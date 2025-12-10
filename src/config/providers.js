@@ -86,6 +86,21 @@ export const providerConfig = {
           documentationLink: "https://cloud.google.com/iam/",
           preferred: true
           },            
+          {
+            id: "speech:v2",
+            name: "speech",
+            version: "v2",
+            title: "Cloud Speech-to-Text API",
+            description: "Converts audio to text by applying powerful neural network models.",
+            discoveryVersion: "v1",
+            discoveryRestUrl: "https://speech.googleapis.com/$discovery/rest?version=v2",
+            icons: {
+              x16: "http://www.google.com/images/icons/product/search-16.gif",
+              x32: "http://www.google.com/images/icons/product/search-32.gif"
+            },
+            documentationLink: "https://cloud.google.com/speech-to-text/docs/quickstart-protocol",
+            preferred: true
+          },
     ],
     excludedServices: [
       'iam',
