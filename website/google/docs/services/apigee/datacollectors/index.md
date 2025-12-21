@@ -144,7 +144,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_datacollectors_list"><CopyableCode code="organizations_datacollectors_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists all data collectors.</td>
 </tr>
 <tr>
@@ -256,8 +256,8 @@ lastModifiedAt,
 type
 FROM google.apigee.datacollectors
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>

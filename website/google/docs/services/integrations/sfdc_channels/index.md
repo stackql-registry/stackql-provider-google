@@ -304,7 +304,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_products_sfdc_instances_sfdc_channels_list"><CopyableCode code="projects_locations_products_sfdc_instances_sfdc_channels_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-productsId"><code>productsId</code></a>, <a href="#parameter-sfdcInstancesId"><code>sfdcInstancesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
     <td>Lists all sfdc channels that match the filter. Restrict to sfdc channels belonging to the current client only.</td>
 </tr>
 <tr>
@@ -318,7 +318,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_sfdc_instances_sfdc_channels_list"><CopyableCode code="projects_locations_sfdc_instances_sfdc_channels_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-sfdcInstancesId"><code>sfdcInstancesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists all sfdc channels that match the filter. Restrict to sfdc channels belonging to the current client only.</td>
 </tr>
 <tr>
@@ -487,9 +487,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND productsId = '{{ productsId }}' -- required
 AND sfdcInstancesId = '{{ sfdcInstancesId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND readMask = '{{ readMask }}'
 ;
 ```
@@ -536,10 +536,10 @@ FROM google.integrations.sfdc_channels
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND sfdcInstancesId = '{{ sfdcInstancesId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 AND readMask = '{{ readMask }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -562,20 +562,20 @@ Creates an sfdc channel record. Store the sfdc channel in Spanner. Returns the s
 
 ```sql
 INSERT INTO google.integrations.sfdc_channels (
-data__name,
-data__displayName,
 data__description,
 data__channelTopic,
+data__displayName,
+data__name,
 projectsId,
 locationsId,
 productsId,
 sfdcInstancesId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
 '{{ description }}',
 '{{ channelTopic }}',
+'{{ displayName }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ productsId }}',
@@ -599,19 +599,19 @@ Creates an sfdc channel record. Store the sfdc channel in Spanner. Returns the s
 
 ```sql
 INSERT INTO google.integrations.sfdc_channels (
-data__name,
-data__displayName,
 data__description,
 data__channelTopic,
+data__displayName,
+data__name,
 projectsId,
 locationsId,
 sfdcInstancesId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
 '{{ description }}',
 '{{ channelTopic }}',
+'{{ displayName }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ sfdcInstancesId }}'
@@ -646,16 +646,6 @@ updateTime
     - name: sfdcInstancesId
       value: string
       description: Required parameter for the sfdc_channels resource.
-    - name: name
-      value: string
-      description: >
-        Resource name of the SFDC channel projects/{project}/locations/{location}/sfdcInstances/{sfdc_instance}/sfdcChannels/{sfdc_channel}.
-        
-    - name: displayName
-      value: string
-      description: >
-        Optional. Client level unique name/alias to easily reference a channel.
-        
     - name: description
       value: string
       description: >
@@ -665,6 +655,16 @@ updateTime
       value: string
       description: >
         Required. The Channel topic defined by salesforce once an channel is opened
+        
+    - name: displayName
+      value: string
+      description: >
+        Optional. Client level unique name/alias to easily reference a channel.
+        
+    - name: name
+      value: string
+      description: >
+        Resource name of the SFDC channel projects/{project}/locations/{location}/sfdcInstances/{sfdc_instance}/sfdcChannels/{sfdc_channel}.
         
 ```
 </TabItem>
@@ -687,10 +687,10 @@ Updates an sfdc channel. Updates the sfdc channel in spanner. Returns the sfdc c
 ```sql
 UPDATE google.integrations.sfdc_channels
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
 data__description = '{{ description }}',
-data__channelTopic = '{{ channelTopic }}'
+data__channelTopic = '{{ channelTopic }}',
+data__displayName = '{{ displayName }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -717,10 +717,10 @@ Updates an sfdc channel. Updates the sfdc channel in spanner. Returns the sfdc c
 ```sql
 UPDATE google.integrations.sfdc_channels
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
 data__description = '{{ description }}',
-data__channelTopic = '{{ channelTopic }}'
+data__channelTopic = '{{ channelTopic }}',
+data__displayName = '{{ displayName }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

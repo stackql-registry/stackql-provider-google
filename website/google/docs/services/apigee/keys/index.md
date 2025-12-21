@@ -385,29 +385,29 @@ Creates a custom consumer key and secret for a developer app. This is particular
 
 ```sql
 INSERT INTO google.apigee.keys (
-data__apiProducts,
-data__attributes,
-data__consumerKey,
-data__consumerSecret,
-data__expiresAt,
-data__issuedAt,
 data__scopes,
 data__status,
+data__issuedAt,
 data__expiresInSeconds,
+data__expiresAt,
+data__apiProducts,
+data__consumerKey,
+data__attributes,
+data__consumerSecret,
 organizationsId,
 developersId,
 appsId
 )
 SELECT 
-'{{ apiProducts }}',
-'{{ attributes }}',
-'{{ consumerKey }}',
-'{{ consumerSecret }}',
-'{{ expiresAt }}',
-'{{ issuedAt }}',
 '{{ scopes }}',
 '{{ status }}',
+'{{ issuedAt }}',
 '{{ expiresInSeconds }}',
+'{{ expiresAt }}',
+'{{ apiProducts }}',
+'{{ consumerKey }}',
+'{{ attributes }}',
+'{{ consumerSecret }}',
 '{{ organizationsId }}',
 '{{ developersId }}',
 '{{ appsId }}'
@@ -430,23 +430,23 @@ Creates a custom consumer key and secret for a AppGroup app. This is particularl
 
 ```sql
 INSERT INTO google.apigee.keys (
+data__expiresInSeconds,
+data__status,
+data__scopes,
 data__attributes,
 data__consumerKey,
 data__consumerSecret,
-data__scopes,
-data__status,
-data__expiresInSeconds,
 organizationsId,
 appgroupsId,
 appsId
 )
 SELECT 
+'{{ expiresInSeconds }}',
+'{{ status }}',
+'{{ scopes }}',
 '{{ attributes }}',
 '{{ consumerKey }}',
 '{{ consumerSecret }}',
-'{{ scopes }}',
-'{{ status }}',
-'{{ expiresInSeconds }}',
 '{{ organizationsId }}',
 '{{ appgroupsId }}',
 '{{ appsId }}'
@@ -481,36 +481,6 @@ status
     - name: appgroupsId
       value: string
       description: Required parameter for the keys resource.
-    - name: apiProducts
-      value: array
-      description: >
-        List of API products for which the credential can be used. **Note**: Do not specify the list of API products when creating a consumer key and secret for a developer app. Instead, use the UpdateDeveloperAppKey API to make the association after the consumer key and secret are created.
-        
-    - name: attributes
-      value: array
-      description: >
-        List of attributes associated with the credential.
-        
-    - name: consumerKey
-      value: string
-      description: >
-        Immutable. Consumer key.
-        
-    - name: consumerSecret
-      value: string
-      description: >
-        Secret key.
-        
-    - name: expiresAt
-      value: string
-      description: >
-        Time the developer app expires in milliseconds since epoch.
-        
-    - name: issuedAt
-      value: string
-      description: >
-        Time the developer app was created in milliseconds since epoch.
-        
     - name: scopes
       value: array
       description: >
@@ -521,10 +491,40 @@ status
       description: >
         Status of the credential. Valid values include `approved` or `revoked`.
         
+    - name: issuedAt
+      value: string
+      description: >
+        Time the developer app was created in milliseconds since epoch.
+        
     - name: expiresInSeconds
       value: string
       description: >
         Immutable. Expiration time, in seconds, for the consumer key. If not set or left to the default value of `-1`, the API key never expires. The expiration time can't be updated after it is set.
+        
+    - name: expiresAt
+      value: string
+      description: >
+        Time the developer app expires in milliseconds since epoch.
+        
+    - name: apiProducts
+      value: array
+      description: >
+        List of API products for which the credential can be used. **Note**: Do not specify the list of API products when creating a consumer key and secret for a developer app. Instead, use the UpdateDeveloperAppKey API to make the association after the consumer key and secret are created.
+        
+    - name: consumerKey
+      value: string
+      description: >
+        Immutable. Consumer key.
+        
+    - name: attributes
+      value: array
+      description: >
+        List of attributes associated with the credential.
+        
+    - name: consumerSecret
+      value: string
+      description: >
+        Secret key.
         
 ```
 </TabItem>
@@ -546,15 +546,15 @@ Updates the scope of an app. This API replaces the existing scopes with those sp
 ```sql
 REPLACE google.apigee.keys
 SET 
-data__apiProducts = '{{ apiProducts }}',
-data__attributes = '{{ attributes }}',
-data__consumerKey = '{{ consumerKey }}',
-data__consumerSecret = '{{ consumerSecret }}',
-data__expiresAt = '{{ expiresAt }}',
-data__issuedAt = '{{ issuedAt }}',
 data__scopes = '{{ scopes }}',
 data__status = '{{ status }}',
-data__expiresInSeconds = '{{ expiresInSeconds }}'
+data__issuedAt = '{{ issuedAt }}',
+data__expiresInSeconds = '{{ expiresInSeconds }}',
+data__expiresAt = '{{ expiresAt }}',
+data__apiProducts = '{{ apiProducts }}',
+data__consumerKey = '{{ consumerKey }}',
+data__attributes = '{{ attributes }}',
+data__consumerSecret = '{{ consumerSecret }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND developersId = '{{ developersId }}' --required
@@ -652,15 +652,15 @@ EXEC google.apigee.keys.organizations_developers_apps_keys_update_developer_app_
 @action='{{ action }}' 
 @@json=
 '{
-"apiProducts": "{{ apiProducts }}", 
-"attributes": "{{ attributes }}", 
-"consumerKey": "{{ consumerKey }}", 
-"consumerSecret": "{{ consumerSecret }}", 
-"expiresAt": "{{ expiresAt }}", 
-"issuedAt": "{{ issuedAt }}", 
 "scopes": "{{ scopes }}", 
 "status": "{{ status }}", 
-"expiresInSeconds": "{{ expiresInSeconds }}"
+"issuedAt": "{{ issuedAt }}", 
+"expiresInSeconds": "{{ expiresInSeconds }}", 
+"expiresAt": "{{ expiresAt }}", 
+"apiProducts": "{{ apiProducts }}", 
+"consumerKey": "{{ consumerKey }}", 
+"attributes": "{{ attributes }}", 
+"consumerSecret": "{{ consumerSecret }}"
 }'
 ;
 ```
@@ -676,15 +676,15 @@ EXEC google.apigee.keys.organizations_developers_apps_keys_create_create
 @appsId='{{ appsId }}' --required 
 @@json=
 '{
-"apiProducts": "{{ apiProducts }}", 
-"attributes": "{{ attributes }}", 
-"consumerKey": "{{ consumerKey }}", 
-"consumerSecret": "{{ consumerSecret }}", 
-"expiresAt": "{{ expiresAt }}", 
-"issuedAt": "{{ issuedAt }}", 
 "scopes": "{{ scopes }}", 
 "status": "{{ status }}", 
-"expiresInSeconds": "{{ expiresInSeconds }}"
+"issuedAt": "{{ issuedAt }}", 
+"expiresInSeconds": "{{ expiresInSeconds }}", 
+"expiresAt": "{{ expiresAt }}", 
+"apiProducts": "{{ apiProducts }}", 
+"consumerKey": "{{ consumerKey }}", 
+"attributes": "{{ attributes }}", 
+"consumerSecret": "{{ consumerSecret }}"
 }'
 ;
 ```
@@ -716,9 +716,9 @@ EXEC google.apigee.keys.organizations_appgroups_apps_keys_update_app_group_app_k
 @keysId='{{ keysId }}' --required 
 @@json=
 '{
+"apiProducts": "{{ apiProducts }}", 
 "action": "{{ action }}", 
-"appGroupAppKey": "{{ appGroupAppKey }}", 
-"apiProducts": "{{ apiProducts }}"
+"appGroupAppKey": "{{ appGroupAppKey }}"
 }'
 ;
 ```

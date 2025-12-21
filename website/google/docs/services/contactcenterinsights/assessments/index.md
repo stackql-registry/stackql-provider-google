@@ -57,7 +57,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="agentInfo" /></td>
     <td><code>object</code></td>
-    <td>Information about an agent involved in the conversation. (id: GoogleCloudContactcenterinsightsV1ConversationQualityMetadataAgentInfo)</td>
+    <td>Information about the agent the assessment is for. (id: GoogleCloudContactcenterinsightsV1ConversationQualityMetadataAgentInfo)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -96,7 +96,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="agentInfo" /></td>
     <td><code>object</code></td>
-    <td>Information about an agent involved in the conversation. (id: GoogleCloudContactcenterinsightsV1ConversationQualityMetadataAgentInfo)</td>
+    <td>Information about the agent the assessment is for. (id: GoogleCloudContactcenterinsightsV1ConversationQualityMetadataAgentInfo)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -136,49 +136,49 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a>, <a href="#parameter-authorizedViewsId"><code>authorizedViewsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-assessmentsId"><code>assessmentsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-assessmentsId"><code>assessmentsId</code></a></td>
     <td></td>
     <td>Get Assessment.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a>, <a href="#parameter-authorizedViewsId"><code>authorizedViewsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a></td>
     <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>List Assessments.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a>, <a href="#parameter-authorizedViewsId"><code>authorizedViewsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a></td>
     <td></td>
     <td>Create Assessment.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a>, <a href="#parameter-authorizedViewsId"><code>authorizedViewsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-assessmentsId"><code>assessmentsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-assessmentsId"><code>assessmentsId</code></a></td>
     <td><a href="#parameter-force"><code>force</code></a></td>
     <td>Delete an Assessment.</td>
 </tr>
 <tr>
-    <td><a href="#publish"><CopyableCode code="publish" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a>, <a href="#parameter-authorizedViewsId"><code>authorizedViewsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-assessmentsId"><code>assessmentsId</code></a></td>
-    <td></td>
-    <td>Publish an Assessment.</td>
-</tr>
-<tr>
     <td><a href="#appeal"><CopyableCode code="appeal" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a>, <a href="#parameter-authorizedViewsId"><code>authorizedViewsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-assessmentsId"><code>assessmentsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-assessmentsId"><code>assessmentsId</code></a></td>
     <td></td>
     <td>Appeal an Assessment.</td>
 </tr>
 <tr>
+    <td><a href="#publish"><CopyableCode code="publish" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-assessmentsId"><code>assessmentsId</code></a></td>
+    <td></td>
+    <td>Publish an Assessment.</td>
+</tr>
+<tr>
     <td><a href="#finalize"><CopyableCode code="finalize" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a>, <a href="#parameter-authorizedViewsId"><code>authorizedViewsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-assessmentsId"><code>assessmentsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-assessmentsId"><code>assessmentsId</code></a></td>
     <td></td>
     <td>Finalize an Assessment.</td>
 </tr>
@@ -200,16 +200,6 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tbody>
 <tr id="parameter-assessmentsId">
     <td><CopyableCode code="assessmentsId" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr id="parameter-authorizedViewSetsId">
-    <td><CopyableCode code="authorizedViewSetsId" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr id="parameter-authorizedViewsId">
-    <td><CopyableCode code="authorizedViewsId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -274,8 +264,6 @@ updateTime
 FROM google.contactcenterinsights.assessments
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND authorizedViewSetsId = '{{ authorizedViewSetsId }}' -- required
-AND authorizedViewsId = '{{ authorizedViewsId }}' -- required
 AND conversationsId = '{{ conversationsId }}' -- required
 AND assessmentsId = '{{ assessmentsId }}' -- required
 ;
@@ -295,8 +283,6 @@ updateTime
 FROM google.contactcenterinsights.assessments
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND authorizedViewSetsId = '{{ authorizedViewSetsId }}' -- required
-AND authorizedViewsId = '{{ authorizedViewsId }}' -- required
 AND conversationsId = '{{ conversationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
@@ -322,21 +308,17 @@ Create Assessment.
 
 ```sql
 INSERT INTO google.contactcenterinsights.assessments (
-data__name,
 data__agentInfo,
+data__name,
 projectsId,
 locationsId,
-authorizedViewSetsId,
-authorizedViewsId,
 conversationsId
 )
 SELECT 
-'{{ name }}',
 '{{ agentInfo }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ authorizedViewSetsId }}',
-'{{ authorizedViewsId }}',
 '{{ conversationsId }}'
 RETURNING
 name,
@@ -359,24 +341,18 @@ updateTime
     - name: locationsId
       value: string
       description: Required parameter for the assessments resource.
-    - name: authorizedViewSetsId
-      value: string
-      description: Required parameter for the assessments resource.
-    - name: authorizedViewsId
-      value: string
-      description: Required parameter for the assessments resource.
     - name: conversationsId
       value: string
       description: Required parameter for the assessments resource.
+    - name: agentInfo
+      value: object
+      description: >
+        Information about the agent the assessment is for.
+        
     - name: name
       value: string
       description: >
         Identifier. The resource name of the assessment. Format: projects/{project}/locations/{location}/conversations/{conversation}/assessments/{assessment}
-        
-    - name: agentInfo
-      value: object
-      description: >
-        Information about an agent involved in the conversation.
         
 ```
 </TabItem>
@@ -399,8 +375,6 @@ Delete an Assessment.
 DELETE FROM google.contactcenterinsights.assessments
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
-AND authorizedViewSetsId = '{{ authorizedViewSetsId }}' --required
-AND authorizedViewsId = '{{ authorizedViewsId }}' --required
 AND conversationsId = '{{ conversationsId }}' --required
 AND assessmentsId = '{{ assessmentsId }}' --required
 AND force = '{{ force }}'
@@ -413,28 +387,13 @@ AND force = '{{ force }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="publish"
+    defaultValue="appeal"
     values={[
-        { label: 'publish', value: 'publish' },
         { label: 'appeal', value: 'appeal' },
+        { label: 'publish', value: 'publish' },
         { label: 'finalize', value: 'finalize' }
     ]}
 >
-<TabItem value="publish">
-
-Publish an Assessment.
-
-```sql
-EXEC google.contactcenterinsights.assessments.publish 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@authorizedViewSetsId='{{ authorizedViewSetsId }}' --required, 
-@authorizedViewsId='{{ authorizedViewsId }}' --required, 
-@conversationsId='{{ conversationsId }}' --required, 
-@assessmentsId='{{ assessmentsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="appeal">
 
 Appeal an Assessment.
@@ -443,8 +402,19 @@ Appeal an Assessment.
 EXEC google.contactcenterinsights.assessments.appeal 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@authorizedViewSetsId='{{ authorizedViewSetsId }}' --required, 
-@authorizedViewsId='{{ authorizedViewsId }}' --required, 
+@conversationsId='{{ conversationsId }}' --required, 
+@assessmentsId='{{ assessmentsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="publish">
+
+Publish an Assessment.
+
+```sql
+EXEC google.contactcenterinsights.assessments.publish 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
 @conversationsId='{{ conversationsId }}' --required, 
 @assessmentsId='{{ assessmentsId }}' --required
 ;
@@ -458,8 +428,6 @@ Finalize an Assessment.
 EXEC google.contactcenterinsights.assessments.finalize 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@authorizedViewSetsId='{{ authorizedViewSetsId }}' --required, 
-@authorizedViewsId='{{ authorizedViewsId }}' --required, 
 @conversationsId='{{ conversationsId }}' --required, 
 @assessmentsId='{{ assessmentsId }}' --required
 ;

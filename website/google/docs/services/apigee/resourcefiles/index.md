@@ -148,7 +148,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_environments_resourcefiles_create"><CopyableCode code="organizations_environments_resourcefiles_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
-    <td><a href="#parameter-type"><code>type</code></a>, <a href="#parameter-name"><code>name</code></a></td>
+    <td><a href="#parameter-name"><code>name</code></a>, <a href="#parameter-type"><code>type</code></a></td>
     <td>Creates a resource file. Specify the `Content-Type` as `application/octet-stream` or `multipart/form-data`. For more information about resource files, see [Resource files](https://cloud.google.com/apigee/docs/api-platform/develop/resource-files).</td>
 </tr>
 <tr>
@@ -287,22 +287,22 @@ Creates a resource file. Specify the `Content-Type` as `application/octet-stream
 
 ```sql
 INSERT INTO google.apigee.resourcefiles (
-data__contentType,
 data__data,
 data__extensions,
+data__contentType,
 organizationsId,
 environmentsId,
-type,
-name
+name,
+type
 )
 SELECT 
-'{{ contentType }}',
 '{{ data }}',
 '{{ extensions }}',
+'{{ contentType }}',
 '{{ organizationsId }}',
 '{{ environmentsId }}',
-'{{ type }}',
-'{{ name }}'
+'{{ name }}',
+'{{ type }}'
 RETURNING
 name,
 type
@@ -321,11 +321,6 @@ type
     - name: environmentsId
       value: string
       description: Required parameter for the resourcefiles resource.
-    - name: contentType
-      value: string
-      description: >
-        The HTTP Content-Type header value specifying the content type of the body.
-        
     - name: data
       value: string
       description: >
@@ -336,9 +331,14 @@ type
       description: >
         Application specific response metadata. Must be set in the first response for streaming APIs.
         
-    - name: type
+    - name: contentType
       value: string
+      description: >
+        The HTTP Content-Type header value specifying the content type of the body.
+        
     - name: name
+      value: string
+    - name: type
       value: string
 ```
 </TabItem>
@@ -360,9 +360,9 @@ Updates a resource file. Specify the `Content-Type` as `application/octet-stream
 ```sql
 REPLACE google.apigee.resourcefiles
 SET 
-data__contentType = '{{ contentType }}',
 data__data = '{{ data }}',
-data__extensions = '{{ extensions }}'
+data__extensions = '{{ extensions }}',
+data__contentType = '{{ contentType }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND environmentsId = '{{ environmentsId }}' --required

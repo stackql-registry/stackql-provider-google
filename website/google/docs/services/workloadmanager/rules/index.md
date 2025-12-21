@@ -49,59 +49,14 @@ The following fields are returned by `SELECT` queries:
 </thead>
 <tbody>
 <tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>rule name</td>
+    <td><CopyableCode code="invalidRulesWrapper" /></td>
+    <td><code>object</code></td>
+    <td>A wrapper of the invalid rules that failed to be validated. (id: InvalidRulesWrapper)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>descrite rule in plain language</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>the name display in UI</td>
-</tr>
-<tr>
-    <td><CopyableCode code="errorMessage" /></td>
-    <td><code>string</code></td>
-    <td>the message template for rule</td>
-</tr>
-<tr>
-    <td><CopyableCode code="primaryCategory" /></td>
-    <td><code>string</code></td>
-    <td>the primary category</td>
-</tr>
-<tr>
-    <td><CopyableCode code="remediation" /></td>
-    <td><code>string</code></td>
-    <td>the remediation for the rule</td>
-</tr>
-<tr>
-    <td><CopyableCode code="revisionId" /></td>
-    <td><code>string</code></td>
-    <td>Output only. the version of the rule</td>
-</tr>
-<tr>
-    <td><CopyableCode code="secondaryCategory" /></td>
-    <td><code>string</code></td>
-    <td>the secondary category</td>
-</tr>
-<tr>
-    <td><CopyableCode code="severity" /></td>
-    <td><code>string</code></td>
-    <td>the severity of the rule</td>
-</tr>
-<tr>
-    <td><CopyableCode code="tags" /></td>
+    <td><CopyableCode code="rules" /></td>
     <td><code>array</code></td>
-    <td>List of user-defined tags</td>
-</tr>
-<tr>
-    <td><CopyableCode code="uri" /></td>
-    <td><code>string</code></td>
-    <td>the docuement url for the rule</td>
+    <td>all rules in response</td>
 </tr>
 </tbody>
 </table>
@@ -127,7 +82,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-customRulesBucket"><code>customRulesBucket</code></a>, <a href="#parameter-evaluationType"><code>evaluationType</code></a></td>
+    <td><a href="#parameter-evaluationType"><code>evaluationType</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-customRulesBucket"><code>customRulesBucket</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists rules in a given project.</td>
 </tr>
 </tbody>
@@ -198,25 +153,16 @@ Lists rules in a given project.
 
 ```sql
 SELECT
-name,
-description,
-displayName,
-errorMessage,
-primaryCategory,
-remediation,
-revisionId,
-secondaryCategory,
-severity,
-tags,
-uri
+invalidRulesWrapper,
+rules
 FROM google.workloadmanager.rules
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND customRulesBucket = '{{ customRulesBucket }}'
 AND evaluationType = '{{ evaluationType }}'
+AND pageToken = '{{ pageToken }}'
+AND customRulesBucket = '{{ customRulesBucket }}'
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>

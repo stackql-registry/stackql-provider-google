@@ -186,8 +186,8 @@ Sets the access control policy on the specified resource. Replaces any existing 
 ```sql
 REPLACE google.cloudfunctions.functions_iam_policies
 SET 
-data__policy = '{{ policy }}',
-data__updateMask = '{{ updateMask }}'
+data__updateMask = '{{ updateMask }}',
+data__policy = '{{ policy }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

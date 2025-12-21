@@ -234,7 +234,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_apis_versions_specs_list"><CopyableCode code="projects_locations_apis_versions_specs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Returns matching specs.</td>
 </tr>
 <tr>
@@ -259,18 +259,18 @@ The following methods are available for this resource:
     <td>Removes a specified spec, all revisions, and all child resources (e.g., artifacts).</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_apis_versions_specs_tag_revision"><CopyableCode code="projects_locations_apis_versions_specs_tag_revision" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a>, <a href="#parameter-specsId"><code>specsId</code></a></td>
-    <td></td>
-    <td>Adds a tag to a specified revision of a spec.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_apis_versions_specs_rollback"><CopyableCode code="projects_locations_apis_versions_specs_rollback" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a>, <a href="#parameter-specsId"><code>specsId</code></a></td>
     <td></td>
     <td>Sets the current revision to a specified prior revision. Note that this creates a new revision with a new revision ID.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_apis_versions_specs_tag_revision"><CopyableCode code="projects_locations_apis_versions_specs_tag_revision" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a>, <a href="#parameter-specsId"><code>specsId</code></a></td>
+    <td></td>
+    <td>Adds a tag to a specified revision of a spec.</td>
 </tr>
 </tbody>
 </table>
@@ -419,10 +419,10 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND apisId = '{{ apisId }}' -- required
 AND versionsId = '{{ versionsId }}' -- required
+AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -444,14 +444,14 @@ Creates a specified spec.
 
 ```sql
 INSERT INTO google.apigeeregistry.specs (
-data__name,
-data__filename,
-data__description,
-data__mimeType,
 data__sourceUri,
+data__mimeType,
 data__contents,
+data__filename,
 data__labels,
 data__annotations,
+data__name,
+data__description,
 projectsId,
 locationsId,
 apisId,
@@ -459,14 +459,14 @@ versionsId,
 apiSpecId
 )
 SELECT 
-'{{ name }}',
-'{{ filename }}',
-'{{ description }}',
-'{{ mimeType }}',
 '{{ sourceUri }}',
+'{{ mimeType }}',
 '{{ contents }}',
+'{{ filename }}',
 '{{ labels }}',
 '{{ annotations }}',
+'{{ name }}',
+'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ apisId }}',
@@ -508,35 +508,25 @@ sourceUri
     - name: versionsId
       value: string
       description: Required parameter for the specs resource.
-    - name: name
+    - name: sourceUri
       value: string
       description: >
-        Resource name.
-        
-    - name: filename
-      value: string
-      description: >
-        A possibly-hierarchical name used to refer to the spec from other specs.
-        
-    - name: description
-      value: string
-      description: >
-        A detailed description.
+        The original source URI of the spec (if one exists). This is an external location that can be used for reference purposes but which may not be authoritative since this external resource may change after the spec is retrieved.
         
     - name: mimeType
       value: string
       description: >
         A style (format) descriptor for this spec that is specified as a [Media Type](https://en.wikipedia.org/wiki/Media_type). Possible values include `application/vnd.apigee.proto`, `application/vnd.apigee.openapi`, and `application/vnd.apigee.graphql`, with possible suffixes representing compression types. These hypothetical names are defined in the vendor tree defined in RFC6838 (https://tools.ietf.org/html/rfc6838) and are not final. Content types can specify compression. Currently only GZip compression is supported (indicated with "+gzip").
         
-    - name: sourceUri
-      value: string
-      description: >
-        The original source URI of the spec (if one exists). This is an external location that can be used for reference purposes but which may not be authoritative since this external resource may change after the spec is retrieved.
-        
     - name: contents
       value: string
       description: >
         Input only. The contents of the spec. Provided by API callers when specs are created or updated. To access the contents of a spec, use GetApiSpecContents.
+        
+    - name: filename
+      value: string
+      description: >
+        A possibly-hierarchical name used to refer to the spec from other specs.
         
     - name: labels
       value: object
@@ -547,6 +537,16 @@ sourceUri
       value: object
       description: >
         Annotations attach non-identifying metadata to resources. Annotation keys and values are less restricted than those of labels, but should be generally used for small values of broad interest. Larger, topic- specific metadata should be stored in Artifacts.
+        
+    - name: name
+      value: string
+      description: >
+        Resource name.
+        
+    - name: description
+      value: string
+      description: >
+        A detailed description.
         
     - name: apiSpecId
       value: string
@@ -570,14 +570,14 @@ Used to modify a specified spec.
 ```sql
 UPDATE google.apigeeregistry.specs
 SET 
-data__name = '{{ name }}',
-data__filename = '{{ filename }}',
-data__description = '{{ description }}',
-data__mimeType = '{{ mimeType }}',
 data__sourceUri = '{{ sourceUri }}',
+data__mimeType = '{{ mimeType }}',
 data__contents = '{{ contents }}',
+data__filename = '{{ filename }}',
 data__labels = '{{ labels }}',
-data__annotations = '{{ annotations }}'
+data__annotations = '{{ annotations }}',
+data__name = '{{ name }}',
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -635,30 +635,12 @@ AND force = '{{ force }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_apis_versions_specs_tag_revision"
+    defaultValue="projects_locations_apis_versions_specs_rollback"
     values={[
-        { label: 'projects_locations_apis_versions_specs_tag_revision', value: 'projects_locations_apis_versions_specs_tag_revision' },
-        { label: 'projects_locations_apis_versions_specs_rollback', value: 'projects_locations_apis_versions_specs_rollback' }
+        { label: 'projects_locations_apis_versions_specs_rollback', value: 'projects_locations_apis_versions_specs_rollback' },
+        { label: 'projects_locations_apis_versions_specs_tag_revision', value: 'projects_locations_apis_versions_specs_tag_revision' }
     ]}
 >
-<TabItem value="projects_locations_apis_versions_specs_tag_revision">
-
-Adds a tag to a specified revision of a spec.
-
-```sql
-EXEC google.apigeeregistry.specs.projects_locations_apis_versions_specs_tag_revision 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@apisId='{{ apisId }}' --required, 
-@versionsId='{{ versionsId }}' --required, 
-@specsId='{{ specsId }}' --required 
-@@json=
-'{
-"tag": "{{ tag }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_apis_versions_specs_rollback">
 
 Sets the current revision to a specified prior revision. Note that this creates a new revision with a new revision ID.
@@ -673,6 +655,24 @@ EXEC google.apigeeregistry.specs.projects_locations_apis_versions_specs_rollback
 @@json=
 '{
 "revisionId": "{{ revisionId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_apis_versions_specs_tag_revision">
+
+Adds a tag to a specified revision of a spec.
+
+```sql
+EXEC google.apigeeregistry.specs.projects_locations_apis_versions_specs_tag_revision 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@apisId='{{ apisId }}' --required, 
+@versionsId='{{ versionsId }}' --required, 
+@specsId='{{ specsId }}' --required 
+@@json=
+'{
+"tag": "{{ tag }}"
 }'
 ;
 ```

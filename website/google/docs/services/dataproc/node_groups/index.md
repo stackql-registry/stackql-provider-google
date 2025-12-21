@@ -99,7 +99,7 @@ The following methods are available for this resource:
     <td><a href="#projects_regions_clusters_node_groups_create"><CopyableCode code="projects_regions_clusters_node_groups_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-regionsId"><code>regionsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
-    <td><a href="#parameter-nodeGroupId"><code>nodeGroupId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-parentOperationId"><code>parentOperationId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-nodeGroupId"><code>nodeGroupId</code></a>, <a href="#parameter-parentOperationId"><code>parentOperationId</code></a></td>
     <td>Creates a node group in a cluster. The returned Operation.metadata is NodeGroupOperationMetadata (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#nodegroupoperationmetadata).</td>
 </tr>
 <tr>
@@ -214,27 +214,27 @@ Creates a node group in a cluster. The returned Operation.metadata is NodeGroupO
 
 ```sql
 INSERT INTO google.dataproc.node_groups (
-data__name,
 data__roles,
-data__nodeGroupConfig,
 data__labels,
+data__name,
+data__nodeGroupConfig,
 projectsId,
 regionsId,
 clustersId,
-nodeGroupId,
 requestId,
+nodeGroupId,
 parentOperationId
 )
 SELECT 
-'{{ name }}',
 '{{ roles }}',
-'{{ nodeGroupConfig }}',
 '{{ labels }}',
+'{{ name }}',
+'{{ nodeGroupConfig }}',
 '{{ projectsId }}',
 '{{ regionsId }}',
 '{{ clustersId }}',
-'{{ nodeGroupId }}',
 '{{ requestId }}',
+'{{ nodeGroupId }}',
 '{{ parentOperationId }}'
 RETURNING
 name,
@@ -260,29 +260,29 @@ response
     - name: clustersId
       value: string
       description: Required parameter for the node_groups resource.
-    - name: name
-      value: string
-      description: >
-        The Node group resource name (https://aip.dev/122).
-        
     - name: roles
       value: array
       description: >
         Required. Node group roles.
-        
-    - name: nodeGroupConfig
-      value: object
-      description: >
-        Optional. The node group instance group configuration.
         
     - name: labels
       value: object
       description: >
         Optional. Node group labels. Label keys must consist of from 1 to 63 characters and conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values can be empty. If specified, they must consist of from 1 to 63 characters and conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). The node group must have no more than 32 labels.
         
-    - name: nodeGroupId
+    - name: name
       value: string
+      description: >
+        The Node group resource name (https://aip.dev/122).
+        
+    - name: nodeGroupConfig
+      value: object
+      description: >
+        Optional. The node group instance group configuration.
+        
     - name: requestId
+      value: string
+    - name: nodeGroupId
       value: string
     - name: parentOperationId
       value: string
@@ -333,8 +333,8 @@ EXEC google.dataproc.node_groups.projects_regions_clusters_node_groups_repair
 @@json=
 '{
 "instanceNames": "{{ instanceNames }}", 
-"repairAction": "{{ repairAction }}", 
-"requestId": "{{ requestId }}"
+"requestId": "{{ requestId }}", 
+"repairAction": "{{ repairAction }}"
 }'
 ;
 ```

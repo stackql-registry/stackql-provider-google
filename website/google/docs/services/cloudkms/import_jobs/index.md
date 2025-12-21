@@ -65,6 +65,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The time at which this ImportJob was created.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="cryptoKeyBackend" /></td>
+    <td><code>string</code></td>
+    <td>Immutable. The resource name of the backend environment where the key material for the wrapping key resides and where all related cryptographic operations are performed. Currently, this field is only populated for keys stored in HSM_SINGLE_TENANT. Note, this list is non-exhaustive and may apply to additional ProtectionLevels in the future.</td>
+</tr>
+<tr>
     <td><CopyableCode code="expireEventTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The time this ImportJob expired. Only present if state is EXPIRED.</td>
@@ -127,6 +132,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The time at which this ImportJob was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="cryptoKeyBackend" /></td>
+    <td><code>string</code></td>
+    <td>Immutable. The resource name of the backend environment where the key material for the wrapping key resides and where all related cryptographic operations are performed. Currently, this field is only populated for keys stored in HSM_SINGLE_TENANT. Note, this list is non-exhaustive and may apply to additional ProtectionLevels in the future.</td>
 </tr>
 <tr>
     <td><CopyableCode code="expireEventTime" /></td>
@@ -194,7 +204,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-keyRingsId"><code>keyRingsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists ImportJobs.</td>
 </tr>
 <tr>
@@ -286,6 +296,7 @@ SELECT
 name,
 attestation,
 createTime,
+cryptoKeyBackend,
 expireEventTime,
 expireTime,
 generateTime,
@@ -310,6 +321,7 @@ SELECT
 name,
 attestation,
 createTime,
+cryptoKeyBackend,
 expireEventTime,
 expireTime,
 generateTime,
@@ -321,10 +333,10 @@ FROM google.cloudkms.import_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND keyRingsId = '{{ keyRingsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -346,16 +358,18 @@ Create a new ImportJob within a KeyRing. ImportJob.import_method is required.
 
 ```sql
 INSERT INTO google.cloudkms.import_jobs (
-data__importMethod,
+data__cryptoKeyBackend,
 data__protectionLevel,
+data__importMethod,
 projectsId,
 locationsId,
 keyRingsId,
 importJobId
 )
 SELECT 
-'{{ importMethod }}',
+'{{ cryptoKeyBackend }}',
 '{{ protectionLevel }}',
+'{{ importMethod }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ keyRingsId }}',
@@ -364,6 +378,7 @@ RETURNING
 name,
 attestation,
 createTime,
+cryptoKeyBackend,
 expireEventTime,
 expireTime,
 generateTime,
@@ -389,18 +404,23 @@ state
     - name: keyRingsId
       value: string
       description: Required parameter for the import_jobs resource.
+    - name: cryptoKeyBackend
+      value: string
+      description: >
+        Immutable. The resource name of the backend environment where the key material for the wrapping key resides and where all related cryptographic operations are performed. Currently, this field is only populated for keys stored in HSM_SINGLE_TENANT. Note, this list is non-exhaustive and may apply to additional ProtectionLevels in the future.
+        
+    - name: protectionLevel
+      value: string
+      description: >
+        Required. Immutable. The protection level of the ImportJob. This must match the protection_level of the version_template on the CryptoKey you attempt to import into.
+        
+      valid_values: ['PROTECTION_LEVEL_UNSPECIFIED', 'SOFTWARE', 'HSM', 'EXTERNAL', 'EXTERNAL_VPC', 'HSM_SINGLE_TENANT']
     - name: importMethod
       value: string
       description: >
         Required. Immutable. The wrapping method to be used for incoming key material.
         
       valid_values: ['IMPORT_METHOD_UNSPECIFIED', 'RSA_OAEP_3072_SHA1_AES_256', 'RSA_OAEP_4096_SHA1_AES_256', 'RSA_OAEP_3072_SHA256_AES_256', 'RSA_OAEP_4096_SHA256_AES_256', 'RSA_OAEP_3072_SHA256', 'RSA_OAEP_4096_SHA256']
-    - name: protectionLevel
-      value: string
-      description: >
-        Required. Immutable. The protection level of the ImportJob. This must match the protection_level of the version_template on the CryptoKey you attempt to import into.
-        
-      valid_values: ['PROTECTION_LEVEL_UNSPECIFIED', 'SOFTWARE', 'HSM', 'EXTERNAL', 'EXTERNAL_VPC']
     - name: importJobId
       value: string
 ```

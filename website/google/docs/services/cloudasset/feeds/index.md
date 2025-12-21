@@ -155,14 +155,14 @@ Creates a feed in a parent project/folder/organization to listen to its asset up
 
 ```sql
 INSERT INTO google.cloudasset.feeds (
-data__feedId,
 data__feed,
+data__feedId,
 parentType,
 parent
 )
 SELECT 
-'{{ feedId }}',
 '{{ feed }}',
+'{{ feedId }}',
 '{{ parentType }}',
 '{{ parent }}'
 RETURNING
@@ -188,15 +188,15 @@ relationshipTypes
     - name: parent
       value: string
       description: Required parameter for the feeds resource.
+    - name: feed
+      value: object
+      description: >
+        An asset feed used to export asset updates to a destinations. An asset feed filter controls what updates are exported. The asset feed must be created within a project, organization, or folder. Supported destinations are: Pub/Sub topics.
+        
     - name: feedId
       value: string
       description: >
         Required. This is the client-assigned asset feed identifier and it needs to be unique under a specific parent project/folder/organization.
-        
-    - name: feed
-      value: object
-      description: >
-        Required. The feed details. The field `name` must be empty and it will be generated in the format of: projects/project_number/feeds/feed_id folders/folder_number/feeds/feed_id organizations/organization_number/feeds/feed_id
         
 ```
 </TabItem>

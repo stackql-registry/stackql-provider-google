@@ -174,28 +174,28 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Retrieve a collection of saas.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-saasId"><code>saasId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-saasId"><code>saasId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Create a new saas.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-saasId"><code>saasId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Update a single saas.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-saasId"><code>saasId</code></a></td>
-    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Delete a single saas.</td>
 </tr>
 </tbody>
@@ -325,9 +325,9 @@ FROM google.saasservicemgmt.saas
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -349,26 +349,26 @@ Create a new saas.
 
 ```sql
 INSERT INTO google.saasservicemgmt.saas (
+data__annotations,
+data__labels,
 data__name,
 data__locations,
-data__labels,
-data__annotations,
 projectsId,
 locationsId,
+requestId,
 saasId,
-validateOnly,
-requestId
+validateOnly
 )
 SELECT 
+'{{ annotations }}',
+'{{ labels }}',
 '{{ name }}',
 '{{ locations }}',
-'{{ labels }}',
-'{{ annotations }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
+'{{ requestId }}',
 '{{ saasId }}',
-'{{ validateOnly }}',
-'{{ requestId }}'
+'{{ validateOnly }}'
 RETURNING
 name,
 annotations,
@@ -393,6 +393,16 @@ updateTime
     - name: locationsId
       value: string
       description: Required parameter for the saas resource.
+    - name: annotations
+      value: object
+      description: >
+        Optional. Annotations is an unstructured key-value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/user-guide/annotations
+        
+    - name: labels
+      value: object
+      description: >
+        Optional. The labels on the resource, which can be used for categorization. similar to Kubernetes resource labels.
+        
     - name: name
       value: string
       description: >
@@ -403,22 +413,12 @@ updateTime
       description: >
         Optional. List of locations that the service is available in. Rollout refers to the list to generate a rollout plan.
         
-    - name: labels
-      value: object
-      description: >
-        Optional. The labels on the resource, which can be used for categorization. similar to Kubernetes resource labels.
-        
-    - name: annotations
-      value: object
-      description: >
-        Optional. Annotations is an unstructured key-value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/user-guide/annotations
-        
+    - name: requestId
+      value: string
     - name: saasId
       value: string
     - name: validateOnly
       value: boolean
-    - name: requestId
-      value: string
 ```
 </TabItem>
 </Tabs>
@@ -439,16 +439,16 @@ Update a single saas.
 ```sql
 UPDATE google.saasservicemgmt.saas
 SET 
-data__name = '{{ name }}',
-data__locations = '{{ locations }}',
+data__annotations = '{{ annotations }}',
 data__labels = '{{ labels }}',
-data__annotations = '{{ annotations }}'
+data__name = '{{ name }}',
+data__locations = '{{ locations }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND saasId = '{{ saasId }}' --required
-AND validateOnly = {{ validateOnly}}
 AND requestId = '{{ requestId}}'
+AND validateOnly = {{ validateOnly}}
 AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
@@ -481,8 +481,8 @@ DELETE FROM google.saasservicemgmt.saas
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND saasId = '{{ saasId }}' --required
-AND etag = '{{ etag }}'
 AND validateOnly = '{{ validateOnly }}'
+AND etag = '{{ etag }}'
 AND requestId = '{{ requestId }}'
 ;
 ```

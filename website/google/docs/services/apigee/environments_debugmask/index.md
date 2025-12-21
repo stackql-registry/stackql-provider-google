@@ -213,15 +213,15 @@ Updates the debug mask singleton resource for an environment.
 ```sql
 UPDATE google.apigee.environments_debugmask
 SET 
-data__name = '{{ name }}',
-data__namespaces = '{{ namespaces }}',
-data__requestXPaths = '{{ requestXPaths }}',
-data__responseXPaths = '{{ responseXPaths }}',
 data__faultXPaths = '{{ faultXPaths }}',
 data__requestJSONPaths = '{{ requestJSONPaths }}',
-data__responseJSONPaths = '{{ responseJSONPaths }}',
 data__faultJSONPaths = '{{ faultJSONPaths }}',
-data__variables = '{{ variables }}'
+data__variables = '{{ variables }}',
+data__responseXPaths = '{{ responseXPaths }}',
+data__responseJSONPaths = '{{ responseJSONPaths }}',
+data__namespaces = '{{ namespaces }}',
+data__requestXPaths = '{{ requestXPaths }}',
+data__name = '{{ name }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND environmentsId = '{{ environmentsId }}' --required

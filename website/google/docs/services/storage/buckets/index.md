@@ -474,7 +474,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-prefix"><code>prefix</code></a>, <a href="#parameter-softDeleted"><code>softDeleted</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-userProject"><code>userProject</code></a></td>
+    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-prefix"><code>prefix</code></a>, <a href="#parameter-softDeleted"><code>softDeleted</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-userProject"><code>userProject</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Retrieves a list of buckets for a given project.</td>
 </tr>
 <tr>
@@ -612,6 +612,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
+<tr id="parameter-returnPartialSuccess">
+    <td><CopyableCode code="returnPartialSuccess" /></td>
+    <td><code>boolean</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-softDeleted">
     <td><CopyableCode code="softDeleted" /></td>
     <td><code>boolean</code></td>
@@ -741,6 +746,7 @@ AND prefix = '{{ prefix }}'
 AND softDeleted = '{{ softDeleted }}'
 AND projection = '{{ projection }}'
 AND userProject = '{{ userProject }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>

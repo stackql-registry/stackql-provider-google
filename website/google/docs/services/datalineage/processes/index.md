@@ -148,7 +148,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-processesId"><code>processesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Updates a process.</td>
 </tr>
 <tr>
@@ -279,19 +279,19 @@ Creates a new process.
 
 ```sql
 INSERT INTO google.datalineage.processes (
-data__name,
-data__displayName,
 data__attributes,
 data__origin,
+data__name,
+data__displayName,
 projectsId,
 locationsId,
 requestId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
 '{{ attributes }}',
 '{{ origin }}',
+'{{ name }}',
+'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ requestId }}'
@@ -315,16 +315,6 @@ origin
     - name: locationsId
       value: string
       description: Required parameter for the processes resource.
-    - name: name
-      value: string
-      description: >
-        Immutable. The resource name of the lineage process. Format: `projects/{project}/locations/{location}/processes/{process}`. Can be specified or auto-assigned. {process} must be not longer than 200 characters and only contain characters in a set: `a-zA-Z0-9_-:.`
-        
-    - name: displayName
-      value: string
-      description: >
-        Optional. A human-readable name you can set to display in a user interface. Must be not longer than 200 characters and only contain UTF-8 letters or numbers, spaces or characters like `_-:&.`
-        
     - name: attributes
       value: object
       description: >
@@ -334,6 +324,16 @@ origin
       value: object
       description: >
         Optional. The origin of this process and its runs and lineage events.
+        
+    - name: name
+      value: string
+      description: >
+        Immutable. The resource name of the lineage process. Format: `projects/{project}/locations/{location}/processes/{process}`. Can be specified or auto-assigned. {process} must be not longer than 200 characters and only contain characters in a set: `a-zA-Z0-9_-:.`
+        
+    - name: displayName
+      value: string
+      description: >
+        Optional. A human-readable name you can set to display in a user interface. Must be not longer than 200 characters and only contain UTF-8 letters or numbers, spaces or characters like `_-:&.`
         
     - name: requestId
       value: string
@@ -357,16 +357,16 @@ Updates a process.
 ```sql
 UPDATE google.datalineage.processes
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
 data__attributes = '{{ attributes }}',
-data__origin = '{{ origin }}'
+data__origin = '{{ origin }}',
+data__name = '{{ name }}',
+data__displayName = '{{ displayName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND processesId = '{{ processesId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND allowMissing = {{ allowMissing}}
+AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
 RETURNING
 name,

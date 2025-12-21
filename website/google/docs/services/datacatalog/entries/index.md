@@ -125,6 +125,11 @@ The following fields are returned by `SELECT` queries:
     <td>Specification that applies to a Cloud Storage fileset. Valid only for entries with the `FILESET` type. (id: GoogleCloudDatacatalogV1GcsFilesetSpec)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="graphSpec" /></td>
+    <td><code>object</code></td>
+    <td>Spec for graph. (id: GoogleCloudDatacatalogV1GraphSpec)</td>
+</tr>
+<tr>
     <td><CopyableCode code="integratedSystem" /></td>
     <td><code>string</code></td>
     <td>Output only. Indicates the entry's source system that Data Catalog integrates with, such as BigQuery, Pub/Sub, or Dataproc Metastore.</td>
@@ -287,6 +292,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="gcsFilesetSpec" /></td>
     <td><code>object</code></td>
     <td>Specification that applies to a Cloud Storage fileset. Valid only for entries with the `FILESET` type. (id: GoogleCloudDatacatalogV1GcsFilesetSpec)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="graphSpec" /></td>
+    <td><code>object</code></td>
+    <td>Spec for graph. (id: GoogleCloudDatacatalogV1GraphSpec)</td>
 </tr>
 <tr>
     <td><CopyableCode code="integratedSystem" /></td>
@@ -579,6 +589,7 @@ featureOnlineStoreSpec,
 filesetSpec,
 fullyQualifiedName,
 gcsFilesetSpec,
+graphSpec,
 integratedSystem,
 labels,
 linkedResource,
@@ -623,6 +634,7 @@ featureOnlineStoreSpec,
 filesetSpec,
 fullyQualifiedName,
 gcsFilesetSpec,
+graphSpec,
 integratedSystem,
 labels,
 linkedResource,
@@ -683,6 +695,7 @@ data__filesetSpec,
 data__serviceSpec,
 data__modelSpec,
 data__featureOnlineStoreSpec,
+data__graphSpec,
 data__displayName,
 data__description,
 data__businessContext,
@@ -713,6 +726,7 @@ SELECT
 '{{ serviceSpec }}',
 '{{ modelSpec }}',
 '{{ featureOnlineStoreSpec }}',
+'{{ graphSpec }}',
 '{{ displayName }}',
 '{{ description }}',
 '{{ businessContext }}',
@@ -740,6 +754,7 @@ featureOnlineStoreSpec,
 filesetSpec,
 fullyQualifiedName,
 gcsFilesetSpec,
+graphSpec,
 integratedSystem,
 labels,
 linkedResource,
@@ -859,6 +874,11 @@ userSpecifiedType
       description: >
         FeatureonlineStore spec for Vertex AI Feature Store.
         
+    - name: graphSpec
+      value: object
+      description: >
+        Spec for graph.
+        
     - name: displayName
       value: string
       description: >
@@ -933,6 +953,7 @@ data__filesetSpec = '{{ filesetSpec }}',
 data__serviceSpec = '{{ serviceSpec }}',
 data__modelSpec = '{{ modelSpec }}',
 data__featureOnlineStoreSpec = '{{ featureOnlineStoreSpec }}',
+data__graphSpec = '{{ graphSpec }}',
 data__displayName = '{{ displayName }}',
 data__description = '{{ description }}',
 data__businessContext = '{{ businessContext }}',
@@ -962,6 +983,7 @@ featureOnlineStoreSpec,
 filesetSpec,
 fullyQualifiedName,
 gcsFilesetSpec,
+graphSpec,
 integratedSystem,
 labels,
 linkedResource,

@@ -254,7 +254,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_templates_list"><CopyableCode code="projects_locations_templates_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists all templates matching the filter.</td>
 </tr>
 <tr>
@@ -279,13 +279,6 @@ The following methods are available for this resource:
     <td>Deletes a template</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_templates_search"><CopyableCode code="projects_locations_templates_search" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-query"><code>query</code></a>, <a href="#parameter-enableNaturalLanguageQueryUnderstanding"><code>enableNaturalLanguageQueryUnderstanding</code></a></td>
-    <td>Search templates based on user query and filters. This api would query the templates and return a list of templates based on the user filter.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_templates_use"><CopyableCode code="projects_locations_templates_use" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-templatesId"><code>templatesId</code></a></td>
@@ -300,11 +293,18 @@ The following methods are available for this resource:
     <td>Import the template to an existing integration. This api would keep track of usage_count and last_used_time. PERMISSION_DENIED would be thrown if template is not accessible by client.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_templates_share"><CopyableCode code="projects_locations_templates_share" /></a></td>
+    <td><a href="#projects_locations_templates_search"><CopyableCode code="projects_locations_templates_search" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-query"><code>query</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-enableNaturalLanguageQueryUnderstanding"><code>enableNaturalLanguageQueryUnderstanding</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Search templates based on user query and filters. This api would query the templates and return a list of templates based on the user filter.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_templates_download"><CopyableCode code="projects_locations_templates_download" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-templatesId"><code>templatesId</code></a></td>
-    <td></td>
-    <td>Share a template with other clients. Only the template owner can share the templates with other projects. PERMISSION_DENIED would be thrown if the request is not from the owner.</td>
+    <td><a href="#parameter-fileFormat"><code>fileFormat</code></a></td>
+    <td>Downloads a template. Retrieves the `Template` and returns the response as a string.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_templates_unshare"><CopyableCode code="projects_locations_templates_unshare" /></a></td>
@@ -314,18 +314,18 @@ The following methods are available for this resource:
     <td>Unshare a template from given clients. Owner of the template can unshare template with clients. Shared client can only unshare the template from itself. PERMISSION_DENIED would be thrown if request is not from owner or for unsharing itself.</td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_templates_share"><CopyableCode code="projects_locations_templates_share" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-templatesId"><code>templatesId</code></a></td>
+    <td></td>
+    <td>Share a template with other clients. Only the template owner can share the templates with other projects. PERMISSION_DENIED would be thrown if the request is not from the owner.</td>
+</tr>
+<tr>
     <td><a href="#projects_locations_templates_upload"><CopyableCode code="projects_locations_templates_upload" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Uploads a template. The content can be a previously downloaded template. Performs the same function as CreateTemplate, but accepts input in a string format, which holds the complete representation of the Template content.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_templates_download"><CopyableCode code="projects_locations_templates_download" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-templatesId"><code>templatesId</code></a></td>
-    <td><a href="#parameter-fileFormat"><code>fileFormat</code></a></td>
-    <td>Downloads a template. Retrieves the `Template` and returns the response as a string.</td>
 </tr>
 </tbody>
 </table>
@@ -469,11 +469,11 @@ visibility
 FROM google.integrations.templates
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 AND readMask = '{{ readMask }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -495,38 +495,38 @@ Creates a new template
 
 ```sql
 INSERT INTO google.integrations.templates (
-data__name,
-data__displayName,
-data__description,
-data__usageInfo,
 data__docLink,
+data__lastUsedTime,
+data__usageInfo,
 data__templateBundle,
 data__components,
-data__tags,
 data__categories,
-data__author,
-data__usageCount,
-data__lastUsedTime,
-data__visibility,
+data__tags,
+data__description,
 data__sharedWith,
+data__name,
+data__visibility,
+data__author,
+data__displayName,
+data__usageCount,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
-'{{ description }}',
-'{{ usageInfo }}',
 '{{ docLink }}',
+'{{ lastUsedTime }}',
+'{{ usageInfo }}',
 '{{ templateBundle }}',
 '{{ components }}',
-'{{ tags }}',
 '{{ categories }}',
-'{{ author }}',
-'{{ usageCount }}',
-'{{ lastUsedTime }}',
-'{{ visibility }}',
+'{{ tags }}',
+'{{ description }}',
 '{{ sharedWith }}',
+'{{ name }}',
+'{{ visibility }}',
+'{{ author }}',
+'{{ displayName }}',
+'{{ usageCount }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -561,30 +561,20 @@ visibility
     - name: locationsId
       value: string
       description: Required parameter for the templates resource.
-    - name: name
+    - name: docLink
       value: string
       description: >
-        Identifier. Resource name of the template.
+        Optional. Link to template documentation.
         
-    - name: displayName
+    - name: lastUsedTime
       value: string
       description: >
-        Required. The name of the template
-        
-    - name: description
-      value: string
-      description: >
-        Optional. Description of the template. The length should not be more than 255 characters
+        Optional. Time the template was last used.
         
     - name: usageInfo
       value: string
       description: >
         Optional. Information on how to use the template. This should contain detailed information about usage of the template.
-        
-    - name: docLink
-      value: string
-      description: >
-        Optional. Link to template documentation.
         
     - name: templateBundle
       value: object
@@ -596,30 +586,30 @@ visibility
       description: >
         Optional. Components being used in the template. This could be used to categorize and filter.
         
-    - name: tags
-      value: array
-      description: >
-        Required. Tags which are used to identify templates. These tags could be for business use case, connectors etc.
-        
     - name: categories
       value: array
       description: >
         Required. Categories associated with the Template. The categories listed below will be utilized for the Template listing.
         
-    - name: author
-      value: string
+    - name: tags
+      value: array
       description: >
-        Optional. Creator of the template.
+        Required. Tags which are used to identify templates. These tags could be for business use case, connectors etc.
         
-    - name: usageCount
+    - name: description
       value: string
       description: >
-        Optional. Number of template usages.
+        Optional. Description of the template. The length should not be more than 255 characters
         
-    - name: lastUsedTime
+    - name: sharedWith
+      value: array
+      description: >
+        Required. Resource names with which the template is shared for example ProjectNumber/Ord id
+        
+    - name: name
       value: string
       description: >
-        Optional. Time the template was last used.
+        Identifier. Resource name of the template.
         
     - name: visibility
       value: string
@@ -627,10 +617,20 @@ visibility
         Required. Visibility of the template.
         
       valid_values: ['VISIBILITY_UNSPECIFIED', 'PRIVATE', 'SHARED', 'PUBLIC']
-    - name: sharedWith
-      value: array
+    - name: author
+      value: string
       description: >
-        Required. Resource names with which the template is shared for example ProjectNumber/Ord id
+        Optional. Creator of the template.
+        
+    - name: displayName
+      value: string
+      description: >
+        Required. The name of the template
+        
+    - name: usageCount
+      value: string
+      description: >
+        Optional. Number of template usages.
         
 ```
 </TabItem>
@@ -652,20 +652,20 @@ Updates the template by given id.
 ```sql
 UPDATE google.integrations.templates
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
-data__usageInfo = '{{ usageInfo }}',
 data__docLink = '{{ docLink }}',
+data__lastUsedTime = '{{ lastUsedTime }}',
+data__usageInfo = '{{ usageInfo }}',
 data__templateBundle = '{{ templateBundle }}',
 data__components = '{{ components }}',
-data__tags = '{{ tags }}',
 data__categories = '{{ categories }}',
-data__author = '{{ author }}',
-data__usageCount = '{{ usageCount }}',
-data__lastUsedTime = '{{ lastUsedTime }}',
+data__tags = '{{ tags }}',
+data__description = '{{ description }}',
+data__sharedWith = '{{ sharedWith }}',
+data__name = '{{ name }}',
 data__visibility = '{{ visibility }}',
-data__sharedWith = '{{ sharedWith }}'
+data__author = '{{ author }}',
+data__displayName = '{{ displayName }}',
+data__usageCount = '{{ usageCount }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -719,35 +719,17 @@ AND templatesId = '{{ templatesId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_templates_search"
+    defaultValue="projects_locations_templates_use"
     values={[
-        { label: 'projects_locations_templates_search', value: 'projects_locations_templates_search' },
         { label: 'projects_locations_templates_use', value: 'projects_locations_templates_use' },
         { label: 'projects_locations_templates_import', value: 'projects_locations_templates_import' },
-        { label: 'projects_locations_templates_share', value: 'projects_locations_templates_share' },
+        { label: 'projects_locations_templates_search', value: 'projects_locations_templates_search' },
+        { label: 'projects_locations_templates_download', value: 'projects_locations_templates_download' },
         { label: 'projects_locations_templates_unshare', value: 'projects_locations_templates_unshare' },
-        { label: 'projects_locations_templates_upload', value: 'projects_locations_templates_upload' },
-        { label: 'projects_locations_templates_download', value: 'projects_locations_templates_download' }
+        { label: 'projects_locations_templates_share', value: 'projects_locations_templates_share' },
+        { label: 'projects_locations_templates_upload', value: 'projects_locations_templates_upload' }
     ]}
 >
-<TabItem value="projects_locations_templates_search">
-
-Search templates based on user query and filters. This api would query the templates and return a list of templates based on the user filter.
-
-```sql
-EXEC google.integrations.templates.projects_locations_templates_search 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@pageSize='{{ pageSize }}', 
-@pageToken='{{ pageToken }}', 
-@filter='{{ filter }}', 
-@orderBy='{{ orderBy }}', 
-@readMask='{{ readMask }}', 
-@query='{{ query }}', 
-@enableNaturalLanguageQueryUnderstanding={{ enableNaturalLanguageQueryUnderstanding }}
-;
-```
-</TabItem>
 <TabItem value="projects_locations_templates_use">
 
 Use the template to create integration. This api would keep track of usage_count and last_used_time. PERMISSION_DENIED would be thrown if template is not accessible by client.
@@ -760,8 +742,8 @@ EXEC google.integrations.templates.projects_locations_templates_use
 @@json=
 '{
 "integrationDetails": "{{ integrationDetails }}", 
-"subIntegrations": "{{ subIntegrations }}", 
-"integrationRegion": "{{ integrationRegion }}"
+"integrationRegion": "{{ integrationRegion }}", 
+"subIntegrations": "{{ subIntegrations }}"
 }'
 ;
 ```
@@ -783,12 +765,43 @@ EXEC google.integrations.templates.projects_locations_templates_import
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_templates_share">
+<TabItem value="projects_locations_templates_search">
 
-Share a template with other clients. Only the template owner can share the templates with other projects. PERMISSION_DENIED would be thrown if the request is not from the owner.
+Search templates based on user query and filters. This api would query the templates and return a list of templates based on the user filter.
 
 ```sql
-EXEC google.integrations.templates.projects_locations_templates_share 
+EXEC google.integrations.templates.projects_locations_templates_search 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@query='{{ query }}', 
+@pageSize='{{ pageSize }}', 
+@enableNaturalLanguageQueryUnderstanding={{ enableNaturalLanguageQueryUnderstanding }}, 
+@orderBy='{{ orderBy }}', 
+@filter='{{ filter }}', 
+@readMask='{{ readMask }}', 
+@pageToken='{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_templates_download">
+
+Downloads a template. Retrieves the `Template` and returns the response as a string.
+
+```sql
+EXEC google.integrations.templates.projects_locations_templates_download 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@templatesId='{{ templatesId }}' --required, 
+@fileFormat='{{ fileFormat }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_templates_unshare">
+
+Unshare a template from given clients. Owner of the template can unshare template with clients. Shared client can only unshare the template from itself. PERMISSION_DENIED would be thrown if request is not from owner or for unsharing itself.
+
+```sql
+EXEC google.integrations.templates.projects_locations_templates_unshare 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @templatesId='{{ templatesId }}' --required 
@@ -799,12 +812,12 @@ EXEC google.integrations.templates.projects_locations_templates_share
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_templates_unshare">
+<TabItem value="projects_locations_templates_share">
 
-Unshare a template from given clients. Owner of the template can unshare template with clients. Shared client can only unshare the template from itself. PERMISSION_DENIED would be thrown if request is not from owner or for unsharing itself.
+Share a template with other clients. Only the template owner can share the templates with other projects. PERMISSION_DENIED would be thrown if the request is not from the owner.
 
 ```sql
-EXEC google.integrations.templates.projects_locations_templates_unshare 
+EXEC google.integrations.templates.projects_locations_templates_share 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @templatesId='{{ templatesId }}' --required 
@@ -828,19 +841,6 @@ EXEC google.integrations.templates.projects_locations_templates_upload
 "content": "{{ content }}", 
 "fileFormat": "{{ fileFormat }}"
 }'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_templates_download">
-
-Downloads a template. Retrieves the `Template` and returns the response as a string.
-
-```sql
-EXEC google.integrations.templates.projects_locations_templates_download 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@templatesId='{{ templatesId }}' --required, 
-@fileFormat='{{ fileFormat }}'
 ;
 ```
 </TabItem>

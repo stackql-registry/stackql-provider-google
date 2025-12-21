@@ -52,7 +52,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Output only. The full name of the BackupPlan resource. Format: `projects/*/locations/*/backupPlans/*`</td>
+    <td>Output only. Identifier. The full name of the BackupPlan resource. Format: `projects/*/locations/*/backupPlans/*`</td>
 </tr>
 <tr>
     <td><CopyableCode code="backupChannel" /></td>
@@ -161,7 +161,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Output only. The full name of the BackupPlan resource. Format: `projects/*/locations/*/backupPlans/*`</td>
+    <td>Output only. Identifier. The full name of the BackupPlan resource. Format: `projects/*/locations/*/backupPlans/*`</td>
 </tr>
 <tr>
     <td><CopyableCode code="backupChannel" /></td>

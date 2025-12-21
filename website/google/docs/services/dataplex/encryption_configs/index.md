@@ -60,6 +60,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The time when the Encryption configuration was created.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="enableMetastoreEncryption" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. Represent the state of CMEK opt-in for metastore.</td>
+</tr>
+<tr>
     <td><CopyableCode code="encryptionState" /></td>
     <td><code>string</code></td>
     <td>Output only. The state of encryption of the databases.</td>
@@ -107,6 +112,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The time when the Encryption configuration was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="enableMetastoreEncryption" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. Represent the state of CMEK opt-in for metastore.</td>
 </tr>
 <tr>
     <td><CopyableCode code="encryptionState" /></td>
@@ -274,6 +284,7 @@ Get an EncryptionConfig.
 SELECT
 name,
 createTime,
+enableMetastoreEncryption,
 encryptionState,
 etag,
 failureDetails,
@@ -294,6 +305,7 @@ List EncryptionConfigs.
 SELECT
 name,
 createTime,
+enableMetastoreEncryption,
 encryptionState,
 etag,
 failureDetails,
@@ -330,6 +342,7 @@ INSERT INTO google.dataplex.encryption_configs (
 data__name,
 data__key,
 data__etag,
+data__enableMetastoreEncryption,
 organizationsId,
 locationsId,
 encryptionConfigId
@@ -338,6 +351,7 @@ SELECT
 '{{ name }}',
 '{{ key }}',
 '{{ etag }}',
+{{ enableMetastoreEncryption }},
 '{{ organizationsId }}',
 '{{ locationsId }}',
 '{{ encryptionConfigId }}'
@@ -377,6 +391,11 @@ response
       description: >
         Etag of the EncryptionConfig. This is a strong etag.
         
+    - name: enableMetastoreEncryption
+      value: boolean
+      description: >
+        Optional. Represent the state of CMEK opt-in for metastore.
+        
     - name: encryptionConfigId
       value: string
 ```
@@ -401,7 +420,8 @@ UPDATE google.dataplex.encryption_configs
 SET 
 data__name = '{{ name }}',
 data__key = '{{ key }}',
-data__etag = '{{ etag }}'
+data__etag = '{{ etag }}',
+data__enableMetastoreEncryption = {{ enableMetastoreEncryption }}
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -22,8 +22,8 @@ Cloud services from Google.
 
 :::info[Provider Summary] 
 
-total services: __178__  
-total resources: __2093__  
+total services: __179__  
+total resources: __2145__  
 
 :::
 
@@ -184,9 +184,9 @@ stackql.exe shell --auth=$Auth
 <a href="/services/gkebackup/">gkebackup</a><br />
 <a href="/services/gkehub/">gkehub</a><br />
 <a href="/services/gkeonprem/">gkeonprem</a><br />
+<a href="/services/healthcare/">healthcare</a><br />
 </div>
 <div class="providerDocColumn">
-<a href="/services/healthcare/">healthcare</a><br />
 <a href="/services/iam/">iam</a><br />
 <a href="/services/iamcredentials/">iamcredentials</a><br />
 <a href="/services/iamv2/">iamv2</a><br />
@@ -255,6 +255,7 @@ stackql.exe shell --auth=$Auth
 <a href="/services/solar/">solar</a><br />
 <a href="/services/spanner/">spanner</a><br />
 <a href="/services/speech/">speech</a><br />
+<a href="/services/speechv2/">speechv2</a><br />
 <a href="/services/sqladmin/">sqladmin</a><br />
 <a href="/services/storage/">storage</a><br />
 <a href="/services/storagebatchoperations/">storagebatchoperations</a><br />

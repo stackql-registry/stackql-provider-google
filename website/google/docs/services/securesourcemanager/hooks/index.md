@@ -184,7 +184,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists hooks in a given repository.</td>
 </tr>
 <tr>
@@ -318,8 +318,8 @@ FROM google.securesourcemanager.hooks
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND repositoriesId = '{{ repositoriesId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -341,24 +341,24 @@ Creates a new hook in a given repository.
 
 ```sql
 INSERT INTO google.securesourcemanager.hooks (
+data__sensitiveQueryString,
+data__pushOption,
+data__disabled,
 data__name,
 data__targetUri,
-data__disabled,
 data__events,
-data__pushOption,
-data__sensitiveQueryString,
 projectsId,
 locationsId,
 repositoriesId,
 hookId
 )
 SELECT 
+'{{ sensitiveQueryString }}',
+'{{ pushOption }}',
+{{ disabled }},
 '{{ name }}',
 '{{ targetUri }}',
-{{ disabled }},
 '{{ events }}',
-'{{ pushOption }}',
-'{{ sensitiveQueryString }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ repositoriesId }}',
@@ -387,6 +387,21 @@ response
     - name: repositoriesId
       value: string
       description: Required parameter for the hooks resource.
+    - name: sensitiveQueryString
+      value: string
+      description: >
+        Optional. The sensitive query string to be appended to the target URI.
+        
+    - name: pushOption
+      value: object
+      description: >
+        Optional. The trigger option for push events.
+        
+    - name: disabled
+      value: boolean
+      description: >
+        Optional. Determines if the hook disabled or not. Set to true to stop sending traffic.
+        
     - name: name
       value: string
       description: >
@@ -397,25 +412,10 @@ response
       description: >
         Required. The target URI to which the payloads will be delivered.
         
-    - name: disabled
-      value: boolean
-      description: >
-        Optional. Determines if the hook disabled or not. Set to true to stop sending traffic.
-        
     - name: events
       value: array
       description: >
         Optional. The events that trigger hook on.
-        
-    - name: pushOption
-      value: object
-      description: >
-        Optional. The trigger option for push events.
-        
-    - name: sensitiveQueryString
-      value: string
-      description: >
-        Optional. The sensitive query string to be appended to the target URI.
         
     - name: hookId
       value: string
@@ -439,12 +439,12 @@ Updates the metadata of a hook.
 ```sql
 UPDATE google.securesourcemanager.hooks
 SET 
+data__sensitiveQueryString = '{{ sensitiveQueryString }}',
+data__pushOption = '{{ pushOption }}',
+data__disabled = {{ disabled }},
 data__name = '{{ name }}',
 data__targetUri = '{{ targetUri }}',
-data__disabled = {{ disabled }},
-data__events = '{{ events }}',
-data__pushOption = '{{ pushOption }}',
-data__sensitiveQueryString = '{{ sensitiveQueryString }}'
+data__events = '{{ events }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

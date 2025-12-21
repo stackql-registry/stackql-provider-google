@@ -118,56 +118,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="id" /></td>
-    <td><code>string</code></td>
-    <td>Unique opaque ID of the job.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="configuration" /></td>
-    <td><code>object</code></td>
-    <td>Required. Describes the job configuration. (id: JobConfiguration)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="errorResult" /></td>
-    <td><code>object</code></td>
-    <td>Error details. (id: ErrorProto)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="jobReference" /></td>
-    <td><code>object</code></td>
-    <td>Unique opaque ID of the job. (id: JobReference)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="kind" /></td>
-    <td><code>string</code></td>
-    <td>The resource type.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="principal_subject" /></td>
-    <td><code>string</code></td>
-    <td>[Full-projection-only] String representation of identity of requesting party. Populated for both first- and third-party identities. Only present for APIs that support third-party identities.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="state" /></td>
-    <td><code>string</code></td>
-    <td>Running state of the job. When the state is DONE, errorResult can be checked to determine whether the job succeeded or failed.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="statistics" /></td>
-    <td><code>object</code></td>
-    <td>Output only. Information about the job, including starting time and ending time of the job. (id: JobStatistics)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="status" /></td>
-    <td><code>object</code></td>
-    <td>[Full-projection-only] Describes the status of this job. (id: JobStatus)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="user_email" /></td>
-    <td><code>string</code></td>
-    <td>[Full-projection-only] Email address of the user who ran the job.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -199,7 +149,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a></td>
-    <td><a href="#parameter-allUsers"><code>allUsers</code></a>, <a href="#parameter-maxCreationTime"><code>maxCreationTime</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-minCreationTime"><code>minCreationTime</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-parentJobId"><code>parentJobId</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-stateFilter"><code>stateFilter</code></a></td>
+    <td><a href="#parameter-stateFilter"><code>stateFilter</code></a>, <a href="#parameter-maxCreationTime"><code>maxCreationTime</code></a>, <a href="#parameter-parentJobId"><code>parentJobId</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-minCreationTime"><code>minCreationTime</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-allUsers"><code>allUsers</code></a></td>
     <td>Lists all jobs that you started in the specified project. Job information is available for a six month period after creation. The job list is sorted in reverse chronological order, by job creation time. Requires the Can View project role, or the Is Owner project role if you set the allUsers property.</td>
 </tr>
 <tr>
@@ -217,18 +167,18 @@ The following methods are available for this resource:
     <td>Requests the deletion of the metadata of a job. This call returns when the job's metadata is deleted.</td>
 </tr>
 <tr>
-    <td><a href="#cancel"><CopyableCode code="cancel" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+jobId"><code>+jobId</code></a></td>
-    <td><a href="#parameter-location"><code>location</code></a></td>
-    <td>Requests that a job be cancelled. This call will return immediately, and the client will need to poll for the job status to see if the cancel completed successfully. Cancelled jobs may still incur costs.</td>
-</tr>
-<tr>
     <td><a href="#query"><CopyableCode code="query" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a></td>
     <td></td>
     <td>Runs a BigQuery SQL query synchronously and returns query results if the query completes within a specified timeout.</td>
+</tr>
+<tr>
+    <td><a href="#cancel"><CopyableCode code="cancel" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+jobId"><code>+jobId</code></a></td>
+    <td><a href="#parameter-location"><code>location</code></a></td>
+    <td>Requests that a job be cancelled. This call will return immediately, and the client will need to poll for the job status to see if the cancel completed successfully. Cancelled jobs may still incur costs.</td>
 </tr>
 </tbody>
 </table>
@@ -343,26 +293,17 @@ Lists all jobs that you started in the specified project. Job information is ava
 
 ```sql
 SELECT
-id,
-configuration,
-errorResult,
-jobReference,
-kind,
-principal_subject,
-state,
-statistics,
-status,
-user_email
+*
 FROM google.bigquery.jobs
 WHERE projectId = '{{ projectId }}' -- required
-AND allUsers = '{{ allUsers }}'
+AND stateFilter = '{{ stateFilter }}'
 AND maxCreationTime = '{{ maxCreationTime }}'
+AND parentJobId = '{{ parentJobId }}'
 AND maxResults = '{{ maxResults }}'
 AND minCreationTime = '{{ minCreationTime }}'
 AND pageToken = '{{ pageToken }}'
-AND parentJobId = '{{ parentJobId }}'
 AND projection = '{{ projection }}'
-AND stateFilter = '{{ stateFilter }}'
+AND allUsers = '{{ allUsers }}'
 ;
 ```
 </TabItem>
@@ -457,24 +398,12 @@ AND location = '{{ location }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="cancel"
+    defaultValue="query"
     values={[
-        { label: 'cancel', value: 'cancel' },
-        { label: 'query', value: 'query' }
+        { label: 'query', value: 'query' },
+        { label: 'cancel', value: 'cancel' }
     ]}
 >
-<TabItem value="cancel">
-
-Requests that a job be cancelled. This call will return immediately, and the client will need to poll for the job status to see if the cancel completed successfully. Cancelled jobs may still incur costs.
-
-```sql
-EXEC google.bigquery.jobs.cancel 
-@projectId='{{ projectId }}' --required, 
-@+jobId='{{ +jobId }}' --required, 
-@location='{{ location }}'
-;
-```
-</TabItem>
 <TabItem value="query">
 
 Runs a BigQuery SQL query synchronously and returns query results if the query completes within a specified timeout.
@@ -484,31 +413,44 @@ EXEC google.bigquery.jobs.query
 @projectId='{{ projectId }}' --required 
 @@json=
 '{
-"connectionProperties": "{{ connectionProperties }}", 
-"continuous": {{ continuous }}, 
-"createSession": {{ createSession }}, 
-"defaultDataset": "{{ defaultDataset }}", 
-"destinationEncryptionConfiguration": "{{ destinationEncryptionConfiguration }}", 
-"dryRun": {{ dryRun }}, 
-"formatOptions": "{{ formatOptions }}", 
-"jobCreationMode": "{{ jobCreationMode }}", 
-"jobTimeoutMs": "{{ jobTimeoutMs }}", 
 "kind": "{{ kind }}", 
-"labels": "{{ labels }}", 
 "location": "{{ location }}", 
-"maxResults": {{ maxResults }}, 
-"maximumBytesBilled": "{{ maximumBytesBilled }}", 
-"parameterMode": "{{ parameterMode }}", 
-"preserveNulls": {{ preserveNulls }}, 
+"jobTimeoutMs": "{{ jobTimeoutMs }}", 
 "query": "{{ query }}", 
+"formatOptions": "{{ formatOptions }}", 
 "queryParameters": "{{ queryParameters }}", 
-"requestId": "{{ requestId }}", 
-"reservation": "{{ reservation }}", 
+"maxSlots": {{ maxSlots }}, 
+"preserveNulls": {{ preserveNulls }}, 
+"createSession": {{ createSession }}, 
 "timeoutMs": {{ timeoutMs }}, 
 "useLegacySql": {{ useLegacySql }}, 
+"parameterMode": "{{ parameterMode }}", 
+"jobCreationMode": "{{ jobCreationMode }}", 
+"maximumBytesBilled": "{{ maximumBytesBilled }}", 
 "useQueryCache": {{ useQueryCache }}, 
-"writeIncrementalResults": {{ writeIncrementalResults }}
+"requestId": "{{ requestId }}", 
+"maxResults": {{ maxResults }}, 
+"continuous": {{ continuous }}, 
+"connectionProperties": "{{ connectionProperties }}", 
+"destinationEncryptionConfiguration": "{{ destinationEncryptionConfiguration }}", 
+"defaultDataset": "{{ defaultDataset }}", 
+"writeIncrementalResults": {{ writeIncrementalResults }}, 
+"labels": "{{ labels }}", 
+"dryRun": {{ dryRun }}, 
+"reservation": "{{ reservation }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="cancel">
+
+Requests that a job be cancelled. This call will return immediately, and the client will need to poll for the job status to see if the cancel completed successfully. Cancelled jobs may still incur costs.
+
+```sql
+EXEC google.bigquery.jobs.cancel 
+@projectId='{{ projectId }}' --required, 
+@+jobId='{{ +jobId }}' --required, 
+@location='{{ location }}'
 ;
 ```
 </TabItem>

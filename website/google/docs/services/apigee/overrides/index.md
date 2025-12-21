@@ -124,7 +124,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_environments_trace_config_overrides_list"><CopyableCode code="organizations_environments_trace_config_overrides_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists all of the distributed trace configuration overrides in an environment.</td>
 </tr>
 <tr>
@@ -234,8 +234,8 @@ samplingConfig
 FROM google.apigee.overrides
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND environmentsId = '{{ environmentsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -258,15 +258,15 @@ Creates a trace configuration override. The response contains a system-generated
 ```sql
 INSERT INTO google.apigee.overrides (
 data__name,
-data__apiProxy,
 data__samplingConfig,
+data__apiProxy,
 organizationsId,
 environmentsId
 )
 SELECT 
 '{{ name }}',
-'{{ apiProxy }}',
 '{{ samplingConfig }}',
+'{{ apiProxy }}',
 '{{ organizationsId }}',
 '{{ environmentsId }}'
 RETURNING
@@ -293,15 +293,15 @@ samplingConfig
       description: >
         ID of the trace configuration override specified as a system-generated UUID.
         
-    - name: apiProxy
-      value: string
-      description: >
-        ID of the API proxy that will have its trace configuration overridden.
-        
     - name: samplingConfig
       value: object
       description: >
         Trace configuration to override.
+        
+    - name: apiProxy
+      value: string
+      description: >
+        ID of the API proxy that will have its trace configuration overridden.
         
 ```
 </TabItem>
@@ -324,8 +324,8 @@ Updates a distributed trace configuration override. Note that the repeated field
 UPDATE google.apigee.overrides
 SET 
 data__name = '{{ name }}',
-data__apiProxy = '{{ apiProxy }}',
-data__samplingConfig = '{{ samplingConfig }}'
+data__samplingConfig = '{{ samplingConfig }}',
+data__apiProxy = '{{ apiProxy }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND environmentsId = '{{ environmentsId }}' --required

@@ -111,9 +111,9 @@ EXEC google.aiplatform.migratable_resources.search
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"pageSize": {{ pageSize }}, 
 "pageToken": "{{ pageToken }}", 
-"filter": "{{ filter }}"
+"filter": "{{ filter }}", 
+"pageSize": {{ pageSize }}
 }'
 ;
 ```

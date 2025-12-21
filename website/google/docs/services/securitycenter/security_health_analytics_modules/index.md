@@ -35,68 +35,14 @@ The following fields are returned by `SELECT` queries:
     defaultValue="folders_security_health_analytics_settings_custom_modules_get"
     values={[
         { label: 'folders_security_health_analytics_settings_custom_modules_get', value: 'folders_security_health_analytics_settings_custom_modules_get' },
-        { label: 'projects_security_health_analytics_settings_custom_modules_get', value: 'projects_security_health_analytics_settings_custom_modules_get' },
         { label: 'organizations_security_health_analytics_settings_custom_modules_get', value: 'organizations_security_health_analytics_settings_custom_modules_get' },
+        { label: 'projects_security_health_analytics_settings_custom_modules_get', value: 'projects_security_health_analytics_settings_custom_modules_get' },
         { label: 'folders_security_health_analytics_settings_custom_modules_list', value: 'folders_security_health_analytics_settings_custom_modules_list' },
-        { label: 'projects_security_health_analytics_settings_custom_modules_list', value: 'projects_security_health_analytics_settings_custom_modules_list' },
-        { label: 'organizations_security_health_analytics_settings_custom_modules_list', value: 'organizations_security_health_analytics_settings_custom_modules_list' }
+        { label: 'organizations_security_health_analytics_settings_custom_modules_list', value: 'organizations_security_health_analytics_settings_custom_modules_list' },
+        { label: 'projects_security_health_analytics_settings_custom_modules_list', value: 'projects_security_health_analytics_settings_custom_modules_list' }
     ]}
 >
 <TabItem value="folders_security_health_analytics_settings_custom_modules_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Immutable. The resource name of the custom module. Its format is "organizations/&#123;organization&#125;/securityHealthAnalyticsSettings/customModules/&#123;customModule&#125;", or "folders/&#123;folder&#125;/securityHealthAnalyticsSettings/customModules/&#123;customModule&#125;", or "projects/&#123;project&#125;/securityHealthAnalyticsSettings/customModules/&#123;customModule&#125;" The id &#123;customModule&#125; is server-generated and is not user settable. It will be a numeric id containing 1-20 digits.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="ancestorModule" /></td>
-    <td><code>string</code></td>
-    <td>Output only. If empty, indicates that the custom module was created in the organization, folder, or project in which you are viewing the custom module. Otherwise, `ancestor_module` specifies the organization or folder from which the custom module is inherited.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="cloudProvider" /></td>
-    <td><code>string</code></td>
-    <td>The cloud provider of the custom module.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="customConfig" /></td>
-    <td><code>object</code></td>
-    <td>The user specified custom configuration for the module. (id: GoogleCloudSecuritycenterV1CustomConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>The display name of the Security Health Analytics custom module. This display name becomes the finding category for all findings that are returned by this custom module. The display name must be between 1 and 128 characters, start with a lowercase letter, and contain alphanumeric characters or underscores only.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="enablementState" /></td>
-    <td><code>string</code></td>
-    <td>The enablement state of the custom module.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="lastEditor" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The editor that last updated the custom module.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time at which the custom module was last updated.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="projects_security_health_analytics_settings_custom_modules_get">
 
 <table>
 <thead>
@@ -204,6 +150,60 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
+<TabItem value="projects_security_health_analytics_settings_custom_modules_get">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Immutable. The resource name of the custom module. Its format is "organizations/&#123;organization&#125;/securityHealthAnalyticsSettings/customModules/&#123;customModule&#125;", or "folders/&#123;folder&#125;/securityHealthAnalyticsSettings/customModules/&#123;customModule&#125;", or "projects/&#123;project&#125;/securityHealthAnalyticsSettings/customModules/&#123;customModule&#125;" The id &#123;customModule&#125; is server-generated and is not user settable. It will be a numeric id containing 1-20 digits.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="ancestorModule" /></td>
+    <td><code>string</code></td>
+    <td>Output only. If empty, indicates that the custom module was created in the organization, folder, or project in which you are viewing the custom module. Otherwise, `ancestor_module` specifies the organization or folder from which the custom module is inherited.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="cloudProvider" /></td>
+    <td><code>string</code></td>
+    <td>The cloud provider of the custom module.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="customConfig" /></td>
+    <td><code>object</code></td>
+    <td>The user specified custom configuration for the module. (id: GoogleCloudSecuritycenterV1CustomConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td>The display name of the Security Health Analytics custom module. This display name becomes the finding category for all findings that are returned by this custom module. The display name must be between 1 and 128 characters, start with a lowercase letter, and contain alphanumeric characters or underscores only.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="enablementState" /></td>
+    <td><code>string</code></td>
+    <td>The enablement state of the custom module.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="lastEditor" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The editor that last updated the custom module.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time at which the custom module was last updated.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
 <TabItem value="folders_security_health_analytics_settings_custom_modules_list">
 
 <table>
@@ -258,7 +258,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_security_health_analytics_settings_custom_modules_list">
+<TabItem value="organizations_security_health_analytics_settings_custom_modules_list">
 
 <table>
 <thead>
@@ -312,7 +312,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="organizations_security_health_analytics_settings_custom_modules_list">
+<TabItem value="projects_security_health_analytics_settings_custom_modules_list">
 
 <table>
 <thead>
@@ -391,16 +391,16 @@ The following methods are available for this resource:
     <td>Retrieves a SecurityHealthAnalyticsCustomModule.</td>
 </tr>
 <tr>
-    <td><a href="#projects_security_health_analytics_settings_custom_modules_get"><CopyableCode code="projects_security_health_analytics_settings_custom_modules_get" /></a></td>
+    <td><a href="#organizations_security_health_analytics_settings_custom_modules_get"><CopyableCode code="organizations_security_health_analytics_settings_custom_modules_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
     <td></td>
     <td>Retrieves a SecurityHealthAnalyticsCustomModule.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_security_health_analytics_settings_custom_modules_get"><CopyableCode code="organizations_security_health_analytics_settings_custom_modules_get" /></a></td>
+    <td><a href="#projects_security_health_analytics_settings_custom_modules_get"><CopyableCode code="projects_security_health_analytics_settings_custom_modules_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
     <td></td>
     <td>Retrieves a SecurityHealthAnalyticsCustomModule.</td>
 </tr>
@@ -412,13 +412,6 @@ The following methods are available for this resource:
     <td>Returns a list of all SecurityHealthAnalyticsCustomModules for the given parent. This includes resident modules defined at the scope of the parent, and inherited modules, inherited from CRM ancestors.</td>
 </tr>
 <tr>
-    <td><a href="#projects_security_health_analytics_settings_custom_modules_list"><CopyableCode code="projects_security_health_analytics_settings_custom_modules_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Returns a list of all SecurityHealthAnalyticsCustomModules for the given parent. This includes resident modules defined at the scope of the parent, and inherited modules, inherited from CRM ancestors.</td>
-</tr>
-<tr>
     <td><a href="#organizations_security_health_analytics_settings_custom_modules_list"><CopyableCode code="organizations_security_health_analytics_settings_custom_modules_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
@@ -426,16 +419,16 @@ The following methods are available for this resource:
     <td>Returns a list of all SecurityHealthAnalyticsCustomModules for the given parent. This includes resident modules defined at the scope of the parent, and inherited modules, inherited from CRM ancestors.</td>
 </tr>
 <tr>
+    <td><a href="#projects_security_health_analytics_settings_custom_modules_list"><CopyableCode code="projects_security_health_analytics_settings_custom_modules_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td>Returns a list of all SecurityHealthAnalyticsCustomModules for the given parent. This includes resident modules defined at the scope of the parent, and inherited modules, inherited from CRM ancestors.</td>
+</tr>
+<tr>
     <td><a href="#folders_security_health_analytics_settings_custom_modules_create"><CopyableCode code="folders_security_health_analytics_settings_custom_modules_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
-    <td></td>
-    <td>Creates a resident SecurityHealthAnalyticsCustomModule at the scope of the given CRM parent, and also creates inherited SecurityHealthAnalyticsCustomModules for all CRM descendants of the given parent. These modules are enabled by default.</td>
-</tr>
-<tr>
-    <td><a href="#projects_security_health_analytics_settings_custom_modules_create"><CopyableCode code="projects_security_health_analytics_settings_custom_modules_create" /></a></td>
-    <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
     <td>Creates a resident SecurityHealthAnalyticsCustomModule at the scope of the given CRM parent, and also creates inherited SecurityHealthAnalyticsCustomModules for all CRM descendants of the given parent. These modules are enabled by default.</td>
 </tr>
@@ -447,6 +440,13 @@ The following methods are available for this resource:
     <td>Creates a resident SecurityHealthAnalyticsCustomModule at the scope of the given CRM parent, and also creates inherited SecurityHealthAnalyticsCustomModules for all CRM descendants of the given parent. These modules are enabled by default.</td>
 </tr>
 <tr>
+    <td><a href="#projects_security_health_analytics_settings_custom_modules_create"><CopyableCode code="projects_security_health_analytics_settings_custom_modules_create" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td></td>
+    <td>Creates a resident SecurityHealthAnalyticsCustomModule at the scope of the given CRM parent, and also creates inherited SecurityHealthAnalyticsCustomModules for all CRM descendants of the given parent. These modules are enabled by default.</td>
+</tr>
+<tr>
     <td><a href="#folders_security_health_analytics_settings_custom_modules_delete"><CopyableCode code="folders_security_health_analytics_settings_custom_modules_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
@@ -454,16 +454,16 @@ The following methods are available for this resource:
     <td>Deletes the specified SecurityHealthAnalyticsCustomModule and all of its descendants in the CRM hierarchy. This method is only supported for resident custom modules.</td>
 </tr>
 <tr>
-    <td><a href="#projects_security_health_analytics_settings_custom_modules_delete"><CopyableCode code="projects_security_health_analytics_settings_custom_modules_delete" /></a></td>
+    <td><a href="#organizations_security_health_analytics_settings_custom_modules_delete"><CopyableCode code="organizations_security_health_analytics_settings_custom_modules_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
     <td></td>
     <td>Deletes the specified SecurityHealthAnalyticsCustomModule and all of its descendants in the CRM hierarchy. This method is only supported for resident custom modules.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_security_health_analytics_settings_custom_modules_delete"><CopyableCode code="organizations_security_health_analytics_settings_custom_modules_delete" /></a></td>
+    <td><a href="#projects_security_health_analytics_settings_custom_modules_delete"><CopyableCode code="projects_security_health_analytics_settings_custom_modules_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
     <td></td>
     <td>Deletes the specified SecurityHealthAnalyticsCustomModule and all of its descendants in the CRM hierarchy. This method is only supported for resident custom modules.</td>
 </tr>
@@ -522,11 +522,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="folders_security_health_analytics_settings_custom_modules_get"
     values={[
         { label: 'folders_security_health_analytics_settings_custom_modules_get', value: 'folders_security_health_analytics_settings_custom_modules_get' },
-        { label: 'projects_security_health_analytics_settings_custom_modules_get', value: 'projects_security_health_analytics_settings_custom_modules_get' },
         { label: 'organizations_security_health_analytics_settings_custom_modules_get', value: 'organizations_security_health_analytics_settings_custom_modules_get' },
+        { label: 'projects_security_health_analytics_settings_custom_modules_get', value: 'projects_security_health_analytics_settings_custom_modules_get' },
         { label: 'folders_security_health_analytics_settings_custom_modules_list', value: 'folders_security_health_analytics_settings_custom_modules_list' },
-        { label: 'projects_security_health_analytics_settings_custom_modules_list', value: 'projects_security_health_analytics_settings_custom_modules_list' },
-        { label: 'organizations_security_health_analytics_settings_custom_modules_list', value: 'organizations_security_health_analytics_settings_custom_modules_list' }
+        { label: 'organizations_security_health_analytics_settings_custom_modules_list', value: 'organizations_security_health_analytics_settings_custom_modules_list' },
+        { label: 'projects_security_health_analytics_settings_custom_modules_list', value: 'projects_security_health_analytics_settings_custom_modules_list' }
     ]}
 >
 <TabItem value="folders_security_health_analytics_settings_custom_modules_get">
@@ -545,26 +545,6 @@ lastEditor,
 updateTime
 FROM google.securitycenter.security_health_analytics_modules
 WHERE foldersId = '{{ foldersId }}' -- required
-AND customModulesId = '{{ customModulesId }}' -- required
-;
-```
-</TabItem>
-<TabItem value="projects_security_health_analytics_settings_custom_modules_get">
-
-Retrieves a SecurityHealthAnalyticsCustomModule.
-
-```sql
-SELECT
-name,
-ancestorModule,
-cloudProvider,
-customConfig,
-displayName,
-enablementState,
-lastEditor,
-updateTime
-FROM google.securitycenter.security_health_analytics_modules
-WHERE projectsId = '{{ projectsId }}' -- required
 AND customModulesId = '{{ customModulesId }}' -- required
 ;
 ```
@@ -589,6 +569,26 @@ AND customModulesId = '{{ customModulesId }}' -- required
 ;
 ```
 </TabItem>
+<TabItem value="projects_security_health_analytics_settings_custom_modules_get">
+
+Retrieves a SecurityHealthAnalyticsCustomModule.
+
+```sql
+SELECT
+name,
+ancestorModule,
+cloudProvider,
+customConfig,
+displayName,
+enablementState,
+lastEditor,
+updateTime
+FROM google.securitycenter.security_health_analytics_modules
+WHERE projectsId = '{{ projectsId }}' -- required
+AND customModulesId = '{{ customModulesId }}' -- required
+;
+```
+</TabItem>
 <TabItem value="folders_security_health_analytics_settings_custom_modules_list">
 
 Returns a list of all SecurityHealthAnalyticsCustomModules for the given parent. This includes resident modules defined at the scope of the parent, and inherited modules, inherited from CRM ancestors.
@@ -605,27 +605,6 @@ lastEditor,
 updateTime
 FROM google.securitycenter.security_health_analytics_modules
 WHERE foldersId = '{{ foldersId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
-<TabItem value="projects_security_health_analytics_settings_custom_modules_list">
-
-Returns a list of all SecurityHealthAnalyticsCustomModules for the given parent. This includes resident modules defined at the scope of the parent, and inherited modules, inherited from CRM ancestors.
-
-```sql
-SELECT
-name,
-ancestorModule,
-cloudProvider,
-customConfig,
-displayName,
-enablementState,
-lastEditor,
-updateTime
-FROM google.securitycenter.security_health_analytics_modules
-WHERE projectsId = '{{ projectsId }}' -- required
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
@@ -652,6 +631,27 @@ AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
+<TabItem value="projects_security_health_analytics_settings_custom_modules_list">
+
+Returns a list of all SecurityHealthAnalyticsCustomModules for the given parent. This includes resident modules defined at the scope of the parent, and inherited modules, inherited from CRM ancestors.
+
+```sql
+SELECT
+name,
+ancestorModule,
+cloudProvider,
+customConfig,
+displayName,
+enablementState,
+lastEditor,
+updateTime
+FROM google.securitycenter.security_health_analytics_modules
+WHERE projectsId = '{{ projectsId }}' -- required
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+;
+```
+</TabItem>
 </Tabs>
 
 
@@ -661,8 +661,8 @@ AND pageToken = '{{ pageToken }}'
     defaultValue="folders_security_health_analytics_settings_custom_modules_create"
     values={[
         { label: 'folders_security_health_analytics_settings_custom_modules_create', value: 'folders_security_health_analytics_settings_custom_modules_create' },
-        { label: 'projects_security_health_analytics_settings_custom_modules_create', value: 'projects_security_health_analytics_settings_custom_modules_create' },
         { label: 'organizations_security_health_analytics_settings_custom_modules_create', value: 'organizations_security_health_analytics_settings_custom_modules_create' },
+        { label: 'projects_security_health_analytics_settings_custom_modules_create', value: 'projects_security_health_analytics_settings_custom_modules_create' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
@@ -673,51 +673,19 @@ Creates a resident SecurityHealthAnalyticsCustomModule at the scope of the given
 ```sql
 INSERT INTO google.securitycenter.security_health_analytics_modules (
 data__name,
-data__displayName,
-data__enablementState,
 data__customConfig,
 data__cloudProvider,
+data__enablementState,
+data__displayName,
 foldersId
 )
 SELECT 
 '{{ name }}',
-'{{ displayName }}',
-'{{ enablementState }}',
 '{{ customConfig }}',
 '{{ cloudProvider }}',
+'{{ enablementState }}',
+'{{ displayName }}',
 '{{ foldersId }}'
-RETURNING
-name,
-ancestorModule,
-cloudProvider,
-customConfig,
-displayName,
-enablementState,
-lastEditor,
-updateTime
-;
-```
-</TabItem>
-<TabItem value="projects_security_health_analytics_settings_custom_modules_create">
-
-Creates a resident SecurityHealthAnalyticsCustomModule at the scope of the given CRM parent, and also creates inherited SecurityHealthAnalyticsCustomModules for all CRM descendants of the given parent. These modules are enabled by default.
-
-```sql
-INSERT INTO google.securitycenter.security_health_analytics_modules (
-data__name,
-data__displayName,
-data__enablementState,
-data__customConfig,
-data__cloudProvider,
-projectsId
-)
-SELECT 
-'{{ name }}',
-'{{ displayName }}',
-'{{ enablementState }}',
-'{{ customConfig }}',
-'{{ cloudProvider }}',
-'{{ projectsId }}'
 RETURNING
 name,
 ancestorModule,
@@ -737,19 +705,51 @@ Creates a resident SecurityHealthAnalyticsCustomModule at the scope of the given
 ```sql
 INSERT INTO google.securitycenter.security_health_analytics_modules (
 data__name,
-data__displayName,
-data__enablementState,
 data__customConfig,
 data__cloudProvider,
+data__enablementState,
+data__displayName,
 organizationsId
 )
 SELECT 
 '{{ name }}',
-'{{ displayName }}',
-'{{ enablementState }}',
 '{{ customConfig }}',
 '{{ cloudProvider }}',
+'{{ enablementState }}',
+'{{ displayName }}',
 '{{ organizationsId }}'
+RETURNING
+name,
+ancestorModule,
+cloudProvider,
+customConfig,
+displayName,
+enablementState,
+lastEditor,
+updateTime
+;
+```
+</TabItem>
+<TabItem value="projects_security_health_analytics_settings_custom_modules_create">
+
+Creates a resident SecurityHealthAnalyticsCustomModule at the scope of the given CRM parent, and also creates inherited SecurityHealthAnalyticsCustomModules for all CRM descendants of the given parent. These modules are enabled by default.
+
+```sql
+INSERT INTO google.securitycenter.security_health_analytics_modules (
+data__name,
+data__customConfig,
+data__cloudProvider,
+data__enablementState,
+data__displayName,
+projectsId
+)
+SELECT 
+'{{ name }}',
+'{{ customConfig }}',
+'{{ cloudProvider }}',
+'{{ enablementState }}',
+'{{ displayName }}',
+'{{ projectsId }}'
 RETURNING
 name,
 ancestorModule,
@@ -771,10 +771,10 @@ updateTime
     - name: foldersId
       value: string
       description: Required parameter for the security_health_analytics_modules resource.
-    - name: projectsId
+    - name: organizationsId
       value: string
       description: Required parameter for the security_health_analytics_modules resource.
-    - name: organizationsId
+    - name: projectsId
       value: string
       description: Required parameter for the security_health_analytics_modules resource.
     - name: name
@@ -782,17 +782,6 @@ updateTime
       description: >
         Immutable. The resource name of the custom module. Its format is "organizations/{organization}/securityHealthAnalyticsSettings/customModules/{customModule}", or "folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModule}", or "projects/{project}/securityHealthAnalyticsSettings/customModules/{customModule}" The id {customModule} is server-generated and is not user settable. It will be a numeric id containing 1-20 digits.
         
-    - name: displayName
-      value: string
-      description: >
-        The display name of the Security Health Analytics custom module. This display name becomes the finding category for all findings that are returned by this custom module. The display name must be between 1 and 128 characters, start with a lowercase letter, and contain alphanumeric characters or underscores only.
-        
-    - name: enablementState
-      value: string
-      description: >
-        The enablement state of the custom module.
-        
-      valid_values: ['ENABLEMENT_STATE_UNSPECIFIED', 'ENABLED', 'DISABLED', 'INHERITED']
     - name: customConfig
       value: object
       description: >
@@ -804,6 +793,17 @@ updateTime
         The cloud provider of the custom module.
         
       valid_values: ['CLOUD_PROVIDER_UNSPECIFIED', 'GOOGLE_CLOUD_PLATFORM', 'AMAZON_WEB_SERVICES', 'MICROSOFT_AZURE']
+    - name: enablementState
+      value: string
+      description: >
+        The enablement state of the custom module.
+        
+      valid_values: ['ENABLEMENT_STATE_UNSPECIFIED', 'ENABLED', 'DISABLED', 'INHERITED']
+    - name: displayName
+      value: string
+      description: >
+        The display name of the Security Health Analytics custom module. This display name becomes the finding category for all findings that are returned by this custom module. The display name must be between 1 and 128 characters, start with a lowercase letter, and contain alphanumeric characters or underscores only.
+        
 ```
 </TabItem>
 </Tabs>
@@ -815,8 +815,8 @@ updateTime
     defaultValue="folders_security_health_analytics_settings_custom_modules_delete"
     values={[
         { label: 'folders_security_health_analytics_settings_custom_modules_delete', value: 'folders_security_health_analytics_settings_custom_modules_delete' },
-        { label: 'projects_security_health_analytics_settings_custom_modules_delete', value: 'projects_security_health_analytics_settings_custom_modules_delete' },
-        { label: 'organizations_security_health_analytics_settings_custom_modules_delete', value: 'organizations_security_health_analytics_settings_custom_modules_delete' }
+        { label: 'organizations_security_health_analytics_settings_custom_modules_delete', value: 'organizations_security_health_analytics_settings_custom_modules_delete' },
+        { label: 'projects_security_health_analytics_settings_custom_modules_delete', value: 'projects_security_health_analytics_settings_custom_modules_delete' }
     ]}
 >
 <TabItem value="folders_security_health_analytics_settings_custom_modules_delete">
@@ -830,17 +830,6 @@ AND customModulesId = '{{ customModulesId }}' --required
 ;
 ```
 </TabItem>
-<TabItem value="projects_security_health_analytics_settings_custom_modules_delete">
-
-Deletes the specified SecurityHealthAnalyticsCustomModule and all of its descendants in the CRM hierarchy. This method is only supported for resident custom modules.
-
-```sql
-DELETE FROM google.securitycenter.security_health_analytics_modules
-WHERE projectsId = '{{ projectsId }}' --required
-AND customModulesId = '{{ customModulesId }}' --required
-;
-```
-</TabItem>
 <TabItem value="organizations_security_health_analytics_settings_custom_modules_delete">
 
 Deletes the specified SecurityHealthAnalyticsCustomModule and all of its descendants in the CRM hierarchy. This method is only supported for resident custom modules.
@@ -848,6 +837,17 @@ Deletes the specified SecurityHealthAnalyticsCustomModule and all of its descend
 ```sql
 DELETE FROM google.securitycenter.security_health_analytics_modules
 WHERE organizationsId = '{{ organizationsId }}' --required
+AND customModulesId = '{{ customModulesId }}' --required
+;
+```
+</TabItem>
+<TabItem value="projects_security_health_analytics_settings_custom_modules_delete">
+
+Deletes the specified SecurityHealthAnalyticsCustomModule and all of its descendants in the CRM hierarchy. This method is only supported for resident custom modules.
+
+```sql
+DELETE FROM google.securitycenter.security_health_analytics_modules
+WHERE projectsId = '{{ projectsId }}' --required
 AND customModulesId = '{{ customModulesId }}' --required
 ;
 ```

@@ -334,7 +334,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>List storage volumes in a given project and location.</td>
 </tr>
 <tr>
@@ -345,11 +345,11 @@ The following methods are available for this resource:
     <td>Update details of a single storage volume.</td>
 </tr>
 <tr>
-    <td><a href="#rename"><CopyableCode code="rename" /></a></td>
+    <td><a href="#resize"><CopyableCode code="resize" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a></td>
     <td></td>
-    <td>RenameVolume sets a new name for a volume. Use with caution, previous names become immediately invalidated.</td>
+    <td>Emergency Volume resize.</td>
 </tr>
 <tr>
     <td><a href="#evict"><CopyableCode code="evict" /></a></td>
@@ -359,11 +359,11 @@ The following methods are available for this resource:
     <td>Skips volume's cooloff and deletes it now. Volume must be in cooloff state.</td>
 </tr>
 <tr>
-    <td><a href="#resize"><CopyableCode code="resize" /></a></td>
+    <td><a href="#rename"><CopyableCode code="rename" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a></td>
     <td></td>
-    <td>Emergency Volume resize.</td>
+    <td>RenameVolume sets a new name for a volume. Use with caution, previous names become immediately invalidated.</td>
 </tr>
 </tbody>
 </table>
@@ -498,8 +498,8 @@ workloadProfile
 FROM google.baremetalsolution.volumes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
 ;
 ```
@@ -524,22 +524,22 @@ UPDATE google.baremetalsolution.volumes
 SET 
 data__id = '{{ id }}',
 data__storageType = '{{ storageType }}',
-data__state = '{{ state }}',
-data__requestedSizeGib = '{{ requestedSizeGib }}',
 data__originallyRequestedSizeGib = '{{ originallyRequestedSizeGib }}',
-data__currentSizeGib = '{{ currentSizeGib }}',
+data__snapshotReservationDetail = '{{ snapshotReservationDetail }}',
+data__state = '{{ state }}',
+data__remainingSpaceGib = '{{ remainingSpaceGib }}',
+data__performanceTier = '{{ performanceTier }}',
 data__emergencySizeGib = '{{ emergencySizeGib }}',
+data__requestedSizeGib = '{{ requestedSizeGib }}',
+data__notes = '{{ notes }}',
+data__labels = '{{ labels }}',
+data__snapshotAutoDeleteBehavior = '{{ snapshotAutoDeleteBehavior }}',
 data__maxSizeGib = '{{ maxSizeGib }}',
 data__autoGrownSizeGib = '{{ autoGrownSizeGib }}',
-data__remainingSpaceGib = '{{ remainingSpaceGib }}',
-data__snapshotReservationDetail = '{{ snapshotReservationDetail }}',
-data__snapshotAutoDeleteBehavior = '{{ snapshotAutoDeleteBehavior }}',
-data__labels = '{{ labels }}',
+data__workloadProfile = '{{ workloadProfile }}',
 data__snapshotEnabled = {{ snapshotEnabled }},
 data__pod = '{{ pod }}',
-data__performanceTier = '{{ performanceTier }}',
-data__notes = '{{ notes }}',
-data__workloadProfile = '{{ workloadProfile }}'
+data__currentSizeGib = '{{ currentSizeGib }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -559,25 +559,25 @@ response;
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="rename"
+    defaultValue="resize"
     values={[
-        { label: 'rename', value: 'rename' },
+        { label: 'resize', value: 'resize' },
         { label: 'evict', value: 'evict' },
-        { label: 'resize', value: 'resize' }
+        { label: 'rename', value: 'rename' }
     ]}
 >
-<TabItem value="rename">
+<TabItem value="resize">
 
-RenameVolume sets a new name for a volume. Use with caution, previous names become immediately invalidated.
+Emergency Volume resize.
 
 ```sql
-EXEC google.baremetalsolution.volumes.rename 
+EXEC google.baremetalsolution.volumes.resize 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @volumesId='{{ volumesId }}' --required 
 @@json=
 '{
-"newVolumeId": "{{ newVolumeId }}"
+"sizeGib": "{{ sizeGib }}"
 }'
 ;
 ```
@@ -594,18 +594,18 @@ EXEC google.baremetalsolution.volumes.evict
 ;
 ```
 </TabItem>
-<TabItem value="resize">
+<TabItem value="rename">
 
-Emergency Volume resize.
+RenameVolume sets a new name for a volume. Use with caution, previous names become immediately invalidated.
 
 ```sql
-EXEC google.baremetalsolution.volumes.resize 
+EXEC google.baremetalsolution.volumes.rename 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @volumesId='{{ volumesId }}' --required 
 @@json=
 '{
-"sizeGib": "{{ sizeGib }}"
+"newVolumeId": "{{ newVolumeId }}"
 }'
 ;
 ```

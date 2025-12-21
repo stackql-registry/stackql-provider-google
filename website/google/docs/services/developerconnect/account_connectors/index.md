@@ -103,46 +103,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Identifier. The resource name of the accountConnector, in the format `projects/&#123;project&#125;/locations/&#123;location&#125;/accountConnectors/&#123;account_connector_id&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="annotations" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Allows users to store small amounts of arbitrary data.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp when the accountConnector was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="etag" /></td>
-    <td><code>string</code></td>
-    <td>Optional. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Labels as key value pairs</td>
-</tr>
-<tr>
-    <td><CopyableCode code="oauthStartUri" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Start OAuth flow by clicking on this URL.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="providerOauthConfig" /></td>
-    <td><code>object</code></td>
-    <td>Provider OAuth config. (id: ProviderOAuthConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp when the accountConnector was updated.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -174,7 +134,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists AccountConnectors in a given project and location.</td>
 </tr>
 <tr>
@@ -188,14 +148,14 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-accountConnectorsId"><code>accountConnectorsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Updates the parameters of a single AccountConnector.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-accountConnectorsId"><code>accountConnectorsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-force"><code>force</code></a></td>
+    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
     <td>Deletes a single AccountConnector.</td>
 </tr>
 </tbody>
@@ -323,21 +283,14 @@ Lists AccountConnectors in a given project and location.
 
 ```sql
 SELECT
-name,
-annotations,
-createTime,
-etag,
-labels,
-oauthStartUri,
-providerOauthConfig,
-updateTime
+*
 FROM google.developerconnect.account_connectors
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -359,10 +312,10 @@ Creates a new AccountConnector in a given project and location.
 
 ```sql
 INSERT INTO google.developerconnect.account_connectors (
-data__providerOauthConfig,
 data__name,
 data__annotations,
 data__etag,
+data__providerOauthConfig,
 data__labels,
 projectsId,
 locationsId,
@@ -371,10 +324,10 @@ requestId,
 validateOnly
 )
 SELECT 
-'{{ providerOauthConfig }}',
 '{{ name }}',
 '{{ annotations }}',
 '{{ etag }}',
+'{{ providerOauthConfig }}',
 '{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -402,11 +355,6 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the account_connectors resource.
-    - name: providerOauthConfig
-      value: object
-      description: >
-        Provider OAuth config.
-        
     - name: name
       value: string
       description: >
@@ -421,6 +369,11 @@ response
       value: string
       description: >
         Optional. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
+        
+    - name: providerOauthConfig
+      value: object
+      description: >
+        Provider OAuth config.
         
     - name: labels
       value: object
@@ -453,19 +406,19 @@ Updates the parameters of a single AccountConnector.
 ```sql
 UPDATE google.developerconnect.account_connectors
 SET 
-data__providerOauthConfig = '{{ providerOauthConfig }}',
 data__name = '{{ name }}',
 data__annotations = '{{ annotations }}',
 data__etag = '{{ etag }}',
+data__providerOauthConfig = '{{ providerOauthConfig }}',
 data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND accountConnectorsId = '{{ accountConnectorsId }}' --required
 AND updateMask = '{{ updateMask}}'
-AND requestId = '{{ requestId}}'
 AND allowMissing = {{ allowMissing}}
 AND validateOnly = {{ validateOnly}}
+AND requestId = '{{ requestId}}'
 RETURNING
 name,
 done,
@@ -494,10 +447,10 @@ DELETE FROM google.developerconnect.account_connectors
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND accountConnectorsId = '{{ accountConnectorsId }}' --required
-AND requestId = '{{ requestId }}'
-AND validateOnly = '{{ validateOnly }}'
-AND etag = '{{ etag }}'
 AND force = '{{ force }}'
+AND validateOnly = '{{ validateOnly }}'
+AND requestId = '{{ requestId }}'
+AND etag = '{{ etag }}'
 ;
 ```
 </TabItem>

@@ -174,7 +174,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_environments_apis_revisions_debugsessions_list"><CopyableCode code="organizations_environments_apis_revisions_debugsessions_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists debug sessions that are currently active in the given API Proxy revision.</td>
 </tr>
 <tr>
@@ -295,8 +295,8 @@ WHERE organizationsId = '{{ organizationsId }}' -- required
 AND environmentsId = '{{ environmentsId }}' -- required
 AND apisId = '{{ apisId }}' -- required
 AND revisionsId = '{{ revisionsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -336,12 +336,12 @@ Creates a debug session for a deployed API Proxy revision.
 
 ```sql
 INSERT INTO google.apigee.debugsessions (
-data__name,
-data__validity,
-data__count,
-data__tracesize,
-data__filter,
 data__timeout,
+data__validity,
+data__name,
+data__tracesize,
+data__count,
+data__filter,
 organizationsId,
 environmentsId,
 apisId,
@@ -349,12 +349,12 @@ revisionsId,
 timeout
 )
 SELECT 
-'{{ name }}',
-{{ validity }},
-{{ count }},
-{{ tracesize }},
-'{{ filter }}',
 '{{ timeout }}',
+{{ validity }},
+'{{ name }}',
+{{ tracesize }},
+{{ count }},
+'{{ filter }}',
 '{{ organizationsId }}',
 '{{ environmentsId }}',
 '{{ apisId }}',
@@ -389,35 +389,35 @@ validity
     - name: revisionsId
       value: string
       description: Required parameter for the debugsessions resource.
-    - name: name
+    - name: timeout
       value: string
       description: >
-        A unique ID for this DebugSession.
+        Optional. The time in seconds after which this DebugSession should end. This value will override the value in query param, if both are provided.
         
     - name: validity
       value: integer
       description: >
         Optional. The length of time, in seconds, that this debug session is valid, starting from when it's received in the control plane. Min = 1, Max = 15, Default = 10.
         
-    - name: count
-      value: integer
+    - name: name
+      value: string
       description: >
-        Optional. The number of request to be traced. Min = 1, Max = 15, Default = 10.
+        A unique ID for this DebugSession.
         
     - name: tracesize
       value: integer
       description: >
         Optional. The maximum number of bytes captured from the response payload. Min = 0, Max = 5120, Default = 5120.
         
+    - name: count
+      value: integer
+      description: >
+        Optional. The number of request to be traced. Min = 1, Max = 15, Default = 10.
+        
     - name: filter
       value: string
       description: >
         Optional. A conditional statement which is evaluated against the request message to determine if it should be traced. Syntax matches that of on API Proxy bundle flow Condition.
-        
-    - name: timeout
-      value: string
-      description: >
-        Optional. The time in seconds after which this DebugSession should end. This value will override the value in query param, if both are provided.
         
     - name: timeout
       value: string (int64)

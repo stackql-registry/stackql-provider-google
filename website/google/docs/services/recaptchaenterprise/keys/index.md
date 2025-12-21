@@ -92,7 +92,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="wafSettings" /></td>
     <td><code>object</code></td>
-    <td>Optional. Settings for WAF (id: GoogleCloudRecaptchaenterpriseV1WafSettings)</td>
+    <td>Optional. Settings for Web Application Firewall (WAF). (id: GoogleCloudRecaptchaenterpriseV1WafSettings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="webSettings" /></td>
@@ -156,7 +156,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="wafSettings" /></td>
     <td><code>object</code></td>
-    <td>Optional. Settings for WAF (id: GoogleCloudRecaptchaenterpriseV1WafSettings)</td>
+    <td>Optional. Settings for Web Application Firewall (WAF). (id: GoogleCloudRecaptchaenterpriseV1WafSettings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="webSettings" /></td>
@@ -341,27 +341,27 @@ Creates a new reCAPTCHA Enterprise key.
 
 ```sql
 INSERT INTO google.recaptchaenterprise.keys (
-data__name,
-data__displayName,
+data__labels,
+data__iosSettings,
 data__webSettings,
 data__androidSettings,
-data__iosSettings,
+data__name,
 data__expressSettings,
-data__labels,
-data__testingOptions,
 data__wafSettings,
+data__displayName,
+data__testingOptions,
 projectsId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
+'{{ labels }}',
+'{{ iosSettings }}',
 '{{ webSettings }}',
 '{{ androidSettings }}',
-'{{ iosSettings }}',
+'{{ name }}',
 '{{ expressSettings }}',
-'{{ labels }}',
-'{{ testingOptions }}',
 '{{ wafSettings }}',
+'{{ displayName }}',
+'{{ testingOptions }}',
 '{{ projectsId }}'
 RETURNING
 name,
@@ -386,15 +386,15 @@ webSettings
     - name: projectsId
       value: string
       description: Required parameter for the keys resource.
-    - name: name
-      value: string
+    - name: labels
+      value: object
       description: >
-        Identifier. The resource name for the Key in the format `projects/{project}/keys/{key}`.
+        Optional. See [Creating and managing labels] (https://cloud.google.com/recaptcha/docs/labels).
         
-    - name: displayName
-      value: string
+    - name: iosSettings
+      value: object
       description: >
-        Required. Human-readable display name of this key. Modifiable by user.
+        Settings for keys that can be used by iOS apps.
         
     - name: webSettings
       value: object
@@ -406,30 +406,30 @@ webSettings
       description: >
         Settings for keys that can be used by Android apps.
         
-    - name: iosSettings
-      value: object
+    - name: name
+      value: string
       description: >
-        Settings for keys that can be used by iOS apps.
+        Identifier. The resource name for the Key in the format `projects/{project}/keys/{key}`.
         
     - name: expressSettings
       value: object
       description: >
         Settings for keys that can be used by reCAPTCHA Express.
         
-    - name: labels
+    - name: wafSettings
       value: object
       description: >
-        Optional. See [Creating and managing labels] (https://cloud.google.com/recaptcha/docs/labels).
+        Optional. Settings for Web Application Firewall (WAF).
+        
+    - name: displayName
+      value: string
+      description: >
+        Required. Human-readable display name of this key. Modifiable by user.
         
     - name: testingOptions
       value: object
       description: >
         Optional. Options for user acceptance testing.
-        
-    - name: wafSettings
-      value: object
-      description: >
-        Optional. Settings for WAF
         
 ```
 </TabItem>
@@ -451,15 +451,15 @@ Updates the specified key.
 ```sql
 UPDATE google.recaptchaenterprise.keys
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
+data__labels = '{{ labels }}',
+data__iosSettings = '{{ iosSettings }}',
 data__webSettings = '{{ webSettings }}',
 data__androidSettings = '{{ androidSettings }}',
-data__iosSettings = '{{ iosSettings }}',
+data__name = '{{ name }}',
 data__expressSettings = '{{ expressSettings }}',
-data__labels = '{{ labels }}',
-data__testingOptions = '{{ testingOptions }}',
-data__wafSettings = '{{ wafSettings }}'
+data__wafSettings = '{{ wafSettings }}',
+data__displayName = '{{ displayName }}',
+data__testingOptions = '{{ testingOptions }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND keysId = '{{ keysId }}' --required

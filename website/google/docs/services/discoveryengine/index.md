@@ -18,18 +18,21 @@ discoveryengine service documentation.
 
 :::info[Service Summary]
 
-total resources: __35__  
+total resources: __41__  
 
 :::
 
 ## Resources
 <div class="row">
 <div class="providerDocColumn">
+<a href="/services/discoveryengine/acl_config/">acl_config</a><br />
 <a href="/services/discoveryengine/answers/">answers</a><br />
 <a href="/services/discoveryengine/assistants/">assistants</a><br />
 <a href="/services/discoveryengine/branches_documents_metadata/">branches_documents_metadata</a><br />
 <a href="/services/discoveryengine/cmek_config/">cmek_config</a><br />
 <a href="/services/discoveryengine/cmek_configs/">cmek_configs</a><br />
+<a href="/services/discoveryengine/collections/">collections</a><br />
+<a href="/services/discoveryengine/collections_data_connector/">collections_data_connector</a><br />
 <a href="/services/discoveryengine/completion_config/">completion_config</a><br />
 <a href="/services/discoveryengine/completion_suggestions/">completion_suggestions</a><br />
 <a href="/services/discoveryengine/controls/">controls</a><br />
@@ -45,7 +48,9 @@ total resources: __35__
 <a href="/services/discoveryengine/identity_mapping_stores_identity_mappings/">identity_mapping_stores_identity_mappings</a>
 </div>
 <div class="providerDocColumn">
-<a href="/services/discoveryengine/media/">media</a><br />
+<a href="/services/discoveryengine/license_configs/">license_configs</a><br />
+<a href="/services/discoveryengine/license_configs_usage_stats/">license_configs_usage_stats</a><br />
+<a href="/services/discoveryengine/locations/">locations</a><br />
 <a href="/services/discoveryengine/operations/">operations</a><br />
 <a href="/services/discoveryengine/projects/">projects</a><br />
 <a href="/services/discoveryengine/ranking_configs/">ranking_configs</a><br />
@@ -61,6 +66,7 @@ total resources: __35__
 <a href="/services/discoveryengine/target_sites/">target_sites</a><br />
 <a href="/services/discoveryengine/user_events/">user_events</a><br />
 <a href="/services/discoveryengine/user_licenses/">user_licenses</a><br />
-<a href="/services/discoveryengine/user_stores/">user_stores</a>
+<a href="/services/discoveryengine/user_stores/">user_stores</a><br />
+<a href="/services/discoveryengine/widget_configs/">widget_configs</a>
 </div>
 </div>

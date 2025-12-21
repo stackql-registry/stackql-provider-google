@@ -164,7 +164,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>List datasets matching the input.</td>
 </tr>
 <tr>
@@ -196,6 +196,13 @@ The following methods are available for this resource:
     <td>Delete feedback labels in bulk using a filter.</td>
 </tr>
 <tr>
+    <td><a href="#export"><CopyableCode code="export" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a></td>
+    <td></td>
+    <td>Export insights data to a destination defined in the request body.</td>
+</tr>
+<tr>
     <td><a href="#bulk_upload_feedback_labels"><CopyableCode code="bulk_upload_feedback_labels" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a></td>
@@ -208,13 +215,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a></td>
     <td></td>
     <td>Download feedback labels in bulk from an external source. Currently supports exporting Quality AI example conversations with transcripts and question bodies.</td>
-</tr>
-<tr>
-    <td><a href="#export"><CopyableCode code="export" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a></td>
-    <td></td>
-    <td>Export insights data to a destination defined in the request body.</td>
 </tr>
 </tbody>
 </table>
@@ -320,9 +320,9 @@ updateTime
 FROM google.contactcenterinsights.datasets
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -344,21 +344,21 @@ Creates a dataset.
 
 ```sql
 INSERT INTO google.contactcenterinsights.datasets (
-data__name,
-data__displayName,
-data__description,
 data__type,
 data__ttl,
+data__description,
+data__name,
+data__displayName,
 projectsId,
 locationsId,
 datasetId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
-'{{ description }}',
 '{{ type }}',
 '{{ ttl }}',
+'{{ description }}',
+'{{ name }}',
+'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ datasetId }}'
@@ -385,21 +385,6 @@ updateTime
     - name: locationsId
       value: string
       description: Required parameter for the datasets resource.
-    - name: name
-      value: string
-      description: >
-        Immutable. Identifier. Resource name of the dataset. Format: projects/{project}/locations/{location}/datasets/{dataset}
-        
-    - name: displayName
-      value: string
-      description: >
-        Display name for the dataaset
-        
-    - name: description
-      value: string
-      description: >
-        Dataset description.
-        
     - name: type
       value: string
       description: >
@@ -410,6 +395,21 @@ updateTime
       value: string
       description: >
         Optional. Option TTL for the dataset.
+        
+    - name: description
+      value: string
+      description: >
+        Dataset description.
+        
+    - name: name
+      value: string
+      description: >
+        Immutable. Identifier. Resource name of the dataset. Format: projects/{project}/locations/{location}/datasets/{dataset}
+        
+    - name: displayName
+      value: string
+      description: >
+        Display name for the dataaset
         
     - name: datasetId
       value: string
@@ -433,11 +433,11 @@ Updates a dataset.
 ```sql
 UPDATE google.contactcenterinsights.datasets
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
 data__type = '{{ type }}',
-data__ttl = '{{ ttl }}'
+data__ttl = '{{ ttl }}',
+data__description = '{{ description }}',
+data__name = '{{ name }}',
+data__displayName = '{{ displayName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -495,13 +495,34 @@ AND datasetsId = '{{ datasetsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="bulk_upload_feedback_labels"
+    defaultValue="export"
     values={[
+        { label: 'export', value: 'export' },
         { label: 'bulk_upload_feedback_labels', value: 'bulk_upload_feedback_labels' },
-        { label: 'bulk_download_feedback_labels', value: 'bulk_download_feedback_labels' },
-        { label: 'export', value: 'export' }
+        { label: 'bulk_download_feedback_labels', value: 'bulk_download_feedback_labels' }
     ]}
 >
+<TabItem value="export">
+
+Export insights data to a destination defined in the request body.
+
+```sql
+EXEC google.contactcenterinsights.datasets.export 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@datasetsId='{{ datasetsId }}' --required 
+@@json=
+'{
+"filter": "{{ filter }}", 
+"kmsKey": "{{ kmsKey }}", 
+"exportSchemaVersion": "{{ exportSchemaVersion }}", 
+"bigQueryDestination": "{{ bigQueryDestination }}", 
+"writeDisposition": "{{ writeDisposition }}", 
+"parent": "{{ parent }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="bulk_upload_feedback_labels">
 
 Upload feedback labels from an external source in bulk. Currently supports labeling Quality AI example conversations.
@@ -513,9 +534,9 @@ EXEC google.contactcenterinsights.datasets.bulk_upload_feedback_labels
 @datasetsId='{{ datasetsId }}' --required 
 @@json=
 '{
-"gcsSource": "{{ gcsSource }}", 
 "sheetsSource": "{{ sheetsSource }}", 
-"validateOnly": {{ validateOnly }}
+"validateOnly": {{ validateOnly }}, 
+"gcsSource": "{{ gcsSource }}"
 }'
 ;
 ```
@@ -531,35 +552,14 @@ EXEC google.contactcenterinsights.datasets.bulk_download_feedback_labels
 @datasetsId='{{ datasetsId }}' --required 
 @@json=
 '{
-"gcsDestination": "{{ gcsDestination }}", 
-"sheetsDestination": "{{ sheetsDestination }}", 
-"parent": "{{ parent }}", 
-"filter": "{{ filter }}", 
 "maxDownloadCount": {{ maxDownloadCount }}, 
 "feedbackLabelType": "{{ feedbackLabelType }}", 
-"conversationFilter": "{{ conversationFilter }}", 
-"templateQaScorecardId": "{{ templateQaScorecardId }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="export">
-
-Export insights data to a destination defined in the request body.
-
-```sql
-EXEC google.contactcenterinsights.datasets.export 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@datasetsId='{{ datasetsId }}' --required 
-@@json=
-'{
-"bigQueryDestination": "{{ bigQueryDestination }}", 
 "parent": "{{ parent }}", 
+"sheetsDestination": "{{ sheetsDestination }}", 
 "filter": "{{ filter }}", 
-"kmsKey": "{{ kmsKey }}", 
-"writeDisposition": "{{ writeDisposition }}", 
-"exportSchemaVersion": "{{ exportSchemaVersion }}"
+"conversationFilter": "{{ conversationFilter }}", 
+"gcsDestination": "{{ gcsDestination }}", 
+"templateQaScorecardId": "{{ templateQaScorecardId }}"
 }'
 ;
 ```

@@ -85,6 +85,11 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. A description provided by the user for the job. Its max length is 1024 bytes when Unicode-encoded.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="dryRun" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. If true, the job will run in dry run mode, returning the total object count and, if the object configuration is a prefix list, the bytes found from source. No transformations will be performed.</td>
+</tr>
+<tr>
     <td><CopyableCode code="errorSummaries" /></td>
     <td><code>array</code></td>
     <td>Output only. Summarizes errors encountered with sample error log entries.</td>
@@ -167,6 +172,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
     <td>Optional. A description provided by the user for the job. Its max length is 1024 bytes when Unicode-encoded.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="dryRun" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. If true, the job will run in dry run mode, returning the total object count and, if the object configuration is a prefix list, the bytes found from source. No transformations will be performed.</td>
 </tr>
 <tr>
     <td><CopyableCode code="errorSummaries" /></td>
@@ -344,6 +354,7 @@ counters,
 createTime,
 deleteObject,
 description,
+dryRun,
 errorSummaries,
 loggingConfig,
 putMetadata,
@@ -371,6 +382,7 @@ counters,
 createTime,
 deleteObject,
 description,
+dryRun,
 errorSummaries,
 loggingConfig,
 putMetadata,
@@ -414,6 +426,7 @@ data__deleteObject,
 data__putMetadata,
 data__rewriteObject,
 data__loggingConfig,
+data__dryRun,
 projectsId,
 locationsId,
 jobId,
@@ -428,6 +441,7 @@ SELECT
 '{{ putMetadata }}',
 '{{ rewriteObject }}',
 '{{ loggingConfig }}',
+{{ dryRun }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ jobId }}',
@@ -492,6 +506,11 @@ response
       value: object
       description: >
         Optional. Logging configuration.
+        
+    - name: dryRun
+      value: boolean
+      description: >
+        Optional. If true, the job will run in dry run mode, returning the total object count and, if the object configuration is a prefix list, the bytes found from source. No transformations will be performed.
         
     - name: jobId
       value: string

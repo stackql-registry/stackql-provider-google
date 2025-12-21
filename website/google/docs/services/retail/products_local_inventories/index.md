@@ -122,10 +122,10 @@ Updates local inventory information for a Product at a list of places, while res
 
 ```sql
 INSERT INTO google.retail.products_local_inventories (
-data__localInventories,
 data__addMask,
-data__addTime,
+data__localInventories,
 data__allowMissing,
+data__addTime,
 projectsId,
 locationsId,
 catalogsId,
@@ -133,10 +133,10 @@ branchesId,
 productsId
 )
 SELECT 
-'{{ localInventories }}',
 '{{ addMask }}',
-'{{ addTime }}',
+'{{ localInventories }}',
 {{ allowMissing }},
+'{{ addTime }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ catalogsId }}',
@@ -172,25 +172,25 @@ response
     - name: productsId
       value: string
       description: Required parameter for the products_local_inventories resource.
-    - name: localInventories
-      value: array
-      description: >
-        Required. A list of inventory information at difference places. Each place is identified by its place ID. At most 3000 inventories are allowed per request.
-        
     - name: addMask
       value: string
       description: >
         Indicates which inventory fields in the provided list of LocalInventory to update. The field is updated to the provided value. If a field is set while the place does not have a previous local inventory, the local inventory at that store is created. If a field is set while the value of that field is not provided, the original field value, if it exists, is deleted. If the mask is not set or set with empty paths, all inventory fields will be updated. If an unsupported or unknown field is provided, an INVALID_ARGUMENT error is returned and the entire update will be ignored.
         
-    - name: addTime
-      value: string
+    - name: localInventories
+      value: array
       description: >
-        The time when the inventory updates are issued. Used to prevent out-of-order updates on local inventory fields. If not provided, the internal system time will be used.
+        Required. A list of inventory information at difference places. Each place is identified by its place ID. At most 3000 inventories are allowed per request.
         
     - name: allowMissing
       value: boolean
       description: >
         If set to true, and the Product is not found, the local inventory will still be processed and retained for at most 1 day and processed once the Product is created. If set to false, a NOT_FOUND error is returned if the Product is not found.
+        
+    - name: addTime
+      value: string
+      description: >
+        The time when the inventory updates are issued. Used to prevent out-of-order updates on local inventory fields. If not provided, the internal system time will be used.
         
 ```
 </TabItem>

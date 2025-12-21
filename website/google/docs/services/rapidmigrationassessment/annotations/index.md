@@ -191,16 +191,16 @@ Creates an Annotation
 ```sql
 INSERT INTO google.rapidmigrationassessment.annotations (
 data__name,
-data__labels,
 data__type,
+data__labels,
 projectsId,
 locationsId,
 requestId
 )
 SELECT 
 '{{ name }}',
-'{{ labels }}',
 '{{ type }}',
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ requestId }}'
@@ -230,17 +230,17 @@ response
       description: >
         name of resource.
         
-    - name: labels
-      value: object
-      description: >
-        Labels as key value pairs.
-        
     - name: type
       value: string
       description: >
         Type of an annotation.
         
       valid_values: ['TYPE_UNSPECIFIED', 'TYPE_LEGACY_EXPORT_CONSENT', 'TYPE_QWIKLAB']
+    - name: labels
+      value: object
+      description: >
+        Labels as key value pairs.
+        
     - name: requestId
       value: string
 ```

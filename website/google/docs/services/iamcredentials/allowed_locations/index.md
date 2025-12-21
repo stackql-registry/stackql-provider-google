@@ -81,9 +81,9 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get_allowed_locations"><CopyableCode code="get_allowed_locations" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workforcePoolsId"><code>workforcePoolsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-serviceAccountsId"><code>serviceAccountsId</code></a></td>
     <td></td>
-    <td>Returns the trust boundary info for a given workforce pool.</td>
+    <td>Returns the trust boundary info for a given service account.</td>
 </tr>
 </tbody>
 </table>
@@ -101,13 +101,13 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-locationsId">
-    <td><CopyableCode code="locationsId" /></td>
+<tr id="parameter-projectsId">
+    <td><CopyableCode code="projectsId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
-<tr id="parameter-workforcePoolsId">
-    <td><CopyableCode code="workforcePoolsId" /></td>
+<tr id="parameter-serviceAccountsId">
+    <td><CopyableCode code="serviceAccountsId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -124,15 +124,15 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get_allowed_locations">
 
-Returns the trust boundary info for a given workforce pool.
+Returns the trust boundary info for a given service account.
 
 ```sql
 SELECT
 encodedLocations,
 locations
 FROM google.iamcredentials.allowed_locations
-WHERE locationsId = '{{ locationsId }}' -- required
-AND workforcePoolsId = '{{ workforcePoolsId }}' -- required
+WHERE projectsId = '{{ projectsId }}' -- required
+AND serviceAccountsId = '{{ serviceAccountsId }}' -- required
 ;
 ```
 </TabItem>

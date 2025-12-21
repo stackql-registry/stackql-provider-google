@@ -154,7 +154,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_environments_archive_deployments_list"><CopyableCode code="organizations_environments_archive_deployments_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists the ArchiveDeployments in the specified Environment.</td>
 </tr>
 <tr>
@@ -179,18 +179,18 @@ The following methods are available for this resource:
     <td>Deletes an archive deployment.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_environments_archive_deployments_generate_upload_url"><CopyableCode code="organizations_environments_archive_deployments_generate_upload_url" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
-    <td></td>
-    <td>Generates a signed URL for uploading an Archive zip file to Google Cloud Storage. Once the upload is complete, the signed URL should be passed to CreateArchiveDeployment. When uploading to the generated signed URL, please follow these restrictions: * Source file type should be a zip file. * Source file size should not exceed 1GB limit. * No credentials should be attached - the signed URLs provide access to the target bucket using internal service identity; if credentials were attached, the identity from the credentials would be used, but that identity does not have permissions to upload files to the URL. When making a HTTP PUT request, these two headers need to be specified: * `content-type: application/zip` * `x-goog-content-length-range: 0,1073741824` And this header SHOULD NOT be specified: * `Authorization: Bearer YOUR_TOKEN`</td>
-</tr>
-<tr>
     <td><a href="#organizations_environments_archive_deployments_generate_download_url"><CopyableCode code="organizations_environments_archive_deployments_generate_download_url" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-archiveDeploymentsId"><code>archiveDeploymentsId</code></a></td>
     <td></td>
     <td>Generates a signed URL for downloading the original zip file used to create an Archive Deployment. The URL is only valid for a limited period and should be used within minutes after generation. Each call returns a new upload URL.</td>
+</tr>
+<tr>
+    <td><a href="#organizations_environments_archive_deployments_generate_upload_url"><CopyableCode code="organizations_environments_archive_deployments_generate_upload_url" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
+    <td></td>
+    <td>Generates a signed URL for uploading an Archive zip file to Google Cloud Storage. Once the upload is complete, the signed URL should be passed to CreateArchiveDeployment. When uploading to the generated signed URL, please follow these restrictions: * Source file type should be a zip file. * Source file size should not exceed 1GB limit. * No credentials should be attached - the signed URLs provide access to the target bucket using internal service identity; if credentials were attached, the identity from the credentials would be used, but that identity does not have permissions to upload files to the URL. When making a HTTP PUT request, these two headers need to be specified: * `content-type: application/zip` * `x-goog-content-length-range: 0,1073741824` And this header SHOULD NOT be specified: * `Authorization: Bearer YOUR_TOKEN`</td>
 </tr>
 </tbody>
 </table>
@@ -289,9 +289,9 @@ updatedAt
 FROM google.apigee.archive_deployments
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND environmentsId = '{{ environmentsId }}' -- required
+AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -313,16 +313,16 @@ Creates a new ArchiveDeployment.
 
 ```sql
 INSERT INTO google.apigee.archive_deployments (
-data__name,
-data__labels,
 data__gcsUri,
+data__labels,
+data__name,
 organizationsId,
 environmentsId
 )
 SELECT 
-'{{ name }}',
-'{{ labels }}',
 '{{ gcsUri }}',
+'{{ labels }}',
+'{{ name }}',
 '{{ organizationsId }}',
 '{{ environmentsId }}'
 RETURNING
@@ -346,20 +346,20 @@ response
     - name: environmentsId
       value: string
       description: Required parameter for the archive_deployments resource.
-    - name: name
+    - name: gcsUri
       value: string
       description: >
-        Name of the Archive Deployment in the following format: `organizations/{org}/environments/{env}/archiveDeployments/{id}`.
+        Input only. The Google Cloud Storage signed URL returned from GenerateUploadUrl and used to upload the Archive zip file.
         
     - name: labels
       value: object
       description: >
         User-supplied key-value pairs used to organize ArchiveDeployments. Label keys must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: \p{Ll}\p{Lo}{0,62} Label values must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: [\p{Ll}\p{Lo}\p{N}_-]{0,63} No more than 64 labels can be associated with a given store.
         
-    - name: gcsUri
+    - name: name
       value: string
       description: >
-        Input only. The Google Cloud Storage signed URL returned from GenerateUploadUrl and used to upload the Archive zip file.
+        Name of the Archive Deployment in the following format: `organizations/{org}/environments/{env}/archiveDeployments/{id}`.
         
 ```
 </TabItem>
@@ -381,9 +381,9 @@ Updates an existing ArchiveDeployment. Labels can modified but most of the other
 ```sql
 UPDATE google.apigee.archive_deployments
 SET 
-data__name = '{{ name }}',
+data__gcsUri = '{{ gcsUri }}',
 data__labels = '{{ labels }}',
-data__gcsUri = '{{ gcsUri }}'
+data__name = '{{ name }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND environmentsId = '{{ environmentsId }}' --required
@@ -427,23 +427,12 @@ AND archiveDeploymentsId = '{{ archiveDeploymentsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="organizations_environments_archive_deployments_generate_upload_url"
+    defaultValue="organizations_environments_archive_deployments_generate_download_url"
     values={[
-        { label: 'organizations_environments_archive_deployments_generate_upload_url', value: 'organizations_environments_archive_deployments_generate_upload_url' },
-        { label: 'organizations_environments_archive_deployments_generate_download_url', value: 'organizations_environments_archive_deployments_generate_download_url' }
+        { label: 'organizations_environments_archive_deployments_generate_download_url', value: 'organizations_environments_archive_deployments_generate_download_url' },
+        { label: 'organizations_environments_archive_deployments_generate_upload_url', value: 'organizations_environments_archive_deployments_generate_upload_url' }
     ]}
 >
-<TabItem value="organizations_environments_archive_deployments_generate_upload_url">
-
-Generates a signed URL for uploading an Archive zip file to Google Cloud Storage. Once the upload is complete, the signed URL should be passed to CreateArchiveDeployment. When uploading to the generated signed URL, please follow these restrictions: * Source file type should be a zip file. * Source file size should not exceed 1GB limit. * No credentials should be attached - the signed URLs provide access to the target bucket using internal service identity; if credentials were attached, the identity from the credentials would be used, but that identity does not have permissions to upload files to the URL. When making a HTTP PUT request, these two headers need to be specified: * `content-type: application/zip` * `x-goog-content-length-range: 0,1073741824` And this header SHOULD NOT be specified: * `Authorization: Bearer YOUR_TOKEN`
-
-```sql
-EXEC google.apigee.archive_deployments.organizations_environments_archive_deployments_generate_upload_url 
-@organizationsId='{{ organizationsId }}' --required, 
-@environmentsId='{{ environmentsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="organizations_environments_archive_deployments_generate_download_url">
 
 Generates a signed URL for downloading the original zip file used to create an Archive Deployment. The URL is only valid for a limited period and should be used within minutes after generation. Each call returns a new upload URL.
@@ -453,6 +442,17 @@ EXEC google.apigee.archive_deployments.organizations_environments_archive_deploy
 @organizationsId='{{ organizationsId }}' --required, 
 @environmentsId='{{ environmentsId }}' --required, 
 @archiveDeploymentsId='{{ archiveDeploymentsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="organizations_environments_archive_deployments_generate_upload_url">
+
+Generates a signed URL for uploading an Archive zip file to Google Cloud Storage. Once the upload is complete, the signed URL should be passed to CreateArchiveDeployment. When uploading to the generated signed URL, please follow these restrictions: * Source file type should be a zip file. * Source file size should not exceed 1GB limit. * No credentials should be attached - the signed URLs provide access to the target bucket using internal service identity; if credentials were attached, the identity from the credentials would be used, but that identity does not have permissions to upload files to the URL. When making a HTTP PUT request, these two headers need to be specified: * `content-type: application/zip` * `x-goog-content-length-range: 0,1073741824` And this header SHOULD NOT be specified: * `Authorization: Bearer YOUR_TOKEN`
+
+```sql
+EXEC google.apigee.archive_deployments.organizations_environments_archive_deployments_generate_upload_url 
+@organizationsId='{{ organizationsId }}' --required, 
+@environmentsId='{{ environmentsId }}' --required
 ;
 ```
 </TabItem>

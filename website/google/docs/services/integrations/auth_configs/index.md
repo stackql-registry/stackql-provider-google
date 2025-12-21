@@ -464,7 +464,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_products_auth_configs_list"><CopyableCode code="projects_locations_products_auth_configs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-productsId"><code>productsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists all auth configs that match the filter. Restrict to auth configs belong to the current client only.</td>
 </tr>
 <tr>
@@ -478,7 +478,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_auth_configs_list"><CopyableCode code="projects_locations_auth_configs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td><a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all auth configs that match the filter. Restrict to auth configs belong to the current client only.</td>
 </tr>
 <tr>
@@ -492,21 +492,21 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_auth_configs_create"><CopyableCode code="projects_locations_auth_configs_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-clientCertificate.sslCertificate"><code>clientCertificate.sslCertificate</code></a>, <a href="#parameter-clientCertificate.encryptedPrivateKey"><code>clientCertificate.encryptedPrivateKey</code></a>, <a href="#parameter-clientCertificate.passphrase"><code>clientCertificate.passphrase</code></a></td>
+    <td><a href="#parameter-clientCertificate.passphrase"><code>clientCertificate.passphrase</code></a>, <a href="#parameter-clientCertificate.encryptedPrivateKey"><code>clientCertificate.encryptedPrivateKey</code></a>, <a href="#parameter-clientCertificate.sslCertificate"><code>clientCertificate.sslCertificate</code></a></td>
     <td>Creates an auth config record. Fetch corresponding credentials for specific auth types, e.g. access token for OAuth 2.0, JWT token for JWT. Encrypt the auth config with Cloud KMS and store the encrypted credentials in Spanner. Returns the encrypted auth config.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_products_auth_configs_patch"><CopyableCode code="projects_locations_products_auth_configs_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-productsId"><code>productsId</code></a>, <a href="#parameter-authConfigsId"><code>authConfigsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-clientCertificate.sslCertificate"><code>clientCertificate.sslCertificate</code></a>, <a href="#parameter-clientCertificate.encryptedPrivateKey"><code>clientCertificate.encryptedPrivateKey</code></a>, <a href="#parameter-clientCertificate.passphrase"><code>clientCertificate.passphrase</code></a></td>
+    <td><a href="#parameter-clientCertificate.encryptedPrivateKey"><code>clientCertificate.encryptedPrivateKey</code></a>, <a href="#parameter-clientCertificate.passphrase"><code>clientCertificate.passphrase</code></a>, <a href="#parameter-clientCertificate.sslCertificate"><code>clientCertificate.sslCertificate</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates an auth config. If credential is updated, fetch the encrypted auth config from Spanner, decrypt with Cloud KMS key, update the credential fields, re-encrypt with Cloud KMS key and update the Spanner record. For other fields, directly update the Spanner record. Returns the encrypted auth config.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_auth_configs_patch"><CopyableCode code="projects_locations_auth_configs_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authConfigsId"><code>authConfigsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-clientCertificate.sslCertificate"><code>clientCertificate.sslCertificate</code></a>, <a href="#parameter-clientCertificate.encryptedPrivateKey"><code>clientCertificate.encryptedPrivateKey</code></a>, <a href="#parameter-clientCertificate.passphrase"><code>clientCertificate.passphrase</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-clientCertificate.passphrase"><code>clientCertificate.passphrase</code></a>, <a href="#parameter-clientCertificate.sslCertificate"><code>clientCertificate.sslCertificate</code></a>, <a href="#parameter-clientCertificate.encryptedPrivateKey"><code>clientCertificate.encryptedPrivateKey</code></a></td>
     <td>Updates an auth config. If credential is updated, fetch the encrypted auth config from Spanner, decrypt with Cloud KMS key, update the credential fields, re-encrypt with Cloud KMS key and update the Spanner record. For other fields, directly update the Spanner record. Returns the encrypted auth config.</td>
 </tr>
 <tr>
@@ -672,9 +672,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND productsId = '{{ productsId }}' -- required
 AND pageSize = '{{ pageSize }}'
+AND readMask = '{{ readMask }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND readMask = '{{ readMask }}'
 ;
 ```
 </TabItem>
@@ -734,10 +734,10 @@ visibility
 FROM google.integrations.auth_configs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND readMask = '{{ readMask }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -760,19 +760,19 @@ Creates an auth config record. Fetch corresponding credentials for specific auth
 
 ```sql
 INSERT INTO google.integrations.auth_configs (
-data__name,
-data__displayName,
-data__description,
 data__encryptedCredential,
-data__decryptedCredential,
-data__certificateId,
-data__credentialType,
-data__creatorEmail,
 data__lastModifierEmail,
-data__visibility,
 data__expiryNotificationDuration,
-data__validTime,
+data__creatorEmail,
+data__description,
+data__certificateId,
+data__name,
 data__overrideValidTime,
+data__credentialType,
+data__validTime,
+data__visibility,
+data__decryptedCredential,
+data__displayName,
 projectsId,
 locationsId,
 productsId,
@@ -781,19 +781,19 @@ clientCertificate.encryptedPrivateKey,
 clientCertificate.passphrase
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
-'{{ description }}',
 '{{ encryptedCredential }}',
-'{{ decryptedCredential }}',
-'{{ certificateId }}',
-'{{ credentialType }}',
-'{{ creatorEmail }}',
 '{{ lastModifierEmail }}',
-'{{ visibility }}',
 '{{ expiryNotificationDuration }}',
-'{{ validTime }}',
+'{{ creatorEmail }}',
+'{{ description }}',
+'{{ certificateId }}',
+'{{ name }}',
 '{{ overrideValidTime }}',
+'{{ credentialType }}',
+'{{ validTime }}',
+'{{ visibility }}',
+'{{ decryptedCredential }}',
+'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ productsId }}',
@@ -827,44 +827,44 @@ Creates an auth config record. Fetch corresponding credentials for specific auth
 
 ```sql
 INSERT INTO google.integrations.auth_configs (
-data__name,
-data__displayName,
-data__description,
 data__encryptedCredential,
-data__decryptedCredential,
-data__certificateId,
-data__credentialType,
-data__creatorEmail,
 data__lastModifierEmail,
-data__visibility,
 data__expiryNotificationDuration,
-data__validTime,
+data__creatorEmail,
+data__description,
+data__certificateId,
+data__name,
 data__overrideValidTime,
+data__credentialType,
+data__validTime,
+data__visibility,
+data__decryptedCredential,
+data__displayName,
 projectsId,
 locationsId,
-clientCertificate.sslCertificate,
+clientCertificate.passphrase,
 clientCertificate.encryptedPrivateKey,
-clientCertificate.passphrase
+clientCertificate.sslCertificate
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
-'{{ description }}',
 '{{ encryptedCredential }}',
-'{{ decryptedCredential }}',
-'{{ certificateId }}',
-'{{ credentialType }}',
-'{{ creatorEmail }}',
 '{{ lastModifierEmail }}',
-'{{ visibility }}',
 '{{ expiryNotificationDuration }}',
-'{{ validTime }}',
+'{{ creatorEmail }}',
+'{{ description }}',
+'{{ certificateId }}',
+'{{ name }}',
 '{{ overrideValidTime }}',
+'{{ credentialType }}',
+'{{ validTime }}',
+'{{ visibility }}',
+'{{ decryptedCredential }}',
+'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ clientCertificate.sslCertificate }}',
+'{{ clientCertificate.passphrase }}',
 '{{ clientCertificate.encryptedPrivateKey }}',
-'{{ clientCertificate.passphrase }}'
+'{{ clientCertificate.sslCertificate }}'
 RETURNING
 name,
 certificateId,
@@ -901,35 +901,45 @@ visibility
     - name: productsId
       value: string
       description: Required parameter for the auth_configs resource.
-    - name: name
+    - name: encryptedCredential
       value: string
       description: >
-        Resource name of the auth config. For more information, see Manage authentication profiles. projects/{project}/locations/{location}/authConfigs/{authConfig}.
+        Auth credential encrypted by Cloud KMS. Can be decrypted as Credential with proper KMS key.
         
-    - name: displayName
+    - name: lastModifierEmail
       value: string
       description: >
-        Required. The name of the auth config.
+        The last modifier's email address. Generated based on the End User Credentials/LOAS role of the user making the call.
+        
+    - name: expiryNotificationDuration
+      value: array
+      description: >
+        Optional. User can define the time to receive notification after which the auth config becomes invalid. Support up to 30 days. Support granularity in hours.
+        
+    - name: creatorEmail
+      value: string
+      description: >
+        The creator's email address. Generated based on the End User Credentials/LOAS role of the user making the call.
         
     - name: description
       value: string
       description: >
         Optional. A description of the auth config.
         
-    - name: encryptedCredential
-      value: string
-      description: >
-        Auth credential encrypted by Cloud KMS. Can be decrypted as Credential with proper KMS key.
-        
-    - name: decryptedCredential
-      value: object
-      description: >
-        Raw auth credentials.
-        
     - name: certificateId
       value: string
       description: >
         Certificate id for client certificate
+        
+    - name: name
+      value: string
+      description: >
+        Resource name of the auth config. For more information, see Manage authentication profiles. projects/{project}/locations/{location}/authConfigs/{authConfig}.
+        
+    - name: overrideValidTime
+      value: string
+      description: >
+        Optional. User provided expiry time to override. For the example of Salesforce, username/password credentials can be valid for 6 months depending on the instance settings.
         
     - name: credentialType
       value: string
@@ -937,15 +947,10 @@ visibility
         Required. Credential type of the encrypted credential.
         
       valid_values: ['CREDENTIAL_TYPE_UNSPECIFIED', 'USERNAME_AND_PASSWORD', 'API_KEY', 'OAUTH2_AUTHORIZATION_CODE', 'OAUTH2_IMPLICIT', 'OAUTH2_CLIENT_CREDENTIALS', 'OAUTH2_RESOURCE_OWNER_CREDENTIALS', 'JWT', 'AUTH_TOKEN', 'SERVICE_ACCOUNT', 'CLIENT_CERTIFICATE_ONLY', 'OIDC_TOKEN']
-    - name: creatorEmail
+    - name: validTime
       value: string
       description: >
-        The creator's email address. Generated based on the End User Credentials/LOAS role of the user making the call.
-        
-    - name: lastModifierEmail
-      value: string
-      description: >
-        The last modifier's email address. Generated based on the End User Credentials/LOAS role of the user making the call.
+        Optional. The time until the auth config is valid. Empty or max value is considered the auth config won't expire.
         
     - name: visibility
       value: string
@@ -953,20 +958,15 @@ visibility
         Optional. The visibility of the auth config.
         
       valid_values: ['AUTH_CONFIG_VISIBILITY_UNSPECIFIED', 'PRIVATE', 'CLIENT_VISIBLE']
-    - name: expiryNotificationDuration
-      value: array
+    - name: decryptedCredential
+      value: object
       description: >
-        Optional. User can define the time to receive notification after which the auth config becomes invalid. Support up to 30 days. Support granularity in hours.
+        Raw auth credentials.
         
-    - name: validTime
+    - name: displayName
       value: string
       description: >
-        Optional. The time until the auth config is valid. Empty or max value is considered the auth config won't expire.
-        
-    - name: overrideValidTime
-      value: string
-      description: >
-        Optional. User provided expiry time to override. For the example of Salesforce, username/password credentials can be valid for 6 months depending on the instance settings.
+        Required. The name of the auth config.
         
     - name: clientCertificate.sslCertificate
       value: string
@@ -995,28 +995,28 @@ Updates an auth config. If credential is updated, fetch the encrypted auth confi
 ```sql
 UPDATE google.integrations.auth_configs
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
 data__encryptedCredential = '{{ encryptedCredential }}',
-data__decryptedCredential = '{{ decryptedCredential }}',
-data__certificateId = '{{ certificateId }}',
-data__credentialType = '{{ credentialType }}',
-data__creatorEmail = '{{ creatorEmail }}',
 data__lastModifierEmail = '{{ lastModifierEmail }}',
-data__visibility = '{{ visibility }}',
 data__expiryNotificationDuration = '{{ expiryNotificationDuration }}',
+data__creatorEmail = '{{ creatorEmail }}',
+data__description = '{{ description }}',
+data__certificateId = '{{ certificateId }}',
+data__name = '{{ name }}',
+data__overrideValidTime = '{{ overrideValidTime }}',
+data__credentialType = '{{ credentialType }}',
 data__validTime = '{{ validTime }}',
-data__overrideValidTime = '{{ overrideValidTime }}'
+data__visibility = '{{ visibility }}',
+data__decryptedCredential = '{{ decryptedCredential }}',
+data__displayName = '{{ displayName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND productsId = '{{ productsId }}' --required
 AND authConfigsId = '{{ authConfigsId }}' --required
-AND updateMask = '{{ updateMask}}'
-AND clientCertificate.sslCertificate = '{{ clientCertificate.sslCertificate}}'
 AND clientCertificate.encryptedPrivateKey = '{{ clientCertificate.encryptedPrivateKey}}'
 AND clientCertificate.passphrase = '{{ clientCertificate.passphrase}}'
+AND clientCertificate.sslCertificate = '{{ clientCertificate.sslCertificate}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 certificateId,
@@ -1044,27 +1044,27 @@ Updates an auth config. If credential is updated, fetch the encrypted auth confi
 ```sql
 UPDATE google.integrations.auth_configs
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
 data__encryptedCredential = '{{ encryptedCredential }}',
-data__decryptedCredential = '{{ decryptedCredential }}',
-data__certificateId = '{{ certificateId }}',
-data__credentialType = '{{ credentialType }}',
-data__creatorEmail = '{{ creatorEmail }}',
 data__lastModifierEmail = '{{ lastModifierEmail }}',
-data__visibility = '{{ visibility }}',
 data__expiryNotificationDuration = '{{ expiryNotificationDuration }}',
+data__creatorEmail = '{{ creatorEmail }}',
+data__description = '{{ description }}',
+data__certificateId = '{{ certificateId }}',
+data__name = '{{ name }}',
+data__overrideValidTime = '{{ overrideValidTime }}',
+data__credentialType = '{{ credentialType }}',
 data__validTime = '{{ validTime }}',
-data__overrideValidTime = '{{ overrideValidTime }}'
+data__visibility = '{{ visibility }}',
+data__decryptedCredential = '{{ decryptedCredential }}',
+data__displayName = '{{ displayName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND authConfigsId = '{{ authConfigsId }}' --required
 AND updateMask = '{{ updateMask}}'
+AND clientCertificate.passphrase = '{{ clientCertificate.passphrase}}'
 AND clientCertificate.sslCertificate = '{{ clientCertificate.sslCertificate}}'
 AND clientCertificate.encryptedPrivateKey = '{{ clientCertificate.encryptedPrivateKey}}'
-AND clientCertificate.passphrase = '{{ clientCertificate.passphrase}}'
 RETURNING
 name,
 certificateId,

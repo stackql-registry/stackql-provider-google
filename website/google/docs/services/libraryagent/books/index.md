@@ -134,15 +134,8 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-shelvesId"><code>shelvesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists books in a shelf. The order is unspecified but deterministic. Newly created books will not necessarily be added to the end of this list. Returns NOT_FOUND if the shelf does not exist.</td>
-</tr>
-<tr>
-    <td><a href="#borrow"><CopyableCode code="borrow" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-shelvesId"><code>shelvesId</code></a>, <a href="#parameter-booksId"><code>booksId</code></a></td>
-    <td></td>
-    <td>Borrow a book from the library. Returns the book if it is borrowed successfully. Returns NOT_FOUND if the book does not exist in the library. Returns quota exceeded error if the amount of books borrowed exceeds allocation quota in any dimensions.</td>
 </tr>
 <tr>
     <td><a href="#return"><CopyableCode code="return" /></a></td>
@@ -150,6 +143,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-shelvesId"><code>shelvesId</code></a>, <a href="#parameter-booksId"><code>booksId</code></a></td>
     <td></td>
     <td>Return a book to the library. Returns the book if it is returned to the library successfully. Returns error if the book does not belong to the library or the users didn't borrow before.</td>
+</tr>
+<tr>
+    <td><a href="#borrow"><CopyableCode code="borrow" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-shelvesId"><code>shelvesId</code></a>, <a href="#parameter-booksId"><code>booksId</code></a></td>
+    <td></td>
+    <td>Borrow a book from the library. Returns the book if it is borrowed successfully. Returns NOT_FOUND if the book does not exist in the library. Returns quota exceeded error if the amount of books borrowed exceeds allocation quota in any dimensions.</td>
 </tr>
 </tbody>
 </table>
@@ -227,8 +227,8 @@ read,
 title
 FROM google.libraryagent.books
 WHERE shelvesId = '{{ shelvesId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -238,29 +238,29 @@ AND pageToken = '{{ pageToken }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="borrow"
+    defaultValue="return"
     values={[
-        { label: 'borrow', value: 'borrow' },
-        { label: 'return', value: 'return' }
+        { label: 'return', value: 'return' },
+        { label: 'borrow', value: 'borrow' }
     ]}
 >
-<TabItem value="borrow">
-
-Borrow a book from the library. Returns the book if it is borrowed successfully. Returns NOT_FOUND if the book does not exist in the library. Returns quota exceeded error if the amount of books borrowed exceeds allocation quota in any dimensions.
-
-```sql
-EXEC google.libraryagent.books.borrow 
-@shelvesId='{{ shelvesId }}' --required, 
-@booksId='{{ booksId }}' --required
-;
-```
-</TabItem>
 <TabItem value="return">
 
 Return a book to the library. Returns the book if it is returned to the library successfully. Returns error if the book does not belong to the library or the users didn't borrow before.
 
 ```sql
 EXEC google.libraryagent.books.return 
+@shelvesId='{{ shelvesId }}' --required, 
+@booksId='{{ booksId }}' --required
+;
+```
+</TabItem>
+<TabItem value="borrow">
+
+Borrow a book from the library. Returns the book if it is borrowed successfully. Returns NOT_FOUND if the book does not exist in the library. Returns quota exceeded error if the amount of books borrowed exceeds allocation quota in any dimensions.
+
+```sql
+EXEC google.libraryagent.books.borrow 
 @shelvesId='{{ shelvesId }}' --required, 
 @booksId='{{ booksId }}' --required
 ;

@@ -32,48 +32,14 @@ Creates, updates, deletes, gets or lists a <code>recent_queries</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_locations_recent_queries_list"
+    defaultValue="organizations_locations_recent_queries_list"
     values={[
-        { label: 'projects_locations_recent_queries_list', value: 'projects_locations_recent_queries_list' },
         { label: 'organizations_locations_recent_queries_list', value: 'organizations_locations_recent_queries_list' },
-        { label: 'folders_locations_recent_queries_list', value: 'folders_locations_recent_queries_list' },
-        { label: 'billing_accounts_locations_recent_queries_list', value: 'billing_accounts_locations_recent_queries_list' }
+        { label: 'billing_accounts_locations_recent_queries_list', value: 'billing_accounts_locations_recent_queries_list' },
+        { label: 'projects_locations_recent_queries_list', value: 'projects_locations_recent_queries_list' },
+        { label: 'folders_locations_recent_queries_list', value: 'folders_locations_recent_queries_list' }
     ]}
 >
-<TabItem value="projects_locations_recent_queries_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Resource name of the recent query.In the format: "projects/[PROJECT_ID]/locations/[LOCATION_ID]/recentQueries/[QUERY_ID]" For a list of supported locations, see Supported Regions (https://cloud.google.com/logging/docs/region-support)The QUERY_ID is a system generated alphanumeric ID.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="lastRunTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp when this query was last run.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="loggingQuery" /></td>
-    <td><code>object</code></td>
-    <td>Logging query that can be executed in Logs Explorer or via Logging API. (id: LoggingQuery)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="opsAnalyticsQuery" /></td>
-    <td><code>object</code></td>
-    <td>Analytics query that can be executed in Log Analytics. (id: OpsAnalyticsQuery)</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="organizations_locations_recent_queries_list">
 
 <table>
@@ -85,60 +51,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Resource name of the recent query.In the format: "projects/[PROJECT_ID]/locations/[LOCATION_ID]/recentQueries/[QUERY_ID]" For a list of supported locations, see Supported Regions (https://cloud.google.com/logging/docs/region-support)The QUERY_ID is a system generated alphanumeric ID.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="lastRunTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp when this query was last run.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="loggingQuery" /></td>
-    <td><code>object</code></td>
-    <td>Logging query that can be executed in Logs Explorer or via Logging API. (id: LoggingQuery)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="opsAnalyticsQuery" /></td>
-    <td><code>object</code></td>
-    <td>Analytics query that can be executed in Log Analytics. (id: OpsAnalyticsQuery)</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="folders_locations_recent_queries_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Resource name of the recent query.In the format: "projects/[PROJECT_ID]/locations/[LOCATION_ID]/recentQueries/[QUERY_ID]" For a list of supported locations, see Supported Regions (https://cloud.google.com/logging/docs/region-support)The QUERY_ID is a system generated alphanumeric ID.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="lastRunTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp when this query was last run.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="loggingQuery" /></td>
-    <td><code>object</code></td>
-    <td>Logging query that can be executed in Logs Explorer or via Logging API. (id: LoggingQuery)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="opsAnalyticsQuery" /></td>
-    <td><code>object</code></td>
-    <td>Analytics query that can be executed in Log Analytics. (id: OpsAnalyticsQuery)</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -153,26 +65,34 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Resource name of the recent query.In the format: "projects/[PROJECT_ID]/locations/[LOCATION_ID]/recentQueries/[QUERY_ID]" For a list of supported locations, see Supported Regions (https://cloud.google.com/logging/docs/region-support)The QUERY_ID is a system generated alphanumeric ID.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="lastRunTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp when this query was last run.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="loggingQuery" /></td>
-    <td><code>object</code></td>
-    <td>Logging query that can be executed in Logs Explorer or via Logging API. (id: LoggingQuery)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="opsAnalyticsQuery" /></td>
-    <td><code>object</code></td>
-    <td>Analytics query that can be executed in Log Analytics. (id: OpsAnalyticsQuery)</td>
-</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_locations_recent_queries_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="folders_locations_recent_queries_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
 </tbody>
 </table>
 </TabItem>
@@ -194,31 +114,31 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_locations_recent_queries_list"><CopyableCode code="projects_locations_recent_queries_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
-    <td>Lists the RecentQueries that were created by the user making the request.</td>
-</tr>
-<tr>
     <td><a href="#organizations_locations_recent_queries_list"><CopyableCode code="organizations_locations_recent_queries_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
-    <td>Lists the RecentQueries that were created by the user making the request.</td>
-</tr>
-<tr>
-    <td><a href="#folders_locations_recent_queries_list"><CopyableCode code="folders_locations_recent_queries_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists the RecentQueries that were created by the user making the request.</td>
 </tr>
 <tr>
     <td><a href="#billing_accounts_locations_recent_queries_list"><CopyableCode code="billing_accounts_locations_recent_queries_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-billingAccountsId"><code>billingAccountsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists the RecentQueries that were created by the user making the request.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_recent_queries_list"><CopyableCode code="projects_locations_recent_queries_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td>Lists the RecentQueries that were created by the user making the request.</td>
+</tr>
+<tr>
+    <td><a href="#folders_locations_recent_queries_list"><CopyableCode code="folders_locations_recent_queries_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the RecentQueries that were created by the user making the request.</td>
 </tr>
 </tbody>
@@ -283,67 +203,26 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_locations_recent_queries_list"
+    defaultValue="organizations_locations_recent_queries_list"
     values={[
-        { label: 'projects_locations_recent_queries_list', value: 'projects_locations_recent_queries_list' },
         { label: 'organizations_locations_recent_queries_list', value: 'organizations_locations_recent_queries_list' },
-        { label: 'folders_locations_recent_queries_list', value: 'folders_locations_recent_queries_list' },
-        { label: 'billing_accounts_locations_recent_queries_list', value: 'billing_accounts_locations_recent_queries_list' }
+        { label: 'billing_accounts_locations_recent_queries_list', value: 'billing_accounts_locations_recent_queries_list' },
+        { label: 'projects_locations_recent_queries_list', value: 'projects_locations_recent_queries_list' },
+        { label: 'folders_locations_recent_queries_list', value: 'folders_locations_recent_queries_list' }
     ]}
 >
-<TabItem value="projects_locations_recent_queries_list">
-
-Lists the RecentQueries that were created by the user making the request.
-
-```sql
-SELECT
-name,
-lastRunTime,
-loggingQuery,
-opsAnalyticsQuery
-FROM google.logging.recent_queries
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
-;
-```
-</TabItem>
 <TabItem value="organizations_locations_recent_queries_list">
 
 Lists the RecentQueries that were created by the user making the request.
 
 ```sql
 SELECT
-name,
-lastRunTime,
-loggingQuery,
-opsAnalyticsQuery
+*
 FROM google.logging.recent_queries
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
-;
-```
-</TabItem>
-<TabItem value="folders_locations_recent_queries_list">
-
-Lists the RecentQueries that were created by the user making the request.
-
-```sql
-SELECT
-name,
-lastRunTime,
-loggingQuery,
-opsAnalyticsQuery
-FROM google.logging.recent_queries
-WHERE foldersId = '{{ foldersId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
 AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
 ;
 ```
@@ -354,16 +233,45 @@ Lists the RecentQueries that were created by the user making the request.
 
 ```sql
 SELECT
-name,
-lastRunTime,
-loggingQuery,
-opsAnalyticsQuery
+*
 FROM google.logging.recent_queries
 WHERE billingAccountsId = '{{ billingAccountsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_recent_queries_list">
+
+Lists the RecentQueries that were created by the user making the request.
+
+```sql
+SELECT
+*
+FROM google.logging.recent_queries
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+;
+```
+</TabItem>
+<TabItem value="folders_locations_recent_queries_list">
+
+Lists the RecentQueries that were created by the user making the request.
+
+```sql
+SELECT
+*
+FROM google.logging.recent_queries
+WHERE foldersId = '{{ foldersId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

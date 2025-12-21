@@ -177,28 +177,28 @@ The following methods are available for this resource:
     <td><a href="#organizations_simulations_valued_resources_attack_paths_list"><CopyableCode code="organizations_simulations_valued_resources_attack_paths_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-simulationsId"><code>simulationsId</code></a>, <a href="#parameter-valuedResourcesId"><code>valuedResourcesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists the attack paths for a set of simulation results or valued resources and filter.</td>
 </tr>
 <tr>
     <td><a href="#organizations_simulations_attack_exposure_results_attack_paths_list"><CopyableCode code="organizations_simulations_attack_exposure_results_attack_paths_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-simulationsId"><code>simulationsId</code></a>, <a href="#parameter-attackExposureResultsId"><code>attackExposureResultsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the attack paths for a set of simulation results or valued resources and filter.</td>
 </tr>
 <tr>
     <td><a href="#organizations_simulations_attack_paths_list"><CopyableCode code="organizations_simulations_attack_paths_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-simulationsId"><code>simulationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists the attack paths for a set of simulation results or valued resources and filter.</td>
 </tr>
 <tr>
     <td><a href="#organizations_attack_paths_list"><CopyableCode code="organizations_attack_paths_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the attack paths for a set of simulation results or valued resources and filter.</td>
 </tr>
 </tbody>
@@ -279,9 +279,9 @@ FROM google.securitycenter.attack_paths
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND simulationsId = '{{ simulationsId }}' -- required
 AND valuedResourcesId = '{{ valuedResourcesId }}' -- required
-AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -299,8 +299,8 @@ WHERE organizationsId = '{{ organizationsId }}' -- required
 AND simulationsId = '{{ simulationsId }}' -- required
 AND attackExposureResultsId = '{{ attackExposureResultsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -316,9 +316,9 @@ pathNodes
 FROM google.securitycenter.attack_paths
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND simulationsId = '{{ simulationsId }}' -- required
-AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -333,9 +333,9 @@ edges,
 pathNodes
 FROM google.securitycenter.attack_paths
 WHERE organizationsId = '{{ organizationsId }}' -- required
+AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>

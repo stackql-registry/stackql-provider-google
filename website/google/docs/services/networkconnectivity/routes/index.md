@@ -264,7 +264,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-hubsId"><code>hubsId</code></a>, <a href="#parameter-routeTablesId"><code>routeTablesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists routes in a given route table.</td>
 </tr>
 </tbody>
@@ -393,9 +393,9 @@ FROM google.networkconnectivity.routes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND hubsId = '{{ hubsId }}' -- required
 AND routeTablesId = '{{ routeTablesId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```

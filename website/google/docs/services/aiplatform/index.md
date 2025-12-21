@@ -18,7 +18,7 @@ aiplatform service documentation.
 
 :::info[Service Summary]
 
-total resources: __75__  
+total resources: __86__  
 
 :::
 
@@ -39,12 +39,17 @@ total resources: __75__
 <a href="/services/aiplatform/data_labeling_jobs/">data_labeling_jobs</a><br />
 <a href="/services/aiplatform/dataset_versions/">dataset_versions</a><br />
 <a href="/services/aiplatform/datasets/">datasets</a><br />
+<a href="/services/aiplatform/datasets_iam_policies/">datasets_iam_policies</a><br />
 <a href="/services/aiplatform/deployment_resource_pools/">deployment_resource_pools</a><br />
 <a href="/services/aiplatform/endpoints/">endpoints</a><br />
 <a href="/services/aiplatform/endpoints_predict_operation/">endpoints_predict_operation</a><br />
 <a href="/services/aiplatform/entity_types/">entity_types</a><br />
 <a href="/services/aiplatform/entity_types_iam_policies/">entity_types_iam_policies</a><br />
+<a href="/services/aiplatform/evaluation_items/">evaluation_items</a><br />
+<a href="/services/aiplatform/evaluation_runs/">evaluation_runs</a><br />
+<a href="/services/aiplatform/evaluation_sets/">evaluation_sets</a><br />
 <a href="/services/aiplatform/evaluations/">evaluations</a><br />
+<a href="/services/aiplatform/events/">events</a><br />
 <a href="/services/aiplatform/execution_lineage_subgraph/">execution_lineage_subgraph</a><br />
 <a href="/services/aiplatform/executions/">executions</a><br />
 <a href="/services/aiplatform/experiments/">experiments</a><br />
@@ -62,9 +67,11 @@ total resources: __75__
 <a href="/services/aiplatform/hyperparameter_tuning_jobs/">hyperparameter_tuning_jobs</a><br />
 <a href="/services/aiplatform/index_endpoints/">index_endpoints</a><br />
 <a href="/services/aiplatform/indexes/">indexes</a><br />
-<a href="/services/aiplatform/locations/">locations</a>
+<a href="/services/aiplatform/invoke/">invoke</a>
 </div>
 <div class="providerDocColumn">
+<a href="/services/aiplatform/locations/">locations</a><br />
+<a href="/services/aiplatform/memories/">memories</a><br />
 <a href="/services/aiplatform/metadata_schemas/">metadata_schemas</a><br />
 <a href="/services/aiplatform/metadata_stores/">metadata_stores</a><br />
 <a href="/services/aiplatform/migratable_resources/">migratable_resources</a><br />
@@ -81,6 +88,7 @@ total resources: __75__
 <a href="/services/aiplatform/notebook_runtime_templates/">notebook_runtime_templates</a><br />
 <a href="/services/aiplatform/notebook_runtime_templates_iam_policies/">notebook_runtime_templates_iam_policies</a><br />
 <a href="/services/aiplatform/notebook_runtimes/">notebook_runtimes</a><br />
+<a href="/services/aiplatform/openapi/">openapi</a><br />
 <a href="/services/aiplatform/operations/">operations</a><br />
 <a href="/services/aiplatform/operations_wait/">operations_wait</a><br />
 <a href="/services/aiplatform/optimal_trials/">optimal_trials</a><br />
@@ -91,9 +99,12 @@ total resources: __75__
 <a href="/services/aiplatform/rag_file_operations/">rag_file_operations</a><br />
 <a href="/services/aiplatform/rag_files/">rag_files</a><br />
 <a href="/services/aiplatform/reasoning_engines/">reasoning_engines</a><br />
+<a href="/services/aiplatform/revisions/">revisions</a><br />
 <a href="/services/aiplatform/runs/">runs</a><br />
 <a href="/services/aiplatform/saved_queries/">saved_queries</a><br />
 <a href="/services/aiplatform/schedules/">schedules</a><br />
+<a href="/services/aiplatform/science/">science</a><br />
+<a href="/services/aiplatform/sessions/">sessions</a><br />
 <a href="/services/aiplatform/slices/">slices</a><br />
 <a href="/services/aiplatform/specialist_pools/">specialist_pools</a><br />
 <a href="/services/aiplatform/studies/">studies</a><br />

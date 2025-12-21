@@ -244,7 +244,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists Indexes in a Location.</td>
 </tr>
 <tr>
@@ -269,18 +269,18 @@ The following methods are available for this resource:
     <td>Deletes an Index. An Index can only be deleted when all its DeployedIndexes had been undeployed.</td>
 </tr>
 <tr>
-    <td><a href="#upsert_datapoints"><CopyableCode code="upsert_datapoints" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-indexesId"><code>indexesId</code></a></td>
-    <td></td>
-    <td>Add/update Datapoints into an Index.</td>
-</tr>
-<tr>
     <td><a href="#remove_datapoints"><CopyableCode code="remove_datapoints" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-indexesId"><code>indexesId</code></a></td>
     <td></td>
     <td>Remove Datapoints from an Index.</td>
+</tr>
+<tr>
+    <td><a href="#upsert_datapoints"><CopyableCode code="upsert_datapoints" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-indexesId"><code>indexesId</code></a></td>
+    <td></td>
+    <td>Add/update Datapoints into an Index.</td>
 </tr>
 </tbody>
 </table>
@@ -402,10 +402,10 @@ updateTime
 FROM google.aiplatform.indexes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND readMask = '{{ readMask }}'
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -427,26 +427,26 @@ Creates an Index.
 
 ```sql
 INSERT INTO google.aiplatform.indexes (
-data__displayName,
 data__description,
-data__metadataSchemaUri,
-data__metadata,
-data__etag,
-data__labels,
-data__indexUpdateMethod,
 data__encryptionSpec,
+data__etag,
+data__metadataSchemaUri,
+data__labels,
+data__metadata,
+data__indexUpdateMethod,
+data__displayName,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ displayName }}',
 '{{ description }}',
-'{{ metadataSchemaUri }}',
-'{{ metadata }}',
-'{{ etag }}',
-'{{ labels }}',
-'{{ indexUpdateMethod }}',
 '{{ encryptionSpec }}',
+'{{ etag }}',
+'{{ metadataSchemaUri }}',
+'{{ labels }}',
+'{{ metadata }}',
+'{{ indexUpdateMethod }}',
+'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -470,35 +470,35 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the indexes resource.
-    - name: displayName
-      value: string
-      description: >
-        Required. The display name of the Index. The name can be up to 128 characters long and can consist of any UTF-8 characters.
-        
     - name: description
       value: string
       description: >
         The description of the Index.
         
-    - name: metadataSchemaUri
-      value: string
+    - name: encryptionSpec
+      value: object
       description: >
-        Immutable. Points to a YAML file stored on Google Cloud Storage describing additional information about the Index, that is specific to it. Unset if the Index does not have any additional information. The schema is defined as an OpenAPI 3.0.2 [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject). Note: The URI given on output will be immutable and probably different, including the URI scheme, than the one given on input. The output URI will point to a location where the user only has a read access.
-        
-    - name: metadata
-      value: any
-      description: >
-        An additional information about the Index; the schema of the metadata can be found in metadata_schema.
+        Immutable. Customer-managed encryption key spec for an Index. If set, this Index and all sub-resources of this Index will be secured by this key.
         
     - name: etag
       value: string
       description: >
         Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
         
+    - name: metadataSchemaUri
+      value: string
+      description: >
+        Immutable. Points to a YAML file stored on Google Cloud Storage describing additional information about the Index, that is specific to it. Unset if the Index does not have any additional information. The schema is defined as an OpenAPI 3.0.2 [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject). Note: The URI given on output will be immutable and probably different, including the URI scheme, than the one given on input. The output URI will point to a location where the user only has a read access.
+        
     - name: labels
       value: object
       description: >
         The labels with user-defined metadata to organize your Indexes. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
+        
+    - name: metadata
+      value: any
+      description: >
+        An additional information about the Index; the schema of the metadata can be found in metadata_schema.
         
     - name: indexUpdateMethod
       value: string
@@ -506,10 +506,10 @@ response
         Immutable. The update method to use with this Index. If not set, BATCH_UPDATE will be used by default.
         
       valid_values: ['INDEX_UPDATE_METHOD_UNSPECIFIED', 'BATCH_UPDATE', 'STREAM_UPDATE']
-    - name: encryptionSpec
-      value: object
+    - name: displayName
+      value: string
       description: >
-        Immutable. Customer-managed encryption key spec for an Index. If set, this Index and all sub-resources of this Index will be secured by this key.
+        Required. The display name of the Index. The name can be up to 128 characters long and can consist of any UTF-8 characters.
         
 ```
 </TabItem>
@@ -531,14 +531,14 @@ Updates an Index.
 ```sql
 UPDATE google.aiplatform.indexes
 SET 
-data__displayName = '{{ displayName }}',
 data__description = '{{ description }}',
-data__metadataSchemaUri = '{{ metadataSchemaUri }}',
-data__metadata = '{{ metadata }}',
+data__encryptionSpec = '{{ encryptionSpec }}',
 data__etag = '{{ etag }}',
+data__metadataSchemaUri = '{{ metadataSchemaUri }}',
 data__labels = '{{ labels }}',
+data__metadata = '{{ metadata }}',
 data__indexUpdateMethod = '{{ indexUpdateMethod }}',
-data__encryptionSpec = '{{ encryptionSpec }}'
+data__displayName = '{{ displayName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -581,29 +581,12 @@ AND indexesId = '{{ indexesId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="upsert_datapoints"
+    defaultValue="remove_datapoints"
     values={[
-        { label: 'upsert_datapoints', value: 'upsert_datapoints' },
-        { label: 'remove_datapoints', value: 'remove_datapoints' }
+        { label: 'remove_datapoints', value: 'remove_datapoints' },
+        { label: 'upsert_datapoints', value: 'upsert_datapoints' }
     ]}
 >
-<TabItem value="upsert_datapoints">
-
-Add/update Datapoints into an Index.
-
-```sql
-EXEC google.aiplatform.indexes.upsert_datapoints 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@indexesId='{{ indexesId }}' --required 
-@@json=
-'{
-"datapoints": "{{ datapoints }}", 
-"updateMask": "{{ updateMask }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="remove_datapoints">
 
 Remove Datapoints from an Index.
@@ -616,6 +599,23 @@ EXEC google.aiplatform.indexes.remove_datapoints
 @@json=
 '{
 "datapointIds": "{{ datapointIds }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="upsert_datapoints">
+
+Add/update Datapoints into an Index.
+
+```sql
+EXEC google.aiplatform.indexes.upsert_datapoints 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@indexesId='{{ indexesId }}' --required 
+@@json=
+'{
+"updateMask": "{{ updateMask }}", 
+"datapoints": "{{ datapoints }}"
 }'
 ;
 ```

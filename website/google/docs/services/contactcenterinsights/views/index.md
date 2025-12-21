@@ -144,7 +144,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists views.</td>
 </tr>
 <tr>
@@ -258,8 +258,8 @@ value
 FROM google.contactcenterinsights.views
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -281,16 +281,16 @@ Creates a view.
 
 ```sql
 INSERT INTO google.contactcenterinsights.views (
-data__name,
-data__displayName,
 data__value,
+data__displayName,
+data__name,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
 '{{ value }}',
+'{{ displayName }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -314,20 +314,20 @@ value
     - name: locationsId
       value: string
       description: Required parameter for the views resource.
-    - name: name
+    - name: value
       value: string
       description: >
-        Immutable. The resource name of the view. Format: projects/{project}/locations/{location}/views/{view}
+        A filter to reduce conversation results to a specific subset. Refer to https://cloud.google.com/contact-center/insights/docs/filtering for details.
         
     - name: displayName
       value: string
       description: >
         The human-readable display name of the view.
         
-    - name: value
+    - name: name
       value: string
       description: >
-        A filter to reduce conversation results to a specific subset. Refer to https://cloud.google.com/contact-center/insights/docs/filtering for details.
+        Immutable. The resource name of the view. Format: projects/{project}/locations/{location}/views/{view}
         
 ```
 </TabItem>
@@ -349,9 +349,9 @@ Updates a view.
 ```sql
 UPDATE google.contactcenterinsights.views
 SET 
-data__name = '{{ name }}',
+data__value = '{{ value }}',
 data__displayName = '{{ displayName }}',
-data__value = '{{ value }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

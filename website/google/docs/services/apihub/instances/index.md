@@ -85,6 +85,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Error message describing the failure, if any, during Create, Delete or ApplyConfig operation corresponding to the plugin instance.This field will only be populated if the plugin instance is in the ERROR or FAILED state.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="sourceEnvironmentsConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. The source environment's config present in the gateway instance linked to the plugin instance. The key is the `source_environment` name from the SourceEnvironment message.</td>
+</tr>
+<tr>
     <td><CopyableCode code="sourceProjectId" /></td>
     <td><code>string</code></td>
     <td>Optional. The source project id of the plugin instance. This will be the id of runtime project in case of gcp based plugins and org id in case of non gcp based plugins. This field will be a required field for Google provided on-ramp plugins.</td>
@@ -147,6 +152,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="errorMessage" /></td>
     <td><code>string</code></td>
     <td>Output only. Error message describing the failure, if any, during Create, Delete or ApplyConfig operation corresponding to the plugin instance.This field will only be populated if the plugin instance is in the ERROR or FAILED state.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="sourceEnvironmentsConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. The source environment's config present in the gateway instance linked to the plugin instance. The key is the `source_environment` name from the SourceEnvironment message.</td>
 </tr>
 <tr>
     <td><CopyableCode code="sourceProjectId" /></td>
@@ -239,6 +249,13 @@ The following methods are available for this resource:
     <td></td>
     <td>Disables a plugin instance in the API hub.</td>
 </tr>
+<tr>
+    <td><a href="#manage_source_data"><CopyableCode code="manage_source_data" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-pluginsId"><code>pluginsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Manages data for a given plugin instance.</td>
+</tr>
 </tbody>
 </table>
 
@@ -325,6 +342,7 @@ authConfig,
 createTime,
 displayName,
 errorMessage,
+sourceEnvironmentsConfig,
 sourceProjectId,
 state,
 updateTime
@@ -349,6 +367,7 @@ authConfig,
 createTime,
 displayName,
 errorMessage,
+sourceEnvironmentsConfig,
 sourceProjectId,
 state,
 updateTime
@@ -386,6 +405,7 @@ data__authConfig,
 data__additionalConfig,
 data__actions,
 data__sourceProjectId,
+data__sourceEnvironmentsConfig,
 projectsId,
 locationsId,
 pluginsId,
@@ -398,6 +418,7 @@ SELECT
 '{{ additionalConfig }}',
 '{{ actions }}',
 '{{ sourceProjectId }}',
+'{{ sourceEnvironmentsConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ pluginsId }}',
@@ -456,6 +477,11 @@ response
       description: >
         Optional. The source project id of the plugin instance. This will be the id of runtime project in case of gcp based plugins and org id in case of non gcp based plugins. This field will be a required field for Google provided on-ramp plugins.
         
+    - name: sourceEnvironmentsConfig
+      value: object
+      description: >
+        Optional. The source environment's config present in the gateway instance linked to the plugin instance. The key is the `source_environment` name from the SourceEnvironment message.
+        
     - name: pluginInstanceId
       value: string
 ```
@@ -483,7 +509,8 @@ data__displayName = '{{ displayName }}',
 data__authConfig = '{{ authConfig }}',
 data__additionalConfig = '{{ additionalConfig }}',
 data__actions = '{{ actions }}',
-data__sourceProjectId = '{{ sourceProjectId }}'
+data__sourceProjectId = '{{ sourceProjectId }}',
+data__sourceEnvironmentsConfig = '{{ sourceEnvironmentsConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -498,6 +525,7 @@ authConfig,
 createTime,
 displayName,
 errorMessage,
+sourceEnvironmentsConfig,
 sourceProjectId,
 state,
 updateTime;
@@ -537,7 +565,8 @@ AND instancesId = '{{ instancesId }}' --required
     values={[
         { label: 'execute_action', value: 'execute_action' },
         { label: 'enable_action', value: 'enable_action' },
-        { label: 'disable_action', value: 'disable_action' }
+        { label: 'disable_action', value: 'disable_action' },
+        { label: 'manage_source_data', value: 'manage_source_data' }
     ]}
 >
 <TabItem value="execute_action">
@@ -587,6 +616,26 @@ EXEC google.apihub.instances.disable_action
 @@json=
 '{
 "actionId": "{{ actionId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="manage_source_data">
+
+Manages data for a given plugin instance.
+
+```sql
+EXEC google.apihub.instances.manage_source_data 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@pluginsId='{{ pluginsId }}' --required, 
+@instancesId='{{ instancesId }}' --required 
+@@json=
+'{
+"dataType": "{{ dataType }}", 
+"action": "{{ action }}", 
+"relativePath": "{{ relativePath }}", 
+"data": "{{ data }}"
 }'
 ;
 ```

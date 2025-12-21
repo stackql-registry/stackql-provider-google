@@ -50,6 +50,13 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
+    <td><a href="#sign_blob"><CopyableCode code="sign_blob" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-serviceAccountsId"><code>serviceAccountsId</code></a></td>
+    <td></td>
+    <td>Signs a blob using a service account's system-managed private key.</td>
+</tr>
+<tr>
     <td><a href="#generate_access_token"><CopyableCode code="generate_access_token" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-serviceAccountsId"><code>serviceAccountsId</code></a></td>
@@ -62,13 +69,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-serviceAccountsId"><code>serviceAccountsId</code></a></td>
     <td></td>
     <td>Generates an OpenID Connect ID token for a service account.</td>
-</tr>
-<tr>
-    <td><a href="#sign_blob"><CopyableCode code="sign_blob" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-serviceAccountsId"><code>serviceAccountsId</code></a></td>
-    <td></td>
-    <td>Signs a blob using a service account's system-managed private key.</td>
 </tr>
 <tr>
     <td><a href="#sign_jwt"><CopyableCode code="sign_jwt" /></a></td>
@@ -109,14 +109,30 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="generate_access_token"
+    defaultValue="sign_blob"
     values={[
+        { label: 'sign_blob', value: 'sign_blob' },
         { label: 'generate_access_token', value: 'generate_access_token' },
         { label: 'generate_id_token', value: 'generate_id_token' },
-        { label: 'sign_blob', value: 'sign_blob' },
         { label: 'sign_jwt', value: 'sign_jwt' }
     ]}
 >
+<TabItem value="sign_blob">
+
+Signs a blob using a service account's system-managed private key.
+
+```sql
+EXEC google.iamcredentials.service_accounts.sign_blob 
+@projectsId='{{ projectsId }}' --required, 
+@serviceAccountsId='{{ serviceAccountsId }}' --required 
+@@json=
+'{
+"delegates": "{{ delegates }}", 
+"payload": "{{ payload }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="generate_access_token">
 
 Generates an OAuth 2.0 access token for a service account.
@@ -144,26 +160,10 @@ EXEC google.iamcredentials.service_accounts.generate_id_token
 @serviceAccountsId='{{ serviceAccountsId }}' --required 
 @@json=
 '{
-"delegates": "{{ delegates }}", 
 "audience": "{{ audience }}", 
-"includeEmail": {{ includeEmail }}, 
-"organizationNumberIncluded": {{ organizationNumberIncluded }}
-}'
-;
-```
-</TabItem>
-<TabItem value="sign_blob">
-
-Signs a blob using a service account's system-managed private key.
-
-```sql
-EXEC google.iamcredentials.service_accounts.sign_blob 
-@projectsId='{{ projectsId }}' --required, 
-@serviceAccountsId='{{ serviceAccountsId }}' --required 
-@@json=
-'{
 "delegates": "{{ delegates }}", 
-"payload": "{{ payload }}"
+"organizationNumberIncluded": {{ organizationNumberIncluded }}, 
+"includeEmail": {{ includeEmail }}
 }'
 ;
 ```

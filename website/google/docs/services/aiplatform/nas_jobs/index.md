@@ -82,7 +82,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>Output only. Only populated when job's state is JOB_STATE_FAILED or JOB_STATE_CANCELLED. (id: GoogleRpcStatus)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: GoogleRpcStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -171,7 +171,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>Output only. Only populated when job's state is JOB_STATE_FAILED or JOB_STATE_CANCELLED. (id: GoogleRpcStatus)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: GoogleRpcStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -244,7 +244,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists NasJobs in a Location.</td>
 </tr>
 <tr>
@@ -383,10 +383,10 @@ updateTime
 FROM google.aiplatform.nas_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 AND readMask = '{{ readMask }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -408,20 +408,20 @@ Creates a NasJob
 
 ```sql
 INSERT INTO google.aiplatform.nas_jobs (
+data__enableRestrictedImageTraining,
+data__encryptionSpec,
+data__labels,
 data__displayName,
 data__nasJobSpec,
-data__labels,
-data__encryptionSpec,
-data__enableRestrictedImageTraining,
 projectsId,
 locationsId
 )
 SELECT 
+{{ enableRestrictedImageTraining }},
+'{{ encryptionSpec }}',
+'{{ labels }}',
 '{{ displayName }}',
 '{{ nasJobSpec }}',
-'{{ labels }}',
-'{{ encryptionSpec }}',
-{{ enableRestrictedImageTraining }},
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -455,6 +455,21 @@ updateTime
     - name: locationsId
       value: string
       description: Required parameter for the nas_jobs resource.
+    - name: enableRestrictedImageTraining
+      value: boolean
+      description: >
+        Optional. Enable a separation of Custom model training and restricted image training for tenant project.
+        
+    - name: encryptionSpec
+      value: object
+      description: >
+        Customer-managed encryption key options for a NasJob. If this is set, then all resources created by the NasJob will be encrypted with the provided encryption key.
+        
+    - name: labels
+      value: object
+      description: >
+        The labels with user-defined metadata to organize NasJobs. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
+        
     - name: displayName
       value: string
       description: >
@@ -464,21 +479,6 @@ updateTime
       value: object
       description: >
         Required. The specification of a NasJob.
-        
-    - name: labels
-      value: object
-      description: >
-        The labels with user-defined metadata to organize NasJobs. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
-        
-    - name: encryptionSpec
-      value: object
-      description: >
-        Customer-managed encryption key options for a NasJob. If this is set, then all resources created by the NasJob will be encrypted with the provided encryption key.
-        
-    - name: enableRestrictedImageTraining
-      value: boolean
-      description: >
-        Optional. Enable a separation of Custom model training and restricted image training for tenant project.
         
 ```
 </TabItem>

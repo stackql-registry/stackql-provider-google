@@ -204,7 +204,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
     <td>Lists Featurestores in a given project and location.</td>
 </tr>
 <tr>
@@ -374,10 +374,10 @@ updateTime
 FROM google.aiplatform.featurestores
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND readMask = '{{ readMask }}'
 ;
 ```
@@ -400,21 +400,21 @@ Creates a new Featurestore in a given project and location.
 
 ```sql
 INSERT INTO google.aiplatform.featurestores (
-data__etag,
 data__labels,
 data__onlineServingConfig,
-data__onlineStorageTtlDays,
+data__etag,
 data__encryptionSpec,
+data__onlineStorageTtlDays,
 projectsId,
 locationsId,
 featurestoreId
 )
 SELECT 
-'{{ etag }}',
 '{{ labels }}',
 '{{ onlineServingConfig }}',
-{{ onlineStorageTtlDays }},
+'{{ etag }}',
 '{{ encryptionSpec }}',
+{{ onlineStorageTtlDays }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ featurestoreId }}'
@@ -439,11 +439,6 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the featurestores resource.
-    - name: etag
-      value: string
-      description: >
-        Optional. Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
-        
     - name: labels
       value: object
       description: >
@@ -454,15 +449,20 @@ response
       description: >
         Optional. Config for online storage resources. The field should not co-exist with the field of `OnlineStoreReplicationConfig`. If both of it and OnlineStoreReplicationConfig are unset, the feature store will not have an online store and cannot be used for online serving.
         
-    - name: onlineStorageTtlDays
-      value: integer
+    - name: etag
+      value: string
       description: >
-        Optional. TTL in days for feature values that will be stored in online serving storage. The Feature Store online storage periodically removes obsolete feature values older than `online_storage_ttl_days` since the feature generation time. Note that `online_storage_ttl_days` should be less than or equal to `offline_storage_ttl_days` for each EntityType under a featurestore. If not set, default to 4000 days
+        Optional. Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
         
     - name: encryptionSpec
       value: object
       description: >
         Optional. Customer-managed encryption key spec for data storage. If set, both of the online and offline data storage will be secured by this key.
+        
+    - name: onlineStorageTtlDays
+      value: integer
+      description: >
+        Optional. TTL in days for feature values that will be stored in online serving storage. The Feature Store online storage periodically removes obsolete feature values older than `online_storage_ttl_days` since the feature generation time. Note that `online_storage_ttl_days` should be less than or equal to `offline_storage_ttl_days` for each EntityType under a featurestore. If not set, default to 4000 days
         
     - name: featurestoreId
       value: string
@@ -486,11 +486,11 @@ Updates the parameters of a single Featurestore.
 ```sql
 UPDATE google.aiplatform.featurestores
 SET 
-data__etag = '{{ etag }}',
 data__labels = '{{ labels }}',
 data__onlineServingConfig = '{{ onlineServingConfig }}',
-data__onlineStorageTtlDays = {{ onlineStorageTtlDays }},
-data__encryptionSpec = '{{ encryptionSpec }}'
+data__etag = '{{ etag }}',
+data__encryptionSpec = '{{ encryptionSpec }}',
+data__onlineStorageTtlDays = {{ onlineStorageTtlDays }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -552,11 +552,11 @@ EXEC google.aiplatform.featurestores.batch_read_feature_values
 @@json=
 '{
 "csvReadInstances": "{{ csvReadInstances }}", 
-"bigqueryReadInstances": "{{ bigqueryReadInstances }}", 
-"destination": "{{ destination }}", 
-"passThroughFields": "{{ passThroughFields }}", 
+"startTime": "{{ startTime }}", 
 "entityTypeSpecs": "{{ entityTypeSpecs }}", 
-"startTime": "{{ startTime }}"
+"passThroughFields": "{{ passThroughFields }}", 
+"destination": "{{ destination }}", 
+"bigqueryReadInstances": "{{ bigqueryReadInstances }}"
 }'
 ;
 ```

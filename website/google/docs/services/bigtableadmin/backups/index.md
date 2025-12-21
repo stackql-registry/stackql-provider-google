@@ -204,7 +204,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists Cloud Bigtable backups. Returns both completed and pending backups.</td>
 </tr>
 <tr>
@@ -359,10 +359,10 @@ FROM google.bigtableadmin.backups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND instancesId = '{{ instancesId }}' -- required
 AND clustersId = '{{ clustersId }}' -- required
-AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -385,10 +385,10 @@ Starts creating a new Cloud Bigtable Backup. The returned backup long-running op
 ```sql
 INSERT INTO google.bigtableadmin.backups (
 data__name,
-data__sourceTable,
 data__expireTime,
-data__backupType,
+data__sourceTable,
 data__hotToStandardTime,
+data__backupType,
 projectsId,
 instancesId,
 clustersId,
@@ -396,10 +396,10 @@ backupId
 )
 SELECT 
 '{{ name }}',
-'{{ sourceTable }}',
 '{{ expireTime }}',
-'{{ backupType }}',
+'{{ sourceTable }}',
 '{{ hotToStandardTime }}',
+'{{ backupType }}',
 '{{ projectsId }}',
 '{{ instancesId }}',
 '{{ clustersId }}',
@@ -433,15 +433,20 @@ response
       description: >
         A globally unique identifier for the backup which cannot be changed. Values are of the form `projects/{project}/instances/{instance}/clusters/{cluster}/ backups/_a-zA-Z0-9*` The final segment of the name must be between 1 and 50 characters in length. The backup is stored in the cluster identified by the prefix of the backup name of the form `projects/{project}/instances/{instance}/clusters/{cluster}`.
         
+    - name: expireTime
+      value: string
+      description: >
+        Required. The expiration time of the backup. When creating a backup or updating its `expire_time`, the value must be greater than the backup creation time by: - At least 6 hours - At most 90 days Once the `expire_time` has passed, Cloud Bigtable will delete the backup.
+        
     - name: sourceTable
       value: string
       description: >
         Required. Immutable. Name of the table from which this backup was created. This needs to be in the same instance as the backup. Values are of the form `projects/{project}/instances/{instance}/tables/{source_table}`.
         
-    - name: expireTime
+    - name: hotToStandardTime
       value: string
       description: >
-        Required. The expiration time of the backup. When creating a backup or updating its `expire_time`, the value must be greater than the backup creation time by: - At least 6 hours - At most 90 days Once the `expire_time` has passed, Cloud Bigtable will delete the backup.
+        The time at which the hot backup will be converted to a standard backup. Once the `hot_to_standard_time` has passed, Cloud Bigtable will convert the hot backup to a standard backup. This value must be greater than the backup creation time by: - At least 24 hours This field only applies for hot backups. When creating or updating a standard backup, attempting to set this field will fail the request.
         
     - name: backupType
       value: string
@@ -449,11 +454,6 @@ response
         Indicates the backup type of the backup.
         
       valid_values: ['BACKUP_TYPE_UNSPECIFIED', 'STANDARD', 'HOT']
-    - name: hotToStandardTime
-      value: string
-      description: >
-        The time at which the hot backup will be converted to a standard backup. Once the `hot_to_standard_time` has passed, Cloud Bigtable will convert the hot backup to a standard backup. This value must be greater than the backup creation time by: - At least 24 hours This field only applies for hot backups. When creating or updating a standard backup, attempting to set this field will fail the request.
-        
     - name: backupId
       value: string
 ```
@@ -477,10 +477,10 @@ Updates a pending or completed Cloud Bigtable Backup.
 UPDATE google.bigtableadmin.backups
 SET 
 data__name = '{{ name }}',
-data__sourceTable = '{{ sourceTable }}',
 data__expireTime = '{{ expireTime }}',
-data__backupType = '{{ backupType }}',
-data__hotToStandardTime = '{{ hotToStandardTime }}'
+data__sourceTable = '{{ sourceTable }}',
+data__hotToStandardTime = '{{ hotToStandardTime }}',
+data__backupType = '{{ backupType }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instancesId = '{{ instancesId }}' --required

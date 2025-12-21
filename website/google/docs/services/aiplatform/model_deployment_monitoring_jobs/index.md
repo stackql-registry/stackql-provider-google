@@ -344,7 +344,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists ModelDeploymentMonitoringJobs in a Location.</td>
 </tr>
 <tr>
@@ -369,13 +369,6 @@ The following methods are available for this resource:
     <td>Deletes a ModelDeploymentMonitoringJob.</td>
 </tr>
 <tr>
-    <td><a href="#search_model_deployment_monitoring_stats_anomalies"><CopyableCode code="search_model_deployment_monitoring_stats_anomalies" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-modelDeploymentMonitoringJobsId"><code>modelDeploymentMonitoringJobsId</code></a></td>
-    <td></td>
-    <td>Searches Model Monitoring Statistics generated within a given time window.</td>
-</tr>
-<tr>
     <td><a href="#pause"><CopyableCode code="pause" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-modelDeploymentMonitoringJobsId"><code>modelDeploymentMonitoringJobsId</code></a></td>
@@ -388,6 +381,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-modelDeploymentMonitoringJobsId"><code>modelDeploymentMonitoringJobsId</code></a></td>
     <td></td>
     <td>Resumes a paused ModelDeploymentMonitoringJob. It will start to run from next scheduled time. A deleted ModelDeploymentMonitoringJob can't be resumed.</td>
+</tr>
+<tr>
+    <td><a href="#search_model_deployment_monitoring_stats_anomalies"><CopyableCode code="search_model_deployment_monitoring_stats_anomalies" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-modelDeploymentMonitoringJobsId"><code>modelDeploymentMonitoringJobsId</code></a></td>
+    <td></td>
+    <td>Searches Model Monitoring Statistics generated within a given time window.</td>
 </tr>
 </tbody>
 </table>
@@ -529,10 +529,10 @@ updateTime
 FROM google.aiplatform.model_deployment_monitoring_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND readMask = '{{ readMask }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -554,38 +554,38 @@ Creates a ModelDeploymentMonitoringJob. It will run periodically on a configured
 
 ```sql
 INSERT INTO google.aiplatform.model_deployment_monitoring_jobs (
-data__displayName,
-data__endpoint,
 data__modelDeploymentMonitoringObjectiveConfigs,
-data__modelDeploymentMonitoringScheduleConfig,
-data__loggingSamplingStrategy,
-data__modelMonitoringAlertConfig,
-data__predictInstanceSchemaUri,
-data__samplePredictInstance,
-data__analysisInstanceSchemaUri,
-data__logTtl,
-data__labels,
+data__displayName,
 data__statsAnomaliesBaseDirectory,
-data__encryptionSpec,
+data__logTtl,
+data__analysisInstanceSchemaUri,
+data__endpoint,
+data__modelMonitoringAlertConfig,
+data__loggingSamplingStrategy,
+data__predictInstanceSchemaUri,
 data__enableMonitoringPipelineLogs,
+data__encryptionSpec,
+data__modelDeploymentMonitoringScheduleConfig,
+data__labels,
+data__samplePredictInstance,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ displayName }}',
-'{{ endpoint }}',
 '{{ modelDeploymentMonitoringObjectiveConfigs }}',
-'{{ modelDeploymentMonitoringScheduleConfig }}',
-'{{ loggingSamplingStrategy }}',
-'{{ modelMonitoringAlertConfig }}',
-'{{ predictInstanceSchemaUri }}',
-'{{ samplePredictInstance }}',
-'{{ analysisInstanceSchemaUri }}',
-'{{ logTtl }}',
-'{{ labels }}',
+'{{ displayName }}',
 '{{ statsAnomaliesBaseDirectory }}',
-'{{ encryptionSpec }}',
+'{{ logTtl }}',
+'{{ analysisInstanceSchemaUri }}',
+'{{ endpoint }}',
+'{{ modelMonitoringAlertConfig }}',
+'{{ loggingSamplingStrategy }}',
+'{{ predictInstanceSchemaUri }}',
 {{ enableMonitoringPipelineLogs }},
+'{{ encryptionSpec }}',
+'{{ modelDeploymentMonitoringScheduleConfig }}',
+'{{ labels }}',
+'{{ samplePredictInstance }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -629,75 +629,75 @@ updateTime
     - name: locationsId
       value: string
       description: Required parameter for the model_deployment_monitoring_jobs resource.
-    - name: displayName
-      value: string
-      description: >
-        Required. The user-defined name of the ModelDeploymentMonitoringJob. The name can be up to 128 characters long and can consist of any UTF-8 characters. Display name of a ModelDeploymentMonitoringJob.
-        
-    - name: endpoint
-      value: string
-      description: >
-        Required. Endpoint resource name. Format: `projects/{project}/locations/{location}/endpoints/{endpoint}`
-        
     - name: modelDeploymentMonitoringObjectiveConfigs
       value: array
       description: >
         Required. The config for monitoring objectives. This is a per DeployedModel config. Each DeployedModel needs to be configured separately.
         
-    - name: modelDeploymentMonitoringScheduleConfig
-      value: object
-      description: >
-        Required. Schedule config for running the monitoring job.
-        
-    - name: loggingSamplingStrategy
-      value: object
-      description: >
-        Required. Sample Strategy for logging.
-        
-    - name: modelMonitoringAlertConfig
-      value: object
-      description: >
-        Alert config for model monitoring.
-        
-    - name: predictInstanceSchemaUri
+    - name: displayName
       value: string
       description: >
-        YAML schema file uri describing the format of a single instance, which are given to format this Endpoint's prediction (and explanation). If not set, we will generate predict schema from collected predict requests.
-        
-    - name: samplePredictInstance
-      value: any
-      description: >
-        Sample Predict instance, same format as PredictRequest.instances, this can be set as a replacement of ModelDeploymentMonitoringJob.predict_instance_schema_uri. If not set, we will generate predict schema from collected predict requests.
-        
-    - name: analysisInstanceSchemaUri
-      value: string
-      description: >
-        YAML schema file uri describing the format of a single instance that you want Tensorflow Data Validation (TFDV) to analyze. If this field is empty, all the feature data types are inferred from predict_instance_schema_uri, meaning that TFDV will use the data in the exact format(data type) as prediction request/response. If there are any data type differences between predict instance and TFDV instance, this field can be used to override the schema. For models trained with Vertex AI, this field must be set as all the fields in predict instance formatted as string.
-        
-    - name: logTtl
-      value: string
-      description: >
-        The TTL of BigQuery tables in user projects which stores logs. A day is the basic unit of the TTL and we take the ceil of TTL/86400(a day). e.g. { second: 3600} indicates ttl = 1 day.
-        
-    - name: labels
-      value: object
-      description: >
-        The labels with user-defined metadata to organize your ModelDeploymentMonitoringJob. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
+        Required. The user-defined name of the ModelDeploymentMonitoringJob. The name can be up to 128 characters long and can consist of any UTF-8 characters. Display name of a ModelDeploymentMonitoringJob.
         
     - name: statsAnomaliesBaseDirectory
       value: object
       description: >
         Stats anomalies base folder path.
         
-    - name: encryptionSpec
+    - name: logTtl
+      value: string
+      description: >
+        The TTL of BigQuery tables in user projects which stores logs. A day is the basic unit of the TTL and we take the ceil of TTL/86400(a day). e.g. { second: 3600} indicates ttl = 1 day.
+        
+    - name: analysisInstanceSchemaUri
+      value: string
+      description: >
+        YAML schema file uri describing the format of a single instance that you want Tensorflow Data Validation (TFDV) to analyze. If this field is empty, all the feature data types are inferred from predict_instance_schema_uri, meaning that TFDV will use the data in the exact format(data type) as prediction request/response. If there are any data type differences between predict instance and TFDV instance, this field can be used to override the schema. For models trained with Vertex AI, this field must be set as all the fields in predict instance formatted as string.
+        
+    - name: endpoint
+      value: string
+      description: >
+        Required. Endpoint resource name. Format: `projects/{project}/locations/{location}/endpoints/{endpoint}`
+        
+    - name: modelMonitoringAlertConfig
       value: object
       description: >
-        Customer-managed encryption key spec for a ModelDeploymentMonitoringJob. If set, this ModelDeploymentMonitoringJob and all sub-resources of this ModelDeploymentMonitoringJob will be secured by this key.
+        Alert config for model monitoring.
+        
+    - name: loggingSamplingStrategy
+      value: object
+      description: >
+        Required. Sample Strategy for logging.
+        
+    - name: predictInstanceSchemaUri
+      value: string
+      description: >
+        YAML schema file uri describing the format of a single instance, which are given to format this Endpoint's prediction (and explanation). If not set, we will generate predict schema from collected predict requests.
         
     - name: enableMonitoringPipelineLogs
       value: boolean
       description: >
         If true, the scheduled monitoring pipeline logs are sent to Google Cloud Logging, including pipeline status and anomalies detected. Please note the logs incur cost, which are subject to [Cloud Logging pricing](https://cloud.google.com/logging#pricing).
+        
+    - name: encryptionSpec
+      value: object
+      description: >
+        Customer-managed encryption key spec for a ModelDeploymentMonitoringJob. If set, this ModelDeploymentMonitoringJob and all sub-resources of this ModelDeploymentMonitoringJob will be secured by this key.
+        
+    - name: modelDeploymentMonitoringScheduleConfig
+      value: object
+      description: >
+        Required. Schedule config for running the monitoring job.
+        
+    - name: labels
+      value: object
+      description: >
+        The labels with user-defined metadata to organize your ModelDeploymentMonitoringJob. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
+        
+    - name: samplePredictInstance
+      value: any
+      description: >
+        Sample Predict instance, same format as PredictRequest.instances, this can be set as a replacement of ModelDeploymentMonitoringJob.predict_instance_schema_uri. If not set, we will generate predict schema from collected predict requests.
         
 ```
 </TabItem>
@@ -719,20 +719,20 @@ Updates a ModelDeploymentMonitoringJob.
 ```sql
 UPDATE google.aiplatform.model_deployment_monitoring_jobs
 SET 
-data__displayName = '{{ displayName }}',
-data__endpoint = '{{ endpoint }}',
 data__modelDeploymentMonitoringObjectiveConfigs = '{{ modelDeploymentMonitoringObjectiveConfigs }}',
-data__modelDeploymentMonitoringScheduleConfig = '{{ modelDeploymentMonitoringScheduleConfig }}',
-data__loggingSamplingStrategy = '{{ loggingSamplingStrategy }}',
-data__modelMonitoringAlertConfig = '{{ modelMonitoringAlertConfig }}',
-data__predictInstanceSchemaUri = '{{ predictInstanceSchemaUri }}',
-data__samplePredictInstance = '{{ samplePredictInstance }}',
-data__analysisInstanceSchemaUri = '{{ analysisInstanceSchemaUri }}',
-data__logTtl = '{{ logTtl }}',
-data__labels = '{{ labels }}',
+data__displayName = '{{ displayName }}',
 data__statsAnomaliesBaseDirectory = '{{ statsAnomaliesBaseDirectory }}',
+data__logTtl = '{{ logTtl }}',
+data__analysisInstanceSchemaUri = '{{ analysisInstanceSchemaUri }}',
+data__endpoint = '{{ endpoint }}',
+data__modelMonitoringAlertConfig = '{{ modelMonitoringAlertConfig }}',
+data__loggingSamplingStrategy = '{{ loggingSamplingStrategy }}',
+data__predictInstanceSchemaUri = '{{ predictInstanceSchemaUri }}',
+data__enableMonitoringPipelineLogs = {{ enableMonitoringPipelineLogs }},
 data__encryptionSpec = '{{ encryptionSpec }}',
-data__enableMonitoringPipelineLogs = {{ enableMonitoringPipelineLogs }}
+data__modelDeploymentMonitoringScheduleConfig = '{{ modelDeploymentMonitoringScheduleConfig }}',
+data__labels = '{{ labels }}',
+data__samplePredictInstance = '{{ samplePredictInstance }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -775,35 +775,13 @@ AND modelDeploymentMonitoringJobsId = '{{ modelDeploymentMonitoringJobsId }}' --
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="search_model_deployment_monitoring_stats_anomalies"
+    defaultValue="pause"
     values={[
-        { label: 'search_model_deployment_monitoring_stats_anomalies', value: 'search_model_deployment_monitoring_stats_anomalies' },
         { label: 'pause', value: 'pause' },
-        { label: 'resume', value: 'resume' }
+        { label: 'resume', value: 'resume' },
+        { label: 'search_model_deployment_monitoring_stats_anomalies', value: 'search_model_deployment_monitoring_stats_anomalies' }
     ]}
 >
-<TabItem value="search_model_deployment_monitoring_stats_anomalies">
-
-Searches Model Monitoring Statistics generated within a given time window.
-
-```sql
-EXEC google.aiplatform.model_deployment_monitoring_jobs.search_model_deployment_monitoring_stats_anomalies 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@modelDeploymentMonitoringJobsId='{{ modelDeploymentMonitoringJobsId }}' --required 
-@@json=
-'{
-"deployedModelId": "{{ deployedModelId }}", 
-"featureDisplayName": "{{ featureDisplayName }}", 
-"objectives": "{{ objectives }}", 
-"pageSize": {{ pageSize }}, 
-"pageToken": "{{ pageToken }}", 
-"startTime": "{{ startTime }}", 
-"endTime": "{{ endTime }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="pause">
 
 Pauses a ModelDeploymentMonitoringJob. If the job is running, the server makes a best effort to cancel the job. Will mark ModelDeploymentMonitoringJob.state to 'PAUSED'.
@@ -825,6 +803,28 @@ EXEC google.aiplatform.model_deployment_monitoring_jobs.resume
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @modelDeploymentMonitoringJobsId='{{ modelDeploymentMonitoringJobsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="search_model_deployment_monitoring_stats_anomalies">
+
+Searches Model Monitoring Statistics generated within a given time window.
+
+```sql
+EXEC google.aiplatform.model_deployment_monitoring_jobs.search_model_deployment_monitoring_stats_anomalies 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@modelDeploymentMonitoringJobsId='{{ modelDeploymentMonitoringJobsId }}' --required 
+@@json=
+'{
+"objectives": "{{ objectives }}", 
+"pageToken": "{{ pageToken }}", 
+"deployedModelId": "{{ deployedModelId }}", 
+"pageSize": {{ pageSize }}, 
+"featureDisplayName": "{{ featureDisplayName }}", 
+"endTime": "{{ endTime }}", 
+"startTime": "{{ startTime }}"
+}'
 ;
 ```
 </TabItem>

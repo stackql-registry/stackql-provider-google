@@ -184,21 +184,21 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_app_connectors_list"><CopyableCode code="projects_locations_app_connectors_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists AppConnectors in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_app_connectors_create"><CopyableCode code="projects_locations_app_connectors_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-appConnectorId"><code>appConnectorId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-appConnectorId"><code>appConnectorId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new AppConnector in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_app_connectors_patch"><CopyableCode code="projects_locations_app_connectors_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-appConnectorsId"><code>appConnectorsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Updates the parameters of a single AppConnector.</td>
 </tr>
 <tr>
@@ -209,18 +209,18 @@ The following methods are available for this resource:
     <td>Deletes a single AppConnector.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_app_connectors_resolve_instance_config"><CopyableCode code="projects_locations_app_connectors_resolve_instance_config" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-appConnectorsId"><code>appConnectorsId</code></a></td>
-    <td></td>
-    <td>Gets instance configuration for a given AppConnector. An internal method called by a AppConnector to get its container config.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_app_connectors_report_status"><CopyableCode code="projects_locations_app_connectors_report_status" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-appConnectorsId"><code>appConnectorsId</code></a></td>
     <td></td>
     <td>Report status for a given connector.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_app_connectors_resolve_instance_config"><CopyableCode code="projects_locations_app_connectors_resolve_instance_config" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-appConnectorsId"><code>appConnectorsId</code></a></td>
+    <td></td>
+    <td>Gets instance configuration for a given AppConnector. An internal method called by a AppConnector to get its container config.</td>
 </tr>
 </tbody>
 </table>
@@ -345,10 +345,10 @@ updateTime
 FROM google.beyondcorp.app_connectors
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -370,28 +370,28 @@ Creates a new AppConnector in a given project and location.
 
 ```sql
 INSERT INTO google.beyondcorp.app_connectors (
+data__displayName,
+data__resourceInfo,
 data__name,
 data__labels,
-data__displayName,
 data__principalInfo,
-data__resourceInfo,
 projectsId,
 locationsId,
 appConnectorId,
-requestId,
-validateOnly
+validateOnly,
+requestId
 )
 SELECT 
+'{{ displayName }}',
+'{{ resourceInfo }}',
 '{{ name }}',
 '{{ labels }}',
-'{{ displayName }}',
 '{{ principalInfo }}',
-'{{ resourceInfo }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ appConnectorId }}',
-'{{ requestId }}',
-'{{ validateOnly }}'
+'{{ validateOnly }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -413,6 +413,16 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the app_connectors resource.
+    - name: displayName
+      value: string
+      description: >
+        Optional. An arbitrary user-provided name for the AppConnector. Cannot exceed 64 characters.
+        
+    - name: resourceInfo
+      value: object
+      description: >
+        Optional. Resource info of the connector.
+        
     - name: name
       value: string
       description: >
@@ -423,27 +433,17 @@ response
       description: >
         Optional. Resource labels to represent user provided metadata.
         
-    - name: displayName
-      value: string
-      description: >
-        Optional. An arbitrary user-provided name for the AppConnector. Cannot exceed 64 characters.
-        
     - name: principalInfo
       value: object
       description: >
         Required. Principal information about the Identity of the AppConnector.
         
-    - name: resourceInfo
-      value: object
-      description: >
-        Optional. Resource info of the connector.
-        
     - name: appConnectorId
-      value: string
-    - name: requestId
       value: string
     - name: validateOnly
       value: boolean
+    - name: requestId
+      value: string
 ```
 </TabItem>
 </Tabs>
@@ -464,17 +464,17 @@ Updates the parameters of a single AppConnector.
 ```sql
 UPDATE google.beyondcorp.app_connectors
 SET 
+data__displayName = '{{ displayName }}',
+data__resourceInfo = '{{ resourceInfo }}',
 data__name = '{{ name }}',
 data__labels = '{{ labels }}',
-data__displayName = '{{ displayName }}',
-data__principalInfo = '{{ principalInfo }}',
-data__resourceInfo = '{{ resourceInfo }}'
+data__principalInfo = '{{ principalInfo }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND appConnectorsId = '{{ appConnectorsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
@@ -515,24 +515,12 @@ AND validateOnly = '{{ validateOnly }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_app_connectors_resolve_instance_config"
+    defaultValue="projects_locations_app_connectors_report_status"
     values={[
-        { label: 'projects_locations_app_connectors_resolve_instance_config', value: 'projects_locations_app_connectors_resolve_instance_config' },
-        { label: 'projects_locations_app_connectors_report_status', value: 'projects_locations_app_connectors_report_status' }
+        { label: 'projects_locations_app_connectors_report_status', value: 'projects_locations_app_connectors_report_status' },
+        { label: 'projects_locations_app_connectors_resolve_instance_config', value: 'projects_locations_app_connectors_resolve_instance_config' }
     ]}
 >
-<TabItem value="projects_locations_app_connectors_resolve_instance_config">
-
-Gets instance configuration for a given AppConnector. An internal method called by a AppConnector to get its container config.
-
-```sql
-EXEC google.beyondcorp.app_connectors.projects_locations_app_connectors_resolve_instance_config 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@appConnectorsId='{{ appConnectorsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="projects_locations_app_connectors_report_status">
 
 Report status for a given connector.
@@ -544,10 +532,22 @@ EXEC google.beyondcorp.app_connectors.projects_locations_app_connectors_report_s
 @appConnectorsId='{{ appConnectorsId }}' --required 
 @@json=
 '{
+"validateOnly": {{ validateOnly }}, 
 "resourceInfo": "{{ resourceInfo }}", 
-"requestId": "{{ requestId }}", 
-"validateOnly": {{ validateOnly }}
+"requestId": "{{ requestId }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_app_connectors_resolve_instance_config">
+
+Gets instance configuration for a given AppConnector. An internal method called by a AppConnector to get its container config.
+
+```sql
+EXEC google.beyondcorp.app_connectors.projects_locations_app_connectors_resolve_instance_config 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@appConnectorsId='{{ appConnectorsId }}' --required
 ;
 ```
 </TabItem>

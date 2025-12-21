@@ -424,21 +424,21 @@ Update details of a single network.
 ```sql
 UPDATE google.baremetalsolution.networks
 SET 
-data__id = '{{ id }}',
-data__type = '{{ type }}',
-data__ipAddress = '{{ ipAddress }}',
-data__macAddress = '{{ macAddress }}',
-data__state = '{{ state }}',
-data__vlanId = '{{ vlanId }}',
-data__cidr = '{{ cidr }}',
-data__vrf = '{{ vrf }}',
-data__vrfAttachment = '{{ vrfAttachment }}',
-data__labels = '{{ labels }}',
-data__servicesCidr = '{{ servicesCidr }}',
-data__reservations = '{{ reservations }}',
-data__pod = '{{ pod }}',
 data__mountPoints = '{{ mountPoints }}',
-data__jumboFramesEnabled = {{ jumboFramesEnabled }}
+data__pod = '{{ pod }}',
+data__vrfAttachment = '{{ vrfAttachment }}',
+data__macAddress = '{{ macAddress }}',
+data__labels = '{{ labels }}',
+data__jumboFramesEnabled = {{ jumboFramesEnabled }},
+data__type = '{{ type }}',
+data__servicesCidr = '{{ servicesCidr }}',
+data__state = '{{ state }}',
+data__id = '{{ id }}',
+data__cidr = '{{ cidr }}',
+data__ipAddress = '{{ ipAddress }}',
+data__vrf = '{{ vrf }}',
+data__reservations = '{{ reservations }}',
+data__vlanId = '{{ vlanId }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

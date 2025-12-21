@@ -118,61 +118,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Identifier. The resource name of the backup vault. Format: `projects/&#123;project_id&#125;/locations/&#123;location&#125;/backupVaults/&#123;backup_vault_id&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="backupRegion" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Region where the backups are stored. Format: `projects/&#123;project_id&#125;/locations/&#123;location&#125;`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="backupRetentionPolicy" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Backup retention policy defining the retenton of backups. (id: BackupRetentionPolicy)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="backupVaultType" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Type of backup vault to be created. Default is IN_REGION.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Create time of the backup vault.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Description of the backup vault.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="destinationBackupVault" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Name of the Backup vault created in backup region. Format: `projects/&#123;project_id&#125;/locations/&#123;location&#125;/backupVaults/&#123;backup_vault_id&#125;`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Resource labels to represent user provided metadata.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="sourceBackupVault" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Name of the Backup vault created in source region. Format: `projects/&#123;project_id&#125;/locations/&#123;location&#125;/backupVaults/&#123;backup_vault_id&#125;`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="sourceRegion" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Region in which the backup vault is created. Format: `projects/&#123;project_id&#125;/locations/&#123;location&#125;`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="state" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The backup vault state.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -204,7 +149,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Returns list of all available backup vaults.</td>
 </tr>
 <tr>
@@ -331,24 +276,14 @@ Returns list of all available backup vaults.
 
 ```sql
 SELECT
-name,
-backupRegion,
-backupRetentionPolicy,
-backupVaultType,
-createTime,
-description,
-destinationBackupVault,
-labels,
-sourceBackupVault,
-sourceRegion,
-state
+*
 FROM google.netapp.backup_vaults
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -370,23 +305,23 @@ Creates new backup vault
 
 ```sql
 INSERT INTO google.netapp.backup_vaults (
-data__name,
-data__description,
-data__labels,
-data__backupVaultType,
 data__backupRegion,
+data__description,
 data__backupRetentionPolicy,
+data__backupVaultType,
+data__labels,
+data__name,
 projectsId,
 locationsId,
 backupVaultId
 )
 SELECT 
-'{{ name }}',
-'{{ description }}',
-'{{ labels }}',
-'{{ backupVaultType }}',
 '{{ backupRegion }}',
+'{{ description }}',
 '{{ backupRetentionPolicy }}',
+'{{ backupVaultType }}',
+'{{ labels }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ backupVaultId }}'
@@ -411,20 +346,20 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the backup_vaults resource.
-    - name: name
+    - name: backupRegion
       value: string
       description: >
-        Identifier. The resource name of the backup vault. Format: `projects/{project_id}/locations/{location}/backupVaults/{backup_vault_id}`.
+        Optional. Region where the backups are stored. Format: `projects/{project_id}/locations/{location}`
         
     - name: description
       value: string
       description: >
         Description of the backup vault.
         
-    - name: labels
+    - name: backupRetentionPolicy
       value: object
       description: >
-        Resource labels to represent user provided metadata.
+        Optional. Backup retention policy defining the retenton of backups.
         
     - name: backupVaultType
       value: string
@@ -432,15 +367,15 @@ response
         Optional. Type of backup vault to be created. Default is IN_REGION.
         
       valid_values: ['BACKUP_VAULT_TYPE_UNSPECIFIED', 'IN_REGION', 'CROSS_REGION']
-    - name: backupRegion
-      value: string
-      description: >
-        Optional. Region where the backups are stored. Format: `projects/{project_id}/locations/{location}`
-        
-    - name: backupRetentionPolicy
+    - name: labels
       value: object
       description: >
-        Optional. Backup retention policy defining the retenton of backups.
+        Resource labels to represent user provided metadata.
+        
+    - name: name
+      value: string
+      description: >
+        Identifier. The resource name of the backup vault. Format: `projects/{project_id}/locations/{location}/backupVaults/{backup_vault_id}`.
         
     - name: backupVaultId
       value: string
@@ -464,12 +399,12 @@ Updates the settings of a specific backup vault.
 ```sql
 UPDATE google.netapp.backup_vaults
 SET 
-data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__labels = '{{ labels }}',
-data__backupVaultType = '{{ backupVaultType }}',
 data__backupRegion = '{{ backupRegion }}',
-data__backupRetentionPolicy = '{{ backupRetentionPolicy }}'
+data__description = '{{ description }}',
+data__backupRetentionPolicy = '{{ backupRetentionPolicy }}',
+data__backupVaultType = '{{ backupVaultType }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -461,7 +461,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_job_triggers_list"><CopyableCode code="projects_locations_job_triggers_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-type"><code>type</code></a>, <a href="#parameter-locationId"><code>locationId</code></a></td>
+    <td><a href="#parameter-type"><code>type</code></a>, <a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists job triggers. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
 </tr>
 <tr>
@@ -475,14 +475,14 @@ The following methods are available for this resource:
     <td><a href="#organizations_locations_job_triggers_list"><CopyableCode code="organizations_locations_job_triggers_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-type"><code>type</code></a>, <a href="#parameter-locationId"><code>locationId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-type"><code>type</code></a></td>
     <td>Lists job triggers. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_job_triggers_list"><CopyableCode code="projects_job_triggers_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-type"><code>type</code></a>, <a href="#parameter-locationId"><code>locationId</code></a></td>
+    <td><a href="#parameter-type"><code>type</code></a>, <a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists job triggers. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
 </tr>
 <tr>
@@ -549,18 +549,18 @@ The following methods are available for this resource:
     <td>Deletes a job trigger. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_job_triggers_hybrid_inspect"><CopyableCode code="projects_locations_job_triggers_hybrid_inspect" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-jobTriggersId"><code>jobTriggersId</code></a></td>
-    <td></td>
-    <td>Inspect hybrid content and store findings to a trigger. The inspection will be processed asynchronously. To review the findings monitor the jobs within the trigger.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_job_triggers_activate"><CopyableCode code="projects_locations_job_triggers_activate" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-jobTriggersId"><code>jobTriggersId</code></a></td>
     <td></td>
     <td>Activate a job trigger. Causes the immediate execute of a trigger instead of waiting on the trigger event to occur.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_job_triggers_hybrid_inspect"><CopyableCode code="projects_locations_job_triggers_hybrid_inspect" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-jobTriggersId"><code>jobTriggersId</code></a></td>
+    <td></td>
+    <td>Inspect hybrid content and store findings to a trigger. The inspection will be processed asynchronously. To review the findings monitor the jobs within the trigger.</td>
 </tr>
 <tr>
     <td><a href="#projects_job_triggers_activate"><CopyableCode code="projects_job_triggers_activate" /></a></td>
@@ -716,12 +716,12 @@ updateTime
 FROM google.dlp.job_triggers
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
-AND filter = '{{ filter }}'
 AND type = '{{ type }}'
 AND locationId = '{{ locationId }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -766,12 +766,12 @@ updateTime
 FROM google.dlp.job_triggers
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND locationId = '{{ locationId }}'
 AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 AND type = '{{ type }}'
-AND locationId = '{{ locationId }}'
 ;
 ```
 </TabItem>
@@ -793,12 +793,12 @@ triggers,
 updateTime
 FROM google.dlp.job_triggers
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
-AND filter = '{{ filter }}'
 AND type = '{{ type }}'
 AND locationId = '{{ locationId }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -822,16 +822,16 @@ Creates a job trigger to run DLP actions such as scanning storage for sensitive 
 
 ```sql
 INSERT INTO google.dlp.job_triggers (
-data__jobTrigger,
 data__triggerId,
 data__locationId,
+data__jobTrigger,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ jobTrigger }}',
 '{{ triggerId }}',
 '{{ locationId }}',
+'{{ jobTrigger }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -854,16 +854,16 @@ Creates a job trigger to run DLP actions such as scanning storage for sensitive 
 
 ```sql
 INSERT INTO google.dlp.job_triggers (
-data__jobTrigger,
 data__triggerId,
 data__locationId,
+data__jobTrigger,
 organizationsId,
 locationsId
 )
 SELECT 
-'{{ jobTrigger }}',
 '{{ triggerId }}',
 '{{ locationId }}',
+'{{ jobTrigger }}',
 '{{ organizationsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -886,15 +886,15 @@ Creates a job trigger to run DLP actions such as scanning storage for sensitive 
 
 ```sql
 INSERT INTO google.dlp.job_triggers (
-data__jobTrigger,
 data__triggerId,
 data__locationId,
+data__jobTrigger,
 projectsId
 )
 SELECT 
-'{{ jobTrigger }}',
 '{{ triggerId }}',
 '{{ locationId }}',
+'{{ jobTrigger }}',
 '{{ projectsId }}'
 RETURNING
 name,
@@ -925,11 +925,6 @@ updateTime
     - name: organizationsId
       value: string
       description: Required parameter for the job_triggers resource.
-    - name: jobTrigger
-      value: object
-      description: >
-        Required. The JobTrigger to create.
-        
     - name: triggerId
       value: string
       description: >
@@ -939,6 +934,11 @@ updateTime
       value: string
       description: >
         Deprecated. This field has no effect.
+        
+    - name: jobTrigger
+      value: object
+      description: >
+        Contains a configuration to make API calls on a repeating basis. See https://cloud.google.com/sensitive-data-protection/docs/concepts-job-triggers to learn more.
         
 ```
 </TabItem>
@@ -1086,13 +1086,25 @@ AND jobTriggersId = '{{ jobTriggersId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_job_triggers_hybrid_inspect"
+    defaultValue="projects_locations_job_triggers_activate"
     values={[
-        { label: 'projects_locations_job_triggers_hybrid_inspect', value: 'projects_locations_job_triggers_hybrid_inspect' },
         { label: 'projects_locations_job_triggers_activate', value: 'projects_locations_job_triggers_activate' },
+        { label: 'projects_locations_job_triggers_hybrid_inspect', value: 'projects_locations_job_triggers_hybrid_inspect' },
         { label: 'projects_job_triggers_activate', value: 'projects_job_triggers_activate' }
     ]}
 >
+<TabItem value="projects_locations_job_triggers_activate">
+
+Activate a job trigger. Causes the immediate execute of a trigger instead of waiting on the trigger event to occur.
+
+```sql
+EXEC google.dlp.job_triggers.projects_locations_job_triggers_activate 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@jobTriggersId='{{ jobTriggersId }}' --required
+;
+```
+</TabItem>
 <TabItem value="projects_locations_job_triggers_hybrid_inspect">
 
 Inspect hybrid content and store findings to a trigger. The inspection will be processed asynchronously. To review the findings monitor the jobs within the trigger.
@@ -1106,18 +1118,6 @@ EXEC google.dlp.job_triggers.projects_locations_job_triggers_hybrid_inspect
 '{
 "hybridItem": "{{ hybridItem }}"
 }'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_job_triggers_activate">
-
-Activate a job trigger. Causes the immediate execute of a trigger instead of waiting on the trigger event to occur.
-
-```sql
-EXEC google.dlp.job_triggers.projects_locations_job_triggers_activate 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@jobTriggersId='{{ jobTriggersId }}' --required
 ;
 ```
 </TabItem>

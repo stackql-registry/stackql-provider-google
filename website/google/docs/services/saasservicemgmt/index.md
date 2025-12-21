@@ -18,7 +18,7 @@ saasservicemgmt service documentation.
 
 :::info[Service Summary]
 
-total resources: __9__  
+total resources: __10__  
 
 :::
 
@@ -27,11 +27,12 @@ total resources: __9__
 <div class="providerDocColumn">
 <a href="/services/saasservicemgmt/locations/">locations</a><br />
 <a href="/services/saasservicemgmt/releases/">releases</a><br />
+<a href="/services/saasservicemgmt/replications_internal/">replications_internal</a><br />
 <a href="/services/saasservicemgmt/rollout_kinds/">rollout_kinds</a><br />
-<a href="/services/saasservicemgmt/rollouts/">rollouts</a><br />
-<a href="/services/saasservicemgmt/saas/">saas</a>
+<a href="/services/saasservicemgmt/rollouts/">rollouts</a>
 </div>
 <div class="providerDocColumn">
+<a href="/services/saasservicemgmt/saas/">saas</a><br />
 <a href="/services/saasservicemgmt/tenants/">tenants</a><br />
 <a href="/services/saasservicemgmt/unit_kinds/">unit_kinds</a><br />
 <a href="/services/saasservicemgmt/unit_operations/">unit_operations</a><br />

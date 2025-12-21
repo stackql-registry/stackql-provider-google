@@ -174,7 +174,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists information about app profiles in an instance.</td>
 </tr>
 <tr>
@@ -304,8 +304,8 @@ standardIsolation
 FROM google.bigtableadmin.app_profiles
 WHERE projectsId = '{{ projectsId }}' -- required
 AND instancesId = '{{ instancesId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -327,28 +327,28 @@ Creates an app profile within an instance.
 
 ```sql
 INSERT INTO google.bigtableadmin.app_profiles (
-data__name,
-data__etag,
-data__description,
-data__multiClusterRoutingUseAny,
 data__singleClusterRouting,
-data__priority,
-data__standardIsolation,
 data__dataBoostIsolationReadOnly,
+data__description,
+data__standardIsolation,
+data__name,
+data__multiClusterRoutingUseAny,
+data__etag,
+data__priority,
 projectsId,
 instancesId,
 appProfileId,
 ignoreWarnings
 )
 SELECT 
-'{{ name }}',
-'{{ etag }}',
-'{{ description }}',
-'{{ multiClusterRoutingUseAny }}',
 '{{ singleClusterRouting }}',
-'{{ priority }}',
-'{{ standardIsolation }}',
 '{{ dataBoostIsolationReadOnly }}',
+'{{ description }}',
+'{{ standardIsolation }}',
+'{{ name }}',
+'{{ multiClusterRoutingUseAny }}',
+'{{ etag }}',
+'{{ priority }}',
 '{{ projectsId }}',
 '{{ instancesId }}',
 '{{ appProfileId }}',
@@ -377,30 +377,40 @@ standardIsolation
     - name: instancesId
       value: string
       description: Required parameter for the app_profiles resource.
-    - name: name
-      value: string
+    - name: singleClusterRouting
+      value: object
       description: >
-        The unique name of the app profile, up to 50 characters long. Values are of the form `projects/{project}/instances/{instance}/appProfiles/_a-zA-Z0-9*`.
+        Use a single-cluster routing policy.
         
-    - name: etag
-      value: string
+    - name: dataBoostIsolationReadOnly
+      value: object
       description: >
-        Strongly validated etag for optimistic concurrency control. Preserve the value returned from `GetAppProfile` when calling `UpdateAppProfile` to fail the request if there has been a modification in the mean time. The `update_mask` of the request need not include `etag` for this protection to apply. See [Wikipedia](https://en.wikipedia.org/wiki/HTTP_ETag) and [RFC 7232](https://tools.ietf.org/html/rfc7232#section-2.3) for more details.
+        Specifies that this app profile is intended for read-only usage via the Data Boost feature.
         
     - name: description
       value: string
       description: >
         Long form description of the use case for this AppProfile.
         
+    - name: standardIsolation
+      value: object
+      description: >
+        The standard options used for isolating this app profile's traffic from other use cases.
+        
+    - name: name
+      value: string
+      description: >
+        The unique name of the app profile, up to 50 characters long. Values are of the form `projects/{project}/instances/{instance}/appProfiles/_a-zA-Z0-9*`.
+        
     - name: multiClusterRoutingUseAny
       value: object
       description: >
         Use a multi-cluster routing policy.
         
-    - name: singleClusterRouting
-      value: object
+    - name: etag
+      value: string
       description: >
-        Use a single-cluster routing policy.
+        Strongly validated etag for optimistic concurrency control. Preserve the value returned from `GetAppProfile` when calling `UpdateAppProfile` to fail the request if there has been a modification in the mean time. The `update_mask` of the request need not include `etag` for this protection to apply. See [Wikipedia](https://en.wikipedia.org/wiki/HTTP_ETag) and [RFC 7232](https://tools.ietf.org/html/rfc7232#section-2.3) for more details.
         
     - name: priority
       value: string
@@ -408,16 +418,6 @@ standardIsolation
         This field has been deprecated in favor of `standard_isolation.priority`. If you set this field, `standard_isolation.priority` will be set instead. The priority of requests sent using this app profile.
         
       valid_values: ['PRIORITY_UNSPECIFIED', 'PRIORITY_LOW', 'PRIORITY_MEDIUM', 'PRIORITY_HIGH']
-    - name: standardIsolation
-      value: object
-      description: >
-        The standard options used for isolating this app profile's traffic from other use cases.
-        
-    - name: dataBoostIsolationReadOnly
-      value: object
-      description: >
-        Specifies that this app profile is intended for read-only usage via the Data Boost feature.
-        
     - name: appProfileId
       value: string
     - name: ignoreWarnings
@@ -442,14 +442,14 @@ Updates an app profile within an instance.
 ```sql
 UPDATE google.bigtableadmin.app_profiles
 SET 
-data__name = '{{ name }}',
-data__etag = '{{ etag }}',
-data__description = '{{ description }}',
-data__multiClusterRoutingUseAny = '{{ multiClusterRoutingUseAny }}',
 data__singleClusterRouting = '{{ singleClusterRouting }}',
-data__priority = '{{ priority }}',
+data__dataBoostIsolationReadOnly = '{{ dataBoostIsolationReadOnly }}',
+data__description = '{{ description }}',
 data__standardIsolation = '{{ standardIsolation }}',
-data__dataBoostIsolationReadOnly = '{{ dataBoostIsolationReadOnly }}'
+data__name = '{{ name }}',
+data__multiClusterRoutingUseAny = '{{ multiClusterRoutingUseAny }}',
+data__etag = '{{ etag }}',
+data__priority = '{{ priority }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instancesId = '{{ instancesId }}' --required

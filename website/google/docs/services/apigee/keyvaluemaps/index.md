@@ -31,8 +31,102 @@ Creates, updates, deletes, gets or lists a <code>keyvaluemaps</code> resource.
 
 The following fields are returned by `SELECT` queries:
 
-`SELECT` not supported for this resource, use `SHOW METHODS` to view available operations for the resource.
+<Tabs
+    defaultValue="organizations_apis_keyvaluemaps_get"
+    values={[
+        { label: 'organizations_apis_keyvaluemaps_get', value: 'organizations_apis_keyvaluemaps_get' },
+        { label: 'organizations_environments_keyvaluemaps_get', value: 'organizations_environments_keyvaluemaps_get' },
+        { label: 'organizations_keyvaluemaps_get', value: 'organizations_keyvaluemaps_get' }
+    ]}
+>
+<TabItem value="organizations_apis_keyvaluemaps_get">
 
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Required. ID of the key value map.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="encrypted" /></td>
+    <td><code>boolean</code></td>
+    <td>Required. Flag that specifies whether entry values will be encrypted. This field is retained for backward compatibility and the value of encrypted will always be `true`. Apigee X and hybrid do not support unencrypted key value maps.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="maskedValues" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. Flag that specifies whether entry values will be masked when returned.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="organizations_environments_keyvaluemaps_get">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Required. ID of the key value map.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="encrypted" /></td>
+    <td><code>boolean</code></td>
+    <td>Required. Flag that specifies whether entry values will be encrypted. This field is retained for backward compatibility and the value of encrypted will always be `true`. Apigee X and hybrid do not support unencrypted key value maps.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="maskedValues" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. Flag that specifies whether entry values will be masked when returned.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="organizations_keyvaluemaps_get">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Required. ID of the key value map.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="encrypted" /></td>
+    <td><code>boolean</code></td>
+    <td>Required. Flag that specifies whether entry values will be encrypted. This field is retained for backward compatibility and the value of encrypted will always be `true`. Apigee X and hybrid do not support unencrypted key value maps.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="maskedValues" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. Flag that specifies whether entry values will be masked when returned.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+</Tabs>
 
 ## Methods
 
@@ -49,6 +143,27 @@ The following methods are available for this resource:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><a href="#organizations_apis_keyvaluemaps_get"><CopyableCode code="organizations_apis_keyvaluemaps_get" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-keyvaluemapsId"><code>keyvaluemapsId</code></a></td>
+    <td></td>
+    <td>Get the key value map scoped to an organization, environment, or API proxy.</td>
+</tr>
+<tr>
+    <td><a href="#organizations_environments_keyvaluemaps_get"><CopyableCode code="organizations_environments_keyvaluemaps_get" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-keyvaluemapsId"><code>keyvaluemapsId</code></a></td>
+    <td></td>
+    <td>Get the key value map scoped to an organization, environment, or API proxy.</td>
+</tr>
+<tr>
+    <td><a href="#organizations_keyvaluemaps_get"><CopyableCode code="organizations_keyvaluemaps_get" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-keyvaluemapsId"><code>keyvaluemapsId</code></a></td>
+    <td></td>
+    <td>Get the key value map scoped to an organization, environment, or API proxy.</td>
+</tr>
 <tr>
     <td><a href="#organizations_apis_keyvaluemaps_create"><CopyableCode code="organizations_apis_keyvaluemaps_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
@@ -69,6 +184,27 @@ The following methods are available for this resource:
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
     <td></td>
     <td>Creates a key value map in an organization.</td>
+</tr>
+<tr>
+    <td><a href="#organizations_apis_keyvaluemaps_update"><CopyableCode code="organizations_apis_keyvaluemaps_update" /></a></td>
+    <td><CopyableCode code="replace" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-keyvaluemapsId"><code>keyvaluemapsId</code></a></td>
+    <td></td>
+    <td>Update the key value map scoped to an organization, environment, or API proxy.</td>
+</tr>
+<tr>
+    <td><a href="#organizations_environments_keyvaluemaps_update"><CopyableCode code="organizations_environments_keyvaluemaps_update" /></a></td>
+    <td><CopyableCode code="replace" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-keyvaluemapsId"><code>keyvaluemapsId</code></a></td>
+    <td></td>
+    <td>Update the key value map scoped to an organization, environment, or API proxy.</td>
+</tr>
+<tr>
+    <td><a href="#organizations_keyvaluemaps_update"><CopyableCode code="organizations_keyvaluemaps_update" /></a></td>
+    <td><CopyableCode code="replace" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-keyvaluemapsId"><code>keyvaluemapsId</code></a></td>
+    <td></td>
+    <td>Update the key value map scoped to an organization, environment, or API proxy.</td>
 </tr>
 <tr>
     <td><a href="#organizations_apis_keyvaluemaps_delete"><CopyableCode code="organizations_apis_keyvaluemaps_delete" /></a></td>
@@ -130,6 +266,66 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tbody>
 </table>
 
+## `SELECT` examples
+
+<Tabs
+    defaultValue="organizations_apis_keyvaluemaps_get"
+    values={[
+        { label: 'organizations_apis_keyvaluemaps_get', value: 'organizations_apis_keyvaluemaps_get' },
+        { label: 'organizations_environments_keyvaluemaps_get', value: 'organizations_environments_keyvaluemaps_get' },
+        { label: 'organizations_keyvaluemaps_get', value: 'organizations_keyvaluemaps_get' }
+    ]}
+>
+<TabItem value="organizations_apis_keyvaluemaps_get">
+
+Get the key value map scoped to an organization, environment, or API proxy.
+
+```sql
+SELECT
+name,
+encrypted,
+maskedValues
+FROM google.apigee.keyvaluemaps
+WHERE organizationsId = '{{ organizationsId }}' -- required
+AND apisId = '{{ apisId }}' -- required
+AND keyvaluemapsId = '{{ keyvaluemapsId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="organizations_environments_keyvaluemaps_get">
+
+Get the key value map scoped to an organization, environment, or API proxy.
+
+```sql
+SELECT
+name,
+encrypted,
+maskedValues
+FROM google.apigee.keyvaluemaps
+WHERE organizationsId = '{{ organizationsId }}' -- required
+AND environmentsId = '{{ environmentsId }}' -- required
+AND keyvaluemapsId = '{{ keyvaluemapsId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="organizations_keyvaluemaps_get">
+
+Get the key value map scoped to an organization, environment, or API proxy.
+
+```sql
+SELECT
+name,
+encrypted,
+maskedValues
+FROM google.apigee.keyvaluemaps
+WHERE organizationsId = '{{ organizationsId }}' -- required
+AND keyvaluemapsId = '{{ keyvaluemapsId }}' -- required
+;
+```
+</TabItem>
+</Tabs>
+
+
 ## `INSERT` examples
 
 <Tabs
@@ -148,18 +344,21 @@ Creates a key value map in an API proxy.
 ```sql
 INSERT INTO google.apigee.keyvaluemaps (
 data__name,
+data__maskedValues,
 data__encrypted,
 organizationsId,
 apisId
 )
 SELECT 
 '{{ name }}',
+{{ maskedValues }},
 {{ encrypted }},
 '{{ organizationsId }}',
 '{{ apisId }}'
 RETURNING
 name,
-encrypted
+encrypted,
+maskedValues
 ;
 ```
 </TabItem>
@@ -170,18 +369,21 @@ Creates a key value map in an environment.
 ```sql
 INSERT INTO google.apigee.keyvaluemaps (
 data__name,
+data__maskedValues,
 data__encrypted,
 organizationsId,
 environmentsId
 )
 SELECT 
 '{{ name }}',
+{{ maskedValues }},
 {{ encrypted }},
 '{{ organizationsId }}',
 '{{ environmentsId }}'
 RETURNING
 name,
-encrypted
+encrypted,
+maskedValues
 ;
 ```
 </TabItem>
@@ -192,16 +394,19 @@ Creates a key value map in an organization.
 ```sql
 INSERT INTO google.apigee.keyvaluemaps (
 data__name,
+data__maskedValues,
 data__encrypted,
 organizationsId
 )
 SELECT 
 '{{ name }}',
+{{ maskedValues }},
 {{ encrypted }},
 '{{ organizationsId }}'
 RETURNING
 name,
-encrypted
+encrypted,
+maskedValues
 ;
 ```
 </TabItem>
@@ -225,11 +430,88 @@ encrypted
       description: >
         Required. ID of the key value map.
         
+    - name: maskedValues
+      value: boolean
+      description: >
+        Optional. Flag that specifies whether entry values will be masked when returned.
+        
     - name: encrypted
       value: boolean
       description: >
         Required. Flag that specifies whether entry values will be encrypted. This field is retained for backward compatibility and the value of encrypted will always be `true`. Apigee X and hybrid do not support unencrypted key value maps.
         
+```
+</TabItem>
+</Tabs>
+
+
+## `REPLACE` examples
+
+<Tabs
+    defaultValue="organizations_apis_keyvaluemaps_update"
+    values={[
+        { label: 'organizations_apis_keyvaluemaps_update', value: 'organizations_apis_keyvaluemaps_update' },
+        { label: 'organizations_environments_keyvaluemaps_update', value: 'organizations_environments_keyvaluemaps_update' },
+        { label: 'organizations_keyvaluemaps_update', value: 'organizations_keyvaluemaps_update' }
+    ]}
+>
+<TabItem value="organizations_apis_keyvaluemaps_update">
+
+Update the key value map scoped to an organization, environment, or API proxy.
+
+```sql
+REPLACE google.apigee.keyvaluemaps
+SET 
+data__name = '{{ name }}',
+data__maskedValues = {{ maskedValues }},
+data__encrypted = {{ encrypted }}
+WHERE 
+organizationsId = '{{ organizationsId }}' --required
+AND apisId = '{{ apisId }}' --required
+AND keyvaluemapsId = '{{ keyvaluemapsId }}' --required
+RETURNING
+name,
+encrypted,
+maskedValues;
+```
+</TabItem>
+<TabItem value="organizations_environments_keyvaluemaps_update">
+
+Update the key value map scoped to an organization, environment, or API proxy.
+
+```sql
+REPLACE google.apigee.keyvaluemaps
+SET 
+data__name = '{{ name }}',
+data__maskedValues = {{ maskedValues }},
+data__encrypted = {{ encrypted }}
+WHERE 
+organizationsId = '{{ organizationsId }}' --required
+AND environmentsId = '{{ environmentsId }}' --required
+AND keyvaluemapsId = '{{ keyvaluemapsId }}' --required
+RETURNING
+name,
+encrypted,
+maskedValues;
+```
+</TabItem>
+<TabItem value="organizations_keyvaluemaps_update">
+
+Update the key value map scoped to an organization, environment, or API proxy.
+
+```sql
+REPLACE google.apigee.keyvaluemaps
+SET 
+data__name = '{{ name }}',
+data__maskedValues = {{ maskedValues }},
+data__encrypted = {{ encrypted }}
+WHERE 
+organizationsId = '{{ organizationsId }}' --required
+AND keyvaluemapsId = '{{ keyvaluemapsId }}' --required
+RETURNING
+name,
+encrypted,
+maskedValues;
 ```
 </TabItem>
 </Tabs>

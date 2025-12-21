@@ -136,6 +136,7 @@ data__clientConnectionConfig,
 data__pscInstanceConfig,
 data__networkConfig,
 data__activationPolicy,
+data__connectionPoolConfig,
 projectsId,
 locationsId,
 clustersId,
@@ -160,6 +161,7 @@ SELECT
 '{{ pscInstanceConfig }}',
 '{{ networkConfig }}',
 '{{ activationPolicy }}',
+'{{ connectionPoolConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ clustersId }}',
@@ -273,6 +275,11 @@ response
         Optional. Specifies whether an instance needs to spin up. Once the instance is active, the activation policy can be updated to the `NEVER` to stop the instance. Likewise, the activation policy can be updated to `ALWAYS` to start the instance. There are restrictions around when an instance can/cannot be activated (for example, a read pool instance should be stopped before stopping primary etc.). Please refer to the API documentation for more details.
         
       valid_values: ['ACTIVATION_POLICY_UNSPECIFIED', 'ALWAYS', 'NEVER']
+    - name: connectionPoolConfig
+      value: object
+      description: >
+        Optional. The configuration for Managed Connection Pool (MCP).
+        
     - name: instanceId
       value: string
     - name: requestId

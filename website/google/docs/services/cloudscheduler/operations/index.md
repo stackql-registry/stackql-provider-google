@@ -88,31 +88,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should be a resource name ending with `operations/&#123;unique_id&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="done" /></td>
-    <td><code>boolean</code></td>
-    <td>If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="error" /></td>
-    <td><code>object</code></td>
-    <td>The error result of the operation in case of failure or cancellation. (id: Status)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="metadata" /></td>
-    <td><code>object</code></td>
-    <td>Service-specific metadata associated with the operation. It typically contains progress information and common metadata such as create time. Some services might not provide such metadata. Any method that returns a long-running operation should document the metadata type, if any.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="response" /></td>
-    <td><code>object</code></td>
-    <td>The normal, successful response of the operation. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -136,28 +111,28 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-operationsId"><code>operationsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
     <td></td>
     <td>Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-operationsId"><code>operationsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
     <td></td>
     <td>Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.</td>
 </tr>
 <tr>
     <td><a href="#cancel"><CopyableCode code="cancel" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-operationsId"><code>operationsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
     <td></td>
     <td>Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.</td>
 </tr>
@@ -177,8 +152,18 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
+<tr id="parameter-locationsId">
+    <td><CopyableCode code="locationsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-operationsId">
     <td><CopyableCode code="operationsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-projectsId">
+    <td><CopyableCode code="projectsId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -195,6 +180,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-pageToken">
     <td><CopyableCode code="pageToken" /></td>
     <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-returnPartialSuccess">
+    <td><CopyableCode code="returnPartialSuccess" /></td>
+    <td><code>boolean</code></td>
     <td></td>
 </tr>
 </tbody>
@@ -221,7 +211,9 @@ error,
 metadata,
 response
 FROM google.cloudscheduler.operations
-WHERE operationsId = '{{ operationsId }}' -- required
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND operationsId = '{{ operationsId }}' -- required
 ;
 ```
 </TabItem>
@@ -231,15 +223,14 @@ Lists operations that match the specified filter in the request. If the server d
 
 ```sql
 SELECT
-name,
-done,
-error,
-metadata,
-response
+*
 FROM google.cloudscheduler.operations
-WHERE filter = '{{ filter }}'
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -260,7 +251,9 @@ Deletes a long-running operation. This method indicates that the client is no lo
 
 ```sql
 DELETE FROM google.cloudscheduler.operations
-WHERE operationsId = '{{ operationsId }}' --required
+WHERE projectsId = '{{ projectsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND operationsId = '{{ operationsId }}' --required
 ;
 ```
 </TabItem>
@@ -281,6 +274,8 @@ Starts asynchronous cancellation on a long-running operation. The server makes a
 
 ```sql
 EXEC google.cloudscheduler.operations.cancel 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
 @operationsId='{{ operationsId }}' --required
 ;
 ```

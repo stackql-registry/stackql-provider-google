@@ -562,7 +562,9 @@ EXEC google.backupdr.backup_plan_associations.trigger_backup
 @@json=
 '{
 "ruleId": "{{ ruleId }}", 
-"requestId": "{{ requestId }}"
+"requestId": "{{ requestId }}", 
+"customRetentionDays": {{ customRetentionDays }}, 
+"labels": "{{ labels }}"
 }'
 ;
 ```

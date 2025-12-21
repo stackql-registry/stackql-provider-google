@@ -52,12 +52,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Identifier. name of resource</td>
+    <td>Identifier. The name of the revision resource, of the form: projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/investigations/&#123;investigation_id&#125;/revisions/&#123;revision_id&#125;</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. [Output only] Create time stamp</td>
+    <td>Output only. The time when the revision was created.</td>
 </tr>
 <tr>
     <td><CopyableCode code="index" /></td>
@@ -67,12 +67,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="labels" /></td>
     <td><code>object</code></td>
-    <td>Optional. Labels as key value pairs</td>
+    <td>Optional. User-defined labels for the revision.</td>
 </tr>
 <tr>
     <td><CopyableCode code="snapshot" /></td>
     <td><code>object</code></td>
-    <td>Message describing Investigation object Next Id: 24 (id: Investigation)</td>
+    <td>Holds the contents of a Gemini Cloud Assist Troubleshooting investigation. (id: Investigation)</td>
 </tr>
 </tbody>
 </table>
@@ -88,31 +88,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Identifier. name of resource</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. [Output only] Create time stamp</td>
-</tr>
-<tr>
-    <td><CopyableCode code="index" /></td>
-    <td><code>integer (int32)</code></td>
-    <td>Output only. Revision index number, in order of creation.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Labels as key value pairs</td>
-</tr>
-<tr>
-    <td><CopyableCode code="snapshot" /></td>
-    <td><code>object</code></td>
-    <td>Message describing Investigation object Next Id: 24 (id: Investigation)</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -145,28 +120,21 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-investigationsId"><code>investigationsId</code></a></td>
     <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists Investigations in a given project and location.</td>
+    <td>Lists Investigations in a given project.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-investigationsId"><code>investigationsId</code></a></td>
-    <td><a href="#parameter-investigationRevisionId"><code>investigationRevisionId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-investigationRevisionId"><code>investigationRevisionId</code></a></td>
     <td>Creates a new revision of a given Investigation.</td>
-</tr>
-<tr>
-    <td><a href="#patch"><CopyableCode code="patch" /></a></td>
-    <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-investigationsId"><code>investigationsId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Updates the parameters of a single Investigation.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-investigationsId"><code>investigationsId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Deletes a single revision of an Investigation. Fails if the revision is the investigation's active revision.</td>
+    <td>Deletes a single revision of an Investigation. Fails if the revision is the investigation's most recent revision.</td>
 </tr>
 <tr>
     <td><a href="#run"><CopyableCode code="run" /></a></td>
@@ -231,11 +199,6 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
-<tr id="parameter-updateMask">
-    <td><CopyableCode code="updateMask" /></td>
-    <td><code>string (google-fieldmask)</code></td>
-    <td></td>
-</tr>
 </tbody>
 </table>
 
@@ -269,15 +232,11 @@ AND revisionsId = '{{ revisionsId }}' -- required
 </TabItem>
 <TabItem value="list">
 
-Lists Investigations in a given project and location.
+Lists Investigations in a given project.
 
 ```sql
 SELECT
-name,
-createTime,
-index,
-labels,
-snapshot
+*
 FROM google.geminicloudassist.revisions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
@@ -311,8 +270,8 @@ data__labels,
 projectsId,
 locationsId,
 investigationsId,
-investigationRevisionId,
-requestId
+requestId,
+investigationRevisionId
 )
 SELECT 
 '{{ name }}',
@@ -321,8 +280,8 @@ SELECT
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ investigationsId }}',
-'{{ investigationRevisionId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ investigationRevisionId }}'
 RETURNING
 name,
 createTime,
@@ -350,58 +309,22 @@ snapshot
     - name: name
       value: string
       description: >
-        Identifier. name of resource
+        Identifier. The name of the revision resource, of the form: projects/{project_number}/locations/{location_id}/investigations/{investigation_id}/revisions/{revision_id}
         
     - name: snapshot
       value: object
       description: >
-        Message describing Investigation object Next Id: 24
+        Holds the contents of a Gemini Cloud Assist Troubleshooting investigation.
         
     - name: labels
       value: object
       description: >
-        Optional. Labels as key value pairs
+        Optional. User-defined labels for the revision.
         
-    - name: investigationRevisionId
-      value: string
     - name: requestId
       value: string
-```
-</TabItem>
-</Tabs>
-
-
-## `UPDATE` examples
-
-<Tabs
-    defaultValue="patch"
-    values={[
-        { label: 'patch', value: 'patch' }
-    ]}
->
-<TabItem value="patch">
-
-Updates the parameters of a single Investigation.
-
-```sql
-UPDATE google.geminicloudassist.revisions
-SET 
-data__name = '{{ name }}',
-data__snapshot = '{{ snapshot }}',
-data__labels = '{{ labels }}'
-WHERE 
-projectsId = '{{ projectsId }}' --required
-AND locationsId = '{{ locationsId }}' --required
-AND investigationsId = '{{ investigationsId }}' --required
-AND revisionsId = '{{ revisionsId }}' --required
-AND updateMask = '{{ updateMask}}'
-AND requestId = '{{ requestId}}'
-RETURNING
-name,
-createTime,
-index,
-labels,
-snapshot;
+    - name: investigationRevisionId
+      value: string
 ```
 </TabItem>
 </Tabs>
@@ -417,7 +340,7 @@ snapshot;
 >
 <TabItem value="delete">
 
-Deletes a single revision of an Investigation. Fails if the revision is the investigation's active revision.
+Deletes a single revision of an Investigation. Fails if the revision is the investigation's most recent revision.
 
 ```sql
 DELETE FROM google.geminicloudassist.revisions
@@ -452,9 +375,7 @@ EXEC google.geminicloudassist.revisions.run
 @revisionsId='{{ revisionsId }}' --required 
 @@json=
 '{
-"runParameters": "{{ runParameters }}", 
-"updatedRevision": "{{ updatedRevision }}", 
-"updateMask": "{{ updateMask }}"
+"runParameters": "{{ runParameters }}"
 }'
 ;
 ```

@@ -324,28 +324,28 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Retrieve a collection of units.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-unitId"><code>unitId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-unitId"><code>unitId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Create a new unit.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-unitsId"><code>unitsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Update a single unit.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-unitsId"><code>unitsId</code></a></td>
-    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Delete a single unit.</td>
 </tr>
 </tbody>
@@ -504,9 +504,9 @@ updateTime
 FROM google.saasservicemgmt.units
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -529,31 +529,31 @@ Create a new unit.
 
 ```sql
 INSERT INTO google.saasservicemgmt.units (
+data__labels,
+data__tenant,
+data__managementMode,
 data__name,
 data__unitKind,
-data__tenant,
-data__maintenance,
-data__managementMode,
-data__labels,
 data__annotations,
+data__maintenance,
 projectsId,
 locationsId,
-unitId,
 validateOnly,
+unitId,
 requestId
 )
 SELECT 
+'{{ labels }}',
+'{{ tenant }}',
+'{{ managementMode }}',
 '{{ name }}',
 '{{ unitKind }}',
-'{{ tenant }}',
-'{{ maintenance }}',
-'{{ managementMode }}',
-'{{ labels }}',
 '{{ annotations }}',
+'{{ maintenance }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ unitId }}',
 '{{ validateOnly }}',
+'{{ unitId }}',
 '{{ requestId }}'
 RETURNING
 name,
@@ -594,6 +594,22 @@ updateTime
     - name: locationsId
       value: string
       description: Required parameter for the units resource.
+    - name: labels
+      value: object
+      description: >
+        Optional. The labels on the resource, which can be used for categorization. similar to Kubernetes resource labels.
+        
+    - name: tenant
+      value: string
+      description: >
+        Optional. Reference to the Saas Tenant resource this unit belongs to. This for example informs the maintenance policies to use for scheduling future updates on a unit. (optional and immutable once created)
+        
+    - name: managementMode
+      value: string
+      description: >
+        Optional. Immutable. Indicates whether the Unit life cycle is controlled by the user or by the system. Immutable once created.
+        
+      valid_values: ['MANAGEMENT_MODE_UNSPECIFIED', 'MANAGEMENT_MODE_USER', 'MANAGEMENT_MODE_SYSTEM']
     - name: name
       value: string
       description: >
@@ -604,36 +620,20 @@ updateTime
       description: >
         Optional. Reference to the UnitKind this Unit belongs to. Immutable once set.
         
-    - name: tenant
-      value: string
+    - name: annotations
+      value: object
       description: >
-        Optional. Reference to the Saas Tenant resource this unit belongs to. This for example informs the maintenance policies to use for scheduling future updates on a unit. (optional and immutable once created)
+        Optional. Annotations is an unstructured key-value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/user-guide/annotations
         
     - name: maintenance
       value: object
       description: >
         Optional. Captures requested directives for performing future maintenance on the unit. This includes a request for the unit to skip maintenance for a period of time and remain pinned to its current release as well as controls for postponing maintenance scheduled in future.
         
-    - name: managementMode
-      value: string
-      description: >
-        Optional. Immutable. Indicates whether the Unit life cycle is controlled by the user or by the system. Immutable once created.
-        
-      valid_values: ['MANAGEMENT_MODE_UNSPECIFIED', 'MANAGEMENT_MODE_USER', 'MANAGEMENT_MODE_SYSTEM']
-    - name: labels
-      value: object
-      description: >
-        Optional. The labels on the resource, which can be used for categorization. similar to Kubernetes resource labels.
-        
-    - name: annotations
-      value: object
-      description: >
-        Optional. Annotations is an unstructured key-value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/user-guide/annotations
-        
-    - name: unitId
-      value: string
     - name: validateOnly
       value: boolean
+    - name: unitId
+      value: string
     - name: requestId
       value: string
 ```
@@ -656,20 +656,20 @@ Update a single unit.
 ```sql
 UPDATE google.saasservicemgmt.units
 SET 
+data__labels = '{{ labels }}',
+data__tenant = '{{ tenant }}',
+data__managementMode = '{{ managementMode }}',
 data__name = '{{ name }}',
 data__unitKind = '{{ unitKind }}',
-data__tenant = '{{ tenant }}',
-data__maintenance = '{{ maintenance }}',
-data__managementMode = '{{ managementMode }}',
-data__labels = '{{ labels }}',
-data__annotations = '{{ annotations }}'
+data__annotations = '{{ annotations }}',
+data__maintenance = '{{ maintenance }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND unitsId = '{{ unitsId }}' --required
+AND updateMask = '{{ updateMask}}'
 AND validateOnly = {{ validateOnly}}
 AND requestId = '{{ requestId}}'
-AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 annotations,
@@ -717,8 +717,8 @@ WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND unitsId = '{{ unitsId }}' --required
 AND etag = '{{ etag }}'
-AND validateOnly = '{{ validateOnly }}'
 AND requestId = '{{ requestId }}'
+AND validateOnly = '{{ validateOnly }}'
 ;
 ```
 </TabItem>

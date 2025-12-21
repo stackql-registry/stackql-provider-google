@@ -127,7 +127,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apiHubInstancesId"><code>apiHubInstancesId</code></a></td>
     <td></td>
-    <td>Deletes the API hub instance.</td>
+    <td>Deletes the API hub instance. Deleting the API hub instance will also result in the removal of all associated runtime project attachments and the host project registration.</td>
 </tr>
 <tr>
     <td><a href="#lookup"><CopyableCode code="lookup" /></a></td>
@@ -296,7 +296,7 @@ response
 >
 <TabItem value="delete">
 
-Deletes the API hub instance.
+Deletes the API hub instance. Deleting the API hub instance will also result in the removal of all associated runtime project attachments and the host project registration.
 
 ```sql
 DELETE FROM google.apihub.api_hub_instances

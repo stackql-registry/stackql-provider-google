@@ -174,8 +174,8 @@ Sets the access control policy on the specified Source.
 ```sql
 REPLACE google.securitycenter.sources_iam_policies
 SET 
-data__policy = '{{ policy }}',
-data__updateMask = '{{ updateMask }}'
+data__updateMask = '{{ updateMask }}',
+data__policy = '{{ policy }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND sourcesId = '{{ sourcesId }}' --required

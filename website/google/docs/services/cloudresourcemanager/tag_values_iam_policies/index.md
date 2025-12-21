@@ -168,8 +168,8 @@ Sets the access control policy on a TagValue, replacing any existing policy. The
 ```sql
 REPLACE google.cloudresourcemanager.tag_values_iam_policies
 SET 
-data__policy = '{{ policy }}',
-data__updateMask = '{{ updateMask }}'
+data__updateMask = '{{ updateMask }}',
+data__policy = '{{ policy }}'
 WHERE 
 tagValuesId = '{{ tagValuesId }}' --required
 RETURNING

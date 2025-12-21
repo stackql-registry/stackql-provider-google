@@ -164,7 +164,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists all GcpUserAccessBindings for a Google Cloud organization.</td>
 </tr>
 <tr>
@@ -178,7 +178,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-gcpUserAccessBindingsId"><code>gcpUserAccessBindingsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-append"><code>append</code></a></td>
+    <td><a href="#parameter-append"><code>append</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a GcpUserAccessBinding. Completion of this long-running operation does not necessarily signify that the changed binding is deployed onto all affected users, which may take more time.</td>
 </tr>
 <tr>
@@ -280,8 +280,8 @@ scopedAccessSettings,
 sessionSettings
 FROM google.accesscontextmanager.gcp_user_access_bindings
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -303,23 +303,23 @@ Creates a GcpUserAccessBinding. If the client specifies a name, the server ignor
 
 ```sql
 INSERT INTO google.accesscontextmanager.gcp_user_access_bindings (
-data__name,
 data__groupKey,
 data__accessLevels,
+data__scopedAccessSettings,
 data__dryRunAccessLevels,
+data__name,
 data__sessionSettings,
 data__restrictedClientApplications,
-data__scopedAccessSettings,
 organizationsId
 )
 SELECT 
-'{{ name }}',
 '{{ groupKey }}',
 '{{ accessLevels }}',
+'{{ scopedAccessSettings }}',
 '{{ dryRunAccessLevels }}',
+'{{ name }}',
 '{{ sessionSettings }}',
 '{{ restrictedClientApplications }}',
-'{{ scopedAccessSettings }}',
 '{{ organizationsId }}'
 RETURNING
 name,
@@ -339,11 +339,6 @@ response
     - name: organizationsId
       value: string
       description: Required parameter for the gcp_user_access_bindings resource.
-    - name: name
-      value: string
-      description: >
-        Immutable. Assigned by the server during creation. The last segment has an arbitrary length and has only URI unreserved characters (as defined by [RFC 3986 Section 2.3](https://tools.ietf.org/html/rfc3986#section-2.3)). Should not be specified by the client during creation. Example: "organizations/256/gcpUserAccessBindings/b3-BhcX_Ud5N"
-        
     - name: groupKey
       value: string
       description: >
@@ -354,10 +349,20 @@ response
       description: >
         Optional. Access level that a user must have to be granted access. Only one access level is supported, not multiple. This repeated field must have exactly one element. Example: "accessPolicies/9522/accessLevels/device_trusted"
         
+    - name: scopedAccessSettings
+      value: array
+      description: >
+        Optional. A list of scoped access settings that set this binding's restrictions on a subset of applications. This field cannot be set if restricted_client_applications is set.
+        
     - name: dryRunAccessLevels
       value: array
       description: >
         Optional. Dry run access level that will be evaluated but will not be enforced. The access denial based on dry run policy will be logged. Only one access level is supported, not multiple. This list must have exactly one element. Example: "accessPolicies/9522/accessLevels/device_trusted"
+        
+    - name: name
+      value: string
+      description: >
+        Immutable. Assigned by the server during creation. The last segment has an arbitrary length and has only URI unreserved characters (as defined by [RFC 3986 Section 2.3](https://tools.ietf.org/html/rfc3986#section-2.3)). Should not be specified by the client during creation. Example: "organizations/256/gcpUserAccessBindings/b3-BhcX_Ud5N"
         
     - name: sessionSettings
       value: object
@@ -368,11 +373,6 @@ response
       value: array
       description: >
         Optional. A list of applications that are subject to this binding's restrictions. If the list is empty, the binding restrictions will universally apply to all applications.
-        
-    - name: scopedAccessSettings
-      value: array
-      description: >
-        Optional. A list of scoped access settings that set this binding's restrictions on a subset of applications. This field cannot be set if restricted_client_applications is set.
         
 ```
 </TabItem>
@@ -394,18 +394,18 @@ Updates a GcpUserAccessBinding. Completion of this long-running operation does n
 ```sql
 UPDATE google.accesscontextmanager.gcp_user_access_bindings
 SET 
-data__name = '{{ name }}',
 data__groupKey = '{{ groupKey }}',
 data__accessLevels = '{{ accessLevels }}',
+data__scopedAccessSettings = '{{ scopedAccessSettings }}',
 data__dryRunAccessLevels = '{{ dryRunAccessLevels }}',
+data__name = '{{ name }}',
 data__sessionSettings = '{{ sessionSettings }}',
-data__restrictedClientApplications = '{{ restrictedClientApplications }}',
-data__scopedAccessSettings = '{{ scopedAccessSettings }}'
+data__restrictedClientApplications = '{{ restrictedClientApplications }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND gcpUserAccessBindingsId = '{{ gcpUserAccessBindingsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND append = {{ append}}
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

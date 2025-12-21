@@ -103,7 +103,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="setAuthenticatedUserAdmin" /></td>
     <td><code>boolean</code></td>
-    <td>Optional. Input only. If set to true, the authenticated user will be granted the roles/dataform.admin role on the created repository. To modify access to the created repository later apply setIamPolicy from https://cloud.google.com/dataform/reference/rest#rest-resource:-v1beta1.projects.locations.repositories</td>
+    <td>Optional. Input only. If set to true, the authenticated user will be granted the roles/dataform.admin role on the created repository.</td>
 </tr>
 <tr>
     <td><CopyableCode code="workspaceCompilationOverrides" /></td>
@@ -201,7 +201,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="setAuthenticatedUserAdmin" /></td>
     <td><code>boolean</code></td>
-    <td>Optional. Input only. If set to true, the authenticated user will be granted the roles/dataform.admin role on the created repository. To modify access to the created repository later apply setIamPolicy from https://cloud.google.com/dataform/reference/rest#rest-resource:-v1beta1.projects.locations.repositories</td>
+    <td>Optional. Input only. If set to true, the authenticated user will be granted the roles/dataform.admin role on the created repository.</td>
 </tr>
 <tr>
     <td><CopyableCode code="workspaceCompilationOverrides" /></td>
@@ -239,14 +239,14 @@ The following methods are available for this resource:
     <td><a href="#query_directory_contents"><CopyableCode code="query_directory_contents" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
-    <td><a href="#parameter-commitSha"><code>commitSha</code></a>, <a href="#parameter-path"><code>path</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-commitSha"><code>commitSha</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-path"><code>path</code></a></td>
     <td>Returns the contents of a given Repository directory. The Repository must not have a value for `git_remote_settings.url`.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists Repositories in a given project and location. **Note:** *This method can return repositories not shown in the [Dataform UI](https://console.cloud.google.com/bigquery/dataform)*.</td>
 </tr>
 <tr>
@@ -271,6 +271,13 @@ The following methods are available for this resource:
     <td>Deletes a single Repository.</td>
 </tr>
 <tr>
+    <td><a href="#compute_access_token_status"><CopyableCode code="compute_access_token_status" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
+    <td></td>
+    <td>Computes a Repository's Git access token status.</td>
+</tr>
+<tr>
     <td><a href="#commit"><CopyableCode code="commit" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
@@ -281,15 +288,8 @@ The following methods are available for this resource:
     <td><a href="#read_file"><CopyableCode code="read_file" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
-    <td><a href="#parameter-commitSha"><code>commitSha</code></a>, <a href="#parameter-path"><code>path</code></a></td>
+    <td><a href="#parameter-path"><code>path</code></a>, <a href="#parameter-commitSha"><code>commitSha</code></a></td>
     <td>Returns the contents of a file (inside a Repository). The Repository must not have a value for `git_remote_settings.url`.</td>
-</tr>
-<tr>
-    <td><a href="#compute_access_token_status"><CopyableCode code="compute_access_token_status" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
-    <td></td>
-    <td>Computes a Repository's Git access token status.</td>
 </tr>
 </tbody>
 </table>
@@ -418,9 +418,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND repositoriesId = '{{ repositoriesId }}' -- required
 AND commitSha = '{{ commitSha }}'
-AND path = '{{ path }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND path = '{{ path }}'
 ;
 ```
 </TabItem>
@@ -445,9 +445,9 @@ workspaceCompilationOverrides
 FROM google.dataform.repositories
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 ;
 ```
@@ -470,29 +470,29 @@ Creates a new Repository in a given project and location.
 
 ```sql
 INSERT INTO google.dataform.repositories (
-data__name,
-data__displayName,
-data__gitRemoteSettings,
-data__npmrcEnvironmentVariablesSecretVersion,
 data__workspaceCompilationOverrides,
+data__gitRemoteSettings,
+data__name,
+data__npmrcEnvironmentVariablesSecretVersion,
+data__displayName,
+data__kmsKeyName,
+data__serviceAccount,
 data__labels,
 data__setAuthenticatedUserAdmin,
-data__serviceAccount,
-data__kmsKeyName,
 projectsId,
 locationsId,
 repositoryId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
-'{{ gitRemoteSettings }}',
-'{{ npmrcEnvironmentVariablesSecretVersion }}',
 '{{ workspaceCompilationOverrides }}',
+'{{ gitRemoteSettings }}',
+'{{ name }}',
+'{{ npmrcEnvironmentVariablesSecretVersion }}',
+'{{ displayName }}',
+'{{ kmsKeyName }}',
+'{{ serviceAccount }}',
 '{{ labels }}',
 {{ setAuthenticatedUserAdmin }},
-'{{ serviceAccount }}',
-'{{ kmsKeyName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ repositoryId }}'
@@ -524,30 +524,40 @@ workspaceCompilationOverrides
     - name: locationsId
       value: string
       description: Required parameter for the repositories resource.
-    - name: name
-      value: string
+    - name: workspaceCompilationOverrides
+      value: object
       description: >
-        Identifier. The repository's name.
-        
-    - name: displayName
-      value: string
-      description: >
-        Optional. The repository's user-friendly name.
+        Optional. If set, fields of `workspace_compilation_overrides` override the default compilation settings that are specified in dataform.json when creating workspace-scoped compilation results. See documentation for `WorkspaceCompilationOverrides` for more information.
         
     - name: gitRemoteSettings
       value: object
       description: >
         Optional. If set, configures this repository to be linked to a Git remote.
         
+    - name: name
+      value: string
+      description: >
+        Identifier. The repository's name.
+        
     - name: npmrcEnvironmentVariablesSecretVersion
       value: string
       description: >
         Optional. The name of the Secret Manager secret version to be used to interpolate variables into the .npmrc file for package installation operations. Must be in the format `projects/*/secrets/*/versions/*`. The file itself must be in a JSON format.
         
-    - name: workspaceCompilationOverrides
-      value: object
+    - name: displayName
+      value: string
       description: >
-        Optional. If set, fields of `workspace_compilation_overrides` override the default compilation settings that are specified in dataform.json when creating workspace-scoped compilation results. See documentation for `WorkspaceCompilationOverrides` for more information.
+        Optional. The repository's user-friendly name.
+        
+    - name: kmsKeyName
+      value: string
+      description: >
+        Optional. The reference to a KMS encryption key. If provided, it will be used to encrypt user data in the repository and all child resources. It is not possible to add or update the encryption key after the repository is created. Example: `projects/{kms_project}/locations/{location}/keyRings/{key_location}/cryptoKeys/{key}`
+        
+    - name: serviceAccount
+      value: string
+      description: >
+        Optional. The service account to run workflow invocations under.
         
     - name: labels
       value: object
@@ -557,17 +567,7 @@ workspaceCompilationOverrides
     - name: setAuthenticatedUserAdmin
       value: boolean
       description: >
-        Optional. Input only. If set to true, the authenticated user will be granted the roles/dataform.admin role on the created repository. To modify access to the created repository later apply setIamPolicy from https://cloud.google.com/dataform/reference/rest#rest-resource:-v1beta1.projects.locations.repositories
-        
-    - name: serviceAccount
-      value: string
-      description: >
-        Optional. The service account to run workflow invocations under.
-        
-    - name: kmsKeyName
-      value: string
-      description: >
-        Optional. The reference to a KMS encryption key. If provided, it will be used to encrypt user data in the repository and all child resources. It is not possible to add or update the encryption key after the repository is created. Example: `projects/{kms_project}/locations/{location}/keyRings/{key_location}/cryptoKeys/{key}`
+        Optional. Input only. If set to true, the authenticated user will be granted the roles/dataform.admin role on the created repository.
         
     - name: repositoryId
       value: string
@@ -591,15 +591,15 @@ Updates a single Repository. **Note:** *This method does not fully implement [AI
 ```sql
 UPDATE google.dataform.repositories
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__gitRemoteSettings = '{{ gitRemoteSettings }}',
-data__npmrcEnvironmentVariablesSecretVersion = '{{ npmrcEnvironmentVariablesSecretVersion }}',
 data__workspaceCompilationOverrides = '{{ workspaceCompilationOverrides }}',
-data__labels = '{{ labels }}',
-data__setAuthenticatedUserAdmin = {{ setAuthenticatedUserAdmin }},
+data__gitRemoteSettings = '{{ gitRemoteSettings }}',
+data__name = '{{ name }}',
+data__npmrcEnvironmentVariablesSecretVersion = '{{ npmrcEnvironmentVariablesSecretVersion }}',
+data__displayName = '{{ displayName }}',
+data__kmsKeyName = '{{ kmsKeyName }}',
 data__serviceAccount = '{{ serviceAccount }}',
-data__kmsKeyName = '{{ kmsKeyName }}'
+data__labels = '{{ labels }}',
+data__setAuthenticatedUserAdmin = {{ setAuthenticatedUserAdmin }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -650,13 +650,25 @@ AND force = '{{ force }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="commit"
+    defaultValue="compute_access_token_status"
     values={[
+        { label: 'compute_access_token_status', value: 'compute_access_token_status' },
         { label: 'commit', value: 'commit' },
-        { label: 'read_file', value: 'read_file' },
-        { label: 'compute_access_token_status', value: 'compute_access_token_status' }
+        { label: 'read_file', value: 'read_file' }
     ]}
 >
+<TabItem value="compute_access_token_status">
+
+Computes a Repository's Git access token status.
+
+```sql
+EXEC google.dataform.repositories.compute_access_token_status 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@repositoriesId='{{ repositoriesId }}' --required
+;
+```
+</TabItem>
 <TabItem value="commit">
 
 Applies a Git commit to a Repository. The Repository must not have a value for `git_remote_settings.url`.
@@ -669,8 +681,8 @@ EXEC google.dataform.repositories.commit
 @@json=
 '{
 "commitMetadata": "{{ commitMetadata }}", 
-"requiredHeadCommitSha": "{{ requiredHeadCommitSha }}", 
-"fileOperations": "{{ fileOperations }}"
+"fileOperations": "{{ fileOperations }}", 
+"requiredHeadCommitSha": "{{ requiredHeadCommitSha }}"
 }'
 ;
 ```
@@ -684,20 +696,8 @@ EXEC google.dataform.repositories.read_file
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @repositoriesId='{{ repositoriesId }}' --required, 
-@commitSha='{{ commitSha }}', 
-@path='{{ path }}'
-;
-```
-</TabItem>
-<TabItem value="compute_access_token_status">
-
-Computes a Repository's Git access token status.
-
-```sql
-EXEC google.dataform.repositories.compute_access_token_status 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@repositoriesId='{{ repositoriesId }}' --required
+@path='{{ path }}', 
+@commitSha='{{ commitSha }}'
 ;
 ```
 </TabItem>

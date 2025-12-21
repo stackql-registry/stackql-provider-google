@@ -329,9 +329,9 @@ UpdateSecurityIncidents updates an existing security incident.
 ```sql
 UPDATE google.apigee.security_incidents
 SET 
+data__trafficCount = '{{ trafficCount }}',
 data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
-data__trafficCount = '{{ trafficCount }}',
 data__observability = '{{ observability }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required

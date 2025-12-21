@@ -174,7 +174,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-accessPoliciesId"><code>accessPoliciesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists all service perimeters for an access policy.</td>
 </tr>
 <tr>
@@ -301,8 +301,8 @@ title,
 useExplicitDryRunSpec
 FROM google.accesscontextmanager.service_perimeters
 WHERE accessPoliciesId = '{{ accessPoliciesId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -324,25 +324,25 @@ Creates a service perimeter. The long-running operation from this RPC has a succ
 
 ```sql
 INSERT INTO google.accesscontextmanager.service_perimeters (
-data__name,
-data__title,
-data__description,
 data__perimeterType,
 data__status,
 data__spec,
+data__title,
+data__name,
 data__useExplicitDryRunSpec,
 data__etag,
+data__description,
 accessPoliciesId
 )
 SELECT 
-'{{ name }}',
-'{{ title }}',
-'{{ description }}',
 '{{ perimeterType }}',
 '{{ status }}',
 '{{ spec }}',
+'{{ title }}',
+'{{ name }}',
 {{ useExplicitDryRunSpec }},
 '{{ etag }}',
+'{{ description }}',
 '{{ accessPoliciesId }}'
 RETURNING
 name,
@@ -362,21 +362,6 @@ response
     - name: accessPoliciesId
       value: string
       description: Required parameter for the service_perimeters resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. Resource name for the `ServicePerimeter`. Format: `accessPolicies/{access_policy}/servicePerimeters/{service_perimeter}`. The `service_perimeter` component must begin with a letter, followed by alphanumeric characters or `_`. After you create a `ServicePerimeter`, you cannot change its `name`.
-        
-    - name: title
-      value: string
-      description: >
-        Human readable title. Must be unique within the Policy.
-        
-    - name: description
-      value: string
-      description: >
-        Description of the `ServicePerimeter` and its use. Does not affect behavior.
-        
     - name: perimeterType
       value: string
       description: >
@@ -393,6 +378,16 @@ response
       description: >
         Proposed (or dry run) ServicePerimeter configuration. This configuration allows to specify and test ServicePerimeter configuration without enforcing actual access restrictions. Only allowed to be set when the "use_explicit_dry_run_spec" flag is set.
         
+    - name: title
+      value: string
+      description: >
+        Human readable title. Must be unique within the Policy.
+        
+    - name: name
+      value: string
+      description: >
+        Identifier. Resource name for the `ServicePerimeter`. Format: `accessPolicies/{access_policy}/servicePerimeters/{service_perimeter}`. The `service_perimeter` component must begin with a letter, followed by alphanumeric characters or `_`. After you create a `ServicePerimeter`, you cannot change its `name`.
+        
     - name: useExplicitDryRunSpec
       value: boolean
       description: >
@@ -402,6 +397,11 @@ response
       value: string
       description: >
         Optional. An opaque identifier for the current version of the `ServicePerimeter`. This identifier does not follow any specific format. If an etag is not provided, the operation will be performed as if a valid etag is provided.
+        
+    - name: description
+      value: string
+      description: >
+        Description of the `ServicePerimeter` and its use. Does not affect behavior.
         
 ```
 </TabItem>
@@ -423,14 +423,14 @@ Updates a service perimeter. The long-running operation from this RPC has a succ
 ```sql
 UPDATE google.accesscontextmanager.service_perimeters
 SET 
-data__name = '{{ name }}',
-data__title = '{{ title }}',
-data__description = '{{ description }}',
 data__perimeterType = '{{ perimeterType }}',
 data__status = '{{ status }}',
 data__spec = '{{ spec }}',
+data__title = '{{ title }}',
+data__name = '{{ name }}',
 data__useExplicitDryRunSpec = {{ useExplicitDryRunSpec }},
-data__etag = '{{ etag }}'
+data__etag = '{{ etag }}',
+data__description = '{{ description }}'
 WHERE 
 accessPoliciesId = '{{ accessPoliciesId }}' --required
 AND servicePerimetersId = '{{ servicePerimetersId }}' --required
@@ -461,8 +461,8 @@ Replace all existing service perimeters in an access policy with the service per
 ```sql
 REPLACE google.accesscontextmanager.service_perimeters
 SET 
-data__servicePerimeters = '{{ servicePerimeters }}',
-data__etag = '{{ etag }}'
+data__etag = '{{ etag }}',
+data__servicePerimeters = '{{ servicePerimeters }}'
 WHERE 
 accessPoliciesId = '{{ accessPoliciesId }}' --required
 RETURNING

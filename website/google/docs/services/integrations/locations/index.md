@@ -103,8 +103,8 @@ EXEC google.integrations.locations.projects_locations_generate_open_api_spec
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"apiTriggerResources": "{{ apiTriggerResources }}", 
-"fileFormat": "{{ fileFormat }}"
+"fileFormat": "{{ fileFormat }}", 
+"apiTriggerResources": "{{ apiTriggerResources }}"
 }'
 ;
 ```

@@ -341,26 +341,26 @@ Creates a new ReleaseConfig in a given Repository.
 
 ```sql
 INSERT INTO google.dataform.release_configs (
+data__releaseCompilationResult,
+data__timeZone,
+data__cronSchedule,
 data__name,
+data__disabled,
 data__gitCommitish,
 data__codeCompilationConfig,
-data__cronSchedule,
-data__timeZone,
-data__releaseCompilationResult,
-data__disabled,
 projectsId,
 locationsId,
 repositoriesId,
 releaseConfigId
 )
 SELECT 
+'{{ releaseCompilationResult }}',
+'{{ timeZone }}',
+'{{ cronSchedule }}',
 '{{ name }}',
+{{ disabled }},
 '{{ gitCommitish }}',
 '{{ codeCompilationConfig }}',
-'{{ cronSchedule }}',
-'{{ timeZone }}',
-'{{ releaseCompilationResult }}',
-{{ disabled }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ repositoriesId }}',
@@ -393,10 +393,30 @@ timeZone
     - name: repositoriesId
       value: string
       description: Required parameter for the release_configs resource.
+    - name: releaseCompilationResult
+      value: string
+      description: >
+        Optional. The name of the currently released compilation result for this release config. This value is updated when a compilation result is automatically created from this release config (using cron_schedule), or when this resource is updated by API call (perhaps to roll back to an earlier release). The compilation result must have been created using this release config. Must be in the format `projects/*/locations/*/repositories/*/compilationResults/*`.
+        
+    - name: timeZone
+      value: string
+      description: >
+        Optional. Specifies the time zone to be used when interpreting cron_schedule. Must be a time zone name from the time zone database (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). If left unspecified, the default is UTC.
+        
+    - name: cronSchedule
+      value: string
+      description: >
+        Optional. Optional schedule (in cron format) for automatic creation of compilation results.
+        
     - name: name
       value: string
       description: >
         Identifier. The release config's name.
+        
+    - name: disabled
+      value: boolean
+      description: >
+        Optional. Disables automatic creation of compilation results.
         
     - name: gitCommitish
       value: string
@@ -407,26 +427,6 @@ timeZone
       value: object
       description: >
         Optional. If set, fields of `code_compilation_config` override the default compilation settings that are specified in dataform.json.
-        
-    - name: cronSchedule
-      value: string
-      description: >
-        Optional. Optional schedule (in cron format) for automatic creation of compilation results.
-        
-    - name: timeZone
-      value: string
-      description: >
-        Optional. Specifies the time zone to be used when interpreting cron_schedule. Must be a time zone name from the time zone database (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). If left unspecified, the default is UTC.
-        
-    - name: releaseCompilationResult
-      value: string
-      description: >
-        Optional. The name of the currently released compilation result for this release config. This value is updated when a compilation result is automatically created from this release config (using cron_schedule), or when this resource is updated by API call (perhaps to roll back to an earlier release). The compilation result must have been created using this release config. Must be in the format `projects/*/locations/*/repositories/*/compilationResults/*`.
-        
-    - name: disabled
-      value: boolean
-      description: >
-        Optional. Disables automatic creation of compilation results.
         
     - name: releaseConfigId
       value: string
@@ -450,13 +450,13 @@ Updates a single ReleaseConfig. **Note:** *This method does not fully implement 
 ```sql
 UPDATE google.dataform.release_configs
 SET 
-data__name = '{{ name }}',
-data__gitCommitish = '{{ gitCommitish }}',
-data__codeCompilationConfig = '{{ codeCompilationConfig }}',
-data__cronSchedule = '{{ cronSchedule }}',
-data__timeZone = '{{ timeZone }}',
 data__releaseCompilationResult = '{{ releaseCompilationResult }}',
-data__disabled = {{ disabled }}
+data__timeZone = '{{ timeZone }}',
+data__cronSchedule = '{{ cronSchedule }}',
+data__name = '{{ name }}',
+data__disabled = {{ disabled }},
+data__gitCommitish = '{{ gitCommitish }}',
+data__codeCompilationConfig = '{{ codeCompilationConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

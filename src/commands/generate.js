@@ -280,8 +280,19 @@ export async function generateSpecs(options, rootDir) {
             logger.info(`checking ${service.name}...`);
 
             // get service data
+            logger.info(`fetching service data from ${service.discoveryRestUrl}...`);
             const svcResp = await fetch(service.discoveryRestUrl);
-            const svcData = await svcResp.json();
+            const responseText = await svcResp.text();
+
+            // Write to file if debugging
+            if (debug) {
+                await writeFile(path.join(rootDir, 'svcResp.tmp'), responseText, debug);
+            }
+
+            // Parse the text as JSON
+            const svcData = JSON.parse(responseText);            
+
+            // const svcData = await svcResp.json();
 
             // check if svcData.auth.oauth2.scopes includes any key
             if(svcData['auth'] && svcData['auth']['oauth2'] && svcData['auth']['oauth2']['scopes']
@@ -311,7 +322,7 @@ export async function generateSpecs(options, rootDir) {
         } catch (err) {
             // crash program if error
             logger.error(err);
-            if(service.name != 'poly'){
+            if(['poly', 'lifesciences'].includes(service.name) == false){
                 process.exit(1);
             }
         }

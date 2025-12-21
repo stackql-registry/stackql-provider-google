@@ -99,16 +99,16 @@ The following methods are available for this resource:
     <td>Updates a signed device.</td>
 </tr>
 <tr>
-    <td><a href="#nodes_devices_update_signed"><CopyableCode code="nodes_devices_update_signed" /></a></td>
+    <td><a href="#deployments_devices_update_signed"><CopyableCode code="deployments_devices_update_signed" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-nodesId"><code>nodesId</code></a>, <a href="#parameter-devicesId"><code>devicesId</code></a></td>
+    <td><a href="#parameter-deploymentsId"><code>deploymentsId</code></a>, <a href="#parameter-devicesId"><code>devicesId</code></a></td>
     <td></td>
     <td>Updates a signed device.</td>
 </tr>
 <tr>
-    <td><a href="#deployments_devices_update_signed"><CopyableCode code="deployments_devices_update_signed" /></a></td>
+    <td><a href="#nodes_devices_update_signed"><CopyableCode code="nodes_devices_update_signed" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-deploymentsId"><code>deploymentsId</code></a>, <a href="#parameter-devicesId"><code>devicesId</code></a></td>
+    <td><a href="#parameter-nodesId"><code>nodesId</code></a>, <a href="#parameter-devicesId"><code>devicesId</code></a></td>
     <td></td>
     <td>Updates a signed device.</td>
 </tr>
@@ -176,14 +176,14 @@ Creates a signed device under a node or customer.
 
 ```sql
 INSERT INTO google.sasportal.devices_signed (
-data__encodedDevice,
 data__installerId,
+data__encodedDevice,
 customersId,
 nodesId
 )
 SELECT 
-'{{ encodedDevice }}',
 '{{ installerId }}',
+'{{ encodedDevice }}',
 '{{ customersId }}',
 '{{ nodesId }}'
 RETURNING
@@ -207,14 +207,14 @@ Creates a signed device under a node or customer.
 
 ```sql
 INSERT INTO google.sasportal.devices_signed (
-data__encodedDevice,
 data__installerId,
+data__encodedDevice,
 customersId,
 deploymentsId
 )
 SELECT 
-'{{ encodedDevice }}',
 '{{ installerId }}',
+'{{ encodedDevice }}',
 '{{ customersId }}',
 '{{ deploymentsId }}'
 RETURNING
@@ -238,14 +238,14 @@ Creates a signed device under a node or customer.
 
 ```sql
 INSERT INTO google.sasportal.devices_signed (
-data__encodedDevice,
 data__installerId,
+data__encodedDevice,
 nodesId,
 nodesId1
 )
 SELECT 
-'{{ encodedDevice }}',
 '{{ installerId }}',
+'{{ encodedDevice }}',
 '{{ nodesId }}',
 '{{ nodesId1 }}'
 RETURNING
@@ -269,14 +269,14 @@ Creates a signed device under a node or customer.
 
 ```sql
 INSERT INTO google.sasportal.devices_signed (
-data__encodedDevice,
 data__installerId,
+data__encodedDevice,
 nodesId,
 deploymentsId
 )
 SELECT 
-'{{ encodedDevice }}',
 '{{ installerId }}',
+'{{ encodedDevice }}',
 '{{ nodesId }}',
 '{{ deploymentsId }}'
 RETURNING
@@ -300,13 +300,13 @@ Creates a signed device under a node or customer.
 
 ```sql
 INSERT INTO google.sasportal.devices_signed (
-data__encodedDevice,
 data__installerId,
+data__encodedDevice,
 customersId
 )
 SELECT 
-'{{ encodedDevice }}',
 '{{ installerId }}',
+'{{ encodedDevice }}',
 '{{ customersId }}'
 RETURNING
 name,
@@ -329,13 +329,13 @@ Creates a signed device under a node or customer.
 
 ```sql
 INSERT INTO google.sasportal.devices_signed (
-data__encodedDevice,
 data__installerId,
+data__encodedDevice,
 nodesId
 )
 SELECT 
-'{{ encodedDevice }}',
 '{{ installerId }}',
+'{{ encodedDevice }}',
 '{{ nodesId }}'
 RETURNING
 name,
@@ -370,15 +370,15 @@ state
     - name: nodesId1
       value: string
       description: Required parameter for the devices_signed resource.
-    - name: encodedDevice
-      value: string
-      description: >
-        Required. JSON Web Token signed using a CPI private key. Payload must be the JSON encoding of the device. The user_id field must be set.
-        
     - name: installerId
       value: string
       description: >
         Required. Unique installer id (CPI ID) from the Certified Professional Installers database.
+        
+    - name: encodedDevice
+      value: string
+      description: >
+        Required. JSON Web Token signed using a CPI private key. Payload must be the JSON encoding of the device. The user_id field must be set.
         
 ```
 </TabItem>
@@ -391,8 +391,8 @@ state
     defaultValue="customers_devices_update_signed"
     values={[
         { label: 'customers_devices_update_signed', value: 'customers_devices_update_signed' },
-        { label: 'nodes_devices_update_signed', value: 'nodes_devices_update_signed' },
-        { label: 'deployments_devices_update_signed', value: 'deployments_devices_update_signed' }
+        { label: 'deployments_devices_update_signed', value: 'deployments_devices_update_signed' },
+        { label: 'nodes_devices_update_signed', value: 'nodes_devices_update_signed' }
     ]}
 >
 <TabItem value="customers_devices_update_signed">
@@ -402,36 +402,10 @@ Updates a signed device.
 ```sql
 UPDATE google.sasportal.devices_signed
 SET 
-data__encodedDevice = '{{ encodedDevice }}',
-data__installerId = '{{ installerId }}'
+data__installerId = '{{ installerId }}',
+data__encodedDevice = '{{ encodedDevice }}'
 WHERE 
 customersId = '{{ customersId }}' --required
-AND devicesId = '{{ devicesId }}' --required
-RETURNING
-name,
-activeConfig,
-currentChannels,
-deviceMetadata,
-displayName,
-fccId,
-grantRangeAllowlists,
-grants,
-preloadedConfig,
-serialNumber,
-state;
-```
-</TabItem>
-<TabItem value="nodes_devices_update_signed">
-
-Updates a signed device.
-
-```sql
-UPDATE google.sasportal.devices_signed
-SET 
-data__encodedDevice = '{{ encodedDevice }}',
-data__installerId = '{{ installerId }}'
-WHERE 
-nodesId = '{{ nodesId }}' --required
 AND devicesId = '{{ devicesId }}' --required
 RETURNING
 name,
@@ -454,10 +428,36 @@ Updates a signed device.
 ```sql
 UPDATE google.sasportal.devices_signed
 SET 
-data__encodedDevice = '{{ encodedDevice }}',
-data__installerId = '{{ installerId }}'
+data__installerId = '{{ installerId }}',
+data__encodedDevice = '{{ encodedDevice }}'
 WHERE 
 deploymentsId = '{{ deploymentsId }}' --required
+AND devicesId = '{{ devicesId }}' --required
+RETURNING
+name,
+activeConfig,
+currentChannels,
+deviceMetadata,
+displayName,
+fccId,
+grantRangeAllowlists,
+grants,
+preloadedConfig,
+serialNumber,
+state;
+```
+</TabItem>
+<TabItem value="nodes_devices_update_signed">
+
+Updates a signed device.
+
+```sql
+UPDATE google.sasportal.devices_signed
+SET 
+data__installerId = '{{ installerId }}',
+data__encodedDevice = '{{ encodedDevice }}'
+WHERE 
+nodesId = '{{ nodesId }}' --required
 AND devicesId = '{{ devicesId }}' --required
 RETURNING
 name,

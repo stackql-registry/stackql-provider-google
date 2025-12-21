@@ -32,14 +32,14 @@ Creates, updates, deletes, gets or lists an <code>answers</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_locations_collections_data_stores_sessions_answers_get"
+    defaultValue="projects_locations_collections_engines_sessions_answers_get"
     values={[
-        { label: 'projects_locations_collections_data_stores_sessions_answers_get', value: 'projects_locations_collections_data_stores_sessions_answers_get' },
         { label: 'projects_locations_collections_engines_sessions_answers_get', value: 'projects_locations_collections_engines_sessions_answers_get' },
+        { label: 'projects_locations_collections_data_stores_sessions_answers_get', value: 'projects_locations_collections_data_stores_sessions_answers_get' },
         { label: 'projects_locations_data_stores_sessions_answers_get', value: 'projects_locations_data_stores_sessions_answers_get' }
     ]}
 >
-<TabItem value="projects_locations_collections_data_stores_sessions_answers_get">
+<TabItem value="projects_locations_collections_engines_sessions_answers_get">
 
 <table>
 <thead>
@@ -123,7 +123,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_collections_engines_sessions_answers_get">
+<TabItem value="projects_locations_collections_data_stores_sessions_answers_get">
 
 <table>
 <thead>
@@ -309,16 +309,16 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_locations_collections_data_stores_sessions_answers_get"><CopyableCode code="projects_locations_collections_data_stores_sessions_answers_get" /></a></td>
+    <td><a href="#projects_locations_collections_engines_sessions_answers_get"><CopyableCode code="projects_locations_collections_engines_sessions_answers_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a>, <a href="#parameter-answersId"><code>answersId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-enginesId"><code>enginesId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a>, <a href="#parameter-answersId"><code>answersId</code></a></td>
     <td></td>
     <td>Gets a Answer.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_collections_engines_sessions_answers_get"><CopyableCode code="projects_locations_collections_engines_sessions_answers_get" /></a></td>
+    <td><a href="#projects_locations_collections_data_stores_sessions_answers_get"><CopyableCode code="projects_locations_collections_data_stores_sessions_answers_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-enginesId"><code>enginesId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a>, <a href="#parameter-answersId"><code>answersId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a>, <a href="#parameter-answersId"><code>answersId</code></a></td>
     <td></td>
     <td>Gets a Answer.</td>
 </tr>
@@ -386,43 +386,13 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_locations_collections_data_stores_sessions_answers_get"
+    defaultValue="projects_locations_collections_engines_sessions_answers_get"
     values={[
-        { label: 'projects_locations_collections_data_stores_sessions_answers_get', value: 'projects_locations_collections_data_stores_sessions_answers_get' },
         { label: 'projects_locations_collections_engines_sessions_answers_get', value: 'projects_locations_collections_engines_sessions_answers_get' },
+        { label: 'projects_locations_collections_data_stores_sessions_answers_get', value: 'projects_locations_collections_data_stores_sessions_answers_get' },
         { label: 'projects_locations_data_stores_sessions_answers_get', value: 'projects_locations_data_stores_sessions_answers_get' }
     ]}
 >
-<TabItem value="projects_locations_collections_data_stores_sessions_answers_get">
-
-Gets a Answer.
-
-```sql
-SELECT
-name,
-answerSkippedReasons,
-answerText,
-citations,
-completeTime,
-createTime,
-groundingScore,
-groundingSupports,
-queryUnderstandingInfo,
-references,
-relatedQuestions,
-safetyRatings,
-state,
-steps
-FROM google.discoveryengine.answers
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND collectionsId = '{{ collectionsId }}' -- required
-AND dataStoresId = '{{ dataStoresId }}' -- required
-AND sessionsId = '{{ sessionsId }}' -- required
-AND answersId = '{{ answersId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="projects_locations_collections_engines_sessions_answers_get">
 
 Gets a Answer.
@@ -448,6 +418,36 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND collectionsId = '{{ collectionsId }}' -- required
 AND enginesId = '{{ enginesId }}' -- required
+AND sessionsId = '{{ sessionsId }}' -- required
+AND answersId = '{{ answersId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="projects_locations_collections_data_stores_sessions_answers_get">
+
+Gets a Answer.
+
+```sql
+SELECT
+name,
+answerSkippedReasons,
+answerText,
+citations,
+completeTime,
+createTime,
+groundingScore,
+groundingSupports,
+queryUnderstandingInfo,
+references,
+relatedQuestions,
+safetyRatings,
+state,
+steps
+FROM google.discoveryengine.answers
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND collectionsId = '{{ collectionsId }}' -- required
+AND dataStoresId = '{{ dataStoresId }}' -- required
 AND sessionsId = '{{ sessionsId }}' -- required
 AND answersId = '{{ answersId }}' -- required
 ;

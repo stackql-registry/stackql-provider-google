@@ -277,28 +277,28 @@ Inserts a resource containing information about a database inside a Cloud SQL in
 
 ```sql
 INSERT INTO google.sqladmin.databases (
-data__kind,
-data__charset,
 data__collation,
 data__etag,
 data__name,
-data__instance,
-data__selfLink,
-data__project,
+data__charset,
 data__sqlserverDatabaseDetails,
+data__selfLink,
+data__kind,
+data__project,
+data__instance,
 project,
 instance
 )
 SELECT 
-'{{ kind }}',
-'{{ charset }}',
 '{{ collation }}',
 '{{ etag }}',
 '{{ name }}',
-'{{ instance }}',
-'{{ selfLink }}',
-'{{ project }}',
+'{{ charset }}',
 '{{ sqlserverDatabaseDetails }}',
+'{{ selfLink }}',
+'{{ kind }}',
+'{{ project }}',
+'{{ instance }}',
 '{{ project }}',
 '{{ instance }}'
 RETURNING
@@ -313,6 +313,7 @@ importContext,
 insertTime,
 kind,
 operationType,
+preCheckMajorVersionUpgradeContext,
 selfLink,
 startTime,
 status,
@@ -336,16 +337,6 @@ user
     - name: instance
       value: string
       description: Required parameter for the databases resource.
-    - name: kind
-      value: string
-      description: >
-        This is always `sql#database`.
-        
-    - name: charset
-      value: string
-      description: >
-        The Cloud SQL charset value.
-        
     - name: collation
       value: string
       description: >
@@ -361,25 +352,35 @@ user
       description: >
         The name of the database in the Cloud SQL instance. This does not include the project ID or instance name.
         
-    - name: instance
+    - name: charset
       value: string
       description: >
-        The name of the Cloud SQL instance. This does not include the project ID.
+        The Cloud SQL charset value.
+        
+    - name: sqlserverDatabaseDetails
+      value: object
+      description: >
+        Represents a Sql Server database on the Cloud SQL instance.
         
     - name: selfLink
       value: string
       description: >
         The URI of this resource.
         
+    - name: kind
+      value: string
+      description: >
+        This is always `sql#database`.
+        
     - name: project
       value: string
       description: >
         The project ID of the project containing the Cloud SQL database. The Google apps domain is prefixed if applicable.
         
-    - name: sqlserverDatabaseDetails
-      value: object
+    - name: instance
+      value: string
       description: >
-        Represents a Sql Server database on the Cloud SQL instance.
+        The name of the Cloud SQL instance. This does not include the project ID.
         
 ```
 </TabItem>
@@ -401,15 +402,15 @@ Partially updates a resource containing information about a database inside a Cl
 ```sql
 UPDATE google.sqladmin.databases
 SET 
-data__kind = '{{ kind }}',
-data__charset = '{{ charset }}',
 data__collation = '{{ collation }}',
 data__etag = '{{ etag }}',
 data__name = '{{ name }}',
-data__instance = '{{ instance }}',
+data__charset = '{{ charset }}',
+data__sqlserverDatabaseDetails = '{{ sqlserverDatabaseDetails }}',
 data__selfLink = '{{ selfLink }}',
+data__kind = '{{ kind }}',
 data__project = '{{ project }}',
-data__sqlserverDatabaseDetails = '{{ sqlserverDatabaseDetails }}'
+data__instance = '{{ instance }}'
 WHERE 
 project = '{{ project }}' --required
 AND instance = '{{ instance }}' --required
@@ -426,6 +427,7 @@ importContext,
 insertTime,
 kind,
 operationType,
+preCheckMajorVersionUpgradeContext,
 selfLink,
 startTime,
 status,
@@ -454,15 +456,15 @@ Updates a resource containing information about a database inside a Cloud SQL in
 ```sql
 REPLACE google.sqladmin.databases
 SET 
-data__kind = '{{ kind }}',
-data__charset = '{{ charset }}',
 data__collation = '{{ collation }}',
 data__etag = '{{ etag }}',
 data__name = '{{ name }}',
-data__instance = '{{ instance }}',
+data__charset = '{{ charset }}',
+data__sqlserverDatabaseDetails = '{{ sqlserverDatabaseDetails }}',
 data__selfLink = '{{ selfLink }}',
+data__kind = '{{ kind }}',
 data__project = '{{ project }}',
-data__sqlserverDatabaseDetails = '{{ sqlserverDatabaseDetails }}'
+data__instance = '{{ instance }}'
 WHERE 
 project = '{{ project }}' --required
 AND instance = '{{ instance }}' --required
@@ -479,6 +481,7 @@ importContext,
 insertTime,
 kind,
 operationType,
+preCheckMajorVersionUpgradeContext,
 selfLink,
 startTime,
 status,

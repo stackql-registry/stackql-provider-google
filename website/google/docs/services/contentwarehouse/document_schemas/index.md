@@ -164,7 +164,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists document schemas.</td>
 </tr>
 <tr>
@@ -277,8 +277,8 @@ updateTime
 FROM google.contentwarehouse.document_schemas
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -300,20 +300,20 @@ Creates a document schema.
 
 ```sql
 INSERT INTO google.contentwarehouse.document_schemas (
-data__description,
-data__displayName,
-data__propertyDefinitions,
 data__name,
 data__documentIsFolder,
+data__propertyDefinitions,
+data__description,
+data__displayName,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ description }}',
-'{{ displayName }}',
-'{{ propertyDefinitions }}',
 '{{ name }}',
 {{ documentIsFolder }},
+'{{ propertyDefinitions }}',
+'{{ description }}',
+'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -339,21 +339,6 @@ updateTime
     - name: locationsId
       value: string
       description: Required parameter for the document_schemas resource.
-    - name: description
-      value: string
-      description: >
-        Schema description.
-        
-    - name: displayName
-      value: string
-      description: >
-        Required. Name of the schema given by the user. Must be unique per project.
-        
-    - name: propertyDefinitions
-      value: array
-      description: >
-        Document details.
-        
     - name: name
       value: string
       description: >
@@ -363,6 +348,21 @@ updateTime
       value: boolean
       description: >
         Document Type, true refers the document is a folder, otherwise it is a typical document.
+        
+    - name: propertyDefinitions
+      value: array
+      description: >
+        Document details.
+        
+    - name: description
+      value: string
+      description: >
+        Schema description.
+        
+    - name: displayName
+      value: string
+      description: >
+        Required. Name of the schema given by the user. Must be unique per project.
         
 ```
 </TabItem>

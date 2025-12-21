@@ -334,16 +334,16 @@ Creates a new Gateway in a given project and location.
 
 ```sql
 INSERT INTO google.apigateway.gateways (
-data__labels,
 data__displayName,
+data__labels,
 data__apiConfig,
 projectsId,
 locationsId,
 gatewayId
 )
 SELECT 
-'{{ labels }}',
 '{{ displayName }}',
+'{{ labels }}',
 '{{ apiConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -369,15 +369,15 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the gateways resource.
-    - name: labels
-      value: object
-      description: >
-        Optional. Resource labels to represent user-provided metadata. Refer to cloud documentation on labels for more details. https://cloud.google.com/compute/docs/labeling-resources
-        
     - name: displayName
       value: string
       description: >
         Optional. Display name.
+        
+    - name: labels
+      value: object
+      description: >
+        Optional. Resource labels to represent user-provided metadata. Refer to cloud documentation on labels for more details. https://cloud.google.com/compute/docs/labeling-resources
         
     - name: apiConfig
       value: string
@@ -406,8 +406,8 @@ Updates the parameters of a single Gateway.
 ```sql
 UPDATE google.apigateway.gateways
 SET 
-data__labels = '{{ labels }}',
 data__displayName = '{{ displayName }}',
+data__labels = '{{ labels }}',
 data__apiConfig = '{{ apiConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

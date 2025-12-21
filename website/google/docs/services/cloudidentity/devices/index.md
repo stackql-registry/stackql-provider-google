@@ -414,7 +414,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-customer"><code>customer</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-view"><code>view</code></a></td>
+    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-customer"><code>customer</code></a></td>
     <td>Lists/Searches devices.</td>
 </tr>
 <tr>
@@ -591,12 +591,12 @@ serialNumber,
 unifiedDeviceId,
 wifiMacAddresses
 FROM google.cloudidentity.devices
-WHERE customer = '{{ customer }}'
+WHERE view = '{{ view }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
-AND view = '{{ view }}'
+AND customer = '{{ customer }}'
 ;
 ```
 </TabItem>
@@ -618,21 +618,21 @@ Creates a device. Only company-owned device may be created. **Note**: This metho
 
 ```sql
 INSERT INTO google.cloudidentity.devices (
-data__lastSyncTime,
+data__hostname,
 data__serialNumber,
+data__lastSyncTime,
+data__deviceId,
 data__assetTag,
 data__wifiMacAddresses,
-data__deviceId,
-data__hostname,
 customer
 )
 SELECT 
-'{{ lastSyncTime }}',
+'{{ hostname }}',
 '{{ serialNumber }}',
+'{{ lastSyncTime }}',
+'{{ deviceId }}',
 '{{ assetTag }}',
 '{{ wifiMacAddresses }}',
-'{{ deviceId }}',
-'{{ hostname }}',
 '{{ customer }}'
 RETURNING
 name,
@@ -649,15 +649,25 @@ response
 # Description fields are for documentation purposes
 - name: devices
   props:
-    - name: lastSyncTime
+    - name: hostname
       value: string
       description: >
-        Most recent time when device synced with this service.
+        Host name of the device.
         
     - name: serialNumber
       value: string
       description: >
         Serial Number of device. Example: HT82V1A01076.
+        
+    - name: lastSyncTime
+      value: string
+      description: >
+        Most recent time when device synced with this service.
+        
+    - name: deviceId
+      value: string
+      description: >
+        Unique identifier for the device.
         
     - name: assetTag
       value: string
@@ -668,16 +678,6 @@ response
       value: array
       description: >
         WiFi MAC addresses of device.
-        
-    - name: deviceId
-      value: string
-      description: >
-        Unique identifier for the device.
-        
-    - name: hostname
-      value: string
-      description: >
-        Host name of the device.
         
     - name: customer
       value: string

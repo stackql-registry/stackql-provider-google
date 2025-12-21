@@ -180,8 +180,8 @@ Sets the access control policy on the specified resource. Replaces any existing 
 ```sql
 REPLACE google.networkconnectivity.policy_based_routes_iam_policies
 SET 
-data__policy = '{{ policy }}',
-data__updateMask = '{{ updateMask }}'
+data__updateMask = '{{ updateMask }}',
+data__policy = '{{ policy }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND policyBasedRoutesId = '{{ policyBasedRoutesId }}' --required

@@ -86,18 +86,18 @@ The following methods are available for this resource:
     <td>Lists log entries. Use this method to retrieve log entries that originated from a project/folder/organization/billing account. For ways to export log entries, see Exporting Logs (https://cloud.google.com/logging/docs/export).</td>
 </tr>
 <tr>
-    <td><a href="#entries_copy"><CopyableCode code="entries_copy" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td></td>
-    <td></td>
-    <td>Copies a set of log entries from a log bucket to a Cloud Storage bucket.</td>
-</tr>
-<tr>
     <td><a href="#entries_write"><CopyableCode code="entries_write" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
     <td></td>
     <td>Writes log entries to Logging. This API method is the only way to send log entries to Logging. This method is used, directly or indirectly, by the Logging agent (fluentd) and all logging libraries configured to use Logging. A single request may contain log entries for a maximum of 1000 different resource names (projects, organizations, billing accounts or folders), where the resource name for a log entry is determined from its logName field.</td>
+</tr>
+<tr>
+    <td><a href="#entries_copy"><CopyableCode code="entries_copy" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td></td>
+    <td></td>
+    <td>Copies a set of log entries from a log bucket to a Cloud Storage bucket.</td>
 </tr>
 <tr>
     <td><a href="#entries_tail"><CopyableCode code="entries_tail" /></a></td>
@@ -151,13 +151,31 @@ FROM google.logging.entries
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="entries_copy"
+    defaultValue="entries_write"
     values={[
-        { label: 'entries_copy', value: 'entries_copy' },
         { label: 'entries_write', value: 'entries_write' },
+        { label: 'entries_copy', value: 'entries_copy' },
         { label: 'entries_tail', value: 'entries_tail' }
     ]}
 >
+<TabItem value="entries_write">
+
+Writes log entries to Logging. This API method is the only way to send log entries to Logging. This method is used, directly or indirectly, by the Logging agent (fluentd) and all logging libraries configured to use Logging. A single request may contain log entries for a maximum of 1000 different resource names (projects, organizations, billing accounts or folders), where the resource name for a log entry is determined from its logName field.
+
+```sql
+EXEC google.logging.entries.entries_write 
+@@json=
+'{
+"entries": "{{ entries }}", 
+"resource": "{{ resource }}", 
+"logName": "{{ logName }}", 
+"labels": "{{ labels }}", 
+"partialSuccess": {{ partialSuccess }}, 
+"dryRun": {{ dryRun }}
+}'
+;
+```
+</TabItem>
 <TabItem value="entries_copy">
 
 Copies a set of log entries from a log bucket to a Cloud Storage bucket.
@@ -167,26 +185,8 @@ EXEC google.logging.entries.entries_copy
 @@json=
 '{
 "name": "{{ name }}", 
-"filter": "{{ filter }}", 
-"destination": "{{ destination }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="entries_write">
-
-Writes log entries to Logging. This API method is the only way to send log entries to Logging. This method is used, directly or indirectly, by the Logging agent (fluentd) and all logging libraries configured to use Logging. A single request may contain log entries for a maximum of 1000 different resource names (projects, organizations, billing accounts or folders), where the resource name for a log entry is determined from its logName field.
-
-```sql
-EXEC google.logging.entries.entries_write 
-@@json=
-'{
-"logName": "{{ logName }}", 
-"resource": "{{ resource }}", 
-"labels": "{{ labels }}", 
-"entries": "{{ entries }}", 
-"partialSuccess": {{ partialSuccess }}, 
-"dryRun": {{ dryRun }}
+"destination": "{{ destination }}", 
+"filter": "{{ filter }}"
 }'
 ;
 ```
@@ -200,8 +200,8 @@ EXEC google.logging.entries.entries_tail
 @@json=
 '{
 "resourceNames": "{{ resourceNames }}", 
-"filter": "{{ filter }}", 
-"bufferWindow": "{{ bufferWindow }}"
+"bufferWindow": "{{ bufferWindow }}", 
+"filter": "{{ filter }}"
 }'
 ;
 ```

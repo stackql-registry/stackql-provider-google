@@ -178,9 +178,9 @@ Updates the conversational search customization config for a given catalog.
 ```sql
 UPDATE google.retail.catalogs_conversational_search_customization_config
 SET 
+data__catalog = '{{ catalog }}',
 data__retailerDisplayName = '{{ retailerDisplayName }}',
-data__intentClassificationConfig = '{{ intentClassificationConfig }}',
-data__catalog = '{{ catalog }}'
+data__intentClassificationConfig = '{{ intentClassificationConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

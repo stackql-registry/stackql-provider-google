@@ -154,7 +154,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-consentStoresId"><code>consentStoresId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the User data mappings in the specified consent store.</td>
 </tr>
 <tr>
@@ -297,8 +297,8 @@ AND locationsId = '{{ locationsId }}' -- required
 AND datasetsId = '{{ datasetsId }}' -- required
 AND consentStoresId = '{{ consentStoresId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -320,20 +320,20 @@ Creates a new User data mapping in the parent consent store.
 
 ```sql
 INSERT INTO google.healthcare.user_data_mappings (
+data__resourceAttributes,
 data__name,
 data__dataId,
 data__userId,
-data__resourceAttributes,
 projectsId,
 locationsId,
 datasetsId,
 consentStoresId
 )
 SELECT 
+'{{ resourceAttributes }}',
 '{{ name }}',
 '{{ dataId }}',
 '{{ userId }}',
-'{{ resourceAttributes }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ datasetsId }}',
@@ -366,6 +366,11 @@ userId
     - name: consentStoresId
       value: string
       description: Required parameter for the user_data_mappings resource.
+    - name: resourceAttributes
+      value: array
+      description: >
+        Attributes of the resource. Only explicitly set attributes are displayed here. Attribute definitions with defaults set implicitly apply to these User data mappings. Attributes listed here must be single valued, that is, exactly one value is specified for the field "values" in each Attribute.
+        
     - name: name
       value: string
       description: >
@@ -380,11 +385,6 @@ userId
       value: string
       description: >
         Required. User's UUID provided by the client.
-        
-    - name: resourceAttributes
-      value: array
-      description: >
-        Attributes of the resource. Only explicitly set attributes are displayed here. Attribute definitions with defaults set implicitly apply to these User data mappings. Attributes listed here must be single valued, that is, exactly one value is specified for the field "values" in each Attribute.
         
 ```
 </TabItem>
@@ -406,10 +406,10 @@ Updates the specified User data mapping.
 ```sql
 UPDATE google.healthcare.user_data_mappings
 SET 
+data__resourceAttributes = '{{ resourceAttributes }}',
 data__name = '{{ name }}',
 data__dataId = '{{ dataId }}',
-data__userId = '{{ userId }}',
-data__resourceAttributes = '{{ resourceAttributes }}'
+data__userId = '{{ userId }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

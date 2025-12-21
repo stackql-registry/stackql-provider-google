@@ -53,7 +53,7 @@ The following methods are available for this resource:
     <td><a href="#search"><CopyableCode code="search" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-cryptoKey"><code>cryptoKey</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-resourceTypes"><code>resourceTypes</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-cryptoKey"><code>cryptoKey</code></a>, <a href="#parameter-resourceTypes"><code>resourceTypes</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Returns metadata about the resources protected by the given Cloud KMS CryptoKey in the given Cloud organization.</td>
 </tr>
 </tbody>
@@ -115,10 +115,10 @@ Returns metadata about the resources protected by the given Cloud KMS CryptoKey 
 ```sql
 EXEC google.kmsinventory.protected_resources.search 
 @organizationsId='{{ organizationsId }}' --required, 
-@cryptoKey='{{ cryptoKey }}', 
-@pageSize='{{ pageSize }}', 
 @pageToken='{{ pageToken }}', 
-@resourceTypes='{{ resourceTypes }}'
+@cryptoKey='{{ cryptoKey }}', 
+@resourceTypes='{{ resourceTypes }}', 
+@pageSize='{{ pageSize }}'
 ;
 ```
 </TabItem>

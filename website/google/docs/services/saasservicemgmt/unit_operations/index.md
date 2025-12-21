@@ -284,7 +284,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Retrieve a collection of unit operations.</td>
 </tr>
 <tr>
@@ -298,14 +298,14 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-unitOperationsId"><code>unitOperationsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Update a single unit operation.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-unitOperationsId"><code>unitOperationsId</code></a></td>
-    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
     <td>Delete a single unit operation.</td>
 </tr>
 </tbody>
@@ -456,10 +456,10 @@ upgrade
 FROM google.saasservicemgmt.unit_operations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -481,17 +481,17 @@ Create a new unit operation.
 
 ```sql
 INSERT INTO google.saasservicemgmt.unit_operations (
-data__provision,
-data__upgrade,
-data__deprovision,
-data__name,
 data__unit,
-data__parentUnitOperation,
-data__rollout,
-data__cancel,
-data__schedule,
 data__labels,
+data__deprovision,
+data__parentUnitOperation,
+data__schedule,
 data__annotations,
+data__upgrade,
+data__rollout,
+data__provision,
+data__name,
+data__cancel,
 projectsId,
 locationsId,
 unitOperationId,
@@ -499,17 +499,17 @@ validateOnly,
 requestId
 )
 SELECT 
-'{{ provision }}',
-'{{ upgrade }}',
-'{{ deprovision }}',
-'{{ name }}',
 '{{ unit }}',
-'{{ parentUnitOperation }}',
-'{{ rollout }}',
-{{ cancel }},
-'{{ schedule }}',
 '{{ labels }}',
+'{{ deprovision }}',
+'{{ parentUnitOperation }}',
+'{{ schedule }}',
 '{{ annotations }}',
+'{{ upgrade }}',
+'{{ rollout }}',
+'{{ provision }}',
+'{{ name }}',
+{{ cancel }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ unitOperationId }}',
@@ -550,60 +550,60 @@ upgrade
     - name: locationsId
       value: string
       description: Required parameter for the unit_operations resource.
-    - name: provision
-      value: object
-      description: >
-        Provision is the unit operation that provision the underlying resources represented by a Unit. Can only execute if the Unit is not currently provisioned.
-        
-    - name: upgrade
-      value: object
-      description: >
-        Upgrade is the unit operation that upgrades a provisioned unit, which may also include the underlying resources represented by a Unit. Can only execute if the Unit is currently provisioned.
-        
-    - name: deprovision
-      value: object
-      description: >
-        Deprovision is the unit operation that deprovision the underlying resources represented by a Unit. Can only execute if the Unit is currently provisioned.
-        
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name (full URI of the resource) following the standard naming scheme: "projects/{project}/locations/{location}/unitOperations/{unitOperation}"
-        
     - name: unit
       value: string
       description: >
         Required. Immutable. The Unit a given UnitOperation will act upon.
-        
-    - name: parentUnitOperation
-      value: string
-      description: >
-        Optional. Reference to parent resource: UnitOperation. If an operation needs to create other operations as part of its workflow, each of the child operations should have this field set to the parent. This can be used for tracing. (Optional)
-        
-    - name: rollout
-      value: string
-      description: >
-        Optional. Specifies which rollout created this Unit Operation. This cannot be modified and is used for filtering purposes only. If a dependent unit and unit operation are created as part of another unit operation, they will use the same rolloutId.
-        
-    - name: cancel
-      value: boolean
-      description: >
-        Optional. When true, attempt to cancel the operation. Cancellation may fail if the operation is already executing. (Optional)
-        
-    - name: schedule
-      value: object
-      description: >
-        Optional. When to schedule this operation.
         
     - name: labels
       value: object
       description: >
         Optional. The labels on the resource, which can be used for categorization. similar to Kubernetes resource labels.
         
+    - name: deprovision
+      value: object
+      description: >
+        Deprovision is the unit operation that deprovision the underlying resources represented by a Unit. Can only execute if the Unit is currently provisioned.
+        
+    - name: parentUnitOperation
+      value: string
+      description: >
+        Optional. Reference to parent resource: UnitOperation. If an operation needs to create other operations as part of its workflow, each of the child operations should have this field set to the parent. This can be used for tracing. (Optional)
+        
+    - name: schedule
+      value: object
+      description: >
+        Optional. When to schedule this operation.
+        
     - name: annotations
       value: object
       description: >
         Optional. Annotations is an unstructured key-value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/user-guide/annotations
+        
+    - name: upgrade
+      value: object
+      description: >
+        Upgrade is the unit operation that upgrades a provisioned unit, which may also include the underlying resources represented by a Unit. Can only execute if the Unit is currently provisioned.
+        
+    - name: rollout
+      value: string
+      description: >
+        Optional. Specifies which rollout created this Unit Operation. This cannot be modified and is used for filtering purposes only. If a dependent unit and unit operation are created as part of another unit operation, they will use the same rolloutId.
+        
+    - name: provision
+      value: object
+      description: >
+        Provision is the unit operation that provision the underlying resources represented by a Unit. Can only execute if the Unit is not currently provisioned.
+        
+    - name: name
+      value: string
+      description: >
+        Identifier. The resource name (full URI of the resource) following the standard naming scheme: "projects/{project}/locations/{location}/unitOperations/{unitOperation}"
+        
+    - name: cancel
+      value: boolean
+      description: >
+        Optional. When true, attempt to cancel the operation. Cancellation may fail if the operation is already executing. (Optional)
         
     - name: unitOperationId
       value: string
@@ -631,24 +631,24 @@ Update a single unit operation.
 ```sql
 UPDATE google.saasservicemgmt.unit_operations
 SET 
-data__provision = '{{ provision }}',
-data__upgrade = '{{ upgrade }}',
-data__deprovision = '{{ deprovision }}',
-data__name = '{{ name }}',
 data__unit = '{{ unit }}',
-data__parentUnitOperation = '{{ parentUnitOperation }}',
-data__rollout = '{{ rollout }}',
-data__cancel = {{ cancel }},
-data__schedule = '{{ schedule }}',
 data__labels = '{{ labels }}',
-data__annotations = '{{ annotations }}'
+data__deprovision = '{{ deprovision }}',
+data__parentUnitOperation = '{{ parentUnitOperation }}',
+data__schedule = '{{ schedule }}',
+data__annotations = '{{ annotations }}',
+data__upgrade = '{{ upgrade }}',
+data__rollout = '{{ rollout }}',
+data__provision = '{{ provision }}',
+data__name = '{{ name }}',
+data__cancel = {{ cancel }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND unitOperationsId = '{{ unitOperationsId }}' --required
-AND validateOnly = {{ validateOnly}}
 AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
+AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
 annotations,
@@ -691,9 +691,9 @@ DELETE FROM google.saasservicemgmt.unit_operations
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND unitOperationsId = '{{ unitOperationsId }}' --required
-AND etag = '{{ etag }}'
-AND validateOnly = '{{ validateOnly }}'
 AND requestId = '{{ requestId }}'
+AND validateOnly = '{{ validateOnly }}'
+AND etag = '{{ etag }}'
 ;
 ```
 </TabItem>

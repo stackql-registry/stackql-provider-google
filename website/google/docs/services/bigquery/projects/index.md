@@ -97,7 +97,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a></td>
     <td>RPC to list projects to which the user has been granted any project role. Users of this method are encouraged to consider the [Resource Manager](https://cloud.google.com/resource-manager/docs/) API, which provides the underlying data for this method and has more capabilities.</td>
 </tr>
 </tbody>
@@ -149,8 +149,8 @@ kind,
 numericId,
 projectReference
 FROM google.bigquery.projects
-WHERE maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
+WHERE pageToken = '{{ pageToken }}'
+AND maxResults = '{{ maxResults }}'
 ;
 ```
 </TabItem>

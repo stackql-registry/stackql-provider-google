@@ -32,13 +32,37 @@ Creates, updates, deletes, gets or lists a <code>compilation_results</code> reso
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="get"
+    defaultValue="query"
     values={[
-        { label: 'get', value: 'get' },
         { label: 'query', value: 'query' },
+        { label: 'get', value: 'get' },
         { label: 'list', value: 'list' }
     ]}
 >
+<TabItem value="query">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="compilationResultActions" /></td>
+    <td><code>array</code></td>
+    <td>List of compilation result actions.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="nextPageToken" /></td>
+    <td><code>string</code></td>
+    <td>A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
 <TabItem value="get">
 
 <table>
@@ -91,6 +115,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. All the metadata information that is used internally to serve the resource. For example: timestamps, flags, status fields, etc. The format of this field is a JSON string.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="privateResourceMetadata" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Metadata indicating whether this resource is user-scoped. `CompilationResult` resource is `user_scoped` only if it is sourced from a workspace. (id: PrivateResourceMetadata)</td>
+</tr>
+<tr>
     <td><CopyableCode code="releaseConfig" /></td>
     <td><code>string</code></td>
     <td>Immutable. The name of the release config to compile. Must be in the format `projects/*/locations/*/repositories/*/releaseConfigs/*`.</td>
@@ -104,30 +133,6 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="workspace" /></td>
     <td><code>string</code></td>
     <td>Immutable. The name of the workspace to compile. Must be in the format `projects/*/locations/*/repositories/*/workspaces/*`.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="query">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="compilationResultActions" /></td>
-    <td><code>array</code></td>
-    <td>List of compilation result actions.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="nextPageToken" /></td>
-    <td><code>string</code></td>
-    <td>A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.</td>
 </tr>
 </tbody>
 </table>
@@ -184,6 +189,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. All the metadata information that is used internally to serve the resource. For example: timestamps, flags, status fields, etc. The format of this field is a JSON string.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="privateResourceMetadata" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Metadata indicating whether this resource is user-scoped. `CompilationResult` resource is `user_scoped` only if it is sourced from a workspace. (id: PrivateResourceMetadata)</td>
+</tr>
+<tr>
     <td><CopyableCode code="releaseConfig" /></td>
     <td><code>string</code></td>
     <td>Immutable. The name of the release config to compile. Must be in the format `projects/*/locations/*/repositories/*/releaseConfigs/*`.</td>
@@ -219,6 +229,13 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
+    <td><a href="#query"><CopyableCode code="query" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-compilationResultsId"><code>compilationResultsId</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td>Returns CompilationResultActions in a given CompilationResult.</td>
+</tr>
+<tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-compilationResultsId"><code>compilationResultsId</code></a></td>
@@ -226,17 +243,10 @@ The following methods are available for this resource:
     <td>Fetches a single CompilationResult.</td>
 </tr>
 <tr>
-    <td><a href="#query"><CopyableCode code="query" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-compilationResultsId"><code>compilationResultsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
-    <td>Returns CompilationResultActions in a given CompilationResult.</td>
-</tr>
-<tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists CompilationResults in a given Repository.</td>
 </tr>
 <tr>
@@ -308,13 +318,32 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="get"
+    defaultValue="query"
     values={[
-        { label: 'get', value: 'get' },
         { label: 'query', value: 'query' },
+        { label: 'get', value: 'get' },
         { label: 'list', value: 'list' }
     ]}
 >
+<TabItem value="query">
+
+Returns CompilationResultActions in a given CompilationResult.
+
+```sql
+SELECT
+compilationResultActions,
+nextPageToken
+FROM google.dataform.compilation_results
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND repositoriesId = '{{ repositoriesId }}' -- required
+AND compilationResultsId = '{{ compilationResultsId }}' -- required
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+;
+```
+</TabItem>
 <TabItem value="get">
 
 Fetches a single CompilationResult.
@@ -329,6 +358,7 @@ dataEncryptionState,
 dataformCoreVersion,
 gitCommitish,
 internalMetadata,
+privateResourceMetadata,
 releaseConfig,
 resolvedGitCommitSha,
 workspace
@@ -337,25 +367,6 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND repositoriesId = '{{ repositoriesId }}' -- required
 AND compilationResultsId = '{{ compilationResultsId }}' -- required
-;
-```
-</TabItem>
-<TabItem value="query">
-
-Returns CompilationResultActions in a given CompilationResult.
-
-```sql
-SELECT
-compilationResultActions,
-nextPageToken
-FROM google.dataform.compilation_results
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND repositoriesId = '{{ repositoriesId }}' -- required
-AND compilationResultsId = '{{ compilationResultsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -373,6 +384,7 @@ dataEncryptionState,
 dataformCoreVersion,
 gitCommitish,
 internalMetadata,
+privateResourceMetadata,
 releaseConfig,
 resolvedGitCommitSha,
 workspace
@@ -382,8 +394,8 @@ AND locationsId = '{{ locationsId }}' -- required
 AND repositoriesId = '{{ repositoriesId }}' -- required
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -405,8 +417,8 @@ Creates a new CompilationResult in a given project and location.
 
 ```sql
 INSERT INTO google.dataform.compilation_results (
-data__gitCommitish,
 data__workspace,
+data__gitCommitish,
 data__releaseConfig,
 data__codeCompilationConfig,
 projectsId,
@@ -414,8 +426,8 @@ locationsId,
 repositoriesId
 )
 SELECT 
-'{{ gitCommitish }}',
 '{{ workspace }}',
+'{{ gitCommitish }}',
 '{{ releaseConfig }}',
 '{{ codeCompilationConfig }}',
 '{{ projectsId }}',
@@ -430,6 +442,7 @@ dataEncryptionState,
 dataformCoreVersion,
 gitCommitish,
 internalMetadata,
+privateResourceMetadata,
 releaseConfig,
 resolvedGitCommitSha,
 workspace
@@ -451,15 +464,15 @@ workspace
     - name: repositoriesId
       value: string
       description: Required parameter for the compilation_results resource.
-    - name: gitCommitish
-      value: string
-      description: >
-        Immutable. Git commit/tag/branch name at which the repository should be compiled. Must exist in the remote repository. Examples: - a commit SHA: `12ade345` - a tag: `tag1` - a branch name: `branch1`
-        
     - name: workspace
       value: string
       description: >
         Immutable. The name of the workspace to compile. Must be in the format `projects/*/locations/*/repositories/*/workspaces/*`.
+        
+    - name: gitCommitish
+      value: string
+      description: >
+        Immutable. Git commit/tag/branch name at which the repository should be compiled. Must exist in the remote repository. Examples: - a commit SHA: `12ade345` - a tag: `tag1` - a branch name: `branch1`
         
     - name: releaseConfig
       value: string

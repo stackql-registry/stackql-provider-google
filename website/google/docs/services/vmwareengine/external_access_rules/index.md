@@ -224,14 +224,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-networkPoliciesId"><code>networkPoliciesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists `ExternalAccessRule` resources in the specified network policy.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-networkPoliciesId"><code>networkPoliciesId</code></a></td>
-    <td><a href="#parameter-externalAccessRuleId"><code>externalAccessRuleId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-externalAccessRuleId"><code>externalAccessRuleId</code></a></td>
     <td>Creates a new external access rule in a given network policy.</td>
 </tr>
 <tr>
@@ -381,9 +381,9 @@ FROM google.vmwareengine.external_access_rules
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND networkPoliciesId = '{{ networkPoliciesId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -407,33 +407,33 @@ Creates a new external access rule in a given network policy.
 ```sql
 INSERT INTO google.vmwareengine.external_access_rules (
 data__description,
-data__priority,
-data__action,
-data__ipProtocol,
 data__sourceIpRanges,
 data__sourcePorts,
 data__destinationIpRanges,
+data__ipProtocol,
 data__destinationPorts,
+data__priority,
+data__action,
 projectsId,
 locationsId,
 networkPoliciesId,
-externalAccessRuleId,
-requestId
+requestId,
+externalAccessRuleId
 )
 SELECT 
 '{{ description }}',
-{{ priority }},
-'{{ action }}',
-'{{ ipProtocol }}',
 '{{ sourceIpRanges }}',
 '{{ sourcePorts }}',
 '{{ destinationIpRanges }}',
+'{{ ipProtocol }}',
 '{{ destinationPorts }}',
+{{ priority }},
+'{{ action }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ networkPoliciesId }}',
-'{{ externalAccessRuleId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ externalAccessRuleId }}'
 RETURNING
 name,
 done,
@@ -463,22 +463,6 @@ response
       description: >
         User-provided description for this external access rule.
         
-    - name: priority
-      value: integer
-      description: >
-        External access rule priority, which determines the external access rule to use when multiple rules apply. If multiple rules have the same priority, their ordering is non-deterministic. If specific ordering is required, assign unique priorities to enforce such ordering. The external access rule priority is an integer from 100 to 4096, both inclusive. Lower integers indicate higher precedence. For example, a rule with priority `100` has higher precedence than a rule with priority `101`.
-        
-    - name: action
-      value: string
-      description: >
-        The action that the external access rule performs.
-        
-      valid_values: ['ACTION_UNSPECIFIED', 'ALLOW', 'DENY']
-    - name: ipProtocol
-      value: string
-      description: >
-        The IP protocol to which the external access rule applies. This value can be one of the following three protocol strings (not case-sensitive): `tcp`, `udp`, or `icmp`.
-        
     - name: sourceIpRanges
       value: array
       description: >
@@ -494,14 +478,30 @@ response
       description: >
         If destination ranges are specified, the external access rule applies only to the traffic that has a destination IP address in these ranges. The specified IP addresses must have reserved external IP addresses in the scope of the parent network policy. To match all external IP addresses in the scope of the parent network policy, specify `0.0.0.0/0`. To match a specific external IP address, specify it using the `IpRange.external_address` property.
         
+    - name: ipProtocol
+      value: string
+      description: >
+        The IP protocol to which the external access rule applies. This value can be one of the following three protocol strings (not case-sensitive): `tcp`, `udp`, or `icmp`.
+        
     - name: destinationPorts
       value: array
       description: >
         A list of destination ports to which the external access rule applies. This field is only applicable for the UDP or TCP protocol. Each entry must be either an integer or a range. For example: `["22"]`, `["80","443"]`, or `["12345-12349"]`. To match all destination ports, specify `["0-65535"]`.
         
-    - name: externalAccessRuleId
+    - name: priority
+      value: integer
+      description: >
+        External access rule priority, which determines the external access rule to use when multiple rules apply. If multiple rules have the same priority, their ordering is non-deterministic. If specific ordering is required, assign unique priorities to enforce such ordering. The external access rule priority is an integer from 100 to 4096, both inclusive. Lower integers indicate higher precedence. For example, a rule with priority `100` has higher precedence than a rule with priority `101`.
+        
+    - name: action
       value: string
+      description: >
+        The action that the external access rule performs.
+        
+      valid_values: ['ACTION_UNSPECIFIED', 'ALLOW', 'DENY']
     - name: requestId
+      value: string
+    - name: externalAccessRuleId
       value: string
 ```
 </TabItem>
@@ -524,13 +524,13 @@ Updates the parameters of a single external access rule. Only fields specified i
 UPDATE google.vmwareengine.external_access_rules
 SET 
 data__description = '{{ description }}',
-data__priority = {{ priority }},
-data__action = '{{ action }}',
-data__ipProtocol = '{{ ipProtocol }}',
 data__sourceIpRanges = '{{ sourceIpRanges }}',
 data__sourcePorts = '{{ sourcePorts }}',
 data__destinationIpRanges = '{{ destinationIpRanges }}',
-data__destinationPorts = '{{ destinationPorts }}'
+data__ipProtocol = '{{ ipProtocol }}',
+data__destinationPorts = '{{ destinationPorts }}',
+data__priority = {{ priority }},
+data__action = '{{ action }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -69,6 +69,11 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Which type of jobs will use the reservation.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="schedulingPolicy" /></td>
+    <td><code>object</code></td>
+    <td>Optional. The scheduling policy to use for jobs and queries of this assignee when running under the associated reservation. The scheduling policy controls how the reservation's resources are distributed. This overrides the default scheduling policy specified on the reservation. This feature is not yet generally available. (id: SchedulingPolicy)</td>
+</tr>
+<tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
     <td>Output only. State of the assignment.</td>
@@ -205,6 +210,7 @@ name,
 assignee,
 enableGeminiInBigquery,
 jobType,
+schedulingPolicy,
 state
 FROM google.bigqueryreservation.assignments
 WHERE projectsId = '{{ projectsId }}' -- required
@@ -233,18 +239,20 @@ Creates an assignment object which allows the given project to submit jobs of a 
 
 ```sql
 INSERT INTO google.bigqueryreservation.assignments (
+data__enableGeminiInBigquery,
+data__schedulingPolicy,
 data__assignee,
 data__jobType,
-data__enableGeminiInBigquery,
 projectsId,
 locationsId,
 reservationsId,
 assignmentId
 )
 SELECT 
+{{ enableGeminiInBigquery }},
+'{{ schedulingPolicy }}',
 '{{ assignee }}',
 '{{ jobType }}',
-{{ enableGeminiInBigquery }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ reservationsId }}',
@@ -254,6 +262,7 @@ name,
 assignee,
 enableGeminiInBigquery,
 jobType,
+schedulingPolicy,
 state
 ;
 ```
@@ -273,6 +282,16 @@ state
     - name: reservationsId
       value: string
       description: Required parameter for the assignments resource.
+    - name: enableGeminiInBigquery
+      value: boolean
+      description: >
+        Optional. This field controls if "Gemini in BigQuery" (https://cloud.google.com/gemini/docs/bigquery/overview) features should be enabled for this reservation assignment, which is not on by default. "Gemini in BigQuery" has a distinct compliance posture from BigQuery. If this field is set to true, the assignment job type is QUERY, and the parent reservation edition is ENTERPRISE_PLUS, then the assignment will give the grantee project/organization access to "Gemini in BigQuery" features.
+        
+    - name: schedulingPolicy
+      value: object
+      description: >
+        Optional. The scheduling policy to use for jobs and queries of this assignee when running under the associated reservation. The scheduling policy controls how the reservation's resources are distributed. This overrides the default scheduling policy specified on the reservation. This feature is not yet generally available.
+        
     - name: assignee
       value: string
       description: >
@@ -283,12 +302,7 @@ state
       description: >
         Optional. Which type of jobs will use the reservation.
         
-      valid_values: ['JOB_TYPE_UNSPECIFIED', 'PIPELINE', 'QUERY', 'ML_EXTERNAL', 'BACKGROUND', 'CONTINUOUS']
-    - name: enableGeminiInBigquery
-      value: boolean
-      description: >
-        Optional. This field controls if "Gemini in BigQuery" (https://cloud.google.com/gemini/docs/bigquery/overview) features should be enabled for this reservation assignment, which is not on by default. "Gemini in BigQuery" has a distinct compliance posture from BigQuery. If this field is set to true, the assignment job type is QUERY, and the parent reservation edition is ENTERPRISE_PLUS, then the assignment will give the grantee project/organization access to "Gemini in BigQuery" features.
-        
+      valid_values: ['JOB_TYPE_UNSPECIFIED', 'PIPELINE', 'QUERY', 'ML_EXTERNAL', 'BACKGROUND', 'CONTINUOUS', 'BACKGROUND_CHANGE_DATA_CAPTURE', 'BACKGROUND_COLUMN_METADATA_INDEX', 'BACKGROUND_SEARCH_INDEX_REFRESH']
     - name: assignmentId
       value: string
 ```
@@ -311,9 +325,10 @@ Updates an existing assignment. Only the `priority` field can be updated.
 ```sql
 UPDATE google.bigqueryreservation.assignments
 SET 
+data__enableGeminiInBigquery = {{ enableGeminiInBigquery }},
+data__schedulingPolicy = '{{ schedulingPolicy }}',
 data__assignee = '{{ assignee }}',
-data__jobType = '{{ jobType }}',
-data__enableGeminiInBigquery = {{ enableGeminiInBigquery }}
+data__jobType = '{{ jobType }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -325,6 +340,7 @@ name,
 assignee,
 enableGeminiInBigquery,
 jobType,
+schedulingPolicy,
 state;
 ```
 </TabItem>
@@ -375,8 +391,8 @@ EXEC google.bigqueryreservation.assignments.move
 @assignmentsId='{{ assignmentsId }}' --required 
 @@json=
 '{
-"destinationId": "{{ destinationId }}", 
-"assignmentId": "{{ assignmentId }}"
+"assignmentId": "{{ assignmentId }}", 
+"destinationId": "{{ destinationId }}"
 }'
 ;
 ```

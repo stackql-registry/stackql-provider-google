@@ -224,7 +224,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_integrations_versions_test_cases_list"><CopyableCode code="projects_locations_integrations_versions_test_cases_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-integrationsId"><code>integrationsId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td><a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists all the test cases that satisfy the filters.</td>
 </tr>
 <tr>
@@ -256,13 +256,6 @@ The following methods are available for this resource:
     <td>Executes functional test</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_integrations_versions_test_cases_upload"><CopyableCode code="projects_locations_integrations_versions_test_cases_upload" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-integrationsId"><code>integrationsId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
-    <td></td>
-    <td>Uploads a test case. The content can be a previously downloaded test case. Performs the same function as CreateTestCase, but accepts input in a string format, which holds the complete representation of the TestCase content.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_integrations_versions_test_cases_download"><CopyableCode code="projects_locations_integrations_versions_test_cases_download" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-integrationsId"><code>integrationsId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a>, <a href="#parameter-testCasesId"><code>testCasesId</code></a></td>
@@ -282,6 +275,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-integrationsId"><code>integrationsId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
     <td></td>
     <td>Executes all test cases in an integration version.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_integrations_versions_test_cases_upload"><CopyableCode code="projects_locations_integrations_versions_test_cases_upload" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-integrationsId"><code>integrationsId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
+    <td></td>
+    <td>Uploads a test case. The content can be a previously downloaded test case. Performs the same function as CreateTestCase, but accepts input in a string format, which holds the complete representation of the TestCase content.</td>
 </tr>
 </tbody>
 </table>
@@ -428,11 +428,11 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND integrationsId = '{{ integrationsId }}' -- required
 AND versionsId = '{{ versionsId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 AND readMask = '{{ readMask }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -454,18 +454,18 @@ Creates a new test case
 
 ```sql
 INSERT INTO google.integrations.test_cases (
-data__displayName,
-data__description,
-data__triggerId,
-data__testInputParameters,
-data__testTaskConfigs,
 data__databasePersistencePolicy,
-data__creatorEmail,
 data__createTime,
-data__lastModifierEmail,
-data__updateTime,
-data__lockHolderEmail,
+data__triggerId,
+data__description,
+data__displayName,
 data__triggerConfig,
+data__lockHolderEmail,
+data__creatorEmail,
+data__lastModifierEmail,
+data__testTaskConfigs,
+data__updateTime,
+data__testInputParameters,
 projectsId,
 locationsId,
 integrationsId,
@@ -473,18 +473,18 @@ versionsId,
 testCaseId
 )
 SELECT 
-'{{ displayName }}',
-'{{ description }}',
-'{{ triggerId }}',
-'{{ testInputParameters }}',
-'{{ testTaskConfigs }}',
 '{{ databasePersistencePolicy }}',
-'{{ creatorEmail }}',
 '{{ createTime }}',
-'{{ lastModifierEmail }}',
-'{{ updateTime }}',
-'{{ lockHolderEmail }}',
+'{{ triggerId }}',
+'{{ description }}',
+'{{ displayName }}',
 '{{ triggerConfig }}',
+'{{ lockHolderEmail }}',
+'{{ creatorEmail }}',
+'{{ lastModifierEmail }}',
+'{{ testTaskConfigs }}',
+'{{ updateTime }}',
+'{{ testInputParameters }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ integrationsId }}',
@@ -525,66 +525,66 @@ updateTime
     - name: versionsId
       value: string
       description: Required parameter for the test_cases resource.
-    - name: displayName
-      value: string
-      description: >
-        Required. The display name of test case.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. Description of the test case.
-        
-    - name: triggerId
-      value: string
-      description: >
-        Required. This defines the trigger ID in workflow which is considered to be executed as starting point of the test case
-        
-    - name: testInputParameters
-      value: array
-      description: >
-        Optional. Parameters that are expected to be passed to the test case when the test case is triggered. This gives the user the ability to provide default values. This should include all the output variables of the trigger as input variables.
-        
-    - name: testTaskConfigs
-      value: array
-      description: >
-        Optional. However, the test case doesn't mock or assert anything without test_task_configs.
-        
     - name: databasePersistencePolicy
       value: string
       description: >
         Optional. Various policies for how to persist the test execution info including execution info, execution export info, execution metadata index and execution param index..
         
       valid_values: ['DATABASE_PERSISTENCE_POLICY_UNSPECIFIED', 'DATABASE_PERSISTENCE_DISABLED', 'DATABASE_PERSISTENCE_ASYNC']
-    - name: creatorEmail
-      value: string
-      description: >
-        Optional. The creator's email address. Generated based on the End User Credentials/LOAS role of the user making the call.
-        
     - name: createTime
       value: string
       description: >
         Auto-generated.
         
-    - name: lastModifierEmail
+    - name: triggerId
       value: string
       description: >
-        The last modifier's email address. Generated based on the End User Credentials/LOAS role of the user making the call.
+        Required. This defines the trigger ID in workflow which is considered to be executed as starting point of the test case
         
-    - name: updateTime
+    - name: description
       value: string
       description: >
-        Auto-generated.
+        Optional. Description of the test case.
+        
+    - name: displayName
+      value: string
+      description: >
+        Required. The display name of test case.
+        
+    - name: triggerConfig
+      value: object
+      description: >
+        Configuration detail of a trigger.
         
     - name: lockHolderEmail
       value: string
       description: >
         Optional. The edit lock holder's email address. Generated based on the End User Credentials/LOAS role of the user making the call.
         
-    - name: triggerConfig
-      value: object
+    - name: creatorEmail
+      value: string
       description: >
-        Configuration detail of a trigger.
+        Optional. The creator's email address. Generated based on the End User Credentials/LOAS role of the user making the call.
+        
+    - name: lastModifierEmail
+      value: string
+      description: >
+        The last modifier's email address. Generated based on the End User Credentials/LOAS role of the user making the call.
+        
+    - name: testTaskConfigs
+      value: array
+      description: >
+        Optional. However, the test case doesn't mock or assert anything without test_task_configs.
+        
+    - name: updateTime
+      value: string
+      description: >
+        Auto-generated.
+        
+    - name: testInputParameters
+      value: array
+      description: >
+        Optional. Parameters that are expected to be passed to the test case when the test case is triggered. This gives the user the ability to provide default values. This should include all the output variables of the trigger as input variables.
         
     - name: testCaseId
       value: string
@@ -608,18 +608,18 @@ Updates a test case
 ```sql
 UPDATE google.integrations.test_cases
 SET 
-data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
-data__triggerId = '{{ triggerId }}',
-data__testInputParameters = '{{ testInputParameters }}',
-data__testTaskConfigs = '{{ testTaskConfigs }}',
 data__databasePersistencePolicy = '{{ databasePersistencePolicy }}',
-data__creatorEmail = '{{ creatorEmail }}',
 data__createTime = '{{ createTime }}',
-data__lastModifierEmail = '{{ lastModifierEmail }}',
-data__updateTime = '{{ updateTime }}',
+data__triggerId = '{{ triggerId }}',
+data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
+data__triggerConfig = '{{ triggerConfig }}',
 data__lockHolderEmail = '{{ lockHolderEmail }}',
-data__triggerConfig = '{{ triggerConfig }}'
+data__creatorEmail = '{{ creatorEmail }}',
+data__lastModifierEmail = '{{ lastModifierEmail }}',
+data__testTaskConfigs = '{{ testTaskConfigs }}',
+data__updateTime = '{{ updateTime }}',
+data__testInputParameters = '{{ testInputParameters }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -677,10 +677,10 @@ AND testCasesId = '{{ testCasesId }}' --required
     defaultValue="projects_locations_integrations_versions_test_cases_execute_test"
     values={[
         { label: 'projects_locations_integrations_versions_test_cases_execute_test', value: 'projects_locations_integrations_versions_test_cases_execute_test' },
-        { label: 'projects_locations_integrations_versions_test_cases_upload', value: 'projects_locations_integrations_versions_test_cases_upload' },
         { label: 'projects_locations_integrations_versions_test_cases_download', value: 'projects_locations_integrations_versions_test_cases_download' },
         { label: 'projects_locations_integrations_versions_test_cases_takeover_edit_lock', value: 'projects_locations_integrations_versions_test_cases_takeover_edit_lock' },
-        { label: 'projects_locations_integrations_versions_test_cases_execute', value: 'projects_locations_integrations_versions_test_cases_execute' }
+        { label: 'projects_locations_integrations_versions_test_cases_execute', value: 'projects_locations_integrations_versions_test_cases_execute' },
+        { label: 'projects_locations_integrations_versions_test_cases_upload', value: 'projects_locations_integrations_versions_test_cases_upload' }
     ]}
 >
 <TabItem value="projects_locations_integrations_versions_test_cases_execute_test">
@@ -697,24 +697,6 @@ EXEC google.integrations.test_cases.projects_locations_integrations_versions_tes
 @@json=
 '{
 "inputParameters": "{{ inputParameters }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_integrations_versions_test_cases_upload">
-
-Uploads a test case. The content can be a previously downloaded test case. Performs the same function as CreateTestCase, but accepts input in a string format, which holds the complete representation of the TestCase content.
-
-```sql
-EXEC google.integrations.test_cases.projects_locations_integrations_versions_test_cases_upload 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@integrationsId='{{ integrationsId }}' --required, 
-@versionsId='{{ versionsId }}' --required 
-@@json=
-'{
-"content": "{{ content }}", 
-"fileFormat": "{{ fileFormat }}"
 }'
 ;
 ```
@@ -758,6 +740,24 @@ EXEC google.integrations.test_cases.projects_locations_integrations_versions_tes
 @locationsId='{{ locationsId }}' --required, 
 @integrationsId='{{ integrationsId }}' --required, 
 @versionsId='{{ versionsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="projects_locations_integrations_versions_test_cases_upload">
+
+Uploads a test case. The content can be a previously downloaded test case. Performs the same function as CreateTestCase, but accepts input in a string format, which holds the complete representation of the TestCase content.
+
+```sql
+EXEC google.integrations.test_cases.projects_locations_integrations_versions_test_cases_upload 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@integrationsId='{{ integrationsId }}' --required, 
+@versionsId='{{ versionsId }}' --required 
+@@json=
+'{
+"content": "{{ content }}", 
+"fileFormat": "{{ fileFormat }}"
+}'
 ;
 ```
 </TabItem>

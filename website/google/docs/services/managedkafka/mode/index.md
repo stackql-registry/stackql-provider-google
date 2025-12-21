@@ -76,21 +76,21 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a>, <a href="#parameter-modeId"><code>modeId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a>, <a href="#parameter-contextsId"><code>contextsId</code></a>, <a href="#parameter-modeId"><code>modeId</code></a></td>
     <td></td>
     <td>Get mode at global level or for a subject.</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="replace" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a>, <a href="#parameter-modeId"><code>modeId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a>, <a href="#parameter-contextsId"><code>contextsId</code></a>, <a href="#parameter-modeId"><code>modeId</code></a></td>
     <td></td>
     <td>Update mode at global level or for a subject.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a>, <a href="#parameter-modeId"><code>modeId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a>, <a href="#parameter-contextsId"><code>contextsId</code></a>, <a href="#parameter-modeId"><code>modeId</code></a></td>
     <td></td>
     <td>Delete schema mode for a subject.</td>
 </tr>
@@ -110,6 +110,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
+<tr id="parameter-contextsId">
+    <td><CopyableCode code="contextsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-locationsId">
     <td><CopyableCode code="locationsId" /></td>
     <td><code>string</code></td>
@@ -152,6 +157,7 @@ FROM google.managedkafka.mode
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND schemaRegistriesId = '{{ schemaRegistriesId }}' -- required
+AND contextsId = '{{ contextsId }}' -- required
 AND modeId = '{{ modeId }}' -- required
 ;
 ```
@@ -179,6 +185,7 @@ WHERE
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND schemaRegistriesId = '{{ schemaRegistriesId }}' --required
+AND contextsId = '{{ contextsId }}' --required
 AND modeId = '{{ modeId }}' --required
 RETURNING
 mode;
@@ -204,6 +211,7 @@ DELETE FROM google.managedkafka.mode
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND schemaRegistriesId = '{{ schemaRegistriesId }}' --required
+AND contextsId = '{{ contextsId }}' --required
 AND modeId = '{{ modeId }}' --required
 ;
 ```

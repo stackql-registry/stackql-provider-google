@@ -32,37 +32,38 @@ Creates, updates, deletes, gets or lists an <code>operations</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_locations_collections_data_stores_models_operations_get"
+    defaultValue="projects_locations_collections_engines_assistants_agents_operations_get"
     values={[
-        { label: 'projects_locations_collections_data_stores_models_operations_get', value: 'projects_locations_collections_data_stores_models_operations_get' },
+        { label: 'projects_locations_collections_engines_assistants_agents_operations_get', value: 'projects_locations_collections_engines_assistants_agents_operations_get' },
         { label: 'projects_locations_collections_data_stores_branches_operations_get', value: 'projects_locations_collections_data_stores_branches_operations_get' },
         { label: 'projects_locations_collections_data_stores_schemas_operations_get', value: 'projects_locations_collections_data_stores_schemas_operations_get' },
-        { label: 'projects_locations_collections_data_stores_models_operations_list', value: 'projects_locations_collections_data_stores_models_operations_list' },
+        { label: 'projects_locations_collections_data_stores_models_operations_get', value: 'projects_locations_collections_data_stores_models_operations_get' },
+        { label: 'projects_locations_collections_engines_operations_get', value: 'projects_locations_collections_engines_operations_get' },
         { label: 'projects_locations_collections_data_stores_branches_operations_list', value: 'projects_locations_collections_data_stores_branches_operations_list' },
         { label: 'projects_locations_collections_data_stores_schemas_operations_list', value: 'projects_locations_collections_data_stores_schemas_operations_list' },
-        { label: 'projects_locations_collections_engines_operations_get', value: 'projects_locations_collections_engines_operations_get' },
+        { label: 'projects_locations_collections_data_stores_models_operations_list', value: 'projects_locations_collections_data_stores_models_operations_list' },
         { label: 'projects_locations_data_stores_models_operations_get', value: 'projects_locations_data_stores_models_operations_get' },
         { label: 'projects_locations_data_stores_branches_operations_get', value: 'projects_locations_data_stores_branches_operations_get' },
-        { label: 'projects_locations_collections_data_connector_operations_get', value: 'projects_locations_collections_data_connector_operations_get' },
         { label: 'projects_locations_collections_operations_get', value: 'projects_locations_collections_operations_get' },
-        { label: 'projects_locations_collections_data_stores_operations_list', value: 'projects_locations_collections_data_stores_operations_list' },
         { label: 'projects_locations_collections_engines_operations_list', value: 'projects_locations_collections_engines_operations_list' },
-        { label: 'projects_locations_podcasts_operations_get', value: 'projects_locations_podcasts_operations_get' },
+        { label: 'projects_locations_collections_data_connector_operations_get', value: 'projects_locations_collections_data_connector_operations_get' },
+        { label: 'projects_locations_collections_data_stores_operations_list', value: 'projects_locations_collections_data_stores_operations_list' },
         { label: 'projects_locations_data_stores_models_operations_list', value: 'projects_locations_data_stores_models_operations_list' },
         { label: 'projects_locations_data_stores_operations_get', value: 'projects_locations_data_stores_operations_get' },
         { label: 'projects_locations_data_stores_branches_operations_list', value: 'projects_locations_data_stores_branches_operations_list' },
+        { label: 'projects_locations_podcasts_operations_get', value: 'projects_locations_podcasts_operations_get' },
         { label: 'projects_locations_identity_mapping_stores_operations_get', value: 'projects_locations_identity_mapping_stores_operations_get' },
-        { label: 'projects_locations_collections_data_connector_operations_list', value: 'projects_locations_collections_data_connector_operations_list' },
         { label: 'projects_locations_collections_operations_list', value: 'projects_locations_collections_operations_list' },
-        { label: 'projects_locations_operations_get', value: 'projects_locations_operations_get' },
+        { label: 'projects_locations_collections_data_connector_operations_list', value: 'projects_locations_collections_data_connector_operations_list' },
         { label: 'projects_locations_data_stores_operations_list', value: 'projects_locations_data_stores_operations_list' },
         { label: 'projects_locations_identity_mapping_stores_operations_list', value: 'projects_locations_identity_mapping_stores_operations_list' },
-        { label: 'projects_operations_get', value: 'projects_operations_get' },
+        { label: 'projects_locations_operations_get', value: 'projects_locations_operations_get' },
         { label: 'projects_locations_operations_list', value: 'projects_locations_operations_list' },
+        { label: 'projects_operations_get', value: 'projects_operations_get' },
         { label: 'projects_operations_list', value: 'projects_operations_list' }
     ]}
 >
-<TabItem value="projects_locations_collections_data_stores_models_operations_get">
+<TabItem value="projects_locations_collections_engines_assistants_agents_operations_get">
 
 <table>
 <thead>
@@ -86,7 +87,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>The error result of the operation in case of failure or cancellation. (id: GoogleRpcStatus)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: GoogleRpcStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="metadata" /></td>
@@ -125,7 +126,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>The error result of the operation in case of failure or cancellation. (id: GoogleRpcStatus)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: GoogleRpcStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="metadata" /></td>
@@ -164,7 +165,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>The error result of the operation in case of failure or cancellation. (id: GoogleRpcStatus)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: GoogleRpcStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="metadata" /></td>
@@ -179,7 +180,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_collections_data_stores_models_operations_list">
+<TabItem value="projects_locations_collections_data_stores_models_operations_get">
 
 <table>
 <thead>
@@ -203,85 +204,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>The error result of the operation in case of failure or cancellation. (id: GoogleRpcStatus)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="metadata" /></td>
-    <td><code>object</code></td>
-    <td>Service-specific metadata associated with the operation. It typically contains progress information and common metadata such as create time. Some services might not provide such metadata. Any method that returns a long-running operation should document the metadata type, if any.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="response" /></td>
-    <td><code>object</code></td>
-    <td>The normal, successful response of the operation. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="projects_locations_collections_data_stores_branches_operations_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should be a resource name ending with `operations/&#123;unique_id&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="done" /></td>
-    <td><code>boolean</code></td>
-    <td>If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="error" /></td>
-    <td><code>object</code></td>
-    <td>The error result of the operation in case of failure or cancellation. (id: GoogleRpcStatus)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="metadata" /></td>
-    <td><code>object</code></td>
-    <td>Service-specific metadata associated with the operation. It typically contains progress information and common metadata such as create time. Some services might not provide such metadata. Any method that returns a long-running operation should document the metadata type, if any.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="response" /></td>
-    <td><code>object</code></td>
-    <td>The normal, successful response of the operation. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="projects_locations_collections_data_stores_schemas_operations_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should be a resource name ending with `operations/&#123;unique_id&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="done" /></td>
-    <td><code>boolean</code></td>
-    <td>If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="error" /></td>
-    <td><code>object</code></td>
-    <td>The error result of the operation in case of failure or cancellation. (id: GoogleRpcStatus)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: GoogleRpcStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="metadata" /></td>
@@ -320,7 +243,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>The error result of the operation in case of failure or cancellation. (id: GoogleRpcStatus)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: GoogleRpcStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="metadata" /></td>
@@ -332,6 +255,48 @@ The following fields are returned by `SELECT` queries:
     <td><code>object</code></td>
     <td>The normal, successful response of the operation. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.</td>
 </tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_locations_collections_data_stores_branches_operations_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_locations_collections_data_stores_schemas_operations_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_locations_collections_data_stores_models_operations_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
 </tbody>
 </table>
 </TabItem>
@@ -359,7 +324,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>The error result of the operation in case of failure or cancellation. (id: GoogleRpcStatus)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: GoogleRpcStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="metadata" /></td>
@@ -398,46 +363,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>The error result of the operation in case of failure or cancellation. (id: GoogleRpcStatus)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="metadata" /></td>
-    <td><code>object</code></td>
-    <td>Service-specific metadata associated with the operation. It typically contains progress information and common metadata such as create time. Some services might not provide such metadata. Any method that returns a long-running operation should document the metadata type, if any.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="response" /></td>
-    <td><code>object</code></td>
-    <td>The normal, successful response of the operation. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="projects_locations_collections_data_connector_operations_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should be a resource name ending with `operations/&#123;unique_id&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="done" /></td>
-    <td><code>boolean</code></td>
-    <td>If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="error" /></td>
-    <td><code>object</code></td>
-    <td>The error result of the operation in case of failure or cancellation. (id: GoogleRpcStatus)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: GoogleRpcStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="metadata" /></td>
@@ -476,46 +402,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>The error result of the operation in case of failure or cancellation. (id: GoogleRpcStatus)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="metadata" /></td>
-    <td><code>object</code></td>
-    <td>Service-specific metadata associated with the operation. It typically contains progress information and common metadata such as create time. Some services might not provide such metadata. Any method that returns a long-running operation should document the metadata type, if any.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="response" /></td>
-    <td><code>object</code></td>
-    <td>The normal, successful response of the operation. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="projects_locations_collections_data_stores_operations_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should be a resource name ending with `operations/&#123;unique_id&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="done" /></td>
-    <td><code>boolean</code></td>
-    <td>If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="error" /></td>
-    <td><code>object</code></td>
-    <td>The error result of the operation in case of failure or cancellation. (id: GoogleRpcStatus)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: GoogleRpcStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="metadata" /></td>
@@ -541,35 +428,10 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should be a resource name ending with `operations/&#123;unique_id&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="done" /></td>
-    <td><code>boolean</code></td>
-    <td>If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="error" /></td>
-    <td><code>object</code></td>
-    <td>The error result of the operation in case of failure or cancellation. (id: GoogleRpcStatus)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="metadata" /></td>
-    <td><code>object</code></td>
-    <td>Service-specific metadata associated with the operation. It typically contains progress information and common metadata such as create time. Some services might not provide such metadata. Any method that returns a long-running operation should document the metadata type, if any.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="response" /></td>
-    <td><code>object</code></td>
-    <td>The normal, successful response of the operation. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_podcasts_operations_get">
+<TabItem value="projects_locations_collections_data_connector_operations_get">
 
 <table>
 <thead>
@@ -593,7 +455,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>The error result of the operation in case of failure or cancellation. (id: GoogleRpcStatus)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: GoogleRpcStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="metadata" /></td>
@@ -605,6 +467,20 @@ The following fields are returned by `SELECT` queries:
     <td><code>object</code></td>
     <td>The normal, successful response of the operation. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.</td>
 </tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_locations_collections_data_stores_operations_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
 </tbody>
 </table>
 </TabItem>
@@ -619,31 +495,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should be a resource name ending with `operations/&#123;unique_id&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="done" /></td>
-    <td><code>boolean</code></td>
-    <td>If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="error" /></td>
-    <td><code>object</code></td>
-    <td>The error result of the operation in case of failure or cancellation. (id: GoogleRpcStatus)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="metadata" /></td>
-    <td><code>object</code></td>
-    <td>Service-specific metadata associated with the operation. It typically contains progress information and common metadata such as create time. Some services might not provide such metadata. Any method that returns a long-running operation should document the metadata type, if any.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="response" /></td>
-    <td><code>object</code></td>
-    <td>The normal, successful response of the operation. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -671,7 +522,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>The error result of the operation in case of failure or cancellation. (id: GoogleRpcStatus)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: GoogleRpcStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="metadata" /></td>
@@ -697,6 +548,20 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_locations_podcasts_operations_get">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
@@ -710,7 +575,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>The error result of the operation in case of failure or cancellation. (id: GoogleRpcStatus)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: GoogleRpcStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="metadata" /></td>
@@ -749,46 +614,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>The error result of the operation in case of failure or cancellation. (id: GoogleRpcStatus)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="metadata" /></td>
-    <td><code>object</code></td>
-    <td>Service-specific metadata associated with the operation. It typically contains progress information and common metadata such as create time. Some services might not provide such metadata. Any method that returns a long-running operation should document the metadata type, if any.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="response" /></td>
-    <td><code>object</code></td>
-    <td>The normal, successful response of the operation. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="projects_locations_collections_data_connector_operations_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should be a resource name ending with `operations/&#123;unique_id&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="done" /></td>
-    <td><code>boolean</code></td>
-    <td>If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="error" /></td>
-    <td><code>object</code></td>
-    <td>The error result of the operation in case of failure or cancellation. (id: GoogleRpcStatus)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: GoogleRpcStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="metadata" /></td>
@@ -814,31 +640,48 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should be a resource name ending with `operations/&#123;unique_id&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="done" /></td>
-    <td><code>boolean</code></td>
-    <td>If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="error" /></td>
-    <td><code>object</code></td>
-    <td>The error result of the operation in case of failure or cancellation. (id: GoogleRpcStatus)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="metadata" /></td>
-    <td><code>object</code></td>
-    <td>Service-specific metadata associated with the operation. It typically contains progress information and common metadata such as create time. Some services might not provide such metadata. Any method that returns a long-running operation should document the metadata type, if any.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="response" /></td>
-    <td><code>object</code></td>
-    <td>The normal, successful response of the operation. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.</td>
-</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_locations_collections_data_connector_operations_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_locations_data_stores_operations_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_locations_identity_mapping_stores_operations_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
 </tbody>
 </table>
 </TabItem>
@@ -866,7 +709,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>The error result of the operation in case of failure or cancellation. (id: GoogleRpcStatus)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: GoogleRpcStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="metadata" /></td>
@@ -881,7 +724,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_data_stores_operations_list">
+<TabItem value="projects_locations_operations_list">
 
 <table>
 <thead>
@@ -892,70 +735,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should be a resource name ending with `operations/&#123;unique_id&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="done" /></td>
-    <td><code>boolean</code></td>
-    <td>If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="error" /></td>
-    <td><code>object</code></td>
-    <td>The error result of the operation in case of failure or cancellation. (id: GoogleRpcStatus)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="metadata" /></td>
-    <td><code>object</code></td>
-    <td>Service-specific metadata associated with the operation. It typically contains progress information and common metadata such as create time. Some services might not provide such metadata. Any method that returns a long-running operation should document the metadata type, if any.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="response" /></td>
-    <td><code>object</code></td>
-    <td>The normal, successful response of the operation. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="projects_locations_identity_mapping_stores_operations_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should be a resource name ending with `operations/&#123;unique_id&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="done" /></td>
-    <td><code>boolean</code></td>
-    <td>If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="error" /></td>
-    <td><code>object</code></td>
-    <td>The error result of the operation in case of failure or cancellation. (id: GoogleRpcStatus)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="metadata" /></td>
-    <td><code>object</code></td>
-    <td>Service-specific metadata associated with the operation. It typically contains progress information and common metadata such as create time. Some services might not provide such metadata. Any method that returns a long-running operation should document the metadata type, if any.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="response" /></td>
-    <td><code>object</code></td>
-    <td>The normal, successful response of the operation. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -983,46 +762,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>The error result of the operation in case of failure or cancellation. (id: GoogleRpcStatus)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="metadata" /></td>
-    <td><code>object</code></td>
-    <td>Service-specific metadata associated with the operation. It typically contains progress information and common metadata such as create time. Some services might not provide such metadata. Any method that returns a long-running operation should document the metadata type, if any.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="response" /></td>
-    <td><code>object</code></td>
-    <td>The normal, successful response of the operation. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="projects_locations_operations_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should be a resource name ending with `operations/&#123;unique_id&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="done" /></td>
-    <td><code>boolean</code></td>
-    <td>If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="error" /></td>
-    <td><code>object</code></td>
-    <td>The error result of the operation in case of failure or cancellation. (id: GoogleRpcStatus)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: GoogleRpcStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="metadata" /></td>
@@ -1048,31 +788,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should be a resource name ending with `operations/&#123;unique_id&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="done" /></td>
-    <td><code>boolean</code></td>
-    <td>If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="error" /></td>
-    <td><code>object</code></td>
-    <td>The error result of the operation in case of failure or cancellation. (id: GoogleRpcStatus)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="metadata" /></td>
-    <td><code>object</code></td>
-    <td>Service-specific metadata associated with the operation. It typically contains progress information and common metadata such as create time. Some services might not provide such metadata. Any method that returns a long-running operation should document the metadata type, if any.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="response" /></td>
-    <td><code>object</code></td>
-    <td>The normal, successful response of the operation. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -1094,9 +809,9 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_locations_collections_data_stores_models_operations_get"><CopyableCode code="projects_locations_collections_data_stores_models_operations_get" /></a></td>
+    <td><a href="#projects_locations_collections_engines_assistants_agents_operations_get"><CopyableCode code="projects_locations_collections_engines_assistants_agents_operations_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-modelsId"><code>modelsId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-enginesId"><code>enginesId</code></a>, <a href="#parameter-assistantsId"><code>assistantsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
     <td></td>
     <td>Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.</td>
 </tr>
@@ -1115,25 +830,11 @@ The following methods are available for this resource:
     <td>Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_collections_data_stores_models_operations_list"><CopyableCode code="projects_locations_collections_data_stores_models_operations_list" /></a></td>
+    <td><a href="#projects_locations_collections_data_stores_models_operations_get"><CopyableCode code="projects_locations_collections_data_stores_models_operations_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-modelsId"><code>modelsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_collections_data_stores_branches_operations_list"><CopyableCode code="projects_locations_collections_data_stores_branches_operations_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-branchesId"><code>branchesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_collections_data_stores_schemas_operations_list"><CopyableCode code="projects_locations_collections_data_stores_schemas_operations_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-schemasId"><code>schemasId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-modelsId"><code>modelsId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
+    <td></td>
+    <td>Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_collections_engines_operations_get"><CopyableCode code="projects_locations_collections_engines_operations_get" /></a></td>
@@ -1141,6 +842,27 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-enginesId"><code>enginesId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
     <td></td>
     <td>Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_collections_data_stores_branches_operations_list"><CopyableCode code="projects_locations_collections_data_stores_branches_operations_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-branchesId"><code>branchesId</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_collections_data_stores_schemas_operations_list"><CopyableCode code="projects_locations_collections_data_stores_schemas_operations_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-schemasId"><code>schemasId</code></a></td>
+    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_collections_data_stores_models_operations_list"><CopyableCode code="projects_locations_collections_data_stores_models_operations_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-modelsId"><code>modelsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_data_stores_models_operations_get"><CopyableCode code="projects_locations_data_stores_models_operations_get" /></a></td>
@@ -1157,14 +879,21 @@ The following methods are available for this resource:
     <td>Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_collections_data_connector_operations_get"><CopyableCode code="projects_locations_collections_data_connector_operations_get" /></a></td>
+    <td><a href="#projects_locations_collections_operations_get"><CopyableCode code="projects_locations_collections_operations_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
     <td></td>
     <td>Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_collections_operations_get"><CopyableCode code="projects_locations_collections_operations_get" /></a></td>
+    <td><a href="#projects_locations_collections_engines_operations_list"><CopyableCode code="projects_locations_collections_engines_operations_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-enginesId"><code>enginesId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_collections_data_connector_operations_get"><CopyableCode code="projects_locations_collections_data_connector_operations_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
     <td></td>
@@ -1174,28 +903,14 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_collections_data_stores_operations_list"><CopyableCode code="projects_locations_collections_data_stores_operations_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_collections_engines_operations_list"><CopyableCode code="projects_locations_collections_engines_operations_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-enginesId"><code>enginesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_podcasts_operations_get"><CopyableCode code="projects_locations_podcasts_operations_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-podcastsId"><code>podcastsId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
-    <td></td>
-    <td>Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_data_stores_models_operations_list"><CopyableCode code="projects_locations_data_stores_models_operations_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-modelsId"><code>modelsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
 </tr>
 <tr>
@@ -1209,8 +924,15 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_data_stores_branches_operations_list"><CopyableCode code="projects_locations_data_stores_branches_operations_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-branchesId"><code>branchesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_podcasts_operations_get"><CopyableCode code="projects_locations_podcasts_operations_get" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-podcastsId"><code>podcastsId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
+    <td></td>
+    <td>Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_identity_mapping_stores_operations_get"><CopyableCode code="projects_locations_identity_mapping_stores_operations_get" /></a></td>
@@ -1220,17 +942,31 @@ The following methods are available for this resource:
     <td>Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_collections_data_connector_operations_list"><CopyableCode code="projects_locations_collections_data_connector_operations_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_collections_operations_list"><CopyableCode code="projects_locations_collections_operations_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_collections_data_connector_operations_list"><CopyableCode code="projects_locations_collections_data_connector_operations_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_data_stores_operations_list"><CopyableCode code="projects_locations_data_stores_operations_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_identity_mapping_stores_operations_list"><CopyableCode code="projects_locations_identity_mapping_stores_operations_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-identityMappingStoresId"><code>identityMappingStoresId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
 </tr>
 <tr>
@@ -1241,17 +977,10 @@ The following methods are available for this resource:
     <td>Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_data_stores_operations_list"><CopyableCode code="projects_locations_data_stores_operations_list" /></a></td>
+    <td><a href="#projects_locations_operations_list"><CopyableCode code="projects_locations_operations_list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_identity_mapping_stores_operations_list"><CopyableCode code="projects_locations_identity_mapping_stores_operations_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-identityMappingStoresId"><code>identityMappingStoresId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
 </tr>
 <tr>
@@ -1262,23 +991,16 @@ The following methods are available for this resource:
     <td>Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_operations_list"><CopyableCode code="projects_locations_operations_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
-</tr>
-<tr>
     <td><a href="#projects_operations_list"><CopyableCode code="projects_operations_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
 </tr>
 <tr>
-    <td><a href="#projects_operations_cancel"><CopyableCode code="projects_operations_cancel" /></a></td>
+    <td><a href="#projects_locations_collections_engines_operations_cancel"><CopyableCode code="projects_locations_collections_engines_operations_cancel" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-enginesId"><code>enginesId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
     <td></td>
     <td>Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.</td>
 </tr>
@@ -1290,16 +1012,16 @@ The following methods are available for this resource:
     <td>Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_collections_engines_operations_cancel"><CopyableCode code="projects_locations_collections_engines_operations_cancel" /></a></td>
+    <td><a href="#projects_locations_data_stores_branches_operations_cancel"><CopyableCode code="projects_locations_data_stores_branches_operations_cancel" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-enginesId"><code>enginesId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-branchesId"><code>branchesId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
     <td></td>
     <td>Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_data_stores_branches_operations_cancel"><CopyableCode code="projects_locations_data_stores_branches_operations_cancel" /></a></td>
+    <td><a href="#projects_operations_cancel"><CopyableCode code="projects_operations_cancel" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-branchesId"><code>branchesId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
     <td></td>
     <td>Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.</td>
 </tr>
@@ -1319,6 +1041,16 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
+<tr id="parameter-agentsId">
+    <td><CopyableCode code="agentsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-assistantsId">
+    <td><CopyableCode code="assistantsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-branchesId">
     <td><CopyableCode code="branchesId" /></td>
     <td><code>string</code></td>
@@ -1389,43 +1121,49 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
+<tr id="parameter-returnPartialSuccess">
+    <td><CopyableCode code="returnPartialSuccess" /></td>
+    <td><code>boolean</code></td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_locations_collections_data_stores_models_operations_get"
+    defaultValue="projects_locations_collections_engines_assistants_agents_operations_get"
     values={[
-        { label: 'projects_locations_collections_data_stores_models_operations_get', value: 'projects_locations_collections_data_stores_models_operations_get' },
+        { label: 'projects_locations_collections_engines_assistants_agents_operations_get', value: 'projects_locations_collections_engines_assistants_agents_operations_get' },
         { label: 'projects_locations_collections_data_stores_branches_operations_get', value: 'projects_locations_collections_data_stores_branches_operations_get' },
         { label: 'projects_locations_collections_data_stores_schemas_operations_get', value: 'projects_locations_collections_data_stores_schemas_operations_get' },
-        { label: 'projects_locations_collections_data_stores_models_operations_list', value: 'projects_locations_collections_data_stores_models_operations_list' },
+        { label: 'projects_locations_collections_data_stores_models_operations_get', value: 'projects_locations_collections_data_stores_models_operations_get' },
+        { label: 'projects_locations_collections_engines_operations_get', value: 'projects_locations_collections_engines_operations_get' },
         { label: 'projects_locations_collections_data_stores_branches_operations_list', value: 'projects_locations_collections_data_stores_branches_operations_list' },
         { label: 'projects_locations_collections_data_stores_schemas_operations_list', value: 'projects_locations_collections_data_stores_schemas_operations_list' },
-        { label: 'projects_locations_collections_engines_operations_get', value: 'projects_locations_collections_engines_operations_get' },
+        { label: 'projects_locations_collections_data_stores_models_operations_list', value: 'projects_locations_collections_data_stores_models_operations_list' },
         { label: 'projects_locations_data_stores_models_operations_get', value: 'projects_locations_data_stores_models_operations_get' },
         { label: 'projects_locations_data_stores_branches_operations_get', value: 'projects_locations_data_stores_branches_operations_get' },
-        { label: 'projects_locations_collections_data_connector_operations_get', value: 'projects_locations_collections_data_connector_operations_get' },
         { label: 'projects_locations_collections_operations_get', value: 'projects_locations_collections_operations_get' },
-        { label: 'projects_locations_collections_data_stores_operations_list', value: 'projects_locations_collections_data_stores_operations_list' },
         { label: 'projects_locations_collections_engines_operations_list', value: 'projects_locations_collections_engines_operations_list' },
-        { label: 'projects_locations_podcasts_operations_get', value: 'projects_locations_podcasts_operations_get' },
+        { label: 'projects_locations_collections_data_connector_operations_get', value: 'projects_locations_collections_data_connector_operations_get' },
+        { label: 'projects_locations_collections_data_stores_operations_list', value: 'projects_locations_collections_data_stores_operations_list' },
         { label: 'projects_locations_data_stores_models_operations_list', value: 'projects_locations_data_stores_models_operations_list' },
         { label: 'projects_locations_data_stores_operations_get', value: 'projects_locations_data_stores_operations_get' },
         { label: 'projects_locations_data_stores_branches_operations_list', value: 'projects_locations_data_stores_branches_operations_list' },
+        { label: 'projects_locations_podcasts_operations_get', value: 'projects_locations_podcasts_operations_get' },
         { label: 'projects_locations_identity_mapping_stores_operations_get', value: 'projects_locations_identity_mapping_stores_operations_get' },
-        { label: 'projects_locations_collections_data_connector_operations_list', value: 'projects_locations_collections_data_connector_operations_list' },
         { label: 'projects_locations_collections_operations_list', value: 'projects_locations_collections_operations_list' },
-        { label: 'projects_locations_operations_get', value: 'projects_locations_operations_get' },
+        { label: 'projects_locations_collections_data_connector_operations_list', value: 'projects_locations_collections_data_connector_operations_list' },
         { label: 'projects_locations_data_stores_operations_list', value: 'projects_locations_data_stores_operations_list' },
         { label: 'projects_locations_identity_mapping_stores_operations_list', value: 'projects_locations_identity_mapping_stores_operations_list' },
-        { label: 'projects_operations_get', value: 'projects_operations_get' },
+        { label: 'projects_locations_operations_get', value: 'projects_locations_operations_get' },
         { label: 'projects_locations_operations_list', value: 'projects_locations_operations_list' },
+        { label: 'projects_operations_get', value: 'projects_operations_get' },
         { label: 'projects_operations_list', value: 'projects_operations_list' }
     ]}
 >
-<TabItem value="projects_locations_collections_data_stores_models_operations_get">
+<TabItem value="projects_locations_collections_engines_assistants_agents_operations_get">
 
 Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.
 
@@ -1440,8 +1178,9 @@ FROM google.discoveryengine.operations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND collectionsId = '{{ collectionsId }}' -- required
-AND dataStoresId = '{{ dataStoresId }}' -- required
-AND modelsId = '{{ modelsId }}' -- required
+AND enginesId = '{{ enginesId }}' -- required
+AND assistantsId = '{{ assistantsId }}' -- required
+AND agentsId = '{{ agentsId }}' -- required
 AND operationsId = '{{ operationsId }}' -- required
 ;
 ```
@@ -1488,9 +1227,9 @@ AND operationsId = '{{ operationsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_collections_data_stores_models_operations_list">
+<TabItem value="projects_locations_collections_data_stores_models_operations_get">
 
-Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.
+Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.
 
 ```sql
 SELECT
@@ -1505,55 +1244,7 @@ AND locationsId = '{{ locationsId }}' -- required
 AND collectionsId = '{{ collectionsId }}' -- required
 AND dataStoresId = '{{ dataStoresId }}' -- required
 AND modelsId = '{{ modelsId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_collections_data_stores_branches_operations_list">
-
-Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.
-
-```sql
-SELECT
-name,
-done,
-error,
-metadata,
-response
-FROM google.discoveryengine.operations
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND collectionsId = '{{ collectionsId }}' -- required
-AND dataStoresId = '{{ dataStoresId }}' -- required
-AND branchesId = '{{ branchesId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_collections_data_stores_schemas_operations_list">
-
-Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.
-
-```sql
-SELECT
-name,
-done,
-error,
-metadata,
-response
-FROM google.discoveryengine.operations
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND collectionsId = '{{ collectionsId }}' -- required
-AND dataStoresId = '{{ dataStoresId }}' -- required
-AND schemasId = '{{ schemasId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
+AND operationsId = '{{ operationsId }}' -- required
 ;
 ```
 </TabItem>
@@ -1574,6 +1265,66 @@ AND locationsId = '{{ locationsId }}' -- required
 AND collectionsId = '{{ collectionsId }}' -- required
 AND enginesId = '{{ enginesId }}' -- required
 AND operationsId = '{{ operationsId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="projects_locations_collections_data_stores_branches_operations_list">
+
+Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.
+
+```sql
+SELECT
+*
+FROM google.discoveryengine.operations
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND collectionsId = '{{ collectionsId }}' -- required
+AND dataStoresId = '{{ dataStoresId }}' -- required
+AND branchesId = '{{ branchesId }}' -- required
+AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_collections_data_stores_schemas_operations_list">
+
+Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.
+
+```sql
+SELECT
+*
+FROM google.discoveryengine.operations
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND collectionsId = '{{ collectionsId }}' -- required
+AND dataStoresId = '{{ dataStoresId }}' -- required
+AND schemasId = '{{ schemasId }}' -- required
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_collections_data_stores_models_operations_list">
+
+Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.
+
+```sql
+SELECT
+*
+FROM google.discoveryengine.operations
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND collectionsId = '{{ collectionsId }}' -- required
+AND dataStoresId = '{{ dataStoresId }}' -- required
+AND modelsId = '{{ modelsId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -1617,7 +1368,7 @@ AND operationsId = '{{ operationsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_collections_data_connector_operations_get">
+<TabItem value="projects_locations_collections_operations_get">
 
 Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.
 
@@ -1636,7 +1387,26 @@ AND operationsId = '{{ operationsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_collections_operations_get">
+<TabItem value="projects_locations_collections_engines_operations_list">
+
+Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.
+
+```sql
+SELECT
+*
+FROM google.discoveryengine.operations
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND collectionsId = '{{ collectionsId }}' -- required
+AND enginesId = '{{ enginesId }}' -- required
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_collections_data_connector_operations_get">
 
 Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.
 
@@ -1661,60 +1431,16 @@ Lists operations that match the specified filter in the request. If the server d
 
 ```sql
 SELECT
-name,
-done,
-error,
-metadata,
-response
+*
 FROM google.discoveryengine.operations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND collectionsId = '{{ collectionsId }}' -- required
 AND dataStoresId = '{{ dataStoresId }}' -- required
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_collections_engines_operations_list">
-
-Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.
-
-```sql
-SELECT
-name,
-done,
-error,
-metadata,
-response
-FROM google.discoveryengine.operations
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND collectionsId = '{{ collectionsId }}' -- required
-AND enginesId = '{{ enginesId }}' -- required
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_podcasts_operations_get">
-
-Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.
-
-```sql
-SELECT
-name,
-done,
-error,
-metadata,
-response
-FROM google.discoveryengine.operations
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND podcastsId = '{{ podcastsId }}' -- required
-AND operationsId = '{{ operationsId }}' -- required
 ;
 ```
 </TabItem>
@@ -1724,19 +1450,16 @@ Lists operations that match the specified filter in the request. If the server d
 
 ```sql
 SELECT
-name,
-done,
-error,
-metadata,
-response
+*
 FROM google.discoveryengine.operations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND dataStoresId = '{{ dataStoresId }}' -- required
 AND modelsId = '{{ modelsId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -1765,6 +1488,25 @@ Lists operations that match the specified filter in the request. If the server d
 
 ```sql
 SELECT
+*
+FROM google.discoveryengine.operations
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND dataStoresId = '{{ dataStoresId }}' -- required
+AND branchesId = '{{ branchesId }}' -- required
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND pageSize = '{{ pageSize }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_podcasts_operations_get">
+
+Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.
+
+```sql
+SELECT
 name,
 done,
 error,
@@ -1773,11 +1515,8 @@ response
 FROM google.discoveryengine.operations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND dataStoresId = '{{ dataStoresId }}' -- required
-AND branchesId = '{{ branchesId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
+AND podcastsId = '{{ podcastsId }}' -- required
+AND operationsId = '{{ operationsId }}' -- required
 ;
 ```
 </TabItem>
@@ -1800,45 +1539,75 @@ AND operationsId = '{{ operationsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_collections_data_connector_operations_list">
-
-Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.
-
-```sql
-SELECT
-name,
-done,
-error,
-metadata,
-response
-FROM google.discoveryengine.operations
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND collectionsId = '{{ collectionsId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_collections_operations_list">
 
 Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.
 
 ```sql
 SELECT
-name,
-done,
-error,
-metadata,
-response
+*
 FROM google.discoveryengine.operations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND collectionsId = '{{ collectionsId }}' -- required
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_collections_data_connector_operations_list">
+
+Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.
+
+```sql
+SELECT
+*
+FROM google.discoveryengine.operations
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND collectionsId = '{{ collectionsId }}' -- required
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND filter = '{{ filter }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_data_stores_operations_list">
+
+Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.
+
+```sql
+SELECT
+*
+FROM google.discoveryengine.operations
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND dataStoresId = '{{ dataStoresId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_identity_mapping_stores_operations_list">
+
+Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.
+
+```sql
+SELECT
+*
+FROM google.discoveryengine.operations
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND identityMappingStoresId = '{{ identityMappingStoresId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -1860,45 +1629,20 @@ AND operationsId = '{{ operationsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_data_stores_operations_list">
+<TabItem value="projects_locations_operations_list">
 
 Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.
 
 ```sql
 SELECT
-name,
-done,
-error,
-metadata,
-response
+*
 FROM google.discoveryengine.operations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND dataStoresId = '{{ dataStoresId }}' -- required
+AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_identity_mapping_stores_operations_list">
-
-Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.
-
-```sql
-SELECT
-name,
-done,
-error,
-metadata,
-response
-FROM google.discoveryengine.operations
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND identityMappingStoresId = '{{ identityMappingStoresId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -1919,42 +1663,19 @@ AND operationsId = '{{ operationsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_operations_list">
-
-Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.
-
-```sql
-SELECT
-name,
-done,
-error,
-metadata,
-response
-FROM google.discoveryengine.operations
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
 <TabItem value="projects_operations_list">
 
 Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.
 
 ```sql
 SELECT
-name,
-done,
-error,
-metadata,
-response
+*
 FROM google.discoveryengine.operations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -1964,21 +1685,24 @@ AND pageToken = '{{ pageToken }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_operations_cancel"
+    defaultValue="projects_locations_collections_engines_operations_cancel"
     values={[
-        { label: 'projects_operations_cancel', value: 'projects_operations_cancel' },
-        { label: 'projects_locations_collections_data_stores_branches_operations_cancel', value: 'projects_locations_collections_data_stores_branches_operations_cancel' },
         { label: 'projects_locations_collections_engines_operations_cancel', value: 'projects_locations_collections_engines_operations_cancel' },
-        { label: 'projects_locations_data_stores_branches_operations_cancel', value: 'projects_locations_data_stores_branches_operations_cancel' }
+        { label: 'projects_locations_collections_data_stores_branches_operations_cancel', value: 'projects_locations_collections_data_stores_branches_operations_cancel' },
+        { label: 'projects_locations_data_stores_branches_operations_cancel', value: 'projects_locations_data_stores_branches_operations_cancel' },
+        { label: 'projects_operations_cancel', value: 'projects_operations_cancel' }
     ]}
 >
-<TabItem value="projects_operations_cancel">
+<TabItem value="projects_locations_collections_engines_operations_cancel">
 
 Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.
 
 ```sql
-EXEC google.discoveryengine.operations.projects_operations_cancel 
+EXEC google.discoveryengine.operations.projects_locations_collections_engines_operations_cancel 
 @projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@collectionsId='{{ collectionsId }}' --required, 
+@enginesId='{{ enginesId }}' --required, 
 @operationsId='{{ operationsId }}' --required
 ;
 ```
@@ -1998,20 +1722,6 @@ EXEC google.discoveryengine.operations.projects_locations_collections_data_store
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_collections_engines_operations_cancel">
-
-Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.
-
-```sql
-EXEC google.discoveryengine.operations.projects_locations_collections_engines_operations_cancel 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@collectionsId='{{ collectionsId }}' --required, 
-@enginesId='{{ enginesId }}' --required, 
-@operationsId='{{ operationsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="projects_locations_data_stores_branches_operations_cancel">
 
 Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.
@@ -2022,6 +1732,17 @@ EXEC google.discoveryengine.operations.projects_locations_data_stores_branches_o
 @locationsId='{{ locationsId }}' --required, 
 @dataStoresId='{{ dataStoresId }}' --required, 
 @branchesId='{{ branchesId }}' --required, 
+@operationsId='{{ operationsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="projects_operations_cancel">
+
+Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.
+
+```sql
+EXEC google.discoveryengine.operations.projects_operations_cancel 
+@projectsId='{{ projectsId }}' --required, 
 @operationsId='{{ operationsId }}' --required
 ;
 ```

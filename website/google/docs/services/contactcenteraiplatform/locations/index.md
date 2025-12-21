@@ -181,8 +181,15 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a></td>
     <td>Lists information about the supported locations for this service.</td>
+</tr>
+<tr>
+    <td><a href="#generate_shifts"><CopyableCode code="generate_shifts" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Generates shifts constrained by various parameters.</td>
 </tr>
 </tbody>
 </table>
@@ -288,10 +295,40 @@ locationId,
 metadata
 FROM google.contactcenteraiplatform.locations
 WHERE projectsId = '{{ projectsId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 AND extraLocationTypes = '{{ extraLocationTypes }}'
+;
+```
+</TabItem>
+</Tabs>
+
+
+## Lifecycle Methods
+
+<Tabs
+    defaultValue="generate_shifts"
+    values={[
+        { label: 'generate_shifts', value: 'generate_shifts' }
+    ]}
+>
+<TabItem value="generate_shifts">
+
+Generates shifts constrained by various parameters.
+
+```sql
+EXEC google.contactcenteraiplatform.locations.generate_shifts 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"workforceDemands": "{{ workforceDemands }}", 
+"planningHorizon": "{{ planningHorizon }}", 
+"employeeInfo": "{{ employeeInfo }}", 
+"shiftTemplates": "{{ shiftTemplates }}", 
+"solverConfig": "{{ solverConfig }}"
+}'
 ;
 ```
 </TabItem>

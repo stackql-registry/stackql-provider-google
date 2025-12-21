@@ -76,12 +76,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="pubsubNotificationSettings" /></td>
     <td><code>object</code></td>
-    <td>A map that maps a notification trigger to a Pub/Sub topic. Each time a specified trigger occurs, Insights will notify the corresponding Pub/Sub topic. Keys are notification triggers. Supported keys are: * "all-triggers": Notify each time any of the supported triggers occurs. * "create-analysis": Notify each time an analysis is created. * "create-conversation": Notify each time a conversation is created. * "export-insights-data": Notify each time an export is complete. * "ingest-conversations": Notify each time an IngestConversations LRO is complete. * "update-conversation": Notify each time a conversation is updated via UpdateConversation. * "upload-conversation": Notify when an UploadConversation LRO is complete. Values are Pub/Sub topics. The format of each Pub/Sub topic is: projects/&#123;project&#125;/topics/&#123;topic&#125;</td>
+    <td>A map that maps a notification trigger to a Pub/Sub topic. Each time a specified trigger occurs, Insights will notify the corresponding Pub/Sub topic. Keys are notification triggers. Supported keys are: * "all-triggers": Notify each time any of the supported triggers occurs. * "create-analysis": Notify each time an analysis is created. * "create-conversation": Notify each time a conversation is created. * "export-insights-data": Notify each time an export is complete. * "ingest-conversations": Notify each time an IngestConversations LRO is complete. * "update-conversation": Notify each time a conversation is updated via UpdateConversation. * "upload-conversation": Notify when an UploadConversation LRO is complete. * "update-or-analyze-conversation": Notify when an analysis for a conversation is completed or when the conversation is updated. The message will contain the conversation with transcript, analysis and other metadata. Values are Pub/Sub topics. The format of each Pub/Sub topic is: projects/&#123;project&#125;/topics/&#123;topic&#125;</td>
 </tr>
 <tr>
     <td><CopyableCode code="redactionConfig" /></td>
     <td><code>object</code></td>
     <td>Default DLP redaction resources to be applied while ingesting conversations. This applies to conversations ingested from the `UploadConversation` and `IngestConversations` endpoints, including conversations coming from CCAI Platform. (id: GoogleCloudContactcenterinsightsV1RedactionConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="screenRecordingBucketUri" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The path to a Cloud Storage bucket containing conversation screen recordings. If provided, Insights will search in the bucket for a screen recording file matching the conversation data source object name prefix. If matches are found, these file URIs will be stored in the conversation screen recordings field.</td>
 </tr>
 <tr>
     <td><CopyableCode code="speechConfig" /></td>
@@ -182,6 +187,7 @@ createTime,
 languageCode,
 pubsubNotificationSettings,
 redactionConfig,
+screenRecordingBucketUri,
 speechConfig,
 updateTime
 FROM google.contactcenterinsights.settings
@@ -208,12 +214,13 @@ Updates project-level settings.
 ```sql
 UPDATE google.contactcenterinsights.settings
 SET 
-data__name = '{{ name }}',
-data__languageCode = '{{ languageCode }}',
 data__conversationTtl = '{{ conversationTtl }}',
-data__pubsubNotificationSettings = '{{ pubsubNotificationSettings }}',
 data__analysisConfig = '{{ analysisConfig }}',
+data__name = '{{ name }}',
 data__redactionConfig = '{{ redactionConfig }}',
+data__pubsubNotificationSettings = '{{ pubsubNotificationSettings }}',
+data__screenRecordingBucketUri = '{{ screenRecordingBucketUri }}',
+data__languageCode = '{{ languageCode }}',
 data__speechConfig = '{{ speechConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
@@ -227,6 +234,7 @@ createTime,
 languageCode,
 pubsubNotificationSettings,
 redactionConfig,
+screenRecordingBucketUri,
 speechConfig,
 updateTime;
 ```

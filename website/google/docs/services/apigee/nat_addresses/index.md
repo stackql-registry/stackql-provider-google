@@ -124,7 +124,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_instances_nat_addresses_list"><CopyableCode code="organizations_instances_nat_addresses_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists the NAT addresses for an Apigee instance. **Note:** Not supported for Apigee hybrid.</td>
 </tr>
 <tr>
@@ -229,8 +229,8 @@ state
 FROM google.apigee.nat_addresses
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND instancesId = '{{ instancesId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>

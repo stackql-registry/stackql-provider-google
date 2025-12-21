@@ -191,9 +191,9 @@ EXEC google.apigee.flowhooks.organizations_environments_flowhooks_attach_shared_
 @flowhooksId='{{ flowhooksId }}' --required 
 @@json=
 '{
+"continueOnError": {{ continueOnError }}, 
 "description": "{{ description }}", 
-"sharedFlow": "{{ sharedFlow }}", 
-"continueOnError": {{ continueOnError }}
+"sharedFlow": "{{ sharedFlow }}"
 }'
 ;
 ```

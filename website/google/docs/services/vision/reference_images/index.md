@@ -257,18 +257,18 @@ Creates and returns a new ReferenceImage resource. The `bounding_poly` field is 
 
 ```sql
 INSERT INTO google.vision.reference_images (
-data__name,
 data__uri,
 data__boundingPolys,
+data__name,
 projectsId,
 locationsId,
 productsId,
 referenceImageId
 )
 SELECT 
-'{{ name }}',
 '{{ uri }}',
 '{{ boundingPolys }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ productsId }}',
@@ -295,11 +295,6 @@ uri
     - name: productsId
       value: string
       description: Required parameter for the reference_images resource.
-    - name: name
-      value: string
-      description: >
-        The resource name of the reference image. Format is: `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID/referenceImages/IMAGE_ID`. This field is ignored when creating a reference image.
-        
     - name: uri
       value: string
       description: >
@@ -309,6 +304,11 @@ uri
       value: array
       description: >
         Optional. Bounding polygons around the areas of interest in the reference image. If this field is empty, the system will try to detect regions of interest. At most 10 bounding polygons will be used. The provided shape is converted into a non-rotated rectangle. Once converted, the small edge of the rectangle must be greater than or equal to 300 pixels. The aspect ratio must be 1:4 or less (i.e. 1:3 is ok; 1:5 is not).
+        
+    - name: name
+      value: string
+      description: >
+        The resource name of the reference image. Format is: `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID/referenceImages/IMAGE_ID`. This field is ignored when creating a reference image.
         
     - name: referenceImageId
       value: string

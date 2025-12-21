@@ -144,7 +144,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists the DICOM stores in the given dataset.</td>
 </tr>
 <tr>
@@ -169,6 +169,13 @@ The following methods are available for this resource:
     <td>Deletes the specified DICOM store and removes all images that are contained within it.</td>
 </tr>
 <tr>
+    <td><a href="#search_for_instances"><CopyableCode code="search_for_instances" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-dicomStoresId"><code>dicomStoresId</code></a></td>
+    <td></td>
+    <td>SearchForInstances returns a list of matching instances. See [Search Transaction] (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6). For details on the implementation of SearchForInstances, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForInstances, see [Search for DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).</td>
+</tr>
+<tr>
     <td><a href="#deidentify"><CopyableCode code="deidentify" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-dicomStoresId"><code>dicomStoresId</code></a></td>
@@ -176,11 +183,18 @@ The following methods are available for this resource:
     <td>De-identifies data from the source store and writes it to the destination store. The metadata field type is OperationMetadata. If the request is successful, the response field type is DeidentifyDicomStoreSummary. If errors occur, error is set. The LRO result may still be successful if de-identification fails for some DICOM instances. The output DICOM store will not contain these failed resources. Failed resource totals are tracked in Operation.metadata. Error details are also logged to Cloud Logging (see [Viewing error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging)).</td>
 </tr>
 <tr>
-    <td><a href="#set_blob_storage_settings"><CopyableCode code="set_blob_storage_settings" /></a></td>
+    <td><a href="#store_instances"><CopyableCode code="store_instances" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-dicomStoresId"><code>dicomStoresId</code></a></td>
     <td></td>
-    <td>SetBlobStorageSettings sets the blob storage settings of the specified resources.</td>
+    <td>StoreInstances stores DICOM instances associated with study instance unique identifiers (SUID). See [Store Transaction] (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.5). For details on the implementation of StoreInstances, see [Store transaction](https://cloud.google.com/healthcare/docs/dicom#store_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call StoreInstances, see [Store DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#store-dicom).</td>
+</tr>
+<tr>
+    <td><a href="#search_for_studies"><CopyableCode code="search_for_studies" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-dicomStoresId"><code>dicomStoresId</code></a></td>
+    <td></td>
+    <td>SearchForStudies returns a list of matching studies. See [Search Transaction] (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6). For details on the implementation of SearchForStudies, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForStudies, see [Search for DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).</td>
 </tr>
 <tr>
     <td><a href="#import"><CopyableCode code="import" /></a></td>
@@ -190,6 +204,13 @@ The following methods are available for this resource:
     <td>Imports data into the DICOM store by copying it from the specified source. Errors are logged to Cloud Logging. For more information, see [Viewing error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging). The metadata field type is OperationMetadata.</td>
 </tr>
 <tr>
+    <td><a href="#search_for_series"><CopyableCode code="search_for_series" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-dicomStoresId"><code>dicomStoresId</code></a></td>
+    <td></td>
+    <td>SearchForSeries returns a list of matching series. See [Search Transaction] (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6). For details on the implementation of SearchForSeries, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForSeries, see [Search for DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).</td>
+</tr>
+<tr>
     <td><a href="#export"><CopyableCode code="export" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-dicomStoresId"><code>dicomStoresId</code></a></td>
@@ -197,53 +218,32 @@ The following methods are available for this resource:
     <td>Exports data to the specified destination by copying it from the DICOM store. Errors are also logged to Cloud Logging. For more information, see [Viewing error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging). The metadata field type is OperationMetadata.</td>
 </tr>
 <tr>
-    <td><a href="#search_for_studies"><CopyableCode code="search_for_studies" /></a></td>
+    <td><a href="#set_blob_storage_settings"><CopyableCode code="set_blob_storage_settings" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-dicomStoresId"><code>dicomStoresId</code></a></td>
     <td></td>
-    <td>SearchForStudies returns a list of matching studies. See [Search Transaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6). For details on the implementation of SearchForStudies, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForStudies, see [Search for DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).</td>
-</tr>
-<tr>
-    <td><a href="#store_instances"><CopyableCode code="store_instances" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-dicomStoresId"><code>dicomStoresId</code></a></td>
-    <td></td>
-    <td>StoreInstances stores DICOM instances associated with study instance unique identifiers (SUID). See [Store Transaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.5). For details on the implementation of StoreInstances, see [Store transaction](https://cloud.google.com/healthcare/docs/dicom#store_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call StoreInstances, see [Store DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#store-dicom).</td>
-</tr>
-<tr>
-    <td><a href="#search_for_series"><CopyableCode code="search_for_series" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-dicomStoresId"><code>dicomStoresId</code></a></td>
-    <td></td>
-    <td>SearchForSeries returns a list of matching series. See [Search Transaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6). For details on the implementation of SearchForSeries, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForSeries, see [Search for DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).</td>
-</tr>
-<tr>
-    <td><a href="#search_for_instances"><CopyableCode code="search_for_instances" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-dicomStoresId"><code>dicomStoresId</code></a></td>
-    <td></td>
-    <td>SearchForInstances returns a list of matching instances. See [Search Transaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6). For details on the implementation of SearchForInstances, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForInstances, see [Search for DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).</td>
+    <td>SetBlobStorageSettings sets the blob storage settings of the specified resources.</td>
 </tr>
 <tr>
     <td><a href="#retrieve_frames"><CopyableCode code="retrieve_frames" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-dicomStoresId"><code>dicomStoresId</code></a>, <a href="#parameter-studiesId"><code>studiesId</code></a>, <a href="#parameter-seriesId"><code>seriesId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-framesId"><code>framesId</code></a></td>
     <td></td>
-    <td>RetrieveFrames returns instances associated with the given study, series, SOP Instance UID and frame numbers. See [RetrieveTransaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4&#125;. For details on the implementation of RetrieveFrames, see [DICOM frames](https://cloud.google.com/healthcare/docs/dicom#dicom_frames) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveFrames, see [Retrieve DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-dicom).</td>
+    <td>RetrieveFrames returns instances associated with the given study, series, SOP Instance UID and frame numbers. See [RetrieveTransaction] (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4&#125;. For details on the implementation of RetrieveFrames, see [DICOM frames](https://cloud.google.com/healthcare/docs/dicom#dicom_frames) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveFrames, see [Retrieve DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-dicom).</td>
 </tr>
 <tr>
     <td><a href="#retrieve_rendered"><CopyableCode code="retrieve_rendered" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-dicomStoresId"><code>dicomStoresId</code></a>, <a href="#parameter-studiesId"><code>studiesId</code></a>, <a href="#parameter-seriesId"><code>seriesId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-framesId"><code>framesId</code></a></td>
     <td><a href="#parameter-viewport"><code>viewport</code></a></td>
-    <td>RetrieveRenderedFrames returns instances associated with the given study, series, SOP Instance UID and frame numbers in an acceptable Rendered Media Type. See [RetrieveTransaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveRenderedFrames, see [Rendered resources](https://cloud.google.com/healthcare/docs/dicom#rendered_resources) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveRenderedFrames, see [Retrieve consumer image formats](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-consumer).</td>
+    <td>RetrieveRenderedFrames returns instances associated with the given study, series, SOP Instance UID and frame numbers in an acceptable Rendered Media Type. See [RetrieveTransaction] (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveRenderedFrames, see [Rendered resources](https://cloud.google.com/healthcare/docs/dicom#rendered_resources) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveRenderedFrames, see [Retrieve consumer image formats](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-consumer).</td>
 </tr>
 <tr>
     <td><a href="#retrieve_bulkdata"><CopyableCode code="retrieve_bulkdata" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-dicomStoresId"><code>dicomStoresId</code></a>, <a href="#parameter-studiesId"><code>studiesId</code></a>, <a href="#parameter-seriesId"><code>seriesId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-bulkdataId"><code>bulkdataId</code></a>, <a href="#parameter-bulkdataId1"><code>bulkdataId1</code></a></td>
     <td></td>
-    <td>Returns uncompressed, unencoded bytes representing the referenced bulkdata tag from an instance. See [Retrieve Transaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveBulkdata, see [Bulkdata resources](https://cloud.google.com/healthcare/docs/dicom#bulkdata-resources) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveBulkdata, see [Retrieve bulkdata](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-bulkdata).</td>
+    <td>Returns uncompressed, unencoded bytes representing the referenced bulkdata tag from an instance. See [Retrieve Transaction](https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveBulkdata, see [Bulkdata resources](https://cloud.google.com/healthcare/docs/dicom#bulkdata-resources) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveBulkdata, see [Retrieve bulkdata](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-bulkdata).</td>
 </tr>
 </tbody>
 </table>
@@ -387,9 +387,9 @@ FROM google.healthcare.dicom_stores
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND datasetsId = '{{ datasetsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -411,22 +411,22 @@ Creates a new DICOM store within the parent dataset.
 
 ```sql
 INSERT INTO google.healthcare.dicom_stores (
+data__streamConfigs,
+data__labels,
+data__notificationConfigs,
 data__name,
 data__notificationConfig,
-data__labels,
-data__streamConfigs,
-data__notificationConfigs,
 projectsId,
 locationsId,
 datasetsId,
 dicomStoreId
 )
 SELECT 
+'{{ streamConfigs }}',
+'{{ labels }}',
+'{{ notificationConfigs }}',
 '{{ name }}',
 '{{ notificationConfig }}',
-'{{ labels }}',
-'{{ streamConfigs }}',
-'{{ notificationConfigs }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ datasetsId }}',
@@ -455,6 +455,21 @@ streamConfigs
     - name: datasetsId
       value: string
       description: Required parameter for the dicom_stores resource.
+    - name: streamConfigs
+      value: array
+      description: >
+        Optional. A list of streaming configs used to configure the destination of streaming exports for every DICOM instance insertion in this DICOM store. After a new config is added to `stream_configs`, DICOM instance insertions are streamed to the new destination. When a config is removed from `stream_configs`, the server stops streaming to that destination. Each config must contain a unique destination.
+        
+    - name: labels
+      value: object
+      description: >
+        User-supplied key-value pairs used to organize DICOM stores. Label keys must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: \p{Ll}\p{Lo}{0,62} Label values are optional, must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: [\p{Ll}\p{Lo}\p{N}_-]{0,63} No more than 64 labels can be associated with a given store.
+        
+    - name: notificationConfigs
+      value: array
+      description: >
+        Optional. Specifies where and whether to send notifications upon changes to a DICOM store.
+        
     - name: name
       value: string
       description: >
@@ -464,21 +479,6 @@ streamConfigs
       value: object
       description: >
         Optional. Notification destination for new DICOM instances. Supplied by the client.
-        
-    - name: labels
-      value: object
-      description: >
-        User-supplied key-value pairs used to organize DICOM stores. Label keys must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: \p{Ll}\p{Lo}{0,62} Label values are optional, must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: [\p{Ll}\p{Lo}\p{N}_-]{0,63} No more than 64 labels can be associated with a given store.
-        
-    - name: streamConfigs
-      value: array
-      description: >
-        Optional. A list of streaming configs used to configure the destination of streaming exports for every DICOM instance insertion in this DICOM store. After a new config is added to `stream_configs`, DICOM instance insertions are streamed to the new destination. When a config is removed from `stream_configs`, the server stops streaming to that destination. Each config must contain a unique destination.
-        
-    - name: notificationConfigs
-      value: array
-      description: >
-        Optional. Specifies where and whether to send notifications upon changes to a DICOM store.
         
     - name: dicomStoreId
       value: string
@@ -502,11 +502,11 @@ Updates the specified DICOM store.
 ```sql
 UPDATE google.healthcare.dicom_stores
 SET 
-data__name = '{{ name }}',
-data__notificationConfig = '{{ notificationConfig }}',
-data__labels = '{{ labels }}',
 data__streamConfigs = '{{ streamConfigs }}',
-data__notificationConfigs = '{{ notificationConfigs }}'
+data__labels = '{{ labels }}',
+data__notificationConfigs = '{{ notificationConfigs }}',
+data__name = '{{ name }}',
+data__notificationConfig = '{{ notificationConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -551,21 +551,34 @@ AND dicomStoresId = '{{ dicomStoresId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="deidentify"
+    defaultValue="search_for_instances"
     values={[
-        { label: 'deidentify', value: 'deidentify' },
-        { label: 'set_blob_storage_settings', value: 'set_blob_storage_settings' },
-        { label: 'import', value: 'import' },
-        { label: 'export', value: 'export' },
-        { label: 'search_for_studies', value: 'search_for_studies' },
-        { label: 'store_instances', value: 'store_instances' },
-        { label: 'search_for_series', value: 'search_for_series' },
         { label: 'search_for_instances', value: 'search_for_instances' },
+        { label: 'deidentify', value: 'deidentify' },
+        { label: 'store_instances', value: 'store_instances' },
+        { label: 'search_for_studies', value: 'search_for_studies' },
+        { label: 'import', value: 'import' },
+        { label: 'search_for_series', value: 'search_for_series' },
+        { label: 'export', value: 'export' },
+        { label: 'set_blob_storage_settings', value: 'set_blob_storage_settings' },
         { label: 'retrieve_frames', value: 'retrieve_frames' },
         { label: 'retrieve_rendered', value: 'retrieve_rendered' },
         { label: 'retrieve_bulkdata', value: 'retrieve_bulkdata' }
     ]}
 >
+<TabItem value="search_for_instances">
+
+SearchForInstances returns a list of matching instances. See [Search Transaction] (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6). For details on the implementation of SearchForInstances, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForInstances, see [Search for DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).
+
+```sql
+EXEC google.healthcare.dicom_stores.search_for_instances 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@datasetsId='{{ datasetsId }}' --required, 
+@dicomStoresId='{{ dicomStoresId }}' --required
+;
+```
+</TabItem>
 <TabItem value="deidentify">
 
 De-identifies data from the source store and writes it to the destination store. The metadata field type is OperationMetadata. If the request is successful, the response field type is DeidentifyDicomStoreSummary. If errors occur, error is set. The LRO result may still be successful if de-identification fails for some DICOM instances. The output DICOM store will not contain these failed resources. Failed resource totals are tracked in Operation.metadata. Error details are also logged to Cloud Logging (see [Viewing error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging)).
@@ -578,84 +591,17 @@ EXEC google.healthcare.dicom_stores.deidentify
 @dicomStoresId='{{ dicomStoresId }}' --required 
 @@json=
 '{
-"destinationStore": "{{ destinationStore }}", 
-"config": "{{ config }}", 
 "gcsConfigUri": "{{ gcsConfigUri }}", 
-"filterConfig": "{{ filterConfig }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="set_blob_storage_settings">
-
-SetBlobStorageSettings sets the blob storage settings of the specified resources.
-
-```sql
-EXEC google.healthcare.dicom_stores.set_blob_storage_settings 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@datasetsId='{{ datasetsId }}' --required, 
-@dicomStoresId='{{ dicomStoresId }}' --required 
-@@json=
-'{
+"destinationStore": "{{ destinationStore }}", 
 "filterConfig": "{{ filterConfig }}", 
-"blobStorageSettings": "{{ blobStorageSettings }}"
+"config": "{{ config }}"
 }'
-;
-```
-</TabItem>
-<TabItem value="import">
-
-Imports data into the DICOM store by copying it from the specified source. Errors are logged to Cloud Logging. For more information, see [Viewing error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging). The metadata field type is OperationMetadata.
-
-```sql
-EXEC google.healthcare.dicom_stores.import 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@datasetsId='{{ datasetsId }}' --required, 
-@dicomStoresId='{{ dicomStoresId }}' --required 
-@@json=
-'{
-"gcsSource": "{{ gcsSource }}", 
-"blobStorageSettings": "{{ blobStorageSettings }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="export">
-
-Exports data to the specified destination by copying it from the DICOM store. Errors are also logged to Cloud Logging. For more information, see [Viewing error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging). The metadata field type is OperationMetadata.
-
-```sql
-EXEC google.healthcare.dicom_stores.export 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@datasetsId='{{ datasetsId }}' --required, 
-@dicomStoresId='{{ dicomStoresId }}' --required 
-@@json=
-'{
-"gcsDestination": "{{ gcsDestination }}", 
-"bigqueryDestination": "{{ bigqueryDestination }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="search_for_studies">
-
-SearchForStudies returns a list of matching studies. See [Search Transaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6). For details on the implementation of SearchForStudies, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForStudies, see [Search for DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).
-
-```sql
-EXEC google.healthcare.dicom_stores.search_for_studies 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@datasetsId='{{ datasetsId }}' --required, 
-@dicomStoresId='{{ dicomStoresId }}' --required
 ;
 ```
 </TabItem>
 <TabItem value="store_instances">
 
-StoreInstances stores DICOM instances associated with study instance unique identifiers (SUID). See [Store Transaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.5). For details on the implementation of StoreInstances, see [Store transaction](https://cloud.google.com/healthcare/docs/dicom#store_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call StoreInstances, see [Store DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#store-dicom).
+StoreInstances stores DICOM instances associated with study instance unique identifiers (SUID). See [Store Transaction] (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.5). For details on the implementation of StoreInstances, see [Store transaction](https://cloud.google.com/healthcare/docs/dicom#store_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call StoreInstances, see [Store DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#store-dicom).
 
 ```sql
 EXEC google.healthcare.dicom_stores.store_instances 
@@ -672,9 +618,40 @@ EXEC google.healthcare.dicom_stores.store_instances
 ;
 ```
 </TabItem>
+<TabItem value="search_for_studies">
+
+SearchForStudies returns a list of matching studies. See [Search Transaction] (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6). For details on the implementation of SearchForStudies, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForStudies, see [Search for DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).
+
+```sql
+EXEC google.healthcare.dicom_stores.search_for_studies 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@datasetsId='{{ datasetsId }}' --required, 
+@dicomStoresId='{{ dicomStoresId }}' --required
+;
+```
+</TabItem>
+<TabItem value="import">
+
+Imports data into the DICOM store by copying it from the specified source. Errors are logged to Cloud Logging. For more information, see [Viewing error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging). The metadata field type is OperationMetadata.
+
+```sql
+EXEC google.healthcare.dicom_stores.import 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@datasetsId='{{ datasetsId }}' --required, 
+@dicomStoresId='{{ dicomStoresId }}' --required 
+@@json=
+'{
+"blobStorageSettings": "{{ blobStorageSettings }}", 
+"gcsSource": "{{ gcsSource }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="search_for_series">
 
-SearchForSeries returns a list of matching series. See [Search Transaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6). For details on the implementation of SearchForSeries, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForSeries, see [Search for DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).
+SearchForSeries returns a list of matching series. See [Search Transaction] (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6). For details on the implementation of SearchForSeries, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForSeries, see [Search for DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).
 
 ```sql
 EXEC google.healthcare.dicom_stores.search_for_series 
@@ -685,22 +662,45 @@ EXEC google.healthcare.dicom_stores.search_for_series
 ;
 ```
 </TabItem>
-<TabItem value="search_for_instances">
+<TabItem value="export">
 
-SearchForInstances returns a list of matching instances. See [Search Transaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6). For details on the implementation of SearchForInstances, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForInstances, see [Search for DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).
+Exports data to the specified destination by copying it from the DICOM store. Errors are also logged to Cloud Logging. For more information, see [Viewing error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging). The metadata field type is OperationMetadata.
 
 ```sql
-EXEC google.healthcare.dicom_stores.search_for_instances 
+EXEC google.healthcare.dicom_stores.export 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @datasetsId='{{ datasetsId }}' --required, 
-@dicomStoresId='{{ dicomStoresId }}' --required
+@dicomStoresId='{{ dicomStoresId }}' --required 
+@@json=
+'{
+"bigqueryDestination": "{{ bigqueryDestination }}", 
+"gcsDestination": "{{ gcsDestination }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="set_blob_storage_settings">
+
+SetBlobStorageSettings sets the blob storage settings of the specified resources.
+
+```sql
+EXEC google.healthcare.dicom_stores.set_blob_storage_settings 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@datasetsId='{{ datasetsId }}' --required, 
+@dicomStoresId='{{ dicomStoresId }}' --required 
+@@json=
+'{
+"blobStorageSettings": "{{ blobStorageSettings }}", 
+"filterConfig": "{{ filterConfig }}"
+}'
 ;
 ```
 </TabItem>
 <TabItem value="retrieve_frames">
 
-RetrieveFrames returns instances associated with the given study, series, SOP Instance UID and frame numbers. See [RetrieveTransaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4&#125;. For details on the implementation of RetrieveFrames, see [DICOM frames](https://cloud.google.com/healthcare/docs/dicom#dicom_frames) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveFrames, see [Retrieve DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-dicom).
+RetrieveFrames returns instances associated with the given study, series, SOP Instance UID and frame numbers. See [RetrieveTransaction] (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4&#125;. For details on the implementation of RetrieveFrames, see [DICOM frames](https://cloud.google.com/healthcare/docs/dicom#dicom_frames) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveFrames, see [Retrieve DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-dicom).
 
 ```sql
 EXEC google.healthcare.dicom_stores.retrieve_frames 
@@ -717,7 +717,7 @@ EXEC google.healthcare.dicom_stores.retrieve_frames
 </TabItem>
 <TabItem value="retrieve_rendered">
 
-RetrieveRenderedFrames returns instances associated with the given study, series, SOP Instance UID and frame numbers in an acceptable Rendered Media Type. See [RetrieveTransaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveRenderedFrames, see [Rendered resources](https://cloud.google.com/healthcare/docs/dicom#rendered_resources) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveRenderedFrames, see [Retrieve consumer image formats](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-consumer).
+RetrieveRenderedFrames returns instances associated with the given study, series, SOP Instance UID and frame numbers in an acceptable Rendered Media Type. See [RetrieveTransaction] (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveRenderedFrames, see [Rendered resources](https://cloud.google.com/healthcare/docs/dicom#rendered_resources) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveRenderedFrames, see [Retrieve consumer image formats](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-consumer).
 
 ```sql
 EXEC google.healthcare.dicom_stores.retrieve_rendered 
@@ -735,7 +735,7 @@ EXEC google.healthcare.dicom_stores.retrieve_rendered
 </TabItem>
 <TabItem value="retrieve_bulkdata">
 
-Returns uncompressed, unencoded bytes representing the referenced bulkdata tag from an instance. See [Retrieve Transaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveBulkdata, see [Bulkdata resources](https://cloud.google.com/healthcare/docs/dicom#bulkdata-resources) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveBulkdata, see [Retrieve bulkdata](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-bulkdata).
+Returns uncompressed, unencoded bytes representing the referenced bulkdata tag from an instance. See [Retrieve Transaction](https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveBulkdata, see [Bulkdata resources](https://cloud.google.com/healthcare/docs/dicom#bulkdata-resources) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveBulkdata, see [Retrieve bulkdata](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-bulkdata).
 
 ```sql
 EXEC google.healthcare.dicom_stores.retrieve_bulkdata 

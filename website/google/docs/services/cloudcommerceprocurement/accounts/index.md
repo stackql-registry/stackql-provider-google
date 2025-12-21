@@ -75,6 +75,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The identifier of the service provider that this account was created against. Each service provider is assigned a unique provider value when they onboard with Cloud Commerce platform.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="resellerParentBillingAccount" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The reseller parent billing account of the account's corresponding billing account, applicable only when the corresponding billing account is a subaccount of a reseller. Included in responses only for view: ACCOUNT_VIEW_FULL. Format: billingAccounts/&#123;billing_account_id&#125;</td>
+</tr>
+<tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
     <td>Output only. The state of the account. This is used to decide whether the customer is in good standing with the provider and is able to make purchases. An account might not be able to make a purchase if the billing account is suspended, for example.</td>
@@ -124,6 +129,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The identifier of the service provider that this account was created against. Each service provider is assigned a unique provider value when they onboard with Cloud Commerce platform.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="resellerParentBillingAccount" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The reseller parent billing account of the account's corresponding billing account, applicable only when the corresponding billing account is a subaccount of a reseller. Included in responses only for view: ACCOUNT_VIEW_FULL. Format: billingAccounts/&#123;billing_account_id&#125;</td>
+</tr>
+<tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
     <td>Output only. The state of the account. This is used to decide whether the customer is in good standing with the provider and is able to make purchases. An account might not be able to make a purchase if the billing account is suspended, for example.</td>
@@ -157,7 +167,7 @@ The following methods are available for this resource:
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-accountsId"><code>accountsId</code></a></td>
-    <td></td>
+    <td><a href="#parameter-view"><code>view</code></a></td>
     <td>Gets a requested Account resource.</td>
 </tr>
 <tr>
@@ -168,11 +178,11 @@ The following methods are available for this resource:
     <td>Lists Accounts that the provider has access to.</td>
 </tr>
 <tr>
-    <td><a href="#approve"><CopyableCode code="approve" /></a></td>
+    <td><a href="#reset"><CopyableCode code="reset" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-accountsId"><code>accountsId</code></a></td>
     <td></td>
-    <td>Grants an approval on an Account.</td>
+    <td>Resets an Account and cancels all associated Entitlements. Partner can only reset accounts they own rather than customer accounts.</td>
 </tr>
 <tr>
     <td><a href="#reject"><CopyableCode code="reject" /></a></td>
@@ -182,11 +192,11 @@ The following methods are available for this resource:
     <td>Rejects an approval on an Account.</td>
 </tr>
 <tr>
-    <td><a href="#reset"><CopyableCode code="reset" /></a></td>
+    <td><a href="#approve"><CopyableCode code="approve" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-accountsId"><code>accountsId</code></a></td>
     <td></td>
-    <td>Resets an Account and cancels all associated Entitlements. Partner can only reset accounts they own rather than customer accounts.</td>
+    <td>Grants an approval on an Account.</td>
 </tr>
 </tbody>
 </table>
@@ -224,6 +234,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
+<tr id="parameter-view">
+    <td><CopyableCode code="view" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 
@@ -247,11 +262,13 @@ approvals,
 createTime,
 inputProperties,
 provider,
+resellerParentBillingAccount,
 state,
 updateTime
 FROM google.cloudcommerceprocurement.accounts
 WHERE providersId = '{{ providersId }}' -- required
 AND accountsId = '{{ accountsId }}' -- required
+AND view = '{{ view }}'
 ;
 ```
 </TabItem>
@@ -266,6 +283,7 @@ approvals,
 createTime,
 inputProperties,
 provider,
+resellerParentBillingAccount,
 state,
 updateTime
 FROM google.cloudcommerceprocurement.accounts
@@ -281,27 +299,21 @@ AND pageToken = '{{ pageToken }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="approve"
+    defaultValue="reset"
     values={[
-        { label: 'approve', value: 'approve' },
+        { label: 'reset', value: 'reset' },
         { label: 'reject', value: 'reject' },
-        { label: 'reset', value: 'reset' }
+        { label: 'approve', value: 'approve' }
     ]}
 >
-<TabItem value="approve">
+<TabItem value="reset">
 
-Grants an approval on an Account.
+Resets an Account and cancels all associated Entitlements. Partner can only reset accounts they own rather than customer accounts.
 
 ```sql
-EXEC google.cloudcommerceprocurement.accounts.approve 
+EXEC google.cloudcommerceprocurement.accounts.reset 
 @providersId='{{ providersId }}' --required, 
-@accountsId='{{ accountsId }}' --required 
-@@json=
-'{
-"properties": "{{ properties }}", 
-"approvalName": "{{ approvalName }}", 
-"reason": "{{ reason }}"
-}'
+@accountsId='{{ accountsId }}' --required
 ;
 ```
 </TabItem>
@@ -321,14 +333,20 @@ EXEC google.cloudcommerceprocurement.accounts.reject
 ;
 ```
 </TabItem>
-<TabItem value="reset">
+<TabItem value="approve">
 
-Resets an Account and cancels all associated Entitlements. Partner can only reset accounts they own rather than customer accounts.
+Grants an approval on an Account.
 
 ```sql
-EXEC google.cloudcommerceprocurement.accounts.reset 
+EXEC google.cloudcommerceprocurement.accounts.approve 
 @providersId='{{ providersId }}' --required, 
-@accountsId='{{ accountsId }}' --required
+@accountsId='{{ accountsId }}' --required 
+@@json=
+'{
+"approvalName": "{{ approvalName }}", 
+"reason": "{{ reason }}", 
+"properties": "{{ properties }}"
+}'
 ;
 ```
 </TabItem>

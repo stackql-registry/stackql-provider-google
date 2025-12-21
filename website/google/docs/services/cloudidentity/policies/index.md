@@ -138,14 +138,14 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-policiesId"><code>policiesId</code></a></td>
     <td></td>
-    <td>Get a Policy</td>
+    <td>Get a policy.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
-    <td>List Policies</td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td>List policies.</td>
 </tr>
 </tbody>
 </table>
@@ -197,7 +197,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get">
 
-Get a Policy
+Get a policy.
 
 ```sql
 SELECT
@@ -213,7 +213,7 @@ WHERE policiesId = '{{ policiesId }}' -- required
 </TabItem>
 <TabItem value="list">
 
-List Policies
+List policies.
 
 ```sql
 SELECT
@@ -223,9 +223,9 @@ policyQuery,
 setting,
 type
 FROM google.cloudidentity.policies
-WHERE pageSize = '{{ pageSize }}'
+WHERE filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>

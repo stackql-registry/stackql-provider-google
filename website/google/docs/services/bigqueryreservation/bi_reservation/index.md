@@ -178,9 +178,9 @@ Updates a BI reservation. Only fields specified in the `field_mask` are updated.
 ```sql
 UPDATE google.bigqueryreservation.bi_reservation
 SET 
-data__name = '{{ name }}',
+data__preferredTables = '{{ preferredTables }}',
 data__size = '{{ size }}',
-data__preferredTables = '{{ preferredTables }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -52,7 +52,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Identifier. Name of the GrpcRoute resource. It matches pattern `projects/*/locations/global/grpcRoutes/`</td>
+    <td>Identifier. Name of the GrpcRoute resource. It matches pattern `projects/*/locations/*/grpcRoutes/`</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -67,7 +67,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="gateways" /></td>
     <td><code>array</code></td>
-    <td>Optional. Gateways defines a list of gateways this GrpcRoute is attached to, as one of the routing rules to route the requests served by the gateway. Each gateway reference should match the pattern: `projects/*/locations/global/gateways/`</td>
+    <td>Optional. Gateways defines a list of gateways this GrpcRoute is attached to, as one of the routing rules to route the requests served by the gateway. Each gateway reference should match the pattern: `projects/*/locations/*/gateways/`</td>
 </tr>
 <tr>
     <td><CopyableCode code="hostnames" /></td>
@@ -82,7 +82,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="meshes" /></td>
     <td><code>array</code></td>
-    <td>Optional. Meshes defines a list of meshes this GrpcRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: `projects/*/locations/global/meshes/`</td>
+    <td>Optional. Meshes defines a list of meshes this GrpcRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: `projects/*/locations/*/meshes/`</td>
 </tr>
 <tr>
     <td><CopyableCode code="rules" /></td>
@@ -113,56 +113,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Identifier. Name of the GrpcRoute resource. It matches pattern `projects/*/locations/global/grpcRoutes/`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp when the resource was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Optional. A free-text description of the resource. Max length 1024 characters.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="gateways" /></td>
-    <td><code>array</code></td>
-    <td>Optional. Gateways defines a list of gateways this GrpcRoute is attached to, as one of the routing rules to route the requests served by the gateway. Each gateway reference should match the pattern: `projects/*/locations/global/gateways/`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="hostnames" /></td>
-    <td><code>array</code></td>
-    <td>Required. Service hostnames with an optional port for which this route describes traffic. Format: [:] Hostname is the fully qualified domain name of a network host. This matches the RFC 1123 definition of a hostname with 2 notable exceptions: - IPs are not allowed. - A hostname may be prefixed with a wildcard label (`*.`). The wildcard label must appear by itself as the first label. Hostname can be "precise" which is a domain name without the terminating dot of a network host (e.g. `foo.example.com`) or "wildcard", which is a domain name prefixed with a single wildcard label (e.g. `*.example.com`). Note that as per RFC1035 and RFC1123, a label must consist of lower case alphanumeric characters or '-', and must start and end with an alphanumeric character. No other punctuation is allowed. The routes associated with a Mesh or Gateway must have unique hostnames. If you attempt to attach multiple routes with conflicting hostnames, the configuration will be rejected. For example, while it is acceptable for routes for the hostnames `*.foo.bar.com` and `*.bar.com` to be associated with the same route, it is not possible to associate two routes both with `*.bar.com` or both with `bar.com`. If a port is specified, then gRPC clients must use the channel URI with the port to match this rule (i.e. "xds:///service:123"), otherwise they must supply the URI without a port (i.e. "xds:///service").</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Set of label tags associated with the GrpcRoute resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="meshes" /></td>
-    <td><code>array</code></td>
-    <td>Optional. Meshes defines a list of meshes this GrpcRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: `projects/*/locations/global/meshes/`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="rules" /></td>
-    <td><code>array</code></td>
-    <td>Required. A list of detailed rules defining how to route traffic. Within a single GrpcRoute, the GrpcRoute.RouteAction associated with the first matching GrpcRoute.RouteRule will be executed. At least one rule must be supplied.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="selfLink" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Server-defined URL of this resource</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp when the resource was updated.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -194,7 +144,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists GrpcRoutes in a given project and location.</td>
 </tr>
 <tr>
@@ -315,21 +265,12 @@ Lists GrpcRoutes in a given project and location.
 
 ```sql
 SELECT
-name,
-createTime,
-description,
-gateways,
-hostnames,
-labels,
-meshes,
-rules,
-selfLink,
-updateTime
+*
 FROM google.networkservices.grpc_routes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
@@ -352,25 +293,25 @@ Creates a new GrpcRoute in a given project and location.
 
 ```sql
 INSERT INTO google.networkservices.grpc_routes (
-data__name,
 data__labels,
-data__description,
-data__hostnames,
-data__meshes,
-data__gateways,
 data__rules,
+data__gateways,
+data__meshes,
+data__name,
+data__hostnames,
+data__description,
 projectsId,
 locationsId,
 grpcRouteId
 )
 SELECT 
-'{{ name }}',
 '{{ labels }}',
-'{{ description }}',
-'{{ hostnames }}',
-'{{ meshes }}',
-'{{ gateways }}',
 '{{ rules }}',
+'{{ gateways }}',
+'{{ meshes }}',
+'{{ name }}',
+'{{ hostnames }}',
+'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ grpcRouteId }}'
@@ -395,40 +336,40 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the grpc_routes resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. Name of the GrpcRoute resource. It matches pattern `projects/*/locations/global/grpcRoutes/`
-        
     - name: labels
       value: object
       description: >
         Optional. Set of label tags associated with the GrpcRoute resource.
         
-    - name: description
+    - name: rules
+      value: array
+      description: >
+        Required. A list of detailed rules defining how to route traffic. Within a single GrpcRoute, the GrpcRoute.RouteAction associated with the first matching GrpcRoute.RouteRule will be executed. At least one rule must be supplied.
+        
+    - name: gateways
+      value: array
+      description: >
+        Optional. Gateways defines a list of gateways this GrpcRoute is attached to, as one of the routing rules to route the requests served by the gateway. Each gateway reference should match the pattern: `projects/*/locations/*/gateways/`
+        
+    - name: meshes
+      value: array
+      description: >
+        Optional. Meshes defines a list of meshes this GrpcRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: `projects/*/locations/*/meshes/`
+        
+    - name: name
       value: string
       description: >
-        Optional. A free-text description of the resource. Max length 1024 characters.
+        Identifier. Name of the GrpcRoute resource. It matches pattern `projects/*/locations/*/grpcRoutes/`
         
     - name: hostnames
       value: array
       description: >
         Required. Service hostnames with an optional port for which this route describes traffic. Format: [:] Hostname is the fully qualified domain name of a network host. This matches the RFC 1123 definition of a hostname with 2 notable exceptions: - IPs are not allowed. - A hostname may be prefixed with a wildcard label (`*.`). The wildcard label must appear by itself as the first label. Hostname can be "precise" which is a domain name without the terminating dot of a network host (e.g. `foo.example.com`) or "wildcard", which is a domain name prefixed with a single wildcard label (e.g. `*.example.com`). Note that as per RFC1035 and RFC1123, a label must consist of lower case alphanumeric characters or '-', and must start and end with an alphanumeric character. No other punctuation is allowed. The routes associated with a Mesh or Gateway must have unique hostnames. If you attempt to attach multiple routes with conflicting hostnames, the configuration will be rejected. For example, while it is acceptable for routes for the hostnames `*.foo.bar.com` and `*.bar.com` to be associated with the same route, it is not possible to associate two routes both with `*.bar.com` or both with `bar.com`. If a port is specified, then gRPC clients must use the channel URI with the port to match this rule (i.e. "xds:///service:123"), otherwise they must supply the URI without a port (i.e. "xds:///service").
         
-    - name: meshes
-      value: array
+    - name: description
+      value: string
       description: >
-        Optional. Meshes defines a list of meshes this GrpcRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: `projects/*/locations/global/meshes/`
-        
-    - name: gateways
-      value: array
-      description: >
-        Optional. Gateways defines a list of gateways this GrpcRoute is attached to, as one of the routing rules to route the requests served by the gateway. Each gateway reference should match the pattern: `projects/*/locations/global/gateways/`
-        
-    - name: rules
-      value: array
-      description: >
-        Required. A list of detailed rules defining how to route traffic. Within a single GrpcRoute, the GrpcRoute.RouteAction associated with the first matching GrpcRoute.RouteRule will be executed. At least one rule must be supplied.
+        Optional. A free-text description of the resource. Max length 1024 characters.
         
     - name: grpcRouteId
       value: string
@@ -452,13 +393,13 @@ Updates the parameters of a single GrpcRoute.
 ```sql
 UPDATE google.networkservices.grpc_routes
 SET 
-data__name = '{{ name }}',
 data__labels = '{{ labels }}',
-data__description = '{{ description }}',
-data__hostnames = '{{ hostnames }}',
-data__meshes = '{{ meshes }}',
+data__rules = '{{ rules }}',
 data__gateways = '{{ gateways }}',
-data__rules = '{{ rules }}'
+data__meshes = '{{ meshes }}',
+data__name = '{{ name }}',
+data__hostnames = '{{ hostnames }}',
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

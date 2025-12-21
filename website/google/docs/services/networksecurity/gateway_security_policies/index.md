@@ -144,7 +144,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_gateway_security_policies_list"><CopyableCode code="projects_locations_gateway_security_policies_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists GatewaySecurityPolicies in a given project and location.</td>
 </tr>
 <tr>
@@ -263,8 +263,8 @@ updateTime
 FROM google.networksecurity.gateway_security_policies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -286,16 +286,16 @@ Creates a new GatewaySecurityPolicy in a given project and location.
 
 ```sql
 INSERT INTO google.networksecurity.gateway_security_policies (
-data__name,
 data__description,
+data__name,
 data__tlsInspectionPolicy,
 projectsId,
 locationsId,
 gatewaySecurityPolicyId
 )
 SELECT 
-'{{ name }}',
 '{{ description }}',
+'{{ name }}',
 '{{ tlsInspectionPolicy }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -321,15 +321,15 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the gateway_security_policies resource.
-    - name: name
-      value: string
-      description: >
-        Required. Name of the resource. Name is of the form projects/{project}/locations/{location}/gatewaySecurityPolicies/{gateway_security_policy} gateway_security_policy should match the pattern:(^&#91;a-z&#93;([a-z0-9-]{0,61}[a-z0-9])?$).
-        
     - name: description
       value: string
       description: >
         Optional. Free-text description of the resource.
+        
+    - name: name
+      value: string
+      description: >
+        Required. Name of the resource. Name is of the form projects/{project}/locations/{location}/gatewaySecurityPolicies/{gateway_security_policy} gateway_security_policy should match the pattern:(^&#91;a-z&#93;([a-z0-9-]{0,61}[a-z0-9])?$).
         
     - name: tlsInspectionPolicy
       value: string
@@ -358,8 +358,8 @@ Updates the parameters of a single GatewaySecurityPolicy.
 ```sql
 UPDATE google.networksecurity.gateway_security_policies
 SET 
-data__name = '{{ name }}',
 data__description = '{{ description }}',
+data__name = '{{ name }}',
 data__tlsInspectionPolicy = '{{ tlsInspectionPolicy }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

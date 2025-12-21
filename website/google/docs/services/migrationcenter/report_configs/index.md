@@ -154,7 +154,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists ReportConfigs in a given project and location.</td>
 </tr>
 <tr>
@@ -283,10 +283,10 @@ updateTime
 FROM google.migrationcenter.report_configs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -308,18 +308,18 @@ Creates a report configuration.
 
 ```sql
 INSERT INTO google.migrationcenter.report_configs (
+data__groupPreferencesetAssignments,
 data__displayName,
 data__description,
-data__groupPreferencesetAssignments,
 projectsId,
 locationsId,
 reportConfigId,
 requestId
 )
 SELECT 
+'{{ groupPreferencesetAssignments }}',
 '{{ displayName }}',
 '{{ description }}',
-'{{ groupPreferencesetAssignments }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ reportConfigId }}',
@@ -345,6 +345,11 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the report_configs resource.
+    - name: groupPreferencesetAssignments
+      value: array
+      description: >
+        Required. Collection of combinations of groups and preference sets.
+        
     - name: displayName
       value: string
       description: >
@@ -354,11 +359,6 @@ response
       value: string
       description: >
         Free-text description.
-        
-    - name: groupPreferencesetAssignments
-      value: array
-      description: >
-        Required. Collection of combinations of groups and preference sets.
         
     - name: reportConfigId
       value: string

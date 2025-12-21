@@ -204,7 +204,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>List all Jobs for a project within a region.</td>
 </tr>
 <tr>
@@ -218,7 +218,7 @@ The following methods are available for this resource:
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-jobsId"><code>jobsId</code></a></td>
-    <td><a href="#parameter-reason"><code>reason</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-reason"><code>reason</code></a></td>
     <td>Delete a Job.</td>
 </tr>
 <tr>
@@ -350,10 +350,10 @@ updateTime
 FROM google.batch.jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -375,24 +375,24 @@ Create a Job.
 
 ```sql
 INSERT INTO google.batch.jobs (
-data__priority,
-data__taskGroups,
-data__allocationPolicy,
 data__labels,
 data__logsPolicy,
+data__taskGroups,
+data__priority,
 data__notifications,
+data__allocationPolicy,
 projectsId,
 locationsId,
 jobId,
 requestId
 )
 SELECT 
-'{{ priority }}',
-'{{ taskGroups }}',
-'{{ allocationPolicy }}',
 '{{ labels }}',
 '{{ logsPolicy }}',
+'{{ taskGroups }}',
+'{{ priority }}',
 '{{ notifications }}',
+'{{ allocationPolicy }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ jobId }}',
@@ -424,21 +424,6 @@ updateTime
     - name: locationsId
       value: string
       description: Required parameter for the jobs resource.
-    - name: priority
-      value: string
-      description: >
-        Priority of the Job. The valid value range is [0, 100). Default value is 0. Higher value indicates higher priority. A job with higher priority value is more likely to run earlier if all other requirements are satisfied.
-        
-    - name: taskGroups
-      value: array
-      description: >
-        Required. TaskGroups in the Job. Only one TaskGroup is supported now.
-        
-    - name: allocationPolicy
-      value: object
-      description: >
-        Compute resource allocation for all TaskGroups in the Job.
-        
     - name: labels
       value: object
       description: >
@@ -449,10 +434,25 @@ updateTime
       description: >
         Log preservation policy for the Job.
         
+    - name: taskGroups
+      value: array
+      description: >
+        Required. TaskGroups in the Job. Only one TaskGroup is supported now.
+        
+    - name: priority
+      value: string
+      description: >
+        Priority of the Job. The valid value range is [0, 100). Default value is 0. Higher value indicates higher priority. A job with higher priority value is more likely to run earlier if all other requirements are satisfied.
+        
     - name: notifications
       value: array
       description: >
         Notification configurations.
+        
+    - name: allocationPolicy
+      value: object
+      description: >
+        Compute resource allocation for all TaskGroups in the Job.
         
     - name: jobId
       value: string
@@ -480,8 +480,8 @@ DELETE FROM google.batch.jobs
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND jobsId = '{{ jobsId }}' --required
-AND reason = '{{ reason }}'
 AND requestId = '{{ requestId }}'
+AND reason = '{{ reason }}'
 ;
 ```
 </TabItem>

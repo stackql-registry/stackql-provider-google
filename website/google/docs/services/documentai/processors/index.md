@@ -55,6 +55,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Immutable. The resource name of the processor. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/processors/&#123;processor&#125;`</td>
 </tr>
 <tr>
+    <td><CopyableCode code="activeSchemaVersion" /></td>
+    <td><code>string</code></td>
+    <td>Optional. SchemaVersion used by the Processor. It is the same as Processor's DatasetSchema.schema_version Format is `projects/&#123;project&#125;/locations/&#123;location&#125;/schemas/&#123;schema&#125;/schemaVersions/&#123;schema_version&#125;</td>
+</tr>
+<tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The time the processor was created.</td>
@@ -122,6 +127,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
     <td>Output only. Immutable. The resource name of the processor. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/processors/&#123;processor&#125;`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="activeSchemaVersion" /></td>
+    <td><code>string</code></td>
+    <td>Optional. SchemaVersion used by the Processor. It is the same as Processor's DatasetSchema.schema_version Format is `projects/&#123;project&#125;/locations/&#123;location&#125;/schemas/&#123;schema&#125;/schemaVersions/&#123;schema_version&#125;</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -316,6 +326,7 @@ Gets a processor detail.
 ```sql
 SELECT
 name,
+activeSchemaVersion,
 createTime,
 defaultProcessorVersion,
 displayName,
@@ -340,6 +351,7 @@ Lists all processors which belong to this project.
 ```sql
 SELECT
 name,
+activeSchemaVersion,
 createTime,
 defaultProcessorVersion,
 displayName,
@@ -380,6 +392,7 @@ data__type,
 data__displayName,
 data__defaultProcessorVersion,
 data__kmsKeyName,
+data__activeSchemaVersion,
 projectsId,
 locationsId
 )
@@ -388,10 +401,12 @@ SELECT
 '{{ displayName }}',
 '{{ defaultProcessorVersion }}',
 '{{ kmsKeyName }}',
+'{{ activeSchemaVersion }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
 name,
+activeSchemaVersion,
 createTime,
 defaultProcessorVersion,
 displayName,
@@ -436,6 +451,11 @@ type
       value: string
       description: >
         The [KMS key](https://cloud.google.com/security-key-management) used for encryption and decryption in CMEK scenarios.
+        
+    - name: activeSchemaVersion
+      value: string
+      description: >
+        Optional. SchemaVersion used by the Processor. It is the same as Processor's DatasetSchema.schema_version Format is `projects/{project}/locations/{location}/schemas/{schema}/schemaVersions/{schema_version}
         
 ```
 </TabItem>

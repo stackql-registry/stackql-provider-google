@@ -323,25 +323,25 @@ Creates a cluster within an instance. Note that exactly one of Cluster.serve_nod
 
 ```sql
 INSERT INTO google.bigtableadmin.clusters (
-data__name,
+data__clusterConfig,
 data__location,
 data__serveNodes,
+data__name,
 data__nodeScalingFactor,
-data__clusterConfig,
-data__defaultStorageType,
 data__encryptionConfig,
+data__defaultStorageType,
 projectsId,
 instancesId,
 clusterId
 )
 SELECT 
-'{{ name }}',
+'{{ clusterConfig }}',
 '{{ location }}',
 {{ serveNodes }},
+'{{ name }}',
 '{{ nodeScalingFactor }}',
-'{{ clusterConfig }}',
-'{{ defaultStorageType }}',
 '{{ encryptionConfig }}',
+'{{ defaultStorageType }}',
 '{{ projectsId }}',
 '{{ instancesId }}',
 '{{ clusterId }}'
@@ -366,10 +366,10 @@ response
     - name: instancesId
       value: string
       description: Required parameter for the clusters resource.
-    - name: name
-      value: string
+    - name: clusterConfig
+      value: object
       description: >
-        The unique name of the cluster. Values are of the form `projects/{project}/instances/{instance}/clusters/a-z*`.
+        Configuration for this cluster.
         
     - name: location
       value: string
@@ -381,16 +381,21 @@ response
       description: >
         The number of nodes in the cluster. If no value is set, Cloud Bigtable automatically allocates nodes based on your data footprint and optimized for 50% storage utilization.
         
+    - name: name
+      value: string
+      description: >
+        The unique name of the cluster. Values are of the form `projects/{project}/instances/{instance}/clusters/a-z*`.
+        
     - name: nodeScalingFactor
       value: string
       description: >
         Immutable. The node scaling factor of this cluster.
         
       valid_values: ['NODE_SCALING_FACTOR_UNSPECIFIED', 'NODE_SCALING_FACTOR_1X', 'NODE_SCALING_FACTOR_2X']
-    - name: clusterConfig
+    - name: encryptionConfig
       value: object
       description: >
-        Configuration for this cluster.
+        Immutable. The encryption configuration for CMEK-protected clusters.
         
     - name: defaultStorageType
       value: string
@@ -398,11 +403,6 @@ response
         Immutable. The type of storage used by this cluster to serve its parent instance's tables, unless explicitly overridden.
         
       valid_values: ['STORAGE_TYPE_UNSPECIFIED', 'SSD', 'HDD']
-    - name: encryptionConfig
-      value: object
-      description: >
-        Immutable. The encryption configuration for CMEK-protected clusters.
-        
     - name: clusterId
       value: string
 ```
@@ -425,13 +425,13 @@ Updates a cluster within an instance. Note that UpdateCluster does not support u
 ```sql
 REPLACE google.bigtableadmin.clusters
 SET 
-data__name = '{{ name }}',
+data__clusterConfig = '{{ clusterConfig }}',
 data__location = '{{ location }}',
 data__serveNodes = {{ serveNodes }},
+data__name = '{{ name }}',
 data__nodeScalingFactor = '{{ nodeScalingFactor }}',
-data__clusterConfig = '{{ clusterConfig }}',
-data__defaultStorageType = '{{ defaultStorageType }}',
-data__encryptionConfig = '{{ encryptionConfig }}'
+data__encryptionConfig = '{{ encryptionConfig }}',
+data__defaultStorageType = '{{ defaultStorageType }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instancesId = '{{ instancesId }}' --required
@@ -490,13 +490,13 @@ EXEC google.bigtableadmin.clusters.partial_update_cluster
 @updateMask='{{ updateMask }}' 
 @@json=
 '{
-"name": "{{ name }}", 
+"clusterConfig": "{{ clusterConfig }}", 
 "location": "{{ location }}", 
 "serveNodes": {{ serveNodes }}, 
+"name": "{{ name }}", 
 "nodeScalingFactor": "{{ nodeScalingFactor }}", 
-"clusterConfig": "{{ clusterConfig }}", 
-"defaultStorageType": "{{ defaultStorageType }}", 
-"encryptionConfig": "{{ encryptionConfig }}"
+"encryptionConfig": "{{ encryptionConfig }}", 
+"defaultStorageType": "{{ defaultStorageType }}"
 }'
 ;
 ```

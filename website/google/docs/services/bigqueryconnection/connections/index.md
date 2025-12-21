@@ -406,33 +406,33 @@ Creates a new connection.
 
 ```sql
 INSERT INTO google.bigqueryconnection.connections (
-data__friendlyName,
-data__description,
-data__cloudSql,
-data__aws,
 data__azure,
-data__cloudSpanner,
+data__cloudSql,
+data__configuration,
+data__description,
+data__kmsKeyName,
+data__friendlyName,
+data__aws,
 data__cloudResource,
 data__spark,
+data__cloudSpanner,
 data__salesforceDataCloud,
-data__configuration,
-data__kmsKeyName,
 projectsId,
 locationsId,
 connectionId
 )
 SELECT 
-'{{ friendlyName }}',
-'{{ description }}',
-'{{ cloudSql }}',
-'{{ aws }}',
 '{{ azure }}',
-'{{ cloudSpanner }}',
+'{{ cloudSql }}',
+'{{ configuration }}',
+'{{ description }}',
+'{{ kmsKeyName }}',
+'{{ friendlyName }}',
+'{{ aws }}',
 '{{ cloudResource }}',
 '{{ spark }}',
+'{{ cloudSpanner }}',
 '{{ salesforceDataCloud }}',
-'{{ configuration }}',
-'{{ kmsKeyName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ connectionId }}'
@@ -467,35 +467,40 @@ spark
     - name: locationsId
       value: string
       description: Required parameter for the connections resource.
-    - name: friendlyName
-      value: string
+    - name: azure
+      value: object
       description: >
-        User provided display name for the connection.
-        
-    - name: description
-      value: string
-      description: >
-        User provided description.
+        Azure properties.
         
     - name: cloudSql
       value: object
       description: >
         Cloud SQL properties.
         
+    - name: configuration
+      value: object
+      description: >
+        Optional. Connector configuration.
+        
+    - name: description
+      value: string
+      description: >
+        User provided description.
+        
+    - name: kmsKeyName
+      value: string
+      description: >
+        Optional. The Cloud KMS key that is used for credentials encryption. If omitted, internal Google owned encryption keys are used. Example: `projects/[kms_project_id]/locations/[region]/keyRings/[key_region]/cryptoKeys/[key]`
+        
+    - name: friendlyName
+      value: string
+      description: >
+        User provided display name for the connection.
+        
     - name: aws
       value: object
       description: >
         Amazon Web Services (AWS) properties.
-        
-    - name: azure
-      value: object
-      description: >
-        Azure properties.
-        
-    - name: cloudSpanner
-      value: object
-      description: >
-        Cloud Spanner properties.
         
     - name: cloudResource
       value: object
@@ -507,20 +512,15 @@ spark
       description: >
         Spark properties.
         
+    - name: cloudSpanner
+      value: object
+      description: >
+        Cloud Spanner properties.
+        
     - name: salesforceDataCloud
       value: object
       description: >
         Optional. Salesforce DataCloud properties. This field is intended for use only by Salesforce partner projects. This field contains properties for your Salesforce DataCloud connection.
-        
-    - name: configuration
-      value: object
-      description: >
-        Optional. Connector configuration.
-        
-    - name: kmsKeyName
-      value: string
-      description: >
-        Optional. The Cloud KMS key that is used for credentials encryption. If omitted, internal Google owned encryption keys are used. Example: `projects/[kms_project_id]/locations/[region]/keyRings/[key_region]/cryptoKeys/[key]`
         
     - name: connectionId
       value: string
@@ -544,17 +544,17 @@ Updates the specified connection. For security reasons, also resets credential i
 ```sql
 UPDATE google.bigqueryconnection.connections
 SET 
-data__friendlyName = '{{ friendlyName }}',
-data__description = '{{ description }}',
-data__cloudSql = '{{ cloudSql }}',
-data__aws = '{{ aws }}',
 data__azure = '{{ azure }}',
-data__cloudSpanner = '{{ cloudSpanner }}',
+data__cloudSql = '{{ cloudSql }}',
+data__configuration = '{{ configuration }}',
+data__description = '{{ description }}',
+data__kmsKeyName = '{{ kmsKeyName }}',
+data__friendlyName = '{{ friendlyName }}',
+data__aws = '{{ aws }}',
 data__cloudResource = '{{ cloudResource }}',
 data__spark = '{{ spark }}',
-data__salesforceDataCloud = '{{ salesforceDataCloud }}',
-data__configuration = '{{ configuration }}',
-data__kmsKeyName = '{{ kmsKeyName }}'
+data__cloudSpanner = '{{ cloudSpanner }}',
+data__salesforceDataCloud = '{{ salesforceDataCloud }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -204,7 +204,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
     <td>Lists the API keys owned by a project. The key string of the API key isn't included in the response. NOTE: Key is a global resource; hence the only supported value for location is `global`.</td>
 </tr>
 <tr>
@@ -364,8 +364,8 @@ updateTime
 FROM google.apikeys.keys
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 AND showDeleted = '{{ showDeleted }}'
 ;
 ```
@@ -388,19 +388,19 @@ Creates a new API key. NOTE: Key is a global resource; hence the only supported 
 
 ```sql
 INSERT INTO google.apikeys.keys (
+data__displayName,
 data__serviceAccountEmail,
 data__annotations,
 data__restrictions,
-data__displayName,
 projectsId,
 locationsId,
 keyId
 )
 SELECT 
+'{{ displayName }}',
 '{{ serviceAccountEmail }}',
 '{{ annotations }}',
 '{{ restrictions }}',
-'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ keyId }}'
@@ -425,6 +425,11 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the keys resource.
+    - name: displayName
+      value: string
+      description: >
+        Human-readable display name of this key that you can modify. The maximum length is 63 characters.
+        
     - name: serviceAccountEmail
       value: string
       description: >
@@ -439,11 +444,6 @@ response
       value: object
       description: >
         Key restrictions.
-        
-    - name: displayName
-      value: string
-      description: >
-        Human-readable display name of this key that you can modify. The maximum length is 63 characters.
         
     - name: keyId
       value: string
@@ -467,10 +467,10 @@ Patches the modifiable fields of an API key. The key string of the API key isn't
 ```sql
 UPDATE google.apikeys.keys
 SET 
+data__displayName = '{{ displayName }}',
 data__serviceAccountEmail = '{{ serviceAccountEmail }}',
 data__annotations = '{{ annotations }}',
-data__restrictions = '{{ restrictions }}',
-data__displayName = '{{ displayName }}'
+data__restrictions = '{{ restrictions }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

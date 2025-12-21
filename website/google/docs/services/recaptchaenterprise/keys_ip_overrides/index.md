@@ -82,7 +82,7 @@ The following methods are available for this resource:
     <td><a href="#list_ip_overrides"><CopyableCode code="list_ip_overrides" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-keysId"><code>keysId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists all IP overrides for a key.</td>
 </tr>
 </tbody>
@@ -143,8 +143,8 @@ overrideType
 FROM google.recaptchaenterprise.keys_ip_overrides
 WHERE projectsId = '{{ projectsId }}' -- required
 AND keysId = '{{ keysId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>

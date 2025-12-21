@@ -191,42 +191,42 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a>, <a href="#parameter-authorizedViewsId"><code>authorizedViewsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-feedbackLabelsId"><code>feedbackLabelsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-feedbackLabelsId"><code>feedbackLabelsId</code></a></td>
     <td></td>
     <td>Get feedback label.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a>, <a href="#parameter-authorizedViewsId"><code>authorizedViewsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>List feedback labels.</td>
 </tr>
 <tr>
     <td><a href="#list_all_feedback_labels"><CopyableCode code="list_all_feedback_labels" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List all feedback labels by project number.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a>, <a href="#parameter-authorizedViewsId"><code>authorizedViewsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a></td>
     <td><a href="#parameter-feedbackLabelId"><code>feedbackLabelId</code></a></td>
     <td>Create feedback label.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a>, <a href="#parameter-authorizedViewsId"><code>authorizedViewsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-feedbackLabelsId"><code>feedbackLabelsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-feedbackLabelsId"><code>feedbackLabelsId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Update feedback label.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a>, <a href="#parameter-authorizedViewsId"><code>authorizedViewsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-feedbackLabelsId"><code>feedbackLabelsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-feedbackLabelsId"><code>feedbackLabelsId</code></a></td>
     <td></td>
     <td>Delete feedback label.</td>
 </tr>
@@ -246,16 +246,6 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-authorizedViewSetsId">
-    <td><CopyableCode code="authorizedViewSetsId" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr id="parameter-authorizedViewsId">
-    <td><CopyableCode code="authorizedViewsId" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
 <tr id="parameter-conversationsId">
     <td><CopyableCode code="conversationsId" /></td>
     <td><code>string</code></td>
@@ -334,8 +324,7 @@ updateTime
 FROM google.contactcenterinsights.feedback_labels
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND authorizedViewSetsId = '{{ authorizedViewSetsId }}' -- required
-AND authorizedViewsId = '{{ authorizedViewsId }}' -- required
+AND datasetsId = '{{ datasetsId }}' -- required
 AND conversationsId = '{{ conversationsId }}' -- required
 AND feedbackLabelsId = '{{ feedbackLabelsId }}' -- required
 ;
@@ -356,12 +345,11 @@ updateTime
 FROM google.contactcenterinsights.feedback_labels
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND authorizedViewSetsId = '{{ authorizedViewSetsId }}' -- required
-AND authorizedViewsId = '{{ authorizedViewsId }}' -- required
+AND datasetsId = '{{ datasetsId }}' -- required
 AND conversationsId = '{{ conversationsId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -381,9 +369,9 @@ FROM google.contactcenterinsights.feedback_labels
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND datasetsId = '{{ datasetsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -407,24 +395,22 @@ Create feedback label.
 INSERT INTO google.contactcenterinsights.feedback_labels (
 data__label,
 data__qaAnswerLabel,
-data__name,
 data__labeledResource,
+data__name,
 projectsId,
 locationsId,
-authorizedViewSetsId,
-authorizedViewsId,
+datasetsId,
 conversationsId,
 feedbackLabelId
 )
 SELECT 
 '{{ label }}',
 '{{ qaAnswerLabel }}',
-'{{ name }}',
 '{{ labeledResource }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ authorizedViewSetsId }}',
-'{{ authorizedViewsId }}',
+'{{ datasetsId }}',
 '{{ conversationsId }}',
 '{{ feedbackLabelId }}'
 RETURNING
@@ -449,10 +435,7 @@ updateTime
     - name: locationsId
       value: string
       description: Required parameter for the feedback_labels resource.
-    - name: authorizedViewSetsId
-      value: string
-      description: Required parameter for the feedback_labels resource.
-    - name: authorizedViewsId
+    - name: datasetsId
       value: string
       description: Required parameter for the feedback_labels resource.
     - name: conversationsId
@@ -468,15 +451,15 @@ updateTime
       description: >
         QaAnswer label used for Quality AI example conversations.
         
-    - name: name
-      value: string
-      description: >
-        Immutable. Resource name of the FeedbackLabel. Format: projects/{project}/locations/{location}/conversations/{conversation}/feedbackLabels/{feedback_label}
-        
     - name: labeledResource
       value: string
       description: >
         Name of the resource to be labeled. Supported resources are: * `projects/{project}/locations/{location}/qaScorecards/{scorecard}/revisions/{revision}/qaQuestions/{question}` * `projects/{project}/locations/{location}/issueModels/{issue_model}` * `projects/{project}/locations/{location}/generators/{generator_id}`
+        
+    - name: name
+      value: string
+      description: >
+        Immutable. Resource name of the FeedbackLabel. Format: projects/{project}/locations/{location}/conversations/{conversation}/feedbackLabels/{feedback_label}
         
     - name: feedbackLabelId
       value: string
@@ -502,13 +485,12 @@ UPDATE google.contactcenterinsights.feedback_labels
 SET 
 data__label = '{{ label }}',
 data__qaAnswerLabel = '{{ qaAnswerLabel }}',
-data__name = '{{ name }}',
-data__labeledResource = '{{ labeledResource }}'
+data__labeledResource = '{{ labeledResource }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
-AND authorizedViewSetsId = '{{ authorizedViewSetsId }}' --required
-AND authorizedViewsId = '{{ authorizedViewsId }}' --required
+AND datasetsId = '{{ datasetsId }}' --required
 AND conversationsId = '{{ conversationsId }}' --required
 AND feedbackLabelsId = '{{ feedbackLabelsId }}' --required
 AND updateMask = '{{ updateMask}}'
@@ -540,8 +522,7 @@ Delete feedback label.
 DELETE FROM google.contactcenterinsights.feedback_labels
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
-AND authorizedViewSetsId = '{{ authorizedViewSetsId }}' --required
-AND authorizedViewsId = '{{ authorizedViewsId }}' --required
+AND datasetsId = '{{ datasetsId }}' --required
 AND conversationsId = '{{ conversationsId }}' --required
 AND feedbackLabelsId = '{{ feedbackLabelsId }}' --required
 ;

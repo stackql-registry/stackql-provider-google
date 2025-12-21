@@ -392,14 +392,14 @@ Updates an existing ResourceValueConfigs with new rules.
 UPDATE google.securitycenter.resource_value_configs
 SET 
 data__name = '{{ name }}',
-data__resourceValue = '{{ resourceValue }}',
 data__tagValues = '{{ tagValues }}',
 data__resourceType = '{{ resourceType }}',
-data__scope = '{{ scope }}',
-data__resourceLabelsSelector = '{{ resourceLabelsSelector }}',
-data__description = '{{ description }}',
 data__cloudProvider = '{{ cloudProvider }}',
-data__sensitiveDataProtectionMapping = '{{ sensitiveDataProtectionMapping }}'
+data__resourceValue = '{{ resourceValue }}',
+data__description = '{{ description }}',
+data__resourceLabelsSelector = '{{ resourceLabelsSelector }}',
+data__sensitiveDataProtectionMapping = '{{ sensitiveDataProtectionMapping }}',
+data__scope = '{{ scope }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND resourceValueConfigsId = '{{ resourceValueConfigsId }}' --required

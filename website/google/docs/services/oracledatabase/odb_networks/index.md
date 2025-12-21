@@ -65,6 +65,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The ID of the subscription entitlement associated with the OdbNetwork.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="gcpOracleZone" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The GCP Oracle zone where OdbNetwork is hosted. Example: us-east4-b-r2. If not specified, the system will pick a zone based on availability.</td>
+</tr>
+<tr>
     <td><CopyableCode code="labels" /></td>
     <td><code>object</code></td>
     <td>Optional. Labels or tags associated with the resource.</td>
@@ -107,6 +112,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="entitlementId" /></td>
     <td><code>string</code></td>
     <td>Output only. The ID of the subscription entitlement associated with the OdbNetwork.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="gcpOracleZone" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The GCP Oracle zone where OdbNetwork is hosted. Example: us-east4-b-r2. If not specified, the system will pick a zone based on availability.</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -253,6 +263,7 @@ SELECT
 name,
 createTime,
 entitlementId,
+gcpOracleZone,
 labels,
 network,
 state
@@ -272,6 +283,7 @@ SELECT
 name,
 createTime,
 entitlementId,
+gcpOracleZone,
 labels,
 network,
 state
@@ -306,6 +318,7 @@ INSERT INTO google.oracledatabase.odb_networks (
 data__name,
 data__network,
 data__labels,
+data__gcpOracleZone,
 projectsId,
 locationsId,
 odbNetworkId,
@@ -315,6 +328,7 @@ SELECT
 '{{ name }}',
 '{{ network }}',
 '{{ labels }}',
+'{{ gcpOracleZone }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ odbNetworkId }}',
@@ -354,6 +368,11 @@ response
       value: object
       description: >
         Optional. Labels or tags associated with the resource.
+        
+    - name: gcpOracleZone
+      value: string
+      description: >
+        Optional. The GCP Oracle zone where OdbNetwork is hosted. Example: us-east4-b-r2. If not specified, the system will pick a zone based on availability.
         
     - name: odbNetworkId
       value: string

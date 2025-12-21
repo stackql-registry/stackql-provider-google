@@ -35,8 +35,8 @@ The following fields are returned by `SELECT` queries:
     defaultValue="folders_event_threat_detection_settings_custom_modules_get"
     values={[
         { label: 'folders_event_threat_detection_settings_custom_modules_get', value: 'folders_event_threat_detection_settings_custom_modules_get' },
-        { label: 'projects_event_threat_detection_settings_custom_modules_get', value: 'projects_event_threat_detection_settings_custom_modules_get' },
-        { label: 'organizations_event_threat_detection_settings_custom_modules_get', value: 'organizations_event_threat_detection_settings_custom_modules_get' }
+        { label: 'organizations_event_threat_detection_settings_custom_modules_get', value: 'organizations_event_threat_detection_settings_custom_modules_get' },
+        { label: 'projects_event_threat_detection_settings_custom_modules_get', value: 'projects_event_threat_detection_settings_custom_modules_get' }
     ]}
 >
 <TabItem value="folders_event_threat_detection_settings_custom_modules_get">
@@ -103,7 +103,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_event_threat_detection_settings_custom_modules_get">
+<TabItem value="organizations_event_threat_detection_settings_custom_modules_get">
 
 <table>
 <thead>
@@ -167,7 +167,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="organizations_event_threat_detection_settings_custom_modules_get">
+<TabItem value="projects_event_threat_detection_settings_custom_modules_get">
 
 <table>
 <thead>
@@ -256,16 +256,16 @@ The following methods are available for this resource:
     <td>Gets an Event Threat Detection custom module.</td>
 </tr>
 <tr>
-    <td><a href="#projects_event_threat_detection_settings_custom_modules_get"><CopyableCode code="projects_event_threat_detection_settings_custom_modules_get" /></a></td>
+    <td><a href="#organizations_event_threat_detection_settings_custom_modules_get"><CopyableCode code="organizations_event_threat_detection_settings_custom_modules_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
     <td></td>
     <td>Gets an Event Threat Detection custom module.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_event_threat_detection_settings_custom_modules_get"><CopyableCode code="organizations_event_threat_detection_settings_custom_modules_get" /></a></td>
+    <td><a href="#projects_event_threat_detection_settings_custom_modules_get"><CopyableCode code="projects_event_threat_detection_settings_custom_modules_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
     <td></td>
     <td>Gets an Event Threat Detection custom module.</td>
 </tr>
@@ -284,20 +284,6 @@ The following methods are available for this resource:
     <td>Updates the Event Threat Detection custom module with the given name based on the given update mask. Updating the enablement state is supported for both resident and inherited modules (though resident modules cannot have an enablement state of "inherited"). Updating the display name or configuration of a module is supported for resident modules only. The type of a module cannot be changed.</td>
 </tr>
 <tr>
-    <td><a href="#projects_security_health_analytics_settings_custom_modules_patch"><CopyableCode code="projects_security_health_analytics_settings_custom_modules_patch" /></a></td>
-    <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates the SecurityHealthAnalyticsCustomModule under the given name based on the given update mask. Updating the enablement state is supported on both resident and inherited modules (though resident modules cannot have an enablement state of "inherited"). Updating the display name and custom config of a module is supported on resident modules only.</td>
-</tr>
-<tr>
-    <td><a href="#projects_event_threat_detection_settings_custom_modules_patch"><CopyableCode code="projects_event_threat_detection_settings_custom_modules_patch" /></a></td>
-    <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates the Event Threat Detection custom module with the given name based on the given update mask. Updating the enablement state is supported for both resident and inherited modules (though resident modules cannot have an enablement state of "inherited"). Updating the display name or configuration of a module is supported for resident modules only. The type of a module cannot be changed.</td>
-</tr>
-<tr>
     <td><a href="#organizations_security_health_analytics_settings_custom_modules_patch"><CopyableCode code="organizations_security_health_analytics_settings_custom_modules_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
@@ -312,6 +298,20 @@ The following methods are available for this resource:
     <td>Updates the Event Threat Detection custom module with the given name based on the given update mask. Updating the enablement state is supported for both resident and inherited modules (though resident modules cannot have an enablement state of "inherited"). Updating the display name or configuration of a module is supported for resident modules only. The type of a module cannot be changed.</td>
 </tr>
 <tr>
+    <td><a href="#projects_event_threat_detection_settings_custom_modules_patch"><CopyableCode code="projects_event_threat_detection_settings_custom_modules_patch" /></a></td>
+    <td><CopyableCode code="update" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td>Updates the Event Threat Detection custom module with the given name based on the given update mask. Updating the enablement state is supported for both resident and inherited modules (though resident modules cannot have an enablement state of "inherited"). Updating the display name or configuration of a module is supported for resident modules only. The type of a module cannot be changed.</td>
+</tr>
+<tr>
+    <td><a href="#projects_security_health_analytics_settings_custom_modules_patch"><CopyableCode code="projects_security_health_analytics_settings_custom_modules_patch" /></a></td>
+    <td><CopyableCode code="update" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-customModulesId"><code>customModulesId</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td>Updates the SecurityHealthAnalyticsCustomModule under the given name based on the given update mask. Updating the enablement state is supported on both resident and inherited modules (though resident modules cannot have an enablement state of "inherited"). Updating the display name and custom config of a module is supported on resident modules only.</td>
+</tr>
+<tr>
     <td><a href="#folders_security_health_analytics_settings_custom_modules_simulate"><CopyableCode code="folders_security_health_analytics_settings_custom_modules_simulate" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
@@ -319,16 +319,16 @@ The following methods are available for this resource:
     <td>Simulates a given SecurityHealthAnalyticsCustomModule and Resource.</td>
 </tr>
 <tr>
-    <td><a href="#projects_security_health_analytics_settings_custom_modules_simulate"><CopyableCode code="projects_security_health_analytics_settings_custom_modules_simulate" /></a></td>
+    <td><a href="#organizations_security_health_analytics_settings_custom_modules_simulate"><CopyableCode code="organizations_security_health_analytics_settings_custom_modules_simulate" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
     <td></td>
     <td>Simulates a given SecurityHealthAnalyticsCustomModule and Resource.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_security_health_analytics_settings_custom_modules_simulate"><CopyableCode code="organizations_security_health_analytics_settings_custom_modules_simulate" /></a></td>
+    <td><a href="#projects_security_health_analytics_settings_custom_modules_simulate"><CopyableCode code="projects_security_health_analytics_settings_custom_modules_simulate" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
     <td>Simulates a given SecurityHealthAnalyticsCustomModule and Resource.</td>
 </tr>
@@ -382,8 +382,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="folders_event_threat_detection_settings_custom_modules_get"
     values={[
         { label: 'folders_event_threat_detection_settings_custom_modules_get', value: 'folders_event_threat_detection_settings_custom_modules_get' },
-        { label: 'projects_event_threat_detection_settings_custom_modules_get', value: 'projects_event_threat_detection_settings_custom_modules_get' },
-        { label: 'organizations_event_threat_detection_settings_custom_modules_get', value: 'organizations_event_threat_detection_settings_custom_modules_get' }
+        { label: 'organizations_event_threat_detection_settings_custom_modules_get', value: 'organizations_event_threat_detection_settings_custom_modules_get' },
+        { label: 'projects_event_threat_detection_settings_custom_modules_get', value: 'projects_event_threat_detection_settings_custom_modules_get' }
     ]}
 >
 <TabItem value="folders_event_threat_detection_settings_custom_modules_get">
@@ -404,28 +404,6 @@ type,
 updateTime
 FROM google.securitycenter.custom_modules
 WHERE foldersId = '{{ foldersId }}' -- required
-AND customModulesId = '{{ customModulesId }}' -- required
-;
-```
-</TabItem>
-<TabItem value="projects_event_threat_detection_settings_custom_modules_get">
-
-Gets an Event Threat Detection custom module.
-
-```sql
-SELECT
-name,
-ancestorModule,
-cloudProvider,
-config,
-description,
-displayName,
-enablementState,
-lastEditor,
-type,
-updateTime
-FROM google.securitycenter.custom_modules
-WHERE projectsId = '{{ projectsId }}' -- required
 AND customModulesId = '{{ customModulesId }}' -- required
 ;
 ```
@@ -452,6 +430,28 @@ AND customModulesId = '{{ customModulesId }}' -- required
 ;
 ```
 </TabItem>
+<TabItem value="projects_event_threat_detection_settings_custom_modules_get">
+
+Gets an Event Threat Detection custom module.
+
+```sql
+SELECT
+name,
+ancestorModule,
+cloudProvider,
+config,
+description,
+displayName,
+enablementState,
+lastEditor,
+type,
+updateTime
+FROM google.securitycenter.custom_modules
+WHERE projectsId = '{{ projectsId }}' -- required
+AND customModulesId = '{{ customModulesId }}' -- required
+;
+```
+</TabItem>
 </Tabs>
 
 
@@ -462,10 +462,10 @@ AND customModulesId = '{{ customModulesId }}' -- required
     values={[
         { label: 'folders_security_health_analytics_settings_custom_modules_patch', value: 'folders_security_health_analytics_settings_custom_modules_patch' },
         { label: 'folders_event_threat_detection_settings_custom_modules_patch', value: 'folders_event_threat_detection_settings_custom_modules_patch' },
-        { label: 'projects_security_health_analytics_settings_custom_modules_patch', value: 'projects_security_health_analytics_settings_custom_modules_patch' },
-        { label: 'projects_event_threat_detection_settings_custom_modules_patch', value: 'projects_event_threat_detection_settings_custom_modules_patch' },
         { label: 'organizations_security_health_analytics_settings_custom_modules_patch', value: 'organizations_security_health_analytics_settings_custom_modules_patch' },
-        { label: 'organizations_event_threat_detection_settings_custom_modules_patch', value: 'organizations_event_threat_detection_settings_custom_modules_patch' }
+        { label: 'organizations_event_threat_detection_settings_custom_modules_patch', value: 'organizations_event_threat_detection_settings_custom_modules_patch' },
+        { label: 'projects_event_threat_detection_settings_custom_modules_patch', value: 'projects_event_threat_detection_settings_custom_modules_patch' },
+        { label: 'projects_security_health_analytics_settings_custom_modules_patch', value: 'projects_security_health_analytics_settings_custom_modules_patch' }
     ]}
 >
 <TabItem value="folders_security_health_analytics_settings_custom_modules_patch">
@@ -476,10 +476,10 @@ Updates the SecurityHealthAnalyticsCustomModule under the given name based on th
 UPDATE google.securitycenter.custom_modules
 SET 
 data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__enablementState = '{{ enablementState }}',
 data__customConfig = '{{ customConfig }}',
-data__cloudProvider = '{{ cloudProvider }}'
+data__cloudProvider = '{{ cloudProvider }}',
+data__enablementState = '{{ enablementState }}',
+data__displayName = '{{ displayName }}'
 WHERE 
 foldersId = '{{ foldersId }}' --required
 AND customModulesId = '{{ customModulesId }}' --required
@@ -502,73 +502,15 @@ Updates the Event Threat Detection custom module with the given name based on th
 ```sql
 UPDATE google.securitycenter.custom_modules
 SET 
-data__name = '{{ name }}',
-data__config = '{{ config }}',
 data__enablementState = '{{ enablementState }}',
-data__type = '{{ type }}',
-data__displayName = '{{ displayName }}',
 data__description = '{{ description }}',
-data__cloudProvider = '{{ cloudProvider }}'
+data__cloudProvider = '{{ cloudProvider }}',
+data__displayName = '{{ displayName }}',
+data__name = '{{ name }}',
+data__type = '{{ type }}',
+data__config = '{{ config }}'
 WHERE 
 foldersId = '{{ foldersId }}' --required
-AND customModulesId = '{{ customModulesId }}' --required
-AND updateMask = '{{ updateMask}}'
-RETURNING
-name,
-ancestorModule,
-cloudProvider,
-config,
-description,
-displayName,
-enablementState,
-lastEditor,
-type,
-updateTime;
-```
-</TabItem>
-<TabItem value="projects_security_health_analytics_settings_custom_modules_patch">
-
-Updates the SecurityHealthAnalyticsCustomModule under the given name based on the given update mask. Updating the enablement state is supported on both resident and inherited modules (though resident modules cannot have an enablement state of "inherited"). Updating the display name and custom config of a module is supported on resident modules only.
-
-```sql
-UPDATE google.securitycenter.custom_modules
-SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__enablementState = '{{ enablementState }}',
-data__customConfig = '{{ customConfig }}',
-data__cloudProvider = '{{ cloudProvider }}'
-WHERE 
-projectsId = '{{ projectsId }}' --required
-AND customModulesId = '{{ customModulesId }}' --required
-AND updateMask = '{{ updateMask}}'
-RETURNING
-name,
-ancestorModule,
-cloudProvider,
-customConfig,
-displayName,
-enablementState,
-lastEditor,
-updateTime;
-```
-</TabItem>
-<TabItem value="projects_event_threat_detection_settings_custom_modules_patch">
-
-Updates the Event Threat Detection custom module with the given name based on the given update mask. Updating the enablement state is supported for both resident and inherited modules (though resident modules cannot have an enablement state of "inherited"). Updating the display name or configuration of a module is supported for resident modules only. The type of a module cannot be changed.
-
-```sql
-UPDATE google.securitycenter.custom_modules
-SET 
-data__name = '{{ name }}',
-data__config = '{{ config }}',
-data__enablementState = '{{ enablementState }}',
-data__type = '{{ type }}',
-data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
-data__cloudProvider = '{{ cloudProvider }}'
-WHERE 
-projectsId = '{{ projectsId }}' --required
 AND customModulesId = '{{ customModulesId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
@@ -592,10 +534,10 @@ Updates the SecurityHealthAnalyticsCustomModule under the given name based on th
 UPDATE google.securitycenter.custom_modules
 SET 
 data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__enablementState = '{{ enablementState }}',
 data__customConfig = '{{ customConfig }}',
-data__cloudProvider = '{{ cloudProvider }}'
+data__cloudProvider = '{{ cloudProvider }}',
+data__enablementState = '{{ enablementState }}',
+data__displayName = '{{ displayName }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND customModulesId = '{{ customModulesId }}' --required
@@ -618,13 +560,13 @@ Updates the Event Threat Detection custom module with the given name based on th
 ```sql
 UPDATE google.securitycenter.custom_modules
 SET 
-data__name = '{{ name }}',
-data__config = '{{ config }}',
 data__enablementState = '{{ enablementState }}',
-data__type = '{{ type }}',
-data__displayName = '{{ displayName }}',
 data__description = '{{ description }}',
-data__cloudProvider = '{{ cloudProvider }}'
+data__cloudProvider = '{{ cloudProvider }}',
+data__displayName = '{{ displayName }}',
+data__name = '{{ name }}',
+data__type = '{{ type }}',
+data__config = '{{ config }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND customModulesId = '{{ customModulesId }}' --required
@@ -642,6 +584,64 @@ type,
 updateTime;
 ```
 </TabItem>
+<TabItem value="projects_event_threat_detection_settings_custom_modules_patch">
+
+Updates the Event Threat Detection custom module with the given name based on the given update mask. Updating the enablement state is supported for both resident and inherited modules (though resident modules cannot have an enablement state of "inherited"). Updating the display name or configuration of a module is supported for resident modules only. The type of a module cannot be changed.
+
+```sql
+UPDATE google.securitycenter.custom_modules
+SET 
+data__enablementState = '{{ enablementState }}',
+data__description = '{{ description }}',
+data__cloudProvider = '{{ cloudProvider }}',
+data__displayName = '{{ displayName }}',
+data__name = '{{ name }}',
+data__type = '{{ type }}',
+data__config = '{{ config }}'
+WHERE 
+projectsId = '{{ projectsId }}' --required
+AND customModulesId = '{{ customModulesId }}' --required
+AND updateMask = '{{ updateMask}}'
+RETURNING
+name,
+ancestorModule,
+cloudProvider,
+config,
+description,
+displayName,
+enablementState,
+lastEditor,
+type,
+updateTime;
+```
+</TabItem>
+<TabItem value="projects_security_health_analytics_settings_custom_modules_patch">
+
+Updates the SecurityHealthAnalyticsCustomModule under the given name based on the given update mask. Updating the enablement state is supported on both resident and inherited modules (though resident modules cannot have an enablement state of "inherited"). Updating the display name and custom config of a module is supported on resident modules only.
+
+```sql
+UPDATE google.securitycenter.custom_modules
+SET 
+data__name = '{{ name }}',
+data__customConfig = '{{ customConfig }}',
+data__cloudProvider = '{{ cloudProvider }}',
+data__enablementState = '{{ enablementState }}',
+data__displayName = '{{ displayName }}'
+WHERE 
+projectsId = '{{ projectsId }}' --required
+AND customModulesId = '{{ customModulesId }}' --required
+AND updateMask = '{{ updateMask}}'
+RETURNING
+name,
+ancestorModule,
+cloudProvider,
+customConfig,
+displayName,
+enablementState,
+lastEditor,
+updateTime;
+```
+</TabItem>
 </Tabs>
 
 
@@ -651,8 +651,8 @@ updateTime;
     defaultValue="folders_security_health_analytics_settings_custom_modules_simulate"
     values={[
         { label: 'folders_security_health_analytics_settings_custom_modules_simulate', value: 'folders_security_health_analytics_settings_custom_modules_simulate' },
-        { label: 'projects_security_health_analytics_settings_custom_modules_simulate', value: 'projects_security_health_analytics_settings_custom_modules_simulate' },
-        { label: 'organizations_security_health_analytics_settings_custom_modules_simulate', value: 'organizations_security_health_analytics_settings_custom_modules_simulate' }
+        { label: 'organizations_security_health_analytics_settings_custom_modules_simulate', value: 'organizations_security_health_analytics_settings_custom_modules_simulate' },
+        { label: 'projects_security_health_analytics_settings_custom_modules_simulate', value: 'projects_security_health_analytics_settings_custom_modules_simulate' }
     ]}
 >
 <TabItem value="folders_security_health_analytics_settings_custom_modules_simulate">
@@ -664,23 +664,8 @@ EXEC google.securitycenter.custom_modules.folders_security_health_analytics_sett
 @foldersId='{{ foldersId }}' --required 
 @@json=
 '{
-"customConfig": "{{ customConfig }}", 
-"resource": "{{ resource }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_security_health_analytics_settings_custom_modules_simulate">
-
-Simulates a given SecurityHealthAnalyticsCustomModule and Resource.
-
-```sql
-EXEC google.securitycenter.custom_modules.projects_security_health_analytics_settings_custom_modules_simulate 
-@projectsId='{{ projectsId }}' --required 
-@@json=
-'{
-"customConfig": "{{ customConfig }}", 
-"resource": "{{ resource }}"
+"resource": "{{ resource }}", 
+"customConfig": "{{ customConfig }}"
 }'
 ;
 ```
@@ -694,8 +679,23 @@ EXEC google.securitycenter.custom_modules.organizations_security_health_analytic
 @organizationsId='{{ organizationsId }}' --required 
 @@json=
 '{
-"customConfig": "{{ customConfig }}", 
-"resource": "{{ resource }}"
+"resource": "{{ resource }}", 
+"customConfig": "{{ customConfig }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_security_health_analytics_settings_custom_modules_simulate">
+
+Simulates a given SecurityHealthAnalyticsCustomModule and Resource.
+
+```sql
+EXEC google.securitycenter.custom_modules.projects_security_health_analytics_settings_custom_modules_simulate 
+@projectsId='{{ projectsId }}' --required 
+@@json=
+'{
+"resource": "{{ resource }}", 
+"customConfig": "{{ customConfig }}"
 }'
 ;
 ```

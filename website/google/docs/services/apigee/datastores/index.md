@@ -258,14 +258,14 @@ Create a Datastore for an org
 
 ```sql
 INSERT INTO google.apigee.datastores (
-data__displayName,
 data__targetType,
+data__displayName,
 data__datastoreConfig,
 organizationsId
 )
 SELECT 
-'{{ displayName }}',
 '{{ targetType }}',
+'{{ displayName }}',
 '{{ datastoreConfig }}',
 '{{ organizationsId }}'
 RETURNING
@@ -288,15 +288,15 @@ targetType
     - name: organizationsId
       value: string
       description: Required parameter for the datastores resource.
-    - name: displayName
-      value: string
-      description: >
-        Required. Display name in UI
-        
     - name: targetType
       value: string
       description: >
         Destination storage type. Supported types `gcs` or `bigquery`.
+        
+    - name: displayName
+      value: string
+      description: >
+        Required. Display name in UI
         
     - name: datastoreConfig
       value: object
@@ -323,8 +323,8 @@ Update a Datastore
 ```sql
 REPLACE google.apigee.datastores
 SET 
-data__displayName = '{{ displayName }}',
 data__targetType = '{{ targetType }}',
+data__displayName = '{{ displayName }}',
 data__datastoreConfig = '{{ datastoreConfig }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
@@ -381,8 +381,8 @@ EXEC google.apigee.datastores.organizations_analytics_datastores_test
 @organizationsId='{{ organizationsId }}' --required 
 @@json=
 '{
-"displayName": "{{ displayName }}", 
 "targetType": "{{ targetType }}", 
+"displayName": "{{ displayName }}", 
 "datastoreConfig": "{{ datastoreConfig }}"
 }'
 ;

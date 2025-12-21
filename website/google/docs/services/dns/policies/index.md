@@ -72,7 +72,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="dns64Config" /></td>
     <td><code>object</code></td>
-    <td>Configurations related to DNS64 for this Policy. (id: PolicyDns64Config)</td>
+    <td>Configurations related to DNS64 for this policy. (id: PolicyDns64Config)</td>
 </tr>
 <tr>
     <td><CopyableCode code="enableInboundForwarding" /></td>
@@ -131,7 +131,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="dns64Config" /></td>
     <td><code>object</code></td>
-    <td>Configurations related to DNS64 for this Policy. (id: PolicyDns64Config)</td>
+    <td>Configurations related to DNS64 for this policy. (id: PolicyDns64Config)</td>
 </tr>
 <tr>
     <td><CopyableCode code="enableInboundForwarding" /></td>
@@ -178,42 +178,42 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-policy"><code>policy</code></a></td>
     <td><a href="#parameter-clientOperationId"><code>clientOperationId</code></a></td>
-    <td>Fetches the representation of an existing Policy.</td>
+    <td>Fetches the representation of an existing policy.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
     <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Enumerates all Policies associated with a project.</td>
+    <td>Enumerates all policies associated with a project.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
     <td><a href="#parameter-clientOperationId"><code>clientOperationId</code></a></td>
-    <td>Creates a new Policy.</td>
+    <td>Creates a new policy.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-policy"><code>policy</code></a></td>
     <td><a href="#parameter-clientOperationId"><code>clientOperationId</code></a></td>
-    <td>Applies a partial update to an existing Policy.</td>
+    <td>Applies a partial update to an existing policy.</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="replace" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-policy"><code>policy</code></a></td>
     <td><a href="#parameter-clientOperationId"><code>clientOperationId</code></a></td>
-    <td>Updates an existing Policy.</td>
+    <td>Updates an existing policy.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-policy"><code>policy</code></a></td>
     <td><a href="#parameter-clientOperationId"><code>clientOperationId</code></a></td>
-    <td>Deletes a previously created Policy. Fails if the policy is still being referenced by a network.</td>
+    <td>Deletes a previously created policy. Fails if the policy is still being referenced by a network.</td>
 </tr>
 </tbody>
 </table>
@@ -270,7 +270,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get">
 
-Fetches the representation of an existing Policy.
+Fetches the representation of an existing policy.
 
 ```sql
 SELECT
@@ -292,7 +292,7 @@ AND clientOperationId = '{{ clientOperationId }}'
 </TabItem>
 <TabItem value="list">
 
-Enumerates all Policies associated with a project.
+Enumerates all policies associated with a project.
 
 ```sql
 SELECT
@@ -326,7 +326,7 @@ AND pageToken = '{{ pageToken }}'
 >
 <TabItem value="create">
 
-Creates a new Policy.
+Creates a new policy.
 
 ```sql
 INSERT INTO google.dns.policies (
@@ -414,7 +414,7 @@ networks
     - name: dns64Config
       value: object
       description: >
-        Configurations related to DNS64 for this Policy.
+        Configurations related to DNS64 for this policy.
         
     - name: kind
       value: string
@@ -436,7 +436,7 @@ networks
 >
 <TabItem value="patch">
 
-Applies a partial update to an existing Policy.
+Applies a partial update to an existing policy.
 
 ```sql
 UPDATE google.dns.policies
@@ -471,7 +471,7 @@ policy;
 >
 <TabItem value="update">
 
-Updates an existing Policy.
+Updates an existing policy.
 
 ```sql
 REPLACE google.dns.policies
@@ -506,7 +506,7 @@ policy;
 >
 <TabItem value="delete">
 
-Deletes a previously created Policy. Fails if the policy is still being referenced by a network.
+Deletes a previously created policy. Fails if the policy is still being referenced by a network.
 
 ```sql
 DELETE FROM google.dns.policies

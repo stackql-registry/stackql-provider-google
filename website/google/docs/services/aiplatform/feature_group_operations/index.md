@@ -61,7 +61,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>The error result of the operation in case of failure or cancellation. (id: GoogleRpcStatus)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: GoogleRpcStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="metadata" /></td>
@@ -97,7 +97,7 @@ The following methods are available for this resource:
     <td><a href="#list_wait"><CopyableCode code="list_wait" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featureGroupsId"><code>featureGroupsId</code></a>, <a href="#parameter-featuresId"><code>featuresId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
 </tr>
 </tbody>
@@ -156,6 +156,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
+<tr id="parameter-returnPartialSuccess">
+    <td><CopyableCode code="returnPartialSuccess" /></td>
+    <td><code>boolean</code></td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 
@@ -184,9 +189,10 @@ AND locationsId = '{{ locationsId }}' -- required
 AND featureGroupsId = '{{ featureGroupsId }}' -- required
 AND featuresId = '{{ featuresId }}' -- required
 AND operationsId = '{{ operationsId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>

@@ -214,7 +214,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-platformsId"><code>platformsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists platform policies owned by a project in the specified platform. Returns `INVALID_ARGUMENT` if the project or the platform doesn't exist.</td>
 </tr>
 <tr>
@@ -355,8 +355,8 @@ updateTime
 FROM google.binaryauthorization.policies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND platformsId = '{{ platformsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -401,16 +401,16 @@ Creates a platform policy, and returns a copy of it. Returns `NOT_FOUND` if the 
 ```sql
 INSERT INTO google.binaryauthorization.policies (
 data__description,
-data__gkePolicy,
 data__etag,
+data__gkePolicy,
 projectsId,
 platformsId,
 policyId
 )
 SELECT 
 '{{ description }}',
-'{{ gkePolicy }}',
 '{{ etag }}',
+'{{ gkePolicy }}',
 '{{ projectsId }}',
 '{{ platformsId }}',
 '{{ policyId }}'
@@ -440,15 +440,15 @@ updateTime
       description: >
         Optional. A description comment about the policy.
         
-    - name: gkePolicy
-      value: object
-      description: >
-        Optional. GKE platform-specific policy.
-        
     - name: etag
       value: string
       description: >
         Optional. Used to prevent updating the policy when another request has updated it since it was retrieved.
+        
+    - name: gkePolicy
+      value: object
+      description: >
+        Optional. GKE platform-specific policy.
         
     - name: policyId
       value: string
@@ -474,8 +474,8 @@ Replaces a platform policy. Returns `NOT_FOUND` if the policy doesn't exist.
 REPLACE google.binaryauthorization.policies
 SET 
 data__description = '{{ description }}',
-data__gkePolicy = '{{ gkePolicy }}',
-data__etag = '{{ etag }}'
+data__etag = '{{ etag }}',
+data__gkePolicy = '{{ gkePolicy }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND platformsId = '{{ platformsId }}' --required
@@ -495,15 +495,15 @@ Creates or updates a project's policy, and returns a copy of the new policy. A p
 ```sql
 REPLACE google.binaryauthorization.policies
 SET 
+data__etag = '{{ etag }}',
+data__istioServiceIdentityAdmissionRules = '{{ istioServiceIdentityAdmissionRules }}',
 data__description = '{{ description }}',
 data__globalPolicyEvaluationMode = '{{ globalPolicyEvaluationMode }}',
-data__admissionWhitelistPatterns = '{{ admissionWhitelistPatterns }}',
 data__clusterAdmissionRules = '{{ clusterAdmissionRules }}',
 data__kubernetesNamespaceAdmissionRules = '{{ kubernetesNamespaceAdmissionRules }}',
-data__kubernetesServiceAccountAdmissionRules = '{{ kubernetesServiceAccountAdmissionRules }}',
-data__istioServiceIdentityAdmissionRules = '{{ istioServiceIdentityAdmissionRules }}',
 data__defaultAdmissionRule = '{{ defaultAdmissionRule }}',
-data__etag = '{{ etag }}'
+data__kubernetesServiceAccountAdmissionRules = '{{ kubernetesServiceAccountAdmissionRules }}',
+data__admissionWhitelistPatterns = '{{ admissionWhitelistPatterns }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 RETURNING

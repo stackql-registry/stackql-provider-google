@@ -294,7 +294,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-view"><code>view</code></a></td>
+    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists NotebookExecutionJobs in a Location.</td>
 </tr>
 <tr>
@@ -447,11 +447,11 @@ workbenchRuntime
 FROM google.aiplatform.notebook_execution_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND filter = '{{ filter }}'
+AND view = '{{ view }}'
 AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
-AND view = '{{ view }}'
 ;
 ```
 </TabItem>
@@ -473,41 +473,41 @@ Creates a NotebookExecutionJob.
 
 ```sql
 INSERT INTO google.aiplatform.notebook_execution_jobs (
-data__dataformRepositorySource,
-data__gcsNotebookSource,
-data__directNotebookSource,
-data__notebookRuntimeTemplateResourceName,
-data__customEnvironmentSpec,
+data__labels,
+data__scheduleResourceName,
 data__gcsOutputUri,
 data__executionUser,
 data__serviceAccount,
-data__workbenchRuntime,
-data__displayName,
 data__executionTimeout,
-data__scheduleResourceName,
-data__labels,
-data__kernelName,
+data__workbenchRuntime,
 data__encryptionSpec,
+data__kernelName,
+data__directNotebookSource,
+data__displayName,
+data__gcsNotebookSource,
+data__customEnvironmentSpec,
+data__notebookRuntimeTemplateResourceName,
+data__dataformRepositorySource,
 projectsId,
 locationsId,
 notebookExecutionJobId
 )
 SELECT 
-'{{ dataformRepositorySource }}',
-'{{ gcsNotebookSource }}',
-'{{ directNotebookSource }}',
-'{{ notebookRuntimeTemplateResourceName }}',
-'{{ customEnvironmentSpec }}',
+'{{ labels }}',
+'{{ scheduleResourceName }}',
 '{{ gcsOutputUri }}',
 '{{ executionUser }}',
 '{{ serviceAccount }}',
-'{{ workbenchRuntime }}',
-'{{ displayName }}',
 '{{ executionTimeout }}',
-'{{ scheduleResourceName }}',
-'{{ labels }}',
-'{{ kernelName }}',
+'{{ workbenchRuntime }}',
 '{{ encryptionSpec }}',
+'{{ kernelName }}',
+'{{ directNotebookSource }}',
+'{{ displayName }}',
+'{{ gcsNotebookSource }}',
+'{{ customEnvironmentSpec }}',
+'{{ notebookRuntimeTemplateResourceName }}',
+'{{ dataformRepositorySource }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ notebookExecutionJobId }}'
@@ -532,30 +532,15 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the notebook_execution_jobs resource.
-    - name: dataformRepositorySource
+    - name: labels
       value: object
       description: >
-        The Dataform Repository pointing to a single file notebook repository.
+        The labels with user-defined metadata to organize NotebookExecutionJobs. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
         
-    - name: gcsNotebookSource
-      value: object
-      description: >
-        The Cloud Storage url pointing to the ipynb file. Format: `gs://bucket/notebook_file.ipynb`
-        
-    - name: directNotebookSource
-      value: object
-      description: >
-        The contents of an input notebook file.
-        
-    - name: notebookRuntimeTemplateResourceName
+    - name: scheduleResourceName
       value: string
       description: >
-        The NotebookRuntimeTemplate to source compute configuration from.
-        
-    - name: customEnvironmentSpec
-      value: object
-      description: >
-        The custom compute configuration for an execution job.
+        The Schedule resource name if this job is triggered by one. Format: `projects/{project_id}/locations/{location}/schedules/{schedule_id}`
         
     - name: gcsOutputUri
       value: string
@@ -572,40 +557,55 @@ response
       description: >
         The service account to run the execution as.
         
-    - name: workbenchRuntime
-      value: object
-      description: >
-        The Workbench runtime configuration to use for the notebook execution.
-        
-    - name: displayName
-      value: string
-      description: >
-        The display name of the NotebookExecutionJob. The name can be up to 128 characters long and can consist of any UTF-8 characters.
-        
     - name: executionTimeout
       value: string
       description: >
         Max running time of the execution job in seconds (default 86400s / 24 hrs).
         
-    - name: scheduleResourceName
-      value: string
-      description: >
-        The Schedule resource name if this job is triggered by one. Format: `projects/{project_id}/locations/{location}/schedules/{schedule_id}`
-        
-    - name: labels
+    - name: workbenchRuntime
       value: object
       description: >
-        The labels with user-defined metadata to organize NotebookExecutionJobs. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
+        The Workbench runtime configuration to use for the notebook execution.
+        
+    - name: encryptionSpec
+      value: object
+      description: >
+        Customer-managed encryption key spec for the notebook execution job. This field is auto-populated if the NotebookRuntimeTemplate has an encryption spec.
         
     - name: kernelName
       value: string
       description: >
         The name of the kernel to use during notebook execution. If unset, the default kernel is used.
         
-    - name: encryptionSpec
+    - name: directNotebookSource
       value: object
       description: >
-        Customer-managed encryption key spec for the notebook execution job. This field is auto-populated if the NotebookRuntimeTemplate has an encryption spec.
+        The contents of an input notebook file.
+        
+    - name: displayName
+      value: string
+      description: >
+        The display name of the NotebookExecutionJob. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+        
+    - name: gcsNotebookSource
+      value: object
+      description: >
+        The Cloud Storage url pointing to the ipynb file. Format: `gs://bucket/notebook_file.ipynb`
+        
+    - name: customEnvironmentSpec
+      value: object
+      description: >
+        The custom compute configuration for an execution job.
+        
+    - name: notebookRuntimeTemplateResourceName
+      value: string
+      description: >
+        The NotebookRuntimeTemplate to source compute configuration from.
+        
+    - name: dataformRepositorySource
+      value: object
+      description: >
+        The Dataform Repository pointing to a single file notebook repository.
         
     - name: notebookExecutionJobId
       value: string

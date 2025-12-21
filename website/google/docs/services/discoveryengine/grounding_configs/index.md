@@ -109,10 +109,10 @@ EXEC google.discoveryengine.grounding_configs.projects_locations_grounding_confi
 @groundingConfigsId='{{ groundingConfigsId }}' --required 
 @@json=
 '{
-"answerCandidate": "{{ answerCandidate }}", 
 "facts": "{{ facts }}", 
-"groundingSpec": "{{ groundingSpec }}", 
-"userLabels": "{{ userLabels }}"
+"answerCandidate": "{{ answerCandidate }}", 
+"userLabels": "{{ userLabels }}", 
+"groundingSpec": "{{ groundingSpec }}"
 }'
 ;
 ```

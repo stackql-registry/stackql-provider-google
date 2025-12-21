@@ -188,8 +188,8 @@ EXEC google.apigee.addons_config.organizations_environments_addons_config_set_ad
 @environmentsId='{{ environmentsId }}' --required 
 @@json=
 '{
-"analyticsEnabled": {{ analyticsEnabled }}, 
-"apiSecurityEnabled": {{ apiSecurityEnabled }}
+"apiSecurityEnabled": {{ apiSecurityEnabled }}, 
+"analyticsEnabled": {{ analyticsEnabled }}
 }'
 ;
 ```

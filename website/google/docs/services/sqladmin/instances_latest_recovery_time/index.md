@@ -49,6 +49,11 @@ The following fields are returned by `SELECT` queries:
 </thead>
 <tbody>
 <tr>
+    <td><CopyableCode code="earliestRecoveryTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Timestamp, identifies the earliest recovery time of the source instance.</td>
+</tr>
+<tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
     <td>This is always `sql#getLatestRecoveryTime`.</td>
@@ -133,6 +138,7 @@ Get Latest Recovery Time for a given instance.
 
 ```sql
 SELECT
+earliestRecoveryTime,
 kind,
 latestRecoveryTime
 FROM google.sqladmin.instances_latest_recovery_time

@@ -98,8 +98,8 @@ EXEC google.contentwarehouse.projects.set_acl
 @@json=
 '{
 "requestMetadata": "{{ requestMetadata }}", 
-"policy": "{{ policy }}", 
-"projectOwner": {{ projectOwner }}
+"projectOwner": {{ projectOwner }}, 
+"policy": "{{ policy }}"
 }'
 ;
 ```

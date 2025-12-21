@@ -105,6 +105,11 @@ The following fields are returned by `SELECT` queries:
     <td>The type of the operation. Valid values are: * `CREATE` * `DELETE` * `UPDATE` * `RESTART` * `IMPORT` * `EXPORT` * `BACKUP_VOLUME` * `RESTORE_VOLUME` * `CREATE_USER` * `DELETE_USER` * `CREATE_DATABASE` * `DELETE_DATABASE`</td>
 </tr>
 <tr>
+    <td><CopyableCode code="preCheckMajorVersionUpgradeContext" /></td>
+    <td><code>object</code></td>
+    <td>This field is only populated when the operation_type is PRE_CHECK_MAJOR_VERSION_UPGRADE. The PreCheckMajorVersionUpgradeContext message itself contains the details for that pre-check, such as the target database version for the upgrade and the results of the check (including any warnings or errors found). (id: PreCheckMajorVersionUpgradeContext)</td>
+</tr>
+<tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
     <td>The URI of this resource.</td>
@@ -212,6 +217,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="operationType" /></td>
     <td><code>string</code></td>
     <td>The type of the operation. Valid values are: * `CREATE` * `DELETE` * `UPDATE` * `RESTART` * `IMPORT` * `EXPORT` * `BACKUP_VOLUME` * `RESTORE_VOLUME` * `CREATE_USER` * `DELETE_USER` * `CREATE_DATABASE` * `DELETE_DATABASE`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="preCheckMajorVersionUpgradeContext" /></td>
+    <td><code>object</code></td>
+    <td>This field is only populated when the operation_type is PRE_CHECK_MAJOR_VERSION_UPGRADE. The PreCheckMajorVersionUpgradeContext message itself contains the details for that pre-check, such as the target database version for the upgrade and the results of the check (including any warnings or errors found). (id: PreCheckMajorVersionUpgradeContext)</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
@@ -364,6 +374,7 @@ importContext,
 insertTime,
 kind,
 operationType,
+preCheckMajorVersionUpgradeContext,
 selfLink,
 startTime,
 status,
@@ -395,6 +406,7 @@ importContext,
 insertTime,
 kind,
 operationType,
+preCheckMajorVersionUpgradeContext,
 selfLink,
 startTime,
 status,

@@ -18,7 +18,7 @@ apphub service documentation.
 
 :::info[Service Summary]
 
-total resources: __9__  
+total resources: __10__  
 
 :::
 
@@ -27,11 +27,12 @@ total resources: __9__
 <div class="providerDocColumn">
 <a href="/services/apphub/applications/">applications</a><br />
 <a href="/services/apphub/applications_iam_policies/">applications_iam_policies</a><br />
+<a href="/services/apphub/boundary/">boundary</a><br />
 <a href="/services/apphub/discovered_services/">discovered_services</a><br />
-<a href="/services/apphub/discovered_workloads/">discovered_workloads</a><br />
-<a href="/services/apphub/locations/">locations</a>
+<a href="/services/apphub/discovered_workloads/">discovered_workloads</a>
 </div>
 <div class="providerDocColumn">
+<a href="/services/apphub/locations/">locations</a><br />
 <a href="/services/apphub/operations/">operations</a><br />
 <a href="/services/apphub/service_project_attachments/">service_project_attachments</a><br />
 <a href="/services/apphub/services/">services</a><br />

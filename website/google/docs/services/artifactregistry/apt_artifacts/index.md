@@ -50,18 +50,18 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#import"><CopyableCode code="import" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
-    <td></td>
-    <td>Imports Apt artifacts. The returned Operation will complete once the resources are imported. Package, Version, and File resources are created based on the imported artifacts. Imported artifacts that conflict with existing resources are ignored.</td>
-</tr>
-<tr>
     <td><a href="#upload"><CopyableCode code="upload" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
     <td></td>
     <td>Directly uploads an Apt artifact. The returned Operation will complete once the resources are uploaded. Package, Version, and File resources are created based on the imported artifact. Imported artifacts that conflict with existing resources are ignored.</td>
+</tr>
+<tr>
+    <td><a href="#import"><CopyableCode code="import" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
+    <td></td>
+    <td>Imports Apt artifacts. The returned Operation will complete once the resources are imported. Package, Version, and File resources are created based on the imported artifacts. Imported artifacts that conflict with existing resources are ignored.</td>
 </tr>
 </tbody>
 </table>
@@ -100,12 +100,24 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="import"
+    defaultValue="upload"
     values={[
-        { label: 'import', value: 'import' },
-        { label: 'upload', value: 'upload' }
+        { label: 'upload', value: 'upload' },
+        { label: 'import', value: 'import' }
     ]}
 >
+<TabItem value="upload">
+
+Directly uploads an Apt artifact. The returned Operation will complete once the resources are uploaded. Package, Version, and File resources are created based on the imported artifact. Imported artifacts that conflict with existing resources are ignored.
+
+```sql
+EXEC google.artifactregistry.apt_artifacts.upload 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@repositoriesId='{{ repositoriesId }}' --required
+;
+```
+</TabItem>
 <TabItem value="import">
 
 Imports Apt artifacts. The returned Operation will complete once the resources are imported. Package, Version, and File resources are created based on the imported artifacts. Imported artifacts that conflict with existing resources are ignored.
@@ -119,18 +131,6 @@ EXEC google.artifactregistry.apt_artifacts.import
 '{
 "gcsSource": "{{ gcsSource }}"
 }'
-;
-```
-</TabItem>
-<TabItem value="upload">
-
-Directly uploads an Apt artifact. The returned Operation will complete once the resources are uploaded. Package, Version, and File resources are created based on the imported artifact. Imported artifacts that conflict with existing resources are ignored.
-
-```sql
-EXEC google.artifactregistry.apt_artifacts.upload 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@repositoriesId='{{ repositoriesId }}' --required
 ;
 ```
 </TabItem>

@@ -64,7 +64,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="columnInfoType" /></td>
     <td><code>object</code></td>
-    <td>The infoType details for this column. (id: GooglePrivacyDlpV2InfoTypeSummary)</td>
+    <td>If it's been determined this column can be identified as a single type, this will be set. Otherwise the column either has unidentifiable content or mixed types. (id: GooglePrivacyDlpV2InfoTypeSummary)</td>
 </tr>
 <tr>
     <td><CopyableCode code="columnType" /></td>
@@ -178,7 +178,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="columnInfoType" /></td>
     <td><code>object</code></td>
-    <td>The infoType details for this column. (id: GooglePrivacyDlpV2InfoTypeSummary)</td>
+    <td>If it's been determined this column can be identified as a single type, this will be set. Otherwise the column either has unidentifiable content or mixed types. (id: GooglePrivacyDlpV2InfoTypeSummary)</td>
 </tr>
 <tr>
     <td><CopyableCode code="columnType" /></td>
@@ -292,7 +292,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="columnInfoType" /></td>
     <td><code>object</code></td>
-    <td>The infoType details for this column. (id: GooglePrivacyDlpV2InfoTypeSummary)</td>
+    <td>If it's been determined this column can be identified as a single type, this will be set. Otherwise the column either has unidentifiable content or mixed types. (id: GooglePrivacyDlpV2InfoTypeSummary)</td>
 </tr>
 <tr>
     <td><CopyableCode code="columnType" /></td>
@@ -406,7 +406,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="columnInfoType" /></td>
     <td><code>object</code></td>
-    <td>The infoType details for this column. (id: GooglePrivacyDlpV2InfoTypeSummary)</td>
+    <td>If it's been determined this column can be identified as a single type, this will be set. Otherwise the column either has unidentifiable content or mixed types. (id: GooglePrivacyDlpV2InfoTypeSummary)</td>
 </tr>
 <tr>
     <td><CopyableCode code="columnType" /></td>
@@ -531,7 +531,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_column_data_profiles_list"><CopyableCode code="projects_locations_column_data_profiles_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists column data profiles for an organization.</td>
 </tr>
 <tr>
@@ -707,9 +707,9 @@ FROM google.dlp.column_data_profiles
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>

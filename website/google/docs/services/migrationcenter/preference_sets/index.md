@@ -154,7 +154,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all the preference sets in a given project and location.</td>
 </tr>
 <tr>
@@ -285,9 +285,9 @@ virtualMachinePreferences
 FROM google.migrationcenter.preference_sets
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -310,8 +310,8 @@ Creates a new preference set in a given project and location.
 ```sql
 INSERT INTO google.migrationcenter.preference_sets (
 data__displayName,
-data__description,
 data__virtualMachinePreferences,
+data__description,
 projectsId,
 locationsId,
 preferenceSetId,
@@ -319,8 +319,8 @@ requestId
 )
 SELECT 
 '{{ displayName }}',
-'{{ description }}',
 '{{ virtualMachinePreferences }}',
+'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ preferenceSetId }}',
@@ -351,15 +351,15 @@ response
       description: >
         User-friendly display name. Maximum length is 63 characters.
         
-    - name: description
-      value: string
-      description: >
-        A description of the preference set.
-        
     - name: virtualMachinePreferences
       value: object
       description: >
         Optional. A set of preferences that applies to all virtual machines in the context.
+        
+    - name: description
+      value: string
+      description: >
+        A description of the preference set.
         
     - name: preferenceSetId
       value: string
@@ -386,8 +386,8 @@ Updates the parameters of a preference set.
 UPDATE google.migrationcenter.preference_sets
 SET 
 data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
-data__virtualMachinePreferences = '{{ virtualMachinePreferences }}'
+data__virtualMachinePreferences = '{{ virtualMachinePreferences }}',
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

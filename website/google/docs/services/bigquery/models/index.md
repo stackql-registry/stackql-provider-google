@@ -304,7 +304,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+datasetId"><code>+datasetId</code></a></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a></td>
     <td>Lists all models in the specified dataset. Requires the READER dataset role. After retrieving the list of models, you can get information about a particular model by calling the models.get method.</td>
 </tr>
 <tr>
@@ -438,8 +438,8 @@ transformColumns
 FROM google.bigquery.models
 WHERE projectId = '{{ projectId }}' -- required
 AND +datasetId = '{{ +datasetId }}' -- required
-AND maxResults = '{{ maxResults }}'
 AND pageToken = '{{ pageToken }}'
+AND maxResults = '{{ maxResults }}'
 ;
 ```
 </TabItem>
@@ -462,13 +462,13 @@ Patch specific fields in the specified model.
 UPDATE google.bigquery.models
 SET 
 data__bestTrialId = '{{ bestTrialId }}',
-data__description = '{{ description }}',
-data__encryptionConfiguration = '{{ encryptionConfiguration }}',
-data__expirationTime = '{{ expirationTime }}',
 data__friendlyName = '{{ friendlyName }}',
+data__trainingRuns = '{{ trainingRuns }}',
 data__labels = '{{ labels }}',
 data__modelReference = '{{ modelReference }}',
-data__trainingRuns = '{{ trainingRuns }}'
+data__expirationTime = '{{ expirationTime }}',
+data__description = '{{ description }}',
+data__encryptionConfiguration = '{{ encryptionConfiguration }}'
 WHERE 
 projectId = '{{ projectId }}' --required
 AND +datasetId = '{{ +datasetId }}' --required

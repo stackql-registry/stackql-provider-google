@@ -60,6 +60,11 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Configures how data is supposed to be extracted from a BigQuery source to be loaded onto the FeatureOnlineStore. (id: GoogleCloudAiplatformV1FeatureViewBigQuerySource)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="bigtableMetadata" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Metadata containing information about the Cloud Bigtable. (id: GoogleCloudAiplatformV1FeatureViewBigtableMetadata)</td>
+</tr>
+<tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. Timestamp when this FeatureView was created.</td>
@@ -147,6 +152,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="bigQuerySource" /></td>
     <td><code>object</code></td>
     <td>Optional. Configures how data is supposed to be extracted from a BigQuery source to be loaded onto the FeatureOnlineStore. (id: GoogleCloudAiplatformV1FeatureViewBigQuerySource)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="bigtableMetadata" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Metadata containing information about the Cloud Bigtable. (id: GoogleCloudAiplatformV1FeatureViewBigtableMetadata)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -244,7 +254,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featureOnlineStoresId"><code>featureOnlineStoresId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists FeatureViews in a given FeatureOnlineStore.</td>
 </tr>
 <tr>
@@ -269,6 +279,27 @@ The following methods are available for this resource:
     <td>Deletes a single FeatureView.</td>
 </tr>
 <tr>
+    <td><a href="#direct_write"><CopyableCode code="direct_write" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featureOnlineStoresId"><code>featureOnlineStoresId</code></a>, <a href="#parameter-featureViewsId"><code>featureViewsId</code></a></td>
+    <td></td>
+    <td>Bidirectional streaming RPC to directly write to feature values in a feature view. Requests may not have a one-to-one mapping to responses and responses may be returned out-of-order to reduce latency.</td>
+</tr>
+<tr>
+    <td><a href="#generate_fetch_access_token"><CopyableCode code="generate_fetch_access_token" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featureOnlineStoresId"><code>featureOnlineStoresId</code></a>, <a href="#parameter-featureViewsId"><code>featureViewsId</code></a></td>
+    <td></td>
+    <td>RPC to generate an access token for the given feature view. FeatureViews under the same FeatureOnlineStore share the same access token.</td>
+</tr>
+<tr>
+    <td><a href="#search_nearest_entities"><CopyableCode code="search_nearest_entities" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featureOnlineStoresId"><code>featureOnlineStoresId</code></a>, <a href="#parameter-featureViewsId"><code>featureViewsId</code></a></td>
+    <td></td>
+    <td>Search the nearest entities under a FeatureView. Search only works for indexable feature view; if a feature view isn't indexable, returns Invalid argument response.</td>
+</tr>
+<tr>
     <td><a href="#sync"><CopyableCode code="sync" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featureOnlineStoresId"><code>featureOnlineStoresId</code></a>, <a href="#parameter-featureViewsId"><code>featureViewsId</code></a></td>
@@ -281,20 +312,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featureOnlineStoresId"><code>featureOnlineStoresId</code></a>, <a href="#parameter-featureViewsId"><code>featureViewsId</code></a></td>
     <td></td>
     <td>Fetch feature values under a FeatureView.</td>
-</tr>
-<tr>
-    <td><a href="#search_nearest_entities"><CopyableCode code="search_nearest_entities" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featureOnlineStoresId"><code>featureOnlineStoresId</code></a>, <a href="#parameter-featureViewsId"><code>featureViewsId</code></a></td>
-    <td></td>
-    <td>Search the nearest entities under a FeatureView. Search only works for indexable feature view; if a feature view isn't indexable, returns Invalid argument response.</td>
-</tr>
-<tr>
-    <td><a href="#direct_write"><CopyableCode code="direct_write" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featureOnlineStoresId"><code>featureOnlineStoresId</code></a>, <a href="#parameter-featureViewsId"><code>featureViewsId</code></a></td>
-    <td></td>
-    <td>Bidirectional streaming RPC to directly write to feature values in a feature view. Requests may not have a one-to-one mapping to responses and responses may be returned out-of-order to reduce latency.</td>
 </tr>
 </tbody>
 </table>
@@ -387,6 +404,7 @@ Gets details of a single FeatureView.
 SELECT
 name,
 bigQuerySource,
+bigtableMetadata,
 createTime,
 etag,
 featureRegistrySource,
@@ -416,6 +434,7 @@ Lists FeatureViews in a given FeatureOnlineStore.
 SELECT
 name,
 bigQuerySource,
+bigtableMetadata,
 createTime,
 etag,
 featureRegistrySource,
@@ -434,8 +453,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND featureOnlineStoresId = '{{ featureOnlineStoresId }}' -- required
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -458,15 +477,15 @@ Creates a new FeatureView in a given FeatureOnlineStore.
 
 ```sql
 INSERT INTO google.aiplatform.feature_views (
-data__bigQuerySource,
-data__featureRegistrySource,
-data__vertexRagSource,
-data__name,
-data__etag,
 data__labels,
-data__syncConfig,
+data__vertexRagSource,
+data__etag,
 data__indexConfig,
+data__syncConfig,
+data__featureRegistrySource,
+data__bigQuerySource,
 data__optimizedConfig,
+data__name,
 data__serviceAgentType,
 projectsId,
 locationsId,
@@ -475,15 +494,15 @@ featureViewId,
 runSyncImmediately
 )
 SELECT 
-'{{ bigQuerySource }}',
-'{{ featureRegistrySource }}',
-'{{ vertexRagSource }}',
-'{{ name }}',
-'{{ etag }}',
 '{{ labels }}',
-'{{ syncConfig }}',
+'{{ vertexRagSource }}',
+'{{ etag }}',
 '{{ indexConfig }}',
+'{{ syncConfig }}',
+'{{ featureRegistrySource }}',
+'{{ bigQuerySource }}',
 '{{ optimizedConfig }}',
+'{{ name }}',
 '{{ serviceAgentType }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -514,50 +533,50 @@ response
     - name: featureOnlineStoresId
       value: string
       description: Required parameter for the feature_views resource.
-    - name: bigQuerySource
+    - name: labels
       value: object
       description: >
-        Optional. Configures how data is supposed to be extracted from a BigQuery source to be loaded onto the FeatureOnlineStore.
-        
-    - name: featureRegistrySource
-      value: object
-      description: >
-        Optional. Configures the features from a Feature Registry source that need to be loaded onto the FeatureOnlineStore.
+        Optional. The labels with user-defined metadata to organize your FeatureViews. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information on and examples of labels. No more than 64 user labels can be associated with one FeatureOnlineStore(System labels are excluded)." System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
         
     - name: vertexRagSource
       value: object
       description: >
         Optional. The Vertex RAG Source that the FeatureView is linked to.
         
-    - name: name
-      value: string
-      description: >
-        Identifier. Name of the FeatureView. Format: `projects/{project}/locations/{location}/featureOnlineStores/{feature_online_store}/featureViews/{feature_view}`
-        
     - name: etag
       value: string
       description: >
         Optional. Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. The labels with user-defined metadata to organize your FeatureViews. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information on and examples of labels. No more than 64 user labels can be associated with one FeatureOnlineStore(System labels are excluded)." System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
-        
-    - name: syncConfig
-      value: object
-      description: >
-        Configures when data is to be synced/updated for this FeatureView. At the end of the sync the latest featureValues for each entityId of this FeatureView are made ready for online serving.
         
     - name: indexConfig
       value: object
       description: >
         Optional. Configuration for index preparation for vector search. It contains the required configurations to create an index from source data, so that approximate nearest neighbor (a.k.a ANN) algorithms search can be performed during online serving.
         
+    - name: syncConfig
+      value: object
+      description: >
+        Configures when data is to be synced/updated for this FeatureView. At the end of the sync the latest featureValues for each entityId of this FeatureView are made ready for online serving.
+        
+    - name: featureRegistrySource
+      value: object
+      description: >
+        Optional. Configures the features from a Feature Registry source that need to be loaded onto the FeatureOnlineStore.
+        
+    - name: bigQuerySource
+      value: object
+      description: >
+        Optional. Configures how data is supposed to be extracted from a BigQuery source to be loaded onto the FeatureOnlineStore.
+        
     - name: optimizedConfig
       value: object
       description: >
         Optional. Configuration for FeatureView created under Optimized FeatureOnlineStore.
+        
+    - name: name
+      value: string
+      description: >
+        Identifier. Name of the FeatureView. Format: `projects/{project}/locations/{location}/featureOnlineStores/{feature_online_store}/featureViews/{feature_view}`
         
     - name: serviceAgentType
       value: string
@@ -589,15 +608,15 @@ Updates the parameters of a single FeatureView.
 ```sql
 UPDATE google.aiplatform.feature_views
 SET 
-data__bigQuerySource = '{{ bigQuerySource }}',
-data__featureRegistrySource = '{{ featureRegistrySource }}',
-data__vertexRagSource = '{{ vertexRagSource }}',
-data__name = '{{ name }}',
-data__etag = '{{ etag }}',
 data__labels = '{{ labels }}',
-data__syncConfig = '{{ syncConfig }}',
+data__vertexRagSource = '{{ vertexRagSource }}',
+data__etag = '{{ etag }}',
 data__indexConfig = '{{ indexConfig }}',
+data__syncConfig = '{{ syncConfig }}',
+data__featureRegistrySource = '{{ featureRegistrySource }}',
+data__bigQuerySource = '{{ bigQuerySource }}',
 data__optimizedConfig = '{{ optimizedConfig }}',
+data__name = '{{ name }}',
 data__serviceAgentType = '{{ serviceAgentType }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
@@ -643,14 +662,63 @@ AND featureViewsId = '{{ featureViewsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="sync"
+    defaultValue="direct_write"
     values={[
-        { label: 'sync', value: 'sync' },
-        { label: 'fetch_feature_values', value: 'fetch_feature_values' },
+        { label: 'direct_write', value: 'direct_write' },
+        { label: 'generate_fetch_access_token', value: 'generate_fetch_access_token' },
         { label: 'search_nearest_entities', value: 'search_nearest_entities' },
-        { label: 'direct_write', value: 'direct_write' }
+        { label: 'sync', value: 'sync' },
+        { label: 'fetch_feature_values', value: 'fetch_feature_values' }
     ]}
 >
+<TabItem value="direct_write">
+
+Bidirectional streaming RPC to directly write to feature values in a feature view. Requests may not have a one-to-one mapping to responses and responses may be returned out-of-order to reduce latency.
+
+```sql
+EXEC google.aiplatform.feature_views.direct_write 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@featureOnlineStoresId='{{ featureOnlineStoresId }}' --required, 
+@featureViewsId='{{ featureViewsId }}' --required 
+@@json=
+'{
+"dataKeyAndFeatureValues": "{{ dataKeyAndFeatureValues }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="generate_fetch_access_token">
+
+RPC to generate an access token for the given feature view. FeatureViews under the same FeatureOnlineStore share the same access token.
+
+```sql
+EXEC google.aiplatform.feature_views.generate_fetch_access_token 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@featureOnlineStoresId='{{ featureOnlineStoresId }}' --required, 
+@featureViewsId='{{ featureViewsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="search_nearest_entities">
+
+Search the nearest entities under a FeatureView. Search only works for indexable feature view; if a feature view isn't indexable, returns Invalid argument response.
+
+```sql
+EXEC google.aiplatform.feature_views.search_nearest_entities 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@featureOnlineStoresId='{{ featureOnlineStoresId }}' --required, 
+@featureViewsId='{{ featureViewsId }}' --required 
+@@json=
+'{
+"returnFullEntity": {{ returnFullEntity }}, 
+"query": "{{ query }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="sync">
 
 Triggers on-demand sync for the FeatureView.
@@ -678,41 +746,6 @@ EXEC google.aiplatform.feature_views.fetch_feature_values
 '{
 "dataKey": "{{ dataKey }}", 
 "dataFormat": "{{ dataFormat }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="search_nearest_entities">
-
-Search the nearest entities under a FeatureView. Search only works for indexable feature view; if a feature view isn't indexable, returns Invalid argument response.
-
-```sql
-EXEC google.aiplatform.feature_views.search_nearest_entities 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@featureOnlineStoresId='{{ featureOnlineStoresId }}' --required, 
-@featureViewsId='{{ featureViewsId }}' --required 
-@@json=
-'{
-"query": "{{ query }}", 
-"returnFullEntity": {{ returnFullEntity }}
-}'
-;
-```
-</TabItem>
-<TabItem value="direct_write">
-
-Bidirectional streaming RPC to directly write to feature values in a feature view. Requests may not have a one-to-one mapping to responses and responses may be returned out-of-order to reduce latency.
-
-```sql
-EXEC google.aiplatform.feature_views.direct_write 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@featureOnlineStoresId='{{ featureOnlineStoresId }}' --required, 
-@featureViewsId='{{ featureViewsId }}' --required 
-@@json=
-'{
-"dataKeyAndFeatureValues": "{{ dataKeyAndFeatureValues }}"
 }'
 ;
 ```

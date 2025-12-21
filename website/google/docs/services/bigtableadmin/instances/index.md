@@ -323,17 +323,17 @@ Create an instance within a project. Note that exactly one of Cluster.serve_node
 
 ```sql
 INSERT INTO google.bigtableadmin.instances (
-data__parent,
-data__instanceId,
 data__instance,
 data__clusters,
+data__instanceId,
+data__parent,
 projectsId
 )
 SELECT 
-'{{ parent }}',
-'{{ instanceId }}',
 '{{ instance }}',
 '{{ clusters }}',
+'{{ instanceId }}',
+'{{ parent }}',
 '{{ projectsId }}'
 RETURNING
 name,
@@ -353,16 +353,6 @@ response
     - name: projectsId
       value: string
       description: Required parameter for the instances resource.
-    - name: parent
-      value: string
-      description: >
-        Required. The unique name of the project in which to create the new instance. Values are of the form `projects/{project}`.
-        
-    - name: instanceId
-      value: string
-      description: >
-        Required. The ID to be used when referring to the new instance within its project, e.g., just `myinstance` rather than `projects/myproject/instances/myinstance`.
-        
     - name: instance
       value: object
       description: >
@@ -372,6 +362,16 @@ response
       value: object
       description: >
         Required. The clusters to be created within the instance, mapped by desired cluster ID, e.g., just `mycluster` rather than `projects/myproject/instances/myinstance/clusters/mycluster`. Fields marked `OutputOnly` must be left blank.
+        
+    - name: instanceId
+      value: string
+      description: >
+        Required. The ID to be used when referring to the new instance within its project, e.g., just `myinstance` rather than `projects/myproject/instances/myinstance`.
+        
+    - name: parent
+      value: string
+      description: >
+        Required. The unique name of the project in which to create the new instance. Values are of the form `projects/{project}`.
         
 ```
 </TabItem>
@@ -393,11 +393,11 @@ Updates an instance within a project. This method updates only the display name 
 ```sql
 REPLACE google.bigtableadmin.instances
 SET 
-data__name = '{{ name }}',
+data__tags = '{{ tags }}',
 data__displayName = '{{ displayName }}',
 data__type = '{{ type }}',
 data__labels = '{{ labels }}',
-data__tags = '{{ tags }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instancesId = '{{ instancesId }}' --required
@@ -457,11 +457,11 @@ EXEC google.bigtableadmin.instances.partial_update_instance
 @updateMask='{{ updateMask }}' 
 @@json=
 '{
-"name": "{{ name }}", 
+"tags": "{{ tags }}", 
 "displayName": "{{ displayName }}", 
 "type": "{{ type }}", 
 "labels": "{{ labels }}", 
-"tags": "{{ tags }}"
+"name": "{{ name }}"
 }'
 ;
 ```

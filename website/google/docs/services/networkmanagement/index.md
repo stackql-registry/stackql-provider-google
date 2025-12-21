@@ -18,7 +18,7 @@ networkmanagement service documentation.
 
 :::info[Service Summary]
 
-total resources: __9__  
+total resources: __5__  
 
 :::
 
@@ -27,14 +27,10 @@ total resources: __9__
 <div class="providerDocColumn">
 <a href="/services/networkmanagement/connectivity_tests/">connectivity_tests</a><br />
 <a href="/services/networkmanagement/connectivity_tests_iam_policies/">connectivity_tests_iam_policies</a><br />
-<a href="/services/networkmanagement/locations/">locations</a><br />
-<a href="/services/networkmanagement/monitoring_points/">monitoring_points</a><br />
-<a href="/services/networkmanagement/network_monitoring_providers/">network_monitoring_providers</a>
+<a href="/services/networkmanagement/locations/">locations</a>
 </div>
 <div class="providerDocColumn">
-<a href="/services/networkmanagement/network_paths/">network_paths</a><br />
 <a href="/services/networkmanagement/operations/">operations</a><br />
-<a href="/services/networkmanagement/vpc_flow_logs_configs/">vpc_flow_logs_configs</a><br />
-<a href="/services/networkmanagement/web_paths/">web_paths</a>
+<a href="/services/networkmanagement/vpc_flow_logs_configs/">vpc_flow_logs_configs</a>
 </div>
 </div>

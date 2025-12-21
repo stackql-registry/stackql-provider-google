@@ -194,7 +194,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List NFS shares.</td>
 </tr>
 <tr>
@@ -330,9 +330,9 @@ volume
 FROM google.baremetalsolution.nfs_shares
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -354,22 +354,22 @@ Create an NFS share.
 
 ```sql
 INSERT INTO google.baremetalsolution.nfs_shares (
-data__name,
-data__allowedClients,
 data__labels,
 data__requestedSizeGib,
+data__name,
 data__storageType,
 data__pod,
+data__allowedClients,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ name }}',
-'{{ allowedClients }}',
 '{{ labels }}',
 '{{ requestedSizeGib }}',
+'{{ name }}',
 '{{ storageType }}',
 '{{ pod }}',
+'{{ allowedClients }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -393,16 +393,6 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the nfs_shares resource.
-    - name: name
-      value: string
-      description: >
-        Immutable. The name of the NFS share.
-        
-    - name: allowedClients
-      value: array
-      description: >
-        List of allowed access points.
-        
     - name: labels
       value: object
       description: >
@@ -412,6 +402,11 @@ response
       value: string
       description: >
         The requested size, in GiB.
+        
+    - name: name
+      value: string
+      description: >
+        Immutable. The name of the NFS share.
         
     - name: storageType
       value: string
@@ -423,6 +418,11 @@ response
       value: string
       description: >
         Immutable. Pod name. Pod is an independent part of infrastructure. NFSShare can only be connected to the assets (networks, instances) allocated in the same pod.
+        
+    - name: allowedClients
+      value: array
+      description: >
+        List of allowed access points.
         
 ```
 </TabItem>
@@ -444,12 +444,12 @@ Update details of a single NFS share.
 ```sql
 UPDATE google.baremetalsolution.nfs_shares
 SET 
-data__name = '{{ name }}',
-data__allowedClients = '{{ allowedClients }}',
 data__labels = '{{ labels }}',
 data__requestedSizeGib = '{{ requestedSizeGib }}',
+data__name = '{{ name }}',
 data__storageType = '{{ storageType }}',
-data__pod = '{{ pod }}'
+data__pod = '{{ pod }}',
+data__allowedClients = '{{ allowedClients }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

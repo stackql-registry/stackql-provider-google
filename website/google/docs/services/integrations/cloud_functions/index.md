@@ -113,19 +113,19 @@ Creates a cloud function project.
 
 ```sql
 INSERT INTO google.integrations.cloud_functions (
-data__projectId,
-data__functionName,
 data__functionRegion,
 data__gcfApiVersion,
+data__functionName,
+data__projectId,
 projectsId,
 locationsId,
 productsId
 )
 SELECT 
-'{{ projectId }}',
-'{{ functionName }}',
 '{{ functionRegion }}',
 '{{ gcfApiVersion }}',
+'{{ functionName }}',
+'{{ projectId }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ productsId }}'
@@ -140,18 +140,18 @@ Creates a cloud function project.
 
 ```sql
 INSERT INTO google.integrations.cloud_functions (
-data__projectId,
-data__functionName,
 data__functionRegion,
 data__gcfApiVersion,
+data__functionName,
+data__projectId,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ projectId }}',
-'{{ functionName }}',
 '{{ functionRegion }}',
 '{{ gcfApiVersion }}',
+'{{ functionName }}',
+'{{ projectId }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -174,16 +174,6 @@ triggerUrl
     - name: productsId
       value: string
       description: Required parameter for the cloud_functions resource.
-    - name: projectId
-      value: string
-      description: >
-        Indicates the id of the GCP project that the function will be created in.
-        
-    - name: functionName
-      value: string
-      description: >
-        The function name of CF to be created
-        
     - name: functionRegion
       value: string
       description: >
@@ -195,6 +185,16 @@ triggerUrl
         Optional. The api version of CF to be created
         
       valid_values: ['GCF_API_VERSION_UNSPECIFIED', 'API_VERSION_V1', 'API_VERSION_V2']
+    - name: functionName
+      value: string
+      description: >
+        The function name of CF to be created
+        
+    - name: projectId
+      value: string
+      description: >
+        Indicates the id of the GCP project that the function will be created in.
+        
 ```
 </TabItem>
 </Tabs>

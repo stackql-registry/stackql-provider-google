@@ -35,68 +35,14 @@ The following fields are returned by `SELECT` queries:
     defaultValue="folders_big_query_exports_get"
     values={[
         { label: 'folders_big_query_exports_get', value: 'folders_big_query_exports_get' },
-        { label: 'projects_big_query_exports_get', value: 'projects_big_query_exports_get' },
         { label: 'organizations_big_query_exports_get', value: 'organizations_big_query_exports_get' },
+        { label: 'projects_big_query_exports_get', value: 'projects_big_query_exports_get' },
         { label: 'folders_big_query_exports_list', value: 'folders_big_query_exports_list' },
-        { label: 'projects_big_query_exports_list', value: 'projects_big_query_exports_list' },
-        { label: 'organizations_big_query_exports_list', value: 'organizations_big_query_exports_list' }
+        { label: 'organizations_big_query_exports_list', value: 'organizations_big_query_exports_list' },
+        { label: 'projects_big_query_exports_list', value: 'projects_big_query_exports_list' }
     ]}
 >
 <TabItem value="folders_big_query_exports_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>The relative resource name of this export. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name. Example format: "organizations/&#123;organization_id&#125;/bigQueryExports/&#123;export_id&#125;" Example format: "folders/&#123;folder_id&#125;/bigQueryExports/&#123;export_id&#125;" Example format: "projects/&#123;project_id&#125;/bigQueryExports/&#123;export_id&#125;" This field is provided in responses, and is ignored when provided in create requests.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time at which the BigQuery export was created. This field is set by the server and will be ignored if provided on export on creation.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="dataset" /></td>
-    <td><code>string</code></td>
-    <td>The dataset to write findings' updates to. Its format is "projects/[project_id]/datasets/[bigquery_dataset_id]". BigQuery Dataset unique ID must contain only letters (a-z, A-Z), numbers (0-9), or underscores (_).</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>The description of the export (max of 1024 characters).</td>
-</tr>
-<tr>
-    <td><CopyableCode code="filter" /></td>
-    <td><code>string</code></td>
-    <td>Expression that defines the filter to apply across create/update events of findings. The expression is a list of zero or more restrictions combined via logical operators `AND` and `OR`. Parentheses are supported, and `OR` has higher precedence than `AND`. Restrictions have the form ` ` and may have a `-` character in front of them to indicate negation. The fields map to those defined in the corresponding resource. The supported operators are: * `=` for all value types. * `>`, `<`, `>=`, `<=` for integer values. * `:`, meaning substring matching, for strings. The supported value types are: * string literals in quotes. * integer literals without quotes. * boolean literals `true` and `false` without quotes.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="mostRecentEditor" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Email address of the user who last edited the BigQuery export. This field is set by the server and will be ignored if provided on export creation or update.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="principal" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The service account that needs permission to create table and upload data to the BigQuery dataset.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The most recent time at which the BigQuery export was updated. This field is set by the server and will be ignored if provided on export creation or update.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="projects_big_query_exports_get">
 
 <table>
 <thead>
@@ -204,6 +150,60 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
+<TabItem value="projects_big_query_exports_get">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>The relative resource name of this export. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name. Example format: "organizations/&#123;organization_id&#125;/bigQueryExports/&#123;export_id&#125;" Example format: "folders/&#123;folder_id&#125;/bigQueryExports/&#123;export_id&#125;" Example format: "projects/&#123;project_id&#125;/bigQueryExports/&#123;export_id&#125;" This field is provided in responses, and is ignored when provided in create requests.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time at which the BigQuery export was created. This field is set by the server and will be ignored if provided on export on creation.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="dataset" /></td>
+    <td><code>string</code></td>
+    <td>The dataset to write findings' updates to. Its format is "projects/[project_id]/datasets/[bigquery_dataset_id]". BigQuery Dataset unique ID must contain only letters (a-z, A-Z), numbers (0-9), or underscores (_).</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>The description of the export (max of 1024 characters).</td>
+</tr>
+<tr>
+    <td><CopyableCode code="filter" /></td>
+    <td><code>string</code></td>
+    <td>Expression that defines the filter to apply across create/update events of findings. The expression is a list of zero or more restrictions combined via logical operators `AND` and `OR`. Parentheses are supported, and `OR` has higher precedence than `AND`. Restrictions have the form ` ` and may have a `-` character in front of them to indicate negation. The fields map to those defined in the corresponding resource. The supported operators are: * `=` for all value types. * `>`, `<`, `>=`, `<=` for integer values. * `:`, meaning substring matching, for strings. The supported value types are: * string literals in quotes. * integer literals without quotes. * boolean literals `true` and `false` without quotes.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="mostRecentEditor" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Email address of the user who last edited the BigQuery export. This field is set by the server and will be ignored if provided on export creation or update.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="principal" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The service account that needs permission to create table and upload data to the BigQuery dataset.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The most recent time at which the BigQuery export was updated. This field is set by the server and will be ignored if provided on export creation or update.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
 <TabItem value="folders_big_query_exports_list">
 
 <table>
@@ -258,7 +258,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_big_query_exports_list">
+<TabItem value="organizations_big_query_exports_list">
 
 <table>
 <thead>
@@ -312,7 +312,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="organizations_big_query_exports_list">
+<TabItem value="projects_big_query_exports_list">
 
 <table>
 <thead>
@@ -391,16 +391,16 @@ The following methods are available for this resource:
     <td>Gets a BigQuery export.</td>
 </tr>
 <tr>
-    <td><a href="#projects_big_query_exports_get"><CopyableCode code="projects_big_query_exports_get" /></a></td>
+    <td><a href="#organizations_big_query_exports_get"><CopyableCode code="organizations_big_query_exports_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-bigQueryExportsId"><code>bigQueryExportsId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-bigQueryExportsId"><code>bigQueryExportsId</code></a></td>
     <td></td>
     <td>Gets a BigQuery export.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_big_query_exports_get"><CopyableCode code="organizations_big_query_exports_get" /></a></td>
+    <td><a href="#projects_big_query_exports_get"><CopyableCode code="projects_big_query_exports_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-bigQueryExportsId"><code>bigQueryExportsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-bigQueryExportsId"><code>bigQueryExportsId</code></a></td>
     <td></td>
     <td>Gets a BigQuery export.</td>
 </tr>
@@ -412,16 +412,16 @@ The following methods are available for this resource:
     <td>Lists BigQuery exports. Note that when requesting BigQuery exports at a given level all exports under that level are also returned e.g. if requesting BigQuery exports under a folder, then all BigQuery exports immediately under the folder plus the ones created under the projects within the folder are returned.</td>
 </tr>
 <tr>
-    <td><a href="#projects_big_query_exports_list"><CopyableCode code="projects_big_query_exports_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists BigQuery exports. Note that when requesting BigQuery exports at a given level all exports under that level are also returned e.g. if requesting BigQuery exports under a folder, then all BigQuery exports immediately under the folder plus the ones created under the projects within the folder are returned.</td>
-</tr>
-<tr>
     <td><a href="#organizations_big_query_exports_list"><CopyableCode code="organizations_big_query_exports_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td>Lists BigQuery exports. Note that when requesting BigQuery exports at a given level all exports under that level are also returned e.g. if requesting BigQuery exports under a folder, then all BigQuery exports immediately under the folder plus the ones created under the projects within the folder are returned.</td>
+</tr>
+<tr>
+    <td><a href="#projects_big_query_exports_list"><CopyableCode code="projects_big_query_exports_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists BigQuery exports. Note that when requesting BigQuery exports at a given level all exports under that level are also returned e.g. if requesting BigQuery exports under a folder, then all BigQuery exports immediately under the folder plus the ones created under the projects within the folder are returned.</td>
 </tr>
@@ -433,16 +433,16 @@ The following methods are available for this resource:
     <td>Creates a BigQuery export.</td>
 </tr>
 <tr>
-    <td><a href="#projects_big_query_exports_create"><CopyableCode code="projects_big_query_exports_create" /></a></td>
+    <td><a href="#organizations_big_query_exports_create"><CopyableCode code="organizations_big_query_exports_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
     <td><a href="#parameter-bigQueryExportId"><code>bigQueryExportId</code></a></td>
     <td>Creates a BigQuery export.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_big_query_exports_create"><CopyableCode code="organizations_big_query_exports_create" /></a></td>
+    <td><a href="#projects_big_query_exports_create"><CopyableCode code="projects_big_query_exports_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td><a href="#parameter-bigQueryExportId"><code>bigQueryExportId</code></a></td>
     <td>Creates a BigQuery export.</td>
 </tr>
@@ -454,16 +454,16 @@ The following methods are available for this resource:
     <td>Updates a BigQuery export.</td>
 </tr>
 <tr>
-    <td><a href="#projects_big_query_exports_patch"><CopyableCode code="projects_big_query_exports_patch" /></a></td>
+    <td><a href="#organizations_big_query_exports_patch"><CopyableCode code="organizations_big_query_exports_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-bigQueryExportsId"><code>bigQueryExportsId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-bigQueryExportsId"><code>bigQueryExportsId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a BigQuery export.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_big_query_exports_patch"><CopyableCode code="organizations_big_query_exports_patch" /></a></td>
+    <td><a href="#projects_big_query_exports_patch"><CopyableCode code="projects_big_query_exports_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-bigQueryExportsId"><code>bigQueryExportsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-bigQueryExportsId"><code>bigQueryExportsId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a BigQuery export.</td>
 </tr>
@@ -475,16 +475,16 @@ The following methods are available for this resource:
     <td>Deletes an existing BigQuery export.</td>
 </tr>
 <tr>
-    <td><a href="#projects_big_query_exports_delete"><CopyableCode code="projects_big_query_exports_delete" /></a></td>
+    <td><a href="#organizations_big_query_exports_delete"><CopyableCode code="organizations_big_query_exports_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-bigQueryExportsId"><code>bigQueryExportsId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-bigQueryExportsId"><code>bigQueryExportsId</code></a></td>
     <td></td>
     <td>Deletes an existing BigQuery export.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_big_query_exports_delete"><CopyableCode code="organizations_big_query_exports_delete" /></a></td>
+    <td><a href="#projects_big_query_exports_delete"><CopyableCode code="projects_big_query_exports_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-bigQueryExportsId"><code>bigQueryExportsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-bigQueryExportsId"><code>bigQueryExportsId</code></a></td>
     <td></td>
     <td>Deletes an existing BigQuery export.</td>
 </tr>
@@ -553,11 +553,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="folders_big_query_exports_get"
     values={[
         { label: 'folders_big_query_exports_get', value: 'folders_big_query_exports_get' },
-        { label: 'projects_big_query_exports_get', value: 'projects_big_query_exports_get' },
         { label: 'organizations_big_query_exports_get', value: 'organizations_big_query_exports_get' },
+        { label: 'projects_big_query_exports_get', value: 'projects_big_query_exports_get' },
         { label: 'folders_big_query_exports_list', value: 'folders_big_query_exports_list' },
-        { label: 'projects_big_query_exports_list', value: 'projects_big_query_exports_list' },
-        { label: 'organizations_big_query_exports_list', value: 'organizations_big_query_exports_list' }
+        { label: 'organizations_big_query_exports_list', value: 'organizations_big_query_exports_list' },
+        { label: 'projects_big_query_exports_list', value: 'projects_big_query_exports_list' }
     ]}
 >
 <TabItem value="folders_big_query_exports_get">
@@ -580,26 +580,6 @@ AND bigQueryExportsId = '{{ bigQueryExportsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_big_query_exports_get">
-
-Gets a BigQuery export.
-
-```sql
-SELECT
-name,
-createTime,
-dataset,
-description,
-filter,
-mostRecentEditor,
-principal,
-updateTime
-FROM google.securitycenter.big_query_exports
-WHERE projectsId = '{{ projectsId }}' -- required
-AND bigQueryExportsId = '{{ bigQueryExportsId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="organizations_big_query_exports_get">
 
 Gets a BigQuery export.
@@ -616,6 +596,26 @@ principal,
 updateTime
 FROM google.securitycenter.big_query_exports
 WHERE organizationsId = '{{ organizationsId }}' -- required
+AND bigQueryExportsId = '{{ bigQueryExportsId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="projects_big_query_exports_get">
+
+Gets a BigQuery export.
+
+```sql
+SELECT
+name,
+createTime,
+dataset,
+description,
+filter,
+mostRecentEditor,
+principal,
+updateTime
+FROM google.securitycenter.big_query_exports
+WHERE projectsId = '{{ projectsId }}' -- required
 AND bigQueryExportsId = '{{ bigQueryExportsId }}' -- required
 ;
 ```
@@ -641,6 +641,27 @@ AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
+<TabItem value="organizations_big_query_exports_list">
+
+Lists BigQuery exports. Note that when requesting BigQuery exports at a given level all exports under that level are also returned e.g. if requesting BigQuery exports under a folder, then all BigQuery exports immediately under the folder plus the ones created under the projects within the folder are returned.
+
+```sql
+SELECT
+name,
+createTime,
+dataset,
+description,
+filter,
+mostRecentEditor,
+principal,
+updateTime
+FROM google.securitycenter.big_query_exports
+WHERE organizationsId = '{{ organizationsId }}' -- required
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+;
+```
+</TabItem>
 <TabItem value="projects_big_query_exports_list">
 
 Lists BigQuery exports. Note that when requesting BigQuery exports at a given level all exports under that level are also returned e.g. if requesting BigQuery exports under a folder, then all BigQuery exports immediately under the folder plus the ones created under the projects within the folder are returned.
@@ -662,27 +683,6 @@ AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
-<TabItem value="organizations_big_query_exports_list">
-
-Lists BigQuery exports. Note that when requesting BigQuery exports at a given level all exports under that level are also returned e.g. if requesting BigQuery exports under a folder, then all BigQuery exports immediately under the folder plus the ones created under the projects within the folder are returned.
-
-```sql
-SELECT
-name,
-createTime,
-dataset,
-description,
-filter,
-mostRecentEditor,
-principal,
-updateTime
-FROM google.securitycenter.big_query_exports
-WHERE organizationsId = '{{ organizationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
 </Tabs>
 
 
@@ -692,8 +692,8 @@ AND pageToken = '{{ pageToken }}'
     defaultValue="folders_big_query_exports_create"
     values={[
         { label: 'folders_big_query_exports_create', value: 'folders_big_query_exports_create' },
-        { label: 'projects_big_query_exports_create', value: 'projects_big_query_exports_create' },
         { label: 'organizations_big_query_exports_create', value: 'organizations_big_query_exports_create' },
+        { label: 'projects_big_query_exports_create', value: 'projects_big_query_exports_create' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
@@ -703,51 +703,19 @@ Creates a BigQuery export.
 
 ```sql
 INSERT INTO google.securitycenter.big_query_exports (
-data__name,
-data__description,
-data__filter,
 data__dataset,
+data__name,
+data__filter,
+data__description,
 foldersId,
 bigQueryExportId
 )
 SELECT 
-'{{ name }}',
-'{{ description }}',
-'{{ filter }}',
 '{{ dataset }}',
+'{{ name }}',
+'{{ filter }}',
+'{{ description }}',
 '{{ foldersId }}',
-'{{ bigQueryExportId }}'
-RETURNING
-name,
-createTime,
-dataset,
-description,
-filter,
-mostRecentEditor,
-principal,
-updateTime
-;
-```
-</TabItem>
-<TabItem value="projects_big_query_exports_create">
-
-Creates a BigQuery export.
-
-```sql
-INSERT INTO google.securitycenter.big_query_exports (
-data__name,
-data__description,
-data__filter,
-data__dataset,
-projectsId,
-bigQueryExportId
-)
-SELECT 
-'{{ name }}',
-'{{ description }}',
-'{{ filter }}',
-'{{ dataset }}',
-'{{ projectsId }}',
 '{{ bigQueryExportId }}'
 RETURNING
 name,
@@ -767,19 +735,51 @@ Creates a BigQuery export.
 
 ```sql
 INSERT INTO google.securitycenter.big_query_exports (
-data__name,
-data__description,
-data__filter,
 data__dataset,
+data__name,
+data__filter,
+data__description,
 organizationsId,
 bigQueryExportId
 )
 SELECT 
-'{{ name }}',
-'{{ description }}',
-'{{ filter }}',
 '{{ dataset }}',
+'{{ name }}',
+'{{ filter }}',
+'{{ description }}',
 '{{ organizationsId }}',
+'{{ bigQueryExportId }}'
+RETURNING
+name,
+createTime,
+dataset,
+description,
+filter,
+mostRecentEditor,
+principal,
+updateTime
+;
+```
+</TabItem>
+<TabItem value="projects_big_query_exports_create">
+
+Creates a BigQuery export.
+
+```sql
+INSERT INTO google.securitycenter.big_query_exports (
+data__dataset,
+data__name,
+data__filter,
+data__description,
+projectsId,
+bigQueryExportId
+)
+SELECT 
+'{{ dataset }}',
+'{{ name }}',
+'{{ filter }}',
+'{{ description }}',
+'{{ projectsId }}',
 '{{ bigQueryExportId }}'
 RETURNING
 name,
@@ -802,31 +802,31 @@ updateTime
     - name: foldersId
       value: string
       description: Required parameter for the big_query_exports resource.
-    - name: projectsId
-      value: string
-      description: Required parameter for the big_query_exports resource.
     - name: organizationsId
       value: string
       description: Required parameter for the big_query_exports resource.
+    - name: projectsId
+      value: string
+      description: Required parameter for the big_query_exports resource.
+    - name: dataset
+      value: string
+      description: >
+        The dataset to write findings' updates to. Its format is "projects/[project_id]/datasets/[bigquery_dataset_id]". BigQuery Dataset unique ID must contain only letters (a-z, A-Z), numbers (0-9), or underscores (_).
+        
     - name: name
       value: string
       description: >
         The relative resource name of this export. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name. Example format: "organizations/{organization_id}/bigQueryExports/{export_id}" Example format: "folders/{folder_id}/bigQueryExports/{export_id}" Example format: "projects/{project_id}/bigQueryExports/{export_id}" This field is provided in responses, and is ignored when provided in create requests.
-        
-    - name: description
-      value: string
-      description: >
-        The description of the export (max of 1024 characters).
         
     - name: filter
       value: string
       description: >
         Expression that defines the filter to apply across create/update events of findings. The expression is a list of zero or more restrictions combined via logical operators `AND` and `OR`. Parentheses are supported, and `OR` has higher precedence than `AND`. Restrictions have the form ` ` and may have a `-` character in front of them to indicate negation. The fields map to those defined in the corresponding resource. The supported operators are: * `=` for all value types. * `>`, `<`, `>=`, `<=` for integer values. * `:`, meaning substring matching, for strings. The supported value types are: * string literals in quotes. * integer literals without quotes. * boolean literals `true` and `false` without quotes.
         
-    - name: dataset
+    - name: description
       value: string
       description: >
-        The dataset to write findings' updates to. Its format is "projects/[project_id]/datasets/[bigquery_dataset_id]". BigQuery Dataset unique ID must contain only letters (a-z, A-Z), numbers (0-9), or underscores (_).
+        The description of the export (max of 1024 characters).
         
     - name: bigQueryExportId
       value: string
@@ -841,8 +841,8 @@ updateTime
     defaultValue="folders_big_query_exports_patch"
     values={[
         { label: 'folders_big_query_exports_patch', value: 'folders_big_query_exports_patch' },
-        { label: 'projects_big_query_exports_patch', value: 'projects_big_query_exports_patch' },
-        { label: 'organizations_big_query_exports_patch', value: 'organizations_big_query_exports_patch' }
+        { label: 'organizations_big_query_exports_patch', value: 'organizations_big_query_exports_patch' },
+        { label: 'projects_big_query_exports_patch', value: 'projects_big_query_exports_patch' }
     ]}
 >
 <TabItem value="folders_big_query_exports_patch">
@@ -852,38 +852,12 @@ Updates a BigQuery export.
 ```sql
 UPDATE google.securitycenter.big_query_exports
 SET 
+data__dataset = '{{ dataset }}',
 data__name = '{{ name }}',
-data__description = '{{ description }}',
 data__filter = '{{ filter }}',
-data__dataset = '{{ dataset }}'
+data__description = '{{ description }}'
 WHERE 
 foldersId = '{{ foldersId }}' --required
-AND bigQueryExportsId = '{{ bigQueryExportsId }}' --required
-AND updateMask = '{{ updateMask}}'
-RETURNING
-name,
-createTime,
-dataset,
-description,
-filter,
-mostRecentEditor,
-principal,
-updateTime;
-```
-</TabItem>
-<TabItem value="projects_big_query_exports_patch">
-
-Updates a BigQuery export.
-
-```sql
-UPDATE google.securitycenter.big_query_exports
-SET 
-data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__filter = '{{ filter }}',
-data__dataset = '{{ dataset }}'
-WHERE 
-projectsId = '{{ projectsId }}' --required
 AND bigQueryExportsId = '{{ bigQueryExportsId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
@@ -904,12 +878,38 @@ Updates a BigQuery export.
 ```sql
 UPDATE google.securitycenter.big_query_exports
 SET 
+data__dataset = '{{ dataset }}',
 data__name = '{{ name }}',
-data__description = '{{ description }}',
 data__filter = '{{ filter }}',
-data__dataset = '{{ dataset }}'
+data__description = '{{ description }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
+AND bigQueryExportsId = '{{ bigQueryExportsId }}' --required
+AND updateMask = '{{ updateMask}}'
+RETURNING
+name,
+createTime,
+dataset,
+description,
+filter,
+mostRecentEditor,
+principal,
+updateTime;
+```
+</TabItem>
+<TabItem value="projects_big_query_exports_patch">
+
+Updates a BigQuery export.
+
+```sql
+UPDATE google.securitycenter.big_query_exports
+SET 
+data__dataset = '{{ dataset }}',
+data__name = '{{ name }}',
+data__filter = '{{ filter }}',
+data__description = '{{ description }}'
+WHERE 
+projectsId = '{{ projectsId }}' --required
 AND bigQueryExportsId = '{{ bigQueryExportsId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
@@ -932,8 +932,8 @@ updateTime;
     defaultValue="folders_big_query_exports_delete"
     values={[
         { label: 'folders_big_query_exports_delete', value: 'folders_big_query_exports_delete' },
-        { label: 'projects_big_query_exports_delete', value: 'projects_big_query_exports_delete' },
-        { label: 'organizations_big_query_exports_delete', value: 'organizations_big_query_exports_delete' }
+        { label: 'organizations_big_query_exports_delete', value: 'organizations_big_query_exports_delete' },
+        { label: 'projects_big_query_exports_delete', value: 'projects_big_query_exports_delete' }
     ]}
 >
 <TabItem value="folders_big_query_exports_delete">
@@ -947,17 +947,6 @@ AND bigQueryExportsId = '{{ bigQueryExportsId }}' --required
 ;
 ```
 </TabItem>
-<TabItem value="projects_big_query_exports_delete">
-
-Deletes an existing BigQuery export.
-
-```sql
-DELETE FROM google.securitycenter.big_query_exports
-WHERE projectsId = '{{ projectsId }}' --required
-AND bigQueryExportsId = '{{ bigQueryExportsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="organizations_big_query_exports_delete">
 
 Deletes an existing BigQuery export.
@@ -965,6 +954,17 @@ Deletes an existing BigQuery export.
 ```sql
 DELETE FROM google.securitycenter.big_query_exports
 WHERE organizationsId = '{{ organizationsId }}' --required
+AND bigQueryExportsId = '{{ bigQueryExportsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="projects_big_query_exports_delete">
+
+Deletes an existing BigQuery export.
+
+```sql
+DELETE FROM google.securitycenter.big_query_exports
+WHERE projectsId = '{{ projectsId }}' --required
 AND bigQueryExportsId = '{{ bigQueryExportsId }}' --required
 ;
 ```

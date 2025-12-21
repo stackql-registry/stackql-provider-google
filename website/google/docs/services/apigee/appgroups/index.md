@@ -194,7 +194,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_appgroups_list"><CopyableCode code="organizations_appgroups_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists all AppGroups in an organization. A maximum of 1000 AppGroups are returned in the response if PageSize is not specified, or if the PageSize is greater than 1000.</td>
 </tr>
 <tr>
@@ -316,9 +316,9 @@ organization,
 status
 FROM google.apigee.appgroups
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -341,22 +341,22 @@ Creates an AppGroup. Once created, user can register apps under the AppGroup to 
 ```sql
 INSERT INTO google.apigee.appgroups (
 data__name,
-data__channelUri,
-data__channelId,
 data__displayName,
-data__organization,
 data__status,
+data__channelId,
 data__attributes,
+data__channelUri,
+data__organization,
 organizationsId
 )
 SELECT 
 '{{ name }}',
-'{{ channelUri }}',
-'{{ channelId }}',
 '{{ displayName }}',
-'{{ organization }}',
 '{{ status }}',
+'{{ channelId }}',
 '{{ attributes }}',
+'{{ channelUri }}',
+'{{ organization }}',
 '{{ organizationsId }}'
 RETURNING
 name,
@@ -386,35 +386,35 @@ status
       description: >
         Immutable. Name of the AppGroup. Characters you can use in the name are restricted to: A-Z0-9._\-$ %.
         
-    - name: channelUri
-      value: string
-      description: >
-        A reference to the associated storefront/marketplace.
-        
-    - name: channelId
-      value: string
-      description: >
-        channel identifier identifies the owner maintaing this grouping.
-        
     - name: displayName
       value: string
       description: >
         app group name displayed in the UI
-        
-    - name: organization
-      value: string
-      description: >
-        Immutable. the org the app group is created
         
     - name: status
       value: string
       description: >
         Valid values are `active` or `inactive`. Note that the status of the AppGroup should be updated via UpdateAppGroupRequest by setting the action as `active` or `inactive`.
         
+    - name: channelId
+      value: string
+      description: >
+        channel identifier identifies the owner maintaing this grouping.
+        
     - name: attributes
       value: array
       description: >
         A list of attributes
+        
+    - name: channelUri
+      value: string
+      description: >
+        A reference to the associated storefront/marketplace.
+        
+    - name: organization
+      value: string
+      description: >
+        Immutable. the org the app group is created
         
 ```
 </TabItem>
@@ -437,12 +437,12 @@ Updates an AppGroup. This API replaces the existing AppGroup details with those 
 REPLACE google.apigee.appgroups
 SET 
 data__name = '{{ name }}',
-data__channelUri = '{{ channelUri }}',
-data__channelId = '{{ channelId }}',
 data__displayName = '{{ displayName }}',
-data__organization = '{{ organization }}',
 data__status = '{{ status }}',
-data__attributes = '{{ attributes }}'
+data__channelId = '{{ channelId }}',
+data__attributes = '{{ attributes }}',
+data__channelUri = '{{ channelUri }}',
+data__organization = '{{ organization }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND appgroupsId = '{{ appgroupsId }}' --required

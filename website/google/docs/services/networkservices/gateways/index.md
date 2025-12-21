@@ -442,41 +442,41 @@ Creates a new Gateway in a given project and location.
 
 ```sql
 INSERT INTO google.networkservices.gateways (
-data__name,
-data__labels,
-data__description,
-data__type,
-data__addresses,
-data__ports,
-data__scope,
-data__serverTlsPolicy,
-data__certificateUrls,
-data__gatewaySecurityPolicy,
 data__network,
+data__name,
+data__certificateUrls,
+data__addresses,
+data__description,
 data__subnetwork,
-data__ipVersion,
-data__envoyHeaders,
 data__routingMode,
+data__labels,
+data__serverTlsPolicy,
+data__envoyHeaders,
+data__type,
+data__ipVersion,
+data__ports,
+data__gatewaySecurityPolicy,
+data__scope,
 projectsId,
 locationsId,
 gatewayId
 )
 SELECT 
-'{{ name }}',
-'{{ labels }}',
-'{{ description }}',
-'{{ type }}',
-'{{ addresses }}',
-'{{ ports }}',
-'{{ scope }}',
-'{{ serverTlsPolicy }}',
-'{{ certificateUrls }}',
-'{{ gatewaySecurityPolicy }}',
 '{{ network }}',
+'{{ name }}',
+'{{ certificateUrls }}',
+'{{ addresses }}',
+'{{ description }}',
 '{{ subnetwork }}',
-'{{ ipVersion }}',
-'{{ envoyHeaders }}',
 '{{ routingMode }}',
+'{{ labels }}',
+'{{ serverTlsPolicy }}',
+'{{ envoyHeaders }}',
+'{{ type }}',
+'{{ ipVersion }}',
+'{{ ports }}',
+'{{ gatewaySecurityPolicy }}',
+'{{ scope }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ gatewayId }}'
@@ -501,85 +501,85 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the gateways resource.
+    - name: network
+      value: string
+      description: >
+        Optional. The relative resource name identifying the VPC network that is using this configuration. For example: `projects/*/global/networks/network-1`. Currently, this field is specific to gateways of type 'SECURE_WEB_GATEWAY'.
+        
     - name: name
       value: string
       description: >
         Identifier. Name of the Gateway resource. It matches pattern `projects/*/locations/*/gateways/`.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Set of label tags associated with the Gateway resource.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. A free-text description of the resource. Max length 1024 characters.
-        
-    - name: type
-      value: string
-      description: >
-        Immutable. The type of the customer managed gateway. This field is required. If unspecified, an error is returned.
-        
-      valid_values: ['TYPE_UNSPECIFIED', 'OPEN_MESH', 'SECURE_WEB_GATEWAY']
-    - name: addresses
-      value: array
-      description: >
-        Optional. Zero or one IPv4 or IPv6 address on which the Gateway will receive the traffic. When no address is provided, an IP from the subnetwork is allocated This field only applies to gateways of type 'SECURE_WEB_GATEWAY'. Gateways of type 'OPEN_MESH' listen on 0.0.0.0 for IPv4 and :: for IPv6.
-        
-    - name: ports
-      value: array
-      description: >
-        Required. One or more port numbers (1-65535), on which the Gateway will receive traffic. The proxy binds to the specified ports. Gateways of type 'SECURE_WEB_GATEWAY' are limited to 5 ports. Gateways of type 'OPEN_MESH' listen on 0.0.0.0 for IPv4 and :: for IPv6 and support multiple ports.
-        
-    - name: scope
-      value: string
-      description: >
-        Optional. Scope determines how configuration across multiple Gateway instances are merged. The configuration for multiple Gateway instances with the same scope will be merged as presented as a single configuration to the proxy/load balancer. Max length 64 characters. Scope should start with a letter and can only have letters, numbers, hyphens.
-        
-    - name: serverTlsPolicy
-      value: string
-      description: >
-        Optional. A fully-qualified ServerTLSPolicy URL reference. Specifies how TLS traffic is terminated. If empty, TLS termination is disabled.
         
     - name: certificateUrls
       value: array
       description: >
         Optional. A fully-qualified Certificates URL reference. The proxy presents a Certificate (selected based on SNI) when establishing a TLS connection. This feature only applies to gateways of type 'SECURE_WEB_GATEWAY'.
         
-    - name: gatewaySecurityPolicy
-      value: string
+    - name: addresses
+      value: array
       description: >
-        Optional. A fully-qualified GatewaySecurityPolicy URL reference. Defines how a server should apply security policy to inbound (VM to Proxy) initiated connections. For example: `projects/*/locations/*/gatewaySecurityPolicies/swg-policy`. This policy is specific to gateways of type 'SECURE_WEB_GATEWAY'.
+        Optional. Zero or one IPv4 or IPv6 address on which the Gateway will receive the traffic. When no address is provided, an IP from the subnetwork is allocated This field only applies to gateways of type 'SECURE_WEB_GATEWAY'. Gateways of type 'OPEN_MESH' listen on 0.0.0.0 for IPv4 and :: for IPv6.
         
-    - name: network
+    - name: description
       value: string
       description: >
-        Optional. The relative resource name identifying the VPC network that is using this configuration. For example: `projects/*/global/networks/network-1`. Currently, this field is specific to gateways of type 'SECURE_WEB_GATEWAY'.
+        Optional. A free-text description of the resource. Max length 1024 characters.
         
     - name: subnetwork
       value: string
       description: >
         Optional. The relative resource name identifying the subnetwork in which this SWG is allocated. For example: `projects/*/regions/us-central1/subnetworks/network-1` Currently, this field is specific to gateways of type 'SECURE_WEB_GATEWAY".
         
-    - name: ipVersion
-      value: string
-      description: >
-        Optional. The IP Version that will be used by this gateway. Valid options are IPV4 or IPV6. Default is IPV4.
-        
-      valid_values: ['IP_VERSION_UNSPECIFIED', 'IPV4', 'IPV6']
-    - name: envoyHeaders
-      value: string
-      description: >
-        Optional. Determines if envoy will insert internal debug headers into upstream requests. Other Envoy headers may still be injected. By default, envoy will not insert any debug headers.
-        
-      valid_values: ['ENVOY_HEADERS_UNSPECIFIED', 'NONE', 'DEBUG_HEADERS']
     - name: routingMode
       value: string
       description: >
         Optional. The routing mode of the Gateway. This field is configurable only for gateways of type SECURE_WEB_GATEWAY. This field is required for gateways of type SECURE_WEB_GATEWAY.
         
       valid_values: ['EXPLICIT_ROUTING_MODE', 'NEXT_HOP_ROUTING_MODE']
+    - name: labels
+      value: object
+      description: >
+        Optional. Set of label tags associated with the Gateway resource.
+        
+    - name: serverTlsPolicy
+      value: string
+      description: >
+        Optional. A fully-qualified ServerTLSPolicy URL reference. Specifies how TLS traffic is terminated. If empty, TLS termination is disabled.
+        
+    - name: envoyHeaders
+      value: string
+      description: >
+        Optional. Determines if envoy will insert internal debug headers into upstream requests. Other Envoy headers may still be injected. By default, envoy will not insert any debug headers.
+        
+      valid_values: ['ENVOY_HEADERS_UNSPECIFIED', 'NONE', 'DEBUG_HEADERS']
+    - name: type
+      value: string
+      description: >
+        Immutable. The type of the customer managed gateway. This field is required. If unspecified, an error is returned.
+        
+      valid_values: ['TYPE_UNSPECIFIED', 'OPEN_MESH', 'SECURE_WEB_GATEWAY']
+    - name: ipVersion
+      value: string
+      description: >
+        Optional. The IP Version that will be used by this gateway. Valid options are IPV4 or IPV6. Default is IPV4.
+        
+      valid_values: ['IP_VERSION_UNSPECIFIED', 'IPV4', 'IPV6']
+    - name: ports
+      value: array
+      description: >
+        Required. One or more port numbers (1-65535), on which the Gateway will receive traffic. The proxy binds to the specified ports. Gateways of type 'SECURE_WEB_GATEWAY' are limited to 5 ports. Gateways of type 'OPEN_MESH' listen on 0.0.0.0 for IPv4 and :: for IPv6 and support multiple ports.
+        
+    - name: gatewaySecurityPolicy
+      value: string
+      description: >
+        Optional. A fully-qualified GatewaySecurityPolicy URL reference. Defines how a server should apply security policy to inbound (VM to Proxy) initiated connections. For example: `projects/*/locations/*/gatewaySecurityPolicies/swg-policy`. This policy is specific to gateways of type 'SECURE_WEB_GATEWAY'.
+        
+    - name: scope
+      value: string
+      description: >
+        Optional. Scope determines how configuration across multiple Gateway instances are merged. The configuration for multiple Gateway instances with the same scope will be merged as presented as a single configuration to the proxy/load balancer. Max length 64 characters. Scope should start with a letter and can only have letters, numbers, hyphens.
+        
     - name: gatewayId
       value: string
 ```
@@ -602,21 +602,21 @@ Updates the parameters of a single Gateway.
 ```sql
 UPDATE google.networkservices.gateways
 SET 
-data__name = '{{ name }}',
-data__labels = '{{ labels }}',
-data__description = '{{ description }}',
-data__type = '{{ type }}',
-data__addresses = '{{ addresses }}',
-data__ports = '{{ ports }}',
-data__scope = '{{ scope }}',
-data__serverTlsPolicy = '{{ serverTlsPolicy }}',
-data__certificateUrls = '{{ certificateUrls }}',
-data__gatewaySecurityPolicy = '{{ gatewaySecurityPolicy }}',
 data__network = '{{ network }}',
+data__name = '{{ name }}',
+data__certificateUrls = '{{ certificateUrls }}',
+data__addresses = '{{ addresses }}',
+data__description = '{{ description }}',
 data__subnetwork = '{{ subnetwork }}',
-data__ipVersion = '{{ ipVersion }}',
+data__routingMode = '{{ routingMode }}',
+data__labels = '{{ labels }}',
+data__serverTlsPolicy = '{{ serverTlsPolicy }}',
 data__envoyHeaders = '{{ envoyHeaders }}',
-data__routingMode = '{{ routingMode }}'
+data__type = '{{ type }}',
+data__ipVersion = '{{ ipVersion }}',
+data__ports = '{{ ports }}',
+data__gatewaySecurityPolicy = '{{ gatewaySecurityPolicy }}',
+data__scope = '{{ scope }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

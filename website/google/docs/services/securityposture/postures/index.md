@@ -382,23 +382,23 @@ Creates a new Posture.
 
 ```sql
 INSERT INTO google.securityposture.postures (
-data__name,
-data__state,
 data__description,
 data__policySets,
+data__name,
 data__etag,
 data__annotations,
+data__state,
 organizationsId,
 locationsId,
 postureId
 )
 SELECT 
-'{{ name }}',
-'{{ state }}',
 '{{ description }}',
 '{{ policySets }}',
+'{{ name }}',
 '{{ etag }}',
 '{{ annotations }}',
+'{{ state }}',
 '{{ organizationsId }}',
 '{{ locationsId }}',
 '{{ postureId }}'
@@ -423,17 +423,6 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the postures resource.
-    - name: name
-      value: string
-      description: >
-        Required. Identifier. The name of the posture, in the format `organizations/{organization}/locations/global/postures/{posture_id}`.
-        
-    - name: state
-      value: string
-      description: >
-        Required. The state of the posture at the specified `revision_id`.
-        
-      valid_values: ['STATE_UNSPECIFIED', 'DEPRECATED', 'DRAFT', 'ACTIVE']
     - name: description
       value: string
       description: >
@@ -443,6 +432,11 @@ response
       value: array
       description: >
         Required. The PolicySet resources that the posture includes.
+        
+    - name: name
+      value: string
+      description: >
+        Required. Identifier. The name of the posture, in the format `organizations/{organization}/locations/global/postures/{posture_id}`.
         
     - name: etag
       value: string
@@ -454,6 +448,12 @@ response
       description: >
         Optional. The user-specified annotations for the posture. For details about the values you can use in an annotation, see [AIP-148: Standard fields](https://google.aip.dev/148#annotations).
         
+    - name: state
+      value: string
+      description: >
+        Required. The state of the posture at the specified `revision_id`.
+        
+      valid_values: ['STATE_UNSPECIFIED', 'DEPRECATED', 'DRAFT', 'ACTIVE']
     - name: postureId
       value: string
 ```
@@ -476,12 +476,12 @@ Updates a revision of an existing Posture. If the posture revision that you upda
 ```sql
 UPDATE google.securityposture.postures
 SET 
-data__name = '{{ name }}',
-data__state = '{{ state }}',
 data__description = '{{ description }}',
 data__policySets = '{{ policySets }}',
+data__name = '{{ name }}',
 data__etag = '{{ etag }}',
-data__annotations = '{{ annotations }}'
+data__annotations = '{{ annotations }}',
+data__state = '{{ state }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

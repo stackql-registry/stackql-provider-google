@@ -36,8 +36,8 @@ The following fields are returned by `SELECT` queries:
     values={[
         { label: 'organizations_sources_get', value: 'organizations_sources_get' },
         { label: 'folders_sources_list', value: 'folders_sources_list' },
-        { label: 'projects_sources_list', value: 'projects_sources_list' },
-        { label: 'organizations_sources_list', value: 'organizations_sources_list' }
+        { label: 'organizations_sources_list', value: 'organizations_sources_list' },
+        { label: 'projects_sources_list', value: 'projects_sources_list' }
     ]}
 >
 <TabItem value="organizations_sources_get">
@@ -108,7 +108,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_sources_list">
+<TabItem value="organizations_sources_list">
 
 <table>
 <thead>
@@ -142,7 +142,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="organizations_sources_list">
+<TabItem value="projects_sources_list">
 
 <table>
 <thead>
@@ -208,16 +208,16 @@ The following methods are available for this resource:
     <td>Lists all sources belonging to an organization.</td>
 </tr>
 <tr>
-    <td><a href="#projects_sources_list"><CopyableCode code="projects_sources_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Lists all sources belonging to an organization.</td>
-</tr>
-<tr>
     <td><a href="#organizations_sources_list"><CopyableCode code="organizations_sources_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists all sources belonging to an organization.</td>
+</tr>
+<tr>
+    <td><a href="#projects_sources_list"><CopyableCode code="projects_sources_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists all sources belonging to an organization.</td>
 </tr>
@@ -296,8 +296,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     values={[
         { label: 'organizations_sources_get', value: 'organizations_sources_get' },
         { label: 'folders_sources_list', value: 'folders_sources_list' },
-        { label: 'projects_sources_list', value: 'projects_sources_list' },
-        { label: 'organizations_sources_list', value: 'organizations_sources_list' }
+        { label: 'organizations_sources_list', value: 'organizations_sources_list' },
+        { label: 'projects_sources_list', value: 'projects_sources_list' }
     ]}
 >
 <TabItem value="organizations_sources_get">
@@ -333,23 +333,6 @@ AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
-<TabItem value="projects_sources_list">
-
-Lists all sources belonging to an organization.
-
-```sql
-SELECT
-name,
-canonicalName,
-description,
-displayName
-FROM google.securitycenter.sources
-WHERE projectsId = '{{ projectsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
-;
-```
-</TabItem>
 <TabItem value="organizations_sources_list">
 
 Lists all sources belonging to an organization.
@@ -362,6 +345,23 @@ description,
 displayName
 FROM google.securitycenter.sources
 WHERE organizationsId = '{{ organizationsId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="projects_sources_list">
+
+Lists all sources belonging to an organization.
+
+```sql
+SELECT
+name,
+canonicalName,
+description,
+displayName
+FROM google.securitycenter.sources
+WHERE projectsId = '{{ projectsId }}' -- required
 AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
 ;

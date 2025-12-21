@@ -250,22 +250,22 @@ Submit a data export job to be processed in the background. If the request is su
 
 ```sql
 INSERT INTO google.apigee.exports (
-data__name,
+data__outputFormat,
+data__datastoreName,
 data__description,
 data__dateRange,
-data__outputFormat,
 data__csvDelimiter,
-data__datastoreName,
+data__name,
 organizationsId,
 environmentsId
 )
 SELECT 
-'{{ name }}',
+'{{ outputFormat }}',
+'{{ datastoreName }}',
 '{{ description }}',
 '{{ dateRange }}',
-'{{ outputFormat }}',
 '{{ csvDelimiter }}',
-'{{ datastoreName }}',
+'{{ name }}',
 '{{ organizationsId }}',
 '{{ environmentsId }}'
 RETURNING
@@ -293,10 +293,15 @@ updated
     - name: environmentsId
       value: string
       description: Required parameter for the exports resource.
-    - name: name
+    - name: outputFormat
       value: string
       description: >
-        Required. Display name of the export job.
+        Optional. Output format of the export. Valid values include: `csv` or `json`. Defaults to `json`. Note: Configure the delimiter for CSV output using the `csvDelimiter` property.
+        
+    - name: datastoreName
+      value: string
+      description: >
+        Required. Name of the preconfigured datastore.
         
     - name: description
       value: string
@@ -308,20 +313,15 @@ updated
       description: >
         Required. Date range of the data to export.
         
-    - name: outputFormat
-      value: string
-      description: >
-        Optional. Output format of the export. Valid values include: `csv` or `json`. Defaults to `json`. Note: Configure the delimiter for CSV output using the `csvDelimiter` property.
-        
     - name: csvDelimiter
       value: string
       description: >
         Optional. Delimiter used in the CSV file, if `outputFormat` is set to `csv`. Defaults to the `,` (comma) character. Supported delimiter characters include comma (`,`), pipe (`|`), and tab (`\t`).
         
-    - name: datastoreName
+    - name: name
       value: string
       description: >
-        Required. Name of the preconfigured datastore.
+        Required. Display name of the export job.
         
 ```
 </TabItem>

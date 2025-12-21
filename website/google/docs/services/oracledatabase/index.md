@@ -18,7 +18,7 @@ oracledatabase service documentation.
 
 :::info[Service Summary]
 
-total resources: __15__  
+total resources: __25__  
 
 :::
 
@@ -31,16 +31,26 @@ total resources: __15__
 <a href="/services/oracledatabase/autonomous_db_versions/">autonomous_db_versions</a><br />
 <a href="/services/oracledatabase/cloud_exadata_infrastructures/">cloud_exadata_infrastructures</a><br />
 <a href="/services/oracledatabase/cloud_vm_clusters/">cloud_vm_clusters</a><br />
+<a href="/services/oracledatabase/database_character_sets/">database_character_sets</a><br />
+<a href="/services/oracledatabase/databases/">databases</a><br />
 <a href="/services/oracledatabase/db_nodes/">db_nodes</a><br />
-<a href="/services/oracledatabase/db_servers/">db_servers</a>
+<a href="/services/oracledatabase/db_servers/">db_servers</a><br />
+<a href="/services/oracledatabase/db_system_initial_storage_sizes/">db_system_initial_storage_sizes</a><br />
+<a href="/services/oracledatabase/db_system_shapes/">db_system_shapes</a><br />
+<a href="/services/oracledatabase/db_systems/">db_systems</a>
 </div>
 <div class="providerDocColumn">
-<a href="/services/oracledatabase/db_system_shapes/">db_system_shapes</a><br />
+<a href="/services/oracledatabase/db_versions/">db_versions</a><br />
 <a href="/services/oracledatabase/entitlements/">entitlements</a><br />
+<a href="/services/oracledatabase/exadb_vm_clusters/">exadb_vm_clusters</a><br />
+<a href="/services/oracledatabase/exadb_vm_clusters_virtual_machine/">exadb_vm_clusters_virtual_machine</a><br />
+<a href="/services/oracledatabase/exascale_db_storage_vaults/">exascale_db_storage_vaults</a><br />
 <a href="/services/oracledatabase/gi_versions/">gi_versions</a><br />
 <a href="/services/oracledatabase/locations/">locations</a><br />
+<a href="/services/oracledatabase/minor_versions/">minor_versions</a><br />
 <a href="/services/oracledatabase/odb_networks/">odb_networks</a><br />
 <a href="/services/oracledatabase/odb_subnets/">odb_subnets</a><br />
-<a href="/services/oracledatabase/operations/">operations</a>
+<a href="/services/oracledatabase/operations/">operations</a><br />
+<a href="/services/oracledatabase/pluggable_databases/">pluggable_databases</a>
 </div>
 </div>

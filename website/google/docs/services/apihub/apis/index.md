@@ -107,7 +107,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="fingerprint" /></td>
     <td><code>string</code></td>
-    <td>Optional. Fingerprint of the API resource.</td>
+    <td>Optional. Fingerprint of the API resource. This must be unique for each API resource. It can neither be unset nor be updated to an existing fingerprint of another API resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="maturityLevel" /></td>
@@ -221,7 +221,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="fingerprint" /></td>
     <td><code>string</code></td>
-    <td>Optional. Fingerprint of the API resource.</td>
+    <td>Optional. Fingerprint of the API resource. This must be unique for each API resource. It can neither be unset nor be updated to an existing fingerprint of another API resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="maturityLevel" /></td>
@@ -309,7 +309,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Update an API resource in the API hub. The following fields in the API can be updated: * display_name * description * owner * documentation * target_user * team * business_unit * maturity_level * api_style * attributes The update_mask should be used to specify the fields being updated. Updating the owner field requires complete owner message and updates both owner and email fields.</td>
+    <td>Update an API resource in the API hub. The following fields in the API can be updated: * display_name * description * owner * documentation * target_user * team * business_unit * maturity_level * api_style * attributes * fingerprint The update_mask should be used to specify the fields being updated. Updating the owner field requires complete owner message and updates both owner and email fields.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
@@ -621,7 +621,7 @@ versions
     - name: fingerprint
       value: string
       description: >
-        Optional. Fingerprint of the API resource.
+        Optional. Fingerprint of the API resource. This must be unique for each API resource. It can neither be unset nor be updated to an existing fingerprint of another API resource.
         
     - name: apiFunctionalRequirements
       value: object
@@ -650,7 +650,7 @@ versions
 >
 <TabItem value="patch">
 
-Update an API resource in the API hub. The following fields in the API can be updated: * display_name * description * owner * documentation * target_user * team * business_unit * maturity_level * api_style * attributes The update_mask should be used to specify the fields being updated. Updating the owner field requires complete owner message and updates both owner and email fields.
+Update an API resource in the API hub. The following fields in the API can be updated: * display_name * description * owner * documentation * target_user * team * business_unit * maturity_level * api_style * attributes * fingerprint The update_mask should be used to specify the fields being updated. Updating the owner field requires complete owner message and updates both owner and email fields.
 
 ```sql
 UPDATE google.apihub.apis

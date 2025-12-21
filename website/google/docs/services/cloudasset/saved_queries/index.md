@@ -167,7 +167,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-parentType"><code>parentType</code></a>, <a href="#parameter-parent"><code>parent</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists all saved queries in a parent project/folder/organization.</td>
 </tr>
 <tr>
@@ -283,9 +283,9 @@ lastUpdater
 FROM google.cloudasset.saved_queries
 WHERE parentType = '{{ parentType }}' -- required
 AND parent = '{{ parent }}' -- required
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -326,19 +326,19 @@ Creates a saved query in a parent project/folder/organization.
 
 ```sql
 INSERT INTO google.cloudasset.saved_queries (
-data__name,
-data__description,
 data__labels,
 data__content,
+data__name,
+data__description,
 parentType,
 parent,
 savedQueryId
 )
 SELECT 
-'{{ name }}',
-'{{ description }}',
 '{{ labels }}',
 '{{ content }}',
+'{{ name }}',
+'{{ description }}',
 '{{ parentType }}',
 '{{ parent }}',
 '{{ savedQueryId }}'
@@ -366,16 +366,6 @@ lastUpdater
     - name: parent
       value: string
       description: Required parameter for the saved_queries resource.
-    - name: name
-      value: string
-      description: >
-        The resource name of the saved query. The format must be: * projects/project_number/savedQueries/saved_query_id * folders/folder_number/savedQueries/saved_query_id * organizations/organization_number/savedQueries/saved_query_id
-        
-    - name: description
-      value: string
-      description: >
-        The description of this saved query. This value should be fewer than 255 characters.
-        
     - name: labels
       value: object
       description: >
@@ -385,6 +375,16 @@ lastUpdater
       value: object
       description: >
         The query content.
+        
+    - name: name
+      value: string
+      description: >
+        The resource name of the saved query. The format must be: * projects/project_number/savedQueries/saved_query_id * folders/folder_number/savedQueries/saved_query_id * organizations/organization_number/savedQueries/saved_query_id
+        
+    - name: description
+      value: string
+      description: >
+        The description of this saved query. This value should be fewer than 255 characters.
         
     - name: savedQueryId
       value: string
@@ -408,10 +408,10 @@ Updates a saved query.
 ```sql
 UPDATE google.cloudasset.saved_queries
 SET 
-data__name = '{{ name }}',
-data__description = '{{ description }}',
 data__labels = '{{ labels }}',
-data__content = '{{ content }}'
+data__content = '{{ content }}',
+data__name = '{{ name }}',
+data__description = '{{ description }}'
 WHERE 
 name = '{{ name }}' --required
 AND updateMask = '{{ updateMask}}'

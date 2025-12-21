@@ -77,7 +77,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="scope" /></td>
     <td><code>string</code></td>
-    <td>Required. Scope of the security monitoring condition. For Apigee, the environment is the scope of the resources.</td>
+    <td>Optional. Scope of the security monitoring condition. For Apigee, the environment is the scope of the resources.</td>
 </tr>
 <tr>
     <td><CopyableCode code="totalDeployedResources" /></td>
@@ -136,7 +136,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="scope" /></td>
     <td><code>string</code></td>
-    <td>Required. Scope of the security monitoring condition. For Apigee, the environment is the scope of the resources.</td>
+    <td>Optional. Scope of the security monitoring condition. For Apigee, the environment is the scope of the resources.</td>
 </tr>
 <tr>
     <td><CopyableCode code="totalDeployedResources" /></td>
@@ -333,20 +333,20 @@ Create a security monitoring condition.
 
 ```sql
 INSERT INTO google.apigee.security_monitoring_conditions (
+data__include,
+data__includeAllResources,
 data__name,
 data__profile,
 data__scope,
-data__includeAllResources,
-data__include,
 organizationsId,
 securityMonitoringConditionId
 )
 SELECT 
+'{{ include }}',
+'{{ includeAllResources }}',
 '{{ name }}',
 '{{ profile }}',
 '{{ scope }}',
-'{{ includeAllResources }}',
-'{{ include }}',
 '{{ organizationsId }}',
 '{{ securityMonitoringConditionId }}'
 RETURNING
@@ -371,6 +371,16 @@ updateTime
     - name: organizationsId
       value: string
       description: Required parameter for the security_monitoring_conditions resource.
+    - name: include
+      value: object
+      description: >
+        Include only these resources.
+        
+    - name: includeAllResources
+      value: object
+      description: >
+        Include all resources under the scope.
+        
     - name: name
       value: string
       description: >
@@ -384,17 +394,7 @@ updateTime
     - name: scope
       value: string
       description: >
-        Required. Scope of the security monitoring condition. For Apigee, the environment is the scope of the resources.
-        
-    - name: includeAllResources
-      value: object
-      description: >
-        Include all resources under the scope.
-        
-    - name: include
-      value: object
-      description: >
-        Include only these resources.
+        Optional. Scope of the security monitoring condition. For Apigee, the environment is the scope of the resources.
         
     - name: securityMonitoringConditionId
       value: string
@@ -418,11 +418,11 @@ Update a security monitoring condition.
 ```sql
 UPDATE google.apigee.security_monitoring_conditions
 SET 
+data__include = '{{ include }}',
+data__includeAllResources = '{{ includeAllResources }}',
 data__name = '{{ name }}',
 data__profile = '{{ profile }}',
-data__scope = '{{ scope }}',
-data__includeAllResources = '{{ includeAllResources }}',
-data__include = '{{ include }}'
+data__scope = '{{ scope }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND securityMonitoringConditionsId = '{{ securityMonitoringConditionsId }}' --required

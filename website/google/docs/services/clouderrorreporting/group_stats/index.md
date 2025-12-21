@@ -116,8 +116,8 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-groupId"><code>groupId</code></a>, <a href="#parameter-serviceFilter.service"><code>serviceFilter.service</code></a>, <a href="#parameter-serviceFilter.version"><code>serviceFilter.version</code></a>, <a href="#parameter-serviceFilter.resourceType"><code>serviceFilter.resourceType</code></a>, <a href="#parameter-timeRange.period"><code>timeRange.period</code></a>, <a href="#parameter-timedCountDuration"><code>timedCountDuration</code></a>, <a href="#parameter-alignment"><code>alignment</code></a>, <a href="#parameter-alignmentTime"><code>alignmentTime</code></a>, <a href="#parameter-order"><code>order</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td><a href="#parameter-alignmentTime"><code>alignmentTime</code></a>, <a href="#parameter-timedCountDuration"><code>timedCountDuration</code></a>, <a href="#parameter-serviceFilter.resourceType"><code>serviceFilter.resourceType</code></a>, <a href="#parameter-groupId"><code>groupId</code></a>, <a href="#parameter-alignment"><code>alignment</code></a>, <a href="#parameter-timeRange.period"><code>timeRange.period</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-serviceFilter.version"><code>serviceFilter.version</code></a>, <a href="#parameter-serviceFilter.service"><code>serviceFilter.service</code></a>, <a href="#parameter-order"><code>order</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists the specified groups.</td>
 </tr>
 </tbody>
@@ -136,11 +136,6 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-locationsId">
-    <td><CopyableCode code="locationsId" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
 <tr id="parameter-projectsId">
     <td><CopyableCode code="projectsId" /></td>
     <td><code>string</code></td>
@@ -229,18 +224,17 @@ representative,
 timedCounts
 FROM google.clouderrorreporting.group_stats
 WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND groupId = '{{ groupId }}'
-AND serviceFilter.service = '{{ serviceFilter.service }}'
-AND serviceFilter.version = '{{ serviceFilter.version }}'
-AND serviceFilter.resourceType = '{{ serviceFilter.resourceType }}'
-AND timeRange.period = '{{ timeRange.period }}'
-AND timedCountDuration = '{{ timedCountDuration }}'
-AND alignment = '{{ alignment }}'
 AND alignmentTime = '{{ alignmentTime }}'
+AND timedCountDuration = '{{ timedCountDuration }}'
+AND serviceFilter.resourceType = '{{ serviceFilter.resourceType }}'
+AND groupId = '{{ groupId }}'
+AND alignment = '{{ alignment }}'
+AND timeRange.period = '{{ timeRange.period }}'
+AND pageToken = '{{ pageToken }}'
+AND serviceFilter.version = '{{ serviceFilter.version }}'
+AND serviceFilter.service = '{{ serviceFilter.service }}'
 AND order = '{{ order }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

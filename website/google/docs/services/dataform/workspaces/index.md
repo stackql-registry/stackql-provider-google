@@ -70,6 +70,11 @@ The following fields are returned by `SELECT` queries:
     <td><code>string</code></td>
     <td>Output only. All the metadata information that is used internally to serve the resource. For example: timestamps, flags, status fields, etc. The format of this field is a JSON string.</td>
 </tr>
+<tr>
+    <td><CopyableCode code="privateResourceMetadata" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Metadata indicating whether this resource is user-scoped. For `Workspace` resources, the `user_scoped` field is always `true`. (id: PrivateResourceMetadata)</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -128,6 +133,11 @@ The following fields are returned by `SELECT` queries:
     <td><code>string</code></td>
     <td>Output only. All the metadata information that is used internally to serve the resource. For example: timestamps, flags, status fields, etc. The format of this field is a JSON string.</td>
 </tr>
+<tr>
+    <td><CopyableCode code="privateResourceMetadata" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Metadata indicating whether this resource is user-scoped. For `Workspace` resources, the `user_scoped` field is always `true`. (id: PrivateResourceMetadata)</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -159,14 +169,14 @@ The following methods are available for this resource:
     <td><a href="#query_directory_contents"><CopyableCode code="query_directory_contents" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-workspacesId"><code>workspacesId</code></a></td>
-    <td><a href="#parameter-path"><code>path</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-path"><code>path</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Returns the contents of a given Workspace directory.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists Workspaces in a given Repository.</td>
 </tr>
 <tr>
@@ -184,34 +194,6 @@ The following methods are available for this resource:
     <td>Deletes a single Workspace.</td>
 </tr>
 <tr>
-    <td><a href="#install_npm_packages"><CopyableCode code="install_npm_packages" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-workspacesId"><code>workspacesId</code></a></td>
-    <td></td>
-    <td>Installs dependency NPM packages (inside a Workspace).</td>
-</tr>
-<tr>
-    <td><a href="#pull"><CopyableCode code="pull" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-workspacesId"><code>workspacesId</code></a></td>
-    <td></td>
-    <td>Pulls Git commits from the Repository's remote into a Workspace.</td>
-</tr>
-<tr>
-    <td><a href="#push"><CopyableCode code="push" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-workspacesId"><code>workspacesId</code></a></td>
-    <td></td>
-    <td>Pushes Git commits from a Workspace to the Repository's remote.</td>
-</tr>
-<tr>
-    <td><a href="#commit"><CopyableCode code="commit" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-workspacesId"><code>workspacesId</code></a></td>
-    <td></td>
-    <td>Applies a Git commit for uncommitted files in a Workspace.</td>
-</tr>
-<tr>
     <td><a href="#reset"><CopyableCode code="reset" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-workspacesId"><code>workspacesId</code></a></td>
@@ -219,18 +201,11 @@ The following methods are available for this resource:
     <td>Performs a Git reset for uncommitted files in a Workspace.</td>
 </tr>
 <tr>
-    <td><a href="#search_files"><CopyableCode code="search_files" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-workspacesId"><code>workspacesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
-    <td>Finds the contents of a given Workspace directory by filter.</td>
-</tr>
-<tr>
-    <td><a href="#make_directory"><CopyableCode code="make_directory" /></a></td>
+    <td><a href="#install_npm_packages"><CopyableCode code="install_npm_packages" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-workspacesId"><code>workspacesId</code></a></td>
     <td></td>
-    <td>Creates a directory inside a Workspace.</td>
+    <td>Installs dependency NPM packages (inside a Workspace).</td>
 </tr>
 <tr>
     <td><a href="#remove_directory"><CopyableCode code="remove_directory" /></a></td>
@@ -240,25 +215,39 @@ The following methods are available for this resource:
     <td>Deletes a directory (inside a Workspace) and all of its contents.</td>
 </tr>
 <tr>
-    <td><a href="#move_directory"><CopyableCode code="move_directory" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-workspacesId"><code>workspacesId</code></a></td>
-    <td></td>
-    <td>Moves a directory (inside a Workspace), and all of its contents, to a new location.</td>
-</tr>
-<tr>
-    <td><a href="#read_file"><CopyableCode code="read_file" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-workspacesId"><code>workspacesId</code></a></td>
-    <td><a href="#parameter-path"><code>path</code></a>, <a href="#parameter-revision"><code>revision</code></a></td>
-    <td>Returns the contents of a file (inside a Workspace).</td>
-</tr>
-<tr>
     <td><a href="#remove_file"><CopyableCode code="remove_file" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-workspacesId"><code>workspacesId</code></a></td>
     <td></td>
     <td>Deletes a file (inside a Workspace).</td>
+</tr>
+<tr>
+    <td><a href="#make_directory"><CopyableCode code="make_directory" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-workspacesId"><code>workspacesId</code></a></td>
+    <td></td>
+    <td>Creates a directory inside a Workspace.</td>
+</tr>
+<tr>
+    <td><a href="#write_file"><CopyableCode code="write_file" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-workspacesId"><code>workspacesId</code></a></td>
+    <td></td>
+    <td>Writes to a file (inside a Workspace).</td>
+</tr>
+<tr>
+    <td><a href="#search_files"><CopyableCode code="search_files" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-workspacesId"><code>workspacesId</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td>Finds the contents of a given Workspace directory by filter.</td>
+</tr>
+<tr>
+    <td><a href="#move_directory"><CopyableCode code="move_directory" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-workspacesId"><code>workspacesId</code></a></td>
+    <td></td>
+    <td>Moves a directory (inside a Workspace), and all of its contents, to a new location.</td>
 </tr>
 <tr>
     <td><a href="#move_file"><CopyableCode code="move_file" /></a></td>
@@ -268,11 +257,32 @@ The following methods are available for this resource:
     <td>Moves a file (inside a Workspace) to a new location.</td>
 </tr>
 <tr>
-    <td><a href="#write_file"><CopyableCode code="write_file" /></a></td>
+    <td><a href="#read_file"><CopyableCode code="read_file" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-workspacesId"><code>workspacesId</code></a></td>
+    <td><a href="#parameter-revision"><code>revision</code></a>, <a href="#parameter-path"><code>path</code></a></td>
+    <td>Returns the contents of a file (inside a Workspace).</td>
+</tr>
+<tr>
+    <td><a href="#push"><CopyableCode code="push" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-workspacesId"><code>workspacesId</code></a></td>
     <td></td>
-    <td>Writes to a file (inside a Workspace).</td>
+    <td>Pushes Git commits from a Workspace to the Repository's remote.</td>
+</tr>
+<tr>
+    <td><a href="#pull"><CopyableCode code="pull" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-workspacesId"><code>workspacesId</code></a></td>
+    <td></td>
+    <td>Pulls Git commits from the Repository's remote into a Workspace.</td>
+</tr>
+<tr>
+    <td><a href="#commit"><CopyableCode code="commit" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-workspacesId"><code>workspacesId</code></a></td>
+    <td></td>
+    <td>Applies a Git commit for uncommitted files in a Workspace.</td>
 </tr>
 </tbody>
 </table>
@@ -367,7 +377,8 @@ SELECT
 name,
 createTime,
 dataEncryptionState,
-internalMetadata
+internalMetadata,
+privateResourceMetadata
 FROM google.dataform.workspaces
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
@@ -389,9 +400,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND repositoriesId = '{{ repositoriesId }}' -- required
 AND workspacesId = '{{ workspacesId }}' -- required
+AND pageToken = '{{ pageToken }}'
 AND path = '{{ path }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -404,15 +415,16 @@ SELECT
 name,
 createTime,
 dataEncryptionState,
-internalMetadata
+internalMetadata,
+privateResourceMetadata
 FROM google.dataform.workspaces
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND repositoriesId = '{{ repositoriesId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -450,7 +462,8 @@ RETURNING
 name,
 createTime,
 dataEncryptionState,
-internalMetadata
+internalMetadata,
+privateResourceMetadata
 ;
 ```
 </TabItem>
@@ -508,90 +521,23 @@ AND workspacesId = '{{ workspacesId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="install_npm_packages"
+    defaultValue="reset"
     values={[
-        { label: 'install_npm_packages', value: 'install_npm_packages' },
-        { label: 'pull', value: 'pull' },
-        { label: 'push', value: 'push' },
-        { label: 'commit', value: 'commit' },
         { label: 'reset', value: 'reset' },
-        { label: 'search_files', value: 'search_files' },
-        { label: 'make_directory', value: 'make_directory' },
+        { label: 'install_npm_packages', value: 'install_npm_packages' },
         { label: 'remove_directory', value: 'remove_directory' },
-        { label: 'move_directory', value: 'move_directory' },
-        { label: 'read_file', value: 'read_file' },
         { label: 'remove_file', value: 'remove_file' },
+        { label: 'make_directory', value: 'make_directory' },
+        { label: 'write_file', value: 'write_file' },
+        { label: 'search_files', value: 'search_files' },
+        { label: 'move_directory', value: 'move_directory' },
         { label: 'move_file', value: 'move_file' },
-        { label: 'write_file', value: 'write_file' }
+        { label: 'read_file', value: 'read_file' },
+        { label: 'push', value: 'push' },
+        { label: 'pull', value: 'pull' },
+        { label: 'commit', value: 'commit' }
     ]}
 >
-<TabItem value="install_npm_packages">
-
-Installs dependency NPM packages (inside a Workspace).
-
-```sql
-EXEC google.dataform.workspaces.install_npm_packages 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@repositoriesId='{{ repositoriesId }}' --required, 
-@workspacesId='{{ workspacesId }}' --required
-;
-```
-</TabItem>
-<TabItem value="pull">
-
-Pulls Git commits from the Repository's remote into a Workspace.
-
-```sql
-EXEC google.dataform.workspaces.pull 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@repositoriesId='{{ repositoriesId }}' --required, 
-@workspacesId='{{ workspacesId }}' --required 
-@@json=
-'{
-"remoteBranch": "{{ remoteBranch }}", 
-"author": "{{ author }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="push">
-
-Pushes Git commits from a Workspace to the Repository's remote.
-
-```sql
-EXEC google.dataform.workspaces.push 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@repositoriesId='{{ repositoriesId }}' --required, 
-@workspacesId='{{ workspacesId }}' --required 
-@@json=
-'{
-"remoteBranch": "{{ remoteBranch }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="commit">
-
-Applies a Git commit for uncommitted files in a Workspace.
-
-```sql
-EXEC google.dataform.workspaces.commit 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@repositoriesId='{{ repositoriesId }}' --required, 
-@workspacesId='{{ workspacesId }}' --required 
-@@json=
-'{
-"author": "{{ author }}", 
-"commitMessage": "{{ commitMessage }}", 
-"paths": "{{ paths }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="reset">
 
 Performs a Git reset for uncommitted files in a Workspace.
@@ -610,19 +556,50 @@ EXEC google.dataform.workspaces.reset
 ;
 ```
 </TabItem>
-<TabItem value="search_files">
+<TabItem value="install_npm_packages">
 
-Finds the contents of a given Workspace directory by filter.
+Installs dependency NPM packages (inside a Workspace).
 
 ```sql
-EXEC google.dataform.workspaces.search_files 
+EXEC google.dataform.workspaces.install_npm_packages 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @repositoriesId='{{ repositoriesId }}' --required, 
-@workspacesId='{{ workspacesId }}' --required, 
-@pageSize='{{ pageSize }}', 
-@pageToken='{{ pageToken }}', 
-@filter='{{ filter }}'
+@workspacesId='{{ workspacesId }}' --required
+;
+```
+</TabItem>
+<TabItem value="remove_directory">
+
+Deletes a directory (inside a Workspace) and all of its contents.
+
+```sql
+EXEC google.dataform.workspaces.remove_directory 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@repositoriesId='{{ repositoriesId }}' --required, 
+@workspacesId='{{ workspacesId }}' --required 
+@@json=
+'{
+"path": "{{ path }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="remove_file">
+
+Deletes a file (inside a Workspace).
+
+```sql
+EXEC google.dataform.workspaces.remove_file 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@repositoriesId='{{ repositoriesId }}' --required, 
+@workspacesId='{{ workspacesId }}' --required 
+@@json=
+'{
+"path": "{{ path }}"
+}'
 ;
 ```
 </TabItem>
@@ -643,20 +620,37 @@ EXEC google.dataform.workspaces.make_directory
 ;
 ```
 </TabItem>
-<TabItem value="remove_directory">
+<TabItem value="write_file">
 
-Deletes a directory (inside a Workspace) and all of its contents.
+Writes to a file (inside a Workspace).
 
 ```sql
-EXEC google.dataform.workspaces.remove_directory 
+EXEC google.dataform.workspaces.write_file 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @repositoriesId='{{ repositoriesId }}' --required, 
 @workspacesId='{{ workspacesId }}' --required 
 @@json=
 '{
-"path": "{{ path }}"
+"path": "{{ path }}", 
+"contents": "{{ contents }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="search_files">
+
+Finds the contents of a given Workspace directory by filter.
+
+```sql
+EXEC google.dataform.workspaces.search_files 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@repositoriesId='{{ repositoriesId }}' --required, 
+@workspacesId='{{ workspacesId }}' --required, 
+@pageToken='{{ pageToken }}', 
+@filter='{{ filter }}', 
+@pageSize='{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -678,38 +672,6 @@ EXEC google.dataform.workspaces.move_directory
 ;
 ```
 </TabItem>
-<TabItem value="read_file">
-
-Returns the contents of a file (inside a Workspace).
-
-```sql
-EXEC google.dataform.workspaces.read_file 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@repositoriesId='{{ repositoriesId }}' --required, 
-@workspacesId='{{ workspacesId }}' --required, 
-@path='{{ path }}', 
-@revision='{{ revision }}'
-;
-```
-</TabItem>
-<TabItem value="remove_file">
-
-Deletes a file (inside a Workspace).
-
-```sql
-EXEC google.dataform.workspaces.remove_file 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@repositoriesId='{{ repositoriesId }}' --required, 
-@workspacesId='{{ workspacesId }}' --required 
-@@json=
-'{
-"path": "{{ path }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="move_file">
 
 Moves a file (inside a Workspace) to a new location.
@@ -722,26 +684,77 @@ EXEC google.dataform.workspaces.move_file
 @workspacesId='{{ workspacesId }}' --required 
 @@json=
 '{
-"path": "{{ path }}", 
-"newPath": "{{ newPath }}"
+"newPath": "{{ newPath }}", 
+"path": "{{ path }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="write_file">
+<TabItem value="read_file">
 
-Writes to a file (inside a Workspace).
+Returns the contents of a file (inside a Workspace).
 
 ```sql
-EXEC google.dataform.workspaces.write_file 
+EXEC google.dataform.workspaces.read_file 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@repositoriesId='{{ repositoriesId }}' --required, 
+@workspacesId='{{ workspacesId }}' --required, 
+@revision='{{ revision }}', 
+@path='{{ path }}'
+;
+```
+</TabItem>
+<TabItem value="push">
+
+Pushes Git commits from a Workspace to the Repository's remote.
+
+```sql
+EXEC google.dataform.workspaces.push 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @repositoriesId='{{ repositoriesId }}' --required, 
 @workspacesId='{{ workspacesId }}' --required 
 @@json=
 '{
-"path": "{{ path }}", 
-"contents": "{{ contents }}"
+"remoteBranch": "{{ remoteBranch }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="pull">
+
+Pulls Git commits from the Repository's remote into a Workspace.
+
+```sql
+EXEC google.dataform.workspaces.pull 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@repositoriesId='{{ repositoriesId }}' --required, 
+@workspacesId='{{ workspacesId }}' --required 
+@@json=
+'{
+"author": "{{ author }}", 
+"remoteBranch": "{{ remoteBranch }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="commit">
+
+Applies a Git commit for uncommitted files in a Workspace.
+
+```sql
+EXEC google.dataform.workspaces.commit 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@repositoriesId='{{ repositoriesId }}' --required, 
+@workspacesId='{{ workspacesId }}' --required 
+@@json=
+'{
+"paths": "{{ paths }}", 
+"author": "{{ author }}", 
+"commitMessage": "{{ commitMessage }}"
 }'
 ;
 ```

@@ -87,7 +87,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="systemInstruction" /></td>
     <td><code>object</code></td>
-    <td>The base structured datatype containing multi-part content of a message. A `Content` includes a `role` field designating the producer of the `Content` and a `parts` field containing multi-part data that contains the content of the message turn. (id: GoogleCloudAiplatformV1Content)</td>
+    <td>The structured data content of a message. A Content message contains a `role` field, which indicates the producer of the content, and a `parts` field, which contains the multi-part data of the message. (id: GoogleCloudAiplatformV1Content)</td>
 </tr>
 <tr>
     <td><CopyableCode code="toolConfig" /></td>
@@ -166,7 +166,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="systemInstruction" /></td>
     <td><code>object</code></td>
-    <td>The base structured datatype containing multi-part content of a message. A `Content` includes a `role` field designating the producer of the `Content` and a `parts` field containing multi-part data that contains the content of the message turn. (id: GoogleCloudAiplatformV1Content)</td>
+    <td>The structured data content of a message. A Content message contains a `role` field, which indicates the producer of the content, and a `parts` field, which contains the multi-part data of the message. (id: GoogleCloudAiplatformV1Content)</td>
 </tr>
 <tr>
     <td><CopyableCode code="toolConfig" /></td>
@@ -377,30 +377,30 @@ Creates cached content, this call will initialize the cached content in the data
 
 ```sql
 INSERT INTO google.aiplatform.cached_contents (
-data__expireTime,
-data__ttl,
-data__name,
-data__displayName,
+data__toolConfig,
+data__tools,
 data__model,
+data__displayName,
+data__encryptionSpec,
 data__systemInstruction,
 data__contents,
-data__tools,
-data__toolConfig,
-data__encryptionSpec,
+data__name,
+data__expireTime,
+data__ttl,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ expireTime }}',
-'{{ ttl }}',
-'{{ name }}',
-'{{ displayName }}',
+'{{ toolConfig }}',
+'{{ tools }}',
 '{{ model }}',
+'{{ displayName }}',
+'{{ encryptionSpec }}',
 '{{ systemInstruction }}',
 '{{ contents }}',
-'{{ tools }}',
-'{{ toolConfig }}',
-'{{ encryptionSpec }}',
+'{{ name }}',
+'{{ expireTime }}',
+'{{ ttl }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -432,6 +432,46 @@ usageMetadata
     - name: locationsId
       value: string
       description: Required parameter for the cached_contents resource.
+    - name: toolConfig
+      value: object
+      description: >
+        Optional. Input only. Immutable. Tool config. This config is shared for all tools
+        
+    - name: tools
+      value: array
+      description: >
+        Optional. Input only. Immutable. A list of `Tools` the model may use to generate the next response
+        
+    - name: model
+      value: string
+      description: >
+        Immutable. The name of the `Model` to use for cached content. Currently, only the published Gemini base models are supported, in form of projects/{PROJECT}/locations/{LOCATION}/publishers/google/models/{MODEL}
+        
+    - name: displayName
+      value: string
+      description: >
+        Optional. Immutable. The user-generated meaningful display name of the cached content.
+        
+    - name: encryptionSpec
+      value: object
+      description: >
+        Input only. Immutable. Customer-managed encryption key spec for a `CachedContent`. If set, this `CachedContent` and all its sub-resources will be secured by this key.
+        
+    - name: systemInstruction
+      value: object
+      description: >
+        The structured data content of a message. A Content message contains a `role` field, which indicates the producer of the content, and a `parts` field, which contains the multi-part data of the message.
+        
+    - name: contents
+      value: array
+      description: >
+        Optional. Input only. Immutable. The content to cache
+        
+    - name: name
+      value: string
+      description: >
+        Immutable. Identifier. The server-generated resource name of the cached content Format: projects/{project}/locations/{location}/cachedContents/{cached_content}
+        
     - name: expireTime
       value: string
       description: >
@@ -441,46 +481,6 @@ usageMetadata
       value: string
       description: >
         Input only. The TTL for this resource. The expiration time is computed: now + TTL.
-        
-    - name: name
-      value: string
-      description: >
-        Immutable. Identifier. The server-generated resource name of the cached content Format: projects/{project}/locations/{location}/cachedContents/{cached_content}
-        
-    - name: displayName
-      value: string
-      description: >
-        Optional. Immutable. The user-generated meaningful display name of the cached content.
-        
-    - name: model
-      value: string
-      description: >
-        Immutable. The name of the `Model` to use for cached content. Currently, only the published Gemini base models are supported, in form of projects/{PROJECT}/locations/{LOCATION}/publishers/google/models/{MODEL}
-        
-    - name: systemInstruction
-      value: object
-      description: >
-        The base structured datatype containing multi-part content of a message. A `Content` includes a `role` field designating the producer of the `Content` and a `parts` field containing multi-part data that contains the content of the message turn.
-        
-    - name: contents
-      value: array
-      description: >
-        Optional. Input only. Immutable. The content to cache
-        
-    - name: tools
-      value: array
-      description: >
-        Optional. Input only. Immutable. A list of `Tools` the model may use to generate the next response
-        
-    - name: toolConfig
-      value: object
-      description: >
-        Optional. Input only. Immutable. Tool config. This config is shared for all tools
-        
-    - name: encryptionSpec
-      value: object
-      description: >
-        Input only. Immutable. Customer-managed encryption key spec for a `CachedContent`. If set, this `CachedContent` and all its sub-resources will be secured by this key.
         
 ```
 </TabItem>
@@ -502,16 +502,16 @@ Updates cached content configurations
 ```sql
 UPDATE google.aiplatform.cached_contents
 SET 
-data__expireTime = '{{ expireTime }}',
-data__ttl = '{{ ttl }}',
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
+data__toolConfig = '{{ toolConfig }}',
+data__tools = '{{ tools }}',
 data__model = '{{ model }}',
+data__displayName = '{{ displayName }}',
+data__encryptionSpec = '{{ encryptionSpec }}',
 data__systemInstruction = '{{ systemInstruction }}',
 data__contents = '{{ contents }}',
-data__tools = '{{ tools }}',
-data__toolConfig = '{{ toolConfig }}',
-data__encryptionSpec = '{{ encryptionSpec }}'
+data__name = '{{ name }}',
+data__expireTime = '{{ expireTime }}',
+data__ttl = '{{ ttl }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

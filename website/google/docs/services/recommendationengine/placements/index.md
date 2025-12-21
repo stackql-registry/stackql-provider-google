@@ -121,13 +121,13 @@ EXEC google.recommendationengine.placements.projects_locations_catalogs_event_st
 @placementsId='{{ placementsId }}' --required 
 @@json=
 '{
-"userEvent": "{{ userEvent }}", 
-"pageSize": {{ pageSize }}, 
-"pageToken": "{{ pageToken }}", 
-"filter": "{{ filter }}", 
-"dryRun": {{ dryRun }}, 
 "params": "{{ params }}", 
-"labels": "{{ labels }}"
+"pageToken": "{{ pageToken }}", 
+"labels": "{{ labels }}", 
+"dryRun": {{ dryRun }}, 
+"filter": "{{ filter }}", 
+"pageSize": {{ pageSize }}, 
+"userEvent": "{{ userEvent }}"
 }'
 ;
 ```

@@ -184,7 +184,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_collections_data_stores_schemas_list"><CopyableCode code="projects_locations_collections_data_stores_schemas_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Gets a list of Schemas.</td>
 </tr>
 <tr>
@@ -350,8 +350,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND collectionsId = '{{ collectionsId }}' -- required
 AND dataStoresId = '{{ dataStoresId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -409,9 +409,9 @@ Creates a Schema.
 
 ```sql
 INSERT INTO google.discoveryengine.schemas (
+data__name,
 data__structSchema,
 data__jsonSchema,
-data__name,
 projectsId,
 locationsId,
 collectionsId,
@@ -419,9 +419,9 @@ dataStoresId,
 schemaId
 )
 SELECT 
+'{{ name }}',
 '{{ structSchema }}',
 '{{ jsonSchema }}',
-'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ collectionsId }}',
@@ -442,18 +442,18 @@ Creates a Schema.
 
 ```sql
 INSERT INTO google.discoveryengine.schemas (
+data__name,
 data__structSchema,
 data__jsonSchema,
-data__name,
 projectsId,
 locationsId,
 dataStoresId,
 schemaId
 )
 SELECT 
+'{{ name }}',
 '{{ structSchema }}',
 '{{ jsonSchema }}',
-'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ dataStoresId }}',
@@ -485,6 +485,11 @@ response
     - name: dataStoresId
       value: string
       description: Required parameter for the schemas resource.
+    - name: name
+      value: string
+      description: >
+        Immutable. The full resource name of the schema, in the format of `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/schemas/{schema}`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.
+        
     - name: structSchema
       value: object
       description: >
@@ -494,11 +499,6 @@ response
       value: string
       description: >
         The JSON representation of the schema.
-        
-    - name: name
-      value: string
-      description: >
-        Immutable. The full resource name of the schema, in the format of `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/schemas/{schema}`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.
         
     - name: schemaId
       value: string
@@ -523,9 +523,9 @@ Updates a Schema.
 ```sql
 UPDATE google.discoveryengine.schemas
 SET 
+data__name = '{{ name }}',
 data__structSchema = '{{ structSchema }}',
-data__jsonSchema = '{{ jsonSchema }}',
-data__name = '{{ name }}'
+data__jsonSchema = '{{ jsonSchema }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -548,9 +548,9 @@ Updates a Schema.
 ```sql
 UPDATE google.discoveryengine.schemas
 SET 
+data__name = '{{ name }}',
 data__structSchema = '{{ structSchema }}',
-data__jsonSchema = '{{ jsonSchema }}',
-data__name = '{{ name }}'
+data__jsonSchema = '{{ jsonSchema }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

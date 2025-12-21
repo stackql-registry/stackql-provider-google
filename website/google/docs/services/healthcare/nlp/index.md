@@ -103,9 +103,9 @@ EXEC google.healthcare.nlp.analyze_entities
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"documentContent": "{{ documentContent }}", 
 "licensedVocabularies": "{{ licensedVocabularies }}", 
-"alternativeOutputFormat": "{{ alternativeOutputFormat }}"
+"alternativeOutputFormat": "{{ alternativeOutputFormat }}", 
+"documentContent": "{{ documentContent }}"
 }'
 ;
 ```

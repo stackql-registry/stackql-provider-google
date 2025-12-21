@@ -423,36 +423,36 @@ CreateBranchRule creates a branch rule in a given repository.
 
 ```sql
 INSERT INTO google.securesourcemanager.branch_rules (
-data__name,
 data__annotations,
+data__requireLinearHistory,
 data__etag,
-data__includePattern,
-data__disabled,
-data__requirePullRequest,
+data__requiredStatusChecks,
 data__minimumReviewsCount,
 data__minimumApprovalsCount,
+data__includePattern,
 data__requireCommentsResolved,
+data__disabled,
 data__allowStaleReviews,
-data__requireLinearHistory,
-data__requiredStatusChecks,
+data__name,
+data__requirePullRequest,
 projectsId,
 locationsId,
 repositoriesId,
 branchRuleId
 )
 SELECT 
-'{{ name }}',
 '{{ annotations }}',
+{{ requireLinearHistory }},
 '{{ etag }}',
-'{{ includePattern }}',
-{{ disabled }},
-{{ requirePullRequest }},
+'{{ requiredStatusChecks }}',
 {{ minimumReviewsCount }},
 {{ minimumApprovalsCount }},
+'{{ includePattern }}',
 {{ requireCommentsResolved }},
+{{ disabled }},
 {{ allowStaleReviews }},
-{{ requireLinearHistory }},
-'{{ requiredStatusChecks }}',
+'{{ name }}',
+{{ requirePullRequest }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ repositoriesId }}',
@@ -481,35 +481,25 @@ response
     - name: repositoriesId
       value: string
       description: Required parameter for the branch_rules resource.
-    - name: name
-      value: string
-      description: >
-        Optional. A unique identifier for a BranchRule. The name should be of the format: `projects/{project}/locations/{location}/repositories/{repository}/branchRules/{branch_rule}`
-        
     - name: annotations
       value: object
       description: >
         Optional. User annotations. These attributes can only be set and used by the user. See https://google.aip.dev/128#annotations for more details such as format and size limitations.
+        
+    - name: requireLinearHistory
+      value: boolean
+      description: >
+        Optional. Determines if require linear history before merging to the branch.
         
     - name: etag
       value: string
       description: >
         Optional. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
         
-    - name: includePattern
-      value: string
+    - name: requiredStatusChecks
+      value: array
       description: >
-        Optional. The pattern of the branch that can match to this BranchRule. Specified as regex. .* for all branches. Examples: main, (main|release.*). Current MVP phase only support `.*` for wildcard.
-        
-    - name: disabled
-      value: boolean
-      description: >
-        Optional. Determines if the branch rule is disabled or not.
-        
-    - name: requirePullRequest
-      value: boolean
-      description: >
-        Optional. Determines if the branch rule requires a pull request or not.
+        Optional. List of required status checks before merging to the branch.
         
     - name: minimumReviewsCount
       value: integer
@@ -521,25 +511,35 @@ response
       description: >
         Optional. The minimum number of approvals required for the branch rule to be matched.
         
+    - name: includePattern
+      value: string
+      description: >
+        Optional. The pattern of the branch that can match to this BranchRule. Specified as regex. .* for all branches. Examples: main, (main|release.*). Current MVP phase only support `.*` for wildcard.
+        
     - name: requireCommentsResolved
       value: boolean
       description: >
         Optional. Determines if require comments resolved before merging to the branch.
+        
+    - name: disabled
+      value: boolean
+      description: >
+        Optional. Determines if the branch rule is disabled or not.
         
     - name: allowStaleReviews
       value: boolean
       description: >
         Optional. Determines if allow stale reviews or approvals before merging to the branch.
         
-    - name: requireLinearHistory
+    - name: name
+      value: string
+      description: >
+        Optional. A unique identifier for a BranchRule. The name should be of the format: `projects/{project}/locations/{location}/repositories/{repository}/branchRules/{branch_rule}`
+        
+    - name: requirePullRequest
       value: boolean
       description: >
-        Optional. Determines if require linear history before merging to the branch.
-        
-    - name: requiredStatusChecks
-      value: array
-      description: >
-        Optional. List of required status checks before merging to the branch.
+        Optional. Determines if the branch rule requires a pull request or not.
         
     - name: branchRuleId
       value: string
@@ -563,18 +563,18 @@ UpdateBranchRule updates a branch rule.
 ```sql
 UPDATE google.securesourcemanager.branch_rules
 SET 
-data__name = '{{ name }}',
 data__annotations = '{{ annotations }}',
+data__requireLinearHistory = {{ requireLinearHistory }},
 data__etag = '{{ etag }}',
-data__includePattern = '{{ includePattern }}',
-data__disabled = {{ disabled }},
-data__requirePullRequest = {{ requirePullRequest }},
+data__requiredStatusChecks = '{{ requiredStatusChecks }}',
 data__minimumReviewsCount = {{ minimumReviewsCount }},
 data__minimumApprovalsCount = {{ minimumApprovalsCount }},
+data__includePattern = '{{ includePattern }}',
 data__requireCommentsResolved = {{ requireCommentsResolved }},
+data__disabled = {{ disabled }},
 data__allowStaleReviews = {{ allowStaleReviews }},
-data__requireLinearHistory = {{ requireLinearHistory }},
-data__requiredStatusChecks = '{{ requiredStatusChecks }}'
+data__name = '{{ name }}',
+data__requirePullRequest = {{ requirePullRequest }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

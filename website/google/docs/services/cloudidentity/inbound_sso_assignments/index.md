@@ -184,7 +184,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists the InboundSsoAssignments for a `Customer`.</td>
 </tr>
 <tr>
@@ -297,9 +297,9 @@ ssoMode,
 targetGroup,
 targetOrgUnit
 FROM google.cloudidentity.inbound_sso_assignments
-WHERE filter = '{{ filter }}'
+WHERE pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -321,24 +321,24 @@ Creates an InboundSsoAssignment for users and devices in a `Customer` under a gi
 
 ```sql
 INSERT INTO google.cloudidentity.inbound_sso_assignments (
-data__targetGroup,
-data__targetOrgUnit,
-data__customer,
-data__rank,
-data__ssoMode,
-data__samlSsoInfo,
 data__oidcSsoInfo,
-data__signInBehavior
+data__signInBehavior,
+data__ssoMode,
+data__targetOrgUnit,
+data__samlSsoInfo,
+data__targetGroup,
+data__customer,
+data__rank
 )
 SELECT 
-'{{ targetGroup }}',
-'{{ targetOrgUnit }}',
-'{{ customer }}',
-{{ rank }},
-'{{ ssoMode }}',
-'{{ samlSsoInfo }}',
 '{{ oidcSsoInfo }}',
-'{{ signInBehavior }}'
+'{{ signInBehavior }}',
+'{{ ssoMode }}',
+'{{ targetOrgUnit }}',
+'{{ samlSsoInfo }}',
+'{{ targetGroup }}',
+'{{ customer }}',
+{{ rank }}
 RETURNING
 name,
 done,
@@ -354,15 +354,36 @@ response
 # Description fields are for documentation purposes
 - name: inbound_sso_assignments
   props:
-    - name: targetGroup
+    - name: oidcSsoInfo
+      value: object
+      description: >
+        OpenID Connect SSO details. Must be set if and only if `sso_mode` is set to `OIDC_SSO`.
+        
+    - name: signInBehavior
+      value: object
+      description: >
+        Assertions about users assigned to an IdP will always be accepted from that IdP. This controls whether/when Google should redirect a user to the IdP. Unset (defaults) is the recommended configuration.
+        
+    - name: ssoMode
       value: string
       description: >
-        Immutable. Must be of the form `groups/{group}`.
+        Inbound SSO behavior.
         
+      valid_values: ['SSO_MODE_UNSPECIFIED', 'SSO_OFF', 'SAML_SSO', 'OIDC_SSO', 'DOMAIN_WIDE_SAML_IF_ENABLED']
     - name: targetOrgUnit
       value: string
       description: >
         Immutable. Must be of the form `orgUnits/{org_unit}`.
+        
+    - name: samlSsoInfo
+      value: object
+      description: >
+        SAML SSO details. Must be set if and only if `sso_mode` is set to `SAML_SSO`.
+        
+    - name: targetGroup
+      value: string
+      description: >
+        Immutable. Must be of the form `groups/{group}`.
         
     - name: customer
       value: string
@@ -373,27 +394,6 @@ response
       value: integer
       description: >
         Must be zero (which is the default value so it can be omitted) for assignments with `target_org_unit` set and must be greater-than-or-equal-to one for assignments with `target_group` set.
-        
-    - name: ssoMode
-      value: string
-      description: >
-        Inbound SSO behavior.
-        
-      valid_values: ['SSO_MODE_UNSPECIFIED', 'SSO_OFF', 'SAML_SSO', 'OIDC_SSO', 'DOMAIN_WIDE_SAML_IF_ENABLED']
-    - name: samlSsoInfo
-      value: object
-      description: >
-        SAML SSO details. Must be set if and only if `sso_mode` is set to `SAML_SSO`.
-        
-    - name: oidcSsoInfo
-      value: object
-      description: >
-        OpenID Connect SSO details. Must be set if and only if `sso_mode` is set to `OIDC_SSO`.
-        
-    - name: signInBehavior
-      value: object
-      description: >
-        Assertions about users assigned to an IdP will always be accepted from that IdP. This controls whether/when Google should redirect a user to the IdP. Unset (defaults) is the recommended configuration.
         
 ```
 </TabItem>
@@ -415,14 +415,14 @@ Updates an InboundSsoAssignment. The body of this request is the `inbound_sso_as
 ```sql
 UPDATE google.cloudidentity.inbound_sso_assignments
 SET 
-data__targetGroup = '{{ targetGroup }}',
-data__targetOrgUnit = '{{ targetOrgUnit }}',
-data__customer = '{{ customer }}',
-data__rank = {{ rank }},
-data__ssoMode = '{{ ssoMode }}',
-data__samlSsoInfo = '{{ samlSsoInfo }}',
 data__oidcSsoInfo = '{{ oidcSsoInfo }}',
-data__signInBehavior = '{{ signInBehavior }}'
+data__signInBehavior = '{{ signInBehavior }}',
+data__ssoMode = '{{ ssoMode }}',
+data__targetOrgUnit = '{{ targetOrgUnit }}',
+data__samlSsoInfo = '{{ samlSsoInfo }}',
+data__targetGroup = '{{ targetGroup }}',
+data__customer = '{{ customer }}',
+data__rank = {{ rank }}
 WHERE 
 inboundSsoAssignmentsId = '{{ inboundSsoAssignmentsId }}' --required
 AND updateMask = '{{ updateMask}}'

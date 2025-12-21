@@ -101,9 +101,9 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateConnectionsId"><code>privateConnectionsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists the private connection routes exchanged over a peering connection.</td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-networkPeeringsId"><code>networkPeeringsId</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td>Lists the network peering routes exchanged over a peering connection. NetworkPeering is a global resource and location can only be global.</td>
 </tr>
 </tbody>
 </table>
@@ -126,13 +126,18 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
-<tr id="parameter-privateConnectionsId">
-    <td><CopyableCode code="privateConnectionsId" /></td>
+<tr id="parameter-networkPeeringsId">
+    <td><CopyableCode code="networkPeeringsId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
 <tr id="parameter-projectsId">
     <td><CopyableCode code="projectsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-filter">
+    <td><CopyableCode code="filter" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -159,7 +164,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="list">
 
-Lists the private connection routes exchanged over a peering connection.
+Lists the network peering routes exchanged over a peering connection. NetworkPeering is a global resource and location can only be global.
 
 ```sql
 SELECT
@@ -172,9 +177,10 @@ type
 FROM google.vmwareengine.peering_routes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND privateConnectionsId = '{{ privateConnectionsId }}' -- required
-AND pageSize = '{{ pageSize }}'
+AND networkPeeringsId = '{{ networkPeeringsId }}' -- required
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>

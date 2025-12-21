@@ -166,8 +166,8 @@ Updates the VPCSC Config for the Project.
 ```sql
 UPDATE google.artifactregistry.vpcsc_config
 SET 
-data__name = '{{ name }}',
-data__vpcscPolicy = '{{ vpcscPolicy }}'
+data__vpcscPolicy = '{{ vpcscPolicy }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

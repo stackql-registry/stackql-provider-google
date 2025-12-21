@@ -224,7 +224,7 @@ The following methods are available for this resource:
     <td><a href="#projects_metrics_list"><CopyableCode code="projects_metrics_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists logs-based metrics.</td>
 </tr>
 <tr>
@@ -342,8 +342,8 @@ valueExtractor,
 version
 FROM google.logging.metrics
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -365,29 +365,29 @@ Creates a logs-based metric.
 
 ```sql
 INSERT INTO google.logging.metrics (
-data__name,
-data__description,
-data__filter,
-data__bucketName,
+data__bucketOptions,
 data__disabled,
-data__metricDescriptor,
+data__name,
+data__version,
+data__bucketName,
 data__valueExtractor,
 data__labelExtractors,
-data__bucketOptions,
-data__version,
+data__filter,
+data__description,
+data__metricDescriptor,
 projectsId
 )
 SELECT 
-'{{ name }}',
-'{{ description }}',
-'{{ filter }}',
-'{{ bucketName }}',
+'{{ bucketOptions }}',
 {{ disabled }},
-'{{ metricDescriptor }}',
+'{{ name }}',
+'{{ version }}',
+'{{ bucketName }}',
 '{{ valueExtractor }}',
 '{{ labelExtractors }}',
-'{{ bucketOptions }}',
-'{{ version }}',
+'{{ filter }}',
+'{{ description }}',
+'{{ metricDescriptor }}',
 '{{ projectsId }}'
 RETURNING
 name,
@@ -415,35 +415,31 @@ version
     - name: projectsId
       value: string
       description: Required parameter for the metrics resource.
-    - name: name
-      value: string
+    - name: bucketOptions
+      value: object
       description: >
-        Required. The client-assigned metric identifier. Examples: "error_count", "nginx/requests".Metric identifiers are limited to 100 characters and can include only the following characters: A-Z, a-z, 0-9, and the special characters _-.,+!*',()%/. The forward-slash character (/) denotes a hierarchy of name pieces, and it cannot be the first character of the name.This field is the [METRIC_ID] part of a metric resource name in the format "projects/PROJECT_ID/metrics/METRIC_ID". Example: If the resource name of a metric is "projects/my-project/metrics/nginx%2Frequests", this field's value is "nginx/requests".
-        
-    - name: description
-      value: string
-      description: >
-        Optional. A description of this metric, which is used in documentation. The maximum length of the description is 8000 characters.
-        
-    - name: filter
-      value: string
-      description: >
-        Required. An advanced logs filter (https://cloud.google.com/logging/docs/view/advanced_filters) which is used to match log entries. Example: "resource.type=gae_app AND severity>=ERROR" The maximum length of the filter is 20000 characters.
-        
-    - name: bucketName
-      value: string
-      description: >
-        Optional. The resource name of the Log Bucket that owns the Log Metric. Only Log Buckets in projects are supported. The bucket has to be in the same project as the metric.For example:projects/my-project/locations/global/buckets/my-bucketIf empty, then the Log Metric is considered a non-Bucket Log Metric.
+        Optional. The bucket_options are required when the logs-based metric is using a DISTRIBUTION value type and it describes the bucket boundaries used to create a histogram of the extracted values.
         
     - name: disabled
       value: boolean
       description: >
         Optional. If set to True, then this metric is disabled and it does not generate any points.
         
-    - name: metricDescriptor
-      value: object
+    - name: name
+      value: string
       description: >
-        Optional. The metric descriptor associated with the logs-based metric. If unspecified, it uses a default metric descriptor with a DELTA metric kind, INT64 value type, with no labels and a unit of "1". Such a metric counts the number of log entries matching the filter expression.The name, type, and description fields in the metric_descriptor are output only, and is constructed using the name and description field in the LogMetric.To create a logs-based metric that records a distribution of log values, a DELTA metric kind with a DISTRIBUTION value type must be used along with a value_extractor expression in the LogMetric.Each label in the metric descriptor must have a matching label name as the key and an extractor expression as the value in the label_extractors map.The metric_kind and value_type fields in the metric_descriptor cannot be updated once initially configured. New labels can be added in the metric_descriptor, but existing labels cannot be modified except for their description.
+        Required. The client-assigned metric identifier. Examples: "error_count", "nginx/requests".Metric identifiers are limited to 100 characters and can include only the following characters: A-Z, a-z, 0-9, and the special characters _-.,+!*',()%/. The forward-slash character (/) denotes a hierarchy of name pieces, and it cannot be the first character of the name.This field is the [METRIC_ID] part of a metric resource name in the format "projects/PROJECT_ID/metrics/METRIC_ID". Example: If the resource name of a metric is "projects/my-project/metrics/nginx%2Frequests", this field's value is "nginx/requests".
+        
+    - name: version
+      value: string
+      description: >
+        Deprecated. The API version that created or updated this metric. The v2 format is used by default and cannot be changed.
+        
+      valid_values: ['V2', 'V1']
+    - name: bucketName
+      value: string
+      description: >
+        Optional. The resource name of the Log Bucket that owns the Log Metric. Only Log Buckets in projects are supported. The bucket has to be in the same project as the metric.For example:projects/my-project/locations/global/buckets/my-bucketIf empty, then the Log Metric is considered a non-Bucket Log Metric.
         
     - name: valueExtractor
       value: string
@@ -455,17 +451,21 @@ version
       description: >
         Optional. A map from a label key string to an extractor expression which is used to extract data from a log entry field and assign as the label value. Each label key specified in the LabelDescriptor must have an associated extractor expression in this map. The syntax of the extractor expression is the same as for the value_extractor field.The extracted value is converted to the type defined in the label descriptor. If either the extraction or the type conversion fails, the label will have a default value. The default value for a string label is an empty string, for an integer label its 0, and for a boolean label its false.Note that there are upper bounds on the maximum number of labels and the number of active time series that are allowed in a project.
         
-    - name: bucketOptions
-      value: object
-      description: >
-        Optional. The bucket_options are required when the logs-based metric is using a DISTRIBUTION value type and it describes the bucket boundaries used to create a histogram of the extracted values.
-        
-    - name: version
+    - name: filter
       value: string
       description: >
-        Deprecated. The API version that created or updated this metric. The v2 format is used by default and cannot be changed.
+        Required. An advanced logs filter (https://cloud.google.com/logging/docs/view/advanced_filters) which is used to match log entries. Example: "resource.type=gae_app AND severity>=ERROR" The maximum length of the filter is 20000 characters.
         
-      valid_values: ['V2', 'V1']
+    - name: description
+      value: string
+      description: >
+        Optional. A description of this metric, which is used in documentation. The maximum length of the description is 8000 characters.
+        
+    - name: metricDescriptor
+      value: object
+      description: >
+        Optional. The metric descriptor associated with the logs-based metric. If unspecified, it uses a default metric descriptor with a DELTA metric kind, INT64 value type, with no labels and a unit of "1". Such a metric counts the number of log entries matching the filter expression.The name, type, and description fields in the metric_descriptor are output only, and is constructed using the name and description field in the LogMetric.To create a logs-based metric that records a distribution of log values, a DELTA metric kind with a DISTRIBUTION value type must be used along with a value_extractor expression in the LogMetric.Each label in the metric descriptor must have a matching label name as the key and an extractor expression as the value in the label_extractors map.The metric_kind and value_type fields in the metric_descriptor cannot be updated once initially configured. New labels can be added in the metric_descriptor, but existing labels cannot be modified except for their description.
+        
 ```
 </TabItem>
 </Tabs>
@@ -486,16 +486,16 @@ Creates or updates a logs-based metric.
 ```sql
 REPLACE google.logging.metrics
 SET 
-data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__filter = '{{ filter }}',
-data__bucketName = '{{ bucketName }}',
+data__bucketOptions = '{{ bucketOptions }}',
 data__disabled = {{ disabled }},
-data__metricDescriptor = '{{ metricDescriptor }}',
+data__name = '{{ name }}',
+data__version = '{{ version }}',
+data__bucketName = '{{ bucketName }}',
 data__valueExtractor = '{{ valueExtractor }}',
 data__labelExtractors = '{{ labelExtractors }}',
-data__bucketOptions = '{{ bucketOptions }}',
-data__version = '{{ version }}'
+data__filter = '{{ filter }}',
+data__description = '{{ description }}',
+data__metricDescriptor = '{{ metricDescriptor }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND metricsId = '{{ metricsId }}' --required

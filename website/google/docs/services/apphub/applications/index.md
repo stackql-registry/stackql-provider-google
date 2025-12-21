@@ -184,21 +184,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Applications in a host project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-applicationId"><code>applicationId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-applicationId"><code>applicationId</code></a></td>
     <td>Creates an Application in a host project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-applicationsId"><code>applicationsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates an Application in a host project and location.</td>
 </tr>
 <tr>
@@ -326,10 +326,10 @@ updateTime
 FROM google.apphub.applications
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -353,24 +353,24 @@ Creates an Application in a host project and location.
 INSERT INTO google.apphub.applications (
 data__name,
 data__displayName,
-data__description,
 data__attributes,
 data__scope,
+data__description,
 projectsId,
 locationsId,
-applicationId,
-requestId
+requestId,
+applicationId
 )
 SELECT 
 '{{ name }}',
 '{{ displayName }}',
-'{{ description }}',
 '{{ attributes }}',
 '{{ scope }}',
+'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ applicationId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ applicationId }}'
 RETURNING
 name,
 done,
@@ -402,11 +402,6 @@ response
       description: >
         Optional. User-defined name for the Application. Can have a maximum length of 63 characters.
         
-    - name: description
-      value: string
-      description: >
-        Optional. User-defined description of an Application. Can have a maximum length of 2048 characters.
-        
     - name: attributes
       value: object
       description: >
@@ -417,9 +412,14 @@ response
       description: >
         Required. Immutable. Defines what data can be included into this Application. Limits which Services and Workloads can be registered.
         
-    - name: applicationId
+    - name: description
       value: string
+      description: >
+        Optional. User-defined description of an Application. Can have a maximum length of 2048 characters.
+        
     - name: requestId
+      value: string
+    - name: applicationId
       value: string
 ```
 </TabItem>
@@ -443,15 +443,15 @@ UPDATE google.apphub.applications
 SET 
 data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
 data__attributes = '{{ attributes }}',
-data__scope = '{{ scope }}'
+data__scope = '{{ scope }}',
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND applicationsId = '{{ applicationsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

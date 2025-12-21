@@ -254,7 +254,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists IndexEndpoints in a Location.</td>
 </tr>
 <tr>
@@ -279,6 +279,13 @@ The following methods are available for this resource:
     <td>Deletes an IndexEndpoint.</td>
 </tr>
 <tr>
+    <td><a href="#mutate_deployed_index"><CopyableCode code="mutate_deployed_index" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-indexEndpointsId"><code>indexEndpointsId</code></a></td>
+    <td></td>
+    <td>Update an existing DeployedIndex under an IndexEndpoint.</td>
+</tr>
+<tr>
     <td><a href="#deploy_index"><CopyableCode code="deploy_index" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-indexEndpointsId"><code>indexEndpointsId</code></a></td>
@@ -293,11 +300,11 @@ The following methods are available for this resource:
     <td>Undeploys an Index from an IndexEndpoint, removing a DeployedIndex from it, and freeing all resources it's using.</td>
 </tr>
 <tr>
-    <td><a href="#mutate_deployed_index"><CopyableCode code="mutate_deployed_index" /></a></td>
+    <td><a href="#read_index_datapoints"><CopyableCode code="read_index_datapoints" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-indexEndpointsId"><code>indexEndpointsId</code></a></td>
     <td></td>
-    <td>Update an existing DeployedIndex under an IndexEndpoint.</td>
+    <td>Reads the datapoints/vectors of the given IDs. A maximum of 1000 datapoints can be retrieved in a batch.</td>
 </tr>
 <tr>
     <td><a href="#find_neighbors"><CopyableCode code="find_neighbors" /></a></td>
@@ -305,13 +312,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-indexEndpointsId"><code>indexEndpointsId</code></a></td>
     <td></td>
     <td>Finds the nearest neighbors of each vector within the request.</td>
-</tr>
-<tr>
-    <td><a href="#read_index_datapoints"><CopyableCode code="read_index_datapoints" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-indexEndpointsId"><code>indexEndpointsId</code></a></td>
-    <td></td>
-    <td>Reads the datapoints/vectors of the given IDs. A maximum of 1000 datapoints can be retrieved in a batch.</td>
 </tr>
 </tbody>
 </table>
@@ -435,10 +435,10 @@ updateTime
 FROM google.aiplatform.index_endpoints
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 AND readMask = '{{ readMask }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -460,28 +460,28 @@ Creates an IndexEndpoint.
 
 ```sql
 INSERT INTO google.aiplatform.index_endpoints (
-data__displayName,
-data__description,
-data__etag,
-data__labels,
-data__network,
-data__enablePrivateServiceConnect,
-data__privateServiceConnectConfig,
 data__publicEndpointEnabled,
+data__etag,
+data__enablePrivateServiceConnect,
+data__description,
+data__displayName,
+data__network,
+data__privateServiceConnectConfig,
 data__encryptionSpec,
+data__labels,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ displayName }}',
-'{{ description }}',
-'{{ etag }}',
-'{{ labels }}',
-'{{ network }}',
-{{ enablePrivateServiceConnect }},
-'{{ privateServiceConnectConfig }}',
 {{ publicEndpointEnabled }},
+'{{ etag }}',
+{{ enablePrivateServiceConnect }},
+'{{ description }}',
+'{{ displayName }}',
+'{{ network }}',
+'{{ privateServiceConnectConfig }}',
 '{{ encryptionSpec }}',
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -505,50 +505,50 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the index_endpoints resource.
-    - name: displayName
-      value: string
+    - name: publicEndpointEnabled
+      value: boolean
       description: >
-        Required. The display name of the IndexEndpoint. The name can be up to 128 characters long and can consist of any UTF-8 characters.
-        
-    - name: description
-      value: string
-      description: >
-        The description of the IndexEndpoint.
+        Optional. If true, the deployed index will be accessible through public endpoint.
         
     - name: etag
       value: string
       description: >
         Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
         
-    - name: labels
-      value: object
+    - name: enablePrivateServiceConnect
+      value: boolean
       description: >
-        The labels with user-defined metadata to organize your IndexEndpoints. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
+        Optional. Deprecated: If true, expose the IndexEndpoint via private service connect. Only one of the fields, network or enable_private_service_connect, can be set.
+        
+    - name: description
+      value: string
+      description: >
+        The description of the IndexEndpoint.
+        
+    - name: displayName
+      value: string
+      description: >
+        Required. The display name of the IndexEndpoint. The name can be up to 128 characters long and can consist of any UTF-8 characters.
         
     - name: network
       value: string
       description: >
         Optional. The full name of the Google Compute Engine [network](https://cloud.google.com/compute/docs/networks-and-firewalls#networks) to which the IndexEndpoint should be peered. Private services access must already be configured for the network. If left unspecified, the Endpoint is not peered with any network. network and private_service_connect_config are mutually exclusive. [Format](https://cloud.google.com/compute/docs/reference/rest/v1/networks/insert): `projects/{project}/global/networks/{network}`. Where {project} is a project number, as in '12345', and {network} is network name.
         
-    - name: enablePrivateServiceConnect
-      value: boolean
-      description: >
-        Optional. Deprecated: If true, expose the IndexEndpoint via private service connect. Only one of the fields, network or enable_private_service_connect, can be set.
-        
     - name: privateServiceConnectConfig
       value: object
       description: >
         Optional. Configuration for private service connect. network and private_service_connect_config are mutually exclusive.
         
-    - name: publicEndpointEnabled
-      value: boolean
-      description: >
-        Optional. If true, the deployed index will be accessible through public endpoint.
-        
     - name: encryptionSpec
       value: object
       description: >
         Immutable. Customer-managed encryption key spec for an IndexEndpoint. If set, this IndexEndpoint and all sub-resources of this IndexEndpoint will be secured by this key.
+        
+    - name: labels
+      value: object
+      description: >
+        The labels with user-defined metadata to organize your IndexEndpoints. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
         
 ```
 </TabItem>
@@ -570,15 +570,15 @@ Updates an IndexEndpoint.
 ```sql
 UPDATE google.aiplatform.index_endpoints
 SET 
-data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
-data__etag = '{{ etag }}',
-data__labels = '{{ labels }}',
-data__network = '{{ network }}',
-data__enablePrivateServiceConnect = {{ enablePrivateServiceConnect }},
-data__privateServiceConnectConfig = '{{ privateServiceConnectConfig }}',
 data__publicEndpointEnabled = {{ publicEndpointEnabled }},
-data__encryptionSpec = '{{ encryptionSpec }}'
+data__etag = '{{ etag }}',
+data__enablePrivateServiceConnect = {{ enablePrivateServiceConnect }},
+data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
+data__network = '{{ network }}',
+data__privateServiceConnectConfig = '{{ privateServiceConnectConfig }}',
+data__encryptionSpec = '{{ encryptionSpec }}',
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -632,15 +632,42 @@ AND indexEndpointsId = '{{ indexEndpointsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="deploy_index"
+    defaultValue="mutate_deployed_index"
     values={[
+        { label: 'mutate_deployed_index', value: 'mutate_deployed_index' },
         { label: 'deploy_index', value: 'deploy_index' },
         { label: 'undeploy_index', value: 'undeploy_index' },
-        { label: 'mutate_deployed_index', value: 'mutate_deployed_index' },
-        { label: 'find_neighbors', value: 'find_neighbors' },
-        { label: 'read_index_datapoints', value: 'read_index_datapoints' }
+        { label: 'read_index_datapoints', value: 'read_index_datapoints' },
+        { label: 'find_neighbors', value: 'find_neighbors' }
     ]}
 >
+<TabItem value="mutate_deployed_index">
+
+Update an existing DeployedIndex under an IndexEndpoint.
+
+```sql
+EXEC google.aiplatform.index_endpoints.mutate_deployed_index 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@indexEndpointsId='{{ indexEndpointsId }}' --required 
+@@json=
+'{
+"automaticResources": "{{ automaticResources }}", 
+"enableDatapointUpsertLogging": {{ enableDatapointUpsertLogging }}, 
+"index": "{{ index }}", 
+"dedicatedResources": "{{ dedicatedResources }}", 
+"deploymentGroup": "{{ deploymentGroup }}", 
+"deploymentTier": "{{ deploymentTier }}", 
+"reservedIpRanges": "{{ reservedIpRanges }}", 
+"enableAccessLogging": {{ enableAccessLogging }}, 
+"displayName": "{{ displayName }}", 
+"deployedIndexAuthConfig": "{{ deployedIndexAuthConfig }}", 
+"id": "{{ id }}", 
+"pscAutomationConfigs": "{{ pscAutomationConfigs }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="deploy_index">
 
 Deploys an Index into this IndexEndpoint, creating a DeployedIndex within it.
@@ -673,29 +700,19 @@ EXEC google.aiplatform.index_endpoints.undeploy_index
 ;
 ```
 </TabItem>
-<TabItem value="mutate_deployed_index">
+<TabItem value="read_index_datapoints">
 
-Update an existing DeployedIndex under an IndexEndpoint.
+Reads the datapoints/vectors of the given IDs. A maximum of 1000 datapoints can be retrieved in a batch.
 
 ```sql
-EXEC google.aiplatform.index_endpoints.mutate_deployed_index 
+EXEC google.aiplatform.index_endpoints.read_index_datapoints 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @indexEndpointsId='{{ indexEndpointsId }}' --required 
 @@json=
 '{
-"id": "{{ id }}", 
-"index": "{{ index }}", 
-"displayName": "{{ displayName }}", 
-"automaticResources": "{{ automaticResources }}", 
-"dedicatedResources": "{{ dedicatedResources }}", 
-"enableAccessLogging": {{ enableAccessLogging }}, 
-"enableDatapointUpsertLogging": {{ enableDatapointUpsertLogging }}, 
-"deployedIndexAuthConfig": "{{ deployedIndexAuthConfig }}", 
-"reservedIpRanges": "{{ reservedIpRanges }}", 
-"deploymentGroup": "{{ deploymentGroup }}", 
-"deploymentTier": "{{ deploymentTier }}", 
-"pscAutomationConfigs": "{{ pscAutomationConfigs }}"
+"deployedIndexId": "{{ deployedIndexId }}", 
+"ids": "{{ ids }}"
 }'
 ;
 ```
@@ -712,25 +729,8 @@ EXEC google.aiplatform.index_endpoints.find_neighbors
 @@json=
 '{
 "deployedIndexId": "{{ deployedIndexId }}", 
-"queries": "{{ queries }}", 
-"returnFullDatapoint": {{ returnFullDatapoint }}
-}'
-;
-```
-</TabItem>
-<TabItem value="read_index_datapoints">
-
-Reads the datapoints/vectors of the given IDs. A maximum of 1000 datapoints can be retrieved in a batch.
-
-```sql
-EXEC google.aiplatform.index_endpoints.read_index_datapoints 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@indexEndpointsId='{{ indexEndpointsId }}' --required 
-@@json=
-'{
-"deployedIndexId": "{{ deployedIndexId }}", 
-"ids": "{{ ids }}"
+"returnFullDatapoint": {{ returnFullDatapoint }}, 
+"queries": "{{ queries }}"
 }'
 ;
 ```

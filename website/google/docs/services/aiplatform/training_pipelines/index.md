@@ -264,7 +264,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td><a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists TrainingPipelines in a Location.</td>
 </tr>
 <tr>
@@ -407,10 +407,10 @@ updateTime
 FROM google.aiplatform.training_pipelines
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND readMask = '{{ readMask }}'
+AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND readMask = '{{ readMask }}'
 ;
 ```
 </TabItem>
@@ -432,28 +432,28 @@ Creates a TrainingPipeline. A created TrainingPipeline right away will be attemp
 
 ```sql
 INSERT INTO google.aiplatform.training_pipelines (
-data__displayName,
-data__inputDataConfig,
-data__trainingTaskDefinition,
-data__trainingTaskInputs,
-data__modelToUpload,
 data__modelId,
-data__parentModel,
 data__labels,
+data__trainingTaskDefinition,
+data__inputDataConfig,
 data__encryptionSpec,
+data__displayName,
+data__trainingTaskInputs,
+data__parentModel,
+data__modelToUpload,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ displayName }}',
-'{{ inputDataConfig }}',
-'{{ trainingTaskDefinition }}',
-'{{ trainingTaskInputs }}',
-'{{ modelToUpload }}',
 '{{ modelId }}',
-'{{ parentModel }}',
 '{{ labels }}',
+'{{ trainingTaskDefinition }}',
+'{{ inputDataConfig }}',
 '{{ encryptionSpec }}',
+'{{ displayName }}',
+'{{ trainingTaskInputs }}',
+'{{ parentModel }}',
+'{{ modelToUpload }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -489,50 +489,50 @@ updateTime
     - name: locationsId
       value: string
       description: Required parameter for the training_pipelines resource.
-    - name: displayName
-      value: string
-      description: >
-        Required. The user-defined name of this TrainingPipeline.
-        
-    - name: inputDataConfig
-      value: object
-      description: >
-        Specifies Vertex AI owned input data that may be used for training the Model. The TrainingPipeline's training_task_definition should make clear whether this config is used and if there are any special requirements on how it should be filled. If nothing about this config is mentioned in the training_task_definition, then it should be assumed that the TrainingPipeline does not depend on this configuration.
-        
-    - name: trainingTaskDefinition
-      value: string
-      description: >
-        Required. A Google Cloud Storage path to the YAML file that defines the training task which is responsible for producing the model artifact, and may also include additional auxiliary work. The definition files that can be used here are found in gs://google-cloud-aiplatform/schema/trainingjob/definition/. Note: The URI given on output will be immutable and probably different, including the URI scheme, than the one given on input. The output URI will point to a location where the user only has a read access.
-        
-    - name: trainingTaskInputs
-      value: any
-      description: >
-        Required. The training task's parameter(s), as specified in the training_task_definition's `inputs`.
-        
-    - name: modelToUpload
-      value: object
-      description: >
-        A trained machine learning Model.
-        
     - name: modelId
       value: string
       description: >
         Optional. The ID to use for the uploaded Model, which will become the final component of the model resource name. This value may be up to 63 characters, and valid characters are `[a-z0-9_-]`. The first character cannot be a number or hyphen.
-        
-    - name: parentModel
-      value: string
-      description: >
-        Optional. When specify this field, the `model_to_upload` will not be uploaded as a new model, instead, it will become a new version of this `parent_model`.
         
     - name: labels
       value: object
       description: >
         The labels with user-defined metadata to organize TrainingPipelines. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
         
+    - name: trainingTaskDefinition
+      value: string
+      description: >
+        Required. A Google Cloud Storage path to the YAML file that defines the training task which is responsible for producing the model artifact, and may also include additional auxiliary work. The definition files that can be used here are found in gs://google-cloud-aiplatform/schema/trainingjob/definition/. Note: The URI given on output will be immutable and probably different, including the URI scheme, than the one given on input. The output URI will point to a location where the user only has a read access.
+        
+    - name: inputDataConfig
+      value: object
+      description: >
+        Specifies Vertex AI owned input data that may be used for training the Model. The TrainingPipeline's training_task_definition should make clear whether this config is used and if there are any special requirements on how it should be filled. If nothing about this config is mentioned in the training_task_definition, then it should be assumed that the TrainingPipeline does not depend on this configuration.
+        
     - name: encryptionSpec
       value: object
       description: >
         Customer-managed encryption key spec for a TrainingPipeline. If set, this TrainingPipeline will be secured by this key. Note: Model trained by this TrainingPipeline is also secured by this key if model_to_upload is not set separately.
+        
+    - name: displayName
+      value: string
+      description: >
+        Required. The user-defined name of this TrainingPipeline.
+        
+    - name: trainingTaskInputs
+      value: any
+      description: >
+        Required. The training task's parameter(s), as specified in the training_task_definition's `inputs`.
+        
+    - name: parentModel
+      value: string
+      description: >
+        Optional. When specify this field, the `model_to_upload` will not be uploaded as a new model, instead, it will become a new version of this `parent_model`.
+        
+    - name: modelToUpload
+      value: object
+      description: >
+        A trained machine learning Model.
         
 ```
 </TabItem>

@@ -181,11 +181,11 @@ The following methods are available for this resource:
     <td>Deploys an issue model. Returns an error if a model is already deployed. An issue model can only be used in analysis after it has been deployed.</td>
 </tr>
 <tr>
-    <td><a href="#undeploy"><CopyableCode code="undeploy" /></a></td>
+    <td><a href="#calculate_issue_model_stats"><CopyableCode code="calculate_issue_model_stats" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-issueModelsId"><code>issueModelsId</code></a></td>
     <td></td>
-    <td>Undeploys an issue model. An issue model can not be used in analysis after it has been undeployed.</td>
+    <td>Gets an issue model's statistics.</td>
 </tr>
 <tr>
     <td><a href="#export"><CopyableCode code="export" /></a></td>
@@ -202,11 +202,11 @@ The following methods are available for this resource:
     <td>Imports an issue model from a Cloud Storage bucket.</td>
 </tr>
 <tr>
-    <td><a href="#calculate_issue_model_stats"><CopyableCode code="calculate_issue_model_stats" /></a></td>
+    <td><a href="#undeploy"><CopyableCode code="undeploy" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-issueModelsId"><code>issueModelsId</code></a></td>
     <td></td>
-    <td>Gets an issue model's statistics.</td>
+    <td>Undeploys an issue model. An issue model can not be used in analysis after it has been undeployed.</td>
 </tr>
 </tbody>
 </table>
@@ -310,20 +310,20 @@ Creates an issue model.
 
 ```sql
 INSERT INTO google.contactcenterinsights.issue_models (
+data__modelType,
 data__name,
+data__languageCode,
 data__displayName,
 data__inputDataConfig,
-data__modelType,
-data__languageCode,
 projectsId,
 locationsId
 )
 SELECT 
+'{{ modelType }}',
 '{{ name }}',
+'{{ languageCode }}',
 '{{ displayName }}',
 '{{ inputDataConfig }}',
-'{{ modelType }}',
-'{{ languageCode }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -347,10 +347,21 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the issue_models resource.
+    - name: modelType
+      value: string
+      description: >
+        Type of the model.
+        
+      valid_values: ['MODEL_TYPE_UNSPECIFIED', 'TYPE_V1', 'TYPE_V2']
     - name: name
       value: string
       description: >
         Immutable. The resource name of the issue model. Format: projects/{project}/locations/{location}/issueModels/{issue_model}
+        
+    - name: languageCode
+      value: string
+      description: >
+        Language of the model.
         
     - name: displayName
       value: string
@@ -361,17 +372,6 @@ response
       value: object
       description: >
         Configs for the input data that used to create the issue model.
-        
-    - name: modelType
-      value: string
-      description: >
-        Type of the model.
-        
-      valid_values: ['MODEL_TYPE_UNSPECIFIED', 'TYPE_V1', 'TYPE_V2']
-    - name: languageCode
-      value: string
-      description: >
-        Language of the model.
         
 ```
 </TabItem>
@@ -393,11 +393,11 @@ Updates an issue model.
 ```sql
 UPDATE google.contactcenterinsights.issue_models
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__inputDataConfig = '{{ inputDataConfig }}',
 data__modelType = '{{ modelType }}',
-data__languageCode = '{{ languageCode }}'
+data__name = '{{ name }}',
+data__languageCode = '{{ languageCode }}',
+data__displayName = '{{ displayName }}',
+data__inputDataConfig = '{{ inputDataConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -448,10 +448,10 @@ AND issueModelsId = '{{ issueModelsId }}' --required
     defaultValue="deploy"
     values={[
         { label: 'deploy', value: 'deploy' },
-        { label: 'undeploy', value: 'undeploy' },
+        { label: 'calculate_issue_model_stats', value: 'calculate_issue_model_stats' },
         { label: 'export', value: 'export' },
         { label: 'import', value: 'import' },
-        { label: 'calculate_issue_model_stats', value: 'calculate_issue_model_stats' }
+        { label: 'undeploy', value: 'undeploy' }
     ]}
 >
 <TabItem value="deploy">
@@ -470,19 +470,15 @@ EXEC google.contactcenterinsights.issue_models.deploy
 ;
 ```
 </TabItem>
-<TabItem value="undeploy">
+<TabItem value="calculate_issue_model_stats">
 
-Undeploys an issue model. An issue model can not be used in analysis after it has been undeployed.
+Gets an issue model's statistics.
 
 ```sql
-EXEC google.contactcenterinsights.issue_models.undeploy 
+EXEC google.contactcenterinsights.issue_models.calculate_issue_model_stats 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@issueModelsId='{{ issueModelsId }}' --required 
-@@json=
-'{
-"name": "{{ name }}"
-}'
+@issueModelsId='{{ issueModelsId }}' --required
 ;
 ```
 </TabItem>
@@ -497,8 +493,8 @@ EXEC google.contactcenterinsights.issue_models.export
 @issueModelsId='{{ issueModelsId }}' --required 
 @@json=
 '{
-"gcsDestination": "{{ gcsDestination }}", 
-"name": "{{ name }}"
+"name": "{{ name }}", 
+"gcsDestination": "{{ gcsDestination }}"
 }'
 ;
 ```
@@ -520,15 +516,19 @@ EXEC google.contactcenterinsights.issue_models.import
 ;
 ```
 </TabItem>
-<TabItem value="calculate_issue_model_stats">
+<TabItem value="undeploy">
 
-Gets an issue model's statistics.
+Undeploys an issue model. An issue model can not be used in analysis after it has been undeployed.
 
 ```sql
-EXEC google.contactcenterinsights.issue_models.calculate_issue_model_stats 
+EXEC google.contactcenterinsights.issue_models.undeploy 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@issueModelsId='{{ issueModelsId }}' --required
+@issueModelsId='{{ issueModelsId }}' --required 
+@@json=
+'{
+"name": "{{ name }}"
+}'
 ;
 ```
 </TabItem>

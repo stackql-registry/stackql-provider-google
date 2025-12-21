@@ -65,6 +65,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The creation time of the object.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="customizationRules" /></td>
+    <td><code>array</code></td>
+    <td>Output only. The customization rules for the object. These rules are derived from the parent Stream's `rule_sets` and represent the intended configuration for the object.</td>
+</tr>
+<tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
     <td>Required. Display name.</td>
@@ -112,6 +117,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The creation time of the object.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="customizationRules" /></td>
+    <td><code>array</code></td>
+    <td>Output only. The customization rules for the object. These rules are derived from the parent Stream's `rule_sets` and represent the intended configuration for the object.</td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
@@ -255,6 +265,7 @@ SELECT
 name,
 backfillJob,
 createTime,
+customizationRules,
 displayName,
 errors,
 sourceObject,
@@ -276,6 +287,7 @@ SELECT
 name,
 backfillJob,
 createTime,
+customizationRules,
 displayName,
 errors,
 sourceObject,
@@ -327,7 +339,11 @@ EXEC google.datastream.objects.start_backfill_job
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @streamsId='{{ streamsId }}' --required, 
-@objectsId='{{ objectsId }}' --required
+@objectsId='{{ objectsId }}' --required 
+@@json=
+'{
+"eventFilter": "{{ eventFilter }}"
+}'
 ;
 ```
 </TabItem>

@@ -70,6 +70,16 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Cluster created from backup. (id: BackupSource)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="backupdrBackupSource" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Cluster created from a BackupDR backup. (id: BackupDrBackupSource)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="backupdrInfo" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Output only information about BackupDR protection for this cluster. (id: BackupDrInfo)</td>
+</tr>
+<tr>
     <td><CopyableCode code="cloudsqlBackupRunSource" /></td>
     <td><code>object</code></td>
     <td>Output only. Cluster created from CloudSQL snapshot. (id: CloudSQLBackupRunSource)</td>
@@ -98,6 +108,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="databaseVersion" /></td>
     <td><code>string</code></td>
     <td>Optional. The database engine major version. This is an optional field and it is populated at the Cluster creation time. If a database version is not supplied at cluster creation time, then a default database version will be used.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="dataplexConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Configuration for Dataplex integration. (id: DataplexConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="deleteTime" /></td>
@@ -143,6 +158,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="maintenanceUpdatePolicy" /></td>
     <td><code>object</code></td>
     <td>Optional. The maintenance update policy determines when to allow or deny updates. (id: MaintenanceUpdatePolicy)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="maintenanceVersionSelectionPolicy" /></td>
+    <td><code>string</code></td>
+    <td>Input only. Policy to use to automatically select the maintenance version to which to update the cluster's instances.</td>
 </tr>
 <tr>
     <td><CopyableCode code="migrationSource" /></td>
@@ -254,6 +274,16 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Cluster created from backup. (id: BackupSource)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="backupdrBackupSource" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Cluster created from a BackupDR backup. (id: BackupDrBackupSource)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="backupdrInfo" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Output only information about BackupDR protection for this cluster. (id: BackupDrInfo)</td>
+</tr>
+<tr>
     <td><CopyableCode code="cloudsqlBackupRunSource" /></td>
     <td><code>object</code></td>
     <td>Output only. Cluster created from CloudSQL snapshot. (id: CloudSQLBackupRunSource)</td>
@@ -282,6 +312,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="databaseVersion" /></td>
     <td><code>string</code></td>
     <td>Optional. The database engine major version. This is an optional field and it is populated at the Cluster creation time. If a database version is not supplied at cluster creation time, then a default database version will be used.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="dataplexConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Configuration for Dataplex integration. (id: DataplexConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="deleteTime" /></td>
@@ -327,6 +362,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="maintenanceUpdatePolicy" /></td>
     <td><code>object</code></td>
     <td>Optional. The maintenance update policy determines when to allow or deny updates. (id: MaintenanceUpdatePolicy)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="maintenanceVersionSelectionPolicy" /></td>
+    <td><code>string</code></td>
+    <td>Input only. Policy to use to automatically select the maintenance version to which to update the cluster's instances.</td>
 </tr>
 <tr>
     <td><CopyableCode code="migrationSource" /></td>
@@ -620,12 +660,15 @@ name,
 annotations,
 automatedBackupPolicy,
 backupSource,
+backupdrBackupSource,
+backupdrInfo,
 cloudsqlBackupRunSource,
 clusterType,
 continuousBackupConfig,
 continuousBackupInfo,
 createTime,
 databaseVersion,
+dataplexConfig,
 deleteTime,
 displayName,
 encryptionConfig,
@@ -635,6 +678,7 @@ initialUser,
 labels,
 maintenanceSchedule,
 maintenanceUpdatePolicy,
+maintenanceVersionSelectionPolicy,
 migrationSource,
 network,
 networkConfig,
@@ -668,12 +712,15 @@ name,
 annotations,
 automatedBackupPolicy,
 backupSource,
+backupdrBackupSource,
+backupdrInfo,
 cloudsqlBackupRunSource,
 clusterType,
 continuousBackupConfig,
 continuousBackupInfo,
 createTime,
 databaseVersion,
+dataplexConfig,
 deleteTime,
 displayName,
 encryptionConfig,
@@ -683,6 +730,7 @@ initialUser,
 labels,
 maintenanceSchedule,
 maintenanceUpdatePolicy,
+maintenanceVersionSelectionPolicy,
 migrationSource,
 network,
 networkConfig,
@@ -726,6 +774,7 @@ Creates a new Cluster in a given project and location.
 
 ```sql
 INSERT INTO google.alloydb.clusters (
+data__maintenanceVersionSelectionPolicy,
 data__displayName,
 data__labels,
 data__databaseVersion,
@@ -743,6 +792,7 @@ data__pscConfig,
 data__maintenanceUpdatePolicy,
 data__subscriptionType,
 data__tags,
+data__dataplexConfig,
 projectsId,
 locationsId,
 clusterId,
@@ -750,6 +800,7 @@ requestId,
 validateOnly
 )
 SELECT 
+'{{ maintenanceVersionSelectionPolicy }}',
 '{{ displayName }}',
 '{{ labels }}',
 '{{ databaseVersion }}',
@@ -767,6 +818,7 @@ SELECT
 '{{ maintenanceUpdatePolicy }}',
 '{{ subscriptionType }}',
 '{{ tags }}',
+'{{ dataplexConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ clusterId }}',
@@ -793,6 +845,12 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the clusters resource.
+    - name: maintenanceVersionSelectionPolicy
+      value: string
+      description: >
+        Input only. Policy to use to automatically select the maintenance version to which to update the cluster's instances.
+        
+      valid_values: ['MAINTENANCE_VERSION_SELECTION_POLICY_UNSPECIFIED', 'MAINTENANCE_VERSION_SELECTION_POLICY_LATEST', 'MAINTENANCE_VERSION_SELECTION_POLICY_DEFAULT']
     - name: displayName
       value: string
       description: >
@@ -808,7 +866,7 @@ response
       description: >
         Optional. The database engine major version. This is an optional field and it is populated at the Cluster creation time. If a database version is not supplied at cluster creation time, then a default database version will be used.
         
-      valid_values: ['DATABASE_VERSION_UNSPECIFIED', 'POSTGRES_13', 'POSTGRES_14', 'POSTGRES_15', 'POSTGRES_16']
+      valid_values: ['DATABASE_VERSION_UNSPECIFIED', 'POSTGRES_13', 'POSTGRES_14', 'POSTGRES_15', 'POSTGRES_16', 'POSTGRES_17']
     - name: networkConfig
       value: object
       description: >
@@ -880,6 +938,11 @@ response
       description: >
         Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: ``` "123/environment": "production", "123/costCenter": "marketing" ```
         
+    - name: dataplexConfig
+      value: object
+      description: >
+        Optional. Configuration for Dataplex integration.
+        
     - name: clusterId
       value: string
     - name: requestId
@@ -906,6 +969,7 @@ Updates the parameters of a single Cluster.
 ```sql
 UPDATE google.alloydb.clusters
 SET 
+data__maintenanceVersionSelectionPolicy = '{{ maintenanceVersionSelectionPolicy }}',
 data__displayName = '{{ displayName }}',
 data__labels = '{{ labels }}',
 data__databaseVersion = '{{ databaseVersion }}',
@@ -922,7 +986,8 @@ data__secondaryConfig = '{{ secondaryConfig }}',
 data__pscConfig = '{{ pscConfig }}',
 data__maintenanceUpdatePolicy = '{{ maintenanceUpdatePolicy }}',
 data__subscriptionType = '{{ subscriptionType }}',
-data__tags = '{{ tags }}'
+data__tags = '{{ tags }}',
+data__dataplexConfig = '{{ dataplexConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -1105,6 +1170,8 @@ EXEC google.alloydb.clusters.restore
 '{
 "backupSource": "{{ backupSource }}", 
 "continuousBackupSource": "{{ continuousBackupSource }}", 
+"backupdrBackupSource": "{{ backupdrBackupSource }}", 
+"backupdrPitrSource": "{{ backupdrPitrSource }}", 
 "clusterId": "{{ clusterId }}", 
 "cluster": "{{ cluster }}", 
 "requestId": "{{ requestId }}", 

@@ -257,16 +257,16 @@ Creates a subscription to an API product.
 
 ```sql
 INSERT INTO google.apigee.subscriptions (
-data__apiproduct,
 data__startTime,
 data__endTime,
+data__apiproduct,
 organizationsId,
 developersId
 )
 SELECT 
-'{{ apiproduct }}',
 '{{ startTime }}',
 '{{ endTime }}',
+'{{ apiproduct }}',
 '{{ organizationsId }}',
 '{{ developersId }}'
 RETURNING
@@ -291,11 +291,6 @@ startTime
     - name: developersId
       value: string
       description: Required parameter for the subscriptions resource.
-    - name: apiproduct
-      value: string
-      description: >
-        Name of the API product for which the developer is purchasing a subscription.
-        
     - name: startTime
       value: string
       description: >
@@ -305,6 +300,11 @@ startTime
       value: string
       description: >
         Time when the API product subscription ends in milliseconds since epoch.
+        
+    - name: apiproduct
+      value: string
+      description: >
+        Name of the API product for which the developer is purchasing a subscription.
         
 ```
 </TabItem>

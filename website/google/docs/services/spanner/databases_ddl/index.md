@@ -90,7 +90,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a></td>
     <td></td>
-    <td>Updates the schema of a Cloud Spanner database by creating/altering/dropping tables, columns, indexes, etc. The returned long-running operation will have a name of the format `/operations/` and can be used to track execution of the schema change(s). The metadata field type is UpdateDatabaseDdlMetadata. The operation has no response.</td>
+    <td>Updates the schema of a Cloud Spanner database by creating/altering/dropping tables, columns, indexes, etc. The returned long-running operation will have a name of the format `/operations/` and can be used to track execution of the schema changes. The metadata field type is UpdateDatabaseDdlMetadata. The operation has no response.</td>
 </tr>
 </tbody>
 </table>
@@ -162,13 +162,13 @@ AND databasesId = '{{ databasesId }}' -- required
 >
 <TabItem value="projects_instances_databases_update_ddl">
 
-Updates the schema of a Cloud Spanner database by creating/altering/dropping tables, columns, indexes, etc. The returned long-running operation will have a name of the format `/operations/` and can be used to track execution of the schema change(s). The metadata field type is UpdateDatabaseDdlMetadata. The operation has no response.
+Updates the schema of a Cloud Spanner database by creating/altering/dropping tables, columns, indexes, etc. The returned long-running operation will have a name of the format `/operations/` and can be used to track execution of the schema changes. The metadata field type is UpdateDatabaseDdlMetadata. The operation has no response.
 
 ```sql
 UPDATE google.spanner.databases_ddl
 SET 
-data__statements = '{{ statements }}',
 data__operationId = '{{ operationId }}',
+data__statements = '{{ statements }}',
 data__protoDescriptors = '{{ protoDescriptors }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

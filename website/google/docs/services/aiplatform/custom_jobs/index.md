@@ -77,7 +77,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>Output only. Only populated when job's state is `JOB_STATE_FAILED` or `JOB_STATE_CANCELLED`. (id: GoogleRpcStatus)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: GoogleRpcStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="jobSpec" /></td>
@@ -161,7 +161,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>Output only. Only populated when job's state is `JOB_STATE_FAILED` or `JOB_STATE_CANCELLED`. (id: GoogleRpcStatus)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: GoogleRpcStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="jobSpec" /></td>
@@ -396,18 +396,18 @@ Creates a CustomJob. A created CustomJob right away will be attempted to be run.
 
 ```sql
 INSERT INTO google.aiplatform.custom_jobs (
-data__displayName,
 data__jobSpec,
-data__labels,
 data__encryptionSpec,
+data__displayName,
+data__labels,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ displayName }}',
 '{{ jobSpec }}',
-'{{ labels }}',
 '{{ encryptionSpec }}',
+'{{ displayName }}',
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -440,25 +440,25 @@ webAccessUris
     - name: locationsId
       value: string
       description: Required parameter for the custom_jobs resource.
-    - name: displayName
-      value: string
-      description: >
-        Required. The display name of the CustomJob. The name can be up to 128 characters long and can consist of any UTF-8 characters.
-        
     - name: jobSpec
       value: object
       description: >
         Required. Job spec.
         
-    - name: labels
-      value: object
-      description: >
-        The labels with user-defined metadata to organize CustomJobs. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
-        
     - name: encryptionSpec
       value: object
       description: >
         Customer-managed encryption key options for a CustomJob. If this is set, then all resources created by the CustomJob will be encrypted with the provided encryption key.
+        
+    - name: displayName
+      value: string
+      description: >
+        Required. The display name of the CustomJob. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+        
+    - name: labels
+      value: object
+      description: >
+        The labels with user-defined metadata to organize CustomJobs. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
         
 ```
 </TabItem>

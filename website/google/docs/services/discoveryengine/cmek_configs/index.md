@@ -256,8 +256,8 @@ Provisions a CMEK key for use in a location of a customer's project. This method
 ```sql
 UPDATE google.discoveryengine.cmek_configs
 SET 
-data__name = '{{ name }}',
 data__kmsKey = '{{ kmsKey }}',
+data__name = '{{ name }}',
 data__singleRegionKeys = '{{ singleRegionKeys }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

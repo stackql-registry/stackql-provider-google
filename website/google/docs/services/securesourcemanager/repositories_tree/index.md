@@ -82,7 +82,7 @@ The following methods are available for this resource:
     <td><a href="#fetch_tree"><CopyableCode code="fetch_tree" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
-    <td><a href="#parameter-ref"><code>ref</code></a>, <a href="#parameter-recursive"><code>recursive</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-ref"><code>ref</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-recursive"><code>recursive</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Fetches a tree from a repository.</td>
 </tr>
 </tbody>
@@ -160,9 +160,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND repositoriesId = '{{ repositoriesId }}' -- required
 AND ref = '{{ ref }}'
+AND pageToken = '{{ pageToken }}'
 AND recursive = '{{ recursive }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

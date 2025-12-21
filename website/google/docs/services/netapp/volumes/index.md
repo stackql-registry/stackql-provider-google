@@ -65,6 +65,16 @@ The following fields are returned by `SELECT` queries:
     <td>BackupConfig of the volume. (id: BackupConfig)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="blockDevices" /></td>
+    <td><code>array</code></td>
+    <td>Optional. Block devices for the volume. Currently, only one block device is permitted per Volume.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="cacheParameters" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Cache parameters for the volume. (id: CacheParameters)</td>
+</tr>
+<tr>
     <td><CopyableCode code="capacityGib" /></td>
     <td><code>string (int64)</code></td>
     <td>Required. Capacity in GIB of the volume</td>
@@ -98,6 +108,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="hasReplication" /></td>
     <td><code>boolean</code></td>
     <td>Output only. Indicates whether the volume is part of a replication relationship.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="hotTierSizeUsedGib" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Output only. Total hot tier data rounded down to the nearest GiB used by the Volume. This field is only used for flex Service Level</td>
 </tr>
 <tr>
     <td><CopyableCode code="hybridReplicationParameters" /></td>
@@ -274,6 +289,16 @@ The following fields are returned by `SELECT` queries:
     <td>BackupConfig of the volume. (id: BackupConfig)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="blockDevices" /></td>
+    <td><code>array</code></td>
+    <td>Optional. Block devices for the volume. Currently, only one block device is permitted per Volume.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="cacheParameters" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Cache parameters for the volume. (id: CacheParameters)</td>
+</tr>
+<tr>
     <td><CopyableCode code="capacityGib" /></td>
     <td><code>string (int64)</code></td>
     <td>Required. Capacity in GIB of the volume</td>
@@ -307,6 +332,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="hasReplication" /></td>
     <td><code>boolean</code></td>
     <td>Output only. Indicates whether the volume is part of a replication relationship.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="hotTierSizeUsedGib" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Output only. Total hot tier data rounded down to the nearest GiB used by the Volume. This field is only used for flex Service Level</td>
 </tr>
 <tr>
     <td><CopyableCode code="hybridReplicationParameters" /></td>
@@ -484,7 +514,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists Volumes in a given project.</td>
 </tr>
 <tr>
@@ -514,6 +544,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a></td>
     <td></td>
     <td>Revert an existing volume to a specified snapshot. Warning! This operation will permanently revert all changes made after the snapshot was created.</td>
+</tr>
+<tr>
+    <td><a href="#restore"><CopyableCode code="restore" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a></td>
+    <td></td>
+    <td>Restore files from a backup to a volume.</td>
 </tr>
 </tbody>
 </table>
@@ -602,6 +639,8 @@ SELECT
 name,
 activeDirectory,
 backupConfig,
+blockDevices,
+cacheParameters,
 capacityGib,
 coldTierSizeGib,
 createTime,
@@ -609,6 +648,7 @@ description,
 encryptionType,
 exportPolicy,
 hasReplication,
+hotTierSizeUsedGib,
 hybridReplicationParameters,
 kerberosEnabled,
 kmsConfig,
@@ -654,6 +694,8 @@ SELECT
 name,
 activeDirectory,
 backupConfig,
+blockDevices,
+cacheParameters,
 capacityGib,
 coldTierSizeGib,
 createTime,
@@ -661,6 +703,7 @@ description,
 encryptionType,
 exportPolicy,
 hasReplication,
+hotTierSizeUsedGib,
 hybridReplicationParameters,
 kerberosEnabled,
 kmsConfig,
@@ -693,9 +736,9 @@ zone
 FROM google.netapp.volumes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -718,57 +761,61 @@ Creates a new Volume in a given project and location.
 
 ```sql
 INSERT INTO google.netapp.volumes (
-data__name,
 data__shareName,
-data__storagePool,
-data__capacityGib,
-data__exportPolicy,
-data__protocols,
-data__smbSettings,
-data__unixPermissions,
-data__labels,
-data__description,
 data__snapshotPolicy,
-data__snapReserve,
-data__snapshotDirectory,
-data__securityStyle,
 data__kerberosEnabled,
-data__restoreParameters,
-data__backupConfig,
-data__restrictedActions,
-data__largeCapacity,
-data__multipleEndpoints,
-data__tieringPolicy,
-data__hybridReplicationParameters,
+data__exportPolicy,
 data__throughputMibps,
+data__tieringPolicy,
+data__name,
+data__securityStyle,
+data__cacheParameters,
+data__restrictedActions,
+data__multipleEndpoints,
+data__description,
+data__largeCapacity,
+data__snapshotDirectory,
+data__unixPermissions,
+data__protocols,
+data__storagePool,
+data__backupConfig,
+data__hybridReplicationParameters,
+data__smbSettings,
+data__restoreParameters,
+data__blockDevices,
+data__capacityGib,
+data__labels,
+data__snapReserve,
 projectsId,
 locationsId,
 volumeId
 )
 SELECT 
-'{{ name }}',
 '{{ shareName }}',
-'{{ storagePool }}',
-'{{ capacityGib }}',
-'{{ exportPolicy }}',
-'{{ protocols }}',
-'{{ smbSettings }}',
-'{{ unixPermissions }}',
-'{{ labels }}',
-'{{ description }}',
 '{{ snapshotPolicy }}',
-{{ snapReserve }},
-{{ snapshotDirectory }},
-'{{ securityStyle }}',
 {{ kerberosEnabled }},
-'{{ restoreParameters }}',
-'{{ backupConfig }}',
-'{{ restrictedActions }}',
-{{ largeCapacity }},
-{{ multipleEndpoints }},
-'{{ tieringPolicy }}',
-'{{ hybridReplicationParameters }}',
+'{{ exportPolicy }}',
 {{ throughputMibps }},
+'{{ tieringPolicy }}',
+'{{ name }}',
+'{{ securityStyle }}',
+'{{ cacheParameters }}',
+'{{ restrictedActions }}',
+{{ multipleEndpoints }},
+'{{ description }}',
+{{ largeCapacity }},
+{{ snapshotDirectory }},
+'{{ unixPermissions }}',
+'{{ protocols }}',
+'{{ storagePool }}',
+'{{ backupConfig }}',
+'{{ hybridReplicationParameters }}',
+'{{ smbSettings }}',
+'{{ restoreParameters }}',
+'{{ blockDevices }}',
+'{{ capacityGib }}',
+'{{ labels }}',
+{{ snapReserve }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ volumeId }}'
@@ -793,70 +840,40 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the volumes resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. Name of the volume
-        
     - name: shareName
       value: string
       description: >
         Required. Share name of the volume
-        
-    - name: storagePool
-      value: string
-      description: >
-        Required. StoragePool name of the volume
-        
-    - name: capacityGib
-      value: string
-      description: >
-        Required. Capacity in GIB of the volume
-        
-    - name: exportPolicy
-      value: object
-      description: >
-        Optional. Export policy of the volume
-        
-    - name: protocols
-      value: array
-      description: >
-        Required. Protocols required for the volume
-        
-    - name: smbSettings
-      value: array
-      description: >
-        Optional. SMB share settings for the volume.
-        
-    - name: unixPermissions
-      value: string
-      description: >
-        Optional. Default unix style permission (e.g. 777) the mount point will be created with. Applicable for NFS protocol types only.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Labels as key value pairs
-        
-    - name: description
-      value: string
-      description: >
-        Optional. Description of the volume
         
     - name: snapshotPolicy
       value: object
       description: >
         Optional. SnapshotPolicy for a volume.
         
-    - name: snapReserve
-      value: number
-      description: >
-        Optional. Snap_reserve specifies percentage of volume storage reserved for snapshot storage. Default is 0 percent.
-        
-    - name: snapshotDirectory
+    - name: kerberosEnabled
       value: boolean
       description: >
-        Optional. Snapshot_directory if enabled (true) the volume will contain a read-only .snapshot directory which provides access to each of the volume's snapshots.
+        Optional. Flag indicating if the volume is a kerberos volume or not, export policy rules control kerberos security modes (krb5, krb5i, krb5p).
+        
+    - name: exportPolicy
+      value: object
+      description: >
+        Optional. Export policy of the volume
+        
+    - name: throughputMibps
+      value: number
+      description: >
+        Optional. Throughput of the volume (in MiB/s)
+        
+    - name: tieringPolicy
+      value: object
+      description: >
+        Tiering policy for the volume.
+        
+    - name: name
+      value: string
+      description: >
+        Identifier. Name of the volume
         
     - name: securityStyle
       value: string
@@ -864,50 +881,90 @@ response
         Optional. Security Style of the Volume
         
       valid_values: ['SECURITY_STYLE_UNSPECIFIED', 'NTFS', 'UNIX']
-    - name: kerberosEnabled
-      value: boolean
-      description: >
-        Optional. Flag indicating if the volume is a kerberos volume or not, export policy rules control kerberos security modes (krb5, krb5i, krb5p).
-        
-    - name: restoreParameters
+    - name: cacheParameters
       value: object
       description: >
-        Optional. Specifies the source of the volume to be created from.
-        
-    - name: backupConfig
-      value: object
-      description: >
-        BackupConfig of the volume.
+        Optional. Cache parameters for the volume.
         
     - name: restrictedActions
       value: array
       description: >
         Optional. List of actions that are restricted on this volume.
         
-    - name: largeCapacity
-      value: boolean
-      description: >
-        Optional. Flag indicating if the volume will be a large capacity volume or a regular volume.
-        
     - name: multipleEndpoints
       value: boolean
       description: >
         Optional. Flag indicating if the volume will have an IP address per node for volumes supporting multiple IP endpoints. Only the volume with large_capacity will be allowed to have multiple endpoints.
         
-    - name: tieringPolicy
+    - name: description
+      value: string
+      description: >
+        Optional. Description of the volume
+        
+    - name: largeCapacity
+      value: boolean
+      description: >
+        Optional. Flag indicating if the volume will be a large capacity volume or a regular volume.
+        
+    - name: snapshotDirectory
+      value: boolean
+      description: >
+        Optional. Snapshot_directory if enabled (true) the volume will contain a read-only .snapshot directory which provides access to each of the volume's snapshots.
+        
+    - name: unixPermissions
+      value: string
+      description: >
+        Optional. Default unix style permission (e.g. 777) the mount point will be created with. Applicable for NFS protocol types only.
+        
+    - name: protocols
+      value: array
+      description: >
+        Required. Protocols required for the volume
+        
+    - name: storagePool
+      value: string
+      description: >
+        Required. StoragePool name of the volume
+        
+    - name: backupConfig
       value: object
       description: >
-        Tiering policy for the volume.
+        BackupConfig of the volume.
         
     - name: hybridReplicationParameters
       value: object
       description: >
         Optional. The Hybrid Replication parameters for the volume.
         
-    - name: throughputMibps
+    - name: smbSettings
+      value: array
+      description: >
+        Optional. SMB share settings for the volume.
+        
+    - name: restoreParameters
+      value: object
+      description: >
+        Optional. Specifies the source of the volume to be created from.
+        
+    - name: blockDevices
+      value: array
+      description: >
+        Optional. Block devices for the volume. Currently, only one block device is permitted per Volume.
+        
+    - name: capacityGib
+      value: string
+      description: >
+        Required. Capacity in GIB of the volume
+        
+    - name: labels
+      value: object
+      description: >
+        Optional. Labels as key value pairs
+        
+    - name: snapReserve
       value: number
       description: >
-        Optional. Throughput of the volume (in MiB/s)
+        Optional. Snap_reserve specifies percentage of volume storage reserved for snapshot storage. Default is 0 percent.
         
     - name: volumeId
       value: string
@@ -931,29 +988,31 @@ Updates the parameters of a single Volume.
 ```sql
 UPDATE google.netapp.volumes
 SET 
-data__name = '{{ name }}',
 data__shareName = '{{ shareName }}',
-data__storagePool = '{{ storagePool }}',
-data__capacityGib = '{{ capacityGib }}',
-data__exportPolicy = '{{ exportPolicy }}',
-data__protocols = '{{ protocols }}',
-data__smbSettings = '{{ smbSettings }}',
-data__unixPermissions = '{{ unixPermissions }}',
-data__labels = '{{ labels }}',
-data__description = '{{ description }}',
 data__snapshotPolicy = '{{ snapshotPolicy }}',
-data__snapReserve = {{ snapReserve }},
-data__snapshotDirectory = {{ snapshotDirectory }},
-data__securityStyle = '{{ securityStyle }}',
 data__kerberosEnabled = {{ kerberosEnabled }},
-data__restoreParameters = '{{ restoreParameters }}',
-data__backupConfig = '{{ backupConfig }}',
-data__restrictedActions = '{{ restrictedActions }}',
-data__largeCapacity = {{ largeCapacity }},
-data__multipleEndpoints = {{ multipleEndpoints }},
+data__exportPolicy = '{{ exportPolicy }}',
+data__throughputMibps = {{ throughputMibps }},
 data__tieringPolicy = '{{ tieringPolicy }}',
+data__name = '{{ name }}',
+data__securityStyle = '{{ securityStyle }}',
+data__cacheParameters = '{{ cacheParameters }}',
+data__restrictedActions = '{{ restrictedActions }}',
+data__multipleEndpoints = {{ multipleEndpoints }},
+data__description = '{{ description }}',
+data__largeCapacity = {{ largeCapacity }},
+data__snapshotDirectory = {{ snapshotDirectory }},
+data__unixPermissions = '{{ unixPermissions }}',
+data__protocols = '{{ protocols }}',
+data__storagePool = '{{ storagePool }}',
+data__backupConfig = '{{ backupConfig }}',
 data__hybridReplicationParameters = '{{ hybridReplicationParameters }}',
-data__throughputMibps = {{ throughputMibps }}
+data__smbSettings = '{{ smbSettings }}',
+data__restoreParameters = '{{ restoreParameters }}',
+data__blockDevices = '{{ blockDevices }}',
+data__capacityGib = '{{ capacityGib }}',
+data__labels = '{{ labels }}',
+data__snapReserve = {{ snapReserve }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -999,7 +1058,8 @@ AND force = '{{ force }}'
 <Tabs
     defaultValue="revert"
     values={[
-        { label: 'revert', value: 'revert' }
+        { label: 'revert', value: 'revert' },
+        { label: 'restore', value: 'restore' }
     ]}
 >
 <TabItem value="revert">
@@ -1014,6 +1074,24 @@ EXEC google.netapp.volumes.revert
 @@json=
 '{
 "snapshotId": "{{ snapshotId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="restore">
+
+Restore files from a backup to a volume.
+
+```sql
+EXEC google.netapp.volumes.restore 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@volumesId='{{ volumesId }}' --required 
+@@json=
+'{
+"restoreDestinationPath": "{{ restoreDestinationPath }}", 
+"backup": "{{ backup }}", 
+"fileList": "{{ fileList }}"
 }'
 ;
 ```

@@ -164,14 +164,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists cloud locations under a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#search"><CopyableCode code="search" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-sourceCloudLocation"><code>sourceCloudLocation</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-query"><code>query</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-sourceCloudLocation"><code>sourceCloudLocation</code></a>, <a href="#parameter-query"><code>query</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Searches for cloud locations from a given source location.</td>
 </tr>
 </tbody>
@@ -278,9 +278,9 @@ territoryCode
 FROM google.cloudlocationfinder.cloud_locations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -303,10 +303,10 @@ Searches for cloud locations from a given source location.
 EXEC google.cloudlocationfinder.cloud_locations.search 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@sourceCloudLocation='{{ sourceCloudLocation }}', 
-@pageSize='{{ pageSize }}', 
 @pageToken='{{ pageToken }}', 
-@query='{{ query }}'
+@sourceCloudLocation='{{ sourceCloudLocation }}', 
+@query='{{ query }}', 
+@pageSize='{{ pageSize }}'
 ;
 ```
 </TabItem>

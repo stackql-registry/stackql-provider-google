@@ -52,37 +52,42 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Identifier. The resource name of the SCIM Tenant. Format: `locations/&#123;location&#125;/workforcePools/&#123;workforce_pool&#125;/providers/ &#123;workforce_pool_provider&#125;/scimTenants/&#123;scim_tenant&#125;`</td>
+    <td>Identifier. Agentspace only. The resource name of the SCIM Tenant. Format: `locations/&#123;location&#125;/workforcePools/&#123;workforce_pool&#125;/providers/ &#123;workforce_pool_provider&#125;/scimTenants/&#123;scim_tenant&#125;`</td>
 </tr>
 <tr>
     <td><CopyableCode code="baseUri" /></td>
     <td><code>string</code></td>
-    <td>Output only. Represents the base URI as defined in [RFC 7644, Section 1.3](https://datatracker.ietf.org/doc/html/rfc7644#section-1.3). Clients must use this as the root address for managing resources under the tenant. Format: https://iamscim.googleapis.com/&#123;version&#125;/&#123;tenant_id&#125;/</td>
+    <td>Output only. Agentspace only. Represents the base URI as defined in [RFC 7644, Section 1.3](https://datatracker.ietf.org/doc/html/rfc7644#section-1.3). Clients must use this as the root address for managing resources under the tenant. Format: https://iamscim.googleapis.com/&#123;version&#125;/&#123;tenant_id&#125;/</td>
 </tr>
 <tr>
     <td><CopyableCode code="claimMapping" /></td>
     <td><code>object</code></td>
-    <td>Optional. Maps BYOID claims to SCIM claims.</td>
+    <td>Optional. Agentspace only. Maps BYOID claims to SCIM claims.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
-    <td>Optional. The user-specified description of the scim tenant. Cannot exceed 256 characters.</td>
+    <td>Optional. Agentspace only. The description of the SCIM tenant. Cannot exceed 256 characters.</td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Optional. The user-specified display name of the scim tenant. Cannot exceed 32 characters.</td>
+    <td>Optional. Agentspace only. The display name of the SCIM tenant. Cannot exceed 32 characters.</td>
 </tr>
 <tr>
     <td><CopyableCode code="purgeTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp when the scim tenant is going to be purged.</td>
+    <td>Output only. Agentspace only. The timestamp that represents the time when the SCIM tenant is purged.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="serviceAgent" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Service Agent created by SCIM Tenant API. SCIM tokens created under this tenant will be attached to this service agent.</td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the tenant.</td>
+    <td>Output only. Agentspace only. The state of the tenant.</td>
 </tr>
 </tbody>
 </table>
@@ -101,37 +106,42 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Identifier. The resource name of the SCIM Tenant. Format: `locations/&#123;location&#125;/workforcePools/&#123;workforce_pool&#125;/providers/ &#123;workforce_pool_provider&#125;/scimTenants/&#123;scim_tenant&#125;`</td>
+    <td>Identifier. Agentspace only. The resource name of the SCIM Tenant. Format: `locations/&#123;location&#125;/workforcePools/&#123;workforce_pool&#125;/providers/ &#123;workforce_pool_provider&#125;/scimTenants/&#123;scim_tenant&#125;`</td>
 </tr>
 <tr>
     <td><CopyableCode code="baseUri" /></td>
     <td><code>string</code></td>
-    <td>Output only. Represents the base URI as defined in [RFC 7644, Section 1.3](https://datatracker.ietf.org/doc/html/rfc7644#section-1.3). Clients must use this as the root address for managing resources under the tenant. Format: https://iamscim.googleapis.com/&#123;version&#125;/&#123;tenant_id&#125;/</td>
+    <td>Output only. Agentspace only. Represents the base URI as defined in [RFC 7644, Section 1.3](https://datatracker.ietf.org/doc/html/rfc7644#section-1.3). Clients must use this as the root address for managing resources under the tenant. Format: https://iamscim.googleapis.com/&#123;version&#125;/&#123;tenant_id&#125;/</td>
 </tr>
 <tr>
     <td><CopyableCode code="claimMapping" /></td>
     <td><code>object</code></td>
-    <td>Optional. Maps BYOID claims to SCIM claims.</td>
+    <td>Optional. Agentspace only. Maps BYOID claims to SCIM claims.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
-    <td>Optional. The user-specified description of the scim tenant. Cannot exceed 256 characters.</td>
+    <td>Optional. Agentspace only. The description of the SCIM tenant. Cannot exceed 256 characters.</td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Optional. The user-specified display name of the scim tenant. Cannot exceed 32 characters.</td>
+    <td>Optional. Agentspace only. The display name of the SCIM tenant. Cannot exceed 32 characters.</td>
 </tr>
 <tr>
     <td><CopyableCode code="purgeTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp when the scim tenant is going to be purged.</td>
+    <td>Output only. Agentspace only. The timestamp that represents the time when the SCIM tenant is purged.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="serviceAgent" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Service Agent created by SCIM Tenant API. SCIM tokens created under this tenant will be attached to this service agent.</td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the tenant.</td>
+    <td>Output only. Agentspace only. The state of the tenant.</td>
 </tr>
 </tbody>
 </table>
@@ -158,42 +168,42 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workforcePoolsId"><code>workforcePoolsId</code></a>, <a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-scimTenantsId"><code>scimTenantsId</code></a></td>
     <td></td>
-    <td>Gets an individual WorkforcePoolProviderScimTenant.</td>
+    <td>Agentspace only. Gets an individual WorkforcePoolProviderScimTenant.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workforcePoolsId"><code>workforcePoolsId</code></a>, <a href="#parameter-providersId"><code>providersId</code></a></td>
     <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
-    <td>Lists all non-deleted WorkforcePoolProviderScimTenants in a WorkforcePoolProvider. If `show_deleted` is set to `true`, then deleted scim tenants are also listed.</td>
+    <td>Agentspace only. Lists all non-deleted WorkforcePoolProviderScimTenants in a WorkforcePoolProvider. If `show_deleted` is set to `true`, then deleted SCIM tenants are also listed.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workforcePoolsId"><code>workforcePoolsId</code></a>, <a href="#parameter-providersId"><code>providersId</code></a></td>
     <td><a href="#parameter-workforcePoolProviderScimTenantId"><code>workforcePoolProviderScimTenantId</code></a></td>
-    <td>Creates a new WorkforcePoolProviderScimTenant in a WorkforcePoolProvider. You cannot reuse the name of a deleted scim tenant until 30 days after deletion.</td>
+    <td>Agentspace only. Creates a new WorkforcePoolProviderScimTenant in a WorkforcePoolProvider. You cannot reuse the name of a deleted SCIM tenant until 30 days after deletion.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workforcePoolsId"><code>workforcePoolsId</code></a>, <a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-scimTenantsId"><code>scimTenantsId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates an existing WorkforcePoolProviderScimTenant.</td>
+    <td>Agentspace only. Updates an existing WorkforcePoolProviderScimTenant.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workforcePoolsId"><code>workforcePoolsId</code></a>, <a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-scimTenantsId"><code>scimTenantsId</code></a></td>
-    <td></td>
-    <td>Deletes a WorkforcePoolProviderScimTenant. You can undelete a scim tenant for 30 days. After 30 days, deletion is permanent. You cannot update deleted scim tenants. However, you can view and list them.</td>
+    <td><a href="#parameter-hardDelete"><code>hardDelete</code></a></td>
+    <td>Agentspace only. Deletes a WorkforcePoolProviderScimTenant. You can undelete a SCIM tenant for 30 days. After 30 days, deletion is permanent. You cannot update deleted SCIM tenants. However, you can view and list them.</td>
 </tr>
 <tr>
     <td><a href="#undelete"><CopyableCode code="undelete" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workforcePoolsId"><code>workforcePoolsId</code></a>, <a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-scimTenantsId"><code>scimTenantsId</code></a></td>
     <td></td>
-    <td>Undeletes a WorkforcePoolProviderScimTenant, as long as it was deleted fewer than 30 days ago.</td>
+    <td>Agentspace only. Undeletes a WorkforcePoolProviderScimTenant, that was deleted fewer than 30 days ago.</td>
 </tr>
 </tbody>
 </table>
@@ -229,6 +239,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-workforcePoolsId">
     <td><CopyableCode code="workforcePoolsId" /></td>
     <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-hardDelete">
+    <td><CopyableCode code="hardDelete" /></td>
+    <td><code>boolean</code></td>
     <td></td>
 </tr>
 <tr id="parameter-pageSize">
@@ -270,7 +285,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get">
 
-Gets an individual WorkforcePoolProviderScimTenant.
+Agentspace only. Gets an individual WorkforcePoolProviderScimTenant.
 
 ```sql
 SELECT
@@ -280,6 +295,7 @@ claimMapping,
 description,
 displayName,
 purgeTime,
+serviceAgent,
 state
 FROM google.iam.scim_tenants
 WHERE locationsId = '{{ locationsId }}' -- required
@@ -291,7 +307,7 @@ AND scimTenantsId = '{{ scimTenantsId }}' -- required
 </TabItem>
 <TabItem value="list">
 
-Lists all non-deleted WorkforcePoolProviderScimTenants in a WorkforcePoolProvider. If `show_deleted` is set to `true`, then deleted scim tenants are also listed.
+Agentspace only. Lists all non-deleted WorkforcePoolProviderScimTenants in a WorkforcePoolProvider. If `show_deleted` is set to `true`, then deleted SCIM tenants are also listed.
 
 ```sql
 SELECT
@@ -301,6 +317,7 @@ claimMapping,
 description,
 displayName,
 purgeTime,
+serviceAgent,
 state
 FROM google.iam.scim_tenants
 WHERE locationsId = '{{ locationsId }}' -- required
@@ -326,7 +343,7 @@ AND showDeleted = '{{ showDeleted }}'
 >
 <TabItem value="create">
 
-Creates a new WorkforcePoolProviderScimTenant in a WorkforcePoolProvider. You cannot reuse the name of a deleted scim tenant until 30 days after deletion.
+Agentspace only. Creates a new WorkforcePoolProviderScimTenant in a WorkforcePoolProvider. You cannot reuse the name of a deleted SCIM tenant until 30 days after deletion.
 
 ```sql
 INSERT INTO google.iam.scim_tenants (
@@ -355,6 +372,7 @@ claimMapping,
 description,
 displayName,
 purgeTime,
+serviceAgent,
 state
 ;
 ```
@@ -377,22 +395,22 @@ state
     - name: name
       value: string
       description: >
-        Identifier. The resource name of the SCIM Tenant. Format: `locations/{location}/workforcePools/{workforce_pool}/providers/ {workforce_pool_provider}/scimTenants/{scim_tenant}`
+        Identifier. Agentspace only. The resource name of the SCIM Tenant. Format: `locations/{location}/workforcePools/{workforce_pool}/providers/ {workforce_pool_provider}/scimTenants/{scim_tenant}`
         
     - name: description
       value: string
       description: >
-        Optional. The user-specified description of the scim tenant. Cannot exceed 256 characters.
+        Optional. Agentspace only. The description of the SCIM tenant. Cannot exceed 256 characters.
         
     - name: displayName
       value: string
       description: >
-        Optional. The user-specified display name of the scim tenant. Cannot exceed 32 characters.
+        Optional. Agentspace only. The display name of the SCIM tenant. Cannot exceed 32 characters.
         
     - name: claimMapping
       value: object
       description: >
-        Optional. Maps BYOID claims to SCIM claims.
+        Optional. Agentspace only. Maps BYOID claims to SCIM claims.
         
     - name: workforcePoolProviderScimTenantId
       value: string
@@ -411,7 +429,7 @@ state
 >
 <TabItem value="patch">
 
-Updates an existing WorkforcePoolProviderScimTenant.
+Agentspace only. Updates an existing WorkforcePoolProviderScimTenant.
 
 ```sql
 UPDATE google.iam.scim_tenants
@@ -433,6 +451,7 @@ claimMapping,
 description,
 displayName,
 purgeTime,
+serviceAgent,
 state;
 ```
 </TabItem>
@@ -449,7 +468,7 @@ state;
 >
 <TabItem value="delete">
 
-Deletes a WorkforcePoolProviderScimTenant. You can undelete a scim tenant for 30 days. After 30 days, deletion is permanent. You cannot update deleted scim tenants. However, you can view and list them.
+Agentspace only. Deletes a WorkforcePoolProviderScimTenant. You can undelete a SCIM tenant for 30 days. After 30 days, deletion is permanent. You cannot update deleted SCIM tenants. However, you can view and list them.
 
 ```sql
 DELETE FROM google.iam.scim_tenants
@@ -457,6 +476,7 @@ WHERE locationsId = '{{ locationsId }}' --required
 AND workforcePoolsId = '{{ workforcePoolsId }}' --required
 AND providersId = '{{ providersId }}' --required
 AND scimTenantsId = '{{ scimTenantsId }}' --required
+AND hardDelete = '{{ hardDelete }}'
 ;
 ```
 </TabItem>
@@ -473,7 +493,7 @@ AND scimTenantsId = '{{ scimTenantsId }}' --required
 >
 <TabItem value="undelete">
 
-Undeletes a WorkforcePoolProviderScimTenant, as long as it was deleted fewer than 30 days ago.
+Agentspace only. Undeletes a WorkforcePoolProviderScimTenant, that was deleted fewer than 30 days ago.
 
 ```sql
 EXEC google.iam.scim_tenants.undelete 

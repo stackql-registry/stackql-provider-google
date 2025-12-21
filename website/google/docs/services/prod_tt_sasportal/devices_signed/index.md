@@ -99,16 +99,16 @@ The following methods are available for this resource:
     <td>Updates a signed device.</td>
 </tr>
 <tr>
-    <td><a href="#nodes_devices_update_signed"><CopyableCode code="nodes_devices_update_signed" /></a></td>
+    <td><a href="#deployments_devices_update_signed"><CopyableCode code="deployments_devices_update_signed" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-nodesId"><code>nodesId</code></a>, <a href="#parameter-devicesId"><code>devicesId</code></a></td>
+    <td><a href="#parameter-deploymentsId"><code>deploymentsId</code></a>, <a href="#parameter-devicesId"><code>devicesId</code></a></td>
     <td></td>
     <td>Updates a signed device.</td>
 </tr>
 <tr>
-    <td><a href="#deployments_devices_update_signed"><CopyableCode code="deployments_devices_update_signed" /></a></td>
+    <td><a href="#nodes_devices_update_signed"><CopyableCode code="nodes_devices_update_signed" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-deploymentsId"><code>deploymentsId</code></a>, <a href="#parameter-devicesId"><code>devicesId</code></a></td>
+    <td><a href="#parameter-nodesId"><code>nodesId</code></a>, <a href="#parameter-devicesId"><code>devicesId</code></a></td>
     <td></td>
     <td>Updates a signed device.</td>
 </tr>
@@ -391,8 +391,8 @@ state
     defaultValue="customers_devices_update_signed"
     values={[
         { label: 'customers_devices_update_signed', value: 'customers_devices_update_signed' },
-        { label: 'nodes_devices_update_signed', value: 'nodes_devices_update_signed' },
-        { label: 'deployments_devices_update_signed', value: 'deployments_devices_update_signed' }
+        { label: 'deployments_devices_update_signed', value: 'deployments_devices_update_signed' },
+        { label: 'nodes_devices_update_signed', value: 'nodes_devices_update_signed' }
     ]}
 >
 <TabItem value="customers_devices_update_signed">
@@ -421,7 +421,7 @@ serialNumber,
 state;
 ```
 </TabItem>
-<TabItem value="nodes_devices_update_signed">
+<TabItem value="deployments_devices_update_signed">
 
 Updates a signed device.
 
@@ -431,7 +431,7 @@ SET
 data__encodedDevice = '{{ encodedDevice }}',
 data__installerId = '{{ installerId }}'
 WHERE 
-nodesId = '{{ nodesId }}' --required
+deploymentsId = '{{ deploymentsId }}' --required
 AND devicesId = '{{ devicesId }}' --required
 RETURNING
 name,
@@ -447,7 +447,7 @@ serialNumber,
 state;
 ```
 </TabItem>
-<TabItem value="deployments_devices_update_signed">
+<TabItem value="nodes_devices_update_signed">
 
 Updates a signed device.
 
@@ -457,7 +457,7 @@ SET
 data__encodedDevice = '{{ encodedDevice }}',
 data__installerId = '{{ installerId }}'
 WHERE 
-deploymentsId = '{{ deploymentsId }}' --required
+nodesId = '{{ nodesId }}' --required
 AND devicesId = '{{ devicesId }}' --required
 RETURNING
 name,

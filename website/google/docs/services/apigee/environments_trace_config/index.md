@@ -172,8 +172,8 @@ Updates the trace configurations in an environment. Note that the repeated field
 ```sql
 UPDATE google.apigee.environments_trace_config
 SET 
-data__exporter = '{{ exporter }}',
 data__endpoint = '{{ endpoint }}',
+data__exporter = '{{ exporter }}',
 data__samplingConfig = '{{ samplingConfig }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required

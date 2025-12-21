@@ -57,7 +57,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="serviceConfigs" /></td>
     <td><code>array</code></td>
-    <td>Output only. The network service tiers supported for the service.</td>
+    <td>Output only. The network service tier or regional endpoint supported for the service.</td>
 </tr>
 </tbody>
 </table>
@@ -81,7 +81,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="serviceConfigs" /></td>
     <td><code>array</code></td>
-    <td>Output only. The network service tiers supported for the service.</td>
+    <td>Output only. The network service tier or regional endpoint supported for the service.</td>
 </tr>
 </tbody>
 </table>
@@ -108,14 +108,14 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-multicloudDataTransferSupportedServicesId"><code>multicloudDataTransferSupportedServicesId</code></a></td>
     <td></td>
-    <td>Gets details of a single MulticloudDataTransferSupportedServices.</td>
+    <td>Gets the details of a service that is supported for Data Transfer Essentials.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists the supported services for Multicloud Data Transfer. This is a passthrough method.</td>
+    <td>Lists the services in the project for a region that are supported for Data Transfer Essentials.</td>
 </tr>
 </tbody>
 </table>
@@ -172,7 +172,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get">
 
-Gets details of a single MulticloudDataTransferSupportedServices.
+Gets the details of a service that is supported for Data Transfer Essentials.
 
 ```sql
 SELECT
@@ -187,7 +187,7 @@ AND multicloudDataTransferSupportedServicesId = '{{ multicloudDataTransferSuppor
 </TabItem>
 <TabItem value="list">
 
-Lists the supported services for Multicloud Data Transfer. This is a passthrough method.
+Lists the services in the project for a region that are supported for Data Transfer Essentials.
 
 ```sql
 SELECT

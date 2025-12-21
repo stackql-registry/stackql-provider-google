@@ -184,7 +184,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Returns list of all quota rules in a location.</td>
 </tr>
 <tr>
@@ -328,10 +328,10 @@ FROM google.netapp.quota_rules
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND volumesId = '{{ volumesId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -353,24 +353,24 @@ Creates a new quota rule.
 
 ```sql
 INSERT INTO google.netapp.quota_rules (
-data__name,
-data__target,
-data__type,
-data__diskLimitMib,
-data__description,
 data__labels,
+data__description,
+data__target,
+data__name,
+data__diskLimitMib,
+data__type,
 projectsId,
 locationsId,
 volumesId,
 quotaRuleId
 )
 SELECT 
-'{{ name }}',
-'{{ target }}',
-'{{ type }}',
-{{ diskLimitMib }},
-'{{ description }}',
 '{{ labels }}',
+'{{ description }}',
+'{{ target }}',
+'{{ name }}',
+{{ diskLimitMib }},
+'{{ type }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ volumesId }}',
@@ -399,15 +399,30 @@ response
     - name: volumesId
       value: string
       description: Required parameter for the quota_rules resource.
-    - name: name
+    - name: labels
+      value: object
+      description: >
+        Optional. Labels of the quota rule
+        
+    - name: description
       value: string
       description: >
-        Identifier. The resource name of the quota rule. Format: `projects/{project_number}/locations/{location_id}/volumes/volumes/{volume_id}/quotaRules/{quota_rule_id}`.
+        Optional. Description of the quota rule
         
     - name: target
       value: string
       description: >
         Optional. The quota rule applies to the specified user or group, identified by a Unix UID/GID, Windows SID, or null for default.
+        
+    - name: name
+      value: string
+      description: >
+        Identifier. The resource name of the quota rule. Format: `projects/{project_number}/locations/{location_id}/volumes/volumes/{volume_id}/quotaRules/{quota_rule_id}`.
+        
+    - name: diskLimitMib
+      value: integer
+      description: >
+        Required. The maximum allowed disk space in MiB.
         
     - name: type
       value: string
@@ -415,21 +430,6 @@ response
         Required. The type of quota rule.
         
       valid_values: ['TYPE_UNSPECIFIED', 'INDIVIDUAL_USER_QUOTA', 'INDIVIDUAL_GROUP_QUOTA', 'DEFAULT_USER_QUOTA', 'DEFAULT_GROUP_QUOTA']
-    - name: diskLimitMib
-      value: integer
-      description: >
-        Required. The maximum allowed disk space in MiB.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. Description of the quota rule
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Labels of the quota rule
-        
     - name: quotaRuleId
       value: string
 ```
@@ -452,12 +452,12 @@ Updates a quota rule.
 ```sql
 UPDATE google.netapp.quota_rules
 SET 
-data__name = '{{ name }}',
-data__target = '{{ target }}',
-data__type = '{{ type }}',
-data__diskLimitMib = {{ diskLimitMib }},
+data__labels = '{{ labels }}',
 data__description = '{{ description }}',
-data__labels = '{{ labels }}'
+data__target = '{{ target }}',
+data__name = '{{ name }}',
+data__diskLimitMib = {{ diskLimitMib }},
+data__type = '{{ type }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

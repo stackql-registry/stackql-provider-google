@@ -50,13 +50,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#analyze_sentiment"><CopyableCode code="analyze_sentiment" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td></td>
-    <td></td>
-    <td>Analyzes the sentiment of the provided text.</td>
-</tr>
-<tr>
     <td><a href="#analyze_entities"><CopyableCode code="analyze_entities" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
@@ -64,11 +57,11 @@ The following methods are available for this resource:
     <td>Finds named entities (currently proper names and common nouns) in the text along with entity types, probability, mentions for each entity, and other properties.</td>
 </tr>
 <tr>
-    <td><a href="#classify_text"><CopyableCode code="classify_text" /></a></td>
+    <td><a href="#annotate_text"><CopyableCode code="annotate_text" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
     <td></td>
-    <td>Classifies a document into categories.</td>
+    <td>A convenience method that provides all features in one call.</td>
 </tr>
 <tr>
     <td><a href="#moderate_text"><CopyableCode code="moderate_text" /></a></td>
@@ -78,11 +71,18 @@ The following methods are available for this resource:
     <td>Moderates a document for harmful and sensitive categories.</td>
 </tr>
 <tr>
-    <td><a href="#annotate_text"><CopyableCode code="annotate_text" /></a></td>
+    <td><a href="#analyze_sentiment"><CopyableCode code="analyze_sentiment" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
     <td></td>
-    <td>A convenience method that provides all features in one call.</td>
+    <td>Analyzes the sentiment of the provided text.</td>
+</tr>
+<tr>
+    <td><a href="#classify_text"><CopyableCode code="classify_text" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td></td>
+    <td></td>
+    <td>Classifies a document into categories.</td>
 </tr>
 </tbody>
 </table>
@@ -106,29 +106,15 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="analyze_sentiment"
+    defaultValue="analyze_entities"
     values={[
-        { label: 'analyze_sentiment', value: 'analyze_sentiment' },
         { label: 'analyze_entities', value: 'analyze_entities' },
-        { label: 'classify_text', value: 'classify_text' },
+        { label: 'annotate_text', value: 'annotate_text' },
         { label: 'moderate_text', value: 'moderate_text' },
-        { label: 'annotate_text', value: 'annotate_text' }
+        { label: 'analyze_sentiment', value: 'analyze_sentiment' },
+        { label: 'classify_text', value: 'classify_text' }
     ]}
 >
-<TabItem value="analyze_sentiment">
-
-Analyzes the sentiment of the provided text.
-
-```sql
-EXEC google.language.documents.analyze_sentiment 
-@@json=
-'{
-"document": "{{ document }}", 
-"encodingType": "{{ encodingType }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="analyze_entities">
 
 Finds named entities (currently proper names and common nouns) in the text along with entity types, probability, mentions for each entity, and other properties.
@@ -143,15 +129,17 @@ EXEC google.language.documents.analyze_entities
 ;
 ```
 </TabItem>
-<TabItem value="classify_text">
+<TabItem value="annotate_text">
 
-Classifies a document into categories.
+A convenience method that provides all features in one call.
 
 ```sql
-EXEC google.language.documents.classify_text 
+EXEC google.language.documents.annotate_text 
 @@json=
 '{
-"document": "{{ document }}"
+"document": "{{ document }}", 
+"features": "{{ features }}", 
+"encodingType": "{{ encodingType }}"
 }'
 ;
 ```
@@ -170,17 +158,29 @@ EXEC google.language.documents.moderate_text
 ;
 ```
 </TabItem>
-<TabItem value="annotate_text">
+<TabItem value="analyze_sentiment">
 
-A convenience method that provides all features in one call.
+Analyzes the sentiment of the provided text.
 
 ```sql
-EXEC google.language.documents.annotate_text 
+EXEC google.language.documents.analyze_sentiment 
 @@json=
 '{
-"document": "{{ document }}", 
-"features": "{{ features }}", 
-"encodingType": "{{ encodingType }}"
+"encodingType": "{{ encodingType }}", 
+"document": "{{ document }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="classify_text">
+
+Classifies a document into categories.
+
+```sql
+EXEC google.language.documents.classify_text 
+@@json=
+'{
+"document": "{{ document }}"
 }'
 ;
 ```

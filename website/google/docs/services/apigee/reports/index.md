@@ -341,43 +341,43 @@ Creates a Custom Report for an Organization. A Custom Report provides Apigee Cus
 
 ```sql
 INSERT INTO google.apigee.reports (
-data__name,
-data__displayName,
-data__metrics,
-data__dimensions,
 data__filter,
+data__toTime,
+data__name,
 data__properties,
+data__metrics,
+data__topk,
+data__comments,
+data__limit,
+data__displayName,
+data__sortByCols,
 data__chartType,
 data__timeUnit,
-data__sortByCols,
-data__sortOrder,
 data__fromTime,
-data__toTime,
 data__offset,
-data__limit,
-data__topk,
+data__dimensions,
 data__tags,
-data__comments,
+data__sortOrder,
 organizationsId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
-'{{ metrics }}',
-'{{ dimensions }}',
 '{{ filter }}',
+'{{ toTime }}',
+'{{ name }}',
 '{{ properties }}',
+'{{ metrics }}',
+'{{ topk }}',
+'{{ comments }}',
+'{{ limit }}',
+'{{ displayName }}',
+'{{ sortByCols }}',
 '{{ chartType }}',
 '{{ timeUnit }}',
-'{{ sortByCols }}',
-'{{ sortOrder }}',
 '{{ fromTime }}',
-'{{ toTime }}',
 '{{ offset }}',
-'{{ limit }}',
-'{{ topk }}',
+'{{ dimensions }}',
 '{{ tags }}',
-'{{ comments }}',
+'{{ sortOrder }}',
 '{{ organizationsId }}'
 RETURNING
 name,
@@ -414,35 +414,55 @@ topk
     - name: organizationsId
       value: string
       description: Required parameter for the reports resource.
+    - name: filter
+      value: string
+      description: >
+        This field contains the filter expression
+        
+    - name: toTime
+      value: string
+      description: >
+        Legacy field: not used. Contains the end time for the report
+        
     - name: name
       value: string
       description: >
         Required. Unique identifier for the report T his is a legacy field used to encode custom report unique id
         
-    - name: displayName
-      value: string
+    - name: properties
+      value: array
       description: >
-        This is the display name for the report
+        This field contains report properties such as ui metadata etc.
         
     - name: metrics
       value: array
       description: >
         Required. This contains the list of metrics
         
-    - name: dimensions
-      value: array
-      description: >
-        This contains the list of dimensions for the report
-        
-    - name: filter
+    - name: topk
       value: string
       description: >
-        This field contains the filter expression
+        Legacy field: not used. This field contains the top k parameter value for restricting the result
         
-    - name: properties
+    - name: comments
       value: array
       description: >
-        This field contains report properties such as ui metadata etc.
+        Legacy field: not used. This field contains a list of comments associated with custom report
+        
+    - name: limit
+      value: string
+      description: >
+        Legacy field: not used This field contains the limit for the result retrieved
+        
+    - name: displayName
+      value: string
+      description: >
+        This is the display name for the report
+        
+    - name: sortByCols
+      value: array
+      description: >
+        Legacy field: not used much. Contains the list of sort by columns
         
     - name: chartType
       value: string
@@ -454,50 +474,30 @@ topk
       description: >
         This field contains the time unit of aggregation for the report
         
-    - name: sortByCols
-      value: array
-      description: >
-        Legacy field: not used much. Contains the list of sort by columns
-        
-    - name: sortOrder
-      value: string
-      description: >
-        Legacy field: not used much. Contains the sort order for the sort columns
-        
     - name: fromTime
       value: string
       description: >
         Legacy field: not used. Contains the from time for the report
-        
-    - name: toTime
-      value: string
-      description: >
-        Legacy field: not used. Contains the end time for the report
         
     - name: offset
       value: string
       description: >
         Legacy field: not used. This field contains the offset for the data
         
-    - name: limit
-      value: string
+    - name: dimensions
+      value: array
       description: >
-        Legacy field: not used This field contains the limit for the result retrieved
-        
-    - name: topk
-      value: string
-      description: >
-        Legacy field: not used. This field contains the top k parameter value for restricting the result
+        This contains the list of dimensions for the report
         
     - name: tags
       value: array
       description: >
         Legacy field: not used. This field contains a list of tags associated with custom report
         
-    - name: comments
-      value: array
+    - name: sortOrder
+      value: string
       description: >
-        Legacy field: not used. This field contains a list of comments associated with custom report
+        Legacy field: not used much. Contains the sort order for the sort columns
         
 ```
 </TabItem>
@@ -519,23 +519,23 @@ Update an existing custom report definition
 ```sql
 REPLACE google.apigee.reports
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__metrics = '{{ metrics }}',
-data__dimensions = '{{ dimensions }}',
 data__filter = '{{ filter }}',
+data__toTime = '{{ toTime }}',
+data__name = '{{ name }}',
 data__properties = '{{ properties }}',
+data__metrics = '{{ metrics }}',
+data__topk = '{{ topk }}',
+data__comments = '{{ comments }}',
+data__limit = '{{ limit }}',
+data__displayName = '{{ displayName }}',
+data__sortByCols = '{{ sortByCols }}',
 data__chartType = '{{ chartType }}',
 data__timeUnit = '{{ timeUnit }}',
-data__sortByCols = '{{ sortByCols }}',
-data__sortOrder = '{{ sortOrder }}',
 data__fromTime = '{{ fromTime }}',
-data__toTime = '{{ toTime }}',
 data__offset = '{{ offset }}',
-data__limit = '{{ limit }}',
-data__topk = '{{ topk }}',
+data__dimensions = '{{ dimensions }}',
 data__tags = '{{ tags }}',
-data__comments = '{{ comments }}'
+data__sortOrder = '{{ sortOrder }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND reportsId = '{{ reportsId }}' --required

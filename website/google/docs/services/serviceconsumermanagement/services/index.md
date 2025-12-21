@@ -53,7 +53,7 @@ The following methods are available for this resource:
     <td><a href="#search"><CopyableCode code="search" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-servicesId"><code>servicesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-query"><code>query</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-query"><code>query</code></a></td>
     <td>Search tenancy units for a managed service.</td>
 </tr>
 </tbody>
@@ -111,8 +111,8 @@ Search tenancy units for a managed service.
 EXEC google.serviceconsumermanagement.services.search 
 @servicesId='{{ servicesId }}' --required, 
 @pageSize='{{ pageSize }}', 
-@query='{{ query }}', 
-@pageToken='{{ pageToken }}'
+@pageToken='{{ pageToken }}', 
+@query='{{ query }}'
 ;
 ```
 </TabItem>

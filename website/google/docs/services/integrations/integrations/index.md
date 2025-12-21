@@ -157,7 +157,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_products_integrations_list"><CopyableCode code="projects_locations_products_integrations_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-productsId"><code>productsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Returns the list of all integrations in the specified project.</td>
 </tr>
 <tr>
@@ -175,39 +175,11 @@ The following methods are available for this resource:
     <td>Delete the selected integration and all versions inside</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_products_integrations_execute"><CopyableCode code="projects_locations_products_integrations_execute" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-productsId"><code>productsId</code></a>, <a href="#parameter-integrationsId"><code>integrationsId</code></a></td>
-    <td></td>
-    <td>Executes integrations synchronously by passing the trigger id in the request body. The request is not returned until the requested executions are either fulfilled or experienced an error. If the integration name is not specified (passing `-`), all of the associated integration under the given trigger_id will be executed. Otherwise only the specified integration for the given `trigger_id` is executed. This is helpful for execution the integration from UI.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_products_integrations_schedule"><CopyableCode code="projects_locations_products_integrations_schedule" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-productsId"><code>productsId</code></a>, <a href="#parameter-integrationsId"><code>integrationsId</code></a></td>
-    <td></td>
-    <td>Schedules an integration for execution by passing the trigger id and the scheduled time in the request body.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_products_integrations_test"><CopyableCode code="projects_locations_products_integrations_test" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-productsId"><code>productsId</code></a>, <a href="#parameter-integrationsId"><code>integrationsId</code></a></td>
-    <td></td>
-    <td>Execute the integration in draft state</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_integrations_execute"><CopyableCode code="projects_locations_integrations_execute" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-integrationsId"><code>integrationsId</code></a></td>
     <td></td>
     <td>Executes integrations synchronously by passing the trigger id in the request body. The request is not returned until the requested executions are either fulfilled or experienced an error. If the integration name is not specified (passing `-`), all of the associated integration under the given trigger_id will be executed. Otherwise only the specified integration for the given `trigger_id` is executed. This is helpful for execution the integration from UI.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_integrations_schedule"><CopyableCode code="projects_locations_integrations_schedule" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-integrationsId"><code>integrationsId</code></a></td>
-    <td></td>
-    <td>Schedules an integration for execution by passing the trigger id and the scheduled time in the request body.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_integrations_test"><CopyableCode code="projects_locations_integrations_test" /></a></td>
@@ -220,8 +192,36 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_integrations_search"><CopyableCode code="projects_locations_integrations_search" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-query"><code>query</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-enableNaturalLanguageQueryUnderstanding"><code>enableNaturalLanguageQueryUnderstanding</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-query"><code>query</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-enableNaturalLanguageQueryUnderstanding"><code>enableNaturalLanguageQueryUnderstanding</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Searches and returns the list of integrations in the specified project.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_integrations_schedule"><CopyableCode code="projects_locations_integrations_schedule" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-integrationsId"><code>integrationsId</code></a></td>
+    <td></td>
+    <td>Schedules an integration for execution by passing the trigger id and the scheduled time in the request body.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_products_integrations_test"><CopyableCode code="projects_locations_products_integrations_test" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-productsId"><code>productsId</code></a>, <a href="#parameter-integrationsId"><code>integrationsId</code></a></td>
+    <td></td>
+    <td>Execute the integration in draft state</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_products_integrations_schedule"><CopyableCode code="projects_locations_products_integrations_schedule" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-productsId"><code>productsId</code></a>, <a href="#parameter-integrationsId"><code>integrationsId</code></a></td>
+    <td></td>
+    <td>Schedules an integration for execution by passing the trigger id and the scheduled time in the request body.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_products_integrations_execute"><CopyableCode code="projects_locations_products_integrations_execute" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-productsId"><code>productsId</code></a>, <a href="#parameter-integrationsId"><code>integrationsId</code></a></td>
+    <td></td>
+    <td>Executes integrations synchronously by passing the trigger id in the request body. The request is not returned until the requested executions are either fulfilled or experienced an error. If the integration name is not specified (passing `-`), all of the associated integration under the given trigger_id will be executed. Otherwise only the specified integration for the given `trigger_id` is executed. This is helpful for execution the integration from UI.</td>
 </tr>
 </tbody>
 </table>
@@ -318,8 +318,8 @@ FROM google.integrations.integrations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND productsId = '{{ productsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 ;
@@ -377,59 +377,96 @@ AND integrationsId = '{{ integrationsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_products_integrations_execute"
+    defaultValue="projects_locations_integrations_execute"
     values={[
-        { label: 'projects_locations_products_integrations_execute', value: 'projects_locations_products_integrations_execute' },
-        { label: 'projects_locations_products_integrations_schedule', value: 'projects_locations_products_integrations_schedule' },
-        { label: 'projects_locations_products_integrations_test', value: 'projects_locations_products_integrations_test' },
         { label: 'projects_locations_integrations_execute', value: 'projects_locations_integrations_execute' },
-        { label: 'projects_locations_integrations_schedule', value: 'projects_locations_integrations_schedule' },
         { label: 'projects_locations_integrations_test', value: 'projects_locations_integrations_test' },
-        { label: 'projects_locations_integrations_search', value: 'projects_locations_integrations_search' }
+        { label: 'projects_locations_integrations_search', value: 'projects_locations_integrations_search' },
+        { label: 'projects_locations_integrations_schedule', value: 'projects_locations_integrations_schedule' },
+        { label: 'projects_locations_products_integrations_test', value: 'projects_locations_products_integrations_test' },
+        { label: 'projects_locations_products_integrations_schedule', value: 'projects_locations_products_integrations_schedule' },
+        { label: 'projects_locations_products_integrations_execute', value: 'projects_locations_products_integrations_execute' }
     ]}
 >
-<TabItem value="projects_locations_products_integrations_execute">
+<TabItem value="projects_locations_integrations_execute">
 
 Executes integrations synchronously by passing the trigger id in the request body. The request is not returned until the requested executions are either fulfilled or experienced an error. If the integration name is not specified (passing `-`), all of the associated integration under the given trigger_id will be executed. Otherwise only the specified integration for the given `trigger_id` is executed. This is helpful for execution the integration from UI.
 
 ```sql
-EXEC google.integrations.integrations.projects_locations_products_integrations_execute 
+EXEC google.integrations.integrations.projects_locations_integrations_execute 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@productsId='{{ productsId }}' --required, 
 @integrationsId='{{ integrationsId }}' --required 
 @@json=
 '{
-"triggerId": "{{ triggerId }}", 
-"parameters": "{{ parameters }}", 
-"doNotPropagateError": {{ doNotPropagateError }}, 
-"parameterEntries": "{{ parameterEntries }}", 
-"requestId": "{{ requestId }}", 
 "executionId": "{{ executionId }}", 
-"inputParameters": "{{ inputParameters }}"
+"parameterEntries": "{{ parameterEntries }}", 
+"triggerId": "{{ triggerId }}", 
+"inputParameters": "{{ inputParameters }}", 
+"doNotPropagateError": {{ doNotPropagateError }}, 
+"requestId": "{{ requestId }}", 
+"parameters": "{{ parameters }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_products_integrations_schedule">
+<TabItem value="projects_locations_integrations_test">
+
+Execute the integration in draft state
+
+```sql
+EXEC google.integrations.integrations.projects_locations_integrations_test 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@integrationsId='{{ integrationsId }}' --required 
+@@json=
+'{
+"parameters": "{{ parameters }}", 
+"deadlineSecondsTime": "{{ deadlineSecondsTime }}", 
+"integrationVersion": "{{ integrationVersion }}", 
+"clientId": "{{ clientId }}", 
+"triggerId": "{{ triggerId }}", 
+"configParameters": "{{ configParameters }}", 
+"inputParameters": "{{ inputParameters }}", 
+"testMode": {{ testMode }}
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_integrations_search">
+
+Searches and returns the list of integrations in the specified project.
+
+```sql
+EXEC google.integrations.integrations.projects_locations_integrations_search 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@pageSize='{{ pageSize }}', 
+@query='{{ query }}', 
+@pageToken='{{ pageToken }}', 
+@enableNaturalLanguageQueryUnderstanding={{ enableNaturalLanguageQueryUnderstanding }}, 
+@filter='{{ filter }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_integrations_schedule">
 
 Schedules an integration for execution by passing the trigger id and the scheduled time in the request body.
 
 ```sql
-EXEC google.integrations.integrations.projects_locations_products_integrations_schedule 
+EXEC google.integrations.integrations.projects_locations_integrations_schedule 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@productsId='{{ productsId }}' --required, 
 @integrationsId='{{ integrationsId }}' --required 
 @@json=
 '{
+"parameterEntries": "{{ parameterEntries }}", 
 "triggerId": "{{ triggerId }}", 
-"parameters": "{{ parameters }}", 
 "scheduleTime": "{{ scheduleTime }}", 
 "requestId": "{{ requestId }}", 
-"parameterEntries": "{{ parameterEntries }}", 
-"inputParameters": "{{ inputParameters }}", 
-"userGeneratedExecutionId": "{{ userGeneratedExecutionId }}"
+"parameters": "{{ parameters }}", 
+"userGeneratedExecutionId": "{{ userGeneratedExecutionId }}", 
+"inputParameters": "{{ inputParameters }}"
 }'
 ;
 ```
@@ -446,98 +483,61 @@ EXEC google.integrations.integrations.projects_locations_products_integrations_t
 @integrationsId='{{ integrationsId }}' --required 
 @@json=
 '{
-"integrationVersion": "{{ integrationVersion }}", 
 "parameters": "{{ parameters }}", 
-"triggerId": "{{ triggerId }}", 
-"clientId": "{{ clientId }}", 
-"testMode": {{ testMode }}, 
 "deadlineSecondsTime": "{{ deadlineSecondsTime }}", 
+"integrationVersion": "{{ integrationVersion }}", 
+"clientId": "{{ clientId }}", 
+"triggerId": "{{ triggerId }}", 
+"configParameters": "{{ configParameters }}", 
 "inputParameters": "{{ inputParameters }}", 
-"configParameters": "{{ configParameters }}"
+"testMode": {{ testMode }}
 }'
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_integrations_execute">
+<TabItem value="projects_locations_products_integrations_schedule">
 
-Executes integrations synchronously by passing the trigger id in the request body. The request is not returned until the requested executions are either fulfilled or experienced an error. If the integration name is not specified (passing `-`), all of the associated integration under the given trigger_id will be executed. Otherwise only the specified integration for the given `trigger_id` is executed. This is helpful for execution the integration from UI.
+Schedules an integration for execution by passing the trigger id and the scheduled time in the request body.
 
 ```sql
-EXEC google.integrations.integrations.projects_locations_integrations_execute 
+EXEC google.integrations.integrations.projects_locations_products_integrations_schedule 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
+@productsId='{{ productsId }}' --required, 
 @integrationsId='{{ integrationsId }}' --required 
 @@json=
 '{
-"triggerId": "{{ triggerId }}", 
-"parameters": "{{ parameters }}", 
-"doNotPropagateError": {{ doNotPropagateError }}, 
 "parameterEntries": "{{ parameterEntries }}", 
+"triggerId": "{{ triggerId }}", 
+"scheduleTime": "{{ scheduleTime }}", 
 "requestId": "{{ requestId }}", 
-"executionId": "{{ executionId }}", 
+"parameters": "{{ parameters }}", 
+"userGeneratedExecutionId": "{{ userGeneratedExecutionId }}", 
 "inputParameters": "{{ inputParameters }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_integrations_schedule">
+<TabItem value="projects_locations_products_integrations_execute">
 
-Schedules an integration for execution by passing the trigger id and the scheduled time in the request body.
+Executes integrations synchronously by passing the trigger id in the request body. The request is not returned until the requested executions are either fulfilled or experienced an error. If the integration name is not specified (passing `-`), all of the associated integration under the given trigger_id will be executed. Otherwise only the specified integration for the given `trigger_id` is executed. This is helpful for execution the integration from UI.
 
 ```sql
-EXEC google.integrations.integrations.projects_locations_integrations_schedule 
+EXEC google.integrations.integrations.projects_locations_products_integrations_execute 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
+@productsId='{{ productsId }}' --required, 
 @integrationsId='{{ integrationsId }}' --required 
 @@json=
 '{
-"triggerId": "{{ triggerId }}", 
-"parameters": "{{ parameters }}", 
-"scheduleTime": "{{ scheduleTime }}", 
-"requestId": "{{ requestId }}", 
+"executionId": "{{ executionId }}", 
 "parameterEntries": "{{ parameterEntries }}", 
-"inputParameters": "{{ inputParameters }}", 
-"userGeneratedExecutionId": "{{ userGeneratedExecutionId }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_integrations_test">
-
-Execute the integration in draft state
-
-```sql
-EXEC google.integrations.integrations.projects_locations_integrations_test 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@integrationsId='{{ integrationsId }}' --required 
-@@json=
-'{
-"integrationVersion": "{{ integrationVersion }}", 
-"parameters": "{{ parameters }}", 
 "triggerId": "{{ triggerId }}", 
-"clientId": "{{ clientId }}", 
-"testMode": {{ testMode }}, 
-"deadlineSecondsTime": "{{ deadlineSecondsTime }}", 
 "inputParameters": "{{ inputParameters }}", 
-"configParameters": "{{ configParameters }}"
+"doNotPropagateError": {{ doNotPropagateError }}, 
+"requestId": "{{ requestId }}", 
+"parameters": "{{ parameters }}"
 }'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_integrations_search">
-
-Searches and returns the list of integrations in the specified project.
-
-```sql
-EXEC google.integrations.integrations.projects_locations_integrations_search 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@query='{{ query }}', 
-@filter='{{ filter }}', 
-@pageSize='{{ pageSize }}', 
-@pageToken='{{ pageToken }}', 
-@enableNaturalLanguageQueryUnderstanding={{ enableNaturalLanguageQueryUnderstanding }}
 ;
 ```
 </TabItem>

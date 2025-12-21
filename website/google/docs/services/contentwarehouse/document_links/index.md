@@ -117,15 +117,15 @@ Create a link between a source document and a target document.
 
 ```sql
 INSERT INTO google.contentwarehouse.document_links (
-data__requestMetadata,
 data__documentLink,
+data__requestMetadata,
 projectsId,
 locationsId,
 documentsId
 )
 SELECT 
-'{{ requestMetadata }}',
 '{{ documentLink }}',
+'{{ requestMetadata }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ documentsId }}'
@@ -155,15 +155,15 @@ updateTime
     - name: documentsId
       value: string
       description: Required parameter for the document_links resource.
+    - name: documentLink
+      value: object
+      description: >
+        Required. Document links associated with the source documents (source_document_id).
+        
     - name: requestMetadata
       value: object
       description: >
         The meta information collected about the document creator, used to enforce access control for the service.
-        
-    - name: documentLink
-      value: object
-      description: >
-        A document-link between source and target document.
         
 ```
 </TabItem>

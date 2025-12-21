@@ -95,6 +95,11 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Comma-separated list of CIDR blocks of length 22 and/or 28 used to create the Apigee instance. Providing CIDR ranges is optional. You can provide just /22 or /28 or both (or neither). Ranges you provide should be freely available as part of a larger named range you have allocated to the Service Networking peering. If this parameter is not provided, Apigee automatically requests an available /22 and /28 CIDR block from Service Networking. Use the /22 CIDR block for configuring your firewall needs to allow traffic from Apigee. Input formats: `a.b.c.d/22` or `e.f.g.h/28` or `a.b.c.d/22,e.f.g.h/28`</td>
 </tr>
 <tr>
+    <td><CopyableCode code="isVersionLocked" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. Indicates whether the instance is version locked. If true, the instance will not be updated by automated runtime rollouts. This is only supported for Apigee X instances.</td>
+</tr>
+<tr>
     <td><CopyableCode code="lastModifiedAt" /></td>
     <td><code>string (int64)</code></td>
     <td>Output only. Time the instance was last modified in milliseconds since epoch.</td>
@@ -103,6 +108,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="location" /></td>
     <td><code>string</code></td>
     <td>Required. Compute Engine location where the instance resides.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="maintenanceUpdatePolicy" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Apigee customers can set the preferred window to perform maintenance on the instance (day of the week and time of day). (id: GoogleCloudApigeeV1MaintenanceUpdatePolicy)</td>
 </tr>
 <tr>
     <td><CopyableCode code="peeringCidrRange" /></td>
@@ -118,6 +128,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="runtimeVersion" /></td>
     <td><code>string</code></td>
     <td>Output only. Version of the runtime system running in the instance. The runtime system is the set of components that serve the API Proxy traffic in your Environments.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="scheduledMaintenance" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Time and date of the scheduled maintenance for this instance. This field is only populated for instances that have opted into Maintenance Window and if there is an upcoming maintenance. Cleared once the maintenance is complete. (id: GoogleCloudApigeeV1ScheduledMaintenance)</td>
 </tr>
 <tr>
     <td><CopyableCode code="serviceAttachment" /></td>
@@ -189,6 +204,11 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Comma-separated list of CIDR blocks of length 22 and/or 28 used to create the Apigee instance. Providing CIDR ranges is optional. You can provide just /22 or /28 or both (or neither). Ranges you provide should be freely available as part of a larger named range you have allocated to the Service Networking peering. If this parameter is not provided, Apigee automatically requests an available /22 and /28 CIDR block from Service Networking. Use the /22 CIDR block for configuring your firewall needs to allow traffic from Apigee. Input formats: `a.b.c.d/22` or `e.f.g.h/28` or `a.b.c.d/22,e.f.g.h/28`</td>
 </tr>
 <tr>
+    <td><CopyableCode code="isVersionLocked" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. Indicates whether the instance is version locked. If true, the instance will not be updated by automated runtime rollouts. This is only supported for Apigee X instances.</td>
+</tr>
+<tr>
     <td><CopyableCode code="lastModifiedAt" /></td>
     <td><code>string (int64)</code></td>
     <td>Output only. Time the instance was last modified in milliseconds since epoch.</td>
@@ -197,6 +217,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="location" /></td>
     <td><code>string</code></td>
     <td>Required. Compute Engine location where the instance resides.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="maintenanceUpdatePolicy" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Apigee customers can set the preferred window to perform maintenance on the instance (day of the week and time of day). (id: GoogleCloudApigeeV1MaintenanceUpdatePolicy)</td>
 </tr>
 <tr>
     <td><CopyableCode code="peeringCidrRange" /></td>
@@ -212,6 +237,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="runtimeVersion" /></td>
     <td><code>string</code></td>
     <td>Output only. Version of the runtime system running in the instance. The runtime system is the set of components that serve the API Proxy traffic in your Environments.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="scheduledMaintenance" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Time and date of the scheduled maintenance for this instance. This field is only populated for instances that have opted into Maintenance Window and if there is an upcoming maintenance. Cleared once the maintenance is complete. (id: GoogleCloudApigeeV1ScheduledMaintenance)</td>
 </tr>
 <tr>
     <td><CopyableCode code="serviceAttachment" /></td>
@@ -353,11 +383,14 @@ diskEncryptionKeyName,
 displayName,
 host,
 ipRange,
+isVersionLocked,
 lastModifiedAt,
 location,
+maintenanceUpdatePolicy,
 peeringCidrRange,
 port,
 runtimeVersion,
+scheduledMaintenance,
 serviceAttachment,
 state
 FROM google.apigee.instances
@@ -381,11 +414,14 @@ diskEncryptionKeyName,
 displayName,
 host,
 ipRange,
+isVersionLocked,
 lastModifiedAt,
 location,
+maintenanceUpdatePolicy,
 peeringCidrRange,
 port,
 runtimeVersion,
+scheduledMaintenance,
 serviceAttachment,
 state
 FROM google.apigee.instances
@@ -413,26 +449,28 @@ Creates an Apigee runtime instance. The instance is accessible from the authoriz
 
 ```sql
 INSERT INTO google.apigee.instances (
-data__name,
-data__location,
 data__peeringCidrRange,
 data__description,
-data__displayName,
-data__diskEncryptionKeyName,
 data__ipRange,
 data__consumerAcceptList,
+data__name,
+data__maintenanceUpdatePolicy,
+data__location,
+data__diskEncryptionKeyName,
+data__displayName,
 data__accessLoggingConfig,
 organizationsId
 )
 SELECT 
-'{{ name }}',
-'{{ location }}',
 '{{ peeringCidrRange }}',
 '{{ description }}',
-'{{ displayName }}',
-'{{ diskEncryptionKeyName }}',
 '{{ ipRange }}',
 '{{ consumerAcceptList }}',
+'{{ name }}',
+'{{ maintenanceUpdatePolicy }}',
+'{{ location }}',
+'{{ diskEncryptionKeyName }}',
+'{{ displayName }}',
 '{{ accessLoggingConfig }}',
 '{{ organizationsId }}'
 RETURNING
@@ -453,16 +491,6 @@ response
     - name: organizationsId
       value: string
       description: Required parameter for the instances resource.
-    - name: name
-      value: string
-      description: >
-        Required. Resource ID of the instance. Values must match the regular expression `^a-z{0,30}[a-z\d]$`.
-        
-    - name: location
-      value: string
-      description: >
-        Required. Compute Engine location where the instance resides.
-        
     - name: peeringCidrRange
       value: string
       description: >
@@ -474,16 +502,6 @@ response
       description: >
         Optional. Description of the instance.
         
-    - name: displayName
-      value: string
-      description: >
-        Optional. Display name for the instance.
-        
-    - name: diskEncryptionKeyName
-      value: string
-      description: >
-        Optional. Customer Managed Encryption Key (CMEK) used for disk and volume encryption. If not specified, a Google-Managed encryption key will be used. Use the following format: `projects/([^/]+)/locations/([^/]+)/keyRings/([^/]+)/cryptoKeys/([^/]+)`
-        
     - name: ipRange
       value: string
       description: >
@@ -493,6 +511,31 @@ response
       value: array
       description: >
         Optional. Customer accept list represents the list of projects (id/number) on customer side that can privately connect to the service attachment. It is an optional field which the customers can provide during the instance creation. By default, the customer project associated with the Apigee organization will be included to the list.
+        
+    - name: name
+      value: string
+      description: >
+        Required. Resource ID of the instance. Values must match the regular expression `^a-z{0,30}[a-z\d]$`.
+        
+    - name: maintenanceUpdatePolicy
+      value: object
+      description: >
+        Optional. Apigee customers can set the preferred window to perform maintenance on the instance (day of the week and time of day).
+        
+    - name: location
+      value: string
+      description: >
+        Required. Compute Engine location where the instance resides.
+        
+    - name: diskEncryptionKeyName
+      value: string
+      description: >
+        Optional. Customer Managed Encryption Key (CMEK) used for disk and volume encryption. If not specified, a Google-Managed encryption key will be used. Use the following format: `projects/([^/]+)/locations/([^/]+)/keyRings/([^/]+)/cryptoKeys/([^/]+)`
+        
+    - name: displayName
+      value: string
+      description: >
+        Optional. Display name for the instance.
         
     - name: accessLoggingConfig
       value: object
@@ -519,14 +562,15 @@ Updates an Apigee runtime instance. You can update the fields described in NodeC
 ```sql
 UPDATE google.apigee.instances
 SET 
-data__name = '{{ name }}',
-data__location = '{{ location }}',
 data__peeringCidrRange = '{{ peeringCidrRange }}',
 data__description = '{{ description }}',
-data__displayName = '{{ displayName }}',
-data__diskEncryptionKeyName = '{{ diskEncryptionKeyName }}',
 data__ipRange = '{{ ipRange }}',
 data__consumerAcceptList = '{{ consumerAcceptList }}',
+data__name = '{{ name }}',
+data__maintenanceUpdatePolicy = '{{ maintenanceUpdatePolicy }}',
+data__location = '{{ location }}',
+data__diskEncryptionKeyName = '{{ diskEncryptionKeyName }}',
+data__displayName = '{{ displayName }}',
 data__accessLoggingConfig = '{{ accessLoggingConfig }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
@@ -583,9 +627,9 @@ EXEC google.apigee.instances.organizations_instances_report_status
 @instancesId='{{ instancesId }}' --required 
 @@json=
 '{
-"instanceUid": "{{ instanceUid }}", 
+"resources": "{{ resources }}", 
 "reportTime": "{{ reportTime }}", 
-"resources": "{{ resources }}"
+"instanceUid": "{{ instanceUid }}"
 }'
 ;
 ```

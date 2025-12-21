@@ -310,20 +310,20 @@ Creates an assessment rule.
 
 ```sql
 INSERT INTO google.contactcenterinsights.assessment_rules (
-data__name,
-data__active,
-data__displayName,
 data__sampleRule,
+data__name,
+data__displayName,
+data__active,
 data__scheduleInfo,
 projectsId,
 locationsId,
 assessmentRuleId
 )
 SELECT 
-'{{ name }}',
-{{ active }},
-'{{ displayName }}',
 '{{ sampleRule }}',
+'{{ name }}',
+'{{ displayName }}',
+{{ active }},
 '{{ scheduleInfo }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -351,25 +351,25 @@ updateTime
     - name: locationsId
       value: string
       description: Required parameter for the assessment_rules resource.
+    - name: sampleRule
+      value: object
+      description: >
+        The sample rule for the assessment rule.
+        
     - name: name
       value: string
       description: >
         Identifier. The resource name of the assessment rule. Format: projects/{project}/locations/{location}/assessmentRules/{assessment_rule}
-        
-    - name: active
-      value: boolean
-      description: >
-        If true, apply this rule to conversations. Otherwise, this rule is inactive.
         
     - name: displayName
       value: string
       description: >
         Display Name of the assessment rule.
         
-    - name: sampleRule
-      value: object
+    - name: active
+      value: boolean
       description: >
-        The sample rule for the assessment rule.
+        If true, apply this rule to conversations. Otherwise, this rule is inactive.
         
     - name: scheduleInfo
       value: object
@@ -398,10 +398,10 @@ Updates an assessment rule.
 ```sql
 UPDATE google.contactcenterinsights.assessment_rules
 SET 
-data__name = '{{ name }}',
-data__active = {{ active }},
-data__displayName = '{{ displayName }}',
 data__sampleRule = '{{ sampleRule }}',
+data__name = '{{ name }}',
+data__displayName = '{{ displayName }}',
+data__active = {{ active }},
 data__scheduleInfo = '{{ scheduleInfo }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

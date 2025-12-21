@@ -144,7 +144,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>List AuthorizedViewSets</td>
 </tr>
 <tr>
@@ -176,18 +176,18 @@ The following methods are available for this resource:
     <td>Query metrics.</td>
 </tr>
 <tr>
+    <td><a href="#search"><CopyableCode code="search" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-query"><code>query</code></a></td>
+    <td>SearchAuthorizedViewSets</td>
+</tr>
+<tr>
     <td><a href="#query_performance_overview"><CopyableCode code="query_performance_overview" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a>, <a href="#parameter-authorizedViewsId"><code>authorizedViewsId</code></a></td>
     <td></td>
     <td>Generates a summary of predefined performance metrics for a set of conversations. Conversations can be specified by specifying a time window and an agent id, for now. The summary includes a comparison of metrics computed for conversations in the previous time period, and also a comparison with peers in the same time period.</td>
-</tr>
-<tr>
-    <td><a href="#search"><CopyableCode code="search" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-query"><code>query</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
-    <td>SearchAuthorizedViewSets</td>
 </tr>
 </tbody>
 </table>
@@ -307,9 +307,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND authorizedViewSetsId = '{{ authorizedViewSetsId }}' -- required
 AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -331,18 +331,18 @@ Create AuthorizedView
 
 ```sql
 INSERT INTO google.contactcenterinsights.authorized_views (
-data__name,
-data__displayName,
 data__conversationFilter,
+data__displayName,
+data__name,
 projectsId,
 locationsId,
 authorizedViewSetsId,
 authorizedViewId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
 '{{ conversationFilter }}',
+'{{ displayName }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ authorizedViewSetsId }}',
@@ -371,20 +371,20 @@ updateTime
     - name: authorizedViewSetsId
       value: string
       description: Required parameter for the authorized_views resource.
-    - name: name
+    - name: conversationFilter
       value: string
       description: >
-        Identifier. The resource name of the AuthorizedView. Format: projects/{project}/locations/{location}/authorizedViewSets/{authorized_view_set}/authorizedViews/{authorized_view}
+        A filter to reduce conversation results to a specific subset. The AuthorizedView's assigned permission (read/write) could be applied to the subset of conversations. If conversation_filter is empty, there is no restriction on the conversations that the AuthorizedView can access. Having *authorizedViews.get* access to the AuthorizedView means having the same read/write access to the Conversations (as well as metadata/annotations linked to the conversation) that this AuthorizedView has.
         
     - name: displayName
       value: string
       description: >
         Display Name. Limit 64 characters.
         
-    - name: conversationFilter
+    - name: name
       value: string
       description: >
-        A filter to reduce conversation results to a specific subset. The AuthorizedView's assigned permission (read/write) could be applied to the subset of conversations. If conversation_filter is empty, there is no restriction on the conversations that the AuthorizedView can access. Having *authorizedViews.get* access to the AuthorizedView means having the same read/write access to the Conversations (as well as metadata/annotations linked to the conversation) that this AuthorizedView has.
+        Identifier. The resource name of the AuthorizedView. Format: projects/{project}/locations/{location}/authorizedViewSets/{authorized_view_set}/authorizedViews/{authorized_view}
         
     - name: authorizedViewId
       value: string
@@ -408,9 +408,9 @@ Updates an AuthorizedView.
 ```sql
 UPDATE google.contactcenterinsights.authorized_views
 SET 
-data__name = '{{ name }}',
+data__conversationFilter = '{{ conversationFilter }}',
 data__displayName = '{{ displayName }}',
-data__conversationFilter = '{{ conversationFilter }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -458,8 +458,8 @@ AND authorizedViewsId = '{{ authorizedViewsId }}' --required
     defaultValue="query_metrics"
     values={[
         { label: 'query_metrics', value: 'query_metrics' },
-        { label: 'query_performance_overview', value: 'query_performance_overview' },
-        { label: 'search', value: 'search' }
+        { label: 'search', value: 'search' },
+        { label: 'query_performance_overview', value: 'query_performance_overview' }
     ]}
 >
 <TabItem value="query_metrics">
@@ -475,10 +475,26 @@ EXEC google.contactcenterinsights.authorized_views.query_metrics
 @@json=
 '{
 "filter": "{{ filter }}", 
-"timeGranularity": "{{ timeGranularity }}", 
+"measureMask": "{{ measureMask }}", 
 "dimensions": "{{ dimensions }}", 
-"measureMask": "{{ measureMask }}"
+"timeGranularity": "{{ timeGranularity }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="search">
+
+SearchAuthorizedViewSets
+
+```sql
+EXEC google.contactcenterinsights.authorized_views.search 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@authorizedViewSetsId='{{ authorizedViewSetsId }}' --required, 
+@orderBy='{{ orderBy }}', 
+@pageToken='{{ pageToken }}', 
+@pageSize='{{ pageSize }}', 
+@query='{{ query }}'
 ;
 ```
 </TabItem>
@@ -494,27 +510,11 @@ EXEC google.contactcenterinsights.authorized_views.query_performance_overview
 @authorizedViewsId='{{ authorizedViewsId }}' --required 
 @@json=
 '{
-"agentPerformanceSource": "{{ agentPerformanceSource }}", 
 "filter": "{{ filter }}", 
 "queryInterval": "{{ queryInterval }}", 
+"agentPerformanceSource": "{{ agentPerformanceSource }}", 
 "comparisonQueryInterval": "{{ comparisonQueryInterval }}"
 }'
-;
-```
-</TabItem>
-<TabItem value="search">
-
-SearchAuthorizedViewSets
-
-```sql
-EXEC google.contactcenterinsights.authorized_views.search 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@authorizedViewSetsId='{{ authorizedViewSetsId }}' --required, 
-@pageSize='{{ pageSize }}', 
-@pageToken='{{ pageToken }}', 
-@query='{{ query }}', 
-@orderBy='{{ orderBy }}'
 ;
 ```
 </TabItem>

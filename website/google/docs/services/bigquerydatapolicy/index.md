@@ -18,14 +18,15 @@ bigquerydatapolicy service documentation.
 
 :::info[Service Summary]
 
-total resources: __2__  
+total resources: __3__  
 
 :::
 
 ## Resources
 <div class="row">
 <div class="providerDocColumn">
-<a href="/services/bigquerydatapolicy/data_policies/">data_policies</a>
+<a href="/services/bigquerydatapolicy/data_policies/">data_policies</a><br />
+<a href="/services/bigquerydatapolicy/data_policies_grantees/">data_policies_grantees</a>
 </div>
 <div class="providerDocColumn">
 <a href="/services/bigquerydatapolicy/data_policies_iam_policies/">data_policies_iam_policies</a>

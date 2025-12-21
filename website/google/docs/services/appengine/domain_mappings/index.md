@@ -57,12 +57,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Full path to the DomainMapping resource in the API. Example: apps/myapp/domainMapping/example.com.@OutputOnly</td>
+    <td>Output only. Full path to the DomainMapping resource in the API. Example: apps/myapp/domainMapping/example.com.@OutputOnly</td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceRecords" /></td>
     <td><code>array</code></td>
-    <td>The resource records required to configure this domain mapping. These records must be added to the domain's DNS configuration in order to serve the application via this domain mapping.@OutputOnly</td>
+    <td>Output only. The resource records required to configure this domain mapping. These records must be added to the domain's DNS configuration in order to serve the application via this domain mapping.@OutputOnly</td>
 </tr>
 <tr>
     <td><CopyableCode code="sslSettings" /></td>
@@ -91,12 +91,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Full path to the DomainMapping resource in the API. Example: apps/myapp/domainMapping/example.com.@OutputOnly</td>
+    <td>Output only. Full path to the DomainMapping resource in the API. Example: apps/myapp/domainMapping/example.com.@OutputOnly</td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceRecords" /></td>
     <td><code>array</code></td>
-    <td>The resource records required to configure this domain mapping. These records must be added to the domain's DNS configuration in order to serve the application via this domain mapping.@OutputOnly</td>
+    <td>Output only. The resource records required to configure this domain mapping. These records must be added to the domain's DNS configuration in order to serve the application via this domain mapping.@OutputOnly</td>
 </tr>
 <tr>
     <td><CopyableCode code="sslSettings" /></td>
@@ -133,7 +133,7 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-appsId"><code>appsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-applicationsId"><code>applicationsId</code></a></td>
     <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the domain mappings on an application.</td>
 </tr>
@@ -147,14 +147,14 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-appsId"><code>appsId</code></a>, <a href="#parameter-domainMappingsId"><code>domainMappingsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-applicationsId"><code>applicationsId</code></a>, <a href="#parameter-domainMappingsId"><code>domainMappingsId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the specified domain mapping. To map an SSL certificate to a domain mapping, update certificate_id to point to an AuthorizedCertificate resource. A user must be authorized to administer the associated domain in order to update a DomainMapping resource.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-appsId"><code>appsId</code></a>, <a href="#parameter-domainMappingsId"><code>domainMappingsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-applicationsId"><code>applicationsId</code></a>, <a href="#parameter-domainMappingsId"><code>domainMappingsId</code></a></td>
     <td></td>
     <td>Deletes the specified domain mapping. A user must be authorized to administer the associated domain in order to delete a DomainMapping resource.</td>
 </tr>
@@ -176,11 +176,6 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tbody>
 <tr id="parameter-applicationsId">
     <td><CopyableCode code="applicationsId" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr id="parameter-appsId">
-    <td><CopyableCode code="appsId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -260,7 +255,9 @@ name,
 resourceRecords,
 sslSettings
 FROM google.appengine.domain_mappings
-WHERE appsId = '{{ appsId }}' -- required
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND applicationsId = '{{ applicationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
@@ -284,20 +281,16 @@ Maps a domain to an application. A user must be authorized to administer a domai
 
 ```sql
 INSERT INTO google.appengine.domain_mappings (
-data__name,
 data__id,
 data__sslSettings,
-data__resourceRecords,
 projectsId,
 locationsId,
 applicationsId,
 overrideStrategy
 )
 SELECT 
-'{{ name }}',
 '{{ id }}',
 '{{ sslSettings }}',
-'{{ resourceRecords }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ applicationsId }}',
@@ -326,11 +319,6 @@ response
     - name: applicationsId
       value: string
       description: Required parameter for the domain_mappings resource.
-    - name: name
-      value: string
-      description: >
-        Full path to the DomainMapping resource in the API. Example: apps/myapp/domainMapping/example.com.@OutputOnly
-        
     - name: id
       value: string
       description: >
@@ -340,11 +328,6 @@ response
       value: object
       description: >
         SSL configuration for this domain. If unconfigured, this domain will not serve with SSL.
-        
-    - name: resourceRecords
-      value: array
-      description: >
-        The resource records required to configure this domain mapping. These records must be added to the domain's DNS configuration in order to serve the application via this domain mapping.@OutputOnly
         
     - name: overrideStrategy
       value: string
@@ -368,12 +351,12 @@ Updates the specified domain mapping. To map an SSL certificate to a domain mapp
 ```sql
 UPDATE google.appengine.domain_mappings
 SET 
-data__name = '{{ name }}',
 data__id = '{{ id }}',
-data__sslSettings = '{{ sslSettings }}',
-data__resourceRecords = '{{ resourceRecords }}'
+data__sslSettings = '{{ sslSettings }}'
 WHERE 
-appsId = '{{ appsId }}' --required
+projectsId = '{{ projectsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND applicationsId = '{{ applicationsId }}' --required
 AND domainMappingsId = '{{ domainMappingsId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
@@ -401,7 +384,9 @@ Deletes the specified domain mapping. A user must be authorized to administer th
 
 ```sql
 DELETE FROM google.appengine.domain_mappings
-WHERE appsId = '{{ appsId }}' --required
+WHERE projectsId = '{{ projectsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND applicationsId = '{{ applicationsId }}' --required
 AND domainMappingsId = '{{ domainMappingsId }}' --required
 ;
 ```

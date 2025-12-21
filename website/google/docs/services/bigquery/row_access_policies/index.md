@@ -154,7 +154,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+datasetId"><code>+datasetId</code></a>, <a href="#parameter-+tableId"><code>+tableId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists all row access policies on the specified table.</td>
 </tr>
 <tr>
@@ -277,8 +277,8 @@ FROM google.bigquery.row_access_policies
 WHERE projectId = '{{ projectId }}' -- required
 AND +datasetId = '{{ +datasetId }}' -- required
 AND +tableId = '{{ +tableId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -300,17 +300,17 @@ Creates a row access policy.
 
 ```sql
 INSERT INTO google.bigquery.row_access_policies (
-data__filterPredicate,
-data__grantees,
 data__rowAccessPolicyReference,
+data__grantees,
+data__filterPredicate,
 projectId,
 +datasetId,
 +tableId
 )
 SELECT 
-'{{ filterPredicate }}',
-'{{ grantees }}',
 '{{ rowAccessPolicyReference }}',
+'{{ grantees }}',
+'{{ filterPredicate }}',
 '{{ projectId }}',
 '{{ +datasetId }}',
 '{{ +tableId }}'
@@ -339,20 +339,20 @@ rowAccessPolicyReference
     - name: +tableId
       value: string
       description: Required parameter for the row_access_policies resource.
-    - name: filterPredicate
-      value: string
+    - name: rowAccessPolicyReference
+      value: object
       description: >
-        Required. A SQL boolean expression that represents the rows defined by this row access policy, similar to the boolean expression in a WHERE clause of a SELECT query on a table. References to other tables, routines, and temporary functions are not supported. Examples: region="EU" date_field = CAST('2019-9-27' as DATE) nullable_field is not NULL numeric_field BETWEEN 1.0 AND 5.0
+        Required. Reference describing the ID of this row access policy.
         
     - name: grantees
       value: array
       description: >
         Optional. Input only. The optional list of iam_member users or groups that specifies the initial members that the row-level access policy should be created with. grantees types: - "user:alice@example.com": An email address that represents a specific Google account. - "serviceAccount:my-other-app@appspot.gserviceaccount.com": An email address that represents a service account. - "group:admins@example.com": An email address that represents a Google group. - "domain:example.com":The Google Workspace domain (primary) that represents all the users of that domain. - "allAuthenticatedUsers": A special identifier that represents all service accounts and all users on the internet who have authenticated with a Google Account. This identifier includes accounts that aren't connected to a Google Workspace or Cloud Identity domain, such as personal Gmail accounts. Users who aren't authenticated, such as anonymous visitors, aren't included. - "allUsers":A special identifier that represents anyone who is on the internet, including authenticated and unauthenticated users. Because BigQuery requires authentication before a user can access the service, allUsers includes only authenticated users.
         
-    - name: rowAccessPolicyReference
-      value: object
+    - name: filterPredicate
+      value: string
       description: >
-        Required. Reference describing the ID of this row access policy.
+        Required. A SQL boolean expression that represents the rows defined by this row access policy, similar to the boolean expression in a WHERE clause of a SELECT query on a table. References to other tables, routines, and temporary functions are not supported. Examples: region="EU" date_field = CAST('2019-9-27' as DATE) nullable_field is not NULL numeric_field BETWEEN 1.0 AND 5.0
         
 ```
 </TabItem>
@@ -374,9 +374,9 @@ Updates a row access policy.
 ```sql
 REPLACE google.bigquery.row_access_policies
 SET 
-data__filterPredicate = '{{ filterPredicate }}',
+data__rowAccessPolicyReference = '{{ rowAccessPolicyReference }}',
 data__grantees = '{{ grantees }}',
-data__rowAccessPolicyReference = '{{ rowAccessPolicyReference }}'
+data__filterPredicate = '{{ filterPredicate }}'
 WHERE 
 projectId = '{{ projectId }}' --required
 AND +datasetId = '{{ +datasetId }}' --required

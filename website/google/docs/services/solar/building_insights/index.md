@@ -53,7 +53,7 @@ The following methods are available for this resource:
     <td><a href="#find_closest"><CopyableCode code="find_closest" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
-    <td><a href="#parameter-location.latitude"><code>location.latitude</code></a>, <a href="#parameter-location.longitude"><code>location.longitude</code></a>, <a href="#parameter-requiredQuality"><code>requiredQuality</code></a>, <a href="#parameter-experiments"><code>experiments</code></a></td>
+    <td><a href="#parameter-requiredQuality"><code>requiredQuality</code></a>, <a href="#parameter-exactQualityRequired"><code>exactQualityRequired</code></a>, <a href="#parameter-experiments"><code>experiments</code></a>, <a href="#parameter-location.latitude"><code>location.latitude</code></a>, <a href="#parameter-location.longitude"><code>location.longitude</code></a></td>
     <td>Locates the building whose centroid is closest to a query point. Returns an error with code `NOT_FOUND` if there are no buildings within approximately 50m of the query point.</td>
 </tr>
 </tbody>
@@ -72,6 +72,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
+<tr id="parameter-exactQualityRequired">
+    <td><CopyableCode code="exactQualityRequired" /></td>
+    <td><code>boolean</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-experiments">
     <td><CopyableCode code="experiments" /></td>
     <td><code>string</code></td>
@@ -109,10 +114,11 @@ Locates the building whose centroid is closest to a query point. Returns an erro
 
 ```sql
 EXEC google.solar.building_insights.find_closest 
-@location.latitude='{{ location.latitude }}', 
-@location.longitude='{{ location.longitude }}', 
 @requiredQuality='{{ requiredQuality }}', 
-@experiments='{{ experiments }}'
+@exactQualityRequired={{ exactQualityRequired }}, 
+@experiments='{{ experiments }}', 
+@location.latitude='{{ location.latitude }}', 
+@location.longitude='{{ location.longitude }}'
 ;
 ```
 </TabItem>

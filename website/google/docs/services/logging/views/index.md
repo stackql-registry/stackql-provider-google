@@ -32,98 +32,20 @@ Creates, updates, deletes, gets or lists a <code>views</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_locations_buckets_views_get"
+    defaultValue="organizations_locations_buckets_views_get"
     values={[
-        { label: 'projects_locations_buckets_views_get', value: 'projects_locations_buckets_views_get' },
         { label: 'organizations_locations_buckets_views_get', value: 'organizations_locations_buckets_views_get' },
-        { label: 'folders_locations_buckets_views_get', value: 'folders_locations_buckets_views_get' },
         { label: 'billing_accounts_locations_buckets_views_get', value: 'billing_accounts_locations_buckets_views_get' },
-        { label: 'projects_locations_buckets_views_list', value: 'projects_locations_buckets_views_list' },
+        { label: 'projects_locations_buckets_views_get', value: 'projects_locations_buckets_views_get' },
+        { label: 'folders_locations_buckets_views_get', value: 'folders_locations_buckets_views_get' },
         { label: 'organizations_locations_buckets_views_list', value: 'organizations_locations_buckets_views_list' },
-        { label: 'folders_locations_buckets_views_list', value: 'folders_locations_buckets_views_list' },
         { label: 'billing_accounts_locations_buckets_views_list', value: 'billing_accounts_locations_buckets_views_list' },
+        { label: 'projects_locations_buckets_views_list', value: 'projects_locations_buckets_views_list' },
+        { label: 'folders_locations_buckets_views_list', value: 'folders_locations_buckets_views_list' },
         { label: 'locations_buckets_views_list', value: 'locations_buckets_views_list' }
     ]}
 >
-<TabItem value="projects_locations_buckets_views_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The resource name of the view.For example:projects/my-project/locations/global/buckets/my-bucket/views/my-view</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The creation timestamp of the view.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Describes this view.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="filter" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Filter that restricts which log entries in a bucket are visible in this view.Filters must be logical conjunctions that use the AND operator, and they can use any of the following qualifiers: SOURCE(), which specifies a project, folder, organization, or billing account of origin. resource.type, which specifies the resource type. LOG_ID(), which identifies the log.They can also use the negations of these qualifiers with the NOT operator.For example:SOURCE("projects/myproject") AND resource.type = "gce_instance" AND NOT LOG_ID("stdout")</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The last update timestamp of the view.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="organizations_locations_buckets_views_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The resource name of the view.For example:projects/my-project/locations/global/buckets/my-bucket/views/my-view</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The creation timestamp of the view.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Describes this view.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="filter" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Filter that restricts which log entries in a bucket are visible in this view.Filters must be logical conjunctions that use the AND operator, and they can use any of the following qualifiers: SOURCE(), which specifies a project, folder, organization, or billing account of origin. resource.type, which specifies the resource type. LOG_ID(), which identifies the log.They can also use the negations of these qualifiers with the NOT operator.For example:SOURCE("projects/myproject") AND resource.type = "gce_instance" AND NOT LOG_ID("stdout")</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The last update timestamp of the view.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="folders_locations_buckets_views_get">
 
 <table>
 <thead>
@@ -201,7 +123,46 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_buckets_views_list">
+<TabItem value="projects_locations_buckets_views_get">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The resource name of the view.For example:projects/my-project/locations/global/buckets/my-bucket/views/my-view</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The creation timestamp of the view.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Describes this view.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="filter" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Filter that restricts which log entries in a bucket are visible in this view.Filters must be logical conjunctions that use the AND operator, and they can use any of the following qualifiers: SOURCE(), which specifies a project, folder, organization, or billing account of origin. resource.type, which specifies the resource type. LOG_ID(), which identifies the log.They can also use the negations of these qualifiers with the NOT operator.For example:SOURCE("projects/myproject") AND resource.type = "gce_instance" AND NOT LOG_ID("stdout")</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The last update timestamp of the view.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="folders_locations_buckets_views_get">
 
 <table>
 <thead>
@@ -279,7 +240,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="folders_locations_buckets_views_list">
+<TabItem value="billing_accounts_locations_buckets_views_list">
 
 <table>
 <thead>
@@ -318,7 +279,46 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="billing_accounts_locations_buckets_views_list">
+<TabItem value="projects_locations_buckets_views_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The resource name of the view.For example:projects/my-project/locations/global/buckets/my-bucket/views/my-view</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The creation timestamp of the view.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Describes this view.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="filter" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Filter that restricts which log entries in a bucket are visible in this view.Filters must be logical conjunctions that use the AND operator, and they can use any of the following qualifiers: SOURCE(), which specifies a project, folder, organization, or billing account of origin. resource.type, which specifies the resource type. LOG_ID(), which identifies the log.They can also use the negations of these qualifiers with the NOT operator.For example:SOURCE("projects/myproject") AND resource.type = "gce_instance" AND NOT LOG_ID("stdout")</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The last update timestamp of the view.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="folders_locations_buckets_views_list">
 
 <table>
 <thead>
@@ -414,23 +414,9 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_locations_buckets_views_get"><CopyableCode code="projects_locations_buckets_views_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a>, <a href="#parameter-viewsId"><code>viewsId</code></a></td>
-    <td></td>
-    <td>Gets a view on a log bucket.</td>
-</tr>
-<tr>
     <td><a href="#organizations_locations_buckets_views_get"><CopyableCode code="organizations_locations_buckets_views_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a>, <a href="#parameter-viewsId"><code>viewsId</code></a></td>
-    <td></td>
-    <td>Gets a view on a log bucket.</td>
-</tr>
-<tr>
-    <td><a href="#folders_locations_buckets_views_get"><CopyableCode code="folders_locations_buckets_views_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a>, <a href="#parameter-viewsId"><code>viewsId</code></a></td>
     <td></td>
     <td>Gets a view on a log bucket.</td>
 </tr>
@@ -442,23 +428,23 @@ The following methods are available for this resource:
     <td>Gets a view on a log bucket.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_buckets_views_list"><CopyableCode code="projects_locations_buckets_views_list" /></a></td>
+    <td><a href="#projects_locations_buckets_views_get"><CopyableCode code="projects_locations_buckets_views_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Lists views on a log bucket.</td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a>, <a href="#parameter-viewsId"><code>viewsId</code></a></td>
+    <td></td>
+    <td>Gets a view on a log bucket.</td>
+</tr>
+<tr>
+    <td><a href="#folders_locations_buckets_views_get"><CopyableCode code="folders_locations_buckets_views_get" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a>, <a href="#parameter-viewsId"><code>viewsId</code></a></td>
+    <td></td>
+    <td>Gets a view on a log bucket.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_buckets_views_list"><CopyableCode code="organizations_locations_buckets_views_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Lists views on a log bucket.</td>
-</tr>
-<tr>
-    <td><a href="#folders_locations_buckets_views_list"><CopyableCode code="folders_locations_buckets_views_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a></td>
     <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists views on a log bucket.</td>
 </tr>
@@ -470,30 +456,30 @@ The following methods are available for this resource:
     <td>Lists views on a log bucket.</td>
 </tr>
 <tr>
-    <td><a href="#locations_buckets_views_list"><CopyableCode code="locations_buckets_views_list" /></a></td>
+    <td><a href="#projects_locations_buckets_views_list"><CopyableCode code="projects_locations_buckets_views_list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-parentType"><code>parentType</code></a>, <a href="#parameter-parent"><code>parent</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists views on a log bucket.</td>
+</tr>
+<tr>
+    <td><a href="#folders_locations_buckets_views_list"><CopyableCode code="folders_locations_buckets_views_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a></td>
     <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists views on a log bucket.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_buckets_views_create"><CopyableCode code="projects_locations_buckets_views_create" /></a></td>
-    <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a></td>
-    <td><a href="#parameter-viewId"><code>viewId</code></a></td>
-    <td>Creates a view over log entries in a log bucket. A bucket may contain a maximum of 30 views.</td>
+    <td><a href="#locations_buckets_views_list"><CopyableCode code="locations_buckets_views_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-parentType"><code>parentType</code></a>, <a href="#parameter-parent"><code>parent</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists views on a log bucket.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_buckets_views_create"><CopyableCode code="organizations_locations_buckets_views_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a></td>
-    <td><a href="#parameter-viewId"><code>viewId</code></a></td>
-    <td>Creates a view over log entries in a log bucket. A bucket may contain a maximum of 30 views.</td>
-</tr>
-<tr>
-    <td><a href="#folders_locations_buckets_views_create"><CopyableCode code="folders_locations_buckets_views_create" /></a></td>
-    <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a></td>
     <td><a href="#parameter-viewId"><code>viewId</code></a></td>
     <td>Creates a view over log entries in a log bucket. A bucket may contain a maximum of 30 views.</td>
 </tr>
@@ -505,6 +491,20 @@ The following methods are available for this resource:
     <td>Creates a view over log entries in a log bucket. A bucket may contain a maximum of 30 views.</td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_buckets_views_create"><CopyableCode code="projects_locations_buckets_views_create" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a></td>
+    <td><a href="#parameter-viewId"><code>viewId</code></a></td>
+    <td>Creates a view over log entries in a log bucket. A bucket may contain a maximum of 30 views.</td>
+</tr>
+<tr>
+    <td><a href="#folders_locations_buckets_views_create"><CopyableCode code="folders_locations_buckets_views_create" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a></td>
+    <td><a href="#parameter-viewId"><code>viewId</code></a></td>
+    <td>Creates a view over log entries in a log bucket. A bucket may contain a maximum of 30 views.</td>
+</tr>
+<tr>
     <td><a href="#locations_buckets_views_create"><CopyableCode code="locations_buckets_views_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-parentType"><code>parentType</code></a>, <a href="#parameter-parent"><code>parent</code></a></td>
@@ -512,23 +512,9 @@ The following methods are available for this resource:
     <td>Creates a view over log entries in a log bucket. A bucket may contain a maximum of 30 views.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_buckets_views_patch"><CopyableCode code="projects_locations_buckets_views_patch" /></a></td>
-    <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a>, <a href="#parameter-viewsId"><code>viewsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates a view on a log bucket. This method replaces the value of the filter field from the existing view with the corresponding value from the new view. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.</td>
-</tr>
-<tr>
     <td><a href="#organizations_locations_buckets_views_patch"><CopyableCode code="organizations_locations_buckets_views_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a>, <a href="#parameter-viewsId"><code>viewsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates a view on a log bucket. This method replaces the value of the filter field from the existing view with the corresponding value from the new view. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.</td>
-</tr>
-<tr>
-    <td><a href="#folders_locations_buckets_views_patch"><CopyableCode code="folders_locations_buckets_views_patch" /></a></td>
-    <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a>, <a href="#parameter-viewsId"><code>viewsId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a view on a log bucket. This method replaces the value of the filter field from the existing view with the corresponding value from the new view. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.</td>
 </tr>
@@ -540,11 +526,18 @@ The following methods are available for this resource:
     <td>Updates a view on a log bucket. This method replaces the value of the filter field from the existing view with the corresponding value from the new view. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_buckets_views_delete"><CopyableCode code="projects_locations_buckets_views_delete" /></a></td>
-    <td><CopyableCode code="delete" /></td>
+    <td><a href="#projects_locations_buckets_views_patch"><CopyableCode code="projects_locations_buckets_views_patch" /></a></td>
+    <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a>, <a href="#parameter-viewsId"><code>viewsId</code></a></td>
-    <td></td>
-    <td>Deletes a view on a log bucket. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can delete the view. If this occurs, please try again in a few minutes.</td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td>Updates a view on a log bucket. This method replaces the value of the filter field from the existing view with the corresponding value from the new view. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.</td>
+</tr>
+<tr>
+    <td><a href="#folders_locations_buckets_views_patch"><CopyableCode code="folders_locations_buckets_views_patch" /></a></td>
+    <td><CopyableCode code="update" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a>, <a href="#parameter-viewsId"><code>viewsId</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td>Updates a view on a log bucket. This method replaces the value of the filter field from the existing view with the corresponding value from the new view. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_buckets_views_delete"><CopyableCode code="organizations_locations_buckets_views_delete" /></a></td>
@@ -554,16 +547,23 @@ The following methods are available for this resource:
     <td>Deletes a view on a log bucket. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can delete the view. If this occurs, please try again in a few minutes.</td>
 </tr>
 <tr>
-    <td><a href="#folders_locations_buckets_views_delete"><CopyableCode code="folders_locations_buckets_views_delete" /></a></td>
+    <td><a href="#billing_accounts_locations_buckets_views_delete"><CopyableCode code="billing_accounts_locations_buckets_views_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a>, <a href="#parameter-viewsId"><code>viewsId</code></a></td>
+    <td><a href="#parameter-billingAccountsId"><code>billingAccountsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a>, <a href="#parameter-viewsId"><code>viewsId</code></a></td>
     <td></td>
     <td>Deletes a view on a log bucket. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can delete the view. If this occurs, please try again in a few minutes.</td>
 </tr>
 <tr>
-    <td><a href="#billing_accounts_locations_buckets_views_delete"><CopyableCode code="billing_accounts_locations_buckets_views_delete" /></a></td>
+    <td><a href="#projects_locations_buckets_views_delete"><CopyableCode code="projects_locations_buckets_views_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-billingAccountsId"><code>billingAccountsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a>, <a href="#parameter-viewsId"><code>viewsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a>, <a href="#parameter-viewsId"><code>viewsId</code></a></td>
+    <td></td>
+    <td>Deletes a view on a log bucket. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can delete the view. If this occurs, please try again in a few minutes.</td>
+</tr>
+<tr>
+    <td><a href="#folders_locations_buckets_views_delete"><CopyableCode code="folders_locations_buckets_views_delete" /></a></td>
+    <td><CopyableCode code="delete" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a>, <a href="#parameter-viewsId"><code>viewsId</code></a></td>
     <td></td>
     <td>Deletes a view on a log bucket. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can delete the view. If this occurs, please try again in a few minutes.</td>
 </tr>
@@ -654,38 +654,19 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_locations_buckets_views_get"
+    defaultValue="organizations_locations_buckets_views_get"
     values={[
-        { label: 'projects_locations_buckets_views_get', value: 'projects_locations_buckets_views_get' },
         { label: 'organizations_locations_buckets_views_get', value: 'organizations_locations_buckets_views_get' },
-        { label: 'folders_locations_buckets_views_get', value: 'folders_locations_buckets_views_get' },
         { label: 'billing_accounts_locations_buckets_views_get', value: 'billing_accounts_locations_buckets_views_get' },
-        { label: 'projects_locations_buckets_views_list', value: 'projects_locations_buckets_views_list' },
+        { label: 'projects_locations_buckets_views_get', value: 'projects_locations_buckets_views_get' },
+        { label: 'folders_locations_buckets_views_get', value: 'folders_locations_buckets_views_get' },
         { label: 'organizations_locations_buckets_views_list', value: 'organizations_locations_buckets_views_list' },
-        { label: 'folders_locations_buckets_views_list', value: 'folders_locations_buckets_views_list' },
         { label: 'billing_accounts_locations_buckets_views_list', value: 'billing_accounts_locations_buckets_views_list' },
+        { label: 'projects_locations_buckets_views_list', value: 'projects_locations_buckets_views_list' },
+        { label: 'folders_locations_buckets_views_list', value: 'folders_locations_buckets_views_list' },
         { label: 'locations_buckets_views_list', value: 'locations_buckets_views_list' }
     ]}
 >
-<TabItem value="projects_locations_buckets_views_get">
-
-Gets a view on a log bucket.
-
-```sql
-SELECT
-name,
-createTime,
-description,
-filter,
-updateTime
-FROM google.logging.views
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND bucketsId = '{{ bucketsId }}' -- required
-AND viewsId = '{{ viewsId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="organizations_locations_buckets_views_get">
 
 Gets a view on a log bucket.
@@ -699,25 +680,6 @@ filter,
 updateTime
 FROM google.logging.views
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND bucketsId = '{{ bucketsId }}' -- required
-AND viewsId = '{{ viewsId }}' -- required
-;
-```
-</TabItem>
-<TabItem value="folders_locations_buckets_views_get">
-
-Gets a view on a log bucket.
-
-```sql
-SELECT
-name,
-createTime,
-description,
-filter,
-updateTime
-FROM google.logging.views
-WHERE foldersId = '{{ foldersId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND bucketsId = '{{ bucketsId }}' -- required
 AND viewsId = '{{ viewsId }}' -- required
@@ -743,9 +705,9 @@ AND viewsId = '{{ viewsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_buckets_views_list">
+<TabItem value="projects_locations_buckets_views_get">
 
-Lists views on a log bucket.
+Gets a view on a log bucket.
 
 ```sql
 SELECT
@@ -758,8 +720,26 @@ FROM google.logging.views
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND bucketsId = '{{ bucketsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
+AND viewsId = '{{ viewsId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="folders_locations_buckets_views_get">
+
+Gets a view on a log bucket.
+
+```sql
+SELECT
+name,
+createTime,
+description,
+filter,
+updateTime
+FROM google.logging.views
+WHERE foldersId = '{{ foldersId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND bucketsId = '{{ bucketsId }}' -- required
+AND viewsId = '{{ viewsId }}' -- required
 ;
 ```
 </TabItem>
@@ -776,26 +756,6 @@ filter,
 updateTime
 FROM google.logging.views
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND bucketsId = '{{ bucketsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
-;
-```
-</TabItem>
-<TabItem value="folders_locations_buckets_views_list">
-
-Lists views on a log bucket.
-
-```sql
-SELECT
-name,
-createTime,
-description,
-filter,
-updateTime
-FROM google.logging.views
-WHERE foldersId = '{{ foldersId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND bucketsId = '{{ bucketsId }}' -- required
 AND pageToken = '{{ pageToken }}'
@@ -823,6 +783,46 @@ AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_buckets_views_list">
+
+Lists views on a log bucket.
+
+```sql
+SELECT
+name,
+createTime,
+description,
+filter,
+updateTime
+FROM google.logging.views
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND bucketsId = '{{ bucketsId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="folders_locations_buckets_views_list">
+
+Lists views on a log bucket.
+
+```sql
+SELECT
+name,
+createTime,
+description,
+filter,
+updateTime
+FROM google.logging.views
+WHERE foldersId = '{{ foldersId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND bucketsId = '{{ bucketsId }}' -- required
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+;
+```
+</TabItem>
 <TabItem value="locations_buckets_views_list">
 
 Lists views on a log bucket.
@@ -837,8 +837,8 @@ updateTime
 FROM google.logging.views
 WHERE parentType = '{{ parentType }}' -- required
 AND parent = '{{ parent }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -848,45 +848,16 @@ AND pageSize = '{{ pageSize }}'
 ## `INSERT` examples
 
 <Tabs
-    defaultValue="projects_locations_buckets_views_create"
+    defaultValue="organizations_locations_buckets_views_create"
     values={[
-        { label: 'projects_locations_buckets_views_create', value: 'projects_locations_buckets_views_create' },
         { label: 'organizations_locations_buckets_views_create', value: 'organizations_locations_buckets_views_create' },
-        { label: 'folders_locations_buckets_views_create', value: 'folders_locations_buckets_views_create' },
         { label: 'billing_accounts_locations_buckets_views_create', value: 'billing_accounts_locations_buckets_views_create' },
+        { label: 'projects_locations_buckets_views_create', value: 'projects_locations_buckets_views_create' },
+        { label: 'folders_locations_buckets_views_create', value: 'folders_locations_buckets_views_create' },
         { label: 'locations_buckets_views_create', value: 'locations_buckets_views_create' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
-<TabItem value="projects_locations_buckets_views_create">
-
-Creates a view over log entries in a log bucket. A bucket may contain a maximum of 30 views.
-
-```sql
-INSERT INTO google.logging.views (
-data__description,
-data__filter,
-projectsId,
-locationsId,
-bucketsId,
-viewId
-)
-SELECT 
-'{{ description }}',
-'{{ filter }}',
-'{{ projectsId }}',
-'{{ locationsId }}',
-'{{ bucketsId }}',
-'{{ viewId }}'
-RETURNING
-name,
-createTime,
-description,
-filter,
-updateTime
-;
-```
-</TabItem>
 <TabItem value="organizations_locations_buckets_views_create">
 
 Creates a view over log entries in a log bucket. A bucket may contain a maximum of 30 views.
@@ -916,35 +887,6 @@ updateTime
 ;
 ```
 </TabItem>
-<TabItem value="folders_locations_buckets_views_create">
-
-Creates a view over log entries in a log bucket. A bucket may contain a maximum of 30 views.
-
-```sql
-INSERT INTO google.logging.views (
-data__description,
-data__filter,
-foldersId,
-locationsId,
-bucketsId,
-viewId
-)
-SELECT 
-'{{ description }}',
-'{{ filter }}',
-'{{ foldersId }}',
-'{{ locationsId }}',
-'{{ bucketsId }}',
-'{{ viewId }}'
-RETURNING
-name,
-createTime,
-description,
-filter,
-updateTime
-;
-```
-</TabItem>
 <TabItem value="billing_accounts_locations_buckets_views_create">
 
 Creates a view over log entries in a log bucket. A bucket may contain a maximum of 30 views.
@@ -962,6 +904,64 @@ SELECT
 '{{ description }}',
 '{{ filter }}',
 '{{ billingAccountsId }}',
+'{{ locationsId }}',
+'{{ bucketsId }}',
+'{{ viewId }}'
+RETURNING
+name,
+createTime,
+description,
+filter,
+updateTime
+;
+```
+</TabItem>
+<TabItem value="projects_locations_buckets_views_create">
+
+Creates a view over log entries in a log bucket. A bucket may contain a maximum of 30 views.
+
+```sql
+INSERT INTO google.logging.views (
+data__description,
+data__filter,
+projectsId,
+locationsId,
+bucketsId,
+viewId
+)
+SELECT 
+'{{ description }}',
+'{{ filter }}',
+'{{ projectsId }}',
+'{{ locationsId }}',
+'{{ bucketsId }}',
+'{{ viewId }}'
+RETURNING
+name,
+createTime,
+description,
+filter,
+updateTime
+;
+```
+</TabItem>
+<TabItem value="folders_locations_buckets_views_create">
+
+Creates a view over log entries in a log bucket. A bucket may contain a maximum of 30 views.
+
+```sql
+INSERT INTO google.logging.views (
+data__description,
+data__filter,
+foldersId,
+locationsId,
+bucketsId,
+viewId
+)
+SELECT 
+'{{ description }}',
+'{{ filter }}',
+'{{ foldersId }}',
 '{{ locationsId }}',
 '{{ bucketsId }}',
 '{{ viewId }}'
@@ -1007,7 +1007,7 @@ updateTime
 # Description fields are for documentation purposes
 - name: views
   props:
-    - name: projectsId
+    - name: organizationsId
       value: string
       description: Required parameter for the views resource.
     - name: locationsId
@@ -1016,13 +1016,13 @@ updateTime
     - name: bucketsId
       value: string
       description: Required parameter for the views resource.
-    - name: organizationsId
+    - name: billingAccountsId
+      value: string
+      description: Required parameter for the views resource.
+    - name: projectsId
       value: string
       description: Required parameter for the views resource.
     - name: foldersId
-      value: string
-      description: Required parameter for the views resource.
-    - name: billingAccountsId
       value: string
       description: Required parameter for the views resource.
     - name: parentType
@@ -1051,37 +1051,14 @@ updateTime
 ## `UPDATE` examples
 
 <Tabs
-    defaultValue="projects_locations_buckets_views_patch"
+    defaultValue="organizations_locations_buckets_views_patch"
     values={[
-        { label: 'projects_locations_buckets_views_patch', value: 'projects_locations_buckets_views_patch' },
         { label: 'organizations_locations_buckets_views_patch', value: 'organizations_locations_buckets_views_patch' },
-        { label: 'folders_locations_buckets_views_patch', value: 'folders_locations_buckets_views_patch' },
-        { label: 'billing_accounts_locations_buckets_views_patch', value: 'billing_accounts_locations_buckets_views_patch' }
+        { label: 'billing_accounts_locations_buckets_views_patch', value: 'billing_accounts_locations_buckets_views_patch' },
+        { label: 'projects_locations_buckets_views_patch', value: 'projects_locations_buckets_views_patch' },
+        { label: 'folders_locations_buckets_views_patch', value: 'folders_locations_buckets_views_patch' }
     ]}
 >
-<TabItem value="projects_locations_buckets_views_patch">
-
-Updates a view on a log bucket. This method replaces the value of the filter field from the existing view with the corresponding value from the new view. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.
-
-```sql
-UPDATE google.logging.views
-SET 
-data__description = '{{ description }}',
-data__filter = '{{ filter }}'
-WHERE 
-projectsId = '{{ projectsId }}' --required
-AND locationsId = '{{ locationsId }}' --required
-AND bucketsId = '{{ bucketsId }}' --required
-AND viewsId = '{{ viewsId }}' --required
-AND updateMask = '{{ updateMask}}'
-RETURNING
-name,
-createTime,
-description,
-filter,
-updateTime;
-```
-</TabItem>
 <TabItem value="organizations_locations_buckets_views_patch">
 
 Updates a view on a log bucket. This method replaces the value of the filter field from the existing view with the corresponding value from the new view. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.
@@ -1093,29 +1070,6 @@ data__description = '{{ description }}',
 data__filter = '{{ filter }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
-AND locationsId = '{{ locationsId }}' --required
-AND bucketsId = '{{ bucketsId }}' --required
-AND viewsId = '{{ viewsId }}' --required
-AND updateMask = '{{ updateMask}}'
-RETURNING
-name,
-createTime,
-description,
-filter,
-updateTime;
-```
-</TabItem>
-<TabItem value="folders_locations_buckets_views_patch">
-
-Updates a view on a log bucket. This method replaces the value of the filter field from the existing view with the corresponding value from the new view. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.
-
-```sql
-UPDATE google.logging.views
-SET 
-data__description = '{{ description }}',
-data__filter = '{{ filter }}'
-WHERE 
-foldersId = '{{ foldersId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND bucketsId = '{{ bucketsId }}' --required
 AND viewsId = '{{ viewsId }}' --required
@@ -1151,33 +1105,66 @@ filter,
 updateTime;
 ```
 </TabItem>
+<TabItem value="projects_locations_buckets_views_patch">
+
+Updates a view on a log bucket. This method replaces the value of the filter field from the existing view with the corresponding value from the new view. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.
+
+```sql
+UPDATE google.logging.views
+SET 
+data__description = '{{ description }}',
+data__filter = '{{ filter }}'
+WHERE 
+projectsId = '{{ projectsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND bucketsId = '{{ bucketsId }}' --required
+AND viewsId = '{{ viewsId }}' --required
+AND updateMask = '{{ updateMask}}'
+RETURNING
+name,
+createTime,
+description,
+filter,
+updateTime;
+```
+</TabItem>
+<TabItem value="folders_locations_buckets_views_patch">
+
+Updates a view on a log bucket. This method replaces the value of the filter field from the existing view with the corresponding value from the new view. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.
+
+```sql
+UPDATE google.logging.views
+SET 
+data__description = '{{ description }}',
+data__filter = '{{ filter }}'
+WHERE 
+foldersId = '{{ foldersId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND bucketsId = '{{ bucketsId }}' --required
+AND viewsId = '{{ viewsId }}' --required
+AND updateMask = '{{ updateMask}}'
+RETURNING
+name,
+createTime,
+description,
+filter,
+updateTime;
+```
+</TabItem>
 </Tabs>
 
 
 ## `DELETE` examples
 
 <Tabs
-    defaultValue="projects_locations_buckets_views_delete"
+    defaultValue="organizations_locations_buckets_views_delete"
     values={[
-        { label: 'projects_locations_buckets_views_delete', value: 'projects_locations_buckets_views_delete' },
         { label: 'organizations_locations_buckets_views_delete', value: 'organizations_locations_buckets_views_delete' },
-        { label: 'folders_locations_buckets_views_delete', value: 'folders_locations_buckets_views_delete' },
-        { label: 'billing_accounts_locations_buckets_views_delete', value: 'billing_accounts_locations_buckets_views_delete' }
+        { label: 'billing_accounts_locations_buckets_views_delete', value: 'billing_accounts_locations_buckets_views_delete' },
+        { label: 'projects_locations_buckets_views_delete', value: 'projects_locations_buckets_views_delete' },
+        { label: 'folders_locations_buckets_views_delete', value: 'folders_locations_buckets_views_delete' }
     ]}
 >
-<TabItem value="projects_locations_buckets_views_delete">
-
-Deletes a view on a log bucket. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can delete the view. If this occurs, please try again in a few minutes.
-
-```sql
-DELETE FROM google.logging.views
-WHERE projectsId = '{{ projectsId }}' --required
-AND locationsId = '{{ locationsId }}' --required
-AND bucketsId = '{{ bucketsId }}' --required
-AND viewsId = '{{ viewsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="organizations_locations_buckets_views_delete">
 
 Deletes a view on a log bucket. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can delete the view. If this occurs, please try again in a few minutes.
@@ -1191,19 +1178,6 @@ AND viewsId = '{{ viewsId }}' --required
 ;
 ```
 </TabItem>
-<TabItem value="folders_locations_buckets_views_delete">
-
-Deletes a view on a log bucket. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can delete the view. If this occurs, please try again in a few minutes.
-
-```sql
-DELETE FROM google.logging.views
-WHERE foldersId = '{{ foldersId }}' --required
-AND locationsId = '{{ locationsId }}' --required
-AND bucketsId = '{{ bucketsId }}' --required
-AND viewsId = '{{ viewsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="billing_accounts_locations_buckets_views_delete">
 
 Deletes a view on a log bucket. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can delete the view. If this occurs, please try again in a few minutes.
@@ -1211,6 +1185,32 @@ Deletes a view on a log bucket. If an UNAVAILABLE error is returned, this indica
 ```sql
 DELETE FROM google.logging.views
 WHERE billingAccountsId = '{{ billingAccountsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND bucketsId = '{{ bucketsId }}' --required
+AND viewsId = '{{ viewsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="projects_locations_buckets_views_delete">
+
+Deletes a view on a log bucket. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can delete the view. If this occurs, please try again in a few minutes.
+
+```sql
+DELETE FROM google.logging.views
+WHERE projectsId = '{{ projectsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND bucketsId = '{{ bucketsId }}' --required
+AND viewsId = '{{ viewsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="folders_locations_buckets_views_delete">
+
+Deletes a view on a log bucket. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can delete the view. If this occurs, please try again in a few minutes.
+
+```sql
+DELETE FROM google.logging.views
+WHERE foldersId = '{{ foldersId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND bucketsId = '{{ bucketsId }}' --required
 AND viewsId = '{{ viewsId }}' --required

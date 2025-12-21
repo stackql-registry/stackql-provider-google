@@ -50,6 +50,13 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
+    <td><a href="#projects_locations_catalogs_placements_predict"><CopyableCode code="projects_locations_catalogs_placements_predict" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a>, <a href="#parameter-placementsId"><code>placementsId</code></a></td>
+    <td></td>
+    <td>Makes a recommendation prediction.</td>
+</tr>
+<tr>
     <td><a href="#projects_locations_catalogs_placements_search"><CopyableCode code="projects_locations_catalogs_placements_search" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a>, <a href="#parameter-placementsId"><code>placementsId</code></a></td>
@@ -57,11 +64,11 @@ The following methods are available for this resource:
     <td>Performs a search. This feature is only available for users who have Retail Search enabled. Enable Retail Search on Cloud Console before using this feature.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_catalogs_placements_predict"><CopyableCode code="projects_locations_catalogs_placements_predict" /></a></td>
+    <td><a href="#projects_locations_catalogs_placements_conversational_search"><CopyableCode code="projects_locations_catalogs_placements_conversational_search" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a>, <a href="#parameter-placementsId"><code>placementsId</code></a></td>
     <td></td>
-    <td>Makes a recommendation prediction.</td>
+    <td>Performs a conversational search. This feature is only available for users who have Conversational Search enabled.</td>
 </tr>
 </tbody>
 </table>
@@ -105,55 +112,13 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_catalogs_placements_search"
+    defaultValue="projects_locations_catalogs_placements_predict"
     values={[
+        { label: 'projects_locations_catalogs_placements_predict', value: 'projects_locations_catalogs_placements_predict' },
         { label: 'projects_locations_catalogs_placements_search', value: 'projects_locations_catalogs_placements_search' },
-        { label: 'projects_locations_catalogs_placements_predict', value: 'projects_locations_catalogs_placements_predict' }
+        { label: 'projects_locations_catalogs_placements_conversational_search', value: 'projects_locations_catalogs_placements_conversational_search' }
     ]}
 >
-<TabItem value="projects_locations_catalogs_placements_search">
-
-Performs a search. This feature is only available for users who have Retail Search enabled. Enable Retail Search on Cloud Console before using this feature.
-
-```sql
-EXEC google.retail.placements.projects_locations_catalogs_placements_search 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@catalogsId='{{ catalogsId }}' --required, 
-@placementsId='{{ placementsId }}' --required 
-@@json=
-'{
-"branch": "{{ branch }}", 
-"query": "{{ query }}", 
-"visitorId": "{{ visitorId }}", 
-"userInfo": "{{ userInfo }}", 
-"pageSize": {{ pageSize }}, 
-"pageToken": "{{ pageToken }}", 
-"offset": {{ offset }}, 
-"filter": "{{ filter }}", 
-"canonicalFilter": "{{ canonicalFilter }}", 
-"orderBy": "{{ orderBy }}", 
-"facetSpecs": "{{ facetSpecs }}", 
-"dynamicFacetSpec": "{{ dynamicFacetSpec }}", 
-"boostSpec": "{{ boostSpec }}", 
-"queryExpansionSpec": "{{ queryExpansionSpec }}", 
-"variantRollupKeys": "{{ variantRollupKeys }}", 
-"pageCategories": "{{ pageCategories }}", 
-"searchMode": "{{ searchMode }}", 
-"personalizationSpec": "{{ personalizationSpec }}", 
-"labels": "{{ labels }}", 
-"spellCorrectionSpec": "{{ spellCorrectionSpec }}", 
-"entity": "{{ entity }}", 
-"conversationalSearchSpec": "{{ conversationalSearchSpec }}", 
-"tileNavigationSpec": "{{ tileNavigationSpec }}", 
-"languageCode": "{{ languageCode }}", 
-"regionCode": "{{ regionCode }}", 
-"placeId": "{{ placeId }}", 
-"userAttributes": "{{ userAttributes }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_catalogs_placements_predict">
 
 Makes a recommendation prediction.
@@ -168,11 +133,80 @@ EXEC google.retail.placements.projects_locations_catalogs_placements_predict
 '{
 "userEvent": "{{ userEvent }}", 
 "pageSize": {{ pageSize }}, 
-"pageToken": "{{ pageToken }}", 
-"filter": "{{ filter }}", 
+"labels": "{{ labels }}", 
 "validateOnly": {{ validateOnly }}, 
-"params": "{{ params }}", 
-"labels": "{{ labels }}"
+"filter": "{{ filter }}", 
+"pageToken": "{{ pageToken }}", 
+"params": "{{ params }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_catalogs_placements_search">
+
+Performs a search. This feature is only available for users who have Retail Search enabled. Enable Retail Search on Cloud Console before using this feature.
+
+```sql
+EXEC google.retail.placements.projects_locations_catalogs_placements_search 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@catalogsId='{{ catalogsId }}' --required, 
+@placementsId='{{ placementsId }}' --required 
+@@json=
+'{
+"canonicalFilter": "{{ canonicalFilter }}", 
+"conversationalSearchSpec": "{{ conversationalSearchSpec }}", 
+"placeId": "{{ placeId }}", 
+"searchMode": "{{ searchMode }}", 
+"pageToken": "{{ pageToken }}", 
+"userAttributes": "{{ userAttributes }}", 
+"dynamicFacetSpec": "{{ dynamicFacetSpec }}", 
+"offset": {{ offset }}, 
+"query": "{{ query }}", 
+"facetSpecs": "{{ facetSpecs }}", 
+"languageCode": "{{ languageCode }}", 
+"personalizationSpec": "{{ personalizationSpec }}", 
+"queryExpansionSpec": "{{ queryExpansionSpec }}", 
+"variantRollupKeys": "{{ variantRollupKeys }}", 
+"tileNavigationSpec": "{{ tileNavigationSpec }}", 
+"pageSize": {{ pageSize }}, 
+"regionCode": "{{ regionCode }}", 
+"pageCategories": "{{ pageCategories }}", 
+"userInfo": "{{ userInfo }}", 
+"visitorId": "{{ visitorId }}", 
+"labels": "{{ labels }}", 
+"spellCorrectionSpec": "{{ spellCorrectionSpec }}", 
+"filter": "{{ filter }}", 
+"boostSpec": "{{ boostSpec }}", 
+"branch": "{{ branch }}", 
+"entity": "{{ entity }}", 
+"orderBy": "{{ orderBy }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_catalogs_placements_conversational_search">
+
+Performs a conversational search. This feature is only available for users who have Conversational Search enabled.
+
+```sql
+EXEC google.retail.placements.projects_locations_catalogs_placements_conversational_search 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@catalogsId='{{ catalogsId }}' --required, 
+@placementsId='{{ placementsId }}' --required 
+@@json=
+'{
+"pageCategories": "{{ pageCategories }}", 
+"userInfo": "{{ userInfo }}", 
+"conversationalFilteringSpec": "{{ conversationalFilteringSpec }}", 
+"query": "{{ query }}", 
+"branch": "{{ branch }}", 
+"safetySettings": "{{ safetySettings }}", 
+"searchParams": "{{ searchParams }}", 
+"visitorId": "{{ visitorId }}", 
+"conversationId": "{{ conversationId }}", 
+"userLabels": "{{ userLabels }}"
 }'
 ;
 ```

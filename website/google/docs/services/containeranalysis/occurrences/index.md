@@ -32,130 +32,16 @@ Creates, updates, deletes, gets or lists an <code>occurrences</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_locations_occurrences_get"
+    defaultValue="projects_locations_notes_occurrences_list"
     values={[
-        { label: 'projects_locations_occurrences_get', value: 'projects_locations_occurrences_get' },
         { label: 'projects_locations_notes_occurrences_list', value: 'projects_locations_notes_occurrences_list' },
-        { label: 'projects_occurrences_get', value: 'projects_occurrences_get' },
-        { label: 'projects_locations_occurrences_list', value: 'projects_locations_occurrences_list' },
+        { label: 'projects_locations_occurrences_get', value: 'projects_locations_occurrences_get' },
         { label: 'projects_notes_occurrences_list', value: 'projects_notes_occurrences_list' },
+        { label: 'projects_locations_occurrences_list', value: 'projects_locations_occurrences_list' },
+        { label: 'projects_occurrences_get', value: 'projects_occurrences_get' },
         { label: 'projects_occurrences_list', value: 'projects_occurrences_list' }
     ]}
 >
-<TabItem value="projects_locations_occurrences_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The name of the occurrence in the form of `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="attestation" /></td>
-    <td><code>object</code></td>
-    <td>Describes an attestation of an artifact. (id: AttestationOccurrence)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="build" /></td>
-    <td><code>object</code></td>
-    <td>Describes a verifiable build. (id: BuildOccurrence)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="compliance" /></td>
-    <td><code>object</code></td>
-    <td>Describes a compliance violation on a linked resource. (id: ComplianceOccurrence)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time this occurrence was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="deployment" /></td>
-    <td><code>object</code></td>
-    <td>Describes the deployment of an artifact on a runtime. (id: DeploymentOccurrence)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="discovery" /></td>
-    <td><code>object</code></td>
-    <td>Describes when a resource was discovered. (id: DiscoveryOccurrence)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="dsseAttestation" /></td>
-    <td><code>object</code></td>
-    <td>Describes an attestation of an artifact using dsse. (id: DSSEAttestationOccurrence)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="envelope" /></td>
-    <td><code>object</code></td>
-    <td>https://github.com/secure-systems-lab/dsse (id: Envelope)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="image" /></td>
-    <td><code>object</code></td>
-    <td>Describes how this resource derives from the basis in the associated note. (id: ImageOccurrence)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="kind" /></td>
-    <td><code>string</code></td>
-    <td>Output only. This explicitly denotes which of the occurrence details are specified. This field can be used as a filter in list requests.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="noteName" /></td>
-    <td><code>string</code></td>
-    <td>Required. Immutable. The analysis note associated with this occurrence, in the form of `projects/[PROVIDER_ID]/notes/[NOTE_ID]`. This field can be used as a filter in list requests.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="package" /></td>
-    <td><code>object</code></td>
-    <td>Describes the installation of a package on the linked resource. (id: PackageOccurrence)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="remediation" /></td>
-    <td><code>string</code></td>
-    <td>A description of actions that can be taken to remedy the note.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="resourceUri" /></td>
-    <td><code>string</code></td>
-    <td>Required. Immutable. A URI that represents the resource for which the occurrence applies. For example, `https://gcr.io/project/image@sha256:123abc` for a Docker image.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="sbomReference" /></td>
-    <td><code>object</code></td>
-    <td>Describes a specific SBOM reference occurrences. (id: SBOMReferenceOccurrence)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="secret" /></td>
-    <td><code>object</code></td>
-    <td>Describes a secret. (id: SecretOccurrence)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time this occurrence was last updated.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="upgrade" /></td>
-    <td><code>object</code></td>
-    <td>Describes an available package upgrade on the linked resource. (id: UpgradeOccurrence)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="vulnerability" /></td>
-    <td><code>object</code></td>
-    <td>Describes a security vulnerability. (id: VulnerabilityOccurrence)</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="projects_locations_notes_occurrences_list">
 
 <table>
@@ -270,7 +156,121 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_occurrences_get">
+<TabItem value="projects_locations_occurrences_get">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The name of the occurrence in the form of `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="attestation" /></td>
+    <td><code>object</code></td>
+    <td>Describes an attestation of an artifact. (id: AttestationOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="build" /></td>
+    <td><code>object</code></td>
+    <td>Describes a verifiable build. (id: BuildOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="compliance" /></td>
+    <td><code>object</code></td>
+    <td>Describes a compliance violation on a linked resource. (id: ComplianceOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time this occurrence was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="deployment" /></td>
+    <td><code>object</code></td>
+    <td>Describes the deployment of an artifact on a runtime. (id: DeploymentOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="discovery" /></td>
+    <td><code>object</code></td>
+    <td>Describes when a resource was discovered. (id: DiscoveryOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="dsseAttestation" /></td>
+    <td><code>object</code></td>
+    <td>Describes an attestation of an artifact using dsse. (id: DSSEAttestationOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="envelope" /></td>
+    <td><code>object</code></td>
+    <td>https://github.com/secure-systems-lab/dsse (id: Envelope)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="image" /></td>
+    <td><code>object</code></td>
+    <td>Describes how this resource derives from the basis in the associated note. (id: ImageOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="kind" /></td>
+    <td><code>string</code></td>
+    <td>Output only. This explicitly denotes which of the occurrence details are specified. This field can be used as a filter in list requests.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="noteName" /></td>
+    <td><code>string</code></td>
+    <td>Required. Immutable. The analysis note associated with this occurrence, in the form of `projects/[PROVIDER_ID]/notes/[NOTE_ID]`. This field can be used as a filter in list requests.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="package" /></td>
+    <td><code>object</code></td>
+    <td>Describes the installation of a package on the linked resource. (id: PackageOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="remediation" /></td>
+    <td><code>string</code></td>
+    <td>A description of actions that can be taken to remedy the note.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="resourceUri" /></td>
+    <td><code>string</code></td>
+    <td>Required. Immutable. A URI that represents the resource for which the occurrence applies. For example, `https://gcr.io/project/image@sha256:123abc` for a Docker image.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="sbomReference" /></td>
+    <td><code>object</code></td>
+    <td>Describes a specific SBOM reference occurrences. (id: SBOMReferenceOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="secret" /></td>
+    <td><code>object</code></td>
+    <td>Describes a secret. (id: SecretOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time this occurrence was last updated.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="upgrade" /></td>
+    <td><code>object</code></td>
+    <td>Describes an available package upgrade on the linked resource. (id: UpgradeOccurrence)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="vulnerability" /></td>
+    <td><code>object</code></td>
+    <td>Describes a security vulnerability. (id: VulnerabilityOccurrence)</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_notes_occurrences_list">
 
 <table>
 <thead>
@@ -498,7 +498,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_notes_occurrences_list">
+<TabItem value="projects_occurrences_get">
 
 <table>
 <thead>
@@ -744,6 +744,13 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
+    <td><a href="#projects_locations_notes_occurrences_list"><CopyableCode code="projects_locations_notes_occurrences_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-notesId"><code>notesId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists occurrences referencing the specified note. Provider projects can use this method to get all occurrences across consumer projects referencing the specified note.</td>
+</tr>
+<tr>
     <td><a href="#projects_locations_occurrences_get"><CopyableCode code="projects_locations_occurrences_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-occurrencesId"><code>occurrencesId</code></a></td>
@@ -751,11 +758,18 @@ The following methods are available for this resource:
     <td>Gets the specified occurrence.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_notes_occurrences_list"><CopyableCode code="projects_locations_notes_occurrences_list" /></a></td>
+    <td><a href="#projects_notes_occurrences_list"><CopyableCode code="projects_notes_occurrences_list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-notesId"><code>notesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-notesId"><code>notesId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists occurrences referencing the specified note. Provider projects can use this method to get all occurrences across consumer projects referencing the specified note.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_occurrences_list"><CopyableCode code="projects_locations_occurrences_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists occurrences for the specified project.</td>
 </tr>
 <tr>
     <td><a href="#projects_occurrences_get"><CopyableCode code="projects_occurrences_get" /></a></td>
@@ -765,32 +779,11 @@ The following methods are available for this resource:
     <td>Gets the specified occurrence.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_occurrences_list"><CopyableCode code="projects_locations_occurrences_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
-    <td>Lists occurrences for the specified project.</td>
-</tr>
-<tr>
-    <td><a href="#projects_notes_occurrences_list"><CopyableCode code="projects_notes_occurrences_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-notesId"><code>notesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists occurrences referencing the specified note. Provider projects can use this method to get all occurrences across consumer projects referencing the specified note.</td>
-</tr>
-<tr>
     <td><a href="#projects_occurrences_list"><CopyableCode code="projects_occurrences_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists occurrences for the specified project.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_occurrences_create"><CopyableCode code="projects_locations_occurrences_create" /></a></td>
-    <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Creates a new occurrence.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_occurrences_batch_create"><CopyableCode code="projects_locations_occurrences_batch_create" /></a></td>
@@ -798,6 +791,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Creates new occurrences in batch.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_occurrences_create"><CopyableCode code="projects_locations_occurrences_create" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Creates a new occurrence.</td>
 </tr>
 <tr>
     <td><a href="#projects_occurrences_create"><CopyableCode code="projects_occurrences_create" /></a></td>
@@ -908,49 +908,16 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_locations_occurrences_get"
+    defaultValue="projects_locations_notes_occurrences_list"
     values={[
-        { label: 'projects_locations_occurrences_get', value: 'projects_locations_occurrences_get' },
         { label: 'projects_locations_notes_occurrences_list', value: 'projects_locations_notes_occurrences_list' },
-        { label: 'projects_occurrences_get', value: 'projects_occurrences_get' },
-        { label: 'projects_locations_occurrences_list', value: 'projects_locations_occurrences_list' },
+        { label: 'projects_locations_occurrences_get', value: 'projects_locations_occurrences_get' },
         { label: 'projects_notes_occurrences_list', value: 'projects_notes_occurrences_list' },
+        { label: 'projects_locations_occurrences_list', value: 'projects_locations_occurrences_list' },
+        { label: 'projects_occurrences_get', value: 'projects_occurrences_get' },
         { label: 'projects_occurrences_list', value: 'projects_occurrences_list' }
     ]}
 >
-<TabItem value="projects_locations_occurrences_get">
-
-Gets the specified occurrence.
-
-```sql
-SELECT
-name,
-attestation,
-build,
-compliance,
-createTime,
-deployment,
-discovery,
-dsseAttestation,
-envelope,
-image,
-kind,
-noteName,
-package,
-remediation,
-resourceUri,
-sbomReference,
-secret,
-updateTime,
-upgrade,
-vulnerability
-FROM google.containeranalysis.occurrences
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND occurrencesId = '{{ occurrencesId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="projects_locations_notes_occurrences_list">
 
 Lists occurrences referencing the specified note. Provider projects can use this method to get all occurrences across consumer projects referencing the specified note.
@@ -987,7 +954,7 @@ AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
-<TabItem value="projects_occurrences_get">
+<TabItem value="projects_locations_occurrences_get">
 
 Gets the specified occurrence.
 
@@ -1015,7 +982,43 @@ upgrade,
 vulnerability
 FROM google.containeranalysis.occurrences
 WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
 AND occurrencesId = '{{ occurrencesId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="projects_notes_occurrences_list">
+
+Lists occurrences referencing the specified note. Provider projects can use this method to get all occurrences across consumer projects referencing the specified note.
+
+```sql
+SELECT
+name,
+attestation,
+build,
+compliance,
+createTime,
+deployment,
+discovery,
+dsseAttestation,
+envelope,
+image,
+kind,
+noteName,
+package,
+remediation,
+resourceUri,
+sbomReference,
+secret,
+updateTime,
+upgrade,
+vulnerability
+FROM google.containeranalysis.occurrences
+WHERE projectsId = '{{ projectsId }}' -- required
+AND notesId = '{{ notesId }}' -- required
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -1050,14 +1053,14 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
-<TabItem value="projects_notes_occurrences_list">
+<TabItem value="projects_occurrences_get">
 
-Lists occurrences referencing the specified note. Provider projects can use this method to get all occurrences across consumer projects referencing the specified note.
+Gets the specified occurrence.
 
 ```sql
 SELECT
@@ -1083,10 +1086,7 @@ upgrade,
 vulnerability
 FROM google.containeranalysis.occurrences
 WHERE projectsId = '{{ projectsId }}' -- required
-AND notesId = '{{ notesId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
+AND occurrencesId = '{{ occurrencesId }}' -- required
 ;
 ```
 </TabItem>
@@ -1118,10 +1118,10 @@ upgrade,
 vulnerability
 FROM google.containeranalysis.occurrences
 WHERE projectsId = '{{ projectsId }}' -- required
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -1131,65 +1131,84 @@ AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ## `INSERT` examples
 
 <Tabs
-    defaultValue="projects_locations_occurrences_create"
+    defaultValue="projects_locations_occurrences_batch_create"
     values={[
-        { label: 'projects_locations_occurrences_create', value: 'projects_locations_occurrences_create' },
         { label: 'projects_locations_occurrences_batch_create', value: 'projects_locations_occurrences_batch_create' },
+        { label: 'projects_locations_occurrences_create', value: 'projects_locations_occurrences_create' },
         { label: 'projects_occurrences_create', value: 'projects_occurrences_create' },
         { label: 'projects_occurrences_batch_create', value: 'projects_occurrences_batch_create' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
+<TabItem value="projects_locations_occurrences_batch_create">
+
+Creates new occurrences in batch.
+
+```sql
+INSERT INTO google.containeranalysis.occurrences (
+data__occurrences,
+projectsId,
+locationsId
+)
+SELECT 
+'{{ occurrences }}',
+'{{ projectsId }}',
+'{{ locationsId }}'
+RETURNING
+occurrences
+;
+```
+</TabItem>
 <TabItem value="projects_locations_occurrences_create">
 
 Creates a new occurrence.
 
 ```sql
 INSERT INTO google.containeranalysis.occurrences (
-data__name,
-data__resourceUri,
-data__noteName,
-data__kind,
-data__remediation,
-data__createTime,
-data__updateTime,
-data__vulnerability,
-data__build,
-data__image,
 data__package,
+data__name,
+data__upgrade,
+data__image,
+data__build,
+data__remediation,
+data__attestation,
+data__kind,
 data__deployment,
 data__discovery,
-data__attestation,
-data__upgrade,
+data__secret,
+data__updateTime,
+data__resourceUri,
+data__sbomReference,
+data__vulnerability,
 data__compliance,
 data__dsseAttestation,
-data__sbomReference,
-data__secret,
 data__envelope,
+data__noteName,
+data__createTime,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ name }}',
-'{{ resourceUri }}',
-'{{ noteName }}',
-'{{ kind }}',
-'{{ remediation }}',
-'{{ createTime }}',
-'{{ updateTime }}',
-'{{ vulnerability }}',
-'{{ build }}',
-'{{ image }}',
 '{{ package }}',
+'{{ name }}',
+'{{ upgrade }}',
+'{{ image }}',
+'{{ build }}',
+'{{ remediation }}',
+'{{ attestation }}',
+'{{ kind }}',
 '{{ deployment }}',
 '{{ discovery }}',
-'{{ attestation }}',
-'{{ upgrade }}',
+'{{ secret }}',
+'{{ updateTime }}',
+'{{ resourceUri }}',
+'{{ sbomReference }}',
+'{{ vulnerability }}',
 '{{ compliance }}',
 '{{ dsseAttestation }}',
-'{{ sbomReference }}',
-'{{ secret }}',
 '{{ envelope }}',
+'{{ noteName }}',
+'{{ createTime }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -1216,74 +1235,55 @@ vulnerability
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_occurrences_batch_create">
-
-Creates new occurrences in batch.
-
-```sql
-INSERT INTO google.containeranalysis.occurrences (
-data__occurrences,
-projectsId,
-locationsId
-)
-SELECT 
-'{{ occurrences }}',
-'{{ projectsId }}',
-'{{ locationsId }}'
-RETURNING
-occurrences
-;
-```
-</TabItem>
 <TabItem value="projects_occurrences_create">
 
 Creates a new occurrence.
 
 ```sql
 INSERT INTO google.containeranalysis.occurrences (
-data__name,
-data__resourceUri,
-data__noteName,
-data__kind,
-data__remediation,
-data__createTime,
-data__updateTime,
-data__vulnerability,
-data__build,
-data__image,
 data__package,
+data__name,
+data__upgrade,
+data__image,
+data__build,
+data__remediation,
+data__attestation,
+data__kind,
 data__deployment,
 data__discovery,
-data__attestation,
-data__upgrade,
+data__secret,
+data__updateTime,
+data__resourceUri,
+data__sbomReference,
+data__vulnerability,
 data__compliance,
 data__dsseAttestation,
-data__sbomReference,
-data__secret,
 data__envelope,
+data__noteName,
+data__createTime,
 projectsId
 )
 SELECT 
-'{{ name }}',
-'{{ resourceUri }}',
-'{{ noteName }}',
-'{{ kind }}',
-'{{ remediation }}',
-'{{ createTime }}',
-'{{ updateTime }}',
-'{{ vulnerability }}',
-'{{ build }}',
-'{{ image }}',
 '{{ package }}',
+'{{ name }}',
+'{{ upgrade }}',
+'{{ image }}',
+'{{ build }}',
+'{{ remediation }}',
+'{{ attestation }}',
+'{{ kind }}',
 '{{ deployment }}',
 '{{ discovery }}',
-'{{ attestation }}',
-'{{ upgrade }}',
+'{{ secret }}',
+'{{ updateTime }}',
+'{{ resourceUri }}',
+'{{ sbomReference }}',
+'{{ vulnerability }}',
 '{{ compliance }}',
 '{{ dsseAttestation }}',
-'{{ sbomReference }}',
-'{{ secret }}',
 '{{ envelope }}',
+'{{ noteName }}',
+'{{ createTime }}',
 '{{ projectsId }}'
 RETURNING
 name,
@@ -1338,20 +1338,45 @@ occurrences
     - name: locationsId
       value: string
       description: Required parameter for the occurrences resource.
+    - name: occurrences
+      value: array
+      description: >
+        Required. The occurrences to create. Max allowed length is 1000.
+        
+    - name: package
+      value: object
+      description: >
+        Describes the installation of a package on the linked resource.
+        
     - name: name
       value: string
       description: >
         Output only. The name of the occurrence in the form of `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]`.
         
-    - name: resourceUri
-      value: string
+    - name: upgrade
+      value: object
       description: >
-        Required. Immutable. A URI that represents the resource for which the occurrence applies. For example, `https://gcr.io/project/image@sha256:123abc` for a Docker image.
+        Describes an available package upgrade on the linked resource.
         
-    - name: noteName
+    - name: image
+      value: object
+      description: >
+        Describes how this resource derives from the basis in the associated note.
+        
+    - name: build
+      value: object
+      description: >
+        Describes a verifiable build.
+        
+    - name: remediation
       value: string
       description: >
-        Required. Immutable. The analysis note associated with this occurrence, in the form of `projects/[PROVIDER_ID]/notes/[NOTE_ID]`. This field can be used as a filter in list requests.
+        A description of actions that can be taken to remedy the note.
+        
+    - name: attestation
+      value: object
+      description: >
+        Describes an attestation of an artifact.
         
     - name: kind
       value: string
@@ -1359,41 +1384,6 @@ occurrences
         Output only. This explicitly denotes which of the occurrence details are specified. This field can be used as a filter in list requests.
         
       valid_values: ['NOTE_KIND_UNSPECIFIED', 'VULNERABILITY', 'BUILD', 'IMAGE', 'PACKAGE', 'DEPLOYMENT', 'DISCOVERY', 'ATTESTATION', 'UPGRADE', 'COMPLIANCE', 'DSSE_ATTESTATION', 'VULNERABILITY_ASSESSMENT', 'SBOM_REFERENCE', 'SECRET']
-    - name: remediation
-      value: string
-      description: >
-        A description of actions that can be taken to remedy the note.
-        
-    - name: createTime
-      value: string
-      description: >
-        Output only. The time this occurrence was created.
-        
-    - name: updateTime
-      value: string
-      description: >
-        Output only. The time this occurrence was last updated.
-        
-    - name: vulnerability
-      value: object
-      description: >
-        Describes a security vulnerability.
-        
-    - name: build
-      value: object
-      description: >
-        Describes a verifiable build.
-        
-    - name: image
-      value: object
-      description: >
-        Describes how this resource derives from the basis in the associated note.
-        
-    - name: package
-      value: object
-      description: >
-        Describes the installation of a package on the linked resource.
-        
     - name: deployment
       value: object
       description: >
@@ -1404,15 +1394,30 @@ occurrences
       description: >
         Describes when a resource was discovered.
         
-    - name: attestation
+    - name: secret
       value: object
       description: >
-        Describes an attestation of an artifact.
+        Describes a secret.
         
-    - name: upgrade
+    - name: updateTime
+      value: string
+      description: >
+        Output only. The time this occurrence was last updated.
+        
+    - name: resourceUri
+      value: string
+      description: >
+        Required. Immutable. A URI that represents the resource for which the occurrence applies. For example, `https://gcr.io/project/image@sha256:123abc` for a Docker image.
+        
+    - name: sbomReference
       value: object
       description: >
-        Describes an available package upgrade on the linked resource.
+        Describes a specific SBOM reference occurrences.
+        
+    - name: vulnerability
+      value: object
+      description: >
+        Describes a security vulnerability.
         
     - name: compliance
       value: object
@@ -1424,25 +1429,20 @@ occurrences
       description: >
         Describes an attestation of an artifact using dsse.
         
-    - name: sbomReference
-      value: object
-      description: >
-        Describes a specific SBOM reference occurrences.
-        
-    - name: secret
-      value: object
-      description: >
-        Describes a secret.
-        
     - name: envelope
       value: object
       description: >
         https://github.com/secure-systems-lab/dsse
         
-    - name: occurrences
-      value: array
+    - name: noteName
+      value: string
       description: >
-        Required. The occurrences to create. Max allowed length is 1000.
+        Required. Immutable. The analysis note associated with this occurrence, in the form of `projects/[PROVIDER_ID]/notes/[NOTE_ID]`. This field can be used as a filter in list requests.
+        
+    - name: createTime
+      value: string
+      description: >
+        Output only. The time this occurrence was created.
         
 ```
 </TabItem>
@@ -1465,26 +1465,26 @@ Updates the specified occurrence.
 ```sql
 UPDATE google.containeranalysis.occurrences
 SET 
-data__name = '{{ name }}',
-data__resourceUri = '{{ resourceUri }}',
-data__noteName = '{{ noteName }}',
-data__kind = '{{ kind }}',
-data__remediation = '{{ remediation }}',
-data__createTime = '{{ createTime }}',
-data__updateTime = '{{ updateTime }}',
-data__vulnerability = '{{ vulnerability }}',
-data__build = '{{ build }}',
-data__image = '{{ image }}',
 data__package = '{{ package }}',
+data__name = '{{ name }}',
+data__upgrade = '{{ upgrade }}',
+data__image = '{{ image }}',
+data__build = '{{ build }}',
+data__remediation = '{{ remediation }}',
+data__attestation = '{{ attestation }}',
+data__kind = '{{ kind }}',
 data__deployment = '{{ deployment }}',
 data__discovery = '{{ discovery }}',
-data__attestation = '{{ attestation }}',
-data__upgrade = '{{ upgrade }}',
+data__secret = '{{ secret }}',
+data__updateTime = '{{ updateTime }}',
+data__resourceUri = '{{ resourceUri }}',
+data__sbomReference = '{{ sbomReference }}',
+data__vulnerability = '{{ vulnerability }}',
 data__compliance = '{{ compliance }}',
 data__dsseAttestation = '{{ dsseAttestation }}',
-data__sbomReference = '{{ sbomReference }}',
-data__secret = '{{ secret }}',
-data__envelope = '{{ envelope }}'
+data__envelope = '{{ envelope }}',
+data__noteName = '{{ noteName }}',
+data__createTime = '{{ createTime }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -1520,26 +1520,26 @@ Updates the specified occurrence.
 ```sql
 UPDATE google.containeranalysis.occurrences
 SET 
-data__name = '{{ name }}',
-data__resourceUri = '{{ resourceUri }}',
-data__noteName = '{{ noteName }}',
-data__kind = '{{ kind }}',
-data__remediation = '{{ remediation }}',
-data__createTime = '{{ createTime }}',
-data__updateTime = '{{ updateTime }}',
-data__vulnerability = '{{ vulnerability }}',
-data__build = '{{ build }}',
-data__image = '{{ image }}',
 data__package = '{{ package }}',
+data__name = '{{ name }}',
+data__upgrade = '{{ upgrade }}',
+data__image = '{{ image }}',
+data__build = '{{ build }}',
+data__remediation = '{{ remediation }}',
+data__attestation = '{{ attestation }}',
+data__kind = '{{ kind }}',
 data__deployment = '{{ deployment }}',
 data__discovery = '{{ discovery }}',
-data__attestation = '{{ attestation }}',
-data__upgrade = '{{ upgrade }}',
+data__secret = '{{ secret }}',
+data__updateTime = '{{ updateTime }}',
+data__resourceUri = '{{ resourceUri }}',
+data__sbomReference = '{{ sbomReference }}',
+data__vulnerability = '{{ vulnerability }}',
 data__compliance = '{{ compliance }}',
 data__dsseAttestation = '{{ dsseAttestation }}',
-data__sbomReference = '{{ sbomReference }}',
-data__secret = '{{ secret }}',
-data__envelope = '{{ envelope }}'
+data__envelope = '{{ envelope }}',
+data__noteName = '{{ noteName }}',
+data__createTime = '{{ createTime }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND occurrencesId = '{{ occurrencesId }}' --required

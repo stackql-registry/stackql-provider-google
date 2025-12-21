@@ -103,46 +103,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Required. Name of the ServerTlsPolicy resource. It matches the pattern `projects/*/locations/&#123;location&#125;/serverTlsPolicies/&#123;server_tls_policy&#125;`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="allowOpen" /></td>
-    <td><code>boolean</code></td>
-    <td>This field applies only for Traffic Director policies. It is must be set to false for Application Load Balancer policies. Determines if server allows plaintext connections. If set to true, server allows plain text connections. By default, it is set to false. This setting is not exclusive of other encryption modes. For example, if `allow_open` and `mtls_policy` are set, server allows both plain text and mTLS connections. See documentation of other encryption modes to confirm compatibility. Consider using it if you wish to upgrade in place your deployment to TLS while having mixed TLS and non-TLS traffic reaching port :80.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp when the resource was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Free-text description of the resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Set of label tags associated with the resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="mtlsPolicy" /></td>
-    <td><code>object</code></td>
-    <td>This field is required if the policy is used with Application Load Balancers. This field can be empty for Traffic Director. Defines a mechanism to provision peer validation certificates for peer to peer authentication (Mutual TLS - mTLS). If not specified, client certificate will not be requested. The connection is treated as TLS and not mTLS. If `allow_open` and `mtls_policy` are set, server allows both plain text and mTLS connections. (id: MTLSPolicy)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="serverCertificate" /></td>
-    <td><code>object</code></td>
-    <td>Optional if policy is to be used with Traffic Director. For Application Load Balancers must be empty. Defines a mechanism to provision server identity (public and private keys). Cannot be combined with `allow_open` as a permissive mode that allows both plain text and TLS is not supported. (id: GoogleCloudNetworksecurityV1CertificateProvider)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp when the resource was updated.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -174,7 +134,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_server_tls_policies_list"><CopyableCode code="projects_locations_server_tls_policies_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists ServerTlsPolicies in a given project and location.</td>
 </tr>
 <tr>
@@ -293,20 +253,13 @@ Lists ServerTlsPolicies in a given project and location.
 
 ```sql
 SELECT
-name,
-allowOpen,
-createTime,
-description,
-labels,
-mtlsPolicy,
-serverCertificate,
-updateTime
+*
 FROM google.networksecurity.server_tls_policies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -329,22 +282,22 @@ Creates a new ServerTlsPolicy in a given project and location.
 ```sql
 INSERT INTO google.networksecurity.server_tls_policies (
 data__name,
-data__description,
-data__labels,
-data__allowOpen,
 data__serverCertificate,
 data__mtlsPolicy,
+data__labels,
+data__allowOpen,
+data__description,
 projectsId,
 locationsId,
 serverTlsPolicyId
 )
 SELECT 
 '{{ name }}',
-'{{ description }}',
-'{{ labels }}',
-{{ allowOpen }},
 '{{ serverCertificate }}',
 '{{ mtlsPolicy }}',
+'{{ labels }}',
+{{ allowOpen }},
+'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ serverTlsPolicyId }}'
@@ -374,10 +327,15 @@ response
       description: >
         Required. Name of the ServerTlsPolicy resource. It matches the pattern `projects/*/locations/{location}/serverTlsPolicies/{server_tls_policy}`
         
-    - name: description
-      value: string
+    - name: serverCertificate
+      value: object
       description: >
-        Free-text description of the resource.
+        Optional if policy is to be used with Traffic Director. For Application Load Balancers must be empty. Defines a mechanism to provision server identity (public and private keys). Cannot be combined with `allow_open` as a permissive mode that allows both plain text and TLS is not supported.
+        
+    - name: mtlsPolicy
+      value: object
+      description: >
+        This field is required if the policy is used with Application Load Balancers. This field can be empty for Traffic Director. Defines a mechanism to provision peer validation certificates for peer to peer authentication (Mutual TLS - mTLS). If not specified, client certificate will not be requested. The connection is treated as TLS and not mTLS. If `allow_open` and `mtls_policy` are set, server allows both plain text and mTLS connections.
         
     - name: labels
       value: object
@@ -389,15 +347,10 @@ response
       description: >
         This field applies only for Traffic Director policies. It is must be set to false for Application Load Balancer policies. Determines if server allows plaintext connections. If set to true, server allows plain text connections. By default, it is set to false. This setting is not exclusive of other encryption modes. For example, if `allow_open` and `mtls_policy` are set, server allows both plain text and mTLS connections. See documentation of other encryption modes to confirm compatibility. Consider using it if you wish to upgrade in place your deployment to TLS while having mixed TLS and non-TLS traffic reaching port :80.
         
-    - name: serverCertificate
-      value: object
+    - name: description
+      value: string
       description: >
-        Optional if policy is to be used with Traffic Director. For Application Load Balancers must be empty. Defines a mechanism to provision server identity (public and private keys). Cannot be combined with `allow_open` as a permissive mode that allows both plain text and TLS is not supported.
-        
-    - name: mtlsPolicy
-      value: object
-      description: >
-        This field is required if the policy is used with Application Load Balancers. This field can be empty for Traffic Director. Defines a mechanism to provision peer validation certificates for peer to peer authentication (Mutual TLS - mTLS). If not specified, client certificate will not be requested. The connection is treated as TLS and not mTLS. If `allow_open` and `mtls_policy` are set, server allows both plain text and mTLS connections.
+        Free-text description of the resource.
         
     - name: serverTlsPolicyId
       value: string
@@ -422,11 +375,11 @@ Updates the parameters of a single ServerTlsPolicy.
 UPDATE google.networksecurity.server_tls_policies
 SET 
 data__name = '{{ name }}',
-data__description = '{{ description }}',
+data__serverCertificate = '{{ serverCertificate }}',
+data__mtlsPolicy = '{{ mtlsPolicy }}',
 data__labels = '{{ labels }}',
 data__allowOpen = {{ allowOpen }},
-data__serverCertificate = '{{ serverCertificate }}',
-data__mtlsPolicy = '{{ mtlsPolicy }}'
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

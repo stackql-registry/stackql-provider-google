@@ -52,7 +52,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Identifier. The resource name of the provider.</td>
+    <td>Output only. The resource name of the provider.</td>
 </tr>
 <tr>
     <td><CopyableCode code="attributeCondition" /></td>
@@ -126,7 +126,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Identifier. The resource name of the provider.</td>
+    <td>Output only. The resource name of the provider.</td>
 </tr>
 <tr>
     <td><CopyableCode code="attributeCondition" /></td>
@@ -390,7 +390,6 @@ Creates a new WorkloadIdentityPoolProvider in a WorkloadIdentityPool. You cannot
 
 ```sql
 INSERT INTO google.iam.workload_identity_pool_providers (
-data__name,
 data__displayName,
 data__description,
 data__disabled,
@@ -406,7 +405,6 @@ workloadIdentityPoolsId,
 workloadIdentityPoolProviderId
 )
 SELECT 
-'{{ name }}',
 '{{ displayName }}',
 '{{ description }}',
 {{ disabled }},
@@ -444,11 +442,6 @@ response
     - name: workloadIdentityPoolsId
       value: string
       description: Required parameter for the workload_identity_pool_providers resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the provider.
-        
     - name: displayName
       value: string
       description: >
@@ -516,7 +509,6 @@ Updates an existing WorkloadIdentityPoolProvider.
 ```sql
 UPDATE google.iam.workload_identity_pool_providers
 SET 
-data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
 data__description = '{{ description }}',
 data__disabled = {{ disabled }},

@@ -168,8 +168,8 @@ Sets the IAM policy for the specified Access Context Manager access policy. This
 ```sql
 REPLACE google.accesscontextmanager.access_policies_iam_policies
 SET 
-data__policy = '{{ policy }}',
-data__updateMask = '{{ updateMask }}'
+data__updateMask = '{{ updateMask }}',
+data__policy = '{{ policy }}'
 WHERE 
 accessPoliciesId = '{{ accessPoliciesId }}' --required
 RETURNING

@@ -90,6 +90,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The GCP Oracle zone where Oracle CloudVmCluster is hosted. This will be the same as the gcp_oracle_zone of the CloudExadataInfrastructure. Example: us-east4-b-r2.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="identityConnector" /></td>
+    <td><code>object</code></td>
+    <td>Output only. The identity connector details which will allow OCI to securely access the resources in the customer project. (id: IdentityConnector)</td>
+</tr>
+<tr>
     <td><CopyableCode code="labels" /></td>
     <td><code>object</code></td>
     <td>Optional. Labels or tags associated with the VM Cluster.</td>
@@ -167,6 +172,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="gcpOracleZone" /></td>
     <td><code>string</code></td>
     <td>Output only. The GCP Oracle zone where Oracle CloudVmCluster is hosted. This will be the same as the gcp_oracle_zone of the CloudExadataInfrastructure. Example: us-east4-b-r2.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="identityConnector" /></td>
+    <td><code>object</code></td>
+    <td>Output only. The identity connector details which will allow OCI to securely access the resources in the customer project. (id: IdentityConnector)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -328,6 +338,7 @@ createTime,
 displayName,
 exadataInfrastructure,
 gcpOracleZone,
+identityConnector,
 labels,
 network,
 odbNetwork,
@@ -354,6 +365,7 @@ createTime,
 displayName,
 exadataInfrastructure,
 gcpOracleZone,
+identityConnector,
 labels,
 network,
 odbNetwork,

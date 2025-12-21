@@ -52,7 +52,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Output only. The fully qualified name of the Backup. `projects/*/locations/*/backupPlans/*/backups/*`</td>
+    <td>Output only. Identifier. The fully qualified name of the Backup. `projects/*/locations/*/backupPlans/*/backups/*`</td>
 </tr>
 <tr>
     <td><CopyableCode code="allNamespaces" /></td>
@@ -226,7 +226,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Output only. The fully qualified name of the Backup. `projects/*/locations/*/backupPlans/*/backups/*`</td>
+    <td>Output only. Identifier. The fully qualified name of the Backup. `projects/*/locations/*/backupPlans/*/backups/*`</td>
 </tr>
 <tr>
     <td><CopyableCode code="allNamespaces" /></td>

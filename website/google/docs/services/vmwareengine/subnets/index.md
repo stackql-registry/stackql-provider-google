@@ -93,36 +93,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Identifier. The resource name of this subnet. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/subnets/my-subnet`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="gatewayIp" /></td>
-    <td><code>string</code></td>
-    <td>The IP address of the gateway of this subnet. Must fall within the IP prefix defined above.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="ipCidrRange" /></td>
-    <td><code>string</code></td>
-    <td>The IP address range of the subnet in CIDR format '10.0.0.0/24'.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="state" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The state of the resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="type" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The type of the subnet. For example "management" or "userDefined".</td>
-</tr>
-<tr>
-    <td><CopyableCode code="vlanId" /></td>
-    <td><code>integer (int32)</code></td>
-    <td>Output only. VLAN ID of the VLAN on which the subnet is configured</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -253,12 +223,7 @@ Lists subnets in a given private cloud.
 
 ```sql
 SELECT
-name,
-gatewayIp,
-ipCidrRange,
-state,
-type,
-vlanId
+*
 FROM google.vmwareengine.subnets
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
@@ -286,8 +251,8 @@ Updates the parameters of a single subnet. Only fields specified in `update_mask
 ```sql
 UPDATE google.vmwareengine.subnets
 SET 
-data__ipCidrRange = '{{ ipCidrRange }}',
-data__gatewayIp = '{{ gatewayIp }}'
+data__gatewayIp = '{{ gatewayIp }}',
+data__ipCidrRange = '{{ ipCidrRange }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

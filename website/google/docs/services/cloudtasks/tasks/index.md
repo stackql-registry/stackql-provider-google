@@ -198,13 +198,13 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-queuesId"><code>queuesId</code></a>, <a href="#parameter-tasksId"><code>tasksId</code></a></td>
     <td><a href="#parameter-responseView"><code>responseView</code></a></td>
-    <td>Gets a task.</td>
+    <td>Gets a task. After a task is successfully executed or has exhausted its retry attempts, the task is deleted. A `GetTask` request for a deleted task returns a `NOT_FOUND` error.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-queuesId"><code>queuesId</code></a></td>
-    <td><a href="#parameter-responseView"><code>responseView</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-responseView"><code>responseView</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the tasks in a queue. By default, only the BASIC view is retrieved due to performance considerations; response_view controls the subset of information which is returned. The tasks may be returned in any order. The ordering may change at any time.</td>
 </tr>
 <tr>
@@ -222,18 +222,18 @@ The following methods are available for this resource:
     <td>Deletes a task. A task can be deleted if it is scheduled or dispatched. A task cannot be deleted if it has executed successfully or permanently failed.</td>
 </tr>
 <tr>
-    <td><a href="#run"><CopyableCode code="run" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-queuesId"><code>queuesId</code></a>, <a href="#parameter-tasksId"><code>tasksId</code></a></td>
-    <td></td>
-    <td>Forces a task to run now. When this method is called, Cloud Tasks will dispatch the task, even if the task is already running, the queue has reached its RateLimits or is PAUSED. This command is meant to be used for manual debugging. For example, RunTask can be used to retry a failed task after a fix has been made or to manually force a task to be dispatched now. If Cloud Tasks receives a successful response from the task's target, then the task will be deleted; otherwise the task's schedule_time will be reset to the time that RunTask was called plus the retry delay specified in the queue's RetryConfig. RunTask returns NOT_FOUND when it is called on a task that has already succeeded or permanently failed.</td>
-</tr>
-<tr>
     <td><a href="#buffer"><CopyableCode code="buffer" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-queuesId"><code>queuesId</code></a>, <a href="#parameter-taskId"><code>taskId</code></a></td>
     <td></td>
     <td>Creates and buffers a new task without the need to explicitly define a Task message. The queue must have HTTP target. To create the task with a custom ID, use the following format and set TASK_ID to your desired ID: projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID:buffer To create the task with an automatically generated ID, use the following format: projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks:buffer.</td>
+</tr>
+<tr>
+    <td><a href="#run"><CopyableCode code="run" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-queuesId"><code>queuesId</code></a>, <a href="#parameter-tasksId"><code>tasksId</code></a></td>
+    <td></td>
+    <td>Forces a task to run now. When this method is called, Cloud Tasks will dispatch the task, even if the task is already running, the queue has reached its RateLimits or is PAUSED. This command is meant to be used for manual debugging. For example, RunTask can be used to retry a failed task after a fix has been made or to manually force a task to be dispatched now. If Cloud Tasks receives a successful response from the task's target, then the task will be deleted; otherwise the task's schedule_time will be reset to the time that RunTask was called plus the retry delay specified in the queue's RetryConfig. RunTask returns NOT_FOUND when it is called on a task that has already succeeded or permanently failed.</td>
 </tr>
 </tbody>
 </table>
@@ -305,7 +305,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get">
 
-Gets a task.
+Gets a task. After a task is successfully executed or has exhausted its retry attempts, the task is deleted. A `GetTask` request for a deleted task returns a `NOT_FOUND` error.
 
 ```sql
 SELECT
@@ -350,8 +350,8 @@ FROM google.cloudtasks.tasks
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND queuesId = '{{ queuesId }}' -- required
-AND responseView = '{{ responseView }}'
 AND pageSize = '{{ pageSize }}'
+AND responseView = '{{ responseView }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -459,29 +459,12 @@ AND tasksId = '{{ tasksId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="run"
+    defaultValue="buffer"
     values={[
-        { label: 'run', value: 'run' },
-        { label: 'buffer', value: 'buffer' }
+        { label: 'buffer', value: 'buffer' },
+        { label: 'run', value: 'run' }
     ]}
 >
-<TabItem value="run">
-
-Forces a task to run now. When this method is called, Cloud Tasks will dispatch the task, even if the task is already running, the queue has reached its RateLimits or is PAUSED. This command is meant to be used for manual debugging. For example, RunTask can be used to retry a failed task after a fix has been made or to manually force a task to be dispatched now. If Cloud Tasks receives a successful response from the task's target, then the task will be deleted; otherwise the task's schedule_time will be reset to the time that RunTask was called plus the retry delay specified in the queue's RetryConfig. RunTask returns NOT_FOUND when it is called on a task that has already succeeded or permanently failed.
-
-```sql
-EXEC google.cloudtasks.tasks.run 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@queuesId='{{ queuesId }}' --required, 
-@tasksId='{{ tasksId }}' --required 
-@@json=
-'{
-"responseView": "{{ responseView }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="buffer">
 
 Creates and buffers a new task without the need to explicitly define a Task message. The queue must have HTTP target. To create the task with a custom ID, use the following format and set TASK_ID to your desired ID: projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID:buffer To create the task with an automatically generated ID, use the following format: projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks:buffer.
@@ -495,6 +478,23 @@ EXEC google.cloudtasks.tasks.buffer
 @@json=
 '{
 "body": "{{ body }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="run">
+
+Forces a task to run now. When this method is called, Cloud Tasks will dispatch the task, even if the task is already running, the queue has reached its RateLimits or is PAUSED. This command is meant to be used for manual debugging. For example, RunTask can be used to retry a failed task after a fix has been made or to manually force a task to be dispatched now. If Cloud Tasks receives a successful response from the task's target, then the task will be deleted; otherwise the task's schedule_time will be reset to the time that RunTask was called plus the retry delay specified in the queue's RetryConfig. RunTask returns NOT_FOUND when it is called on a task that has already succeeded or permanently failed.
+
+```sql
+EXEC google.cloudtasks.tasks.run 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@queuesId='{{ queuesId }}' --required, 
+@tasksId='{{ tasksId }}' --required 
+@@json=
+'{
+"responseView": "{{ responseView }}"
 }'
 ;
 ```

@@ -86,7 +86,7 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get_schema"><CopyableCode code="get_schema" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a>, <a href="#parameter-subjectsId"><code>subjectsId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a>, <a href="#parameter-contextsId"><code>contextsId</code></a>, <a href="#parameter-subjectsId"><code>subjectsId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
     <td><a href="#parameter-deleted"><code>deleted</code></a></td>
     <td>Get the schema string only for a version of a subject. The response will be the schema string.</td>
 </tr>
@@ -106,6 +106,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
+<tr id="parameter-contextsId">
+    <td><CopyableCode code="contextsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-locationsId">
     <td><CopyableCode code="locationsId" /></td>
     <td><code>string</code></td>
@@ -160,6 +165,7 @@ FROM google.managedkafka.versions_schema
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND schemaRegistriesId = '{{ schemaRegistriesId }}' -- required
+AND contextsId = '{{ contextsId }}' -- required
 AND subjectsId = '{{ subjectsId }}' -- required
 AND versionsId = '{{ versionsId }}' -- required
 AND deleted = '{{ deleted }}'

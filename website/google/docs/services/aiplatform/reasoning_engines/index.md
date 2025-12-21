@@ -55,6 +55,11 @@ The following fields are returned by `SELECT` queries:
     <td>Identifier. The resource name of the ReasoningEngine. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/reasoningEngines/&#123;reasoning_engine&#125;`</td>
 </tr>
 <tr>
+    <td><CopyableCode code="contextSpec" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Configuration for how Agent Engine sub-resources should manage context. (id: GoogleCloudAiplatformV1ReasoningEngineContextSpec)</td>
+</tr>
+<tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. Timestamp when this ReasoningEngine was created.</td>
@@ -78,6 +83,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="etag" /></td>
     <td><code>string</code></td>
     <td>Optional. Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Labels for the ReasoningEngine.</td>
 </tr>
 <tr>
     <td><CopyableCode code="spec" /></td>
@@ -109,6 +119,11 @@ The following fields are returned by `SELECT` queries:
     <td>Identifier. The resource name of the ReasoningEngine. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/reasoningEngines/&#123;reasoning_engine&#125;`</td>
 </tr>
 <tr>
+    <td><CopyableCode code="contextSpec" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Configuration for how Agent Engine sub-resources should manage context. (id: GoogleCloudAiplatformV1ReasoningEngineContextSpec)</td>
+</tr>
+<tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. Timestamp when this ReasoningEngine was created.</td>
@@ -132,6 +147,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="etag" /></td>
     <td><code>string</code></td>
     <td>Optional. Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Labels for the ReasoningEngine.</td>
 </tr>
 <tr>
     <td><CopyableCode code="spec" /></td>
@@ -174,7 +194,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-parent"><code>parent</code></a></td>
     <td>Lists reasoning engines in a location.</td>
 </tr>
 <tr>
@@ -282,11 +302,13 @@ Gets a reasoning engine.
 ```sql
 SELECT
 name,
+contextSpec,
 createTime,
 description,
 displayName,
 encryptionSpec,
 etag,
+labels,
 spec,
 updateTime
 FROM google.aiplatform.reasoning_engines
@@ -301,18 +323,20 @@ Lists reasoning engines in a location.
 ```sql
 SELECT
 name,
+contextSpec,
 createTime,
 description,
 displayName,
 encryptionSpec,
 etag,
+labels,
 spec,
 updateTime
 FROM google.aiplatform.reasoning_engines
-WHERE parent = '{{ parent }}'
-AND filter = '{{ filter }}'
+WHERE pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND parent = '{{ parent }}'
 ;
 ```
 </TabItem>
@@ -334,21 +358,25 @@ Creates a reasoning engine.
 
 ```sql
 INSERT INTO google.aiplatform.reasoning_engines (
+data__contextSpec,
+data__description,
+data__labels,
+data__encryptionSpec,
 data__name,
 data__displayName,
-data__description,
-data__spec,
 data__etag,
-data__encryptionSpec,
+data__spec,
 parent
 )
 SELECT 
+'{{ contextSpec }}',
+'{{ description }}',
+'{{ labels }}',
+'{{ encryptionSpec }}',
 '{{ name }}',
 '{{ displayName }}',
-'{{ description }}',
-'{{ spec }}',
 '{{ etag }}',
-'{{ encryptionSpec }}',
+'{{ spec }}',
 '{{ parent }}'
 RETURNING
 name,
@@ -365,6 +393,26 @@ response
 # Description fields are for documentation purposes
 - name: reasoning_engines
   props:
+    - name: contextSpec
+      value: object
+      description: >
+        Optional. Configuration for how Agent Engine sub-resources should manage context.
+        
+    - name: description
+      value: string
+      description: >
+        Optional. The description of the ReasoningEngine.
+        
+    - name: labels
+      value: object
+      description: >
+        Labels for the ReasoningEngine.
+        
+    - name: encryptionSpec
+      value: object
+      description: >
+        Customer-managed encryption key spec for a ReasoningEngine. If set, this ReasoningEngine and all sub-resources of this ReasoningEngine will be secured by this key.
+        
     - name: name
       value: string
       description: >
@@ -375,25 +423,15 @@ response
       description: >
         Required. The display name of the ReasoningEngine.
         
-    - name: description
-      value: string
-      description: >
-        Optional. The description of the ReasoningEngine.
-        
-    - name: spec
-      value: object
-      description: >
-        Optional. Configurations of the ReasoningEngine
-        
     - name: etag
       value: string
       description: >
         Optional. Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
         
-    - name: encryptionSpec
+    - name: spec
       value: object
       description: >
-        Customer-managed encryption key spec for a ReasoningEngine. If set, this ReasoningEngine and all sub-resources of this ReasoningEngine will be secured by this key.
+        Optional. Configurations of the ReasoningEngine
         
     - name: parent
       value: string
@@ -417,12 +455,14 @@ Updates a reasoning engine.
 ```sql
 UPDATE google.aiplatform.reasoning_engines
 SET 
+data__contextSpec = '{{ contextSpec }}',
+data__description = '{{ description }}',
+data__labels = '{{ labels }}',
+data__encryptionSpec = '{{ encryptionSpec }}',
 data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
-data__spec = '{{ spec }}',
 data__etag = '{{ etag }}',
-data__encryptionSpec = '{{ encryptionSpec }}'
+data__spec = '{{ spec }}'
 WHERE 
 reasoningEnginesId = '{{ reasoningEnginesId }}' --required
 AND updateMask = '{{ updateMask}}'
@@ -477,8 +517,8 @@ EXEC google.aiplatform.reasoning_engines.query
 @reasoningEnginesId='{{ reasoningEnginesId }}' --required 
 @@json=
 '{
-"input": "{{ input }}", 
-"classMethod": "{{ classMethod }}"
+"classMethod": "{{ classMethod }}", 
+"input": "{{ input }}"
 }'
 ;
 ```

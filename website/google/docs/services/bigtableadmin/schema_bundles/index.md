@@ -285,8 +285,8 @@ Creates a new schema bundle in the specified table.
 
 ```sql
 INSERT INTO google.bigtableadmin.schema_bundles (
-data__name,
 data__protoSchema,
+data__name,
 data__etag,
 projectsId,
 instancesId,
@@ -294,8 +294,8 @@ tablesId,
 schemaBundleId
 )
 SELECT 
-'{{ name }}',
 '{{ protoSchema }}',
+'{{ name }}',
 '{{ etag }}',
 '{{ projectsId }}',
 '{{ instancesId }}',
@@ -325,15 +325,15 @@ response
     - name: tablesId
       value: string
       description: Required parameter for the schema_bundles resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The unique name identifying this schema bundle. Values are of the form `projects/{project}/instances/{instance}/tables/{table}/schemaBundles/{schema_bundle}`
-        
     - name: protoSchema
       value: object
       description: >
         Schema for Protobufs.
+        
+    - name: name
+      value: string
+      description: >
+        Identifier. The unique name identifying this schema bundle. Values are of the form `projects/{project}/instances/{instance}/tables/{table}/schemaBundles/{schema_bundle}`
         
     - name: etag
       value: string
@@ -362,8 +362,8 @@ Updates a schema bundle in the specified table.
 ```sql
 UPDATE google.bigtableadmin.schema_bundles
 SET 
-data__name = '{{ name }}',
 data__protoSchema = '{{ protoSchema }}',
+data__name = '{{ name }}',
 data__etag = '{{ etag }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

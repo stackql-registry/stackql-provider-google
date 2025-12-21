@@ -32,14 +32,14 @@ Creates, updates, deletes, gets or lists a <code>cmek_settings</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_get_cmek_settings"
+    defaultValue="organizations_get_cmek_settings"
     values={[
-        { label: 'projects_get_cmek_settings', value: 'projects_get_cmek_settings' },
         { label: 'organizations_get_cmek_settings', value: 'organizations_get_cmek_settings' },
+        { label: 'projects_get_cmek_settings', value: 'projects_get_cmek_settings' },
         { label: 'folders_get_cmek_settings', value: 'folders_get_cmek_settings' }
     ]}
 >
-<TabItem value="projects_get_cmek_settings">
+<TabItem value="organizations_get_cmek_settings">
 
 <table>
 <thead>
@@ -73,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="organizations_get_cmek_settings">
+<TabItem value="projects_get_cmek_settings">
 
 <table>
 <thead>
@@ -159,16 +159,16 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_get_cmek_settings"><CopyableCode code="projects_get_cmek_settings" /></a></td>
+    <td><a href="#organizations_get_cmek_settings"><CopyableCode code="organizations_get_cmek_settings" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
     <td></td>
     <td>Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations, and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_get_cmek_settings"><CopyableCode code="organizations_get_cmek_settings" /></a></td>
+    <td><a href="#projects_get_cmek_settings"><CopyableCode code="projects_get_cmek_settings" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
     <td>Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations, and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.</td>
 </tr>
@@ -228,28 +228,13 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_get_cmek_settings"
+    defaultValue="organizations_get_cmek_settings"
     values={[
-        { label: 'projects_get_cmek_settings', value: 'projects_get_cmek_settings' },
         { label: 'organizations_get_cmek_settings', value: 'organizations_get_cmek_settings' },
+        { label: 'projects_get_cmek_settings', value: 'projects_get_cmek_settings' },
         { label: 'folders_get_cmek_settings', value: 'folders_get_cmek_settings' }
     ]}
 >
-<TabItem value="projects_get_cmek_settings">
-
-Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations, and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.
-
-```sql
-SELECT
-name,
-kmsKeyName,
-kmsKeyVersionName,
-serviceAccountId
-FROM google.logging.cmek_settings
-WHERE projectsId = '{{ projectsId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="organizations_get_cmek_settings">
 
 Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations, and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.
@@ -262,6 +247,21 @@ kmsKeyVersionName,
 serviceAccountId
 FROM google.logging.cmek_settings
 WHERE organizationsId = '{{ organizationsId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="projects_get_cmek_settings">
+
+Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations, and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.
+
+```sql
+SELECT
+name,
+kmsKeyName,
+kmsKeyVersionName,
+serviceAccountId
+FROM google.logging.cmek_settings
+WHERE projectsId = '{{ projectsId }}' -- required
 ;
 ```
 </TabItem>

@@ -36,8 +36,8 @@ The following fields are returned by `SELECT` queries:
     values={[
         { label: 'projects_locations_stored_info_types_get', value: 'projects_locations_stored_info_types_get' },
         { label: 'organizations_locations_stored_info_types_get', value: 'organizations_locations_stored_info_types_get' },
-        { label: 'projects_locations_stored_info_types_list', value: 'projects_locations_stored_info_types_list' },
         { label: 'projects_stored_info_types_get', value: 'projects_stored_info_types_get' },
+        { label: 'projects_locations_stored_info_types_list', value: 'projects_locations_stored_info_types_list' },
         { label: 'organizations_locations_stored_info_types_list', value: 'organizations_locations_stored_info_types_list' },
         { label: 'organizations_stored_info_types_get', value: 'organizations_stored_info_types_get' },
         { label: 'projects_stored_info_types_list', value: 'projects_stored_info_types_list' },
@@ -102,7 +102,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_stored_info_types_list">
+<TabItem value="projects_stored_info_types_get">
 
 <table>
 <thead>
@@ -131,7 +131,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_stored_info_types_get">
+<TabItem value="projects_locations_stored_info_types_list">
 
 <table>
 <thead>
@@ -308,13 +308,6 @@ The following methods are available for this resource:
     <td>Gets a stored infoType. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_stored_info_types_list"><CopyableCode code="projects_locations_stored_info_types_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-locationId"><code>locationId</code></a></td>
-    <td>Lists stored infoTypes. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
-</tr>
-<tr>
     <td><a href="#projects_stored_info_types_get"><CopyableCode code="projects_stored_info_types_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-storedInfoTypesId"><code>storedInfoTypesId</code></a></td>
@@ -322,10 +315,17 @@ The following methods are available for this resource:
     <td>Gets a stored infoType. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_stored_info_types_list"><CopyableCode code="projects_locations_stored_info_types_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-locationId"><code>locationId</code></a></td>
+    <td>Lists stored infoTypes. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
+</tr>
+<tr>
     <td><a href="#organizations_locations_stored_info_types_list"><CopyableCode code="organizations_locations_stored_info_types_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-locationId"><code>locationId</code></a></td>
+    <td><a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists stored infoTypes. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
 </tr>
 <tr>
@@ -339,14 +339,14 @@ The following methods are available for this resource:
     <td><a href="#projects_stored_info_types_list"><CopyableCode code="projects_stored_info_types_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-locationId"><code>locationId</code></a></td>
+    <td><a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists stored infoTypes. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_stored_info_types_list"><CopyableCode code="organizations_stored_info_types_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-locationId"><code>locationId</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-locationId"><code>locationId</code></a></td>
     <td>Lists stored infoTypes. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
 </tr>
 <tr>
@@ -499,8 +499,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     values={[
         { label: 'projects_locations_stored_info_types_get', value: 'projects_locations_stored_info_types_get' },
         { label: 'organizations_locations_stored_info_types_get', value: 'organizations_locations_stored_info_types_get' },
-        { label: 'projects_locations_stored_info_types_list', value: 'projects_locations_stored_info_types_list' },
         { label: 'projects_stored_info_types_get', value: 'projects_stored_info_types_get' },
+        { label: 'projects_locations_stored_info_types_list', value: 'projects_locations_stored_info_types_list' },
         { label: 'organizations_locations_stored_info_types_list', value: 'organizations_locations_stored_info_types_list' },
         { label: 'organizations_stored_info_types_get', value: 'organizations_stored_info_types_get' },
         { label: 'projects_stored_info_types_list', value: 'projects_stored_info_types_list' },
@@ -539,25 +539,6 @@ AND storedInfoTypesId = '{{ storedInfoTypesId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_stored_info_types_list">
-
-Lists stored infoTypes. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
-
-```sql
-SELECT
-name,
-currentVersion,
-pendingVersions
-FROM google.dlp.stored_info_types
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
-AND locationId = '{{ locationId }}'
-;
-```
-</TabItem>
 <TabItem value="projects_stored_info_types_get">
 
 Gets a stored infoType. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
@@ -573,6 +554,25 @@ AND storedInfoTypesId = '{{ storedInfoTypesId }}' -- required
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_stored_info_types_list">
+
+Lists stored infoTypes. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
+
+```sql
+SELECT
+name,
+currentVersion,
+pendingVersions
+FROM google.dlp.stored_info_types
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND locationId = '{{ locationId }}'
+;
+```
+</TabItem>
 <TabItem value="organizations_locations_stored_info_types_list">
 
 Lists stored infoTypes. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
@@ -585,10 +585,10 @@ pendingVersions
 FROM google.dlp.stored_info_types
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND locationId = '{{ locationId }}'
 AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
-AND locationId = '{{ locationId }}'
 ;
 ```
 </TabItem>
@@ -618,10 +618,10 @@ currentVersion,
 pendingVersions
 FROM google.dlp.stored_info_types
 WHERE projectsId = '{{ projectsId }}' -- required
+AND locationId = '{{ locationId }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
-AND locationId = '{{ locationId }}'
 ;
 ```
 </TabItem>
@@ -636,9 +636,9 @@ currentVersion,
 pendingVersions
 FROM google.dlp.stored_info_types
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 AND locationId = '{{ locationId }}'
 ;
 ```
@@ -665,15 +665,15 @@ Creates a pre-built stored infoType to be used for inspection. See https://cloud
 ```sql
 INSERT INTO google.dlp.stored_info_types (
 data__config,
-data__storedInfoTypeId,
 data__locationId,
+data__storedInfoTypeId,
 projectsId,
 locationsId
 )
 SELECT 
 '{{ config }}',
-'{{ storedInfoTypeId }}',
 '{{ locationId }}',
+'{{ storedInfoTypeId }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -690,15 +690,15 @@ Creates a pre-built stored infoType to be used for inspection. See https://cloud
 ```sql
 INSERT INTO google.dlp.stored_info_types (
 data__config,
-data__storedInfoTypeId,
 data__locationId,
+data__storedInfoTypeId,
 organizationsId,
 locationsId
 )
 SELECT 
 '{{ config }}',
-'{{ storedInfoTypeId }}',
 '{{ locationId }}',
+'{{ storedInfoTypeId }}',
 '{{ organizationsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -715,14 +715,14 @@ Creates a pre-built stored infoType to be used for inspection. See https://cloud
 ```sql
 INSERT INTO google.dlp.stored_info_types (
 data__config,
-data__storedInfoTypeId,
 data__locationId,
+data__storedInfoTypeId,
 projectsId
 )
 SELECT 
 '{{ config }}',
-'{{ storedInfoTypeId }}',
 '{{ locationId }}',
+'{{ storedInfoTypeId }}',
 '{{ projectsId }}'
 RETURNING
 name,
@@ -738,14 +738,14 @@ Creates a pre-built stored infoType to be used for inspection. See https://cloud
 ```sql
 INSERT INTO google.dlp.stored_info_types (
 data__config,
-data__storedInfoTypeId,
 data__locationId,
+data__storedInfoTypeId,
 organizationsId
 )
 SELECT 
 '{{ config }}',
-'{{ storedInfoTypeId }}',
 '{{ locationId }}',
+'{{ storedInfoTypeId }}',
 '{{ organizationsId }}'
 RETURNING
 name,
@@ -774,15 +774,15 @@ pendingVersions
       description: >
         Required. Configuration of the storedInfoType to create.
         
-    - name: storedInfoTypeId
-      value: string
-      description: >
-        The storedInfoType ID can contain uppercase and lowercase letters, numbers, and hyphens; that is, it must match the regular expression: `[a-zA-Z\d-_]+`. The maximum length is 100 characters. Can be empty to allow the system to generate one.
-        
     - name: locationId
       value: string
       description: >
         Deprecated. This field has no effect.
+        
+    - name: storedInfoTypeId
+      value: string
+      description: >
+        The storedInfoType ID can contain uppercase and lowercase letters, numbers, and hyphens; that is, it must match the regular expression: `[a-zA-Z\d-_]+`. The maximum length is 100 characters. Can be empty to allow the system to generate one.
         
 ```
 </TabItem>

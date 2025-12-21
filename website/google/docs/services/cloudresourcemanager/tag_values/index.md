@@ -174,7 +174,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all TagValues for a specific TagKey.</td>
 </tr>
 <tr>
@@ -188,7 +188,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-tagValuesId"><code>tagValuesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the attributes of the TagValue resource.</td>
 </tr>
 <tr>
@@ -295,8 +295,8 @@ parent,
 shortName,
 updateTime
 FROM google.cloudresourcemanager.tag_values
-WHERE parent = '{{ parent }}'
-AND pageSize = '{{ pageSize }}'
+WHERE pageSize = '{{ pageSize }}'
+AND parent = '{{ parent }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -319,19 +319,19 @@ Creates a TagValue as a child of the specified TagKey. If a another request with
 
 ```sql
 INSERT INTO google.cloudresourcemanager.tag_values (
-data__name,
+data__etag,
 data__parent,
 data__shortName,
 data__description,
-data__etag,
+data__name,
 validateOnly
 )
 SELECT 
-'{{ name }}',
+'{{ etag }}',
 '{{ parent }}',
 '{{ shortName }}',
 '{{ description }}',
-'{{ etag }}',
+'{{ name }}',
 '{{ validateOnly }}'
 RETURNING
 name,
@@ -348,10 +348,10 @@ response
 # Description fields are for documentation purposes
 - name: tag_values
   props:
-    - name: name
+    - name: etag
       value: string
       description: >
-        Immutable. Resource name for TagValue in the format `tagValues/456`.
+        Optional. Entity tag which users can pass to prevent race conditions. This field is always set in server responses. See UpdateTagValueRequest for details.
         
     - name: parent
       value: string
@@ -368,10 +368,10 @@ response
       description: >
         Optional. User-assigned description of the TagValue. Must not exceed 256 characters. Read-write.
         
-    - name: etag
+    - name: name
       value: string
       description: >
-        Optional. Entity tag which users can pass to prevent race conditions. This field is always set in server responses. See UpdateTagValueRequest for details.
+        Immutable. Resource name for TagValue in the format `tagValues/456`.
         
     - name: validateOnly
       value: boolean
@@ -395,15 +395,15 @@ Updates the attributes of the TagValue resource.
 ```sql
 UPDATE google.cloudresourcemanager.tag_values
 SET 
-data__name = '{{ name }}',
+data__etag = '{{ etag }}',
 data__parent = '{{ parent }}',
 data__shortName = '{{ shortName }}',
 data__description = '{{ description }}',
-data__etag = '{{ etag }}'
+data__name = '{{ name }}'
 WHERE 
 tagValuesId = '{{ tagValuesId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND validateOnly = {{ validateOnly}}
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

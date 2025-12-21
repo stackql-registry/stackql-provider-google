@@ -221,14 +221,14 @@ The following methods are available for this resource:
     <td><a href="#organizations_apis_keyvaluemaps_entries_list"><CopyableCode code="organizations_apis_keyvaluemaps_entries_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-keyvaluemapsId"><code>keyvaluemapsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists key value entries for key values maps scoped to an organization, environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and higher.</td>
 </tr>
 <tr>
     <td><a href="#organizations_environments_keyvaluemaps_entries_list"><CopyableCode code="organizations_environments_keyvaluemaps_entries_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-keyvaluemapsId"><code>keyvaluemapsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists key value entries for key values maps scoped to an organization, environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and higher.</td>
 </tr>
 <tr>
@@ -419,8 +419,8 @@ FROM google.apigee.entries
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND apisId = '{{ apisId }}' -- required
 AND keyvaluemapsId = '{{ keyvaluemapsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -436,8 +436,8 @@ FROM google.apigee.entries
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND environmentsId = '{{ environmentsId }}' -- required
 AND keyvaluemapsId = '{{ keyvaluemapsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -492,15 +492,15 @@ Creates key value entries in a key value map scoped to an organization, environm
 
 ```sql
 INSERT INTO google.apigee.entries (
-data__name,
 data__value,
+data__name,
 organizationsId,
 apisId,
 keyvaluemapsId
 )
 SELECT 
-'{{ name }}',
 '{{ value }}',
+'{{ name }}',
 '{{ organizationsId }}',
 '{{ apisId }}',
 '{{ keyvaluemapsId }}'
@@ -516,15 +516,15 @@ Creates key value entries in a key value map scoped to an organization, environm
 
 ```sql
 INSERT INTO google.apigee.entries (
-data__name,
 data__value,
+data__name,
 organizationsId,
 environmentsId,
 keyvaluemapsId
 )
 SELECT 
-'{{ name }}',
 '{{ value }}',
+'{{ name }}',
 '{{ organizationsId }}',
 '{{ environmentsId }}',
 '{{ keyvaluemapsId }}'
@@ -540,14 +540,14 @@ Creates key value entries in a key value map scoped to an organization, environm
 
 ```sql
 INSERT INTO google.apigee.entries (
-data__name,
 data__value,
+data__name,
 organizationsId,
 keyvaluemapsId
 )
 SELECT 
-'{{ name }}',
 '{{ value }}',
+'{{ name }}',
 '{{ organizationsId }}',
 '{{ keyvaluemapsId }}'
 RETURNING
@@ -574,15 +574,15 @@ value
     - name: environmentsId
       value: string
       description: Required parameter for the entries resource.
-    - name: name
-      value: string
-      description: >
-        Resource URI that can be used to identify the scope of the key value map entries.
-        
     - name: value
       value: string
       description: >
         Required. Data or payload that is being retrieved and associated with the unique key.
+        
+    - name: name
+      value: string
+      description: >
+        Resource URI that can be used to identify the scope of the key value map entries.
         
 ```
 </TabItem>
@@ -606,8 +606,8 @@ Update key value entry scoped to an organization, environment, or API proxy for 
 ```sql
 REPLACE google.apigee.entries
 SET 
-data__name = '{{ name }}',
-data__value = '{{ value }}'
+data__value = '{{ value }}',
+data__name = '{{ name }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND apisId = '{{ apisId }}' --required
@@ -625,8 +625,8 @@ Update key value entry scoped to an organization, environment, or API proxy for 
 ```sql
 REPLACE google.apigee.entries
 SET 
-data__name = '{{ name }}',
-data__value = '{{ value }}'
+data__value = '{{ value }}',
+data__name = '{{ name }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND environmentsId = '{{ environmentsId }}' --required
@@ -644,8 +644,8 @@ Update key value entry scoped to an organization, environment, or API proxy for 
 ```sql
 REPLACE google.apigee.entries
 SET 
-data__name = '{{ name }}',
-data__value = '{{ value }}'
+data__value = '{{ value }}',
+data__name = '{{ name }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND keyvaluemapsId = '{{ keyvaluemapsId }}' --required

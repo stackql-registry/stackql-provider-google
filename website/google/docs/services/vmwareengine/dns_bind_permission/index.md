@@ -188,8 +188,8 @@ EXEC google.vmwareengine.dns_bind_permission.revoke
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"principal": "{{ principal }}", 
-"requestId": "{{ requestId }}"
+"requestId": "{{ requestId }}", 
+"principal": "{{ principal }}"
 }'
 ;
 ```

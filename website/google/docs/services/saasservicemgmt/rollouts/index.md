@@ -70,6 +70,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The timestamp when the resource was created.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="effectiveUnitFilter" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Output only. Output only snapshot of the effective unit filter at Rollout start time. Contains a CEL(https://github.com/google/cel-spec) expression consisting of a conjunction of Rollout.unit_filter and RolloutKind.unit_filter. This field captures the filter applied by the Rollout to determine the Unit population. If the associated RolloutKind's unit_filter is modified after the rollout is started, it will not be updated here.</td>
+</tr>
+<tr>
     <td><CopyableCode code="endTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Optional. Output only. The time when the rollout finished execution (regardless of success, failure, or cancellation). Will be empty if the rollout hasn't finished yet. Once set, the rollout is in terminal state and all the results are final.</td>
@@ -102,7 +107,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="rolloutOrchestrationStrategy" /></td>
     <td><code>string</code></td>
-    <td>Optional. The strategy used for executing this Rollout. This strategy will override whatever strategy is specified in the RolloutType. If not specified on creation, the strategy from RolloutType will be used. There are two supported values strategies which are used to control - "Google.Cloud.Simple.AllAtOnce" - "Google.Cloud.Simple.OneLocationAtATime" A rollout with one of these simple strategies will rollout across all locations defined in the targeted UnitKind's Saas Locations.</td>
+    <td>Optional. The strategy used for executing this Rollout. This strategy will override whatever strategy is specified in the RolloutKind. If not specified on creation, the strategy from RolloutKind will be used. There are two supported values strategies which are used to control - "Google.Cloud.Simple.AllAtOnce" - "Google.Cloud.Simple.OneLocationAtATime" A rollout with one of these simple strategies will rollout across all locations defined in the targeted UnitKind's Saas Locations.</td>
 </tr>
 <tr>
     <td><CopyableCode code="rootRollout" /></td>
@@ -142,7 +147,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="unitFilter" /></td>
     <td><code>string</code></td>
-    <td>Optional. CEL(https://github.com/google/cel-spec) formatted filter string against Unit. The filter will be applied to determine the eligible unit population. This filter can only reduce, but not expand the scope of the rollout. If not provided, the unit_filter from the RolloutType will be used.</td>
+    <td>Optional. CEL(https://github.com/google/cel-spec) formatted filter string against Unit. The filter will be applied to determine the eligible unit population. This filter can only reduce, but not expand the scope of the rollout. If not provided, the unit_filter from the RolloutKind will be used.</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -184,6 +189,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The timestamp when the resource was created.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="effectiveUnitFilter" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Output only. Output only snapshot of the effective unit filter at Rollout start time. Contains a CEL(https://github.com/google/cel-spec) expression consisting of a conjunction of Rollout.unit_filter and RolloutKind.unit_filter. This field captures the filter applied by the Rollout to determine the Unit population. If the associated RolloutKind's unit_filter is modified after the rollout is started, it will not be updated here.</td>
+</tr>
+<tr>
     <td><CopyableCode code="endTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Optional. Output only. The time when the rollout finished execution (regardless of success, failure, or cancellation). Will be empty if the rollout hasn't finished yet. Once set, the rollout is in terminal state and all the results are final.</td>
@@ -216,7 +226,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="rolloutOrchestrationStrategy" /></td>
     <td><code>string</code></td>
-    <td>Optional. The strategy used for executing this Rollout. This strategy will override whatever strategy is specified in the RolloutType. If not specified on creation, the strategy from RolloutType will be used. There are two supported values strategies which are used to control - "Google.Cloud.Simple.AllAtOnce" - "Google.Cloud.Simple.OneLocationAtATime" A rollout with one of these simple strategies will rollout across all locations defined in the targeted UnitKind's Saas Locations.</td>
+    <td>Optional. The strategy used for executing this Rollout. This strategy will override whatever strategy is specified in the RolloutKind. If not specified on creation, the strategy from RolloutKind will be used. There are two supported values strategies which are used to control - "Google.Cloud.Simple.AllAtOnce" - "Google.Cloud.Simple.OneLocationAtATime" A rollout with one of these simple strategies will rollout across all locations defined in the targeted UnitKind's Saas Locations.</td>
 </tr>
 <tr>
     <td><CopyableCode code="rootRollout" /></td>
@@ -256,7 +266,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="unitFilter" /></td>
     <td><code>string</code></td>
-    <td>Optional. CEL(https://github.com/google/cel-spec) formatted filter string against Unit. The filter will be applied to determine the eligible unit population. This filter can only reduce, but not expand the scope of the rollout. If not provided, the unit_filter from the RolloutType will be used.</td>
+    <td>Optional. CEL(https://github.com/google/cel-spec) formatted filter string against Unit. The filter will be applied to determine the eligible unit population. This filter can only reduce, but not expand the scope of the rollout. If not provided, the unit_filter from the RolloutKind will be used.</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -294,7 +304,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Retrieve a collection of rollouts.</td>
 </tr>
 <tr>
@@ -308,14 +318,14 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-rolloutsId"><code>rolloutsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Update a single rollout.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-rolloutsId"><code>rolloutsId</code></a></td>
-    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Delete a single rollout.</td>
 </tr>
 </tbody>
@@ -416,6 +426,7 @@ name,
 annotations,
 control,
 createTime,
+effectiveUnitFilter,
 endTime,
 etag,
 labels,
@@ -449,6 +460,7 @@ name,
 annotations,
 control,
 createTime,
+effectiveUnitFilter,
 endTime,
 etag,
 labels,
@@ -469,9 +481,9 @@ FROM google.saasservicemgmt.rollouts
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -493,14 +505,14 @@ Create a new rollout.
 
 ```sql
 INSERT INTO google.saasservicemgmt.rollouts (
-data__name,
-data__release,
-data__rolloutOrchestrationStrategy,
-data__unitFilter,
-data__rolloutKind,
 data__control,
-data__labels,
+data__release,
 data__annotations,
+data__unitFilter,
+data__rolloutOrchestrationStrategy,
+data__rolloutKind,
+data__name,
+data__labels,
 projectsId,
 locationsId,
 rolloutId,
@@ -508,14 +520,14 @@ validateOnly,
 requestId
 )
 SELECT 
-'{{ name }}',
-'{{ release }}',
-'{{ rolloutOrchestrationStrategy }}',
-'{{ unitFilter }}',
-'{{ rolloutKind }}',
 '{{ control }}',
-'{{ labels }}',
+'{{ release }}',
 '{{ annotations }}',
+'{{ unitFilter }}',
+'{{ rolloutOrchestrationStrategy }}',
+'{{ rolloutKind }}',
+'{{ name }}',
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ rolloutId }}',
@@ -526,6 +538,7 @@ name,
 annotations,
 control,
 createTime,
+effectiveUnitFilter,
 endTime,
 etag,
 labels,
@@ -557,45 +570,45 @@ updateTime
     - name: locationsId
       value: string
       description: Required parameter for the rollouts resource.
-    - name: name
-      value: string
+    - name: control
+      value: object
       description: >
-        Identifier. The resource name (full URI of the resource) following the standard naming scheme: "projects/{project}/locations/{location}/rollout/{rollout_id}"
+        Optional. Requested change to the execution of this rollout. Default RolloutControl.action is ROLLOUT_ACTION_RUN meaning the rollout will be executed to completion while progressing through all natural Rollout States (such as RUNNING -> SUCCEEDED or RUNNING -> FAILED). Requests can only be made when the Rollout is in a non-terminal state.
         
     - name: release
       value: string
       description: >
         Optional. Immutable. Name of the Release that gets rolled out to target Units. Required if no other type of release is specified.
         
-    - name: rolloutOrchestrationStrategy
-      value: string
+    - name: annotations
+      value: object
       description: >
-        Optional. The strategy used for executing this Rollout. This strategy will override whatever strategy is specified in the RolloutType. If not specified on creation, the strategy from RolloutType will be used. There are two supported values strategies which are used to control - "Google.Cloud.Simple.AllAtOnce" - "Google.Cloud.Simple.OneLocationAtATime" A rollout with one of these simple strategies will rollout across all locations defined in the targeted UnitKind's Saas Locations.
+        Optional. Annotations is an unstructured key-value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/user-guide/annotations
         
     - name: unitFilter
       value: string
       description: >
-        Optional. CEL(https://github.com/google/cel-spec) formatted filter string against Unit. The filter will be applied to determine the eligible unit population. This filter can only reduce, but not expand the scope of the rollout. If not provided, the unit_filter from the RolloutType will be used.
+        Optional. CEL(https://github.com/google/cel-spec) formatted filter string against Unit. The filter will be applied to determine the eligible unit population. This filter can only reduce, but not expand the scope of the rollout. If not provided, the unit_filter from the RolloutKind will be used.
+        
+    - name: rolloutOrchestrationStrategy
+      value: string
+      description: >
+        Optional. The strategy used for executing this Rollout. This strategy will override whatever strategy is specified in the RolloutKind. If not specified on creation, the strategy from RolloutKind will be used. There are two supported values strategies which are used to control - "Google.Cloud.Simple.AllAtOnce" - "Google.Cloud.Simple.OneLocationAtATime" A rollout with one of these simple strategies will rollout across all locations defined in the targeted UnitKind's Saas Locations.
         
     - name: rolloutKind
       value: string
       description: >
         Optional. Immutable. Name of the RolloutKind this rollout is stemming from and adhering to.
         
-    - name: control
-      value: object
+    - name: name
+      value: string
       description: >
-        Optional. Requested change to the execution of this rollout. Default RolloutControl.action is ROLLOUT_ACTION_RUN meaning the rollout will be executed to completion while progressing through all natural Rollout States (such as RUNNING -> SUCCEEDED or RUNNING -> FAILED). Requests can only be made when the Rollout is in a non-terminal state.
+        Identifier. The resource name (full URI of the resource) following the standard naming scheme: "projects/{project}/locations/{location}/rollout/{rollout_id}"
         
     - name: labels
       value: object
       description: >
         Optional. The labels on the resource, which can be used for categorization. similar to Kubernetes resource labels.
-        
-    - name: annotations
-      value: object
-      description: >
-        Optional. Annotations is an unstructured key-value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/user-guide/annotations
         
     - name: rolloutId
       value: string
@@ -623,26 +636,27 @@ Update a single rollout.
 ```sql
 UPDATE google.saasservicemgmt.rollouts
 SET 
-data__name = '{{ name }}',
-data__release = '{{ release }}',
-data__rolloutOrchestrationStrategy = '{{ rolloutOrchestrationStrategy }}',
-data__unitFilter = '{{ unitFilter }}',
-data__rolloutKind = '{{ rolloutKind }}',
 data__control = '{{ control }}',
-data__labels = '{{ labels }}',
-data__annotations = '{{ annotations }}'
+data__release = '{{ release }}',
+data__annotations = '{{ annotations }}',
+data__unitFilter = '{{ unitFilter }}',
+data__rolloutOrchestrationStrategy = '{{ rolloutOrchestrationStrategy }}',
+data__rolloutKind = '{{ rolloutKind }}',
+data__name = '{{ name }}',
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND rolloutsId = '{{ rolloutsId }}' --required
 AND validateOnly = {{ validateOnly}}
-AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
+AND requestId = '{{ requestId}}'
 RETURNING
 name,
 annotations,
 control,
 createTime,
+effectiveUnitFilter,
 endTime,
 etag,
 labels,
@@ -682,8 +696,8 @@ WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND rolloutsId = '{{ rolloutsId }}' --required
 AND etag = '{{ etag }}'
-AND validateOnly = '{{ validateOnly }}'
 AND requestId = '{{ requestId }}'
+AND validateOnly = '{{ validateOnly }}'
 ;
 ```
 </TabItem>

@@ -72,7 +72,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="backupMinimumEnforcedRetentionDuration" /></td>
     <td><code>string (google-duration)</code></td>
-    <td>Required. The default and minimum enforced retention for each backup within the backup vault. The enforced retention for each backup can be extended.</td>
+    <td>Required. The default and minimum enforced retention for each backup within the backup vault. The enforced retention for each backup can be extended. Note: Longer minimum enforced retention period impacts potential storage costs post introductory trial. We recommend starting with a short duration of 3 days or less.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="backupRetentionInheritance" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Setting for how a backup's enforced retention end time is inherited.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -93,6 +98,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="effectiveTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Optional. Time after which the BackupVault resource is locked.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="encryptionConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. The encryption config of the backup vault. (id: EncryptionConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="etag" /></td>
@@ -166,7 +176,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="backupMinimumEnforcedRetentionDuration" /></td>
     <td><code>string (google-duration)</code></td>
-    <td>Required. The default and minimum enforced retention for each backup within the backup vault. The enforced retention for each backup can be extended.</td>
+    <td>Required. The default and minimum enforced retention for each backup within the backup vault. The enforced retention for each backup can be extended. Note: Longer minimum enforced retention period impacts potential storage costs post introductory trial. We recommend starting with a short duration of 3 days or less.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="backupRetentionInheritance" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Setting for how a backup's enforced retention end time is inherited.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -187,6 +202,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="effectiveTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Optional. Time after which the BackupVault resource is locked.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="encryptionConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. The encryption config of the backup vault. (id: EncryptionConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="etag" /></td>
@@ -402,10 +422,12 @@ accessRestriction,
 annotations,
 backupCount,
 backupMinimumEnforcedRetentionDuration,
+backupRetentionInheritance,
 createTime,
 deletable,
 description,
 effectiveTime,
+encryptionConfig,
 etag,
 labels,
 serviceAccount,
@@ -432,10 +454,12 @@ accessRestriction,
 annotations,
 backupCount,
 backupMinimumEnforcedRetentionDuration,
+backupRetentionInheritance,
 createTime,
 deletable,
 description,
 effectiveTime,
+encryptionConfig,
 etag,
 labels,
 serviceAccount,
@@ -475,10 +499,12 @@ INSERT INTO google.backupdr.backup_vaults (
 data__description,
 data__labels,
 data__backupMinimumEnforcedRetentionDuration,
+data__backupRetentionInheritance,
 data__etag,
 data__effectiveTime,
 data__annotations,
 data__accessRestriction,
+data__encryptionConfig,
 projectsId,
 locationsId,
 backupVaultId,
@@ -489,10 +515,12 @@ SELECT
 '{{ description }}',
 '{{ labels }}',
 '{{ backupMinimumEnforcedRetentionDuration }}',
+'{{ backupRetentionInheritance }}',
 '{{ etag }}',
 '{{ effectiveTime }}',
 '{{ annotations }}',
 '{{ accessRestriction }}',
+'{{ encryptionConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ backupVaultId }}',
@@ -532,8 +560,14 @@ response
     - name: backupMinimumEnforcedRetentionDuration
       value: string
       description: >
-        Required. The default and minimum enforced retention for each backup within the backup vault. The enforced retention for each backup can be extended.
+        Required. The default and minimum enforced retention for each backup within the backup vault. The enforced retention for each backup can be extended. Note: Longer minimum enforced retention period impacts potential storage costs post introductory trial. We recommend starting with a short duration of 3 days or less.
         
+    - name: backupRetentionInheritance
+      value: string
+      description: >
+        Optional. Setting for how a backup's enforced retention end time is inherited.
+        
+      valid_values: ['BACKUP_RETENTION_INHERITANCE_UNSPECIFIED', 'INHERIT_VAULT_RETENTION', 'MATCH_BACKUP_EXPIRE_TIME']
     - name: etag
       value: string
       description: >
@@ -555,6 +589,11 @@ response
         Optional. Note: This field is added for future use case and will not be supported in the current release. Access restriction for the backup vault. Default value is WITHIN_ORGANIZATION if not provided during creation.
         
       valid_values: ['ACCESS_RESTRICTION_UNSPECIFIED', 'WITHIN_PROJECT', 'WITHIN_ORGANIZATION', 'UNRESTRICTED', 'WITHIN_ORG_BUT_UNRESTRICTED_FOR_BA']
+    - name: encryptionConfig
+      value: object
+      description: >
+        Optional. The encryption config of the backup vault.
+        
     - name: backupVaultId
       value: string
     - name: requestId
@@ -584,10 +623,12 @@ SET
 data__description = '{{ description }}',
 data__labels = '{{ labels }}',
 data__backupMinimumEnforcedRetentionDuration = '{{ backupMinimumEnforcedRetentionDuration }}',
+data__backupRetentionInheritance = '{{ backupRetentionInheritance }}',
 data__etag = '{{ etag }}',
 data__effectiveTime = '{{ effectiveTime }}',
 data__annotations = '{{ annotations }}',
-data__accessRestriction = '{{ accessRestriction }}'
+data__accessRestriction = '{{ accessRestriction }}',
+data__encryptionConfig = '{{ encryptionConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

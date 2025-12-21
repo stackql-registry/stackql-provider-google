@@ -112,11 +112,11 @@ EXEC google.apigee.security_stats.organizations_environments_security_stats_quer
 @@json=
 '{
 "dimensions": "{{ dimensions }}", 
-"metrics": "{{ metrics }}", 
 "filter": "{{ filter }}", 
+"pageToken": "{{ pageToken }}", 
+"metrics": "{{ metrics }}", 
 "timeRange": "{{ timeRange }}", 
-"pageSize": {{ pageSize }}, 
-"pageToken": "{{ pageToken }}"
+"pageSize": {{ pageSize }}
 }'
 ;
 ```
@@ -131,14 +131,14 @@ EXEC google.apigee.security_stats.organizations_environments_security_stats_quer
 @environmentsId='{{ environmentsId }}' --required 
 @@json=
 '{
-"dimensions": "{{ dimensions }}", 
-"metrics": "{{ metrics }}", 
+"pageToken": "{{ pageToken }}", 
 "filter": "{{ filter }}", 
-"windowSize": "{{ windowSize }}", 
-"timeRange": "{{ timeRange }}", 
+"metrics": "{{ metrics }}", 
 "timestampOrder": "{{ timestampOrder }}", 
-"pageSize": {{ pageSize }}, 
-"pageToken": "{{ pageToken }}"
+"dimensions": "{{ dimensions }}", 
+"timeRange": "{{ timeRange }}", 
+"windowSize": "{{ windowSize }}", 
+"pageSize": {{ pageSize }}
 }'
 ;
 ```

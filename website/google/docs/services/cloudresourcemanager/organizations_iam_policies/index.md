@@ -168,8 +168,8 @@ Sets the access control policy on an organization resource. Replaces any existin
 ```sql
 REPLACE google.cloudresourcemanager.organizations_iam_policies
 SET 
-data__policy = '{{ policy }}',
-data__updateMask = '{{ updateMask }}'
+data__updateMask = '{{ updateMask }}',
+data__policy = '{{ policy }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 RETURNING

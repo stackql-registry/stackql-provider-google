@@ -57,7 +57,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="allowFewerZonesDeployment" /></td>
     <td><code>boolean</code></td>
-    <td>Optional. Immutable. Allows customers to specify if they are okay with deploying a multi-zone cluster in less than 3 zones. Once set, if there is a zonal outage during the cluster creation, the cluster will only be deployed in 2 zones, and stay within the 2 zones for its lifecycle.</td>
+    <td>Optional. Immutable. Deprecated, do not use.</td>
 </tr>
 <tr>
     <td><CopyableCode code="asyncClusterEndpointsDeletionEnabled" /></td>
@@ -73,6 +73,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="automatedBackupConfig" /></td>
     <td><code>object</code></td>
     <td>Optional. The automated backup config for the cluster. (id: AutomatedBackupConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="availableMaintenanceVersions" /></td>
+    <td><code>array</code></td>
+    <td>Output only. This field is used to determine the available maintenance versions for the self service update.</td>
 </tr>
 <tr>
     <td><CopyableCode code="backupCollection" /></td>
@@ -105,6 +110,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Endpoints created on each given network, for Redis clients to connect to the cluster. Currently only one discovery endpoint is supported.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="effectiveMaintenanceVersion" /></td>
+    <td><code>string</code></td>
+    <td>Output only. This field represents the actual maintenance version of the cluster.</td>
+</tr>
+<tr>
     <td><CopyableCode code="encryptionInfo" /></td>
     <td><code>object</code></td>
     <td>Output only. Encryption information of the data at rest of the cluster. (id: EncryptionInfo)</td>
@@ -120,6 +130,11 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. The KMS key used to encrypt the at-rest data of the cluster.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Labels to represent user-provided metadata.</td>
+</tr>
+<tr>
     <td><CopyableCode code="maintenancePolicy" /></td>
     <td><code>object</code></td>
     <td>Optional. ClusterMaintenancePolicy determines when to allow or deny updates. (id: ClusterMaintenancePolicy)</td>
@@ -128,6 +143,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="maintenanceSchedule" /></td>
     <td><code>object</code></td>
     <td>Output only. ClusterMaintenanceSchedule Output only Published maintenance schedule. (id: ClusterMaintenanceSchedule)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="maintenanceVersion" /></td>
+    <td><code>string</code></td>
+    <td>Optional. This field can be used to trigger self service update to indicate the desired maintenance version. The input to this field can be determined by the available_maintenance_versions field.</td>
 </tr>
 <tr>
     <td><CopyableCode code="managedBackupSource" /></td>
@@ -251,7 +271,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="allowFewerZonesDeployment" /></td>
     <td><code>boolean</code></td>
-    <td>Optional. Immutable. Allows customers to specify if they are okay with deploying a multi-zone cluster in less than 3 zones. Once set, if there is a zonal outage during the cluster creation, the cluster will only be deployed in 2 zones, and stay within the 2 zones for its lifecycle.</td>
+    <td>Optional. Immutable. Deprecated, do not use.</td>
 </tr>
 <tr>
     <td><CopyableCode code="asyncClusterEndpointsDeletionEnabled" /></td>
@@ -267,6 +287,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="automatedBackupConfig" /></td>
     <td><code>object</code></td>
     <td>Optional. The automated backup config for the cluster. (id: AutomatedBackupConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="availableMaintenanceVersions" /></td>
+    <td><code>array</code></td>
+    <td>Output only. This field is used to determine the available maintenance versions for the self service update.</td>
 </tr>
 <tr>
     <td><CopyableCode code="backupCollection" /></td>
@@ -299,6 +324,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Endpoints created on each given network, for Redis clients to connect to the cluster. Currently only one discovery endpoint is supported.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="effectiveMaintenanceVersion" /></td>
+    <td><code>string</code></td>
+    <td>Output only. This field represents the actual maintenance version of the cluster.</td>
+</tr>
+<tr>
     <td><CopyableCode code="encryptionInfo" /></td>
     <td><code>object</code></td>
     <td>Output only. Encryption information of the data at rest of the cluster. (id: EncryptionInfo)</td>
@@ -314,6 +344,11 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. The KMS key used to encrypt the at-rest data of the cluster.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Labels to represent user-provided metadata.</td>
+</tr>
+<tr>
     <td><CopyableCode code="maintenancePolicy" /></td>
     <td><code>object</code></td>
     <td>Optional. ClusterMaintenancePolicy determines when to allow or deny updates. (id: ClusterMaintenancePolicy)</td>
@@ -322,6 +357,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="maintenanceSchedule" /></td>
     <td><code>object</code></td>
     <td>Output only. ClusterMaintenanceSchedule Output only Published maintenance schedule. (id: ClusterMaintenanceSchedule)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="maintenanceVersion" /></td>
+    <td><code>string</code></td>
+    <td>Optional. This field can be used to trigger self service update to indicate the desired maintenance version. The input to this field can be determined by the available_maintenance_versions field.</td>
 </tr>
 <tr>
     <td><CopyableCode code="managedBackupSource" /></td>
@@ -571,17 +611,21 @@ allowFewerZonesDeployment,
 asyncClusterEndpointsDeletionEnabled,
 authorizationMode,
 automatedBackupConfig,
+availableMaintenanceVersions,
 backupCollection,
 clusterEndpoints,
 createTime,
 crossClusterReplicationConfig,
 deletionProtectionEnabled,
 discoveryEndpoints,
+effectiveMaintenanceVersion,
 encryptionInfo,
 gcsSource,
 kmsKey,
+labels,
 maintenancePolicy,
 maintenanceSchedule,
+maintenanceVersion,
 managedBackupSource,
 nodeType,
 ondemandMaintenance,
@@ -620,17 +664,21 @@ allowFewerZonesDeployment,
 asyncClusterEndpointsDeletionEnabled,
 authorizationMode,
 automatedBackupConfig,
+availableMaintenanceVersions,
 backupCollection,
 clusterEndpoints,
 createTime,
 crossClusterReplicationConfig,
 deletionProtectionEnabled,
 discoveryEndpoints,
+effectiveMaintenanceVersion,
 encryptionInfo,
 gcsSource,
 kmsKey,
+labels,
 maintenancePolicy,
 maintenanceSchedule,
+maintenanceVersion,
 managedBackupSource,
 nodeType,
 ondemandMaintenance,
@@ -698,7 +746,9 @@ data__kmsKey,
 data__ondemandMaintenance,
 data__automatedBackupConfig,
 data__asyncClusterEndpointsDeletionEnabled,
+data__maintenanceVersion,
 data__allowFewerZonesDeployment,
+data__labels,
 projectsId,
 locationsId,
 clusterId,
@@ -726,7 +776,9 @@ SELECT
 {{ ondemandMaintenance }},
 '{{ automatedBackupConfig }}',
 {{ asyncClusterEndpointsDeletionEnabled }},
+'{{ maintenanceVersion }}',
 {{ allowFewerZonesDeployment }},
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ clusterId }}',
@@ -860,10 +912,20 @@ response
       description: >
         Optional. If true, cluster endpoints that are created and registered by customers can be deleted asynchronously. That is, such a cluster endpoint can be de-registered before the forwarding rules in the cluster endpoint are deleted.
         
+    - name: maintenanceVersion
+      value: string
+      description: >
+        Optional. This field can be used to trigger self service update to indicate the desired maintenance version. The input to this field can be determined by the available_maintenance_versions field.
+        
     - name: allowFewerZonesDeployment
       value: boolean
       description: >
-        Optional. Immutable. Allows customers to specify if they are okay with deploying a multi-zone cluster in less than 3 zones. Once set, if there is a zonal outage during the cluster creation, the cluster will only be deployed in 2 zones, and stay within the 2 zones for its lifecycle.
+        Optional. Immutable. Deprecated, do not use.
+        
+    - name: labels
+      value: object
+      description: >
+        Optional. Labels to represent user-provided metadata.
         
     - name: clusterId
       value: string
@@ -910,7 +972,9 @@ data__kmsKey = '{{ kmsKey }}',
 data__ondemandMaintenance = {{ ondemandMaintenance }},
 data__automatedBackupConfig = '{{ automatedBackupConfig }}',
 data__asyncClusterEndpointsDeletionEnabled = {{ asyncClusterEndpointsDeletionEnabled }},
-data__allowFewerZonesDeployment = {{ allowFewerZonesDeployment }}
+data__maintenanceVersion = '{{ maintenanceVersion }}',
+data__allowFewerZonesDeployment = {{ allowFewerZonesDeployment }},
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

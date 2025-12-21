@@ -179,8 +179,8 @@ Manages overal generative question feature state -- enables toggling feature on 
 UPDATE google.retail.catalogs_generative_question_feature
 SET 
 data__catalog = '{{ catalog }}',
-data__featureEnabled = {{ featureEnabled }},
-data__minimumProducts = {{ minimumProducts }}
+data__minimumProducts = {{ minimumProducts }},
+data__featureEnabled = {{ featureEnabled }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

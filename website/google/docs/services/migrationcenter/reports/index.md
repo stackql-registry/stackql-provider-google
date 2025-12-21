@@ -174,7 +174,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reportConfigsId"><code>reportConfigsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-view"><code>view</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists Reports in a given ReportConfig.</td>
 </tr>
 <tr>
@@ -190,6 +190,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reportConfigsId"><code>reportConfigsId</code></a>, <a href="#parameter-reportsId"><code>reportsId</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes a Report.</td>
+</tr>
+<tr>
+    <td><a href="#artifact_link"><CopyableCode code="artifact_link" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reportConfigsId"><code>reportConfigsId</code></a>, <a href="#parameter-reportsId"><code>reportsId</code></a></td>
+    <td></td>
+    <td>Gets the link to the generated artifact of a given type for a Report.</td>
 </tr>
 </tbody>
 </table>
@@ -315,11 +322,11 @@ FROM google.migrationcenter.reports
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND reportConfigsId = '{{ reportConfigsId }}' -- required
-AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 AND view = '{{ view }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -341,10 +348,10 @@ Creates a report.
 
 ```sql
 INSERT INTO google.migrationcenter.reports (
+data__state,
+data__type,
 data__displayName,
 data__description,
-data__type,
-data__state,
 projectsId,
 locationsId,
 reportConfigsId,
@@ -352,10 +359,10 @@ reportId,
 requestId
 )
 SELECT 
+'{{ state }}',
+'{{ type }}',
 '{{ displayName }}',
 '{{ description }}',
-'{{ type }}',
-'{{ state }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ reportConfigsId }}',
@@ -385,6 +392,18 @@ response
     - name: reportConfigsId
       value: string
       description: Required parameter for the reports resource.
+    - name: state
+      value: string
+      description: >
+        Report creation state.
+        
+      valid_values: ['STATE_UNSPECIFIED', 'PENDING', 'SUCCEEDED', 'FAILED']
+    - name: type
+      value: string
+      description: >
+        Report type.
+        
+      valid_values: ['TYPE_UNSPECIFIED', 'TOTAL_COST_OF_OWNERSHIP']
     - name: displayName
       value: string
       description: >
@@ -395,18 +414,6 @@ response
       description: >
         Free-text description.
         
-    - name: type
-      value: string
-      description: >
-        Report type.
-        
-      valid_values: ['TYPE_UNSPECIFIED', 'TOTAL_COST_OF_OWNERSHIP']
-    - name: state
-      value: string
-      description: >
-        Report creation state.
-        
-      valid_values: ['STATE_UNSPECIFIED', 'PENDING', 'SUCCEEDED', 'FAILED']
     - name: reportId
       value: string
     - name: requestId
@@ -435,6 +442,34 @@ AND locationsId = '{{ locationsId }}' --required
 AND reportConfigsId = '{{ reportConfigsId }}' --required
 AND reportsId = '{{ reportsId }}' --required
 AND requestId = '{{ requestId }}'
+;
+```
+</TabItem>
+</Tabs>
+
+
+## Lifecycle Methods
+
+<Tabs
+    defaultValue="artifact_link"
+    values={[
+        { label: 'artifact_link', value: 'artifact_link' }
+    ]}
+>
+<TabItem value="artifact_link">
+
+Gets the link to the generated artifact of a given type for a Report.
+
+```sql
+EXEC google.migrationcenter.reports.artifact_link 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@reportConfigsId='{{ reportConfigsId }}' --required, 
+@reportsId='{{ reportsId }}' --required 
+@@json=
+'{
+"artifactType": "{{ artifactType }}"
+}'
 ;
 ```
 </TabItem>

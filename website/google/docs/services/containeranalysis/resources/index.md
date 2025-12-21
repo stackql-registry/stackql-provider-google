@@ -50,16 +50,16 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_locations_resources_export_sbom"><CopyableCode code="projects_locations_resources_export_sbom" /></a></td>
+    <td><a href="#projects_resources_export_sbom"><CopyableCode code="projects_resources_export_sbom" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-resourcesId"><code>resourcesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-resourcesId"><code>resourcesId</code></a></td>
     <td></td>
     <td>Generates an SBOM for the given resource.</td>
 </tr>
 <tr>
-    <td><a href="#projects_resources_export_sbom"><CopyableCode code="projects_resources_export_sbom" /></a></td>
+    <td><a href="#projects_locations_resources_export_sbom"><CopyableCode code="projects_locations_resources_export_sbom" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-resourcesId"><code>resourcesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-resourcesId"><code>resourcesId</code></a></td>
     <td></td>
     <td>Generates an SBOM for the given resource.</td>
 </tr>
@@ -100,20 +100,19 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_resources_export_sbom"
+    defaultValue="projects_resources_export_sbom"
     values={[
-        { label: 'projects_locations_resources_export_sbom', value: 'projects_locations_resources_export_sbom' },
-        { label: 'projects_resources_export_sbom', value: 'projects_resources_export_sbom' }
+        { label: 'projects_resources_export_sbom', value: 'projects_resources_export_sbom' },
+        { label: 'projects_locations_resources_export_sbom', value: 'projects_locations_resources_export_sbom' }
     ]}
 >
-<TabItem value="projects_locations_resources_export_sbom">
+<TabItem value="projects_resources_export_sbom">
 
 Generates an SBOM for the given resource.
 
 ```sql
-EXEC google.containeranalysis.resources.projects_locations_resources_export_sbom 
+EXEC google.containeranalysis.resources.projects_resources_export_sbom 
 @projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
 @resourcesId='{{ resourcesId }}' --required 
 @@json=
 '{
@@ -122,13 +121,14 @@ EXEC google.containeranalysis.resources.projects_locations_resources_export_sbom
 ;
 ```
 </TabItem>
-<TabItem value="projects_resources_export_sbom">
+<TabItem value="projects_locations_resources_export_sbom">
 
 Generates an SBOM for the given resource.
 
 ```sql
-EXEC google.containeranalysis.resources.projects_resources_export_sbom 
+EXEC google.containeranalysis.resources.projects_locations_resources_export_sbom 
 @projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
 @resourcesId='{{ resourcesId }}' --required 
 @@json=
 '{

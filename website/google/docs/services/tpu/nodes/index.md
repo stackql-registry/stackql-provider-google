@@ -75,6 +75,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The API version that created this Node.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="bootDiskConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Boot disk configuration. (id: BootDiskConfig)</td>
+</tr>
+<tr>
     <td><CopyableCode code="cidrBlock" /></td>
     <td><code>string</code></td>
     <td>The CIDR block that the TPU node will use when selecting an IP address. This CIDR block must be a /29 block; the Compute Engine networks API forbids a smaller block, and using a larger block would be wasteful (a node can only consume one IP address). Errors will occur if the CIDR block has already been used for a currently existing TPU node, the CIDR block conflicts with any subnetworks in the user's provided network, or the provided network is peered with another network that is using that CIDR block.</td>
@@ -217,6 +222,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="apiVersion" /></td>
     <td><code>string</code></td>
     <td>Output only. The API version that created this Node.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="bootDiskConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Boot disk configuration. (id: BootDiskConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="cidrBlock" /></td>
@@ -466,6 +476,7 @@ name,
 acceleratorConfig,
 acceleratorType,
 apiVersion,
+bootDiskConfig,
 cidrBlock,
 createTime,
 dataDisks,
@@ -505,6 +516,7 @@ name,
 acceleratorConfig,
 acceleratorType,
 apiVersion,
+bootDiskConfig,
 cidrBlock,
 createTime,
 dataDisks,
@@ -567,6 +579,7 @@ data__tags,
 data__dataDisks,
 data__shieldedInstanceConfig,
 data__acceleratorConfig,
+data__bootDiskConfig,
 projectsId,
 locationsId,
 nodeId
@@ -587,6 +600,7 @@ SELECT
 '{{ dataDisks }}',
 '{{ shieldedInstanceConfig }}',
 '{{ acceleratorConfig }}',
+'{{ bootDiskConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ nodeId }}'
@@ -687,6 +701,11 @@ response
       description: >
         The AccleratorConfig for the TPU Node.
         
+    - name: bootDiskConfig
+      value: object
+      description: >
+        Optional. Boot disk configuration.
+        
     - name: nodeId
       value: string
 ```
@@ -723,7 +742,8 @@ data__metadata = '{{ metadata }}',
 data__tags = '{{ tags }}',
 data__dataDisks = '{{ dataDisks }}',
 data__shieldedInstanceConfig = '{{ shieldedInstanceConfig }}',
-data__acceleratorConfig = '{{ acceleratorConfig }}'
+data__acceleratorConfig = '{{ acceleratorConfig }}',
+data__bootDiskConfig = '{{ bootDiskConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

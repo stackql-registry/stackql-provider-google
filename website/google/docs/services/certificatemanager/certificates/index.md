@@ -80,6 +80,11 @@ The following fields are returned by `SELECT` queries:
     <td>If set, contains configuration and state of a managed certificate. (id: ManagedCertificate)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="managedIdentity" /></td>
+    <td><code>object</code></td>
+    <td>If set, contains configuration and state of a managed identity certificate. (id: ManagedIdentityCertificate)</td>
+</tr>
+<tr>
     <td><CopyableCode code="pemCertificate" /></td>
     <td><code>string</code></td>
     <td>Output only. The PEM-encoded certificate chain.</td>
@@ -152,6 +157,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="managed" /></td>
     <td><code>object</code></td>
     <td>If set, contains configuration and state of a managed certificate. (id: ManagedCertificate)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="managedIdentity" /></td>
+    <td><code>object</code></td>
+    <td>If set, contains configuration and state of a managed identity certificate. (id: ManagedIdentityCertificate)</td>
 </tr>
 <tr>
     <td><CopyableCode code="pemCertificate" /></td>
@@ -323,6 +333,7 @@ description,
 expireTime,
 labels,
 managed,
+managedIdentity,
 pemCertificate,
 sanDnsnames,
 scope,
@@ -348,6 +359,7 @@ description,
 expireTime,
 labels,
 managed,
+managedIdentity,
 pemCertificate,
 sanDnsnames,
 scope,
@@ -387,6 +399,7 @@ data__description,
 data__labels,
 data__selfManaged,
 data__managed,
+data__managedIdentity,
 data__scope,
 projectsId,
 locationsId,
@@ -398,6 +411,7 @@ SELECT
 '{{ labels }}',
 '{{ selfManaged }}',
 '{{ managed }}',
+'{{ managedIdentity }}',
 '{{ scope }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -448,6 +462,11 @@ response
       description: >
         If set, contains configuration and state of a managed certificate.
         
+    - name: managedIdentity
+      value: object
+      description: >
+        If set, contains configuration and state of a managed identity certificate.
+        
     - name: scope
       value: string
       description: >
@@ -481,6 +500,7 @@ data__description = '{{ description }}',
 data__labels = '{{ labels }}',
 data__selfManaged = '{{ selfManaged }}',
 data__managed = '{{ managed }}',
+data__managedIdentity = '{{ managedIdentity }}',
 data__scope = '{{ scope }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

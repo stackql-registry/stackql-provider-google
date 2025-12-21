@@ -100,6 +100,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. If the stream was recovered, the time of the last recovery. Note: This field is currently experimental.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="ruleSets" /></td>
+    <td><code>array</code></td>
+    <td>Optional. Rule sets to apply to the stream.</td>
+</tr>
+<tr>
     <td><CopyableCode code="satisfiesPzi" /></td>
     <td><code>boolean</code></td>
     <td>Output only. Reserved for future use.</td>
@@ -187,6 +192,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="lastRecoveryTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. If the stream was recovered, the time of the last recovery. Note: This field is currently experimental.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="ruleSets" /></td>
+    <td><code>array</code></td>
+    <td>Optional. Rule sets to apply to the stream.</td>
 </tr>
 <tr>
     <td><CopyableCode code="satisfiesPzi" /></td>
@@ -379,6 +389,7 @@ displayName,
 errors,
 labels,
 lastRecoveryTime,
+ruleSets,
 satisfiesPzi,
 satisfiesPzs,
 sourceConfig,
@@ -407,6 +418,7 @@ displayName,
 errors,
 labels,
 lastRecoveryTime,
+ruleSets,
 satisfiesPzi,
 satisfiesPzs,
 sourceConfig,
@@ -448,6 +460,7 @@ data__state,
 data__backfillAll,
 data__backfillNone,
 data__customerManagedEncryptionKey,
+data__ruleSets,
 projectsId,
 locationsId,
 streamId,
@@ -464,6 +477,7 @@ SELECT
 '{{ backfillAll }}',
 '{{ backfillNone }}',
 '{{ customerManagedEncryptionKey }}',
+'{{ ruleSets }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ streamId }}',
@@ -532,6 +546,11 @@ response
       description: >
         Immutable. A reference to a KMS encryption key. If provided, it will be used to encrypt the data. If left blank, data will be encrypted using an internal Stream-specific encryption key provisioned through KMS.
         
+    - name: ruleSets
+      value: array
+      description: >
+        Optional. Rule sets to apply to the stream.
+        
     - name: streamId
       value: string
     - name: requestId
@@ -567,7 +586,8 @@ data__destinationConfig = '{{ destinationConfig }}',
 data__state = '{{ state }}',
 data__backfillAll = '{{ backfillAll }}',
 data__backfillNone = '{{ backfillNone }}',
-data__customerManagedEncryptionKey = '{{ customerManagedEncryptionKey }}'
+data__customerManagedEncryptionKey = '{{ customerManagedEncryptionKey }}',
+data__ruleSets = '{{ ruleSets }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

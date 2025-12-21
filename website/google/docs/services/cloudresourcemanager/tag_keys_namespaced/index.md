@@ -54,6 +54,11 @@ The following fields are returned by `SELECT` queries:
     <td>Immutable. The resource name for a TagKey. Must be in the format `tagKeys/&#123;tag_key_id&#125;`, where `tag_key_id` is the generated numeric id for the TagKey.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="allowedValuesRegex" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Regular expression constraint for freeform tag values. If present, it implicitly allows freeform values (constrained by the regex).</td>
+</tr>
+<tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. Creation time.</td>
@@ -164,6 +169,7 @@ Retrieves a TagKey by its namespaced name. This method will return `PERMISSION_D
 ```sql
 SELECT
 name,
+allowedValuesRegex,
 createTime,
 description,
 etag,

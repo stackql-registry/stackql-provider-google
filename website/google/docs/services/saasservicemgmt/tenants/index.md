@@ -184,28 +184,28 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Retrieve a collection of tenants.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-tenantId"><code>tenantId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-tenantId"><code>tenantId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Create a new tenant.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-tenantsId"><code>tenantsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Update a single tenant.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-tenantsId"><code>tenantsId</code></a></td>
-    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
     <td>Delete a single tenant.</td>
 </tr>
 </tbody>
@@ -336,10 +336,10 @@ updateTime
 FROM google.saasservicemgmt.tenants
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -361,28 +361,28 @@ Create a new tenant.
 
 ```sql
 INSERT INTO google.saasservicemgmt.tenants (
-data__name,
-data__consumerResource,
 data__saas,
-data__labels,
+data__name,
 data__annotations,
+data__labels,
+data__consumerResource,
 projectsId,
 locationsId,
+requestId,
 tenantId,
-validateOnly,
-requestId
+validateOnly
 )
 SELECT 
-'{{ name }}',
-'{{ consumerResource }}',
 '{{ saas }}',
-'{{ labels }}',
+'{{ name }}',
 '{{ annotations }}',
+'{{ labels }}',
+'{{ consumerResource }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
+'{{ requestId }}',
 '{{ tenantId }}',
-'{{ validateOnly }}',
-'{{ requestId }}'
+'{{ validateOnly }}'
 RETURNING
 name,
 annotations,
@@ -408,37 +408,37 @@ updateTime
     - name: locationsId
       value: string
       description: Required parameter for the tenants resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name (full URI of the resource) following the standard naming scheme: "projects/{project}/locations/{location}/tenants/{tenant}"
-        
-    - name: consumerResource
-      value: string
-      description: >
-        Optional. Immutable. A reference to the consumer resource this SaaS Tenant is representing. The relationship with a consumer resource can be used by SaaS Runtime for retrieving consumer-defined settings and policies such as maintenance policies (using Unified Maintenance Policy API).
-        
     - name: saas
       value: string
       description: >
         Required. Immutable. A reference to the Saas that defines the product (managed service) that the producer wants to manage with SaaS Runtime. Part of the SaaS Runtime common data model.
         
-    - name: labels
-      value: object
+    - name: name
+      value: string
       description: >
-        Optional. The labels on the resource, which can be used for categorization. similar to Kubernetes resource labels.
+        Identifier. The resource name (full URI of the resource) following the standard naming scheme: "projects/{project}/locations/{location}/tenants/{tenant}"
         
     - name: annotations
       value: object
       description: >
         Optional. Annotations is an unstructured key-value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/user-guide/annotations
         
+    - name: labels
+      value: object
+      description: >
+        Optional. The labels on the resource, which can be used for categorization. similar to Kubernetes resource labels.
+        
+    - name: consumerResource
+      value: string
+      description: >
+        Optional. Immutable. A reference to the consumer resource this SaaS Tenant is representing. The relationship with a consumer resource can be used by SaaS Runtime for retrieving consumer-defined settings and policies such as maintenance policies (using Unified Maintenance Policy API).
+        
+    - name: requestId
+      value: string
     - name: tenantId
       value: string
     - name: validateOnly
       value: boolean
-    - name: requestId
-      value: string
 ```
 </TabItem>
 </Tabs>
@@ -459,18 +459,18 @@ Update a single tenant.
 ```sql
 UPDATE google.saasservicemgmt.tenants
 SET 
-data__name = '{{ name }}',
-data__consumerResource = '{{ consumerResource }}',
 data__saas = '{{ saas }}',
+data__name = '{{ name }}',
+data__annotations = '{{ annotations }}',
 data__labels = '{{ labels }}',
-data__annotations = '{{ annotations }}'
+data__consumerResource = '{{ consumerResource }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND tenantsId = '{{ tenantsId }}' --required
+AND updateMask = '{{ updateMask}}'
 AND validateOnly = {{ validateOnly}}
 AND requestId = '{{ requestId}}'
-AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 annotations,
@@ -503,9 +503,9 @@ DELETE FROM google.saasservicemgmt.tenants
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND tenantsId = '{{ tenantsId }}' --required
-AND etag = '{{ etag }}'
 AND validateOnly = '{{ validateOnly }}'
 AND requestId = '{{ requestId }}'
+AND etag = '{{ etag }}'
 ;
 ```
 </TabItem>

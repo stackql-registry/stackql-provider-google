@@ -77,7 +77,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="finalMeasurement" /></td>
     <td><code>object</code></td>
-    <td>Output only. The final measurement containing the objective value. (id: GoogleCloudAiplatformV1Measurement)</td>
+    <td>A message representing a Measurement of a Trial. A Measurement contains the Metrics got by executing a Trial using suggested hyperparameter values. (id: GoogleCloudAiplatformV1Measurement)</td>
 </tr>
 <tr>
     <td><CopyableCode code="infeasibleReason" /></td>
@@ -151,7 +151,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="finalMeasurement" /></td>
     <td><code>object</code></td>
-    <td>Output only. The final measurement containing the objective value. (id: GoogleCloudAiplatformV1Measurement)</td>
+    <td>A message representing a Measurement of a Trial. A Measurement contains the Metrics got by executing a Trial using suggested hyperparameter values. (id: GoogleCloudAiplatformV1Measurement)</td>
 </tr>
 <tr>
     <td><CopyableCode code="infeasibleReason" /></td>
@@ -214,7 +214,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-studiesId"><code>studiesId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the Trials associated with a Study.</td>
 </tr>
 <tr>
@@ -232,25 +232,11 @@ The following methods are available for this resource:
     <td>Deletes a Trial.</td>
 </tr>
 <tr>
-    <td><a href="#suggest"><CopyableCode code="suggest" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-studiesId"><code>studiesId</code></a></td>
-    <td></td>
-    <td>Adds one or more Trials to a Study, with parameter values suggested by Vertex AI Vizier. Returns a long-running operation associated with the generation of Trial suggestions. When this long-running operation succeeds, it will contain a SuggestTrialsResponse.</td>
-</tr>
-<tr>
     <td><a href="#add_trial_measurement"><CopyableCode code="add_trial_measurement" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-studiesId"><code>studiesId</code></a>, <a href="#parameter-trialsId"><code>trialsId</code></a></td>
     <td></td>
     <td>Adds a measurement of the objective metrics to a Trial. This measurement is assumed to have been taken before the Trial is complete.</td>
-</tr>
-<tr>
-    <td><a href="#complete"><CopyableCode code="complete" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-studiesId"><code>studiesId</code></a>, <a href="#parameter-trialsId"><code>trialsId</code></a></td>
-    <td></td>
-    <td>Marks a Trial as complete.</td>
 </tr>
 <tr>
     <td><a href="#check_trial_early_stopping_state"><CopyableCode code="check_trial_early_stopping_state" /></a></td>
@@ -265,6 +251,20 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-studiesId"><code>studiesId</code></a>, <a href="#parameter-trialsId"><code>trialsId</code></a></td>
     <td></td>
     <td>Stops a Trial.</td>
+</tr>
+<tr>
+    <td><a href="#complete"><CopyableCode code="complete" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-studiesId"><code>studiesId</code></a>, <a href="#parameter-trialsId"><code>trialsId</code></a></td>
+    <td></td>
+    <td>Marks a Trial as complete.</td>
+</tr>
+<tr>
+    <td><a href="#suggest"><CopyableCode code="suggest" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-studiesId"><code>studiesId</code></a></td>
+    <td></td>
+    <td>Adds one or more Trials to a Study, with parameter values suggested by Vertex AI Vizier. Returns a long-running operation associated with the generation of Trial suggestions. When this long-running operation succeeds, it will contain a SuggestTrialsResponse.</td>
 </tr>
 </tbody>
 </table>
@@ -372,8 +372,8 @@ FROM google.aiplatform.trials
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND studiesId = '{{ studiesId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -466,33 +466,15 @@ AND trialsId = '{{ trialsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="suggest"
+    defaultValue="add_trial_measurement"
     values={[
-        { label: 'suggest', value: 'suggest' },
         { label: 'add_trial_measurement', value: 'add_trial_measurement' },
-        { label: 'complete', value: 'complete' },
         { label: 'check_trial_early_stopping_state', value: 'check_trial_early_stopping_state' },
-        { label: 'stop', value: 'stop' }
+        { label: 'stop', value: 'stop' },
+        { label: 'complete', value: 'complete' },
+        { label: 'suggest', value: 'suggest' }
     ]}
 >
-<TabItem value="suggest">
-
-Adds one or more Trials to a Study, with parameter values suggested by Vertex AI Vizier. Returns a long-running operation associated with the generation of Trial suggestions. When this long-running operation succeeds, it will contain a SuggestTrialsResponse.
-
-```sql
-EXEC google.aiplatform.trials.suggest 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@studiesId='{{ studiesId }}' --required 
-@@json=
-'{
-"suggestionCount": {{ suggestionCount }}, 
-"clientId": "{{ clientId }}", 
-"contexts": "{{ contexts }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="add_trial_measurement">
 
 Adds a measurement of the objective metrics to a Trial. This measurement is assumed to have been taken before the Trial is complete.
@@ -506,25 +488,6 @@ EXEC google.aiplatform.trials.add_trial_measurement
 @@json=
 '{
 "measurement": "{{ measurement }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="complete">
-
-Marks a Trial as complete.
-
-```sql
-EXEC google.aiplatform.trials.complete 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@studiesId='{{ studiesId }}' --required, 
-@trialsId='{{ trialsId }}' --required 
-@@json=
-'{
-"finalMeasurement": "{{ finalMeasurement }}", 
-"trialInfeasible": {{ trialInfeasible }}, 
-"infeasibleReason": "{{ infeasibleReason }}"
 }'
 ;
 ```
@@ -552,6 +515,43 @@ EXEC google.aiplatform.trials.stop
 @locationsId='{{ locationsId }}' --required, 
 @studiesId='{{ studiesId }}' --required, 
 @trialsId='{{ trialsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="complete">
+
+Marks a Trial as complete.
+
+```sql
+EXEC google.aiplatform.trials.complete 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@studiesId='{{ studiesId }}' --required, 
+@trialsId='{{ trialsId }}' --required 
+@@json=
+'{
+"trialInfeasible": {{ trialInfeasible }}, 
+"finalMeasurement": "{{ finalMeasurement }}", 
+"infeasibleReason": "{{ infeasibleReason }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="suggest">
+
+Adds one or more Trials to a Study, with parameter values suggested by Vertex AI Vizier. Returns a long-running operation associated with the generation of Trial suggestions. When this long-running operation succeeds, it will contain a SuggestTrialsResponse.
+
+```sql
+EXEC google.aiplatform.trials.suggest 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@studiesId='{{ studiesId }}' --required 
+@@json=
+'{
+"contexts": "{{ contexts }}", 
+"clientId": "{{ clientId }}", 
+"suggestionCount": {{ suggestionCount }}
+}'
 ;
 ```
 </TabItem>

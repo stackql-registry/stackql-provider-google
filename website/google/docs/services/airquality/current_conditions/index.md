@@ -91,11 +91,11 @@ The Current Conditions endpoint provides hourly air quality information in more 
 EXEC google.airquality.current_conditions.lookup 
 @@json=
 '{
+"languageCode": "{{ languageCode }}", 
 "location": "{{ location }}", 
 "universalAqi": {{ universalAqi }}, 
-"extraComputations": "{{ extraComputations }}", 
-"languageCode": "{{ languageCode }}", 
 "uaqiColorPalette": "{{ uaqiColorPalette }}", 
+"extraComputations": "{{ extraComputations }}", 
 "customLocalAqis": "{{ customLocalAqis }}"
 }'
 ;

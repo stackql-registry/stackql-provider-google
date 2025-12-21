@@ -204,7 +204,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_mirroring_deployment_groups_list"><CopyableCode code="projects_locations_mirroring_deployment_groups_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists deployment groups in a given project and location. See https://google.aip.dev/132.</td>
 </tr>
 <tr>
@@ -350,10 +350,10 @@ updateTime
 FROM google.networksecurity.mirroring_deployment_groups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -375,8 +375,8 @@ Creates a deployment group in a given project and location. See https://google.a
 
 ```sql
 INSERT INTO google.networksecurity.mirroring_deployment_groups (
-data__name,
 data__labels,
+data__name,
 data__network,
 data__description,
 projectsId,
@@ -385,8 +385,8 @@ mirroringDeploymentGroupId,
 requestId
 )
 SELECT 
-'{{ name }}',
 '{{ labels }}',
+'{{ name }}',
 '{{ network }}',
 '{{ description }}',
 '{{ projectsId }}',
@@ -414,15 +414,15 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the mirroring_deployment_groups resource.
-    - name: name
-      value: string
-      description: >
-        Immutable. Identifier. The resource name of this deployment group, for example: `projects/123456789/locations/global/mirroringDeploymentGroups/my-dg`. See https://google.aip.dev/122 for more details.
-        
     - name: labels
       value: object
       description: >
         Optional. Labels are key/value pairs that help to organize and filter resources.
+        
+    - name: name
+      value: string
+      description: >
+        Immutable. Identifier. The resource name of this deployment group, for example: `projects/123456789/locations/global/mirroringDeploymentGroups/my-dg`. See https://google.aip.dev/122 for more details.
         
     - name: network
       value: string
@@ -458,8 +458,8 @@ Updates a deployment group. See https://google.aip.dev/134.
 ```sql
 UPDATE google.networksecurity.mirroring_deployment_groups
 SET 
-data__name = '{{ name }}',
 data__labels = '{{ labels }}',
+data__name = '{{ name }}',
 data__network = '{{ network }}',
 data__description = '{{ description }}'
 WHERE 

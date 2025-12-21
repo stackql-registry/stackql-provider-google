@@ -212,7 +212,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-imageImportsId"><code>imageImportsId</code></a>, <a href="#parameter-imageImportJobsId"><code>imageImportJobsId</code></a></td>
     <td></td>
-    <td>Initiates the cancellation of a running clone job.</td>
+    <td>Initiates the cancellation of a running ImageImportJob.</td>
 </tr>
 </tbody>
 </table>
@@ -348,7 +348,7 @@ AND orderBy = '{{ orderBy }}'
 >
 <TabItem value="cancel">
 
-Initiates the cancellation of a running clone job.
+Initiates the cancellation of a running ImageImportJob.
 
 ```sql
 EXEC google.vmmigration.image_import_jobs.cancel 

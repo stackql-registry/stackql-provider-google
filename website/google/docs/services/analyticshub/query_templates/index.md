@@ -367,24 +367,24 @@ Creates a new QueryTemplate
 
 ```sql
 INSERT INTO google.analyticshub.query_templates (
-data__displayName,
-data__description,
-data__proposer,
 data__primaryContact,
-data__documentation,
+data__description,
 data__routine,
+data__proposer,
+data__documentation,
+data__displayName,
 projectsId,
 locationsId,
 dataExchangesId,
 queryTemplateId
 )
 SELECT 
-'{{ displayName }}',
-'{{ description }}',
-'{{ proposer }}',
 '{{ primaryContact }}',
-'{{ documentation }}',
+'{{ description }}',
 '{{ routine }}',
+'{{ proposer }}',
+'{{ documentation }}',
+'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ dataExchangesId }}',
@@ -418,35 +418,35 @@ updateTime
     - name: dataExchangesId
       value: string
       description: Required parameter for the query_templates resource.
-    - name: displayName
+    - name: primaryContact
       value: string
       description: >
-        Required. Human-readable display name of the QueryTemplate. The display name must contain only Unicode letters, numbers (0-9), underscores (_), dashes (-), spaces ( ), ampersands (&) and can't start or end with spaces. Default value is an empty string. Max length: 63 bytes.
+        Optional. Email or URL of the primary point of contact of the QueryTemplate. Max Length: 1000 bytes.
         
     - name: description
       value: string
       description: >
         Optional. Short description of the QueryTemplate. The description must not contain Unicode non-characters and C0 and C1 control codes except tabs (HT), new lines (LF), carriage returns (CR), and page breaks (FF). Default value is an empty string. Max length: 2000 bytes.
         
+    - name: routine
+      value: object
+      description: >
+        Optional. The routine associated with the QueryTemplate.
+        
     - name: proposer
       value: string
       description: >
         Optional. Will be deprecated. Email or URL of the primary point of contact of the QueryTemplate. Max Length: 1000 bytes.
-        
-    - name: primaryContact
-      value: string
-      description: >
-        Optional. Email or URL of the primary point of contact of the QueryTemplate. Max Length: 1000 bytes.
         
     - name: documentation
       value: string
       description: >
         Optional. Documentation describing the QueryTemplate.
         
-    - name: routine
-      value: object
+    - name: displayName
+      value: string
       description: >
-        Optional. The routine associated with the QueryTemplate.
+        Required. Human-readable display name of the QueryTemplate. The display name must contain only Unicode letters, numbers (0-9), underscores (_), dashes (-), spaces ( ), ampersands (&) and can't start or end with spaces. Default value is an empty string. Max length: 63 bytes.
         
     - name: queryTemplateId
       value: string
@@ -470,12 +470,12 @@ Updates an existing QueryTemplate
 ```sql
 UPDATE google.analyticshub.query_templates
 SET 
-data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
-data__proposer = '{{ proposer }}',
 data__primaryContact = '{{ primaryContact }}',
+data__description = '{{ description }}',
+data__routine = '{{ routine }}',
+data__proposer = '{{ proposer }}',
 data__documentation = '{{ documentation }}',
-data__routine = '{{ routine }}'
+data__displayName = '{{ displayName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

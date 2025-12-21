@@ -57,11 +57,11 @@ The following methods are available for this resource:
     <td>Delete feedback labels in bulk using a filter.</td>
 </tr>
 <tr>
-    <td><a href="#query_metrics"><CopyableCode code="query_metrics" /></a></td>
+    <td><a href="#bulk_download_feedback_labels"><CopyableCode code="bulk_download_feedback_labels" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
-    <td>Query metrics.</td>
+    <td>Download feedback labels in bulk from an external source. Currently supports exporting Quality AI example conversations with transcripts and question bodies.</td>
 </tr>
 <tr>
     <td><a href="#query_performance_overview"><CopyableCode code="query_performance_overview" /></a></td>
@@ -78,11 +78,11 @@ The following methods are available for this resource:
     <td>Upload feedback labels from an external source in bulk. Currently supports labeling Quality AI example conversations.</td>
 </tr>
 <tr>
-    <td><a href="#bulk_download_feedback_labels"><CopyableCode code="bulk_download_feedback_labels" /></a></td>
+    <td><a href="#query_metrics"><CopyableCode code="query_metrics" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
-    <td>Download feedback labels in bulk from an external source. Currently supports exporting Quality AI example conversations with transcripts and question bodies.</td>
+    <td>Query metrics.</td>
 </tr>
 </tbody>
 </table>
@@ -138,28 +138,32 @@ AND locationsId = '{{ locationsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="query_metrics"
+    defaultValue="bulk_download_feedback_labels"
     values={[
-        { label: 'query_metrics', value: 'query_metrics' },
+        { label: 'bulk_download_feedback_labels', value: 'bulk_download_feedback_labels' },
         { label: 'query_performance_overview', value: 'query_performance_overview' },
         { label: 'bulk_upload_feedback_labels', value: 'bulk_upload_feedback_labels' },
-        { label: 'bulk_download_feedback_labels', value: 'bulk_download_feedback_labels' }
+        { label: 'query_metrics', value: 'query_metrics' }
     ]}
 >
-<TabItem value="query_metrics">
+<TabItem value="bulk_download_feedback_labels">
 
-Query metrics.
+Download feedback labels in bulk from an external source. Currently supports exporting Quality AI example conversations with transcripts and question bodies.
 
 ```sql
-EXEC google.contactcenterinsights.locations.query_metrics 
+EXEC google.contactcenterinsights.locations.bulk_download_feedback_labels 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
+"maxDownloadCount": {{ maxDownloadCount }}, 
+"feedbackLabelType": "{{ feedbackLabelType }}", 
+"parent": "{{ parent }}", 
+"sheetsDestination": "{{ sheetsDestination }}", 
 "filter": "{{ filter }}", 
-"timeGranularity": "{{ timeGranularity }}", 
-"dimensions": "{{ dimensions }}", 
-"measureMask": "{{ measureMask }}"
+"conversationFilter": "{{ conversationFilter }}", 
+"gcsDestination": "{{ gcsDestination }}", 
+"templateQaScorecardId": "{{ templateQaScorecardId }}"
 }'
 ;
 ```
@@ -174,9 +178,9 @@ EXEC google.contactcenterinsights.locations.query_performance_overview
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"agentPerformanceSource": "{{ agentPerformanceSource }}", 
 "filter": "{{ filter }}", 
 "queryInterval": "{{ queryInterval }}", 
+"agentPerformanceSource": "{{ agentPerformanceSource }}", 
 "comparisonQueryInterval": "{{ comparisonQueryInterval }}"
 }'
 ;
@@ -192,31 +196,27 @@ EXEC google.contactcenterinsights.locations.bulk_upload_feedback_labels
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"gcsSource": "{{ gcsSource }}", 
 "sheetsSource": "{{ sheetsSource }}", 
-"validateOnly": {{ validateOnly }}
+"validateOnly": {{ validateOnly }}, 
+"gcsSource": "{{ gcsSource }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="bulk_download_feedback_labels">
+<TabItem value="query_metrics">
 
-Download feedback labels in bulk from an external source. Currently supports exporting Quality AI example conversations with transcripts and question bodies.
+Query metrics.
 
 ```sql
-EXEC google.contactcenterinsights.locations.bulk_download_feedback_labels 
+EXEC google.contactcenterinsights.locations.query_metrics 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"gcsDestination": "{{ gcsDestination }}", 
-"sheetsDestination": "{{ sheetsDestination }}", 
-"parent": "{{ parent }}", 
 "filter": "{{ filter }}", 
-"maxDownloadCount": {{ maxDownloadCount }}, 
-"feedbackLabelType": "{{ feedbackLabelType }}", 
-"conversationFilter": "{{ conversationFilter }}", 
-"templateQaScorecardId": "{{ templateQaScorecardId }}"
+"measureMask": "{{ measureMask }}", 
+"dimensions": "{{ dimensions }}", 
+"timeGranularity": "{{ timeGranularity }}"
 }'
 ;
 ```

@@ -254,14 +254,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-showHidden"><code>showHidden</code></a></td>
+    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-showHidden"><code>showHidden</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all the assets in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-assetsId"><code>assetsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of an asset.</td>
 </tr>
 <tr>
@@ -442,12 +442,12 @@ updateTime
 FROM google.migrationcenter.assets
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 AND view = '{{ view }}'
 AND showHidden = '{{ showHidden }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -470,16 +470,16 @@ Updates the parameters of an asset.
 ```sql
 UPDATE google.migrationcenter.assets
 SET 
-data__labels = '{{ labels }}',
+data__hideReason = '{{ hideReason }}',
 data__attributes = '{{ attributes }}',
 data__hidden = {{ hidden }},
-data__hideReason = '{{ hideReason }}'
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND assetsId = '{{ assetsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 assignedGroups,
@@ -588,8 +588,8 @@ EXEC google.migrationcenter.assets.aggregate_values
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"aggregations": "{{ aggregations }}", 
 "filter": "{{ filter }}", 
+"aggregations": "{{ aggregations }}", 
 "showHidden": {{ showHidden }}
 }'
 ;

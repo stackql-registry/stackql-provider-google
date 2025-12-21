@@ -294,7 +294,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_catalogs_serving_configs_list"><CopyableCode code="projects_locations_catalogs_serving_configs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists all ServingConfigs linked to this catalog.</td>
 </tr>
 <tr>
@@ -319,6 +319,13 @@ The following methods are available for this resource:
     <td>Deletes a ServingConfig. Returns a NotFound error if the ServingConfig does not exist.</td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_catalogs_serving_configs_predict"><CopyableCode code="projects_locations_catalogs_serving_configs_predict" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a>, <a href="#parameter-servingConfigsId"><code>servingConfigsId</code></a></td>
+    <td></td>
+    <td>Makes a recommendation prediction.</td>
+</tr>
+<tr>
     <td><a href="#projects_locations_catalogs_serving_configs_search"><CopyableCode code="projects_locations_catalogs_serving_configs_search" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a>, <a href="#parameter-servingConfigsId"><code>servingConfigsId</code></a></td>
@@ -326,11 +333,11 @@ The following methods are available for this resource:
     <td>Performs a search. This feature is only available for users who have Retail Search enabled. Enable Retail Search on Cloud Console before using this feature.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_catalogs_serving_configs_predict"><CopyableCode code="projects_locations_catalogs_serving_configs_predict" /></a></td>
+    <td><a href="#projects_locations_catalogs_serving_configs_conversational_search"><CopyableCode code="projects_locations_catalogs_serving_configs_conversational_search" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a>, <a href="#parameter-servingConfigsId"><code>servingConfigsId</code></a></td>
     <td></td>
-    <td>Makes a recommendation prediction.</td>
+    <td>Performs a conversational search. This feature is only available for users who have Conversational Search enabled.</td>
 </tr>
 </tbody>
 </table>
@@ -464,8 +471,8 @@ FROM google.retail.serving_configs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND catalogsId = '{{ catalogsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -487,52 +494,52 @@ Creates a ServingConfig. A maximum of 100 ServingConfigs are allowed in a Catalo
 
 ```sql
 INSERT INTO google.retail.serving_configs (
-data__name,
-data__displayName,
-data__modelId,
+data__personalizationSpec,
 data__priceRerankingLevel,
-data__facetControlIds,
-data__dynamicFacetSpec,
-data__boostControlIds,
-data__filterControlIds,
-data__redirectControlIds,
-data__twowaySynonymsControlIds,
-data__onewaySynonymsControlIds,
 data__doNotAssociateControlIds,
+data__enableCategoryFilterLevel,
+data__boostControlIds,
+data__name,
+data__modelId,
+data__redirectControlIds,
+data__diversityType,
+data__solutionTypes,
+data__displayName,
 data__replacementControlIds,
+data__twowaySynonymsControlIds,
+data__filterControlIds,
 data__ignoreControlIds,
 data__diversityLevel,
-data__diversityType,
-data__enableCategoryFilterLevel,
+data__onewaySynonymsControlIds,
+data__facetControlIds,
+data__dynamicFacetSpec,
 data__ignoreRecsDenylist,
-data__personalizationSpec,
-data__solutionTypes,
 projectsId,
 locationsId,
 catalogsId,
 servingConfigId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
-'{{ modelId }}',
+'{{ personalizationSpec }}',
 '{{ priceRerankingLevel }}',
-'{{ facetControlIds }}',
-'{{ dynamicFacetSpec }}',
-'{{ boostControlIds }}',
-'{{ filterControlIds }}',
-'{{ redirectControlIds }}',
-'{{ twowaySynonymsControlIds }}',
-'{{ onewaySynonymsControlIds }}',
 '{{ doNotAssociateControlIds }}',
+'{{ enableCategoryFilterLevel }}',
+'{{ boostControlIds }}',
+'{{ name }}',
+'{{ modelId }}',
+'{{ redirectControlIds }}',
+'{{ diversityType }}',
+'{{ solutionTypes }}',
+'{{ displayName }}',
 '{{ replacementControlIds }}',
+'{{ twowaySynonymsControlIds }}',
+'{{ filterControlIds }}',
 '{{ ignoreControlIds }}',
 '{{ diversityLevel }}',
-'{{ diversityType }}',
-'{{ enableCategoryFilterLevel }}',
+'{{ onewaySynonymsControlIds }}',
+'{{ facetControlIds }}',
+'{{ dynamicFacetSpec }}',
 {{ ignoreRecsDenylist }},
-'{{ personalizationSpec }}',
-'{{ solutionTypes }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ catalogsId }}',
@@ -576,70 +583,76 @@ twowaySynonymsControlIds
     - name: catalogsId
       value: string
       description: Required parameter for the serving_configs resource.
-    - name: name
-      value: string
+    - name: personalizationSpec
+      value: object
       description: >
-        Immutable. Fully qualified name `projects/*/locations/global/catalogs/*/servingConfig/*`
-        
-    - name: displayName
-      value: string
-      description: >
-        Required. The human readable serving config display name. Used in Retail UI. This field must be a UTF-8 encoded string with a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT error is returned.
-        
-    - name: modelId
-      value: string
-      description: >
-        The id of the model in the same Catalog to use at serving time. Currently only RecommendationModels are supported: https://cloud.google.com/retail/recommendations-ai/docs/create-models Can be changed but only to a compatible model (e.g. others-you-may-like CTR to others-you-may-like CVR). Required when solution_types is SOLUTION_TYPE_RECOMMENDATION.
+        The specification for personalization spec. Can only be set if solution_types is SOLUTION_TYPE_SEARCH. Notice that if both ServingConfig.personalization_spec and SearchRequest.personalization_spec are set. SearchRequest.personalization_spec will override ServingConfig.personalization_spec.
         
     - name: priceRerankingLevel
       value: string
       description: >
         How much price ranking we want in serving results. Price reranking causes product items with a similar recommendation probability to be ordered by price, with the highest-priced items first. This setting could result in a decrease in click-through and conversion rates. Allowed values are: * `no-price-reranking` * `low-price-reranking` * `medium-price-reranking` * `high-price-reranking` If not specified, we choose default based on model type. Default value: `no-price-reranking`. Can only be set if solution_types is SOLUTION_TYPE_RECOMMENDATION.
         
-    - name: facetControlIds
+    - name: doNotAssociateControlIds
       value: array
       description: >
-        Facet specifications for faceted search. If empty, no facets are returned. The ids refer to the ids of Control resources with only the Facet control set. These controls are assumed to be in the same Catalog as the ServingConfig. A maximum of 100 values are allowed. Otherwise, an INVALID_ARGUMENT error is returned. Can only be set if solution_types is SOLUTION_TYPE_SEARCH.
+        Condition do not associate specifications. If multiple do not associate conditions match, all matching do not associate controls in the list will execute. - Order does not matter. - Maximum number of specifications is 100. Can only be set if solution_types is SOLUTION_TYPE_SEARCH.
         
-    - name: dynamicFacetSpec
-      value: object
+    - name: enableCategoryFilterLevel
+      value: string
       description: >
-        The specification for dynamically generated facets. Notice that only textual facets can be dynamically generated. Can only be set if solution_types is SOLUTION_TYPE_SEARCH.
+        Whether to add additional category filters on the `similar-items` model. If not specified, we enable it by default. Allowed values are: * `no-category-match`: No additional filtering of original results from the model and the customer's filters. * `relaxed-category-match`: Only keep results with categories that match at least one item categories in the PredictRequests's context item. * If customer also sends filters in the PredictRequest, then the results will satisfy both conditions (user given and category match). Can only be set if solution_types is SOLUTION_TYPE_RECOMMENDATION.
         
     - name: boostControlIds
       value: array
       description: >
         Condition boost specifications. If a product matches multiple conditions in the specifications, boost scores from these specifications are all applied and combined in a non-linear way. Maximum number of specifications is 100. Notice that if both ServingConfig.boost_control_ids and SearchRequest.boost_spec are set, the boost conditions from both places are evaluated. If a search request matches multiple boost conditions, the final boost score is equal to the sum of the boost scores from all matched boost conditions. Can only be set if solution_types is SOLUTION_TYPE_SEARCH.
         
-    - name: filterControlIds
-      value: array
+    - name: name
+      value: string
       description: >
-        Condition filter specifications. If a product matches multiple conditions in the specifications, filters from these specifications are all applied and combined via the AND operator. Maximum number of specifications is 100. Can only be set if solution_types is SOLUTION_TYPE_SEARCH.
+        Immutable. Fully qualified name `projects/*/locations/global/catalogs/*/servingConfig/*`
+        
+    - name: modelId
+      value: string
+      description: >
+        The id of the model in the same Catalog to use at serving time. Currently only RecommendationModels are supported: https://cloud.google.com/retail/recommendations-ai/docs/create-models Can be changed but only to a compatible model (e.g. others-you-may-like CTR to others-you-may-like CVR). Required when solution_types is SOLUTION_TYPE_RECOMMENDATION.
         
     - name: redirectControlIds
       value: array
       description: >
         Condition redirect specifications. Only the first triggered redirect action is applied, even if multiple apply. Maximum number of specifications is 1000. Can only be set if solution_types is SOLUTION_TYPE_SEARCH.
         
-    - name: twowaySynonymsControlIds
-      value: array
+    - name: diversityType
+      value: string
       description: >
-        Condition synonyms specifications. If multiple syonyms conditions match, all matching synonyms control in the list will execute. Order of controls in the list will not matter. Maximum number of specifications is 100. Can only be set if solution_types is SOLUTION_TYPE_SEARCH.
+        What kind of diversity to use - data driven or rule based. If unset, the server behavior defaults to RULE_BASED_DIVERSITY.
         
-    - name: onewaySynonymsControlIds
+      valid_values: ['DIVERSITY_TYPE_UNSPECIFIED', 'RULE_BASED_DIVERSITY', 'DATA_DRIVEN_DIVERSITY']
+    - name: solutionTypes
       value: array
       description: >
-        Condition oneway synonyms specifications. If multiple oneway synonyms conditions match, all matching oneway synonyms controls in the list will execute. Order of controls in the list will not matter. Maximum number of specifications is 100. Can only be set if solution_types is SOLUTION_TYPE_SEARCH.
+        Required. Immutable. Specifies the solution types that a serving config can be associated with. Currently we support setting only one type of solution.
         
-    - name: doNotAssociateControlIds
-      value: array
+    - name: displayName
+      value: string
       description: >
-        Condition do not associate specifications. If multiple do not associate conditions match, all matching do not associate controls in the list will execute. - Order does not matter. - Maximum number of specifications is 100. Can only be set if solution_types is SOLUTION_TYPE_SEARCH.
+        Required. The human readable serving config display name. Used in Retail UI. This field must be a UTF-8 encoded string with a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT error is returned.
         
     - name: replacementControlIds
       value: array
       description: >
         Condition replacement specifications. - Applied according to the order in the list. - A previously replaced term can not be re-replaced. - Maximum number of specifications is 100. Can only be set if solution_types is SOLUTION_TYPE_SEARCH.
+        
+    - name: twowaySynonymsControlIds
+      value: array
+      description: >
+        Condition synonyms specifications. If multiple syonyms conditions match, all matching synonyms control in the list will execute. Order of controls in the list will not matter. Maximum number of specifications is 100. Can only be set if solution_types is SOLUTION_TYPE_SEARCH.
+        
+    - name: filterControlIds
+      value: array
+      description: >
+        Condition filter specifications. If a product matches multiple conditions in the specifications, filters from these specifications are all applied and combined via the AND operator. Maximum number of specifications is 100. Can only be set if solution_types is SOLUTION_TYPE_SEARCH.
         
     - name: ignoreControlIds
       value: array
@@ -651,31 +664,25 @@ twowaySynonymsControlIds
       description: >
         How much diversity to use in recommendation model results e.g. `medium-diversity` or `high-diversity`. Currently supported values: * `no-diversity` * `low-diversity` * `medium-diversity` * `high-diversity` * `auto-diversity` If not specified, we choose default based on recommendation model type. Default value: `no-diversity`. Can only be set if solution_types is SOLUTION_TYPE_RECOMMENDATION.
         
-    - name: diversityType
-      value: string
+    - name: onewaySynonymsControlIds
+      value: array
       description: >
-        What kind of diversity to use - data driven or rule based. If unset, the server behavior defaults to RULE_BASED_DIVERSITY.
+        Condition oneway synonyms specifications. If multiple oneway synonyms conditions match, all matching oneway synonyms controls in the list will execute. Order of controls in the list will not matter. Maximum number of specifications is 100. Can only be set if solution_types is SOLUTION_TYPE_SEARCH.
         
-      valid_values: ['DIVERSITY_TYPE_UNSPECIFIED', 'RULE_BASED_DIVERSITY', 'DATA_DRIVEN_DIVERSITY']
-    - name: enableCategoryFilterLevel
-      value: string
+    - name: facetControlIds
+      value: array
       description: >
-        Whether to add additional category filters on the `similar-items` model. If not specified, we enable it by default. Allowed values are: * `no-category-match`: No additional filtering of original results from the model and the customer's filters. * `relaxed-category-match`: Only keep results with categories that match at least one item categories in the PredictRequests's context item. * If customer also sends filters in the PredictRequest, then the results will satisfy both conditions (user given and category match). Can only be set if solution_types is SOLUTION_TYPE_RECOMMENDATION.
+        Facet specifications for faceted search. If empty, no facets are returned. The ids refer to the ids of Control resources with only the Facet control set. These controls are assumed to be in the same Catalog as the ServingConfig. A maximum of 100 values are allowed. Otherwise, an INVALID_ARGUMENT error is returned. Can only be set if solution_types is SOLUTION_TYPE_SEARCH.
+        
+    - name: dynamicFacetSpec
+      value: object
+      description: >
+        The specification for dynamically generated facets. Notice that only textual facets can be dynamically generated. Can only be set if solution_types is SOLUTION_TYPE_SEARCH.
         
     - name: ignoreRecsDenylist
       value: boolean
       description: >
         When the flag is enabled, the products in the denylist will not be filtered out in the recommendation filtering results.
-        
-    - name: personalizationSpec
-      value: object
-      description: >
-        The specification for personalization spec. Can only be set if solution_types is SOLUTION_TYPE_SEARCH. Notice that if both ServingConfig.personalization_spec and SearchRequest.personalization_spec are set. SearchRequest.personalization_spec will override ServingConfig.personalization_spec.
-        
-    - name: solutionTypes
-      value: array
-      description: >
-        Required. Immutable. Specifies the solution types that a serving config can be associated with. Currently we support setting only one type of solution.
         
     - name: servingConfigId
       value: string
@@ -699,26 +706,26 @@ Updates a ServingConfig.
 ```sql
 UPDATE google.retail.serving_configs
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__modelId = '{{ modelId }}',
+data__personalizationSpec = '{{ personalizationSpec }}',
 data__priceRerankingLevel = '{{ priceRerankingLevel }}',
-data__facetControlIds = '{{ facetControlIds }}',
-data__dynamicFacetSpec = '{{ dynamicFacetSpec }}',
-data__boostControlIds = '{{ boostControlIds }}',
-data__filterControlIds = '{{ filterControlIds }}',
-data__redirectControlIds = '{{ redirectControlIds }}',
-data__twowaySynonymsControlIds = '{{ twowaySynonymsControlIds }}',
-data__onewaySynonymsControlIds = '{{ onewaySynonymsControlIds }}',
 data__doNotAssociateControlIds = '{{ doNotAssociateControlIds }}',
+data__enableCategoryFilterLevel = '{{ enableCategoryFilterLevel }}',
+data__boostControlIds = '{{ boostControlIds }}',
+data__name = '{{ name }}',
+data__modelId = '{{ modelId }}',
+data__redirectControlIds = '{{ redirectControlIds }}',
+data__diversityType = '{{ diversityType }}',
+data__solutionTypes = '{{ solutionTypes }}',
+data__displayName = '{{ displayName }}',
 data__replacementControlIds = '{{ replacementControlIds }}',
+data__twowaySynonymsControlIds = '{{ twowaySynonymsControlIds }}',
+data__filterControlIds = '{{ filterControlIds }}',
 data__ignoreControlIds = '{{ ignoreControlIds }}',
 data__diversityLevel = '{{ diversityLevel }}',
-data__diversityType = '{{ diversityType }}',
-data__enableCategoryFilterLevel = '{{ enableCategoryFilterLevel }}',
-data__ignoreRecsDenylist = {{ ignoreRecsDenylist }},
-data__personalizationSpec = '{{ personalizationSpec }}',
-data__solutionTypes = '{{ solutionTypes }}'
+data__onewaySynonymsControlIds = '{{ onewaySynonymsControlIds }}',
+data__facetControlIds = '{{ facetControlIds }}',
+data__dynamicFacetSpec = '{{ dynamicFacetSpec }}',
+data__ignoreRecsDenylist = {{ ignoreRecsDenylist }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -778,55 +785,13 @@ AND servingConfigsId = '{{ servingConfigsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_catalogs_serving_configs_search"
+    defaultValue="projects_locations_catalogs_serving_configs_predict"
     values={[
+        { label: 'projects_locations_catalogs_serving_configs_predict', value: 'projects_locations_catalogs_serving_configs_predict' },
         { label: 'projects_locations_catalogs_serving_configs_search', value: 'projects_locations_catalogs_serving_configs_search' },
-        { label: 'projects_locations_catalogs_serving_configs_predict', value: 'projects_locations_catalogs_serving_configs_predict' }
+        { label: 'projects_locations_catalogs_serving_configs_conversational_search', value: 'projects_locations_catalogs_serving_configs_conversational_search' }
     ]}
 >
-<TabItem value="projects_locations_catalogs_serving_configs_search">
-
-Performs a search. This feature is only available for users who have Retail Search enabled. Enable Retail Search on Cloud Console before using this feature.
-
-```sql
-EXEC google.retail.serving_configs.projects_locations_catalogs_serving_configs_search 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@catalogsId='{{ catalogsId }}' --required, 
-@servingConfigsId='{{ servingConfigsId }}' --required 
-@@json=
-'{
-"branch": "{{ branch }}", 
-"query": "{{ query }}", 
-"visitorId": "{{ visitorId }}", 
-"userInfo": "{{ userInfo }}", 
-"pageSize": {{ pageSize }}, 
-"pageToken": "{{ pageToken }}", 
-"offset": {{ offset }}, 
-"filter": "{{ filter }}", 
-"canonicalFilter": "{{ canonicalFilter }}", 
-"orderBy": "{{ orderBy }}", 
-"facetSpecs": "{{ facetSpecs }}", 
-"dynamicFacetSpec": "{{ dynamicFacetSpec }}", 
-"boostSpec": "{{ boostSpec }}", 
-"queryExpansionSpec": "{{ queryExpansionSpec }}", 
-"variantRollupKeys": "{{ variantRollupKeys }}", 
-"pageCategories": "{{ pageCategories }}", 
-"searchMode": "{{ searchMode }}", 
-"personalizationSpec": "{{ personalizationSpec }}", 
-"labels": "{{ labels }}", 
-"spellCorrectionSpec": "{{ spellCorrectionSpec }}", 
-"entity": "{{ entity }}", 
-"conversationalSearchSpec": "{{ conversationalSearchSpec }}", 
-"tileNavigationSpec": "{{ tileNavigationSpec }}", 
-"languageCode": "{{ languageCode }}", 
-"regionCode": "{{ regionCode }}", 
-"placeId": "{{ placeId }}", 
-"userAttributes": "{{ userAttributes }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_catalogs_serving_configs_predict">
 
 Makes a recommendation prediction.
@@ -841,11 +806,80 @@ EXEC google.retail.serving_configs.projects_locations_catalogs_serving_configs_p
 '{
 "userEvent": "{{ userEvent }}", 
 "pageSize": {{ pageSize }}, 
-"pageToken": "{{ pageToken }}", 
-"filter": "{{ filter }}", 
+"labels": "{{ labels }}", 
 "validateOnly": {{ validateOnly }}, 
-"params": "{{ params }}", 
-"labels": "{{ labels }}"
+"filter": "{{ filter }}", 
+"pageToken": "{{ pageToken }}", 
+"params": "{{ params }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_catalogs_serving_configs_search">
+
+Performs a search. This feature is only available for users who have Retail Search enabled. Enable Retail Search on Cloud Console before using this feature.
+
+```sql
+EXEC google.retail.serving_configs.projects_locations_catalogs_serving_configs_search 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@catalogsId='{{ catalogsId }}' --required, 
+@servingConfigsId='{{ servingConfigsId }}' --required 
+@@json=
+'{
+"canonicalFilter": "{{ canonicalFilter }}", 
+"conversationalSearchSpec": "{{ conversationalSearchSpec }}", 
+"placeId": "{{ placeId }}", 
+"searchMode": "{{ searchMode }}", 
+"pageToken": "{{ pageToken }}", 
+"userAttributes": "{{ userAttributes }}", 
+"dynamicFacetSpec": "{{ dynamicFacetSpec }}", 
+"offset": {{ offset }}, 
+"query": "{{ query }}", 
+"facetSpecs": "{{ facetSpecs }}", 
+"languageCode": "{{ languageCode }}", 
+"personalizationSpec": "{{ personalizationSpec }}", 
+"queryExpansionSpec": "{{ queryExpansionSpec }}", 
+"variantRollupKeys": "{{ variantRollupKeys }}", 
+"tileNavigationSpec": "{{ tileNavigationSpec }}", 
+"pageSize": {{ pageSize }}, 
+"regionCode": "{{ regionCode }}", 
+"pageCategories": "{{ pageCategories }}", 
+"userInfo": "{{ userInfo }}", 
+"visitorId": "{{ visitorId }}", 
+"labels": "{{ labels }}", 
+"spellCorrectionSpec": "{{ spellCorrectionSpec }}", 
+"filter": "{{ filter }}", 
+"boostSpec": "{{ boostSpec }}", 
+"branch": "{{ branch }}", 
+"entity": "{{ entity }}", 
+"orderBy": "{{ orderBy }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_catalogs_serving_configs_conversational_search">
+
+Performs a conversational search. This feature is only available for users who have Conversational Search enabled.
+
+```sql
+EXEC google.retail.serving_configs.projects_locations_catalogs_serving_configs_conversational_search 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@catalogsId='{{ catalogsId }}' --required, 
+@servingConfigsId='{{ servingConfigsId }}' --required 
+@@json=
+'{
+"pageCategories": "{{ pageCategories }}", 
+"userInfo": "{{ userInfo }}", 
+"conversationalFilteringSpec": "{{ conversationalFilteringSpec }}", 
+"query": "{{ query }}", 
+"branch": "{{ branch }}", 
+"safetySettings": "{{ safetySettings }}", 
+"searchParams": "{{ searchParams }}", 
+"visitorId": "{{ visitorId }}", 
+"conversationId": "{{ conversationId }}", 
+"userLabels": "{{ userLabels }}"
 }'
 ;
 ```

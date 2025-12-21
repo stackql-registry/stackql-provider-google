@@ -144,6 +144,11 @@ The following fields are returned by `SELECT` queries:
     <td><code>string</code></td>
     <td>Output only. Current state of the listing.</td>
 </tr>
+<tr>
+    <td><CopyableCode code="storedProcedureConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. If set, stored procedure configuration will be propagated and enforced on the linked dataset. (id: StoredProcedureConfig)</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -253,6 +258,11 @@ The following fields are returned by `SELECT` queries:
     <td><code>string</code></td>
     <td>Output only. Current state of the listing.</td>
 </tr>
+<tr>
+    <td><CopyableCode code="storedProcedureConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. If set, stored procedure configuration will be propagated and enforced on the linked dataset. (id: StoredProcedureConfig)</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -284,7 +294,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_data_exchanges_listings_list"><CopyableCode code="projects_locations_data_exchanges_listings_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataExchangesId"><code>dataExchangesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists all listings in a given project and location.</td>
 </tr>
 <tr>
@@ -412,7 +422,8 @@ pubsubTopic,
 requestAccess,
 resourceType,
 restrictedExportConfig,
-state
+state,
+storedProcedureConfig
 FROM google.analyticshub.listings
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
@@ -445,13 +456,14 @@ pubsubTopic,
 requestAccess,
 resourceType,
 restrictedExportConfig,
-state
+state,
+storedProcedureConfig
 FROM google.analyticshub.listings
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND dataExchangesId = '{{ dataExchangesId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -473,42 +485,44 @@ Creates a new listing.
 
 ```sql
 INSERT INTO google.analyticshub.listings (
-data__bigqueryDataset,
-data__pubsubTopic,
-data__displayName,
+data__requestAccess,
+data__discoveryType,
+data__dataProvider,
+data__allowOnlyMetadataSharing,
 data__description,
+data__restrictedExportConfig,
+data__bigqueryDataset,
+data__displayName,
 data__primaryContact,
 data__documentation,
 data__icon,
-data__dataProvider,
-data__categories,
-data__publisher,
-data__requestAccess,
-data__restrictedExportConfig,
-data__discoveryType,
 data__logLinkedDatasetQueryUserEmail,
-data__allowOnlyMetadataSharing,
+data__pubsubTopic,
+data__categories,
+data__storedProcedureConfig,
+data__publisher,
 projectsId,
 locationsId,
 dataExchangesId,
 listingId
 )
 SELECT 
-'{{ bigqueryDataset }}',
-'{{ pubsubTopic }}',
-'{{ displayName }}',
+'{{ requestAccess }}',
+'{{ discoveryType }}',
+'{{ dataProvider }}',
+{{ allowOnlyMetadataSharing }},
 '{{ description }}',
+'{{ restrictedExportConfig }}',
+'{{ bigqueryDataset }}',
+'{{ displayName }}',
 '{{ primaryContact }}',
 '{{ documentation }}',
 '{{ icon }}',
-'{{ dataProvider }}',
-'{{ categories }}',
-'{{ publisher }}',
-'{{ requestAccess }}',
-'{{ restrictedExportConfig }}',
-'{{ discoveryType }}',
 {{ logLinkedDatasetQueryUserEmail }},
-{{ allowOnlyMetadataSharing }},
+'{{ pubsubTopic }}',
+'{{ categories }}',
+'{{ storedProcedureConfig }}',
+'{{ publisher }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ dataExchangesId }}',
@@ -532,7 +546,8 @@ pubsubTopic,
 requestAccess,
 resourceType,
 restrictedExportConfig,
-state
+state,
+storedProcedureConfig
 ;
 ```
 </TabItem>
@@ -551,25 +566,46 @@ state
     - name: dataExchangesId
       value: string
       description: Required parameter for the listings resource.
-    - name: bigqueryDataset
-      value: object
-      description: >
-        Shared dataset i.e. BigQuery dataset source.
-        
-    - name: pubsubTopic
-      value: object
-      description: >
-        Pub/Sub topic source.
-        
-    - name: displayName
+    - name: requestAccess
       value: string
       description: >
-        Required. Human-readable display name of the listing. The display name must contain only Unicode letters, numbers (0-9), underscores (_), dashes (-), spaces ( ), ampersands (&) and can't start or end with spaces. Default value is an empty string. Max length: 63 bytes.
+        Optional. Email or URL of the request access of the listing. Subscribers can use this reference to request access. Max Length: 1000 bytes.
+        
+    - name: discoveryType
+      value: string
+      description: >
+        Optional. Type of discovery of the listing on the discovery page.
+        
+      valid_values: ['DISCOVERY_TYPE_UNSPECIFIED', 'DISCOVERY_TYPE_PRIVATE', 'DISCOVERY_TYPE_PUBLIC']
+    - name: dataProvider
+      value: object
+      description: >
+        Optional. Details of the data provider who owns the source data.
+        
+    - name: allowOnlyMetadataSharing
+      value: boolean
+      description: >
+        Optional. If true, the listing is only available to get the resource metadata. Listing is non subscribable.
         
     - name: description
       value: string
       description: >
         Optional. Short description of the listing. The description must not contain Unicode non-characters and C0 and C1 control codes except tabs (HT), new lines (LF), carriage returns (CR), and page breaks (FF). Default value is an empty string. Max length: 2000 bytes.
+        
+    - name: restrictedExportConfig
+      value: object
+      description: >
+        Optional. If set, restricted export configuration will be propagated and enforced on the linked dataset.
+        
+    - name: bigqueryDataset
+      value: object
+      description: >
+        Shared dataset i.e. BigQuery dataset source.
+        
+    - name: displayName
+      value: string
+      description: >
+        Required. Human-readable display name of the listing. The display name must contain only Unicode letters, numbers (0-9), underscores (_), dashes (-), spaces ( ), ampersands (&) and can't start or end with spaces. Default value is an empty string. Max length: 63 bytes.
         
     - name: primaryContact
       value: string
@@ -586,46 +622,30 @@ state
       description: >
         Optional. Base64 encoded image representing the listing. Max Size: 3.0MiB Expected image dimensions are 512x512 pixels, however the API only performs validation on size of the encoded data. Note: For byte fields, the contents of the field are base64-encoded (which increases the size of the data by 33-36%) when using JSON on the wire.
         
-    - name: dataProvider
+    - name: logLinkedDatasetQueryUserEmail
+      value: boolean
+      description: >
+        Optional. By default, false. If true, the Listing has an email sharing mandate enabled.
+        
+    - name: pubsubTopic
       value: object
       description: >
-        Optional. Details of the data provider who owns the source data.
+        Pub/Sub topic source.
         
     - name: categories
       value: array
       description: >
         Optional. Categories of the listing. Up to five categories are allowed.
         
+    - name: storedProcedureConfig
+      value: object
+      description: >
+        Optional. If set, stored procedure configuration will be propagated and enforced on the linked dataset.
+        
     - name: publisher
       value: object
       description: >
         Optional. Details of the publisher who owns the listing and who can share the source data.
-        
-    - name: requestAccess
-      value: string
-      description: >
-        Optional. Email or URL of the request access of the listing. Subscribers can use this reference to request access. Max Length: 1000 bytes.
-        
-    - name: restrictedExportConfig
-      value: object
-      description: >
-        Optional. If set, restricted export configuration will be propagated and enforced on the linked dataset.
-        
-    - name: discoveryType
-      value: string
-      description: >
-        Optional. Type of discovery of the listing on the discovery page.
-        
-      valid_values: ['DISCOVERY_TYPE_UNSPECIFIED', 'DISCOVERY_TYPE_PRIVATE', 'DISCOVERY_TYPE_PUBLIC']
-    - name: logLinkedDatasetQueryUserEmail
-      value: boolean
-      description: >
-        Optional. By default, false. If true, the Listing has an email sharing mandate enabled.
-        
-    - name: allowOnlyMetadataSharing
-      value: boolean
-      description: >
-        Optional. If true, the listing is only available to get the resource metadata. Listing is non subscribable.
         
     - name: listingId
       value: string
@@ -649,21 +669,22 @@ Updates an existing listing.
 ```sql
 UPDATE google.analyticshub.listings
 SET 
-data__bigqueryDataset = '{{ bigqueryDataset }}',
-data__pubsubTopic = '{{ pubsubTopic }}',
-data__displayName = '{{ displayName }}',
+data__requestAccess = '{{ requestAccess }}',
+data__discoveryType = '{{ discoveryType }}',
+data__dataProvider = '{{ dataProvider }}',
+data__allowOnlyMetadataSharing = {{ allowOnlyMetadataSharing }},
 data__description = '{{ description }}',
+data__restrictedExportConfig = '{{ restrictedExportConfig }}',
+data__bigqueryDataset = '{{ bigqueryDataset }}',
+data__displayName = '{{ displayName }}',
 data__primaryContact = '{{ primaryContact }}',
 data__documentation = '{{ documentation }}',
 data__icon = '{{ icon }}',
-data__dataProvider = '{{ dataProvider }}',
-data__categories = '{{ categories }}',
-data__publisher = '{{ publisher }}',
-data__requestAccess = '{{ requestAccess }}',
-data__restrictedExportConfig = '{{ restrictedExportConfig }}',
-data__discoveryType = '{{ discoveryType }}',
 data__logLinkedDatasetQueryUserEmail = {{ logLinkedDatasetQueryUserEmail }},
-data__allowOnlyMetadataSharing = {{ allowOnlyMetadataSharing }}
+data__pubsubTopic = '{{ pubsubTopic }}',
+data__categories = '{{ categories }}',
+data__storedProcedureConfig = '{{ storedProcedureConfig }}',
+data__publisher = '{{ publisher }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -689,7 +710,8 @@ pubsubTopic,
 requestAccess,
 resourceType,
 restrictedExportConfig,
-state;
+state,
+storedProcedureConfig;
 ```
 </TabItem>
 </Tabs>

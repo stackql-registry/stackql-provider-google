@@ -351,23 +351,23 @@ Creates a new SecurityProfileGroup in a given organization and location.
 
 ```sql
 INSERT INTO google.networksecurity.security_profile_groups (
-data__name,
+data__customMirroringProfile,
 data__description,
 data__labels,
-data__threatPreventionProfile,
-data__customMirroringProfile,
+data__name,
 data__customInterceptProfile,
+data__threatPreventionProfile,
 organizationsId,
 locationsId,
 securityProfileGroupId
 )
 SELECT 
-'{{ name }}',
+'{{ customMirroringProfile }}',
 '{{ description }}',
 '{{ labels }}',
-'{{ threatPreventionProfile }}',
-'{{ customMirroringProfile }}',
+'{{ name }}',
 '{{ customInterceptProfile }}',
+'{{ threatPreventionProfile }}',
 '{{ organizationsId }}',
 '{{ locationsId }}',
 '{{ securityProfileGroupId }}'
@@ -392,10 +392,10 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the security_profile_groups resource.
-    - name: name
+    - name: customMirroringProfile
       value: string
       description: >
-        Immutable. Identifier. Name of the SecurityProfileGroup resource. It matches pattern `projects|organizations/*/locations/{location}/securityProfileGroups/{security_profile_group}`.
+        Optional. Reference to a SecurityProfile with the CustomMirroring configuration.
         
     - name: description
       value: string
@@ -407,20 +407,20 @@ response
       description: >
         Optional. Labels as key value pairs.
         
-    - name: threatPreventionProfile
+    - name: name
       value: string
       description: >
-        Optional. Reference to a SecurityProfile with the ThreatPrevention configuration.
-        
-    - name: customMirroringProfile
-      value: string
-      description: >
-        Optional. Reference to a SecurityProfile with the CustomMirroring configuration.
+        Immutable. Identifier. Name of the SecurityProfileGroup resource. It matches pattern `projects|organizations/*/locations/{location}/securityProfileGroups/{security_profile_group}`.
         
     - name: customInterceptProfile
       value: string
       description: >
         Optional. Reference to a SecurityProfile with the CustomIntercept configuration.
+        
+    - name: threatPreventionProfile
+      value: string
+      description: >
+        Optional. Reference to a SecurityProfile with the ThreatPrevention configuration.
         
     - name: securityProfileGroupId
       value: string
@@ -444,12 +444,12 @@ Updates the parameters of a single SecurityProfileGroup.
 ```sql
 UPDATE google.networksecurity.security_profile_groups
 SET 
-data__name = '{{ name }}',
+data__customMirroringProfile = '{{ customMirroringProfile }}',
 data__description = '{{ description }}',
 data__labels = '{{ labels }}',
-data__threatPreventionProfile = '{{ threatPreventionProfile }}',
-data__customMirroringProfile = '{{ customMirroringProfile }}',
-data__customInterceptProfile = '{{ customInterceptProfile }}'
+data__name = '{{ name }}',
+data__customInterceptProfile = '{{ customInterceptProfile }}',
+data__threatPreventionProfile = '{{ threatPreventionProfile }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

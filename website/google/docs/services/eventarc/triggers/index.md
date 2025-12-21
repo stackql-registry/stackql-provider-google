@@ -95,6 +95,11 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. User labels attached to the triggers that can be used to group resources.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="retryPolicy" /></td>
+    <td><code>object</code></td>
+    <td>Optional. The retry policy to use in the Trigger. If unset, event delivery will be retried for up to 24 hours by default: https://cloud.google.com/eventarc/docs/retry-events (id: RetryPolicy)</td>
+</tr>
+<tr>
     <td><CopyableCode code="satisfiesPzs" /></td>
     <td><code>boolean</code></td>
     <td>Output only. Whether or not this Trigger satisfies the requirements of physical zone separation</td>
@@ -177,6 +182,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="labels" /></td>
     <td><code>object</code></td>
     <td>Optional. User labels attached to the triggers that can be used to group resources.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="retryPolicy" /></td>
+    <td><code>object</code></td>
+    <td>Optional. The retry policy to use in the Trigger. If unset, event delivery will be retried for up to 24 hours by default: https://cloud.google.com/eventarc/docs/retry-events (id: RetryPolicy)</td>
 </tr>
 <tr>
     <td><CopyableCode code="satisfiesPzs" /></td>
@@ -361,6 +371,7 @@ etag,
 eventDataContentType,
 eventFilters,
 labels,
+retryPolicy,
 satisfiesPzs,
 serviceAccount,
 transport,
@@ -388,6 +399,7 @@ etag,
 eventDataContentType,
 eventFilters,
 labels,
+retryPolicy,
 satisfiesPzs,
 serviceAccount,
 transport,
@@ -429,6 +441,7 @@ data__transport,
 data__labels,
 data__channel,
 data__eventDataContentType,
+data__retryPolicy,
 projectsId,
 locationsId,
 triggerId,
@@ -443,6 +456,7 @@ SELECT
 '{{ labels }}',
 '{{ channel }}',
 '{{ eventDataContentType }}',
+'{{ retryPolicy }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ triggerId }}',
@@ -508,6 +522,11 @@ response
       description: >
         Optional. EventDataContentType specifies the type of payload in MIME format that is expected from the CloudEvent data field. This is set to `application/json` if the value is not defined.
         
+    - name: retryPolicy
+      value: object
+      description: >
+        Optional. The retry policy to use in the Trigger. If unset, event delivery will be retried for up to 24 hours by default: https://cloud.google.com/eventarc/docs/retry-events
+        
     - name: triggerId
       value: string
     - name: validateOnly
@@ -539,7 +558,8 @@ data__destination = '{{ destination }}',
 data__transport = '{{ transport }}',
 data__labels = '{{ labels }}',
 data__channel = '{{ channel }}',
-data__eventDataContentType = '{{ eventDataContentType }}'
+data__eventDataContentType = '{{ eventDataContentType }}',
+data__retryPolicy = '{{ retryPolicy }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

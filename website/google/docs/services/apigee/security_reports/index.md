@@ -224,7 +224,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_environments_security_reports_list"><CopyableCode code="organizations_environments_security_reports_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
-    <td><a href="#parameter-submittedBy"><code>submittedBy</code></a>, <a href="#parameter-status"><code>status</code></a>, <a href="#parameter-from"><code>from</code></a>, <a href="#parameter-to"><code>to</code></a>, <a href="#parameter-dataset"><code>dataset</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-dataset"><code>dataset</code></a>, <a href="#parameter-from"><code>from</code></a>, <a href="#parameter-status"><code>status</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-to"><code>to</code></a>, <a href="#parameter-submittedBy"><code>submittedBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Return a list of Security Reports</td>
 </tr>
 <tr>
@@ -360,12 +360,12 @@ updated
 FROM google.apigee.security_reports
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND environmentsId = '{{ environmentsId }}' -- required
-AND submittedBy = '{{ submittedBy }}'
-AND status = '{{ status }}'
-AND from = '{{ from }}'
-AND to = '{{ to }}'
 AND dataset = '{{ dataset }}'
+AND from = '{{ from }}'
+AND status = '{{ status }}'
 AND pageSize = '{{ pageSize }}'
+AND to = '{{ to }}'
+AND submittedBy = '{{ submittedBy }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -388,32 +388,32 @@ Submit a report request to be processed in the background. If the submission suc
 
 ```sql
 INSERT INTO google.apigee.security_reports (
-data__metrics,
-data__dimensions,
-data__timeRange,
-data__filter,
-data__groupByTimeUnit,
-data__limit,
 data__mimeType,
-data__csvDelimiter,
+data__timeRange,
 data__envgroupHostname,
 data__reportDefinitionId,
+data__metrics,
+data__dimensions,
+data__groupByTimeUnit,
 data__displayName,
+data__filter,
+data__csvDelimiter,
+data__limit,
 organizationsId,
 environmentsId
 )
 SELECT 
-'{{ metrics }}',
-'{{ dimensions }}',
-'{{ timeRange }}',
-'{{ filter }}',
-'{{ groupByTimeUnit }}',
-{{ limit }},
 '{{ mimeType }}',
-'{{ csvDelimiter }}',
+'{{ timeRange }}',
 '{{ envgroupHostname }}',
 '{{ reportDefinitionId }}',
+'{{ metrics }}',
+'{{ dimensions }}',
+'{{ groupByTimeUnit }}',
 '{{ displayName }}',
+'{{ filter }}',
+'{{ csvDelimiter }}',
+{{ limit }},
 '{{ organizationsId }}',
 '{{ environmentsId }}'
 RETURNING
@@ -445,45 +445,15 @@ updated
     - name: environmentsId
       value: string
       description: Required parameter for the security_reports resource.
-    - name: metrics
-      value: array
-      description: >
-        A list of Metrics.
-        
-    - name: dimensions
-      value: array
-      description: >
-        A list of dimensions. https://docs.apigee.com/api-platform/analytics/analytics-reference#dimensions
-        
-    - name: timeRange
-      value: any
-      description: >
-        Required. Time range for the query. Can use the following predefined strings to specify the time range: `last60minutes` `last24hours` `last7days` Or, specify the timeRange as a structure describing start and end timestamps in the ISO format: yyyy-mm-ddThh:mm:ssZ. Example: "timeRange": { "start": "2018-07-29T00:13:00Z", "end": "2018-08-01T00:18:00Z" }
-        
-    - name: filter
-      value: string
-      description: >
-        Boolean expression that can be used to filter data. Filter expressions can be combined using AND/OR terms and should be fully parenthesized to avoid ambiguity. See Analytics metrics, dimensions, and filters reference https://docs.apigee.com/api-platform/analytics/analytics-reference for more information on the fields available to filter on. For more information on the tokens that you use to build filter expressions, see Filter expression syntax. https://docs.apigee.com/api-platform/analytics/asynch-reports-api#filter-expression-syntax
-        
-    - name: groupByTimeUnit
-      value: string
-      description: >
-        Time unit used to group the result set. Valid values include: second, minute, hour, day, week, or month. If a query includes groupByTimeUnit, then the result is an aggregation based on the specified time unit and the resultant timestamp does not include milliseconds precision. If a query omits groupByTimeUnit, then the resultant timestamp includes milliseconds precision.
-        
-    - name: limit
-      value: integer
-      description: >
-        Maximum number of rows that can be returned in the result.
-        
     - name: mimeType
       value: string
       description: >
         Valid values include: `csv` or `json`. Defaults to `json`. Note: Configure the delimiter for CSV output using the csvDelimiter property.
         
-    - name: csvDelimiter
-      value: string
+    - name: timeRange
+      value: any
       description: >
-        Delimiter used in the CSV file, if `outputFormat` is set to `csv`. Defaults to the `,` (comma) character. Supported delimiter characters include comma (`,`), pipe (`|`), and tab (`\t`).
+        Required. Time range for the query. Can use the following predefined strings to specify the time range: `last60minutes` `last24hours` `last7days` Or, specify the timeRange as a structure describing start and end timestamps in the ISO format: yyyy-mm-ddThh:mm:ssZ. Example: "timeRange": { "start": "2018-07-29T00:13:00Z", "end": "2018-08-01T00:18:00Z" }
         
     - name: envgroupHostname
       value: string
@@ -495,10 +465,40 @@ updated
       description: >
         Report Definition ID.
         
+    - name: metrics
+      value: array
+      description: >
+        A list of Metrics.
+        
+    - name: dimensions
+      value: array
+      description: >
+        A list of dimensions. https://docs.apigee.com/api-platform/analytics/analytics-reference#dimensions
+        
+    - name: groupByTimeUnit
+      value: string
+      description: >
+        Time unit used to group the result set. Valid values include: second, minute, hour, day, week, or month. If a query includes groupByTimeUnit, then the result is an aggregation based on the specified time unit and the resultant timestamp does not include milliseconds precision. If a query omits groupByTimeUnit, then the resultant timestamp includes milliseconds precision.
+        
     - name: displayName
       value: string
       description: >
         Security Report display name which users can specify.
+        
+    - name: filter
+      value: string
+      description: >
+        Boolean expression that can be used to filter data. Filter expressions can be combined using AND/OR terms and should be fully parenthesized to avoid ambiguity. See Analytics metrics, dimensions, and filters reference https://docs.apigee.com/api-platform/analytics/analytics-reference for more information on the fields available to filter on. For more information on the tokens that you use to build filter expressions, see Filter expression syntax. https://docs.apigee.com/api-platform/analytics/asynch-reports-api#filter-expression-syntax
+        
+    - name: csvDelimiter
+      value: string
+      description: >
+        Delimiter used in the CSV file, if `outputFormat` is set to `csv`. Defaults to the `,` (comma) character. Supported delimiter characters include comma (`,`), pipe (`|`), and tab (`\t`).
+        
+    - name: limit
+      value: integer
+      description: >
+        Maximum number of rows that can be returned in the result.
         
 ```
 </TabItem>

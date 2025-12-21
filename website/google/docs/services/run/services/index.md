@@ -52,7 +52,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The fully qualified name of this Service. In CreateServiceRequest, this field is ignored, and instead composed from CreateServiceRequest.parent and CreateServiceRequest.service_id. Format: projects/&#123;project&#125;/locations/&#123;location&#125;/services/&#123;service_id&#125;</td>
+    <td>Identifier. The fully qualified name of this Service. In CreateServiceRequest, this field is ignored, and instead composed from CreateServiceRequest.parent and CreateServiceRequest.service_id. Format: projects/&#123;project&#125;/locations/&#123;location&#125;/services/&#123;service_id&#125;</td>
 </tr>
 <tr>
     <td><CopyableCode code="annotations" /></td>
@@ -256,7 +256,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The fully qualified name of this Service. In CreateServiceRequest, this field is ignored, and instead composed from CreateServiceRequest.parent and CreateServiceRequest.service_id. Format: projects/&#123;project&#125;/locations/&#123;location&#125;/services/&#123;service_id&#125;</td>
+    <td>Identifier. The fully qualified name of this Service. In CreateServiceRequest, this field is ignored, and instead composed from CreateServiceRequest.parent and CreateServiceRequest.service_id. Format: projects/&#123;project&#125;/locations/&#123;location&#125;/services/&#123;service_id&#125;</td>
 </tr>
 <tr>
     <td><CopyableCode code="annotations" /></td>
@@ -488,14 +488,14 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Updates a Service.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Deletes a Service. This will cause the Service to stop serving traffic and will delete all revisions.</td>
 </tr>
 </tbody>
@@ -703,50 +703,50 @@ Creates a new Service in a given project and location.
 
 ```sql
 INSERT INTO google.run.services (
-data__name,
-data__description,
-data__labels,
-data__annotations,
-data__client,
-data__clientVersion,
+data__customAudiences,
 data__ingress,
-data__launchStage,
 data__binaryAuthorization,
-data__template,
-data__traffic,
 data__scaling,
+data__multiRegionSettings,
+data__labels,
+data__etag,
+data__name,
+data__buildConfig,
+data__iapEnabled,
+data__clientVersion,
+data__template,
+data__client,
+data__description,
+data__traffic,
+data__annotations,
+data__launchStage,
 data__invokerIamDisabled,
 data__defaultUriDisabled,
-data__iapEnabled,
-data__multiRegionSettings,
-data__customAudiences,
-data__buildConfig,
-data__etag,
 projectsId,
 locationsId,
 serviceId,
 validateOnly
 )
 SELECT 
-'{{ name }}',
-'{{ description }}',
-'{{ labels }}',
-'{{ annotations }}',
-'{{ client }}',
-'{{ clientVersion }}',
+'{{ customAudiences }}',
 '{{ ingress }}',
-'{{ launchStage }}',
 '{{ binaryAuthorization }}',
-'{{ template }}',
-'{{ traffic }}',
 '{{ scaling }}',
+'{{ multiRegionSettings }}',
+'{{ labels }}',
+'{{ etag }}',
+'{{ name }}',
+'{{ buildConfig }}',
+{{ iapEnabled }},
+'{{ clientVersion }}',
+'{{ template }}',
+'{{ client }}',
+'{{ description }}',
+'{{ traffic }}',
+'{{ annotations }}',
+'{{ launchStage }}',
 {{ invokerIamDisabled }},
 {{ defaultUriDisabled }},
-{{ iapEnabled }},
-'{{ multiRegionSettings }}',
-'{{ customAudiences }}',
-'{{ buildConfig }}',
-'{{ etag }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ serviceId }}',
@@ -772,35 +772,10 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the services resource.
-    - name: name
-      value: string
+    - name: customAudiences
+      value: array
       description: >
-        The fully qualified name of this Service. In CreateServiceRequest, this field is ignored, and instead composed from CreateServiceRequest.parent and CreateServiceRequest.service_id. Format: projects/{project}/locations/{location}/services/{service_id}
-        
-    - name: description
-      value: string
-      description: >
-        User-provided description of the Service. This field currently has a 512-character limit.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Unstructured key value map that can be used to organize and categorize objects. User-provided labels are shared with Google's billing system, so they can be used to filter, or break down billing charges by team, component, environment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels. Cloud Run API v2 does not support labels with `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and they will be rejected. All system labels in v1 now have a corresponding field in v2 Service.
-        
-    - name: annotations
-      value: object
-      description: >
-        Optional. Unstructured key value map that may be set by external tools to store and arbitrary metadata. They are not queryable and should be preserved when modifying objects. Cloud Run API v2 does not support annotations with `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and they will be rejected in new resources. All system annotations in v1 now have a corresponding field in v2 Service. This field follows Kubernetes annotations' namespacing, limits, and rules.
-        
-    - name: client
-      value: string
-      description: >
-        Arbitrary identifier for the API client.
-        
-    - name: clientVersion
-      value: string
-      description: >
-        Arbitrary version identifier for the API client.
+        One or more custom audiences that you want this service to support. Specify each custom audience as the full URL in a string. The custom audiences are encoded in the token and used to authenticate requests. For more information, see https://cloud.google.com/run/docs/configuring/custom-audiences.
         
     - name: ingress
       value: string
@@ -808,32 +783,82 @@ response
         Optional. Provides the ingress settings for this Service. On output, returns the currently observed ingress settings, or INGRESS_TRAFFIC_UNSPECIFIED if no revision is active.
         
       valid_values: ['INGRESS_TRAFFIC_UNSPECIFIED', 'INGRESS_TRAFFIC_ALL', 'INGRESS_TRAFFIC_INTERNAL_ONLY', 'INGRESS_TRAFFIC_INTERNAL_LOAD_BALANCER', 'INGRESS_TRAFFIC_NONE']
-    - name: launchStage
-      value: string
-      description: >
-        Optional. The launch stage as defined by [Google Cloud Platform Launch Stages](https://cloud.google.com/terms/launch-stages). Cloud Run supports `ALPHA`, `BETA`, and `GA`. If no value is specified, GA is assumed. Set the launch stage to a preview stage on input to allow use of preview features in that stage. On read (or output), describes whether the resource uses preview features. For example, if ALPHA is provided as input, but only BETA and GA-level features are used, this field will be BETA on output.
-        
-      valid_values: ['LAUNCH_STAGE_UNSPECIFIED', 'UNIMPLEMENTED', 'PRELAUNCH', 'EARLY_ACCESS', 'ALPHA', 'BETA', 'GA', 'DEPRECATED']
     - name: binaryAuthorization
       value: object
       description: >
         Optional. Settings for the Binary Authorization feature.
-        
-    - name: template
-      value: object
-      description: >
-        Required. The template used to create revisions for this Service.
-        
-    - name: traffic
-      value: array
-      description: >
-        Optional. Specifies how to distribute traffic over a collection of Revisions belonging to the Service. If traffic is empty or not provided, defaults to 100% traffic to the latest `Ready` Revision.
         
     - name: scaling
       value: object
       description: >
         Optional. Specifies service-level scaling settings
         
+    - name: multiRegionSettings
+      value: object
+      description: >
+        Optional. Settings for multi-region deployment.
+        
+    - name: labels
+      value: object
+      description: >
+        Optional. Unstructured key value map that can be used to organize and categorize objects. User-provided labels are shared with Google's billing system, so they can be used to filter, or break down billing charges by team, component, environment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels. Cloud Run API v2 does not support labels with `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and they will be rejected. All system labels in v1 now have a corresponding field in v2 Service.
+        
+    - name: etag
+      value: string
+      description: >
+        Optional. A system-generated fingerprint for this version of the resource. May be used to detect modification conflict during updates.
+        
+    - name: name
+      value: string
+      description: >
+        Identifier. The fully qualified name of this Service. In CreateServiceRequest, this field is ignored, and instead composed from CreateServiceRequest.parent and CreateServiceRequest.service_id. Format: projects/{project}/locations/{location}/services/{service_id}
+        
+    - name: buildConfig
+      value: object
+      description: >
+        Optional. Configuration for building a Cloud Run function.
+        
+    - name: iapEnabled
+      value: boolean
+      description: >
+        Optional. IAP settings on the Service.
+        
+    - name: clientVersion
+      value: string
+      description: >
+        Arbitrary version identifier for the API client.
+        
+    - name: template
+      value: object
+      description: >
+        Required. The template used to create revisions for this Service.
+        
+    - name: client
+      value: string
+      description: >
+        Arbitrary identifier for the API client.
+        
+    - name: description
+      value: string
+      description: >
+        User-provided description of the Service. This field currently has a 512-character limit.
+        
+    - name: traffic
+      value: array
+      description: >
+        Optional. Specifies how to distribute traffic over a collection of Revisions belonging to the Service. If traffic is empty or not provided, defaults to 100% traffic to the latest `Ready` Revision.
+        
+    - name: annotations
+      value: object
+      description: >
+        Optional. Unstructured key value map that may be set by external tools to store and arbitrary metadata. They are not queryable and should be preserved when modifying objects. Cloud Run API v2 does not support annotations with `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and they will be rejected in new resources. All system annotations in v1 now have a corresponding field in v2 Service. This field follows Kubernetes annotations' namespacing, limits, and rules.
+        
+    - name: launchStage
+      value: string
+      description: >
+        Optional. The launch stage as defined by [Google Cloud Platform Launch Stages](https://cloud.google.com/terms/launch-stages). Cloud Run supports `ALPHA`, `BETA`, and `GA`. If no value is specified, GA is assumed. Set the launch stage to a preview stage on input to allow use of preview features in that stage. On read (or output), describes whether the resource uses preview features. For example, if ALPHA is provided as input, but only BETA and GA-level features are used, this field will be BETA on output.
+        
+      valid_values: ['LAUNCH_STAGE_UNSPECIFIED', 'UNIMPLEMENTED', 'PRELAUNCH', 'EARLY_ACCESS', 'ALPHA', 'BETA', 'GA', 'DEPRECATED']
     - name: invokerIamDisabled
       value: boolean
       description: >
@@ -843,31 +868,6 @@ response
       value: boolean
       description: >
         Optional. Disables public resolution of the default URI of this service.
-        
-    - name: iapEnabled
-      value: boolean
-      description: >
-        Optional. IAP settings on the Service.
-        
-    - name: multiRegionSettings
-      value: object
-      description: >
-        Optional. Settings for multi-region deployment.
-        
-    - name: customAudiences
-      value: array
-      description: >
-        One or more custom audiences that you want this service to support. Specify each custom audience as the full URL in a string. The custom audiences are encoded in the token and used to authenticate requests. For more information, see https://cloud.google.com/run/docs/configuring/custom-audiences.
-        
-    - name: buildConfig
-      value: object
-      description: >
-        Optional. Configuration for building a Cloud Run function.
-        
-    - name: etag
-      value: string
-      description: >
-        Optional. A system-generated fingerprint for this version of the resource. May be used to detect modification conflict during updates.
         
     - name: serviceId
       value: string
@@ -893,32 +893,32 @@ Updates a Service.
 ```sql
 UPDATE google.run.services
 SET 
-data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__labels = '{{ labels }}',
-data__annotations = '{{ annotations }}',
-data__client = '{{ client }}',
-data__clientVersion = '{{ clientVersion }}',
-data__ingress = '{{ ingress }}',
-data__launchStage = '{{ launchStage }}',
-data__binaryAuthorization = '{{ binaryAuthorization }}',
-data__template = '{{ template }}',
-data__traffic = '{{ traffic }}',
-data__scaling = '{{ scaling }}',
-data__invokerIamDisabled = {{ invokerIamDisabled }},
-data__defaultUriDisabled = {{ defaultUriDisabled }},
-data__iapEnabled = {{ iapEnabled }},
-data__multiRegionSettings = '{{ multiRegionSettings }}',
 data__customAudiences = '{{ customAudiences }}',
+data__ingress = '{{ ingress }}',
+data__binaryAuthorization = '{{ binaryAuthorization }}',
+data__scaling = '{{ scaling }}',
+data__multiRegionSettings = '{{ multiRegionSettings }}',
+data__labels = '{{ labels }}',
+data__etag = '{{ etag }}',
+data__name = '{{ name }}',
 data__buildConfig = '{{ buildConfig }}',
-data__etag = '{{ etag }}'
+data__iapEnabled = {{ iapEnabled }},
+data__clientVersion = '{{ clientVersion }}',
+data__template = '{{ template }}',
+data__client = '{{ client }}',
+data__description = '{{ description }}',
+data__traffic = '{{ traffic }}',
+data__annotations = '{{ annotations }}',
+data__launchStage = '{{ launchStage }}',
+data__invokerIamDisabled = {{ invokerIamDisabled }},
+data__defaultUriDisabled = {{ defaultUriDisabled }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND servicesId = '{{ servicesId }}' --required
 AND updateMask = '{{ updateMask}}'
-AND validateOnly = {{ validateOnly}}
 AND allowMissing = {{ allowMissing}}
+AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
 done,
@@ -947,8 +947,8 @@ DELETE FROM google.run.services
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND servicesId = '{{ servicesId }}' --required
-AND validateOnly = '{{ validateOnly }}'
 AND etag = '{{ etag }}'
+AND validateOnly = '{{ validateOnly }}'
 ;
 ```
 </TabItem>

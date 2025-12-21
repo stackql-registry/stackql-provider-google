@@ -184,7 +184,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_apis_versions_list"><CopyableCode code="projects_locations_apis_versions_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Returns matching versions.</td>
 </tr>
 <tr>
@@ -338,10 +338,10 @@ FROM google.apigeeregistry.versions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND apisId = '{{ apisId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -364,12 +364,12 @@ Creates a specified version.
 ```sql
 INSERT INTO google.apigeeregistry.versions (
 data__name,
-data__displayName,
-data__description,
 data__state,
 data__labels,
 data__annotations,
+data__description,
 data__primarySpec,
+data__displayName,
 projectsId,
 locationsId,
 apisId,
@@ -377,12 +377,12 @@ apiVersionId
 )
 SELECT 
 '{{ name }}',
-'{{ displayName }}',
-'{{ description }}',
 '{{ state }}',
 '{{ labels }}',
 '{{ annotations }}',
+'{{ description }}',
 '{{ primarySpec }}',
+'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ apisId }}',
@@ -420,16 +420,6 @@ updateTime
       description: >
         Resource name.
         
-    - name: displayName
-      value: string
-      description: >
-        Human-meaningful name.
-        
-    - name: description
-      value: string
-      description: >
-        A detailed description.
-        
     - name: state
       value: string
       description: >
@@ -445,10 +435,20 @@ updateTime
       description: >
         Annotations attach non-identifying metadata to resources. Annotation keys and values are less restricted than those of labels, but should be generally used for small values of broad interest. Larger, topic- specific metadata should be stored in Artifacts.
         
+    - name: description
+      value: string
+      description: >
+        A detailed description.
+        
     - name: primarySpec
       value: string
       description: >
         The primary spec for this version. Format: projects/{project}/locations/{location}/apis/{api}/versions/{version}/specs/{spec}
+        
+    - name: displayName
+      value: string
+      description: >
+        Human-meaningful name.
         
     - name: apiVersionId
       value: string
@@ -473,12 +473,12 @@ Used to modify a specified version.
 UPDATE google.apigeeregistry.versions
 SET 
 data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
 data__state = '{{ state }}',
 data__labels = '{{ labels }}',
 data__annotations = '{{ annotations }}',
-data__primarySpec = '{{ primarySpec }}'
+data__description = '{{ description }}',
+data__primarySpec = '{{ primarySpec }}',
+data__displayName = '{{ displayName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

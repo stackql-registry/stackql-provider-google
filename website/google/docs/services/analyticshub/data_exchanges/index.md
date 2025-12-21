@@ -259,7 +259,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_data_exchanges_list"><CopyableCode code="projects_locations_data_exchanges_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists all data exchanges in a given project and location.</td>
 </tr>
 <tr>
@@ -408,8 +408,8 @@ sharingEnvironmentConfig
 FROM google.analyticshub.data_exchanges
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -455,27 +455,27 @@ Creates a new data exchange.
 
 ```sql
 INSERT INTO google.analyticshub.data_exchanges (
-data__displayName,
 data__description,
-data__primaryContact,
-data__documentation,
+data__displayName,
 data__icon,
 data__sharingEnvironmentConfig,
-data__discoveryType,
 data__logLinkedDatasetQueryUserEmail,
+data__discoveryType,
+data__primaryContact,
+data__documentation,
 projectsId,
 locationsId,
 dataExchangeId
 )
 SELECT 
-'{{ displayName }}',
 '{{ description }}',
-'{{ primaryContact }}',
-'{{ documentation }}',
+'{{ displayName }}',
 '{{ icon }}',
 '{{ sharingEnvironmentConfig }}',
-'{{ discoveryType }}',
 {{ logLinkedDatasetQueryUserEmail }},
+'{{ discoveryType }}',
+'{{ primaryContact }}',
+'{{ documentation }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ dataExchangeId }}'
@@ -505,25 +505,15 @@ sharingEnvironmentConfig
     - name: locationsId
       value: string
       description: Required parameter for the data_exchanges resource.
-    - name: displayName
-      value: string
-      description: >
-        Required. Human-readable display name of the data exchange. The display name must contain only Unicode letters, numbers (0-9), underscores (_), dashes (-), spaces ( ), ampersands (&) and must not start or end with spaces. Default value is an empty string. Max length: 63 bytes.
-        
     - name: description
       value: string
       description: >
         Optional. Description of the data exchange. The description must not contain Unicode non-characters as well as C0 and C1 control codes except tabs (HT), new lines (LF), carriage returns (CR), and page breaks (FF). Default value is an empty string. Max length: 2000 bytes.
         
-    - name: primaryContact
+    - name: displayName
       value: string
       description: >
-        Optional. Email or URL of the primary point of contact of the data exchange. Max Length: 1000 bytes.
-        
-    - name: documentation
-      value: string
-      description: >
-        Optional. Documentation describing the data exchange.
+        Required. Human-readable display name of the data exchange. The display name must contain only Unicode letters, numbers (0-9), underscores (_), dashes (-), spaces ( ), ampersands (&) and must not start or end with spaces. Default value is an empty string. Max length: 63 bytes.
         
     - name: icon
       value: string
@@ -535,16 +525,26 @@ sharingEnvironmentConfig
       description: >
         Optional. Configurable data sharing environment option for a data exchange.
         
+    - name: logLinkedDatasetQueryUserEmail
+      value: boolean
+      description: >
+        Optional. By default, false. If true, the DataExchange has an email sharing mandate enabled.
+        
     - name: discoveryType
       value: string
       description: >
         Optional. Type of discovery on the discovery page for all the listings under this exchange. Updating this field also updates (overwrites) the discovery_type field for all the listings under this exchange.
         
       valid_values: ['DISCOVERY_TYPE_UNSPECIFIED', 'DISCOVERY_TYPE_PRIVATE', 'DISCOVERY_TYPE_PUBLIC']
-    - name: logLinkedDatasetQueryUserEmail
-      value: boolean
+    - name: primaryContact
+      value: string
       description: >
-        Optional. By default, false. If true, the DataExchange has an email sharing mandate enabled.
+        Optional. Email or URL of the primary point of contact of the data exchange. Max Length: 1000 bytes.
+        
+    - name: documentation
+      value: string
+      description: >
+        Optional. Documentation describing the data exchange.
         
     - name: dataExchangeId
       value: string
@@ -568,14 +568,14 @@ Updates an existing data exchange.
 ```sql
 UPDATE google.analyticshub.data_exchanges
 SET 
-data__displayName = '{{ displayName }}',
 data__description = '{{ description }}',
-data__primaryContact = '{{ primaryContact }}',
-data__documentation = '{{ documentation }}',
+data__displayName = '{{ displayName }}',
 data__icon = '{{ icon }}',
 data__sharingEnvironmentConfig = '{{ sharingEnvironmentConfig }}',
+data__logLinkedDatasetQueryUserEmail = {{ logLinkedDatasetQueryUserEmail }},
 data__discoveryType = '{{ discoveryType }}',
-data__logLinkedDatasetQueryUserEmail = {{ logLinkedDatasetQueryUserEmail }}
+data__primaryContact = '{{ primaryContact }}',
+data__documentation = '{{ documentation }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -640,9 +640,9 @@ EXEC google.analyticshub.data_exchanges.projects_locations_data_exchanges_subscr
 @@json=
 '{
 "destination": "{{ destination }}", 
+"subscriberContact": "{{ subscriberContact }}", 
 "destinationDataset": "{{ destinationDataset }}", 
-"subscription": "{{ subscription }}", 
-"subscriberContact": "{{ subscriberContact }}"
+"subscription": "{{ subscription }}"
 }'
 ;
 ```

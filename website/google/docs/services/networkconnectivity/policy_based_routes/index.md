@@ -52,7 +52,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Immutable. A unique name of the resource in the form of `projects/&#123;project_number&#125;/locations/global/PolicyBasedRoutes/&#123;policy_based_route_id&#125;`</td>
+    <td>Immutable. Identifier. A unique name of the resource in the form of `projects/&#123;project_number&#125;/locations/global/PolicyBasedRoutes/&#123;policy_based_route_id&#125;`</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -141,7 +141,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Immutable. A unique name of the resource in the form of `projects/&#123;project_number&#125;/locations/global/PolicyBasedRoutes/&#123;policy_based_route_id&#125;`</td>
+    <td>Immutable. Identifier. A unique name of the resource in the form of `projects/&#123;project_number&#125;/locations/global/PolicyBasedRoutes/&#123;policy_based_route_id&#125;`</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -244,7 +244,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists policy-based routes in a given project and location.</td>
 </tr>
 <tr>
@@ -379,10 +379,10 @@ virtualMachine,
 warnings
 FROM google.networkconnectivity.policy_based_routes
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -404,31 +404,31 @@ Creates a new policy-based route in a given project and location.
 
 ```sql
 INSERT INTO google.networkconnectivity.policy_based_routes (
-data__virtualMachine,
 data__interconnectAttachment,
-data__nextHopIlbIp,
-data__nextHopOtherRoutes,
-data__name,
-data__labels,
 data__description,
-data__network,
+data__labels,
+data__nextHopOtherRoutes,
+data__virtualMachine,
 data__filter,
+data__network,
 data__priority,
+data__name,
+data__nextHopIlbIp,
 projectsId,
 policyBasedRouteId,
 requestId
 )
 SELECT 
-'{{ virtualMachine }}',
 '{{ interconnectAttachment }}',
-'{{ nextHopIlbIp }}',
-'{{ nextHopOtherRoutes }}',
-'{{ name }}',
-'{{ labels }}',
 '{{ description }}',
-'{{ network }}',
+'{{ labels }}',
+'{{ nextHopOtherRoutes }}',
+'{{ virtualMachine }}',
 '{{ filter }}',
+'{{ network }}',
 {{ priority }},
+'{{ name }}',
+'{{ nextHopIlbIp }}',
 '{{ projectsId }}',
 '{{ policyBasedRouteId }}',
 '{{ requestId }}'
@@ -450,20 +450,20 @@ response
     - name: projectsId
       value: string
       description: Required parameter for the policy_based_routes resource.
-    - name: virtualMachine
-      value: object
-      description: >
-        Optional. VM instances that this policy-based route applies to.
-        
     - name: interconnectAttachment
       value: object
       description: >
         Optional. The interconnect attachments that this policy-based route applies to.
         
-    - name: nextHopIlbIp
+    - name: description
       value: string
       description: >
-        Optional. The IP address of a global-access-enabled L4 ILB that is the next hop for matching packets. For this version, only nextHopIlbIp is supported.
+        Optional. An optional description of this resource. Provide this field when you create the resource.
+        
+    - name: labels
+      value: object
+      description: >
+        User-defined labels.
         
     - name: nextHopOtherRoutes
       value: string
@@ -471,35 +471,35 @@ response
         Optional. Other routes that will be referenced to determine the next hop of the packet.
         
       valid_values: ['OTHER_ROUTES_UNSPECIFIED', 'DEFAULT_ROUTING']
-    - name: name
-      value: string
-      description: >
-        Immutable. A unique name of the resource in the form of `projects/{project_number}/locations/global/PolicyBasedRoutes/{policy_based_route_id}`
-        
-    - name: labels
+    - name: virtualMachine
       value: object
       description: >
-        User-defined labels.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. An optional description of this resource. Provide this field when you create the resource.
-        
-    - name: network
-      value: string
-      description: >
-        Required. Fully-qualified URL of the network that this route applies to, for example: projects/my-project/global/networks/my-network.
+        Optional. VM instances that this policy-based route applies to.
         
     - name: filter
       value: object
       description: >
         Required. The filter to match L4 traffic.
         
+    - name: network
+      value: string
+      description: >
+        Required. Fully-qualified URL of the network that this route applies to, for example: projects/my-project/global/networks/my-network.
+        
     - name: priority
       value: integer
       description: >
         Optional. The priority of this policy-based route. Priority is used to break ties in cases where there are more than one matching policy-based routes found. In cases where multiple policy-based routes are matched, the one with the lowest-numbered priority value wins. The default value is 1000. The priority value must be from 1 to 65535, inclusive.
+        
+    - name: name
+      value: string
+      description: >
+        Immutable. Identifier. A unique name of the resource in the form of `projects/{project_number}/locations/global/PolicyBasedRoutes/{policy_based_route_id}`
+        
+    - name: nextHopIlbIp
+      value: string
+      description: >
+        Optional. The IP address of a global-access-enabled L4 ILB that is the next hop for matching packets. For this version, only nextHopIlbIp is supported.
         
     - name: policyBasedRouteId
       value: string

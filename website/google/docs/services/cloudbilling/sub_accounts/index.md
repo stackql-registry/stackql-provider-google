@@ -197,15 +197,15 @@ This method creates [billing subaccounts](https://cloud.google.com/billing/docs/
 
 ```sql
 INSERT INTO google.cloudbilling.sub_accounts (
+data__currencyCode,
 data__displayName,
 data__masterBillingAccount,
-data__currencyCode,
 billingAccountsId
 )
 SELECT 
+'{{ currencyCode }}',
 '{{ displayName }}',
 '{{ masterBillingAccount }}',
-'{{ currencyCode }}',
 '{{ billingAccountsId }}'
 RETURNING
 name,
@@ -226,6 +226,11 @@ parent
     - name: billingAccountsId
       value: string
       description: Required parameter for the sub_accounts resource.
+    - name: currencyCode
+      value: string
+      description: >
+        Optional. The currency in which the billing account is billed and charged, represented as an ISO 4217 code such as `USD`. Billing account currency is determined at the time of billing account creation and cannot be updated subsequently, so this field should not be set on update requests. In addition, a subaccount always matches the currency of its parent billing account, so this field should not be set on subaccount creation requests. Clients can read this field to determine the currency of an existing billing account.
+        
     - name: displayName
       value: string
       description: >
@@ -235,11 +240,6 @@ parent
       value: string
       description: >
         If this account is a [subaccount](https://cloud.google.com/billing/docs/concepts), then this will be the resource name of the parent billing account that it is being resold through. Otherwise this will be empty.
-        
-    - name: currencyCode
-      value: string
-      description: >
-        Optional. The currency in which the billing account is billed and charged, represented as an ISO 4217 code such as `USD`. Billing account currency is determined at the time of billing account creation and cannot be updated subsequently, so this field should not be set on update requests. In addition, a subaccount always matches the currency of its parent billing account, so this field should not be set on subaccount creation requests. Clients can read this field to determine the currency of an existing billing account.
         
 ```
 </TabItem>

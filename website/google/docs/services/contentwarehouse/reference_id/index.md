@@ -288,10 +288,10 @@ Updates a document. Returns INVALID_ARGUMENT if the name of the document is non-
 ```sql
 UPDATE google.contentwarehouse.reference_id
 SET 
-data__updateOptions = '{{ updateOptions }}',
+data__cloudAiDocumentOption = '{{ cloudAiDocumentOption }}',
 data__document = '{{ document }}',
 data__requestMetadata = '{{ requestMetadata }}',
-data__cloudAiDocumentOption = '{{ cloudAiDocumentOption }}'
+data__updateOptions = '{{ updateOptions }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

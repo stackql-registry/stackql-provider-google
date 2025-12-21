@@ -99,6 +99,11 @@ The following fields are returned by `SELECT` queries:
     <td><code>string</code></td>
     <td>Output only. An output-only field indicating the state of the topic.</td>
 </tr>
+<tr>
+    <td><CopyableCode code="tags" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -163,6 +168,11 @@ The following fields are returned by `SELECT` queries:
     <td><code>string</code></td>
     <td>Output only. An output-only field indicating the state of the topic.</td>
 </tr>
+<tr>
+    <td><CopyableCode code="tags" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -194,7 +204,7 @@ The following methods are available for this resource:
     <td><a href="#projects_topics_list"><CopyableCode code="projects_topics_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists matching topics.</td>
 </tr>
 <tr>
@@ -288,7 +298,8 @@ messageStoragePolicy,
 messageTransforms,
 satisfiesPzs,
 schemaSettings,
-state
+state,
+tags
 FROM google.pubsub.topics
 WHERE projectsId = '{{ projectsId }}' -- required
 AND topicsId = '{{ topicsId }}' -- required
@@ -310,11 +321,12 @@ messageStoragePolicy,
 messageTransforms,
 satisfiesPzs,
 schemaSettings,
-state
+state,
+tags
 FROM google.pubsub.topics
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -336,8 +348,8 @@ Updates an existing topic by updating the fields specified in the update mask. N
 ```sql
 UPDATE google.pubsub.topics
 SET 
-data__topic = '{{ topic }}',
-data__updateMask = '{{ updateMask }}'
+data__updateMask = '{{ updateMask }}',
+data__topic = '{{ topic }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND topicsId = '{{ topicsId }}' --required
@@ -351,7 +363,8 @@ messageStoragePolicy,
 messageTransforms,
 satisfiesPzs,
 schemaSettings,
-state;
+state,
+tags;
 ```
 </TabItem>
 </Tabs>
@@ -398,14 +411,15 @@ EXEC google.pubsub.topics.projects_topics_create
 @topicsId='{{ topicsId }}' --required 
 @@json=
 '{
+"messageStoragePolicy": "{{ messageStoragePolicy }}", 
 "name": "{{ name }}", 
 "labels": "{{ labels }}", 
-"messageStoragePolicy": "{{ messageStoragePolicy }}", 
-"kmsKeyName": "{{ kmsKeyName }}", 
-"schemaSettings": "{{ schemaSettings }}", 
 "satisfiesPzs": {{ satisfiesPzs }}, 
+"kmsKeyName": "{{ kmsKeyName }}", 
+"tags": "{{ tags }}", 
 "messageRetentionDuration": "{{ messageRetentionDuration }}", 
 "ingestionDataSourceSettings": "{{ ingestionDataSourceSettings }}", 
+"schemaSettings": "{{ schemaSettings }}", 
 "messageTransforms": "{{ messageTransforms }}"
 }'
 ;

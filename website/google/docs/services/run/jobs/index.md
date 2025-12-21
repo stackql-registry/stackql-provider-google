@@ -354,28 +354,28 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
+    <td><a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists Jobs. Results are sorted by creation time, descending.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-jobId"><code>jobId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-jobId"><code>jobId</code></a></td>
     <td>Creates a Job.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-jobsId"><code>jobsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Updates a Job.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-jobsId"><code>jobsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Deletes a Job.</td>
 </tr>
 <tr>
@@ -537,9 +537,9 @@ updateTime
 FROM google.run.jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND showDeleted = '{{ showDeleted }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -561,38 +561,38 @@ Creates a Job.
 
 ```sql
 INSERT INTO google.run.jobs (
-data__name,
 data__labels,
-data__annotations,
-data__client,
-data__clientVersion,
-data__launchStage,
-data__binaryAuthorization,
-data__template,
-data__startExecutionToken,
-data__runExecutionToken,
 data__etag,
+data__runExecutionToken,
+data__binaryAuthorization,
+data__startExecutionToken,
+data__launchStage,
+data__clientVersion,
+data__client,
+data__name,
+data__template,
+data__annotations,
 projectsId,
 locationsId,
-jobId,
-validateOnly
+validateOnly,
+jobId
 )
 SELECT 
-'{{ name }}',
 '{{ labels }}',
-'{{ annotations }}',
-'{{ client }}',
-'{{ clientVersion }}',
-'{{ launchStage }}',
-'{{ binaryAuthorization }}',
-'{{ template }}',
-'{{ startExecutionToken }}',
-'{{ runExecutionToken }}',
 '{{ etag }}',
+'{{ runExecutionToken }}',
+'{{ binaryAuthorization }}',
+'{{ startExecutionToken }}',
+'{{ launchStage }}',
+'{{ clientVersion }}',
+'{{ client }}',
+'{{ name }}',
+'{{ template }}',
+'{{ annotations }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ jobId }}',
-'{{ validateOnly }}'
+'{{ validateOnly }}',
+'{{ jobId }}'
 RETURNING
 name,
 done,
@@ -614,30 +614,30 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the jobs resource.
-    - name: name
-      value: string
-      description: >
-        The fully qualified name of this Job. Format: projects/{project}/locations/{location}/jobs/{job}
-        
     - name: labels
       value: object
       description: >
         Unstructured key value map that can be used to organize and categorize objects. User-provided labels are shared with Google's billing system, so they can be used to filter, or break down billing charges by team, component, environment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels. Cloud Run API v2 does not support labels with `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and they will be rejected. All system labels in v1 now have a corresponding field in v2 Job.
         
-    - name: annotations
+    - name: etag
+      value: string
+      description: >
+        Optional. A system-generated fingerprint for this version of the resource. May be used to detect modification conflict during updates.
+        
+    - name: runExecutionToken
+      value: string
+      description: >
+        A unique string used as a suffix for creating a new execution. The Job will become ready when the execution is successfully completed. The sum of job name and token length must be fewer than 63 characters.
+        
+    - name: binaryAuthorization
       value: object
       description: >
-        Unstructured key value map that may be set by external tools to store and arbitrary metadata. They are not queryable and should be preserved when modifying objects. Cloud Run API v2 does not support annotations with `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and they will be rejected on new resources. All system annotations in v1 now have a corresponding field in v2 Job. This field follows Kubernetes annotations' namespacing, limits, and rules.
+        Settings for the Binary Authorization feature.
         
-    - name: client
+    - name: startExecutionToken
       value: string
       description: >
-        Arbitrary identifier for the API client.
-        
-    - name: clientVersion
-      value: string
-      description: >
-        Arbitrary version identifier for the API client.
+        A unique string used as a suffix creating a new execution. The Job will become ready when the execution is successfully started. The sum of job name and token length must be fewer than 63 characters.
         
     - name: launchStage
       value: string
@@ -645,35 +645,35 @@ response
         The launch stage as defined by [Google Cloud Platform Launch Stages](https://cloud.google.com/terms/launch-stages). Cloud Run supports `ALPHA`, `BETA`, and `GA`. If no value is specified, GA is assumed. Set the launch stage to a preview stage on input to allow use of preview features in that stage. On read (or output), describes whether the resource uses preview features. For example, if ALPHA is provided as input, but only BETA and GA-level features are used, this field will be BETA on output.
         
       valid_values: ['LAUNCH_STAGE_UNSPECIFIED', 'UNIMPLEMENTED', 'PRELAUNCH', 'EARLY_ACCESS', 'ALPHA', 'BETA', 'GA', 'DEPRECATED']
-    - name: binaryAuthorization
-      value: object
+    - name: clientVersion
+      value: string
       description: >
-        Settings for the Binary Authorization feature.
+        Arbitrary version identifier for the API client.
+        
+    - name: client
+      value: string
+      description: >
+        Arbitrary identifier for the API client.
+        
+    - name: name
+      value: string
+      description: >
+        The fully qualified name of this Job. Format: projects/{project}/locations/{location}/jobs/{job}
         
     - name: template
       value: object
       description: >
         Required. The template used to create executions for this Job.
         
-    - name: startExecutionToken
-      value: string
+    - name: annotations
+      value: object
       description: >
-        A unique string used as a suffix creating a new execution. The Job will become ready when the execution is successfully started. The sum of job name and token length must be fewer than 63 characters.
+        Unstructured key value map that may be set by external tools to store and arbitrary metadata. They are not queryable and should be preserved when modifying objects. Cloud Run API v2 does not support annotations with `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and they will be rejected on new resources. All system annotations in v1 now have a corresponding field in v2 Job. This field follows Kubernetes annotations' namespacing, limits, and rules.
         
-    - name: runExecutionToken
-      value: string
-      description: >
-        A unique string used as a suffix for creating a new execution. The Job will become ready when the execution is successfully completed. The sum of job name and token length must be fewer than 63 characters.
-        
-    - name: etag
-      value: string
-      description: >
-        Optional. A system-generated fingerprint for this version of the resource. May be used to detect modification conflict during updates.
-        
-    - name: jobId
-      value: string
     - name: validateOnly
       value: boolean
+    - name: jobId
+      value: string
 ```
 </TabItem>
 </Tabs>
@@ -694,23 +694,23 @@ Updates a Job.
 ```sql
 UPDATE google.run.jobs
 SET 
-data__name = '{{ name }}',
 data__labels = '{{ labels }}',
-data__annotations = '{{ annotations }}',
-data__client = '{{ client }}',
-data__clientVersion = '{{ clientVersion }}',
-data__launchStage = '{{ launchStage }}',
-data__binaryAuthorization = '{{ binaryAuthorization }}',
-data__template = '{{ template }}',
-data__startExecutionToken = '{{ startExecutionToken }}',
+data__etag = '{{ etag }}',
 data__runExecutionToken = '{{ runExecutionToken }}',
-data__etag = '{{ etag }}'
+data__binaryAuthorization = '{{ binaryAuthorization }}',
+data__startExecutionToken = '{{ startExecutionToken }}',
+data__launchStage = '{{ launchStage }}',
+data__clientVersion = '{{ clientVersion }}',
+data__client = '{{ client }}',
+data__name = '{{ name }}',
+data__template = '{{ template }}',
+data__annotations = '{{ annotations }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND jobsId = '{{ jobsId }}' --required
-AND validateOnly = {{ validateOnly}}
 AND allowMissing = {{ allowMissing}}
+AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
 done,
@@ -739,8 +739,8 @@ DELETE FROM google.run.jobs
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND jobsId = '{{ jobsId }}' --required
-AND validateOnly = '{{ validateOnly }}'
 AND etag = '{{ etag }}'
+AND validateOnly = '{{ validateOnly }}'
 ;
 ```
 </TabItem>

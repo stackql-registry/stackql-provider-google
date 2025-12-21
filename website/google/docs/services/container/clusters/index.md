@@ -144,7 +144,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="currentNodeVersion" /></td>
     <td><code>string</code></td>
-    <td>Output only. Deprecated, use [NodePools.version](https://&#123;$universe.dns_names.final_documentation_domain&#125;/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters.nodePools) instead. The current version of the node software components. If they are currently at multiple versions because they're in the process of being upgraded, this reflects the minimum version of all nodes.</td>
+    <td>Output only. Deprecated, use [NodePools.version](https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters.nodePools) instead. The current version of the node software components. If they are currently at multiple versions because they're in the process of being upgraded, this reflects the minimum version of all nodes.</td>
 </tr>
 <tr>
     <td><CopyableCode code="databaseEncryption" /></td>
@@ -184,7 +184,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="enterpriseConfig" /></td>
     <td><code>object</code></td>
-    <td>GKE Enterprise Configuration. (id: EnterpriseConfig)</td>
+    <td>GKE Enterprise Configuration. Deprecated: GKE Enterprise features are now available without an Enterprise tier. (id: EnterpriseConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="etag" /></td>
@@ -219,7 +219,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="initialNodeCount" /></td>
     <td><code>integer (int32)</code></td>
-    <td>The number of nodes to create in this cluster. You must ensure that your Compute Engine [resource quota](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/quotas) is sufficient for this number of instances. You must also have available firewall and routes quota. For requests, this field should only be used in lieu of a "node_pool" object, since this configuration (along with the "node_config") will be used to create a "NodePool" object with an auto-generated name. Do not use this and a node_pool at the same time. This field is deprecated, use node_pool.initial_node_count instead.</td>
+    <td>The number of nodes to create in this cluster. You must ensure that your Compute Engine [resource quota](https://cloud.google.com/compute/quotas) is sufficient for this number of instances. You must also have available firewall and routes quota. For requests, this field should only be used in lieu of a "node_pool" object, since this configuration (along with the "node_config") will be used to create a "NodePool" object with an auto-generated name. Do not use this and a node_pool at the same time. This field is deprecated, use node_pool.initial_node_count instead.</td>
 </tr>
 <tr>
     <td><CopyableCode code="instanceGroupUrls" /></td>
@@ -244,12 +244,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="location" /></td>
     <td><code>string</code></td>
-    <td>Output only. The name of the Google Compute Engine [zone](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/regions-zones/regions-zones#available) or [region](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/regions-zones/regions-zones#available) in which the cluster resides.</td>
+    <td>Output only. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/regions-zones/regions-zones#available) or [region](https://cloud.google.com/compute/docs/regions-zones/regions-zones#available) in which the cluster resides.</td>
 </tr>
 <tr>
     <td><CopyableCode code="locations" /></td>
     <td><code>array</code></td>
-    <td>The list of Google Compute Engine [zones](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/zones#available) in which the cluster's nodes should be located. This field provides a default value if [NodePool.Locations](https://&#123;$universe.dns_names.final_documentation_domain&#125;/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters.nodePools#NodePool.FIELDS.locations) are not specified during node pool creation. Warning: changing cluster locations will update the [NodePool.Locations](https://&#123;$universe.dns_names.final_documentation_domain&#125;/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters.nodePools#NodePool.FIELDS.locations) of all node pools and will result in nodes being added and/or removed.</td>
+    <td>The list of Google Compute Engine [zones](https://cloud.google.com/compute/docs/zones#available) in which the cluster's nodes should be located. This field provides a default value if [NodePool.Locations](https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters.nodePools#NodePool.FIELDS.locations) are not specified during node pool creation. Warning: changing cluster locations will update the [NodePool.Locations](https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters.nodePools#NodePool.FIELDS.locations) of all node pools and will result in nodes being added and/or removed.</td>
 </tr>
 <tr>
     <td><CopyableCode code="loggingConfig" /></td>
@@ -294,7 +294,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="network" /></td>
     <td><code>string</code></td>
-    <td>The name of the Google Compute Engine [network](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/networks-and-firewalls#networks) to which the cluster is connected. If left unspecified, the `default` network will be used.</td>
+    <td>The name of the Google Compute Engine [network](https://cloud.google.com/compute/docs/networks-and-firewalls#networks) to which the cluster is connected. If left unspecified, the `default` network will be used.</td>
 </tr>
 <tr>
     <td><CopyableCode code="networkConfig" /></td>
@@ -419,7 +419,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="subnetwork" /></td>
     <td><code>string</code></td>
-    <td>The name of the Google Compute Engine [subnetwork](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/subnetworks) to which the cluster is connected.</td>
+    <td>The name of the Google Compute Engine [subnetwork](https://cloud.google.com/compute/docs/subnetworks) to which the cluster is connected.</td>
 </tr>
 <tr>
     <td><CopyableCode code="tpuIpv4CidrBlock" /></td>
@@ -439,12 +439,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="workloadIdentityConfig" /></td>
     <td><code>object</code></td>
-    <td>Configuration for the use of Kubernetes Service Accounts in GCP IAM policies. (id: WorkloadIdentityConfig)</td>
+    <td>Configuration for the use of Kubernetes Service Accounts in IAM policies. (id: WorkloadIdentityConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="zone" /></td>
     <td><code>string</code></td>
-    <td>Output only. The name of the Google Compute Engine [zone](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/zones#available) in which the cluster resides. This field is deprecated, use location instead.</td>
+    <td>Output only. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/zones#available) in which the cluster resides. This field is deprecated, use location instead.</td>
 </tr>
 </tbody>
 </table>
@@ -553,7 +553,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="currentNodeVersion" /></td>
     <td><code>string</code></td>
-    <td>Output only. Deprecated, use [NodePools.version](https://&#123;$universe.dns_names.final_documentation_domain&#125;/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters.nodePools) instead. The current version of the node software components. If they are currently at multiple versions because they're in the process of being upgraded, this reflects the minimum version of all nodes.</td>
+    <td>Output only. Deprecated, use [NodePools.version](https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters.nodePools) instead. The current version of the node software components. If they are currently at multiple versions because they're in the process of being upgraded, this reflects the minimum version of all nodes.</td>
 </tr>
 <tr>
     <td><CopyableCode code="databaseEncryption" /></td>
@@ -593,7 +593,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="enterpriseConfig" /></td>
     <td><code>object</code></td>
-    <td>GKE Enterprise Configuration. (id: EnterpriseConfig)</td>
+    <td>GKE Enterprise Configuration. Deprecated: GKE Enterprise features are now available without an Enterprise tier. (id: EnterpriseConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="etag" /></td>
@@ -628,7 +628,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="initialNodeCount" /></td>
     <td><code>integer (int32)</code></td>
-    <td>The number of nodes to create in this cluster. You must ensure that your Compute Engine [resource quota](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/quotas) is sufficient for this number of instances. You must also have available firewall and routes quota. For requests, this field should only be used in lieu of a "node_pool" object, since this configuration (along with the "node_config") will be used to create a "NodePool" object with an auto-generated name. Do not use this and a node_pool at the same time. This field is deprecated, use node_pool.initial_node_count instead.</td>
+    <td>The number of nodes to create in this cluster. You must ensure that your Compute Engine [resource quota](https://cloud.google.com/compute/quotas) is sufficient for this number of instances. You must also have available firewall and routes quota. For requests, this field should only be used in lieu of a "node_pool" object, since this configuration (along with the "node_config") will be used to create a "NodePool" object with an auto-generated name. Do not use this and a node_pool at the same time. This field is deprecated, use node_pool.initial_node_count instead.</td>
 </tr>
 <tr>
     <td><CopyableCode code="instanceGroupUrls" /></td>
@@ -653,12 +653,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="location" /></td>
     <td><code>string</code></td>
-    <td>Output only. The name of the Google Compute Engine [zone](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/regions-zones/regions-zones#available) or [region](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/regions-zones/regions-zones#available) in which the cluster resides.</td>
+    <td>Output only. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/regions-zones/regions-zones#available) or [region](https://cloud.google.com/compute/docs/regions-zones/regions-zones#available) in which the cluster resides.</td>
 </tr>
 <tr>
     <td><CopyableCode code="locations" /></td>
     <td><code>array</code></td>
-    <td>The list of Google Compute Engine [zones](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/zones#available) in which the cluster's nodes should be located. This field provides a default value if [NodePool.Locations](https://&#123;$universe.dns_names.final_documentation_domain&#125;/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters.nodePools#NodePool.FIELDS.locations) are not specified during node pool creation. Warning: changing cluster locations will update the [NodePool.Locations](https://&#123;$universe.dns_names.final_documentation_domain&#125;/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters.nodePools#NodePool.FIELDS.locations) of all node pools and will result in nodes being added and/or removed.</td>
+    <td>The list of Google Compute Engine [zones](https://cloud.google.com/compute/docs/zones#available) in which the cluster's nodes should be located. This field provides a default value if [NodePool.Locations](https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters.nodePools#NodePool.FIELDS.locations) are not specified during node pool creation. Warning: changing cluster locations will update the [NodePool.Locations](https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters.nodePools#NodePool.FIELDS.locations) of all node pools and will result in nodes being added and/or removed.</td>
 </tr>
 <tr>
     <td><CopyableCode code="loggingConfig" /></td>
@@ -703,7 +703,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="network" /></td>
     <td><code>string</code></td>
-    <td>The name of the Google Compute Engine [network](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/networks-and-firewalls#networks) to which the cluster is connected. If left unspecified, the `default` network will be used.</td>
+    <td>The name of the Google Compute Engine [network](https://cloud.google.com/compute/docs/networks-and-firewalls#networks) to which the cluster is connected. If left unspecified, the `default` network will be used.</td>
 </tr>
 <tr>
     <td><CopyableCode code="networkConfig" /></td>
@@ -828,7 +828,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="subnetwork" /></td>
     <td><code>string</code></td>
-    <td>The name of the Google Compute Engine [subnetwork](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/subnetworks) to which the cluster is connected.</td>
+    <td>The name of the Google Compute Engine [subnetwork](https://cloud.google.com/compute/docs/subnetworks) to which the cluster is connected.</td>
 </tr>
 <tr>
     <td><CopyableCode code="tpuIpv4CidrBlock" /></td>
@@ -848,12 +848,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="workloadIdentityConfig" /></td>
     <td><code>object</code></td>
-    <td>Configuration for the use of Kubernetes Service Accounts in GCP IAM policies. (id: WorkloadIdentityConfig)</td>
+    <td>Configuration for the use of Kubernetes Service Accounts in IAM policies. (id: WorkloadIdentityConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="zone" /></td>
     <td><code>string</code></td>
-    <td>Output only. The name of the Google Compute Engine [zone](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/zones#available) in which the cluster resides. This field is deprecated, use location instead.</td>
+    <td>Output only. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/zones#available) in which the cluster resides. This field is deprecated, use location instead.</td>
 </tr>
 </tbody>
 </table>
@@ -962,7 +962,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="currentNodeVersion" /></td>
     <td><code>string</code></td>
-    <td>Output only. Deprecated, use [NodePools.version](https://&#123;$universe.dns_names.final_documentation_domain&#125;/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters.nodePools) instead. The current version of the node software components. If they are currently at multiple versions because they're in the process of being upgraded, this reflects the minimum version of all nodes.</td>
+    <td>Output only. Deprecated, use [NodePools.version](https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters.nodePools) instead. The current version of the node software components. If they are currently at multiple versions because they're in the process of being upgraded, this reflects the minimum version of all nodes.</td>
 </tr>
 <tr>
     <td><CopyableCode code="databaseEncryption" /></td>
@@ -1002,7 +1002,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="enterpriseConfig" /></td>
     <td><code>object</code></td>
-    <td>GKE Enterprise Configuration. (id: EnterpriseConfig)</td>
+    <td>GKE Enterprise Configuration. Deprecated: GKE Enterprise features are now available without an Enterprise tier. (id: EnterpriseConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="etag" /></td>
@@ -1037,7 +1037,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="initialNodeCount" /></td>
     <td><code>integer (int32)</code></td>
-    <td>The number of nodes to create in this cluster. You must ensure that your Compute Engine [resource quota](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/quotas) is sufficient for this number of instances. You must also have available firewall and routes quota. For requests, this field should only be used in lieu of a "node_pool" object, since this configuration (along with the "node_config") will be used to create a "NodePool" object with an auto-generated name. Do not use this and a node_pool at the same time. This field is deprecated, use node_pool.initial_node_count instead.</td>
+    <td>The number of nodes to create in this cluster. You must ensure that your Compute Engine [resource quota](https://cloud.google.com/compute/quotas) is sufficient for this number of instances. You must also have available firewall and routes quota. For requests, this field should only be used in lieu of a "node_pool" object, since this configuration (along with the "node_config") will be used to create a "NodePool" object with an auto-generated name. Do not use this and a node_pool at the same time. This field is deprecated, use node_pool.initial_node_count instead.</td>
 </tr>
 <tr>
     <td><CopyableCode code="instanceGroupUrls" /></td>
@@ -1062,12 +1062,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="location" /></td>
     <td><code>string</code></td>
-    <td>Output only. The name of the Google Compute Engine [zone](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/regions-zones/regions-zones#available) or [region](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/regions-zones/regions-zones#available) in which the cluster resides.</td>
+    <td>Output only. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/regions-zones/regions-zones#available) or [region](https://cloud.google.com/compute/docs/regions-zones/regions-zones#available) in which the cluster resides.</td>
 </tr>
 <tr>
     <td><CopyableCode code="locations" /></td>
     <td><code>array</code></td>
-    <td>The list of Google Compute Engine [zones](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/zones#available) in which the cluster's nodes should be located. This field provides a default value if [NodePool.Locations](https://&#123;$universe.dns_names.final_documentation_domain&#125;/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters.nodePools#NodePool.FIELDS.locations) are not specified during node pool creation. Warning: changing cluster locations will update the [NodePool.Locations](https://&#123;$universe.dns_names.final_documentation_domain&#125;/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters.nodePools#NodePool.FIELDS.locations) of all node pools and will result in nodes being added and/or removed.</td>
+    <td>The list of Google Compute Engine [zones](https://cloud.google.com/compute/docs/zones#available) in which the cluster's nodes should be located. This field provides a default value if [NodePool.Locations](https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters.nodePools#NodePool.FIELDS.locations) are not specified during node pool creation. Warning: changing cluster locations will update the [NodePool.Locations](https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters.nodePools#NodePool.FIELDS.locations) of all node pools and will result in nodes being added and/or removed.</td>
 </tr>
 <tr>
     <td><CopyableCode code="loggingConfig" /></td>
@@ -1112,7 +1112,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="network" /></td>
     <td><code>string</code></td>
-    <td>The name of the Google Compute Engine [network](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/networks-and-firewalls#networks) to which the cluster is connected. If left unspecified, the `default` network will be used.</td>
+    <td>The name of the Google Compute Engine [network](https://cloud.google.com/compute/docs/networks-and-firewalls#networks) to which the cluster is connected. If left unspecified, the `default` network will be used.</td>
 </tr>
 <tr>
     <td><CopyableCode code="networkConfig" /></td>
@@ -1237,7 +1237,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="subnetwork" /></td>
     <td><code>string</code></td>
-    <td>The name of the Google Compute Engine [subnetwork](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/subnetworks) to which the cluster is connected.</td>
+    <td>The name of the Google Compute Engine [subnetwork](https://cloud.google.com/compute/docs/subnetworks) to which the cluster is connected.</td>
 </tr>
 <tr>
     <td><CopyableCode code="tpuIpv4CidrBlock" /></td>
@@ -1257,12 +1257,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="workloadIdentityConfig" /></td>
     <td><code>object</code></td>
-    <td>Configuration for the use of Kubernetes Service Accounts in GCP IAM policies. (id: WorkloadIdentityConfig)</td>
+    <td>Configuration for the use of Kubernetes Service Accounts in IAM policies. (id: WorkloadIdentityConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="zone" /></td>
     <td><code>string</code></td>
-    <td>Output only. The name of the Google Compute Engine [zone](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/zones#available) in which the cluster resides. This field is deprecated, use location instead.</td>
+    <td>Output only. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/zones#available) in which the cluster resides. This field is deprecated, use location instead.</td>
 </tr>
 </tbody>
 </table>
@@ -1312,7 +1312,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_clusters_get"><CopyableCode code="projects_locations_clusters_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-clusterId"><code>clusterId</code></a></td>
+    <td><a href="#parameter-clusterId"><code>clusterId</code></a>, <a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
     <td>Gets the details of a specific cluster.</td>
 </tr>
 <tr>
@@ -1341,14 +1341,14 @@ The following methods are available for this resource:
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
-    <td>Creates a cluster, consisting of the specified number and type of Google Compute Engine instances. By default, the cluster is created in the project's [default network](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/networks-and-firewalls#networks). One firewall is added for the cluster. After cluster creation, the Kubelet creates routes for each node to allow the containers on that node to communicate with all other instances in the cluster. Finally, an entry is added to the project's global metadata indicating which CIDR range the cluster is using.</td>
+    <td>Creates a cluster, consisting of the specified number and type of Google Compute Engine instances. By default, the cluster is created in the project's [default network](https://cloud.google.com/compute/docs/networks-and-firewalls#networks). One firewall is added for the cluster. After cluster creation, the kubelet creates routes for each node to allow the containers on that node to communicate with all other instances in the cluster. Finally, an entry is added to the project's global metadata indicating which CIDR range the cluster is using.</td>
 </tr>
 <tr>
     <td><a href="#projects_zones_clusters_create"><CopyableCode code="projects_zones_clusters_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
     <td></td>
-    <td>Creates a cluster, consisting of the specified number and type of Google Compute Engine instances. By default, the cluster is created in the project's [default network](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/networks-and-firewalls#networks). One firewall is added for the cluster. After cluster creation, the Kubelet creates routes for each node to allow the containers on that node to communicate with all other instances in the cluster. Finally, an entry is added to the project's global metadata indicating which CIDR range the cluster is using.</td>
+    <td>Creates a cluster, consisting of the specified number and type of Google Compute Engine instances. By default, the cluster is created in the project's [default network](https://cloud.google.com/compute/docs/networks-and-firewalls#networks). One firewall is added for the cluster. After cluster creation, the kubelet creates routes for each node to allow the containers on that node to communicate with all other instances in the cluster. Finally, an entry is added to the project's global metadata indicating which CIDR range the cluster is using.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_clusters_update"><CopyableCode code="projects_locations_clusters_update" /></a></td>
@@ -1368,7 +1368,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_clusters_delete"><CopyableCode code="projects_locations_clusters_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-clusterId"><code>clusterId</code></a></td>
+    <td><a href="#parameter-clusterId"><code>clusterId</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-projectId"><code>projectId</code></a></td>
     <td>Deletes the cluster, including the Kubernetes endpoint and all worker nodes. Firewalls and routes that were configured during cluster creation are also deleted. Other Google Compute Engine resources that might be in use by the cluster, such as load balancer resources, are not deleted if they weren't present when the cluster was initially created.</td>
 </tr>
 <tr>
@@ -1377,6 +1377,48 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-clusterId"><code>clusterId</code></a></td>
     <td><a href="#parameter-name"><code>name</code></a></td>
     <td>Deletes the cluster, including the Kubernetes endpoint and all worker nodes. Firewalls and routes that were configured during cluster creation are also deleted. Other Google Compute Engine resources that might be in use by the cluster, such as load balancer resources, are not deleted if they weren't present when the cluster was initially created.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_clusters_complete_ip_rotation"><CopyableCode code="projects_locations_clusters_complete_ip_rotation" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
+    <td></td>
+    <td>Completes master IP rotation.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_clusters_set_locations"><CopyableCode code="projects_locations_clusters_set_locations" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
+    <td></td>
+    <td>Sets the locations for a specific cluster. Deprecated. Use [projects.locations.clusters.update](https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters/update) instead.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_clusters_update_master"><CopyableCode code="projects_locations_clusters_update_master" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
+    <td></td>
+    <td>Updates the master for a specific cluster.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_clusters_check_autopilot_compatibility"><CopyableCode code="projects_locations_clusters_check_autopilot_compatibility" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
+    <td></td>
+    <td>Checks the cluster compatibility with Autopilot mode, and returns a list of compatibility issues.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_clusters_set_resource_labels"><CopyableCode code="projects_locations_clusters_set_resource_labels" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
+    <td></td>
+    <td>Sets labels on a cluster.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_clusters_set_master_auth"><CopyableCode code="projects_locations_clusters_set_master_auth" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
+    <td></td>
+    <td>Sets master auth materials. Currently supports changing the admin password or a specific cluster, either via password generation or explicitly setting the password.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_clusters_set_logging"><CopyableCode code="projects_locations_clusters_set_logging" /></a></td>
@@ -1400,39 +1442,11 @@ The following methods are available for this resource:
     <td>Sets the addons for a specific cluster.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_clusters_set_locations"><CopyableCode code="projects_locations_clusters_set_locations" /></a></td>
+    <td><a href="#projects_locations_clusters_set_maintenance_policy"><CopyableCode code="projects_locations_clusters_set_maintenance_policy" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
     <td></td>
-    <td>Sets the locations for a specific cluster. Deprecated. Use [projects.locations.clusters.update](https://&#123;$universe.dns_names.final_documentation_domain&#125;/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters/update) instead.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_clusters_update_master"><CopyableCode code="projects_locations_clusters_update_master" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
-    <td></td>
-    <td>Updates the master for a specific cluster.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_clusters_set_master_auth"><CopyableCode code="projects_locations_clusters_set_master_auth" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
-    <td></td>
-    <td>Sets master auth materials. Currently supports changing the admin password or a specific cluster, either via password generation or explicitly setting the password.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_clusters_set_resource_labels"><CopyableCode code="projects_locations_clusters_set_resource_labels" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
-    <td></td>
-    <td>Sets labels on a cluster.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_clusters_set_legacy_abac"><CopyableCode code="projects_locations_clusters_set_legacy_abac" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
-    <td></td>
-    <td>Enables or disables the ABAC authorization mechanism on a cluster.</td>
+    <td>Sets the maintenance policy for a cluster.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_clusters_start_ip_rotation"><CopyableCode code="projects_locations_clusters_start_ip_rotation" /></a></td>
@@ -1442,13 +1456,6 @@ The following methods are available for this resource:
     <td>Starts master IP rotation.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_clusters_complete_ip_rotation"><CopyableCode code="projects_locations_clusters_complete_ip_rotation" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
-    <td></td>
-    <td>Completes master IP rotation.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_clusters_set_network_policy"><CopyableCode code="projects_locations_clusters_set_network_policy" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
@@ -1456,18 +1463,32 @@ The following methods are available for this resource:
     <td>Enables or disables Network Policy for a cluster.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_clusters_set_maintenance_policy"><CopyableCode code="projects_locations_clusters_set_maintenance_policy" /></a></td>
+    <td><a href="#projects_locations_clusters_set_legacy_abac"><CopyableCode code="projects_locations_clusters_set_legacy_abac" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
+    <td></td>
+    <td>Enables or disables the ABAC authorization mechanism on a cluster.</td>
+</tr>
+<tr>
+    <td><a href="#projects_zones_clusters_set_maintenance_policy"><CopyableCode code="projects_zones_clusters_set_maintenance_policy" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-clusterId"><code>clusterId</code></a></td>
     <td></td>
     <td>Sets the maintenance policy for a cluster.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_clusters_check_autopilot_compatibility"><CopyableCode code="projects_locations_clusters_check_autopilot_compatibility" /></a></td>
+    <td><a href="#projects_zones_clusters_set_network_policy"><CopyableCode code="projects_zones_clusters_set_network_policy" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-clusterId"><code>clusterId</code></a></td>
     <td></td>
-    <td>Checks the cluster compatibility with Autopilot mode, and returns a list of compatibility issues.</td>
+    <td>Enables or disables Network Policy for a cluster.</td>
+</tr>
+<tr>
+    <td><a href="#projects_zones_clusters_set_master_auth"><CopyableCode code="projects_zones_clusters_set_master_auth" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-clusterId"><code>clusterId</code></a></td>
+    <td></td>
+    <td>Sets master auth materials. Currently supports changing the admin password or a specific cluster, either via password generation or explicitly setting the password.</td>
 </tr>
 <tr>
     <td><a href="#projects_zones_clusters_logging"><CopyableCode code="projects_zones_clusters_logging" /></a></td>
@@ -1477,11 +1498,39 @@ The following methods are available for this resource:
     <td>Sets the logging service for a specific cluster.</td>
 </tr>
 <tr>
+    <td><a href="#projects_zones_clusters_master"><CopyableCode code="projects_zones_clusters_master" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-clusterId"><code>clusterId</code></a></td>
+    <td></td>
+    <td>Updates the master for a specific cluster.</td>
+</tr>
+<tr>
     <td><a href="#projects_zones_clusters_monitoring"><CopyableCode code="projects_zones_clusters_monitoring" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-clusterId"><code>clusterId</code></a></td>
     <td></td>
     <td>Sets the monitoring service for a specific cluster.</td>
+</tr>
+<tr>
+    <td><a href="#projects_zones_clusters_resource_labels"><CopyableCode code="projects_zones_clusters_resource_labels" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-clusterId"><code>clusterId</code></a></td>
+    <td></td>
+    <td>Sets labels on a cluster.</td>
+</tr>
+<tr>
+    <td><a href="#projects_zones_clusters_complete_ip_rotation"><CopyableCode code="projects_zones_clusters_complete_ip_rotation" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-clusterId"><code>clusterId</code></a></td>
+    <td></td>
+    <td>Completes master IP rotation.</td>
+</tr>
+<tr>
+    <td><a href="#projects_zones_clusters_legacy_abac"><CopyableCode code="projects_zones_clusters_legacy_abac" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-clusterId"><code>clusterId</code></a></td>
+    <td></td>
+    <td>Enables or disables the ABAC authorization mechanism on a cluster.</td>
 </tr>
 <tr>
     <td><a href="#projects_zones_clusters_addons"><CopyableCode code="projects_zones_clusters_addons" /></a></td>
@@ -1495,35 +1544,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-clusterId"><code>clusterId</code></a></td>
     <td></td>
-    <td>Sets the locations for a specific cluster. Deprecated. Use [projects.locations.clusters.update](https://&#123;$universe.dns_names.final_documentation_domain&#125;/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters/update) instead.</td>
-</tr>
-<tr>
-    <td><a href="#projects_zones_clusters_master"><CopyableCode code="projects_zones_clusters_master" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-clusterId"><code>clusterId</code></a></td>
-    <td></td>
-    <td>Updates the master for a specific cluster.</td>
-</tr>
-<tr>
-    <td><a href="#projects_zones_clusters_set_master_auth"><CopyableCode code="projects_zones_clusters_set_master_auth" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-clusterId"><code>clusterId</code></a></td>
-    <td></td>
-    <td>Sets master auth materials. Currently supports changing the admin password or a specific cluster, either via password generation or explicitly setting the password.</td>
-</tr>
-<tr>
-    <td><a href="#projects_zones_clusters_resource_labels"><CopyableCode code="projects_zones_clusters_resource_labels" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-clusterId"><code>clusterId</code></a></td>
-    <td></td>
-    <td>Sets labels on a cluster.</td>
-</tr>
-<tr>
-    <td><a href="#projects_zones_clusters_legacy_abac"><CopyableCode code="projects_zones_clusters_legacy_abac" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-clusterId"><code>clusterId</code></a></td>
-    <td></td>
-    <td>Enables or disables the ABAC authorization mechanism on a cluster.</td>
+    <td>Sets the locations for a specific cluster. Deprecated. Use [projects.locations.clusters.update](https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters/update) instead.</td>
 </tr>
 <tr>
     <td><a href="#projects_zones_clusters_start_ip_rotation"><CopyableCode code="projects_zones_clusters_start_ip_rotation" /></a></td>
@@ -1531,27 +1552,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-clusterId"><code>clusterId</code></a></td>
     <td></td>
     <td>Starts master IP rotation.</td>
-</tr>
-<tr>
-    <td><a href="#projects_zones_clusters_complete_ip_rotation"><CopyableCode code="projects_zones_clusters_complete_ip_rotation" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-clusterId"><code>clusterId</code></a></td>
-    <td></td>
-    <td>Completes master IP rotation.</td>
-</tr>
-<tr>
-    <td><a href="#projects_zones_clusters_set_network_policy"><CopyableCode code="projects_zones_clusters_set_network_policy" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-clusterId"><code>clusterId</code></a></td>
-    <td></td>
-    <td>Enables or disables Network Policy for a cluster.</td>
-</tr>
-<tr>
-    <td><a href="#projects_zones_clusters_set_maintenance_policy"><CopyableCode code="projects_zones_clusters_set_maintenance_policy" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-clusterId"><code>clusterId</code></a></td>
-    <td></td>
-    <td>Sets the maintenance policy for a cluster.</td>
 </tr>
 </tbody>
 </table>
@@ -1727,9 +1727,9 @@ FROM google.container.clusters
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND clustersId = '{{ clustersId }}' -- required
+AND clusterId = '{{ clusterId }}'
 AND projectId = '{{ projectId }}'
 AND zone = '{{ zone }}'
-AND clusterId = '{{ clusterId }}'
 ;
 ```
 </TabItem>
@@ -1949,22 +1949,22 @@ AND parent = '{{ parent }}'
 >
 <TabItem value="projects_locations_clusters_create">
 
-Creates a cluster, consisting of the specified number and type of Google Compute Engine instances. By default, the cluster is created in the project's [default network](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/networks-and-firewalls#networks). One firewall is added for the cluster. After cluster creation, the Kubelet creates routes for each node to allow the containers on that node to communicate with all other instances in the cluster. Finally, an entry is added to the project's global metadata indicating which CIDR range the cluster is using.
+Creates a cluster, consisting of the specified number and type of Google Compute Engine instances. By default, the cluster is created in the project's [default network](https://cloud.google.com/compute/docs/networks-and-firewalls#networks). One firewall is added for the cluster. After cluster creation, the kubelet creates routes for each node to allow the containers on that node to communicate with all other instances in the cluster. Finally, an entry is added to the project's global metadata indicating which CIDR range the cluster is using.
 
 ```sql
 INSERT INTO google.container.clusters (
-data__projectId,
-data__zone,
 data__cluster,
 data__parent,
+data__zone,
+data__projectId,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ projectId }}',
-'{{ zone }}',
 '{{ cluster }}',
 '{{ parent }}',
+'{{ zone }}',
+'{{ projectId }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -1988,22 +1988,22 @@ zone
 </TabItem>
 <TabItem value="projects_zones_clusters_create">
 
-Creates a cluster, consisting of the specified number and type of Google Compute Engine instances. By default, the cluster is created in the project's [default network](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/networks-and-firewalls#networks). One firewall is added for the cluster. After cluster creation, the Kubelet creates routes for each node to allow the containers on that node to communicate with all other instances in the cluster. Finally, an entry is added to the project's global metadata indicating which CIDR range the cluster is using.
+Creates a cluster, consisting of the specified number and type of Google Compute Engine instances. By default, the cluster is created in the project's [default network](https://cloud.google.com/compute/docs/networks-and-firewalls#networks). One firewall is added for the cluster. After cluster creation, the kubelet creates routes for each node to allow the containers on that node to communicate with all other instances in the cluster. Finally, an entry is added to the project's global metadata indicating which CIDR range the cluster is using.
 
 ```sql
 INSERT INTO google.container.clusters (
-data__projectId,
-data__zone,
 data__cluster,
 data__parent,
+data__zone,
+data__projectId,
 projectId,
 zone
 )
 SELECT 
-'{{ projectId }}',
-'{{ zone }}',
 '{{ cluster }}',
 '{{ parent }}',
+'{{ zone }}',
+'{{ projectId }}',
 '{{ projectId }}',
 '{{ zone }}'
 RETURNING
@@ -2043,25 +2043,25 @@ zone
     - name: zone
       value: string
       description: Required parameter for the clusters resource.
-    - name: projectId
-      value: string
-      description: >
-        Deprecated. The Google Developers Console [project ID or project number](https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the parent field.
-        
-    - name: zone
-      value: string
-      description: >
-        Deprecated. The name of the Google Compute Engine [zone](https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available) in which the cluster resides. This field has been deprecated and replaced by the parent field.
-        
     - name: cluster
       value: object
       description: >
-        A Google Kubernetes Engine cluster.
+        Required. A [cluster resource](https://cloud.google.com/container-engine/reference/rest/v1/projects.locations.clusters)
         
     - name: parent
       value: string
       description: >
         The parent (project and location) where the cluster will be created. Specified in the format `projects/*/locations/*`.
+        
+    - name: zone
+      value: string
+      description: >
+        Deprecated. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/zones#available) in which the cluster resides. This field has been deprecated and replaced by the parent field.
+        
+    - name: projectId
+      value: string
+      description: >
+        Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the parent field.
         
 ```
 </TabItem>
@@ -2084,11 +2084,11 @@ Updates the settings of a specific cluster.
 ```sql
 REPLACE google.container.clusters
 SET 
-data__projectId = '{{ projectId }}',
-data__zone = '{{ zone }}',
-data__clusterId = '{{ clusterId }}',
 data__update = '{{ update }}',
-data__name = '{{ name }}'
+data__clusterId = '{{ clusterId }}',
+data__zone = '{{ zone }}',
+data__name = '{{ name }}',
+data__projectId = '{{ projectId }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -2118,11 +2118,11 @@ Updates the settings of a specific cluster.
 ```sql
 REPLACE google.container.clusters
 SET 
-data__projectId = '{{ projectId }}',
-data__zone = '{{ zone }}',
-data__clusterId = '{{ clusterId }}',
 data__update = '{{ update }}',
-data__name = '{{ name }}'
+data__clusterId = '{{ clusterId }}',
+data__zone = '{{ zone }}',
+data__name = '{{ name }}',
+data__projectId = '{{ projectId }}'
 WHERE 
 projectId = '{{ projectId }}' --required
 AND zone = '{{ zone }}' --required
@@ -2166,9 +2166,9 @@ DELETE FROM google.container.clusters
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND clustersId = '{{ clustersId }}' --required
-AND projectId = '{{ projectId }}'
-AND zone = '{{ zone }}'
 AND clusterId = '{{ clusterId }}'
+AND zone = '{{ zone }}'
+AND projectId = '{{ projectId }}'
 ;
 ```
 </TabItem>
@@ -2191,98 +2191,57 @@ AND name = '{{ name }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_clusters_set_logging"
+    defaultValue="projects_locations_clusters_complete_ip_rotation"
     values={[
+        { label: 'projects_locations_clusters_complete_ip_rotation', value: 'projects_locations_clusters_complete_ip_rotation' },
+        { label: 'projects_locations_clusters_set_locations', value: 'projects_locations_clusters_set_locations' },
+        { label: 'projects_locations_clusters_update_master', value: 'projects_locations_clusters_update_master' },
+        { label: 'projects_locations_clusters_check_autopilot_compatibility', value: 'projects_locations_clusters_check_autopilot_compatibility' },
+        { label: 'projects_locations_clusters_set_resource_labels', value: 'projects_locations_clusters_set_resource_labels' },
+        { label: 'projects_locations_clusters_set_master_auth', value: 'projects_locations_clusters_set_master_auth' },
         { label: 'projects_locations_clusters_set_logging', value: 'projects_locations_clusters_set_logging' },
         { label: 'projects_locations_clusters_set_monitoring', value: 'projects_locations_clusters_set_monitoring' },
         { label: 'projects_locations_clusters_set_addons', value: 'projects_locations_clusters_set_addons' },
-        { label: 'projects_locations_clusters_set_locations', value: 'projects_locations_clusters_set_locations' },
-        { label: 'projects_locations_clusters_update_master', value: 'projects_locations_clusters_update_master' },
-        { label: 'projects_locations_clusters_set_master_auth', value: 'projects_locations_clusters_set_master_auth' },
-        { label: 'projects_locations_clusters_set_resource_labels', value: 'projects_locations_clusters_set_resource_labels' },
-        { label: 'projects_locations_clusters_set_legacy_abac', value: 'projects_locations_clusters_set_legacy_abac' },
-        { label: 'projects_locations_clusters_start_ip_rotation', value: 'projects_locations_clusters_start_ip_rotation' },
-        { label: 'projects_locations_clusters_complete_ip_rotation', value: 'projects_locations_clusters_complete_ip_rotation' },
-        { label: 'projects_locations_clusters_set_network_policy', value: 'projects_locations_clusters_set_network_policy' },
         { label: 'projects_locations_clusters_set_maintenance_policy', value: 'projects_locations_clusters_set_maintenance_policy' },
-        { label: 'projects_locations_clusters_check_autopilot_compatibility', value: 'projects_locations_clusters_check_autopilot_compatibility' },
+        { label: 'projects_locations_clusters_start_ip_rotation', value: 'projects_locations_clusters_start_ip_rotation' },
+        { label: 'projects_locations_clusters_set_network_policy', value: 'projects_locations_clusters_set_network_policy' },
+        { label: 'projects_locations_clusters_set_legacy_abac', value: 'projects_locations_clusters_set_legacy_abac' },
+        { label: 'projects_zones_clusters_set_maintenance_policy', value: 'projects_zones_clusters_set_maintenance_policy' },
+        { label: 'projects_zones_clusters_set_network_policy', value: 'projects_zones_clusters_set_network_policy' },
+        { label: 'projects_zones_clusters_set_master_auth', value: 'projects_zones_clusters_set_master_auth' },
         { label: 'projects_zones_clusters_logging', value: 'projects_zones_clusters_logging' },
+        { label: 'projects_zones_clusters_master', value: 'projects_zones_clusters_master' },
         { label: 'projects_zones_clusters_monitoring', value: 'projects_zones_clusters_monitoring' },
+        { label: 'projects_zones_clusters_resource_labels', value: 'projects_zones_clusters_resource_labels' },
+        { label: 'projects_zones_clusters_complete_ip_rotation', value: 'projects_zones_clusters_complete_ip_rotation' },
+        { label: 'projects_zones_clusters_legacy_abac', value: 'projects_zones_clusters_legacy_abac' },
         { label: 'projects_zones_clusters_addons', value: 'projects_zones_clusters_addons' },
         { label: 'projects_zones_clusters_locations', value: 'projects_zones_clusters_locations' },
-        { label: 'projects_zones_clusters_master', value: 'projects_zones_clusters_master' },
-        { label: 'projects_zones_clusters_set_master_auth', value: 'projects_zones_clusters_set_master_auth' },
-        { label: 'projects_zones_clusters_resource_labels', value: 'projects_zones_clusters_resource_labels' },
-        { label: 'projects_zones_clusters_legacy_abac', value: 'projects_zones_clusters_legacy_abac' },
-        { label: 'projects_zones_clusters_start_ip_rotation', value: 'projects_zones_clusters_start_ip_rotation' },
-        { label: 'projects_zones_clusters_complete_ip_rotation', value: 'projects_zones_clusters_complete_ip_rotation' },
-        { label: 'projects_zones_clusters_set_network_policy', value: 'projects_zones_clusters_set_network_policy' },
-        { label: 'projects_zones_clusters_set_maintenance_policy', value: 'projects_zones_clusters_set_maintenance_policy' }
+        { label: 'projects_zones_clusters_start_ip_rotation', value: 'projects_zones_clusters_start_ip_rotation' }
     ]}
 >
-<TabItem value="projects_locations_clusters_set_logging">
+<TabItem value="projects_locations_clusters_complete_ip_rotation">
 
-Sets the logging service for a specific cluster.
+Completes master IP rotation.
 
 ```sql
-EXEC google.container.clusters.projects_locations_clusters_set_logging 
+EXEC google.container.clusters.projects_locations_clusters_complete_ip_rotation 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @clustersId='{{ clustersId }}' --required 
 @@json=
 '{
 "projectId": "{{ projectId }}", 
-"zone": "{{ zone }}", 
+"name": "{{ name }}", 
 "clusterId": "{{ clusterId }}", 
-"loggingService": "{{ loggingService }}", 
-"name": "{{ name }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_clusters_set_monitoring">
-
-Sets the monitoring service for a specific cluster.
-
-```sql
-EXEC google.container.clusters.projects_locations_clusters_set_monitoring 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@clustersId='{{ clustersId }}' --required 
-@@json=
-'{
-"projectId": "{{ projectId }}", 
-"zone": "{{ zone }}", 
-"clusterId": "{{ clusterId }}", 
-"monitoringService": "{{ monitoringService }}", 
-"name": "{{ name }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_clusters_set_addons">
-
-Sets the addons for a specific cluster.
-
-```sql
-EXEC google.container.clusters.projects_locations_clusters_set_addons 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@clustersId='{{ clustersId }}' --required 
-@@json=
-'{
-"projectId": "{{ projectId }}", 
-"zone": "{{ zone }}", 
-"clusterId": "{{ clusterId }}", 
-"addonsConfig": "{{ addonsConfig }}", 
-"name": "{{ name }}"
+"zone": "{{ zone }}"
 }'
 ;
 ```
 </TabItem>
 <TabItem value="projects_locations_clusters_set_locations">
 
-Sets the locations for a specific cluster. Deprecated. Use [projects.locations.clusters.update](https://&#123;$universe.dns_names.final_documentation_domain&#125;/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters/update) instead.
+Sets the locations for a specific cluster. Deprecated. Use [projects.locations.clusters.update](https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters/update) instead.
 
 ```sql
 EXEC google.container.clusters.projects_locations_clusters_set_locations 
@@ -2292,10 +2251,10 @@ EXEC google.container.clusters.projects_locations_clusters_set_locations
 @@json=
 '{
 "projectId": "{{ projectId }}", 
-"zone": "{{ zone }}", 
-"clusterId": "{{ clusterId }}", 
 "locations": "{{ locations }}", 
-"name": "{{ name }}"
+"clusterId": "{{ clusterId }}", 
+"name": "{{ name }}", 
+"zone": "{{ zone }}"
 }'
 ;
 ```
@@ -2311,11 +2270,44 @@ EXEC google.container.clusters.projects_locations_clusters_update_master
 @clustersId='{{ clustersId }}' --required 
 @@json=
 '{
-"projectId": "{{ projectId }}", 
-"zone": "{{ zone }}", 
 "clusterId": "{{ clusterId }}", 
-"masterVersion": "{{ masterVersion }}", 
-"name": "{{ name }}"
+"zone": "{{ zone }}", 
+"name": "{{ name }}", 
+"projectId": "{{ projectId }}", 
+"masterVersion": "{{ masterVersion }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_clusters_check_autopilot_compatibility">
+
+Checks the cluster compatibility with Autopilot mode, and returns a list of compatibility issues.
+
+```sql
+EXEC google.container.clusters.projects_locations_clusters_check_autopilot_compatibility 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@clustersId='{{ clustersId }}' --required
+;
+```
+</TabItem>
+<TabItem value="projects_locations_clusters_set_resource_labels">
+
+Sets labels on a cluster.
+
+```sql
+EXEC google.container.clusters.projects_locations_clusters_set_resource_labels 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@clustersId='{{ clustersId }}' --required 
+@@json=
+'{
+"name": "{{ name }}", 
+"labelFingerprint": "{{ labelFingerprint }}", 
+"resourceLabels": "{{ resourceLabels }}", 
+"projectId": "{{ projectId }}", 
+"clusterId": "{{ clusterId }}", 
+"zone": "{{ zone }}"
 }'
 ;
 ```
@@ -2332,52 +2324,91 @@ EXEC google.container.clusters.projects_locations_clusters_set_master_auth
 @@json=
 '{
 "projectId": "{{ projectId }}", 
+"name": "{{ name }}", 
 "zone": "{{ zone }}", 
 "clusterId": "{{ clusterId }}", 
-"action": "{{ action }}", 
 "update": "{{ update }}", 
-"name": "{{ name }}"
+"action": "{{ action }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_clusters_set_resource_labels">
+<TabItem value="projects_locations_clusters_set_logging">
 
-Sets labels on a cluster.
+Sets the logging service for a specific cluster.
 
 ```sql
-EXEC google.container.clusters.projects_locations_clusters_set_resource_labels 
+EXEC google.container.clusters.projects_locations_clusters_set_logging 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @clustersId='{{ clustersId }}' --required 
 @@json=
 '{
-"projectId": "{{ projectId }}", 
-"zone": "{{ zone }}", 
 "clusterId": "{{ clusterId }}", 
-"resourceLabels": "{{ resourceLabels }}", 
-"labelFingerprint": "{{ labelFingerprint }}", 
-"name": "{{ name }}"
+"projectId": "{{ projectId }}", 
+"loggingService": "{{ loggingService }}", 
+"name": "{{ name }}", 
+"zone": "{{ zone }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_clusters_set_legacy_abac">
+<TabItem value="projects_locations_clusters_set_monitoring">
 
-Enables or disables the ABAC authorization mechanism on a cluster.
+Sets the monitoring service for a specific cluster.
 
 ```sql
-EXEC google.container.clusters.projects_locations_clusters_set_legacy_abac 
+EXEC google.container.clusters.projects_locations_clusters_set_monitoring 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @clustersId='{{ clustersId }}' --required 
 @@json=
 '{
+"monitoringService": "{{ monitoringService }}", 
+"clusterId": "{{ clusterId }}", 
+"name": "{{ name }}", 
 "projectId": "{{ projectId }}", 
+"zone": "{{ zone }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_clusters_set_addons">
+
+Sets the addons for a specific cluster.
+
+```sql
+EXEC google.container.clusters.projects_locations_clusters_set_addons 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@clustersId='{{ clustersId }}' --required 
+@@json=
+'{
+"name": "{{ name }}", 
 "zone": "{{ zone }}", 
 "clusterId": "{{ clusterId }}", 
-"enabled": {{ enabled }}, 
-"name": "{{ name }}"
+"addonsConfig": "{{ addonsConfig }}", 
+"projectId": "{{ projectId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_clusters_set_maintenance_policy">
+
+Sets the maintenance policy for a cluster.
+
+```sql
+EXEC google.container.clusters.projects_locations_clusters_set_maintenance_policy 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@clustersId='{{ clustersId }}' --required 
+@@json=
+'{
+"name": "{{ name }}", 
+"clusterId": "{{ clusterId }}", 
+"projectId": "{{ projectId }}", 
+"zone": "{{ zone }}", 
+"maintenancePolicy": "{{ maintenancePolicy }}"
 }'
 ;
 ```
@@ -2393,28 +2424,9 @@ EXEC google.container.clusters.projects_locations_clusters_start_ip_rotation
 @clustersId='{{ clustersId }}' --required 
 @@json=
 '{
-"projectId": "{{ projectId }}", 
+"rotateCredentials": {{ rotateCredentials }}, 
 "zone": "{{ zone }}", 
-"clusterId": "{{ clusterId }}", 
-"name": "{{ name }}", 
-"rotateCredentials": {{ rotateCredentials }}
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_clusters_complete_ip_rotation">
-
-Completes master IP rotation.
-
-```sql
-EXEC google.container.clusters.projects_locations_clusters_complete_ip_rotation 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@clustersId='{{ clustersId }}' --required 
-@@json=
-'{
 "projectId": "{{ projectId }}", 
-"zone": "{{ zone }}", 
 "clusterId": "{{ clusterId }}", 
 "name": "{{ name }}"
 }'
@@ -2432,143 +2444,71 @@ EXEC google.container.clusters.projects_locations_clusters_set_network_policy
 @clustersId='{{ clustersId }}' --required 
 @@json=
 '{
-"projectId": "{{ projectId }}", 
-"zone": "{{ zone }}", 
-"clusterId": "{{ clusterId }}", 
 "networkPolicy": "{{ networkPolicy }}", 
-"name": "{{ name }}"
+"clusterId": "{{ clusterId }}", 
+"projectId": "{{ projectId }}", 
+"name": "{{ name }}", 
+"zone": "{{ zone }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_clusters_set_maintenance_policy">
+<TabItem value="projects_locations_clusters_set_legacy_abac">
 
-Sets the maintenance policy for a cluster.
+Enables or disables the ABAC authorization mechanism on a cluster.
 
 ```sql
-EXEC google.container.clusters.projects_locations_clusters_set_maintenance_policy 
+EXEC google.container.clusters.projects_locations_clusters_set_legacy_abac 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @clustersId='{{ clustersId }}' --required 
 @@json=
 '{
 "projectId": "{{ projectId }}", 
+"name": "{{ name }}", 
 "zone": "{{ zone }}", 
 "clusterId": "{{ clusterId }}", 
-"maintenancePolicy": "{{ maintenancePolicy }}", 
-"name": "{{ name }}"
+"enabled": {{ enabled }}
 }'
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_clusters_check_autopilot_compatibility">
+<TabItem value="projects_zones_clusters_set_maintenance_policy">
 
-Checks the cluster compatibility with Autopilot mode, and returns a list of compatibility issues.
-
-```sql
-EXEC google.container.clusters.projects_locations_clusters_check_autopilot_compatibility 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@clustersId='{{ clustersId }}' --required
-;
-```
-</TabItem>
-<TabItem value="projects_zones_clusters_logging">
-
-Sets the logging service for a specific cluster.
+Sets the maintenance policy for a cluster.
 
 ```sql
-EXEC google.container.clusters.projects_zones_clusters_logging 
+EXEC google.container.clusters.projects_zones_clusters_set_maintenance_policy 
 @projectId='{{ projectId }}' --required, 
 @zone='{{ zone }}' --required, 
 @clusterId='{{ clusterId }}' --required 
 @@json=
 '{
+"name": "{{ name }}", 
+"clusterId": "{{ clusterId }}", 
 "projectId": "{{ projectId }}", 
 "zone": "{{ zone }}", 
-"clusterId": "{{ clusterId }}", 
-"loggingService": "{{ loggingService }}", 
-"name": "{{ name }}"
+"maintenancePolicy": "{{ maintenancePolicy }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="projects_zones_clusters_monitoring">
+<TabItem value="projects_zones_clusters_set_network_policy">
 
-Sets the monitoring service for a specific cluster.
+Enables or disables Network Policy for a cluster.
 
 ```sql
-EXEC google.container.clusters.projects_zones_clusters_monitoring 
+EXEC google.container.clusters.projects_zones_clusters_set_network_policy 
 @projectId='{{ projectId }}' --required, 
 @zone='{{ zone }}' --required, 
 @clusterId='{{ clusterId }}' --required 
 @@json=
 '{
-"projectId": "{{ projectId }}", 
-"zone": "{{ zone }}", 
+"networkPolicy": "{{ networkPolicy }}", 
 "clusterId": "{{ clusterId }}", 
-"monitoringService": "{{ monitoringService }}", 
-"name": "{{ name }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_zones_clusters_addons">
-
-Sets the addons for a specific cluster.
-
-```sql
-EXEC google.container.clusters.projects_zones_clusters_addons 
-@projectId='{{ projectId }}' --required, 
-@zone='{{ zone }}' --required, 
-@clusterId='{{ clusterId }}' --required 
-@@json=
-'{
 "projectId": "{{ projectId }}", 
-"zone": "{{ zone }}", 
-"clusterId": "{{ clusterId }}", 
-"addonsConfig": "{{ addonsConfig }}", 
-"name": "{{ name }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_zones_clusters_locations">
-
-Sets the locations for a specific cluster. Deprecated. Use [projects.locations.clusters.update](https://&#123;$universe.dns_names.final_documentation_domain&#125;/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters/update) instead.
-
-```sql
-EXEC google.container.clusters.projects_zones_clusters_locations 
-@projectId='{{ projectId }}' --required, 
-@zone='{{ zone }}' --required, 
-@clusterId='{{ clusterId }}' --required 
-@@json=
-'{
-"projectId": "{{ projectId }}", 
-"zone": "{{ zone }}", 
-"clusterId": "{{ clusterId }}", 
-"locations": "{{ locations }}", 
-"name": "{{ name }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_zones_clusters_master">
-
-Updates the master for a specific cluster.
-
-```sql
-EXEC google.container.clusters.projects_zones_clusters_master 
-@projectId='{{ projectId }}' --required, 
-@zone='{{ zone }}' --required, 
-@clusterId='{{ clusterId }}' --required 
-@@json=
-'{
-"projectId": "{{ projectId }}", 
-"zone": "{{ zone }}", 
-"clusterId": "{{ clusterId }}", 
-"masterVersion": "{{ masterVersion }}", 
-"name": "{{ name }}"
+"name": "{{ name }}", 
+"zone": "{{ zone }}"
 }'
 ;
 ```
@@ -2585,11 +2525,71 @@ EXEC google.container.clusters.projects_zones_clusters_set_master_auth
 @@json=
 '{
 "projectId": "{{ projectId }}", 
+"name": "{{ name }}", 
 "zone": "{{ zone }}", 
 "clusterId": "{{ clusterId }}", 
-"action": "{{ action }}", 
 "update": "{{ update }}", 
-"name": "{{ name }}"
+"action": "{{ action }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_zones_clusters_logging">
+
+Sets the logging service for a specific cluster.
+
+```sql
+EXEC google.container.clusters.projects_zones_clusters_logging 
+@projectId='{{ projectId }}' --required, 
+@zone='{{ zone }}' --required, 
+@clusterId='{{ clusterId }}' --required 
+@@json=
+'{
+"clusterId": "{{ clusterId }}", 
+"projectId": "{{ projectId }}", 
+"loggingService": "{{ loggingService }}", 
+"name": "{{ name }}", 
+"zone": "{{ zone }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_zones_clusters_master">
+
+Updates the master for a specific cluster.
+
+```sql
+EXEC google.container.clusters.projects_zones_clusters_master 
+@projectId='{{ projectId }}' --required, 
+@zone='{{ zone }}' --required, 
+@clusterId='{{ clusterId }}' --required 
+@@json=
+'{
+"clusterId": "{{ clusterId }}", 
+"zone": "{{ zone }}", 
+"name": "{{ name }}", 
+"projectId": "{{ projectId }}", 
+"masterVersion": "{{ masterVersion }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_zones_clusters_monitoring">
+
+Sets the monitoring service for a specific cluster.
+
+```sql
+EXEC google.container.clusters.projects_zones_clusters_monitoring 
+@projectId='{{ projectId }}' --required, 
+@zone='{{ zone }}' --required, 
+@clusterId='{{ clusterId }}' --required 
+@@json=
+'{
+"monitoringService": "{{ monitoringService }}", 
+"clusterId": "{{ clusterId }}", 
+"name": "{{ name }}", 
+"projectId": "{{ projectId }}", 
+"zone": "{{ zone }}"
 }'
 ;
 ```
@@ -2605,52 +2605,12 @@ EXEC google.container.clusters.projects_zones_clusters_resource_labels
 @clusterId='{{ clusterId }}' --required 
 @@json=
 '{
-"projectId": "{{ projectId }}", 
-"zone": "{{ zone }}", 
-"clusterId": "{{ clusterId }}", 
-"resourceLabels": "{{ resourceLabels }}", 
-"labelFingerprint": "{{ labelFingerprint }}", 
-"name": "{{ name }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_zones_clusters_legacy_abac">
-
-Enables or disables the ABAC authorization mechanism on a cluster.
-
-```sql
-EXEC google.container.clusters.projects_zones_clusters_legacy_abac 
-@projectId='{{ projectId }}' --required, 
-@zone='{{ zone }}' --required, 
-@clusterId='{{ clusterId }}' --required 
-@@json=
-'{
-"projectId": "{{ projectId }}", 
-"zone": "{{ zone }}", 
-"clusterId": "{{ clusterId }}", 
-"enabled": {{ enabled }}, 
-"name": "{{ name }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_zones_clusters_start_ip_rotation">
-
-Starts master IP rotation.
-
-```sql
-EXEC google.container.clusters.projects_zones_clusters_start_ip_rotation 
-@projectId='{{ projectId }}' --required, 
-@zone='{{ zone }}' --required, 
-@clusterId='{{ clusterId }}' --required 
-@@json=
-'{
-"projectId": "{{ projectId }}", 
-"zone": "{{ zone }}", 
-"clusterId": "{{ clusterId }}", 
 "name": "{{ name }}", 
-"rotateCredentials": {{ rotateCredentials }}
+"labelFingerprint": "{{ labelFingerprint }}", 
+"resourceLabels": "{{ resourceLabels }}", 
+"projectId": "{{ projectId }}", 
+"clusterId": "{{ clusterId }}", 
+"zone": "{{ zone }}"
 }'
 ;
 ```
@@ -2667,48 +2627,88 @@ EXEC google.container.clusters.projects_zones_clusters_complete_ip_rotation
 @@json=
 '{
 "projectId": "{{ projectId }}", 
-"zone": "{{ zone }}", 
+"name": "{{ name }}", 
 "clusterId": "{{ clusterId }}", 
-"name": "{{ name }}"
+"zone": "{{ zone }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="projects_zones_clusters_set_network_policy">
+<TabItem value="projects_zones_clusters_legacy_abac">
 
-Enables or disables Network Policy for a cluster.
+Enables or disables the ABAC authorization mechanism on a cluster.
 
 ```sql
-EXEC google.container.clusters.projects_zones_clusters_set_network_policy 
+EXEC google.container.clusters.projects_zones_clusters_legacy_abac 
 @projectId='{{ projectId }}' --required, 
 @zone='{{ zone }}' --required, 
 @clusterId='{{ clusterId }}' --required 
 @@json=
 '{
 "projectId": "{{ projectId }}", 
+"name": "{{ name }}", 
 "zone": "{{ zone }}", 
 "clusterId": "{{ clusterId }}", 
-"networkPolicy": "{{ networkPolicy }}", 
-"name": "{{ name }}"
+"enabled": {{ enabled }}
 }'
 ;
 ```
 </TabItem>
-<TabItem value="projects_zones_clusters_set_maintenance_policy">
+<TabItem value="projects_zones_clusters_addons">
 
-Sets the maintenance policy for a cluster.
+Sets the addons for a specific cluster.
 
 ```sql
-EXEC google.container.clusters.projects_zones_clusters_set_maintenance_policy 
+EXEC google.container.clusters.projects_zones_clusters_addons 
+@projectId='{{ projectId }}' --required, 
+@zone='{{ zone }}' --required, 
+@clusterId='{{ clusterId }}' --required 
+@@json=
+'{
+"name": "{{ name }}", 
+"zone": "{{ zone }}", 
+"clusterId": "{{ clusterId }}", 
+"addonsConfig": "{{ addonsConfig }}", 
+"projectId": "{{ projectId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_zones_clusters_locations">
+
+Sets the locations for a specific cluster. Deprecated. Use [projects.locations.clusters.update](https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters/update) instead.
+
+```sql
+EXEC google.container.clusters.projects_zones_clusters_locations 
 @projectId='{{ projectId }}' --required, 
 @zone='{{ zone }}' --required, 
 @clusterId='{{ clusterId }}' --required 
 @@json=
 '{
 "projectId": "{{ projectId }}", 
-"zone": "{{ zone }}", 
+"locations": "{{ locations }}", 
 "clusterId": "{{ clusterId }}", 
-"maintenancePolicy": "{{ maintenancePolicy }}", 
+"name": "{{ name }}", 
+"zone": "{{ zone }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_zones_clusters_start_ip_rotation">
+
+Starts master IP rotation.
+
+```sql
+EXEC google.container.clusters.projects_zones_clusters_start_ip_rotation 
+@projectId='{{ projectId }}' --required, 
+@zone='{{ zone }}' --required, 
+@clusterId='{{ clusterId }}' --required 
+@@json=
+'{
+"rotateCredentials": {{ rotateCredentials }}, 
+"zone": "{{ zone }}", 
+"projectId": "{{ projectId }}", 
+"clusterId": "{{ clusterId }}", 
 "name": "{{ name }}"
 }'
 ;

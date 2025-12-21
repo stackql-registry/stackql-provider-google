@@ -264,14 +264,14 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_batches_list"><CopyableCode code="projects_locations_batches_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists batch workloads.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_batches_create"><CopyableCode code="projects_locations_batches_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-batchId"><code>batchId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-batchId"><code>batchId</code></a></td>
     <td>Creates a batch workload that executes asynchronously.</td>
 </tr>
 <tr>
@@ -418,9 +418,9 @@ FROM google.dataproc.batches
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -442,30 +442,30 @@ Creates a batch workload that executes asynchronously.
 
 ```sql
 INSERT INTO google.dataproc.batches (
-data__pysparkBatch,
-data__sparkBatch,
-data__sparkRBatch,
-data__sparkSqlBatch,
 data__labels,
+data__sparkSqlBatch,
+data__pysparkBatch,
+data__sparkRBatch,
+data__sparkBatch,
 data__runtimeConfig,
 data__environmentConfig,
 projectsId,
 locationsId,
-batchId,
-requestId
+requestId,
+batchId
 )
 SELECT 
-'{{ pysparkBatch }}',
-'{{ sparkBatch }}',
-'{{ sparkRBatch }}',
-'{{ sparkSqlBatch }}',
 '{{ labels }}',
+'{{ sparkSqlBatch }}',
+'{{ pysparkBatch }}',
+'{{ sparkRBatch }}',
+'{{ sparkBatch }}',
 '{{ runtimeConfig }}',
 '{{ environmentConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ batchId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ batchId }}'
 RETURNING
 name,
 done,
@@ -487,30 +487,30 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the batches resource.
-    - name: pysparkBatch
+    - name: labels
       value: object
       description: >
-        Optional. PySpark batch config.
-        
-    - name: sparkBatch
-      value: object
-      description: >
-        Optional. Spark batch config.
-        
-    - name: sparkRBatch
-      value: object
-      description: >
-        Optional. SparkR batch config.
+        Optional. The labels to associate with this batch. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty, but, if present, must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with a batch.
         
     - name: sparkSqlBatch
       value: object
       description: >
         Optional. SparkSql batch config.
         
-    - name: labels
+    - name: pysparkBatch
       value: object
       description: >
-        Optional. The labels to associate with this batch. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty, but, if present, must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with a batch.
+        Optional. PySpark batch config.
+        
+    - name: sparkRBatch
+      value: object
+      description: >
+        Optional. SparkR batch config.
+        
+    - name: sparkBatch
+      value: object
+      description: >
+        Optional. Spark batch config.
         
     - name: runtimeConfig
       value: object
@@ -522,9 +522,9 @@ response
       description: >
         Optional. Environment configuration for the batch execution.
         
-    - name: batchId
-      value: string
     - name: requestId
+      value: string
+    - name: batchId
       value: string
 ```
 </TabItem>
@@ -573,8 +573,8 @@ EXEC google.dataproc.batches.projects_locations_batches_analyze
 @batchesId='{{ batchesId }}' --required 
 @@json=
 '{
-"requestId": "{{ requestId }}", 
-"requestorId": "{{ requestorId }}"
+"requestorId": "{{ requestorId }}", 
+"requestId": "{{ requestId }}"
 }'
 ;
 ```

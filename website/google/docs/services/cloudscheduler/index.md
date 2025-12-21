@@ -18,17 +18,18 @@ cloudscheduler service documentation.
 
 :::info[Service Summary]
 
-total resources: __3__  
+total resources: __4__  
 
 :::
 
 ## Resources
 <div class="row">
 <div class="providerDocColumn">
-<a href="/services/cloudscheduler/jobs/">jobs</a><br />
-<a href="/services/cloudscheduler/locations/">locations</a>
+<a href="/services/cloudscheduler/cmek_config/">cmek_config</a><br />
+<a href="/services/cloudscheduler/jobs/">jobs</a>
 </div>
 <div class="providerDocColumn">
+<a href="/services/cloudscheduler/locations/">locations</a><br />
 <a href="/services/cloudscheduler/operations/">operations</a>
 </div>
 </div>

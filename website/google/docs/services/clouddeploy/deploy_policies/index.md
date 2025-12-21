@@ -204,28 +204,28 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists DeployPolicies in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-deployPolicyId"><code>deployPolicyId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-deployPolicyId"><code>deployPolicyId</code></a></td>
     <td>Creates a new DeployPolicy in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deployPoliciesId"><code>deployPoliciesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
     <td>Updates the parameters of a single DeployPolicy.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deployPoliciesId"><code>deployPoliciesId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
     <td>Deletes a single DeployPolicy.</td>
 </tr>
 </tbody>
@@ -365,10 +365,10 @@ updateTime
 FROM google.clouddeploy.deploy_policies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -390,32 +390,32 @@ Creates a new DeployPolicy in a given project and location.
 
 ```sql
 INSERT INTO google.clouddeploy.deploy_policies (
-data__description,
 data__annotations,
-data__labels,
-data__suspended,
-data__selectors,
-data__rules,
 data__etag,
+data__description,
+data__selectors,
+data__suspended,
+data__rules,
+data__labels,
 projectsId,
 locationsId,
-deployPolicyId,
+validateOnly,
 requestId,
-validateOnly
+deployPolicyId
 )
 SELECT 
-'{{ description }}',
 '{{ annotations }}',
-'{{ labels }}',
-{{ suspended }},
-'{{ selectors }}',
-'{{ rules }}',
 '{{ etag }}',
+'{{ description }}',
+'{{ selectors }}',
+{{ suspended }},
+'{{ rules }}',
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ deployPolicyId }}',
+'{{ validateOnly }}',
 '{{ requestId }}',
-'{{ validateOnly }}'
+'{{ deployPolicyId }}'
 RETURNING
 name,
 done,
@@ -437,47 +437,47 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the deploy_policies resource.
-    - name: description
-      value: string
-      description: >
-        Optional. Description of the `DeployPolicy`. Max length is 255 characters.
-        
     - name: annotations
       value: object
       description: >
         Optional. User annotations. These attributes can only be set and used by the user, and not by Cloud Deploy. Annotations must meet the following constraints: * Annotations are key/value pairs. * Valid annotation keys have two segments: an optional prefix and name, separated by a slash (`/`). * The name segment is required and must be 63 characters or less, beginning and ending with an alphanumeric character (`[a-z0-9A-Z]`) with dashes (`-`), underscores (`_`), dots (`.`), and alphanumerics between. * The prefix is optional. If specified, the prefix must be a DNS subdomain: a series of DNS labels separated by dots(`.`), not longer than 253 characters in total, followed by a slash (`/`). See https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/#syntax-and-character-set for more details.
-        
-    - name: labels
-      value: object
-      description: >
-        Labels are attributes that can be set and used by both the user and by Cloud Deploy. Labels must meet the following constraints: * Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. * All characters must use UTF-8 encoding, and international characters are allowed. * Keys must start with a lowercase letter or international character. * Each resource is limited to a maximum of 64 labels. Both keys and values are additionally constrained to be <= 128 bytes.
-        
-    - name: suspended
-      value: boolean
-      description: >
-        Optional. When suspended, the policy will not prevent actions from occurring, even if the action violates the policy.
-        
-    - name: selectors
-      value: array
-      description: >
-        Required. Selected resources to which the policy will be applied. At least one selector is required. If one selector matches the resource the policy applies. For example, if there are two selectors and the action being attempted matches one of them, the policy will apply to that action.
-        
-    - name: rules
-      value: array
-      description: >
-        Required. Rules to apply. At least one rule must be present.
         
     - name: etag
       value: string
       description: >
         The weak etag of the `DeployPolicy` resource. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
         
-    - name: deployPolicyId
+    - name: description
       value: string
-    - name: requestId
-      value: string
+      description: >
+        Optional. Description of the `DeployPolicy`. Max length is 255 characters.
+        
+    - name: selectors
+      value: array
+      description: >
+        Required. Selected resources to which the policy will be applied. At least one selector is required. If one selector matches the resource the policy applies. For example, if there are two selectors and the action being attempted matches one of them, the policy will apply to that action.
+        
+    - name: suspended
+      value: boolean
+      description: >
+        Optional. When suspended, the policy will not prevent actions from occurring, even if the action violates the policy.
+        
+    - name: rules
+      value: array
+      description: >
+        Required. Rules to apply. At least one rule must be present.
+        
+    - name: labels
+      value: object
+      description: >
+        Labels are attributes that can be set and used by both the user and by Cloud Deploy. Labels must meet the following constraints: * Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. * All characters must use UTF-8 encoding, and international characters are allowed. * Keys must start with a lowercase letter or international character. * Each resource is limited to a maximum of 64 labels. Both keys and values are additionally constrained to be <= 128 bytes.
+        
     - name: validateOnly
       value: boolean
+    - name: requestId
+      value: string
+    - name: deployPolicyId
+      value: string
 ```
 </TabItem>
 </Tabs>
@@ -498,21 +498,21 @@ Updates the parameters of a single DeployPolicy.
 ```sql
 UPDATE google.clouddeploy.deploy_policies
 SET 
-data__description = '{{ description }}',
 data__annotations = '{{ annotations }}',
-data__labels = '{{ labels }}',
-data__suspended = {{ suspended }},
+data__etag = '{{ etag }}',
+data__description = '{{ description }}',
 data__selectors = '{{ selectors }}',
+data__suspended = {{ suspended }},
 data__rules = '{{ rules }}',
-data__etag = '{{ etag }}'
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND deployPoliciesId = '{{ deployPoliciesId }}' --required
 AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
-AND allowMissing = {{ allowMissing}}
 AND validateOnly = {{ validateOnly}}
+AND allowMissing = {{ allowMissing}}
 RETURNING
 name,
 done,
@@ -541,9 +541,9 @@ DELETE FROM google.clouddeploy.deploy_policies
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND deployPoliciesId = '{{ deployPoliciesId }}' --required
-AND requestId = '{{ requestId }}'
 AND allowMissing = '{{ allowMissing }}'
 AND validateOnly = '{{ validateOnly }}'
+AND requestId = '{{ requestId }}'
 AND etag = '{{ etag }}'
 ;
 ```

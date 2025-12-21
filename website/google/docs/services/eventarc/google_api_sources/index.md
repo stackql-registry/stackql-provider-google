@@ -95,6 +95,16 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Config to control Platform logging for the GoogleApiSource. (id: LoggingConfig)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="organizationSubscription" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Config to enable subscribing to events from all projects in the GoogleApiSource's org. (id: OrganizationSubscription)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="projectSubscriptions" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Config to enable subscribing to all events from a list of projects. All the projects must be in the same org as the GoogleApiSource. (id: ProjectSubscriptions)</td>
+</tr>
+<tr>
     <td><CopyableCode code="uid" /></td>
     <td><code>string</code></td>
     <td>Output only. Server assigned unique identifier for the channel. The value is a UUID4 string and guaranteed to remain unchanged until the resource is deleted.</td>
@@ -162,6 +172,16 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="loggingConfig" /></td>
     <td><code>object</code></td>
     <td>Optional. Config to control Platform logging for the GoogleApiSource. (id: LoggingConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="organizationSubscription" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Config to enable subscribing to events from all projects in the GoogleApiSource's org. (id: OrganizationSubscription)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="projectSubscriptions" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Config to enable subscribing to all events from a list of projects. All the projects must be in the same org as the GoogleApiSource. (id: ProjectSubscriptions)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -331,6 +351,8 @@ displayName,
 etag,
 labels,
 loggingConfig,
+organizationSubscription,
+projectSubscriptions,
 uid,
 updateTime
 FROM google.eventarc.google_api_sources
@@ -355,6 +377,8 @@ displayName,
 etag,
 labels,
 loggingConfig,
+organizationSubscription,
+projectSubscriptions,
 uid,
 updateTime
 FROM google.eventarc.google_api_sources
@@ -392,6 +416,8 @@ data__displayName,
 data__destination,
 data__cryptoKeyName,
 data__loggingConfig,
+data__organizationSubscription,
+data__projectSubscriptions,
 projectsId,
 locationsId,
 googleApiSourceId,
@@ -405,6 +431,8 @@ SELECT
 '{{ destination }}',
 '{{ cryptoKeyName }}',
 '{{ loggingConfig }}',
+'{{ organizationSubscription }}',
+'{{ projectSubscriptions }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ googleApiSourceId }}',
@@ -465,6 +493,16 @@ response
       description: >
         Optional. Config to control Platform logging for the GoogleApiSource.
         
+    - name: organizationSubscription
+      value: object
+      description: >
+        Optional. Config to enable subscribing to events from all projects in the GoogleApiSource's org.
+        
+    - name: projectSubscriptions
+      value: object
+      description: >
+        Optional. Config to enable subscribing to all events from a list of projects. All the projects must be in the same org as the GoogleApiSource.
+        
     - name: googleApiSourceId
       value: string
     - name: validateOnly
@@ -495,7 +533,9 @@ data__annotations = '{{ annotations }}',
 data__displayName = '{{ displayName }}',
 data__destination = '{{ destination }}',
 data__cryptoKeyName = '{{ cryptoKeyName }}',
-data__loggingConfig = '{{ loggingConfig }}'
+data__loggingConfig = '{{ loggingConfig }}',
+data__organizationSubscription = '{{ organizationSubscription }}',
+data__projectSubscriptions = '{{ projectSubscriptions }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

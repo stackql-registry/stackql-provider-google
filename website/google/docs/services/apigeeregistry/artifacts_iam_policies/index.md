@@ -230,16 +230,9 @@ The following methods are available for this resource:
     <td>Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_apis_versions_specs_artifacts_test_iam_permissions"><CopyableCode code="projects_locations_apis_versions_specs_artifacts_test_iam_permissions" /></a></td>
+    <td><a href="#projects_locations_artifacts_test_iam_permissions"><CopyableCode code="projects_locations_artifacts_test_iam_permissions" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a>, <a href="#parameter-specsId"><code>specsId</code></a>, <a href="#parameter-artifactsId"><code>artifactsId</code></a></td>
-    <td></td>
-    <td>Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may "fail open" without warning.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_apis_versions_artifacts_test_iam_permissions"><CopyableCode code="projects_locations_apis_versions_artifacts_test_iam_permissions" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a>, <a href="#parameter-artifactsId"><code>artifactsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-artifactsId"><code>artifactsId</code></a></td>
     <td></td>
     <td>Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may "fail open" without warning.</td>
 </tr>
@@ -251,9 +244,16 @@ The following methods are available for this resource:
     <td>Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may "fail open" without warning.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_artifacts_test_iam_permissions"><CopyableCode code="projects_locations_artifacts_test_iam_permissions" /></a></td>
+    <td><a href="#projects_locations_apis_versions_specs_artifacts_test_iam_permissions"><CopyableCode code="projects_locations_apis_versions_specs_artifacts_test_iam_permissions" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-artifactsId"><code>artifactsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a>, <a href="#parameter-specsId"><code>specsId</code></a>, <a href="#parameter-artifactsId"><code>artifactsId</code></a></td>
+    <td></td>
+    <td>Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may "fail open" without warning.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_apis_versions_artifacts_test_iam_permissions"><CopyableCode code="projects_locations_apis_versions_artifacts_test_iam_permissions" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a>, <a href="#parameter-artifactsId"><code>artifactsId</code></a></td>
     <td></td>
     <td>Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may "fail open" without warning.</td>
 </tr>
@@ -494,14 +494,47 @@ version;
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_apis_versions_specs_artifacts_test_iam_permissions"
+    defaultValue="projects_locations_artifacts_test_iam_permissions"
     values={[
-        { label: 'projects_locations_apis_versions_specs_artifacts_test_iam_permissions', value: 'projects_locations_apis_versions_specs_artifacts_test_iam_permissions' },
-        { label: 'projects_locations_apis_versions_artifacts_test_iam_permissions', value: 'projects_locations_apis_versions_artifacts_test_iam_permissions' },
+        { label: 'projects_locations_artifacts_test_iam_permissions', value: 'projects_locations_artifacts_test_iam_permissions' },
         { label: 'projects_locations_apis_artifacts_test_iam_permissions', value: 'projects_locations_apis_artifacts_test_iam_permissions' },
-        { label: 'projects_locations_artifacts_test_iam_permissions', value: 'projects_locations_artifacts_test_iam_permissions' }
+        { label: 'projects_locations_apis_versions_specs_artifacts_test_iam_permissions', value: 'projects_locations_apis_versions_specs_artifacts_test_iam_permissions' },
+        { label: 'projects_locations_apis_versions_artifacts_test_iam_permissions', value: 'projects_locations_apis_versions_artifacts_test_iam_permissions' }
     ]}
 >
+<TabItem value="projects_locations_artifacts_test_iam_permissions">
+
+Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may "fail open" without warning.
+
+```sql
+EXEC google.apigeeregistry.artifacts_iam_policies.projects_locations_artifacts_test_iam_permissions 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@artifactsId='{{ artifactsId }}' --required 
+@@json=
+'{
+"permissions": "{{ permissions }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_apis_artifacts_test_iam_permissions">
+
+Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may "fail open" without warning.
+
+```sql
+EXEC google.apigeeregistry.artifacts_iam_policies.projects_locations_apis_artifacts_test_iam_permissions 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@apisId='{{ apisId }}' --required, 
+@artifactsId='{{ artifactsId }}' --required 
+@@json=
+'{
+"permissions": "{{ permissions }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="projects_locations_apis_versions_specs_artifacts_test_iam_permissions">
 
 Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may "fail open" without warning.
@@ -531,39 +564,6 @@ EXEC google.apigeeregistry.artifacts_iam_policies.projects_locations_apis_versio
 @locationsId='{{ locationsId }}' --required, 
 @apisId='{{ apisId }}' --required, 
 @versionsId='{{ versionsId }}' --required, 
-@artifactsId='{{ artifactsId }}' --required 
-@@json=
-'{
-"permissions": "{{ permissions }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_apis_artifacts_test_iam_permissions">
-
-Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may "fail open" without warning.
-
-```sql
-EXEC google.apigeeregistry.artifacts_iam_policies.projects_locations_apis_artifacts_test_iam_permissions 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@apisId='{{ apisId }}' --required, 
-@artifactsId='{{ artifactsId }}' --required 
-@@json=
-'{
-"permissions": "{{ permissions }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_artifacts_test_iam_permissions">
-
-Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may "fail open" without warning.
-
-```sql
-EXEC google.apigeeregistry.artifacts_iam_policies.projects_locations_artifacts_test_iam_permissions 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
 @artifactsId='{{ artifactsId }}' --required 
 @@json=
 '{

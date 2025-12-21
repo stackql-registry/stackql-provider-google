@@ -109,12 +109,12 @@ EXEC google.discoveryengine.ranking_configs.projects_locations_ranking_configs_r
 @rankingConfigsId='{{ rankingConfigsId }}' --required 
 @@json=
 '{
-"model": "{{ model }}", 
 "topN": {{ topN }}, 
 "query": "{{ query }}", 
-"records": "{{ records }}", 
+"userLabels": "{{ userLabels }}", 
 "ignoreRecordDetailsInResponse": {{ ignoreRecordDetailsInResponse }}, 
-"userLabels": "{{ userLabels }}"
+"records": "{{ records }}", 
+"model": "{{ model }}"
 }'
 ;
 ```

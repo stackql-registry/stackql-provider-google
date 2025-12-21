@@ -79,7 +79,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="location" /></td>
     <td><code>string</code></td>
-    <td>Output only. The name of the Google Compute Engine [zone](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/regions-zones/regions-zones#available) or [region](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/regions-zones/regions-zones#available) in which the cluster resides.</td>
+    <td>Output only. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/regions-zones/regions-zones#available) or [region](https://cloud.google.com/compute/docs/regions-zones/regions-zones#available) in which the cluster resides.</td>
 </tr>
 <tr>
     <td><CopyableCode code="nodepoolConditions" /></td>
@@ -124,7 +124,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="zone" /></td>
     <td><code>string</code></td>
-    <td>Output only. The name of the Google Compute Engine [zone](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/zones#available) in which the operation is taking place. This field is deprecated, use location instead.</td>
+    <td>Output only. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/zones#available) in which the operation is taking place. This field is deprecated, use location instead.</td>
 </tr>
 </tbody>
 </table>
@@ -168,7 +168,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="location" /></td>
     <td><code>string</code></td>
-    <td>Output only. The name of the Google Compute Engine [zone](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/regions-zones/regions-zones#available) or [region](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/regions-zones/regions-zones#available) in which the cluster resides.</td>
+    <td>Output only. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/regions-zones/regions-zones#available) or [region](https://cloud.google.com/compute/docs/regions-zones/regions-zones#available) in which the cluster resides.</td>
 </tr>
 <tr>
     <td><CopyableCode code="nodepoolConditions" /></td>
@@ -213,7 +213,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="zone" /></td>
     <td><code>string</code></td>
-    <td>Output only. The name of the Google Compute Engine [zone](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/zones#available) in which the operation is taking place. This field is deprecated, use location instead.</td>
+    <td>Output only. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/zones#available) in which the operation is taking place. This field is deprecated, use location instead.</td>
 </tr>
 </tbody>
 </table>
@@ -524,10 +524,10 @@ EXEC google.container.operations.projects_locations_operations_cancel
 @operationsId='{{ operationsId }}' --required 
 @@json=
 '{
-"projectId": "{{ projectId }}", 
-"zone": "{{ zone }}", 
 "operationId": "{{ operationId }}", 
-"name": "{{ name }}"
+"name": "{{ name }}", 
+"zone": "{{ zone }}", 
+"projectId": "{{ projectId }}"
 }'
 ;
 ```
@@ -543,10 +543,10 @@ EXEC google.container.operations.projects_zones_operations_cancel
 @operationId='{{ operationId }}' --required 
 @@json=
 '{
-"projectId": "{{ projectId }}", 
-"zone": "{{ zone }}", 
 "operationId": "{{ operationId }}", 
-"name": "{{ name }}"
+"name": "{{ name }}", 
+"zone": "{{ zone }}", 
+"projectId": "{{ projectId }}"
 }'
 ;
 ```

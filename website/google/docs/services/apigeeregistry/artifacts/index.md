@@ -38,11 +38,11 @@ The following fields are returned by `SELECT` queries:
         { label: 'projects_locations_apis_versions_specs_artifacts_list', value: 'projects_locations_apis_versions_specs_artifacts_list' },
         { label: 'projects_locations_apis_versions_artifacts_get', value: 'projects_locations_apis_versions_artifacts_get' },
         { label: 'projects_locations_apis_deployments_artifacts_get', value: 'projects_locations_apis_deployments_artifacts_get' },
+        { label: 'projects_locations_apis_artifacts_get', value: 'projects_locations_apis_artifacts_get' },
         { label: 'projects_locations_apis_versions_artifacts_list', value: 'projects_locations_apis_versions_artifacts_list' },
         { label: 'projects_locations_apis_deployments_artifacts_list', value: 'projects_locations_apis_deployments_artifacts_list' },
-        { label: 'projects_locations_apis_artifacts_get', value: 'projects_locations_apis_artifacts_get' },
-        { label: 'projects_locations_apis_artifacts_list', value: 'projects_locations_apis_artifacts_list' },
         { label: 'projects_locations_artifacts_get', value: 'projects_locations_artifacts_get' },
+        { label: 'projects_locations_apis_artifacts_list', value: 'projects_locations_apis_artifacts_list' },
         { label: 'projects_locations_artifacts_list', value: 'projects_locations_artifacts_list' }
     ]}
 >
@@ -282,6 +282,65 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
+<TabItem value="projects_locations_apis_artifacts_get">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Resource name.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="annotations" /></td>
+    <td><code>object</code></td>
+    <td>Annotations attach non-identifying metadata to resources. Annotation keys and values are less restricted than those of labels, but should be generally used for small values of broad interest. Larger, topic- specific metadata should be stored in Artifacts.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="contents" /></td>
+    <td><code>string (byte)</code></td>
+    <td>Input only. The contents of the artifact. Provided by API callers when artifacts are created or replaced. To access the contents of an artifact, use GetArtifactContents.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Creation timestamp.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="hash" /></td>
+    <td><code>string</code></td>
+    <td>Output only. A SHA-256 hash of the artifact's contents. If the artifact is gzipped, this is the hash of the uncompressed artifact.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Labels attach identifying metadata to resources. Identifying metadata can be used to filter list operations. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one resource (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with "registry.googleapis.com/" and cannot be changed.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="mimeType" /></td>
+    <td><code>string</code></td>
+    <td>A content type specifier for the artifact. Content type specifiers are Media Types (https://en.wikipedia.org/wiki/Media_type) with a possible "schema" parameter that specifies a schema for the stored information. Content types can specify compression. Currently only GZip compression is supported (indicated with "+gzip").</td>
+</tr>
+<tr>
+    <td><CopyableCode code="sizeBytes" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Output only. The size of the artifact in bytes. If the artifact is gzipped, this is the size of the uncompressed artifact.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Last update timestamp.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
 <TabItem value="projects_locations_apis_versions_artifacts_list">
 
 <table>
@@ -400,7 +459,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_apis_artifacts_get">
+<TabItem value="projects_locations_artifacts_get">
 
 <table>
 <thead>
@@ -460,65 +519,6 @@ The following fields are returned by `SELECT` queries:
 </table>
 </TabItem>
 <TabItem value="projects_locations_apis_artifacts_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Resource name.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="annotations" /></td>
-    <td><code>object</code></td>
-    <td>Annotations attach non-identifying metadata to resources. Annotation keys and values are less restricted than those of labels, but should be generally used for small values of broad interest. Larger, topic- specific metadata should be stored in Artifacts.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="contents" /></td>
-    <td><code>string (byte)</code></td>
-    <td>Input only. The contents of the artifact. Provided by API callers when artifacts are created or replaced. To access the contents of an artifact, use GetArtifactContents.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Creation timestamp.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="hash" /></td>
-    <td><code>string</code></td>
-    <td>Output only. A SHA-256 hash of the artifact's contents. If the artifact is gzipped, this is the hash of the uncompressed artifact.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Labels attach identifying metadata to resources. Identifying metadata can be used to filter list operations. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one resource (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with "registry.googleapis.com/" and cannot be changed.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="mimeType" /></td>
-    <td><code>string</code></td>
-    <td>A content type specifier for the artifact. Content type specifiers are Media Types (https://en.wikipedia.org/wiki/Media_type) with a possible "schema" parameter that specifies a schema for the stored information. Content types can specify compression. Currently only GZip compression is supported (indicated with "+gzip").</td>
-</tr>
-<tr>
-    <td><CopyableCode code="sizeBytes" /></td>
-    <td><code>integer (int32)</code></td>
-    <td>Output only. The size of the artifact in bytes. If the artifact is gzipped, this is the size of the uncompressed artifact.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Last update timestamp.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="projects_locations_artifacts_get">
 
 <table>
 <thead>
@@ -664,7 +664,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_apis_versions_specs_artifacts_list"><CopyableCode code="projects_locations_apis_versions_specs_artifacts_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a>, <a href="#parameter-specsId"><code>specsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Returns matching artifacts.</td>
 </tr>
 <tr>
@@ -682,20 +682,6 @@ The following methods are available for this resource:
     <td>Returns a specified artifact.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_apis_versions_artifacts_list"><CopyableCode code="projects_locations_apis_versions_artifacts_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
-    <td>Returns matching artifacts.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_apis_deployments_artifacts_list"><CopyableCode code="projects_locations_apis_deployments_artifacts_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-deploymentsId"><code>deploymentsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
-    <td>Returns matching artifacts.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_apis_artifacts_get"><CopyableCode code="projects_locations_apis_artifacts_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-artifactsId"><code>artifactsId</code></a></td>
@@ -703,10 +689,17 @@ The following methods are available for this resource:
     <td>Returns a specified artifact.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_apis_artifacts_list"><CopyableCode code="projects_locations_apis_artifacts_list" /></a></td>
+    <td><a href="#projects_locations_apis_versions_artifacts_list"><CopyableCode code="projects_locations_apis_versions_artifacts_list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Returns matching artifacts.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_apis_deployments_artifacts_list"><CopyableCode code="projects_locations_apis_deployments_artifacts_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-deploymentsId"><code>deploymentsId</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Returns matching artifacts.</td>
 </tr>
 <tr>
@@ -717,10 +710,17 @@ The following methods are available for this resource:
     <td>Returns a specified artifact.</td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_apis_artifacts_list"><CopyableCode code="projects_locations_apis_artifacts_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Returns matching artifacts.</td>
+</tr>
+<tr>
     <td><a href="#projects_locations_artifacts_list"><CopyableCode code="projects_locations_artifacts_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Returns matching artifacts.</td>
 </tr>
 <tr>
@@ -916,11 +916,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
         { label: 'projects_locations_apis_versions_specs_artifacts_list', value: 'projects_locations_apis_versions_specs_artifacts_list' },
         { label: 'projects_locations_apis_versions_artifacts_get', value: 'projects_locations_apis_versions_artifacts_get' },
         { label: 'projects_locations_apis_deployments_artifacts_get', value: 'projects_locations_apis_deployments_artifacts_get' },
+        { label: 'projects_locations_apis_artifacts_get', value: 'projects_locations_apis_artifacts_get' },
         { label: 'projects_locations_apis_versions_artifacts_list', value: 'projects_locations_apis_versions_artifacts_list' },
         { label: 'projects_locations_apis_deployments_artifacts_list', value: 'projects_locations_apis_deployments_artifacts_list' },
-        { label: 'projects_locations_apis_artifacts_get', value: 'projects_locations_apis_artifacts_get' },
-        { label: 'projects_locations_apis_artifacts_list', value: 'projects_locations_apis_artifacts_list' },
         { label: 'projects_locations_artifacts_get', value: 'projects_locations_artifacts_get' },
+        { label: 'projects_locations_apis_artifacts_list', value: 'projects_locations_apis_artifacts_list' },
         { label: 'projects_locations_artifacts_list', value: 'projects_locations_artifacts_list' }
     ]}
 >
@@ -970,9 +970,9 @@ AND locationsId = '{{ locationsId }}' -- required
 AND apisId = '{{ apisId }}' -- required
 AND versionsId = '{{ versionsId }}' -- required
 AND specsId = '{{ specsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -1025,60 +1025,6 @@ AND artifactsId = '{{ artifactsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_apis_versions_artifacts_list">
-
-Returns matching artifacts.
-
-```sql
-SELECT
-name,
-annotations,
-contents,
-createTime,
-hash,
-labels,
-mimeType,
-sizeBytes,
-updateTime
-FROM google.apigeeregistry.artifacts
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND apisId = '{{ apisId }}' -- required
-AND versionsId = '{{ versionsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_apis_deployments_artifacts_list">
-
-Returns matching artifacts.
-
-```sql
-SELECT
-name,
-annotations,
-contents,
-createTime,
-hash,
-labels,
-mimeType,
-sizeBytes,
-updateTime
-FROM google.apigeeregistry.artifacts
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND apisId = '{{ apisId }}' -- required
-AND deploymentsId = '{{ deploymentsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_apis_artifacts_get">
 
 Returns a specified artifact.
@@ -1102,7 +1048,7 @@ AND artifactsId = '{{ artifactsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_apis_artifacts_list">
+<TabItem value="projects_locations_apis_versions_artifacts_list">
 
 Returns matching artifacts.
 
@@ -1121,10 +1067,38 @@ FROM google.apigeeregistry.artifacts
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND apisId = '{{ apisId }}' -- required
+AND versionsId = '{{ versionsId }}' -- required
+AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_apis_deployments_artifacts_list">
+
+Returns matching artifacts.
+
+```sql
+SELECT
+name,
+annotations,
+contents,
+createTime,
+hash,
+labels,
+mimeType,
+sizeBytes,
+updateTime
+FROM google.apigeeregistry.artifacts
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND apisId = '{{ apisId }}' -- required
+AND deploymentsId = '{{ deploymentsId }}' -- required
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -1150,6 +1124,32 @@ AND artifactsId = '{{ artifactsId }}' -- required
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_apis_artifacts_list">
+
+Returns matching artifacts.
+
+```sql
+SELECT
+name,
+annotations,
+contents,
+createTime,
+hash,
+labels,
+mimeType,
+sizeBytes,
+updateTime
+FROM google.apigeeregistry.artifacts
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND apisId = '{{ apisId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
 <TabItem value="projects_locations_artifacts_list">
 
 Returns matching artifacts.
@@ -1168,10 +1168,10 @@ updateTime
 FROM google.apigeeregistry.artifacts
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -1197,9 +1197,9 @@ Creates a specified artifact.
 
 ```sql
 INSERT INTO google.apigeeregistry.artifacts (
+data__contents,
 data__name,
 data__mimeType,
-data__contents,
 data__labels,
 data__annotations,
 projectsId,
@@ -1210,9 +1210,9 @@ specsId,
 artifactId
 )
 SELECT 
+'{{ contents }}',
 '{{ name }}',
 '{{ mimeType }}',
-'{{ contents }}',
 '{{ labels }}',
 '{{ annotations }}',
 '{{ projectsId }}',
@@ -1240,9 +1240,9 @@ Creates a specified artifact.
 
 ```sql
 INSERT INTO google.apigeeregistry.artifacts (
+data__contents,
 data__name,
 data__mimeType,
-data__contents,
 data__labels,
 data__annotations,
 projectsId,
@@ -1252,9 +1252,9 @@ versionsId,
 artifactId
 )
 SELECT 
+'{{ contents }}',
 '{{ name }}',
 '{{ mimeType }}',
-'{{ contents }}',
 '{{ labels }}',
 '{{ annotations }}',
 '{{ projectsId }}',
@@ -1281,9 +1281,9 @@ Creates a specified artifact.
 
 ```sql
 INSERT INTO google.apigeeregistry.artifacts (
+data__contents,
 data__name,
 data__mimeType,
-data__contents,
 data__labels,
 data__annotations,
 projectsId,
@@ -1293,9 +1293,9 @@ deploymentsId,
 artifactId
 )
 SELECT 
+'{{ contents }}',
 '{{ name }}',
 '{{ mimeType }}',
-'{{ contents }}',
 '{{ labels }}',
 '{{ annotations }}',
 '{{ projectsId }}',
@@ -1322,9 +1322,9 @@ Creates a specified artifact.
 
 ```sql
 INSERT INTO google.apigeeregistry.artifacts (
+data__contents,
 data__name,
 data__mimeType,
-data__contents,
 data__labels,
 data__annotations,
 projectsId,
@@ -1333,9 +1333,9 @@ apisId,
 artifactId
 )
 SELECT 
+'{{ contents }}',
 '{{ name }}',
 '{{ mimeType }}',
-'{{ contents }}',
 '{{ labels }}',
 '{{ annotations }}',
 '{{ projectsId }}',
@@ -1361,9 +1361,9 @@ Creates a specified artifact.
 
 ```sql
 INSERT INTO google.apigeeregistry.artifacts (
+data__contents,
 data__name,
 data__mimeType,
-data__contents,
 data__labels,
 data__annotations,
 projectsId,
@@ -1371,9 +1371,9 @@ locationsId,
 artifactId
 )
 SELECT 
+'{{ contents }}',
 '{{ name }}',
 '{{ mimeType }}',
-'{{ contents }}',
 '{{ labels }}',
 '{{ annotations }}',
 '{{ projectsId }}',
@@ -1416,6 +1416,11 @@ updateTime
     - name: deploymentsId
       value: string
       description: Required parameter for the artifacts resource.
+    - name: contents
+      value: string
+      description: >
+        Input only. The contents of the artifact. Provided by API callers when artifacts are created or replaced. To access the contents of an artifact, use GetArtifactContents.
+        
     - name: name
       value: string
       description: >
@@ -1425,11 +1430,6 @@ updateTime
       value: string
       description: >
         A content type specifier for the artifact. Content type specifiers are Media Types (https://en.wikipedia.org/wiki/Media_type) with a possible "schema" parameter that specifies a schema for the stored information. Content types can specify compression. Currently only GZip compression is supported (indicated with "+gzip").
-        
-    - name: contents
-      value: string
-      description: >
-        Input only. The contents of the artifact. Provided by API callers when artifacts are created or replaced. To access the contents of an artifact, use GetArtifactContents.
         
     - name: labels
       value: object
@@ -1467,9 +1467,9 @@ Used to replace a specified artifact.
 ```sql
 REPLACE google.apigeeregistry.artifacts
 SET 
+data__contents = '{{ contents }}',
 data__name = '{{ name }}',
 data__mimeType = '{{ mimeType }}',
-data__contents = '{{ contents }}',
 data__labels = '{{ labels }}',
 data__annotations = '{{ annotations }}'
 WHERE 
@@ -1498,9 +1498,9 @@ Used to replace a specified artifact.
 ```sql
 REPLACE google.apigeeregistry.artifacts
 SET 
+data__contents = '{{ contents }}',
 data__name = '{{ name }}',
 data__mimeType = '{{ mimeType }}',
-data__contents = '{{ contents }}',
 data__labels = '{{ labels }}',
 data__annotations = '{{ annotations }}'
 WHERE 
@@ -1528,9 +1528,9 @@ Used to replace a specified artifact.
 ```sql
 REPLACE google.apigeeregistry.artifacts
 SET 
+data__contents = '{{ contents }}',
 data__name = '{{ name }}',
 data__mimeType = '{{ mimeType }}',
-data__contents = '{{ contents }}',
 data__labels = '{{ labels }}',
 data__annotations = '{{ annotations }}'
 WHERE 
@@ -1558,9 +1558,9 @@ Used to replace a specified artifact.
 ```sql
 REPLACE google.apigeeregistry.artifacts
 SET 
+data__contents = '{{ contents }}',
 data__name = '{{ name }}',
 data__mimeType = '{{ mimeType }}',
-data__contents = '{{ contents }}',
 data__labels = '{{ labels }}',
 data__annotations = '{{ annotations }}'
 WHERE 
@@ -1587,9 +1587,9 @@ Used to replace a specified artifact.
 ```sql
 REPLACE google.apigeeregistry.artifacts
 SET 
+data__contents = '{{ contents }}',
 data__name = '{{ name }}',
 data__mimeType = '{{ mimeType }}',
-data__contents = '{{ contents }}',
 data__labels = '{{ labels }}',
 data__annotations = '{{ annotations }}'
 WHERE 

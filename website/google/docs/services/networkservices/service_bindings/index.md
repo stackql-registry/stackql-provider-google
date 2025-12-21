@@ -98,41 +98,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Identifier. Name of the ServiceBinding resource. It matches pattern `projects/*/locations/*/serviceBindings/`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp when the resource was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Optional. A free-text description of the resource. Max length 1024 characters.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Set of label tags associated with the ServiceBinding resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="service" /></td>
-    <td><code>string</code></td>
-    <td>Optional. The full Service Directory Service name of the format `projects/*/locations/*/namespaces/*/services/*`. This field is for Service Directory integration which will be deprecated soon.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="serviceId" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The unique identifier of the Service Directory Service against which the ServiceBinding resource is validated. This is populated when the Service Binding resource is used in another resource (like Backend Service). This is of the UUID4 format. This field is for Service Directory integration which will be deprecated soon.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp when the resource was updated.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -277,13 +242,7 @@ Lists ServiceBinding in a given project and location.
 
 ```sql
 SELECT
-name,
-createTime,
-description,
-labels,
-service,
-serviceId,
-updateTime
+*
 FROM google.networkservices.service_bindings
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
@@ -310,18 +269,18 @@ Creates a new ServiceBinding in a given project and location.
 
 ```sql
 INSERT INTO google.networkservices.service_bindings (
-data__name,
 data__description,
 data__service,
+data__name,
 data__labels,
 projectsId,
 locationsId,
 serviceBindingId
 )
 SELECT 
-'{{ name }}',
 '{{ description }}',
 '{{ service }}',
+'{{ name }}',
 '{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -347,11 +306,6 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the service_bindings resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. Name of the ServiceBinding resource. It matches pattern `projects/*/locations/*/serviceBindings/`.
-        
     - name: description
       value: string
       description: >
@@ -361,6 +315,11 @@ response
       value: string
       description: >
         Optional. The full Service Directory Service name of the format `projects/*/locations/*/namespaces/*/services/*`. This field is for Service Directory integration which will be deprecated soon.
+        
+    - name: name
+      value: string
+      description: >
+        Identifier. Name of the ServiceBinding resource. It matches pattern `projects/*/locations/*/serviceBindings/`.
         
     - name: labels
       value: object
@@ -389,9 +348,9 @@ Updates the parameters of a single ServiceBinding.
 ```sql
 UPDATE google.networkservices.service_bindings
 SET 
-data__name = '{{ name }}',
 data__description = '{{ description }}',
 data__service = '{{ service }}',
+data__name = '{{ name }}',
 data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

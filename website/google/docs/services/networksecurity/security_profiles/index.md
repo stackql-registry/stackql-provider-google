@@ -351,25 +351,25 @@ Creates a new SecurityProfile in a given organization and location.
 
 ```sql
 INSERT INTO google.networksecurity.security_profiles (
-data__threatPreventionProfile,
-data__customMirroringProfile,
-data__customInterceptProfile,
-data__name,
 data__description,
-data__labels,
+data__customMirroringProfile,
+data__name,
 data__type,
+data__labels,
+data__threatPreventionProfile,
+data__customInterceptProfile,
 organizationsId,
 locationsId,
 securityProfileId
 )
 SELECT 
-'{{ threatPreventionProfile }}',
-'{{ customMirroringProfile }}',
-'{{ customInterceptProfile }}',
-'{{ name }}',
 '{{ description }}',
-'{{ labels }}',
+'{{ customMirroringProfile }}',
+'{{ name }}',
 '{{ type }}',
+'{{ labels }}',
+'{{ threatPreventionProfile }}',
+'{{ customInterceptProfile }}',
 '{{ organizationsId }}',
 '{{ locationsId }}',
 '{{ securityProfileId }}'
@@ -394,35 +394,20 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the security_profiles resource.
-    - name: threatPreventionProfile
-      value: object
+    - name: description
+      value: string
       description: >
-        The threat prevention configuration for the SecurityProfile.
+        Optional. An optional description of the profile. Max length 512 characters.
         
     - name: customMirroringProfile
       value: object
       description: >
         The custom Packet Mirroring v2 configuration for the SecurityProfile.
         
-    - name: customInterceptProfile
-      value: object
-      description: >
-        The custom TPPI configuration for the SecurityProfile.
-        
     - name: name
       value: string
       description: >
         Immutable. Identifier. Name of the SecurityProfile resource. It matches pattern `projects|organizations/*/locations/{location}/securityProfiles/{security_profile}`.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. An optional description of the profile. Max length 512 characters.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Labels as key value pairs.
         
     - name: type
       value: string
@@ -430,6 +415,21 @@ response
         Immutable. The single ProfileType that the SecurityProfile resource configures.
         
       valid_values: ['PROFILE_TYPE_UNSPECIFIED', 'THREAT_PREVENTION', 'CUSTOM_MIRRORING', 'CUSTOM_INTERCEPT']
+    - name: labels
+      value: object
+      description: >
+        Optional. Labels as key value pairs.
+        
+    - name: threatPreventionProfile
+      value: object
+      description: >
+        The threat prevention configuration for the SecurityProfile.
+        
+    - name: customInterceptProfile
+      value: object
+      description: >
+        The custom TPPI configuration for the SecurityProfile.
+        
     - name: securityProfileId
       value: string
 ```
@@ -452,13 +452,13 @@ Updates the parameters of a single SecurityProfile.
 ```sql
 UPDATE google.networksecurity.security_profiles
 SET 
-data__threatPreventionProfile = '{{ threatPreventionProfile }}',
-data__customMirroringProfile = '{{ customMirroringProfile }}',
-data__customInterceptProfile = '{{ customInterceptProfile }}',
-data__name = '{{ name }}',
 data__description = '{{ description }}',
+data__customMirroringProfile = '{{ customMirroringProfile }}',
+data__name = '{{ name }}',
+data__type = '{{ type }}',
 data__labels = '{{ labels }}',
-data__type = '{{ type }}'
+data__threatPreventionProfile = '{{ threatPreventionProfile }}',
+data__customInterceptProfile = '{{ customInterceptProfile }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

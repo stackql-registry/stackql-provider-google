@@ -77,7 +77,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="multiplexed" /></td>
     <td><code>boolean</code></td>
-    <td>Optional. If `true`, specifies a multiplexed session. Use a multiplexed session for multiple, concurrent read-only operations. Don't use them for read-write transactions, partitioned reads, or partitioned queries. Use `sessions.create` to create multiplexed sessions. Don't use BatchCreateSessions to create a multiplexed session. You can't delete or list multiplexed sessions.</td>
+    <td>Optional. If `true`, specifies a multiplexed session. Use a multiplexed session for multiple, concurrent operations including any combination of read-only and read-write transactions. Use `sessions.create` to create multiplexed sessions. Don't use BatchCreateSessions to create a multiplexed session. You can't delete or list multiplexed sessions.</td>
 </tr>
 </tbody>
 </table>
@@ -121,7 +121,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="multiplexed" /></td>
     <td><code>boolean</code></td>
-    <td>Optional. If `true`, specifies a multiplexed session. Use a multiplexed session for multiple, concurrent read-only operations. Don't use them for read-write transactions, partitioned reads, or partitioned queries. Use `sessions.create` to create multiplexed sessions. Don't use BatchCreateSessions to create a multiplexed session. You can't delete or list multiplexed sessions.</td>
+    <td>Optional. If `true`, specifies a multiplexed session. Use a multiplexed session for multiple, concurrent operations including any combination of read-only and read-write transactions. Use `sessions.create` to create multiplexed sessions. Don't use BatchCreateSessions to create a multiplexed session. You can't delete or list multiplexed sessions.</td>
 </tr>
 </tbody>
 </table>
@@ -154,7 +154,7 @@ The following methods are available for this resource:
     <td><a href="#projects_instances_databases_sessions_list"><CopyableCode code="projects_instances_databases_sessions_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all sessions in a given database.</td>
 </tr>
 <tr>
@@ -179,25 +179,11 @@ The following methods are available for this resource:
     <td>Ends a session, releasing server resources associated with it. This asynchronously triggers the cancellation of any operations that are running with this session.</td>
 </tr>
 <tr>
-    <td><a href="#projects_instances_databases_sessions_adapter"><CopyableCode code="projects_instances_databases_sessions_adapter" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a></td>
-    <td></td>
-    <td>Creates a new session to be used for requests made by the adapter. A session identifies a specific incarnation of a database resource and is meant to be reused across many `AdaptMessage` calls.</td>
-</tr>
-<tr>
-    <td><a href="#projects_instances_databases_sessions_adapt_message"><CopyableCode code="projects_instances_databases_sessions_adapt_message" /></a></td>
+    <td><a href="#projects_instances_databases_sessions_partition_read"><CopyableCode code="projects_instances_databases_sessions_partition_read" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
     <td></td>
-    <td>Handles a single message from the client and returns the result as a stream. The server will interpret the message frame and respond with message frames to the client.</td>
-</tr>
-<tr>
-    <td><a href="#projects_instances_databases_sessions_execute_sql"><CopyableCode code="projects_instances_databases_sessions_execute_sql" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
-    <td></td>
-    <td>Executes an SQL statement, returning all results in a single reply. This method can't be used to return a result set larger than 10 MiB; if the query yields more data than that, the query fails with a `FAILED_PRECONDITION` error. Operations inside read-write transactions might return `ABORTED`. If this occurs, the application should restart the transaction from the beginning. See Transaction for more details. Larger result sets can be fetched in streaming fashion by calling ExecuteStreamingSql instead. The query string can be SQL or [Graph Query Language (GQL)](https://cloud.google.com/spanner/docs/reference/standard-sql/graph-intro).</td>
+    <td>Creates a set of partition tokens that can be used to execute a read operation in parallel. Each of the returned partition tokens can be used by StreamingRead to specify a subset of the read result to read. The same session and read-only transaction must be used by the `PartitionReadRequest` used to create the partition tokens and the `ReadRequests` that use the partition tokens. There are no ordering guarantees on rows returned among the returned partition tokens, or even within each individual `StreamingRead` call issued with a `partition_token`. Partition tokens become invalid when the session used to create them is deleted, is idle for too long, begins a new transaction, or becomes too old. When any of these happen, it isn't possible to resume the read, and the whole operation must be restarted from the beginning.</td>
 </tr>
 <tr>
     <td><a href="#projects_instances_databases_sessions_execute_streaming_sql"><CopyableCode code="projects_instances_databases_sessions_execute_streaming_sql" /></a></td>
@@ -207,18 +193,11 @@ The following methods are available for this resource:
     <td>Like ExecuteSql, except returns the result set as a stream. Unlike ExecuteSql, there is no limit on the size of the returned result set. However, no individual row in the result set can exceed 100 MiB, and no column value can exceed 10 MiB. The query string can be SQL or [Graph Query Language (GQL)](https://cloud.google.com/spanner/docs/reference/standard-sql/graph-intro).</td>
 </tr>
 <tr>
-    <td><a href="#projects_instances_databases_sessions_execute_batch_dml"><CopyableCode code="projects_instances_databases_sessions_execute_batch_dml" /></a></td>
+    <td><a href="#projects_instances_databases_sessions_rollback"><CopyableCode code="projects_instances_databases_sessions_rollback" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
     <td></td>
-    <td>Executes a batch of SQL DML statements. This method allows many statements to be run with lower latency than submitting them sequentially with ExecuteSql. Statements are executed in sequential order. A request can succeed even if a statement fails. The ExecuteBatchDmlResponse.status field in the response provides information about the statement that failed. Clients must inspect this field to determine whether an error occurred. Execution stops after the first failed statement; the remaining statements are not executed.</td>
-</tr>
-<tr>
-    <td><a href="#projects_instances_databases_sessions_read"><CopyableCode code="projects_instances_databases_sessions_read" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
-    <td></td>
-    <td>Reads rows from the database using key lookups and scans, as a simple key/value style alternative to ExecuteSql. This method can't be used to return a result set larger than 10 MiB; if the read matches more data than that, the read fails with a `FAILED_PRECONDITION` error. Reads inside read-write transactions might return `ABORTED`. If this occurs, the application should restart the transaction from the beginning. See Transaction for more details. Larger result sets can be yielded in streaming fashion by calling StreamingRead instead.</td>
+    <td>Rolls back a transaction, releasing any locks it holds. It's a good idea to call this for any transaction that includes one or more Read or ExecuteSql requests and ultimately decides not to commit. `Rollback` returns `OK` if it successfully aborts the transaction, the transaction was already aborted, or the transaction isn't found. `Rollback` never returns `ABORTED`.</td>
 </tr>
 <tr>
     <td><a href="#projects_instances_databases_sessions_streaming_read"><CopyableCode code="projects_instances_databases_sessions_streaming_read" /></a></td>
@@ -228,6 +207,13 @@ The following methods are available for this resource:
     <td>Like Read, except returns the result set as a stream. Unlike Read, there is no limit on the size of the returned result set. However, no individual row in the result set can exceed 100 MiB, and no column value can exceed 10 MiB.</td>
 </tr>
 <tr>
+    <td><a href="#projects_instances_databases_sessions_adapt_message"><CopyableCode code="projects_instances_databases_sessions_adapt_message" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
+    <td></td>
+    <td>Handles a single message from the client and returns the result as a stream. The server will interpret the message frame and respond with message frames to the client.</td>
+</tr>
+<tr>
     <td><a href="#projects_instances_databases_sessions_begin_transaction"><CopyableCode code="projects_instances_databases_sessions_begin_transaction" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
@@ -235,18 +221,25 @@ The following methods are available for this resource:
     <td>Begins a new transaction. This step can often be skipped: Read, ExecuteSql and Commit can begin a new transaction as a side-effect.</td>
 </tr>
 <tr>
-    <td><a href="#projects_instances_databases_sessions_commit"><CopyableCode code="projects_instances_databases_sessions_commit" /></a></td>
+    <td><a href="#projects_instances_databases_sessions_execute_sql"><CopyableCode code="projects_instances_databases_sessions_execute_sql" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
     <td></td>
-    <td>Commits a transaction. The request includes the mutations to be applied to rows in the database. `Commit` might return an `ABORTED` error. This can occur at any time; commonly, the cause is conflicts with concurrent transactions. However, it can also happen for a variety of other reasons. If `Commit` returns `ABORTED`, the caller should retry the transaction from the beginning, reusing the same session. On very rare occasions, `Commit` might return `UNKNOWN`. This can happen, for example, if the client job experiences a 1+ hour networking failure. At that point, Cloud Spanner has lost track of the transaction outcome and we recommend that you perform another read from the database to see the state of things as they are now.</td>
+    <td>Executes an SQL statement, returning all results in a single reply. This method can't be used to return a result set larger than 10 MiB; if the query yields more data than that, the query fails with a `FAILED_PRECONDITION` error. Operations inside read-write transactions might return `ABORTED`. If this occurs, the application should restart the transaction from the beginning. See Transaction for more details. Larger result sets can be fetched in streaming fashion by calling ExecuteStreamingSql instead. The query string can be SQL or [Graph Query Language (GQL)](https://cloud.google.com/spanner/docs/reference/standard-sql/graph-intro).</td>
 </tr>
 <tr>
-    <td><a href="#projects_instances_databases_sessions_rollback"><CopyableCode code="projects_instances_databases_sessions_rollback" /></a></td>
+    <td><a href="#projects_instances_databases_sessions_read"><CopyableCode code="projects_instances_databases_sessions_read" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
     <td></td>
-    <td>Rolls back a transaction, releasing any locks it holds. It's a good idea to call this for any transaction that includes one or more Read or ExecuteSql requests and ultimately decides not to commit. `Rollback` returns `OK` if it successfully aborts the transaction, the transaction was already aborted, or the transaction isn't found. `Rollback` never returns `ABORTED`.</td>
+    <td>Reads rows from the database using key lookups and scans, as a simple key/value style alternative to ExecuteSql. This method can't be used to return a result set larger than 10 MiB; if the read matches more data than that, the read fails with a `FAILED_PRECONDITION` error. Reads inside read-write transactions might return `ABORTED`. If this occurs, the application should restart the transaction from the beginning. See Transaction for more details. Larger result sets can be yielded in streaming fashion by calling StreamingRead instead.</td>
+</tr>
+<tr>
+    <td><a href="#projects_instances_databases_sessions_batch_write"><CopyableCode code="projects_instances_databases_sessions_batch_write" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
+    <td></td>
+    <td>Batches the supplied mutation groups in a collection of efficient transactions. All mutations in a group are committed atomically. However, mutations across groups can be committed non-atomically in an unspecified order and thus, they must be independent of each other. Partial failure is possible, that is, some groups might have been committed successfully, while some might have failed. The results of individual batches are streamed into the response as the batches are applied. `BatchWrite` requests are not replay protected, meaning that each mutation group can be applied more than once. Replays of non-idempotent mutations can have undesirable effects. For example, replays of an insert mutation can produce an already exists error or if you use generated or commit timestamp-based keys, it can result in additional rows being added to the mutation's table. We recommend structuring your mutation groups to be idempotent to avoid this issue.</td>
 </tr>
 <tr>
     <td><a href="#projects_instances_databases_sessions_partition_query"><CopyableCode code="projects_instances_databases_sessions_partition_query" /></a></td>
@@ -256,18 +249,25 @@ The following methods are available for this resource:
     <td>Creates a set of partition tokens that can be used to execute a query operation in parallel. Each of the returned partition tokens can be used by ExecuteStreamingSql to specify a subset of the query result to read. The same session and read-only transaction must be used by the `PartitionQueryRequest` used to create the partition tokens and the `ExecuteSqlRequests` that use the partition tokens. Partition tokens become invalid when the session used to create them is deleted, is idle for too long, begins a new transaction, or becomes too old. When any of these happen, it isn't possible to resume the query, and the whole operation must be restarted from the beginning.</td>
 </tr>
 <tr>
-    <td><a href="#projects_instances_databases_sessions_partition_read"><CopyableCode code="projects_instances_databases_sessions_partition_read" /></a></td>
+    <td><a href="#projects_instances_databases_sessions_commit"><CopyableCode code="projects_instances_databases_sessions_commit" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
     <td></td>
-    <td>Creates a set of partition tokens that can be used to execute a read operation in parallel. Each of the returned partition tokens can be used by StreamingRead to specify a subset of the read result to read. The same session and read-only transaction must be used by the `PartitionReadRequest` used to create the partition tokens and the `ReadRequests` that use the partition tokens. There are no ordering guarantees on rows returned among the returned partition tokens, or even within each individual `StreamingRead` call issued with a `partition_token`. Partition tokens become invalid when the session used to create them is deleted, is idle for too long, begins a new transaction, or becomes too old. When any of these happen, it isn't possible to resume the read, and the whole operation must be restarted from the beginning.</td>
+    <td>Commits a transaction. The request includes the mutations to be applied to rows in the database. `Commit` might return an `ABORTED` error. This can occur at any time; commonly, the cause is conflicts with concurrent transactions. However, it can also happen for a variety of other reasons. If `Commit` returns `ABORTED`, the caller should retry the transaction from the beginning, reusing the same session. On very rare occasions, `Commit` might return `UNKNOWN`. This can happen, for example, if the client job experiences a 1+ hour networking failure. At that point, Cloud Spanner has lost track of the transaction outcome and we recommend that you perform another read from the database to see the state of things as they are now.</td>
 </tr>
 <tr>
-    <td><a href="#projects_instances_databases_sessions_batch_write"><CopyableCode code="projects_instances_databases_sessions_batch_write" /></a></td>
+    <td><a href="#projects_instances_databases_sessions_adapter"><CopyableCode code="projects_instances_databases_sessions_adapter" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a></td>
+    <td></td>
+    <td>Creates a new session to be used for requests made by the adapter. A session identifies a specific incarnation of a database resource and is meant to be reused across many `AdaptMessage` calls.</td>
+</tr>
+<tr>
+    <td><a href="#projects_instances_databases_sessions_execute_batch_dml"><CopyableCode code="projects_instances_databases_sessions_execute_batch_dml" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a>, <a href="#parameter-sessionsId"><code>sessionsId</code></a></td>
     <td></td>
-    <td>Batches the supplied mutation groups in a collection of efficient transactions. All mutations in a group are committed atomically. However, mutations across groups can be committed non-atomically in an unspecified order and thus, they must be independent of each other. Partial failure is possible, that is, some groups might have been committed successfully, while some might have failed. The results of individual batches are streamed into the response as the batches are applied. `BatchWrite` requests are not replay protected, meaning that each mutation group can be applied more than once. Replays of non-idempotent mutations can have undesirable effects. For example, replays of an insert mutation can produce an already exists error or if you use generated or commit timestamp-based keys, it can result in additional rows being added to the mutation's table. We recommend structuring your mutation groups to be idempotent to avoid this issue.</td>
+    <td>Executes a batch of SQL DML statements. This method allows many statements to be run with lower latency than submitting them sequentially with ExecuteSql. Statements are executed in sequential order. A request can succeed even if a statement fails. The ExecuteBatchDmlResponse.status field in the response provides information about the statement that failed. Clients must inspect this field to determine whether an error occurred. Execution stops after the first failed statement; the remaining statements are not executed.</td>
 </tr>
 </tbody>
 </table>
@@ -369,8 +369,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND instancesId = '{{ instancesId }}' -- required
 AND databasesId = '{{ databasesId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -419,15 +419,15 @@ Creates multiple new sessions. This API can be used to initialize a session cach
 
 ```sql
 INSERT INTO google.spanner.sessions (
-data__sessionTemplate,
 data__sessionCount,
+data__sessionTemplate,
 projectsId,
 instancesId,
 databasesId
 )
 SELECT 
-'{{ sessionTemplate }}',
 {{ sessionCount }},
+'{{ sessionTemplate }}',
 '{{ projectsId }}',
 '{{ instancesId }}',
 '{{ databasesId }}'
@@ -454,17 +454,17 @@ session
     - name: session
       value: object
       description: >
-        Required. The session to create.
-        
-    - name: sessionTemplate
-      value: object
-      description: >
-        Parameters to apply to each created session.
+        A session in the Cloud Spanner API.
         
     - name: sessionCount
       value: integer
       description: >
-        Required. The number of sessions to be created in this batch call. The API can return fewer than the requested number of sessions. If a specific number of sessions are desired, the client can make additional calls to `BatchCreateSessions` (adjusting session_count as necessary).
+        Required. The number of sessions to be created in this batch call. At least one session is created. The API can return fewer than the requested number of sessions. If a specific number of sessions are desired, the client can make additional calls to `BatchCreateSessions` (adjusting session_count as necessary).
+        
+    - name: sessionTemplate
+      value: object
+      description: >
+        A session in the Cloud Spanner API.
         
 ```
 </TabItem>
@@ -498,64 +498,29 @@ AND sessionsId = '{{ sessionsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_instances_databases_sessions_adapter"
+    defaultValue="projects_instances_databases_sessions_partition_read"
     values={[
-        { label: 'projects_instances_databases_sessions_adapter', value: 'projects_instances_databases_sessions_adapter' },
-        { label: 'projects_instances_databases_sessions_adapt_message', value: 'projects_instances_databases_sessions_adapt_message' },
-        { label: 'projects_instances_databases_sessions_execute_sql', value: 'projects_instances_databases_sessions_execute_sql' },
-        { label: 'projects_instances_databases_sessions_execute_streaming_sql', value: 'projects_instances_databases_sessions_execute_streaming_sql' },
-        { label: 'projects_instances_databases_sessions_execute_batch_dml', value: 'projects_instances_databases_sessions_execute_batch_dml' },
-        { label: 'projects_instances_databases_sessions_read', value: 'projects_instances_databases_sessions_read' },
-        { label: 'projects_instances_databases_sessions_streaming_read', value: 'projects_instances_databases_sessions_streaming_read' },
-        { label: 'projects_instances_databases_sessions_begin_transaction', value: 'projects_instances_databases_sessions_begin_transaction' },
-        { label: 'projects_instances_databases_sessions_commit', value: 'projects_instances_databases_sessions_commit' },
-        { label: 'projects_instances_databases_sessions_rollback', value: 'projects_instances_databases_sessions_rollback' },
-        { label: 'projects_instances_databases_sessions_partition_query', value: 'projects_instances_databases_sessions_partition_query' },
         { label: 'projects_instances_databases_sessions_partition_read', value: 'projects_instances_databases_sessions_partition_read' },
-        { label: 'projects_instances_databases_sessions_batch_write', value: 'projects_instances_databases_sessions_batch_write' }
+        { label: 'projects_instances_databases_sessions_execute_streaming_sql', value: 'projects_instances_databases_sessions_execute_streaming_sql' },
+        { label: 'projects_instances_databases_sessions_rollback', value: 'projects_instances_databases_sessions_rollback' },
+        { label: 'projects_instances_databases_sessions_streaming_read', value: 'projects_instances_databases_sessions_streaming_read' },
+        { label: 'projects_instances_databases_sessions_adapt_message', value: 'projects_instances_databases_sessions_adapt_message' },
+        { label: 'projects_instances_databases_sessions_begin_transaction', value: 'projects_instances_databases_sessions_begin_transaction' },
+        { label: 'projects_instances_databases_sessions_execute_sql', value: 'projects_instances_databases_sessions_execute_sql' },
+        { label: 'projects_instances_databases_sessions_read', value: 'projects_instances_databases_sessions_read' },
+        { label: 'projects_instances_databases_sessions_batch_write', value: 'projects_instances_databases_sessions_batch_write' },
+        { label: 'projects_instances_databases_sessions_partition_query', value: 'projects_instances_databases_sessions_partition_query' },
+        { label: 'projects_instances_databases_sessions_commit', value: 'projects_instances_databases_sessions_commit' },
+        { label: 'projects_instances_databases_sessions_adapter', value: 'projects_instances_databases_sessions_adapter' },
+        { label: 'projects_instances_databases_sessions_execute_batch_dml', value: 'projects_instances_databases_sessions_execute_batch_dml' }
     ]}
 >
-<TabItem value="projects_instances_databases_sessions_adapter">
+<TabItem value="projects_instances_databases_sessions_partition_read">
 
-Creates a new session to be used for requests made by the adapter. A session identifies a specific incarnation of a database resource and is meant to be reused across many `AdaptMessage` calls.
-
-```sql
-EXEC google.spanner.sessions.projects_instances_databases_sessions_adapter 
-@projectsId='{{ projectsId }}' --required, 
-@instancesId='{{ instancesId }}' --required, 
-@databasesId='{{ databasesId }}' --required 
-@@json=
-'{
-"name": "{{ name }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_instances_databases_sessions_adapt_message">
-
-Handles a single message from the client and returns the result as a stream. The server will interpret the message frame and respond with message frames to the client.
+Creates a set of partition tokens that can be used to execute a read operation in parallel. Each of the returned partition tokens can be used by StreamingRead to specify a subset of the read result to read. The same session and read-only transaction must be used by the `PartitionReadRequest` used to create the partition tokens and the `ReadRequests` that use the partition tokens. There are no ordering guarantees on rows returned among the returned partition tokens, or even within each individual `StreamingRead` call issued with a `partition_token`. Partition tokens become invalid when the session used to create them is deleted, is idle for too long, begins a new transaction, or becomes too old. When any of these happen, it isn't possible to resume the read, and the whole operation must be restarted from the beginning.
 
 ```sql
-EXEC google.spanner.sessions.projects_instances_databases_sessions_adapt_message 
-@projectsId='{{ projectsId }}' --required, 
-@instancesId='{{ instancesId }}' --required, 
-@databasesId='{{ databasesId }}' --required, 
-@sessionsId='{{ sessionsId }}' --required 
-@@json=
-'{
-"protocol": "{{ protocol }}", 
-"payload": "{{ payload }}", 
-"attachments": "{{ attachments }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_instances_databases_sessions_execute_sql">
-
-Executes an SQL statement, returning all results in a single reply. This method can't be used to return a result set larger than 10 MiB; if the query yields more data than that, the query fails with a `FAILED_PRECONDITION` error. Operations inside read-write transactions might return `ABORTED`. If this occurs, the application should restart the transaction from the beginning. See Transaction for more details. Larger result sets can be fetched in streaming fashion by calling ExecuteStreamingSql instead. The query string can be SQL or [Graph Query Language (GQL)](https://cloud.google.com/spanner/docs/reference/standard-sql/graph-intro).
-
-```sql
-EXEC google.spanner.sessions.projects_instances_databases_sessions_execute_sql 
+EXEC google.spanner.sessions.projects_instances_databases_sessions_partition_read 
 @projectsId='{{ projectsId }}' --required, 
 @instancesId='{{ instancesId }}' --required, 
 @databasesId='{{ databasesId }}' --required, 
@@ -563,18 +528,11 @@ EXEC google.spanner.sessions.projects_instances_databases_sessions_execute_sql
 @@json=
 '{
 "transaction": "{{ transaction }}", 
-"sql": "{{ sql }}", 
-"params": "{{ params }}", 
-"paramTypes": "{{ paramTypes }}", 
-"resumeToken": "{{ resumeToken }}", 
-"queryMode": "{{ queryMode }}", 
-"partitionToken": "{{ partitionToken }}", 
-"seqno": "{{ seqno }}", 
-"queryOptions": "{{ queryOptions }}", 
-"requestOptions": "{{ requestOptions }}", 
-"directedReadOptions": "{{ directedReadOptions }}", 
-"dataBoostEnabled": {{ dataBoostEnabled }}, 
-"lastStatement": {{ lastStatement }}
+"index": "{{ index }}", 
+"partitionOptions": "{{ partitionOptions }}", 
+"table": "{{ table }}", 
+"columns": "{{ columns }}", 
+"keySet": "{{ keySet }}"
 }'
 ;
 ```
@@ -591,69 +549,36 @@ EXEC google.spanner.sessions.projects_instances_databases_sessions_execute_strea
 @sessionsId='{{ sessionsId }}' --required 
 @@json=
 '{
-"transaction": "{{ transaction }}", 
+"dataBoostEnabled": {{ dataBoostEnabled }}, 
+"paramTypes": "{{ paramTypes }}", 
+"seqno": "{{ seqno }}", 
+"requestOptions": "{{ requestOptions }}", 
+"queryOptions": "{{ queryOptions }}", 
+"lastStatement": {{ lastStatement }}, 
 "sql": "{{ sql }}", 
 "params": "{{ params }}", 
-"paramTypes": "{{ paramTypes }}", 
-"resumeToken": "{{ resumeToken }}", 
 "queryMode": "{{ queryMode }}", 
 "partitionToken": "{{ partitionToken }}", 
-"seqno": "{{ seqno }}", 
-"queryOptions": "{{ queryOptions }}", 
-"requestOptions": "{{ requestOptions }}", 
+"transaction": "{{ transaction }}", 
 "directedReadOptions": "{{ directedReadOptions }}", 
-"dataBoostEnabled": {{ dataBoostEnabled }}, 
-"lastStatement": {{ lastStatement }}
+"resumeToken": "{{ resumeToken }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="projects_instances_databases_sessions_execute_batch_dml">
+<TabItem value="projects_instances_databases_sessions_rollback">
 
-Executes a batch of SQL DML statements. This method allows many statements to be run with lower latency than submitting them sequentially with ExecuteSql. Statements are executed in sequential order. A request can succeed even if a statement fails. The ExecuteBatchDmlResponse.status field in the response provides information about the statement that failed. Clients must inspect this field to determine whether an error occurred. Execution stops after the first failed statement; the remaining statements are not executed.
+Rolls back a transaction, releasing any locks it holds. It's a good idea to call this for any transaction that includes one or more Read or ExecuteSql requests and ultimately decides not to commit. `Rollback` returns `OK` if it successfully aborts the transaction, the transaction was already aborted, or the transaction isn't found. `Rollback` never returns `ABORTED`.
 
 ```sql
-EXEC google.spanner.sessions.projects_instances_databases_sessions_execute_batch_dml 
+EXEC google.spanner.sessions.projects_instances_databases_sessions_rollback 
 @projectsId='{{ projectsId }}' --required, 
 @instancesId='{{ instancesId }}' --required, 
 @databasesId='{{ databasesId }}' --required, 
 @sessionsId='{{ sessionsId }}' --required 
 @@json=
 '{
-"transaction": "{{ transaction }}", 
-"statements": "{{ statements }}", 
-"seqno": "{{ seqno }}", 
-"requestOptions": "{{ requestOptions }}", 
-"lastStatements": {{ lastStatements }}
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_instances_databases_sessions_read">
-
-Reads rows from the database using key lookups and scans, as a simple key/value style alternative to ExecuteSql. This method can't be used to return a result set larger than 10 MiB; if the read matches more data than that, the read fails with a `FAILED_PRECONDITION` error. Reads inside read-write transactions might return `ABORTED`. If this occurs, the application should restart the transaction from the beginning. See Transaction for more details. Larger result sets can be yielded in streaming fashion by calling StreamingRead instead.
-
-```sql
-EXEC google.spanner.sessions.projects_instances_databases_sessions_read 
-@projectsId='{{ projectsId }}' --required, 
-@instancesId='{{ instancesId }}' --required, 
-@databasesId='{{ databasesId }}' --required, 
-@sessionsId='{{ sessionsId }}' --required 
-@@json=
-'{
-"transaction": "{{ transaction }}", 
-"table": "{{ table }}", 
-"index": "{{ index }}", 
-"columns": "{{ columns }}", 
-"keySet": "{{ keySet }}", 
-"limit": "{{ limit }}", 
-"resumeToken": "{{ resumeToken }}", 
-"partitionToken": "{{ partitionToken }}", 
-"requestOptions": "{{ requestOptions }}", 
-"directedReadOptions": "{{ directedReadOptions }}", 
-"dataBoostEnabled": {{ dataBoostEnabled }}, 
-"orderBy": "{{ orderBy }}", 
-"lockHint": "{{ lockHint }}"
+"transactionId": "{{ transactionId }}"
 }'
 ;
 ```
@@ -670,19 +595,38 @@ EXEC google.spanner.sessions.projects_instances_databases_sessions_streaming_rea
 @sessionsId='{{ sessionsId }}' --required 
 @@json=
 '{
-"transaction": "{{ transaction }}", 
-"table": "{{ table }}", 
-"index": "{{ index }}", 
+"resumeToken": "{{ resumeToken }}", 
+"orderBy": "{{ orderBy }}", 
 "columns": "{{ columns }}", 
+"dataBoostEnabled": {{ dataBoostEnabled }}, 
+"transaction": "{{ transaction }}", 
+"lockHint": "{{ lockHint }}", 
+"table": "{{ table }}", 
+"directedReadOptions": "{{ directedReadOptions }}", 
+"index": "{{ index }}", 
+"partitionToken": "{{ partitionToken }}", 
 "keySet": "{{ keySet }}", 
 "limit": "{{ limit }}", 
-"resumeToken": "{{ resumeToken }}", 
-"partitionToken": "{{ partitionToken }}", 
-"requestOptions": "{{ requestOptions }}", 
-"directedReadOptions": "{{ directedReadOptions }}", 
-"dataBoostEnabled": {{ dataBoostEnabled }}, 
-"orderBy": "{{ orderBy }}", 
-"lockHint": "{{ lockHint }}"
+"requestOptions": "{{ requestOptions }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_instances_databases_sessions_adapt_message">
+
+Handles a single message from the client and returns the result as a stream. The server will interpret the message frame and respond with message frames to the client.
+
+```sql
+EXEC google.spanner.sessions.projects_instances_databases_sessions_adapt_message 
+@projectsId='{{ projectsId }}' --required, 
+@instancesId='{{ instancesId }}' --required, 
+@databasesId='{{ databasesId }}' --required, 
+@sessionsId='{{ sessionsId }}' --required 
+@@json=
+'{
+"attachments": "{{ attachments }}", 
+"protocol": "{{ protocol }}", 
+"payload": "{{ payload }}"
 }'
 ;
 ```
@@ -706,85 +650,60 @@ EXEC google.spanner.sessions.projects_instances_databases_sessions_begin_transac
 ;
 ```
 </TabItem>
-<TabItem value="projects_instances_databases_sessions_commit">
+<TabItem value="projects_instances_databases_sessions_execute_sql">
 
-Commits a transaction. The request includes the mutations to be applied to rows in the database. `Commit` might return an `ABORTED` error. This can occur at any time; commonly, the cause is conflicts with concurrent transactions. However, it can also happen for a variety of other reasons. If `Commit` returns `ABORTED`, the caller should retry the transaction from the beginning, reusing the same session. On very rare occasions, `Commit` might return `UNKNOWN`. This can happen, for example, if the client job experiences a 1+ hour networking failure. At that point, Cloud Spanner has lost track of the transaction outcome and we recommend that you perform another read from the database to see the state of things as they are now.
+Executes an SQL statement, returning all results in a single reply. This method can't be used to return a result set larger than 10 MiB; if the query yields more data than that, the query fails with a `FAILED_PRECONDITION` error. Operations inside read-write transactions might return `ABORTED`. If this occurs, the application should restart the transaction from the beginning. See Transaction for more details. Larger result sets can be fetched in streaming fashion by calling ExecuteStreamingSql instead. The query string can be SQL or [Graph Query Language (GQL)](https://cloud.google.com/spanner/docs/reference/standard-sql/graph-intro).
 
 ```sql
-EXEC google.spanner.sessions.projects_instances_databases_sessions_commit 
+EXEC google.spanner.sessions.projects_instances_databases_sessions_execute_sql 
 @projectsId='{{ projectsId }}' --required, 
 @instancesId='{{ instancesId }}' --required, 
 @databasesId='{{ databasesId }}' --required, 
 @sessionsId='{{ sessionsId }}' --required 
 @@json=
 '{
-"transactionId": "{{ transactionId }}", 
-"singleUseTransaction": "{{ singleUseTransaction }}", 
-"mutations": "{{ mutations }}", 
-"returnCommitStats": {{ returnCommitStats }}, 
-"maxCommitDelay": "{{ maxCommitDelay }}", 
+"dataBoostEnabled": {{ dataBoostEnabled }}, 
+"paramTypes": "{{ paramTypes }}", 
+"seqno": "{{ seqno }}", 
 "requestOptions": "{{ requestOptions }}", 
-"precommitToken": "{{ precommitToken }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_instances_databases_sessions_rollback">
-
-Rolls back a transaction, releasing any locks it holds. It's a good idea to call this for any transaction that includes one or more Read or ExecuteSql requests and ultimately decides not to commit. `Rollback` returns `OK` if it successfully aborts the transaction, the transaction was already aborted, or the transaction isn't found. `Rollback` never returns `ABORTED`.
-
-```sql
-EXEC google.spanner.sessions.projects_instances_databases_sessions_rollback 
-@projectsId='{{ projectsId }}' --required, 
-@instancesId='{{ instancesId }}' --required, 
-@databasesId='{{ databasesId }}' --required, 
-@sessionsId='{{ sessionsId }}' --required 
-@@json=
-'{
-"transactionId": "{{ transactionId }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_instances_databases_sessions_partition_query">
-
-Creates a set of partition tokens that can be used to execute a query operation in parallel. Each of the returned partition tokens can be used by ExecuteStreamingSql to specify a subset of the query result to read. The same session and read-only transaction must be used by the `PartitionQueryRequest` used to create the partition tokens and the `ExecuteSqlRequests` that use the partition tokens. Partition tokens become invalid when the session used to create them is deleted, is idle for too long, begins a new transaction, or becomes too old. When any of these happen, it isn't possible to resume the query, and the whole operation must be restarted from the beginning.
-
-```sql
-EXEC google.spanner.sessions.projects_instances_databases_sessions_partition_query 
-@projectsId='{{ projectsId }}' --required, 
-@instancesId='{{ instancesId }}' --required, 
-@databasesId='{{ databasesId }}' --required, 
-@sessionsId='{{ sessionsId }}' --required 
-@@json=
-'{
-"transaction": "{{ transaction }}", 
+"queryOptions": "{{ queryOptions }}", 
+"lastStatement": {{ lastStatement }}, 
 "sql": "{{ sql }}", 
 "params": "{{ params }}", 
-"paramTypes": "{{ paramTypes }}", 
-"partitionOptions": "{{ partitionOptions }}"
+"queryMode": "{{ queryMode }}", 
+"partitionToken": "{{ partitionToken }}", 
+"transaction": "{{ transaction }}", 
+"directedReadOptions": "{{ directedReadOptions }}", 
+"resumeToken": "{{ resumeToken }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="projects_instances_databases_sessions_partition_read">
+<TabItem value="projects_instances_databases_sessions_read">
 
-Creates a set of partition tokens that can be used to execute a read operation in parallel. Each of the returned partition tokens can be used by StreamingRead to specify a subset of the read result to read. The same session and read-only transaction must be used by the `PartitionReadRequest` used to create the partition tokens and the `ReadRequests` that use the partition tokens. There are no ordering guarantees on rows returned among the returned partition tokens, or even within each individual `StreamingRead` call issued with a `partition_token`. Partition tokens become invalid when the session used to create them is deleted, is idle for too long, begins a new transaction, or becomes too old. When any of these happen, it isn't possible to resume the read, and the whole operation must be restarted from the beginning.
+Reads rows from the database using key lookups and scans, as a simple key/value style alternative to ExecuteSql. This method can't be used to return a result set larger than 10 MiB; if the read matches more data than that, the read fails with a `FAILED_PRECONDITION` error. Reads inside read-write transactions might return `ABORTED`. If this occurs, the application should restart the transaction from the beginning. See Transaction for more details. Larger result sets can be yielded in streaming fashion by calling StreamingRead instead.
 
 ```sql
-EXEC google.spanner.sessions.projects_instances_databases_sessions_partition_read 
+EXEC google.spanner.sessions.projects_instances_databases_sessions_read 
 @projectsId='{{ projectsId }}' --required, 
 @instancesId='{{ instancesId }}' --required, 
 @databasesId='{{ databasesId }}' --required, 
 @sessionsId='{{ sessionsId }}' --required 
 @@json=
 '{
-"transaction": "{{ transaction }}", 
-"table": "{{ table }}", 
-"index": "{{ index }}", 
+"resumeToken": "{{ resumeToken }}", 
+"orderBy": "{{ orderBy }}", 
 "columns": "{{ columns }}", 
+"dataBoostEnabled": {{ dataBoostEnabled }}, 
+"transaction": "{{ transaction }}", 
+"lockHint": "{{ lockHint }}", 
+"table": "{{ table }}", 
+"directedReadOptions": "{{ directedReadOptions }}", 
+"index": "{{ index }}", 
+"partitionToken": "{{ partitionToken }}", 
 "keySet": "{{ keySet }}", 
-"partitionOptions": "{{ partitionOptions }}"
+"limit": "{{ limit }}", 
+"requestOptions": "{{ requestOptions }}"
 }'
 ;
 ```
@@ -801,9 +720,90 @@ EXEC google.spanner.sessions.projects_instances_databases_sessions_batch_write
 @sessionsId='{{ sessionsId }}' --required 
 @@json=
 '{
-"requestOptions": "{{ requestOptions }}", 
+"excludeTxnFromChangeStreams": {{ excludeTxnFromChangeStreams }}, 
 "mutationGroups": "{{ mutationGroups }}", 
-"excludeTxnFromChangeStreams": {{ excludeTxnFromChangeStreams }}
+"requestOptions": "{{ requestOptions }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_instances_databases_sessions_partition_query">
+
+Creates a set of partition tokens that can be used to execute a query operation in parallel. Each of the returned partition tokens can be used by ExecuteStreamingSql to specify a subset of the query result to read. The same session and read-only transaction must be used by the `PartitionQueryRequest` used to create the partition tokens and the `ExecuteSqlRequests` that use the partition tokens. Partition tokens become invalid when the session used to create them is deleted, is idle for too long, begins a new transaction, or becomes too old. When any of these happen, it isn't possible to resume the query, and the whole operation must be restarted from the beginning.
+
+```sql
+EXEC google.spanner.sessions.projects_instances_databases_sessions_partition_query 
+@projectsId='{{ projectsId }}' --required, 
+@instancesId='{{ instancesId }}' --required, 
+@databasesId='{{ databasesId }}' --required, 
+@sessionsId='{{ sessionsId }}' --required 
+@@json=
+'{
+"sql": "{{ sql }}", 
+"transaction": "{{ transaction }}", 
+"params": "{{ params }}", 
+"partitionOptions": "{{ partitionOptions }}", 
+"paramTypes": "{{ paramTypes }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_instances_databases_sessions_commit">
+
+Commits a transaction. The request includes the mutations to be applied to rows in the database. `Commit` might return an `ABORTED` error. This can occur at any time; commonly, the cause is conflicts with concurrent transactions. However, it can also happen for a variety of other reasons. If `Commit` returns `ABORTED`, the caller should retry the transaction from the beginning, reusing the same session. On very rare occasions, `Commit` might return `UNKNOWN`. This can happen, for example, if the client job experiences a 1+ hour networking failure. At that point, Cloud Spanner has lost track of the transaction outcome and we recommend that you perform another read from the database to see the state of things as they are now.
+
+```sql
+EXEC google.spanner.sessions.projects_instances_databases_sessions_commit 
+@projectsId='{{ projectsId }}' --required, 
+@instancesId='{{ instancesId }}' --required, 
+@databasesId='{{ databasesId }}' --required, 
+@sessionsId='{{ sessionsId }}' --required 
+@@json=
+'{
+"mutations": "{{ mutations }}", 
+"maxCommitDelay": "{{ maxCommitDelay }}", 
+"transactionId": "{{ transactionId }}", 
+"singleUseTransaction": "{{ singleUseTransaction }}", 
+"requestOptions": "{{ requestOptions }}", 
+"precommitToken": "{{ precommitToken }}", 
+"returnCommitStats": {{ returnCommitStats }}
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_instances_databases_sessions_adapter">
+
+Creates a new session to be used for requests made by the adapter. A session identifies a specific incarnation of a database resource and is meant to be reused across many `AdaptMessage` calls.
+
+```sql
+EXEC google.spanner.sessions.projects_instances_databases_sessions_adapter 
+@projectsId='{{ projectsId }}' --required, 
+@instancesId='{{ instancesId }}' --required, 
+@databasesId='{{ databasesId }}' --required 
+@@json=
+'{
+"name": "{{ name }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_instances_databases_sessions_execute_batch_dml">
+
+Executes a batch of SQL DML statements. This method allows many statements to be run with lower latency than submitting them sequentially with ExecuteSql. Statements are executed in sequential order. A request can succeed even if a statement fails. The ExecuteBatchDmlResponse.status field in the response provides information about the statement that failed. Clients must inspect this field to determine whether an error occurred. Execution stops after the first failed statement; the remaining statements are not executed.
+
+```sql
+EXEC google.spanner.sessions.projects_instances_databases_sessions_execute_batch_dml 
+@projectsId='{{ projectsId }}' --required, 
+@instancesId='{{ instancesId }}' --required, 
+@databasesId='{{ databasesId }}' --required, 
+@sessionsId='{{ sessionsId }}' --required 
+@@json=
+'{
+"statements": "{{ statements }}", 
+"requestOptions": "{{ requestOptions }}", 
+"transaction": "{{ transaction }}", 
+"lastStatements": {{ lastStatements }}, 
+"seqno": "{{ seqno }}"
 }'
 ;
 ```

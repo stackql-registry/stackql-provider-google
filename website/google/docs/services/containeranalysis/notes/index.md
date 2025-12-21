@@ -35,8 +35,8 @@ The following fields are returned by `SELECT` queries:
     defaultValue="projects_locations_notes_get"
     values={[
         { label: 'projects_locations_notes_get', value: 'projects_locations_notes_get' },
-        { label: 'projects_locations_notes_list', value: 'projects_locations_notes_list' },
         { label: 'projects_notes_get', value: 'projects_notes_get' },
+        { label: 'projects_locations_notes_list', value: 'projects_locations_notes_list' },
         { label: 'projects_notes_list', value: 'projects_notes_list' }
     ]}
 >
@@ -164,7 +164,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_notes_list">
+<TabItem value="projects_notes_get">
 
 <table>
 <thead>
@@ -288,7 +288,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_notes_get">
+<TabItem value="projects_locations_notes_list">
 
 <table>
 <thead>
@@ -561,13 +561,6 @@ The following methods are available for this resource:
     <td>Gets the specified note.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_notes_list"><CopyableCode code="projects_locations_notes_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
-    <td>Lists notes for the specified project.</td>
-</tr>
-<tr>
     <td><a href="#projects_notes_get"><CopyableCode code="projects_notes_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-notesId"><code>notesId</code></a></td>
@@ -575,10 +568,17 @@ The following methods are available for this resource:
     <td>Gets the specified note.</td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_notes_list"><CopyableCode code="projects_locations_notes_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Lists notes for the specified project.</td>
+</tr>
+<tr>
     <td><a href="#projects_notes_list"><CopyableCode code="projects_notes_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists notes for the specified project.</td>
 </tr>
 <tr>
@@ -707,8 +707,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="projects_locations_notes_get"
     values={[
         { label: 'projects_locations_notes_get', value: 'projects_locations_notes_get' },
-        { label: 'projects_locations_notes_list', value: 'projects_locations_notes_list' },
         { label: 'projects_notes_get', value: 'projects_notes_get' },
+        { label: 'projects_locations_notes_list', value: 'projects_locations_notes_list' },
         { label: 'projects_notes_list', value: 'projects_notes_list' }
     ]}
 >
@@ -747,44 +747,6 @@ AND notesId = '{{ notesId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_notes_list">
-
-Lists notes for the specified project.
-
-```sql
-SELECT
-name,
-attestation,
-build,
-compliance,
-createTime,
-deployment,
-discovery,
-dsseAttestation,
-expirationTime,
-image,
-kind,
-longDescription,
-package,
-relatedNoteNames,
-relatedUrl,
-sbomReference,
-secret,
-shortDescription,
-updateTime,
-upgrade,
-vulnerability,
-vulnerabilityAssessment
-FROM google.containeranalysis.notes
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-;
-```
-</TabItem>
 <TabItem value="projects_notes_get">
 
 Gets the specified note.
@@ -819,6 +781,44 @@ AND notesId = '{{ notesId }}' -- required
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_notes_list">
+
+Lists notes for the specified project.
+
+```sql
+SELECT
+name,
+attestation,
+build,
+compliance,
+createTime,
+deployment,
+discovery,
+dsseAttestation,
+expirationTime,
+image,
+kind,
+longDescription,
+package,
+relatedNoteNames,
+relatedUrl,
+sbomReference,
+secret,
+shortDescription,
+updateTime,
+upgrade,
+vulnerability,
+vulnerabilityAssessment
+FROM google.containeranalysis.notes
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+;
+```
+</TabItem>
 <TabItem value="projects_notes_list">
 
 Lists notes for the specified project.
@@ -850,9 +850,9 @@ vulnerabilityAssessment
 FROM google.containeranalysis.notes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -877,55 +877,55 @@ Creates a new note.
 
 ```sql
 INSERT INTO google.containeranalysis.notes (
-data__name,
-data__shortDescription,
-data__longDescription,
-data__kind,
 data__relatedUrl,
-data__expirationTime,
-data__createTime,
 data__updateTime,
+data__expirationTime,
 data__relatedNoteNames,
-data__vulnerability,
-data__build,
-data__image,
-data__package,
 data__deployment,
-data__discovery,
-data__attestation,
+data__shortDescription,
+data__kind,
+data__image,
+data__vulnerability,
 data__upgrade,
-data__compliance,
+data__longDescription,
 data__dsseAttestation,
+data__build,
+data__attestation,
 data__vulnerabilityAssessment,
+data__createTime,
+data__package,
 data__sbomReference,
 data__secret,
+data__discovery,
+data__compliance,
+data__name,
 projectsId,
 locationsId,
 noteId
 )
 SELECT 
-'{{ name }}',
-'{{ shortDescription }}',
-'{{ longDescription }}',
-'{{ kind }}',
 '{{ relatedUrl }}',
-'{{ expirationTime }}',
-'{{ createTime }}',
 '{{ updateTime }}',
+'{{ expirationTime }}',
 '{{ relatedNoteNames }}',
-'{{ vulnerability }}',
-'{{ build }}',
-'{{ image }}',
-'{{ package }}',
 '{{ deployment }}',
-'{{ discovery }}',
-'{{ attestation }}',
+'{{ shortDescription }}',
+'{{ kind }}',
+'{{ image }}',
+'{{ vulnerability }}',
 '{{ upgrade }}',
-'{{ compliance }}',
+'{{ longDescription }}',
 '{{ dsseAttestation }}',
+'{{ build }}',
+'{{ attestation }}',
 '{{ vulnerabilityAssessment }}',
+'{{ createTime }}',
+'{{ package }}',
 '{{ sbomReference }}',
 '{{ secret }}',
+'{{ discovery }}',
+'{{ compliance }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ noteId }}'
@@ -980,54 +980,54 @@ Creates a new note.
 
 ```sql
 INSERT INTO google.containeranalysis.notes (
-data__name,
-data__shortDescription,
-data__longDescription,
-data__kind,
 data__relatedUrl,
-data__expirationTime,
-data__createTime,
 data__updateTime,
+data__expirationTime,
 data__relatedNoteNames,
-data__vulnerability,
-data__build,
-data__image,
-data__package,
 data__deployment,
-data__discovery,
-data__attestation,
+data__shortDescription,
+data__kind,
+data__image,
+data__vulnerability,
 data__upgrade,
-data__compliance,
+data__longDescription,
 data__dsseAttestation,
+data__build,
+data__attestation,
 data__vulnerabilityAssessment,
+data__createTime,
+data__package,
 data__sbomReference,
 data__secret,
+data__discovery,
+data__compliance,
+data__name,
 projectsId,
 noteId
 )
 SELECT 
-'{{ name }}',
-'{{ shortDescription }}',
-'{{ longDescription }}',
-'{{ kind }}',
 '{{ relatedUrl }}',
-'{{ expirationTime }}',
-'{{ createTime }}',
 '{{ updateTime }}',
+'{{ expirationTime }}',
 '{{ relatedNoteNames }}',
-'{{ vulnerability }}',
-'{{ build }}',
-'{{ image }}',
-'{{ package }}',
 '{{ deployment }}',
-'{{ discovery }}',
-'{{ attestation }}',
+'{{ shortDescription }}',
+'{{ kind }}',
+'{{ image }}',
+'{{ vulnerability }}',
 '{{ upgrade }}',
-'{{ compliance }}',
+'{{ longDescription }}',
 '{{ dsseAttestation }}',
+'{{ build }}',
+'{{ attestation }}',
 '{{ vulnerabilityAssessment }}',
+'{{ createTime }}',
+'{{ package }}',
 '{{ sbomReference }}',
 '{{ secret }}',
+'{{ discovery }}',
+'{{ compliance }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ noteId }}'
 RETURNING
@@ -1085,20 +1085,35 @@ notes
     - name: locationsId
       value: string
       description: Required parameter for the notes resource.
-    - name: name
+    - name: relatedUrl
+      value: array
+      description: >
+        URLs associated with this note.
+        
+    - name: updateTime
       value: string
       description: >
-        Output only. The name of the note in the form of `projects/[PROVIDER_ID]/notes/[NOTE_ID]`.
+        Output only. The time this note was last updated. This field can be used as a filter in list requests.
+        
+    - name: expirationTime
+      value: string
+      description: >
+        Time of expiration for this note. Empty if note does not expire.
+        
+    - name: relatedNoteNames
+      value: array
+      description: >
+        Other notes related to this note.
+        
+    - name: deployment
+      value: object
+      description: >
+        A note describing something that can be deployed.
         
     - name: shortDescription
       value: string
       description: >
         A one sentence description of this note.
-        
-    - name: longDescription
-      value: string
-      description: >
-        A detailed description of this note.
         
     - name: kind
       value: string
@@ -1106,85 +1121,55 @@ notes
         Output only. The type of analysis. This field can be used as a filter in list requests.
         
       valid_values: ['NOTE_KIND_UNSPECIFIED', 'VULNERABILITY', 'BUILD', 'IMAGE', 'PACKAGE', 'DEPLOYMENT', 'DISCOVERY', 'ATTESTATION', 'UPGRADE', 'COMPLIANCE', 'DSSE_ATTESTATION', 'VULNERABILITY_ASSESSMENT', 'SBOM_REFERENCE', 'SECRET']
-    - name: relatedUrl
-      value: array
+    - name: image
+      value: object
       description: >
-        URLs associated with this note.
-        
-    - name: expirationTime
-      value: string
-      description: >
-        Time of expiration for this note. Empty if note does not expire.
-        
-    - name: createTime
-      value: string
-      description: >
-        Output only. The time this note was created. This field can be used as a filter in list requests.
-        
-    - name: updateTime
-      value: string
-      description: >
-        Output only. The time this note was last updated. This field can be used as a filter in list requests.
-        
-    - name: relatedNoteNames
-      value: array
-      description: >
-        Other notes related to this note.
+        A note describing a base image.
         
     - name: vulnerability
       value: object
       description: >
         A note describing a package vulnerability.
         
-    - name: build
-      value: object
-      description: >
-        A note describing build provenance for a verifiable build.
-        
-    - name: image
-      value: object
-      description: >
-        A note describing a base image.
-        
-    - name: package
-      value: object
-      description: >
-        A note describing a package hosted by various package managers.
-        
-    - name: deployment
-      value: object
-      description: >
-        A note describing something that can be deployed.
-        
-    - name: discovery
-      value: object
-      description: >
-        A note describing the initial analysis of a resource.
-        
-    - name: attestation
-      value: object
-      description: >
-        A note describing an attestation role.
-        
     - name: upgrade
       value: object
       description: >
         A note describing available package upgrades.
         
-    - name: compliance
-      value: object
+    - name: longDescription
+      value: string
       description: >
-        A note describing a compliance check.
+        A detailed description of this note.
         
     - name: dsseAttestation
       value: object
       description: >
         A note describing a dsse attestation note.
         
+    - name: build
+      value: object
+      description: >
+        A note describing build provenance for a verifiable build.
+        
+    - name: attestation
+      value: object
+      description: >
+        A note describing an attestation role.
+        
     - name: vulnerabilityAssessment
       value: object
       description: >
         A note describing a vulnerability assessment.
+        
+    - name: createTime
+      value: string
+      description: >
+        Output only. The time this note was created. This field can be used as a filter in list requests.
+        
+    - name: package
+      value: object
+      description: >
+        A note describing a package hosted by various package managers.
         
     - name: sbomReference
       value: object
@@ -1195,6 +1180,21 @@ notes
       value: object
       description: >
         A note describing a secret.
+        
+    - name: discovery
+      value: object
+      description: >
+        A note describing the initial analysis of a resource.
+        
+    - name: compliance
+      value: object
+      description: >
+        A note describing a compliance check.
+        
+    - name: name
+      value: string
+      description: >
+        Output only. The name of the note in the form of `projects/[PROVIDER_ID]/notes/[NOTE_ID]`.
         
     - name: notes
       value: object
@@ -1224,28 +1224,28 @@ Updates the specified note.
 ```sql
 UPDATE google.containeranalysis.notes
 SET 
-data__name = '{{ name }}',
-data__shortDescription = '{{ shortDescription }}',
-data__longDescription = '{{ longDescription }}',
-data__kind = '{{ kind }}',
 data__relatedUrl = '{{ relatedUrl }}',
-data__expirationTime = '{{ expirationTime }}',
-data__createTime = '{{ createTime }}',
 data__updateTime = '{{ updateTime }}',
+data__expirationTime = '{{ expirationTime }}',
 data__relatedNoteNames = '{{ relatedNoteNames }}',
-data__vulnerability = '{{ vulnerability }}',
-data__build = '{{ build }}',
-data__image = '{{ image }}',
-data__package = '{{ package }}',
 data__deployment = '{{ deployment }}',
-data__discovery = '{{ discovery }}',
-data__attestation = '{{ attestation }}',
+data__shortDescription = '{{ shortDescription }}',
+data__kind = '{{ kind }}',
+data__image = '{{ image }}',
+data__vulnerability = '{{ vulnerability }}',
 data__upgrade = '{{ upgrade }}',
-data__compliance = '{{ compliance }}',
+data__longDescription = '{{ longDescription }}',
 data__dsseAttestation = '{{ dsseAttestation }}',
+data__build = '{{ build }}',
+data__attestation = '{{ attestation }}',
 data__vulnerabilityAssessment = '{{ vulnerabilityAssessment }}',
+data__createTime = '{{ createTime }}',
+data__package = '{{ package }}',
 data__sbomReference = '{{ sbomReference }}',
-data__secret = '{{ secret }}'
+data__secret = '{{ secret }}',
+data__discovery = '{{ discovery }}',
+data__compliance = '{{ compliance }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -1283,28 +1283,28 @@ Updates the specified note.
 ```sql
 UPDATE google.containeranalysis.notes
 SET 
-data__name = '{{ name }}',
-data__shortDescription = '{{ shortDescription }}',
-data__longDescription = '{{ longDescription }}',
-data__kind = '{{ kind }}',
 data__relatedUrl = '{{ relatedUrl }}',
-data__expirationTime = '{{ expirationTime }}',
-data__createTime = '{{ createTime }}',
 data__updateTime = '{{ updateTime }}',
+data__expirationTime = '{{ expirationTime }}',
 data__relatedNoteNames = '{{ relatedNoteNames }}',
-data__vulnerability = '{{ vulnerability }}',
-data__build = '{{ build }}',
-data__image = '{{ image }}',
-data__package = '{{ package }}',
 data__deployment = '{{ deployment }}',
-data__discovery = '{{ discovery }}',
-data__attestation = '{{ attestation }}',
+data__shortDescription = '{{ shortDescription }}',
+data__kind = '{{ kind }}',
+data__image = '{{ image }}',
+data__vulnerability = '{{ vulnerability }}',
 data__upgrade = '{{ upgrade }}',
-data__compliance = '{{ compliance }}',
+data__longDescription = '{{ longDescription }}',
 data__dsseAttestation = '{{ dsseAttestation }}',
+data__build = '{{ build }}',
+data__attestation = '{{ attestation }}',
 data__vulnerabilityAssessment = '{{ vulnerabilityAssessment }}',
+data__createTime = '{{ createTime }}',
+data__package = '{{ package }}',
 data__sbomReference = '{{ sbomReference }}',
-data__secret = '{{ secret }}'
+data__secret = '{{ secret }}',
+data__discovery = '{{ discovery }}',
+data__compliance = '{{ compliance }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND notesId = '{{ notesId }}' --required

@@ -52,7 +52,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Identifier. The resource name of the managed identity.</td>
+    <td>Output only. The resource name of the managed identity.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -91,7 +91,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Identifier. The resource name of the managed identity.</td>
+    <td>Output only. The resource name of the managed identity.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -320,7 +320,6 @@ Creates a new WorkloadIdentityPoolManagedIdentity in a WorkloadIdentityPoolNames
 
 ```sql
 INSERT INTO google.iam.managed_identities (
-data__name,
 data__description,
 data__disabled,
 projectsId,
@@ -330,7 +329,6 @@ namespacesId,
 workloadIdentityPoolManagedIdentityId
 )
 SELECT 
-'{{ name }}',
 '{{ description }}',
 {{ disabled }},
 '{{ projectsId }}',
@@ -365,11 +363,6 @@ response
     - name: namespacesId
       value: string
       description: Required parameter for the managed_identities resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the managed identity.
-        
     - name: description
       value: string
       description: >
@@ -402,7 +395,6 @@ Updates an existing WorkloadIdentityPoolManagedIdentity in a WorkloadIdentityPoo
 ```sql
 UPDATE google.iam.managed_identities
 SET 
-data__name = '{{ name }}',
 data__description = '{{ description }}',
 data__disabled = {{ disabled }}
 WHERE 

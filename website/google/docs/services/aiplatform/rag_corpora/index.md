@@ -80,6 +80,16 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Immutable. The CMEK key name used to encrypt at-rest data related to this Corpus. Only applicable to RagManagedDb option for Vector DB. This field can only be set at corpus creation time, and cannot be updated or deleted. (id: GoogleCloudAiplatformV1EncryptionSpec)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="satisfiesPzi" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. Reserved for future use.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="satisfiesPzs" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. Reserved for future use.</td>
+</tr>
+<tr>
     <td><CopyableCode code="updateTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. Timestamp when this RagCorpus was last updated.</td>
@@ -139,6 +149,16 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Immutable. The CMEK key name used to encrypt at-rest data related to this Corpus. Only applicable to RagManagedDb option for Vector DB. This field can only be set at corpus creation time, and cannot be updated or deleted. (id: GoogleCloudAiplatformV1EncryptionSpec)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="satisfiesPzi" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. Reserved for future use.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="satisfiesPzs" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. Reserved for future use.</td>
+</tr>
+<tr>
     <td><CopyableCode code="updateTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. Timestamp when this RagCorpus was last updated.</td>
@@ -184,7 +204,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists RagCorpora in a Location.</td>
 </tr>
 <tr>
@@ -278,6 +298,8 @@ createTime,
 description,
 displayName,
 encryptionSpec,
+satisfiesPzi,
+satisfiesPzs,
 updateTime,
 vectorDbConfig,
 vertexAiSearchConfig
@@ -300,14 +322,16 @@ createTime,
 description,
 displayName,
 encryptionSpec,
+satisfiesPzi,
+satisfiesPzs,
 updateTime,
 vectorDbConfig,
 vertexAiSearchConfig
 FROM google.aiplatform.rag_corpora
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -329,20 +353,20 @@ Creates a RagCorpus.
 
 ```sql
 INSERT INTO google.aiplatform.rag_corpora (
+data__encryptionSpec,
 data__vectorDbConfig,
-data__vertexAiSearchConfig,
 data__displayName,
 data__description,
-data__encryptionSpec,
+data__vertexAiSearchConfig,
 projectsId,
 locationsId
 )
 SELECT 
+'{{ encryptionSpec }}',
 '{{ vectorDbConfig }}',
-'{{ vertexAiSearchConfig }}',
 '{{ displayName }}',
 '{{ description }}',
-'{{ encryptionSpec }}',
+'{{ vertexAiSearchConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -366,15 +390,15 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the rag_corpora resource.
+    - name: encryptionSpec
+      value: object
+      description: >
+        Optional. Immutable. The CMEK key name used to encrypt at-rest data related to this Corpus. Only applicable to RagManagedDb option for Vector DB. This field can only be set at corpus creation time, and cannot be updated or deleted.
+        
     - name: vectorDbConfig
       value: object
       description: >
         Optional. Immutable. The config for the Vector DBs.
-        
-    - name: vertexAiSearchConfig
-      value: object
-      description: >
-        Optional. Immutable. The config for the Vertex AI Search.
         
     - name: displayName
       value: string
@@ -386,10 +410,10 @@ response
       description: >
         Optional. The description of the RagCorpus.
         
-    - name: encryptionSpec
+    - name: vertexAiSearchConfig
       value: object
       description: >
-        Optional. Immutable. The CMEK key name used to encrypt at-rest data related to this Corpus. Only applicable to RagManagedDb option for Vector DB. This field can only be set at corpus creation time, and cannot be updated or deleted.
+        Optional. Immutable. The config for the Vertex AI Search.
         
 ```
 </TabItem>
@@ -411,11 +435,11 @@ Updates a RagCorpus.
 ```sql
 UPDATE google.aiplatform.rag_corpora
 SET 
+data__encryptionSpec = '{{ encryptionSpec }}',
 data__vectorDbConfig = '{{ vectorDbConfig }}',
-data__vertexAiSearchConfig = '{{ vertexAiSearchConfig }}',
 data__displayName = '{{ displayName }}',
 data__description = '{{ description }}',
-data__encryptionSpec = '{{ encryptionSpec }}'
+data__vertexAiSearchConfig = '{{ vertexAiSearchConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

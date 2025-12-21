@@ -158,101 +158,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Identifier. The resource name of the connection, in the format `projects/&#123;project&#125;/locations/&#123;location&#125;/connections/&#123;connection_id&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="annotations" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Allows clients to store small amounts of arbitrary data.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="bitbucketCloudConfig" /></td>
-    <td><code>object</code></td>
-    <td>Configuration for connections to an instance of Bitbucket Clouds. (id: BitbucketCloudConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="bitbucketDataCenterConfig" /></td>
-    <td><code>object</code></td>
-    <td>Configuration for connections to an instance of Bitbucket Data Center. (id: BitbucketDataCenterConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. [Output only] Create timestamp</td>
-</tr>
-<tr>
-    <td><CopyableCode code="cryptoKeyConfig" /></td>
-    <td><code>object</code></td>
-    <td>Optional. The crypto key configuration. This field is used by the Customer-Managed Encryption Keys (CMEK) feature. (id: CryptoKeyConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="deleteTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. [Output only] Delete timestamp</td>
-</tr>
-<tr>
-    <td><CopyableCode code="disabled" /></td>
-    <td><code>boolean</code></td>
-    <td>Optional. If disabled is set to true, functionality is disabled for this connection. Repository based API methods and webhooks processing for repositories in this connection will be disabled.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="etag" /></td>
-    <td><code>string</code></td>
-    <td>Optional. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="gitProxyConfig" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Configuration for the git proxy feature. Enabling the git proxy allows clients to perform git operations on the repositories linked in the connection. (id: GitProxyConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="githubConfig" /></td>
-    <td><code>object</code></td>
-    <td>Configuration for connections to github.com. (id: GitHubConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="githubEnterpriseConfig" /></td>
-    <td><code>object</code></td>
-    <td>Configuration for connections to an instance of GitHub Enterprise. (id: GitHubEnterpriseConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="gitlabConfig" /></td>
-    <td><code>object</code></td>
-    <td>Configuration for connections to gitlab.com. (id: GitLabConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="gitlabEnterpriseConfig" /></td>
-    <td><code>object</code></td>
-    <td>Configuration for connections to an instance of GitLab Enterprise. (id: GitLabEnterpriseConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="installationState" /></td>
-    <td><code>object</code></td>
-    <td>Output only. Installation state of the Connection. (id: InstallationState)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Labels as key value pairs</td>
-</tr>
-<tr>
-    <td><CopyableCode code="reconciling" /></td>
-    <td><code>boolean</code></td>
-    <td>Output only. Set to true when the connection is being set up or updated in the background.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="uid" /></td>
-    <td><code>string</code></td>
-    <td>Output only. A system-assigned unique identifier for the Connection.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. [Output only] Update timestamp</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -284,28 +189,28 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists Connections in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-connectionId"><code>connectionId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-connectionId"><code>connectionId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a new Connection in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Updates the parameters of a single Connection.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes a single Connection.</td>
 </tr>
 <tr>
@@ -446,32 +351,14 @@ Lists Connections in a given project and location.
 
 ```sql
 SELECT
-name,
-annotations,
-bitbucketCloudConfig,
-bitbucketDataCenterConfig,
-createTime,
-cryptoKeyConfig,
-deleteTime,
-disabled,
-etag,
-gitProxyConfig,
-githubConfig,
-githubEnterpriseConfig,
-gitlabConfig,
-gitlabEnterpriseConfig,
-installationState,
-labels,
-reconciling,
-uid,
-updateTime
+*
 FROM google.developerconnect.connections
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -493,43 +380,43 @@ Creates a new Connection in a given project and location.
 
 ```sql
 INSERT INTO google.developerconnect.connections (
-data__githubConfig,
+data__name,
+data__annotations,
 data__githubEnterpriseConfig,
-data__gitlabConfig,
+data__bitbucketCloudConfig,
+data__githubConfig,
+data__gitProxyConfig,
 data__gitlabEnterpriseConfig,
 data__bitbucketDataCenterConfig,
-data__bitbucketCloudConfig,
-data__name,
+data__cryptoKeyConfig,
+data__etag,
 data__labels,
 data__disabled,
-data__annotations,
-data__etag,
-data__cryptoKeyConfig,
-data__gitProxyConfig,
+data__gitlabConfig,
 projectsId,
 locationsId,
-connectionId,
 requestId,
+connectionId,
 validateOnly
 )
 SELECT 
-'{{ githubConfig }}',
+'{{ name }}',
+'{{ annotations }}',
 '{{ githubEnterpriseConfig }}',
-'{{ gitlabConfig }}',
+'{{ bitbucketCloudConfig }}',
+'{{ githubConfig }}',
+'{{ gitProxyConfig }}',
 '{{ gitlabEnterpriseConfig }}',
 '{{ bitbucketDataCenterConfig }}',
-'{{ bitbucketCloudConfig }}',
-'{{ name }}',
+'{{ cryptoKeyConfig }}',
+'{{ etag }}',
 '{{ labels }}',
 {{ disabled }},
-'{{ annotations }}',
-'{{ etag }}',
-'{{ cryptoKeyConfig }}',
-'{{ gitProxyConfig }}',
+'{{ gitlabConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ connectionId }}',
 '{{ requestId }}',
+'{{ connectionId }}',
 '{{ validateOnly }}'
 RETURNING
 name,
@@ -552,20 +439,35 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the connections resource.
-    - name: githubConfig
+    - name: name
+      value: string
+      description: >
+        Identifier. The resource name of the connection, in the format `projects/{project}/locations/{location}/connections/{connection_id}`.
+        
+    - name: annotations
       value: object
       description: >
-        Configuration for connections to github.com.
+        Optional. Allows clients to store small amounts of arbitrary data.
         
     - name: githubEnterpriseConfig
       value: object
       description: >
         Configuration for connections to an instance of GitHub Enterprise.
         
-    - name: gitlabConfig
+    - name: bitbucketCloudConfig
       value: object
       description: >
-        Configuration for connections to gitlab.com.
+        Configuration for connections to an instance of Bitbucket Clouds.
+        
+    - name: githubConfig
+      value: object
+      description: >
+        Configuration for connections to github.com.
+        
+    - name: gitProxyConfig
+      value: object
+      description: >
+        Optional. Configuration for the git proxy feature. Enabling the git proxy allows clients to perform git operations on the repositories linked in the connection.
         
     - name: gitlabEnterpriseConfig
       value: object
@@ -577,15 +479,15 @@ response
       description: >
         Configuration for connections to an instance of Bitbucket Data Center.
         
-    - name: bitbucketCloudConfig
+    - name: cryptoKeyConfig
       value: object
       description: >
-        Configuration for connections to an instance of Bitbucket Clouds.
+        Optional. The crypto key configuration. This field is used by the Customer-Managed Encryption Keys (CMEK) feature.
         
-    - name: name
+    - name: etag
       value: string
       description: >
-        Identifier. The resource name of the connection, in the format `projects/{project}/locations/{location}/connections/{connection_id}`.
+        Optional. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
         
     - name: labels
       value: object
@@ -597,29 +499,14 @@ response
       description: >
         Optional. If disabled is set to true, functionality is disabled for this connection. Repository based API methods and webhooks processing for repositories in this connection will be disabled.
         
-    - name: annotations
+    - name: gitlabConfig
       value: object
       description: >
-        Optional. Allows clients to store small amounts of arbitrary data.
+        Configuration for connections to gitlab.com.
         
-    - name: etag
-      value: string
-      description: >
-        Optional. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
-        
-    - name: cryptoKeyConfig
-      value: object
-      description: >
-        Optional. The crypto key configuration. This field is used by the Customer-Managed Encryption Keys (CMEK) feature.
-        
-    - name: gitProxyConfig
-      value: object
-      description: >
-        Optional. Configuration for the git proxy feature. Enabling the git proxy allows clients to perform git operations on the repositories linked in the connection.
-        
-    - name: connectionId
-      value: string
     - name: requestId
+      value: string
+    - name: connectionId
       value: string
     - name: validateOnly
       value: boolean
@@ -643,27 +530,27 @@ Updates the parameters of a single Connection.
 ```sql
 UPDATE google.developerconnect.connections
 SET 
-data__githubConfig = '{{ githubConfig }}',
+data__name = '{{ name }}',
+data__annotations = '{{ annotations }}',
 data__githubEnterpriseConfig = '{{ githubEnterpriseConfig }}',
-data__gitlabConfig = '{{ gitlabConfig }}',
+data__bitbucketCloudConfig = '{{ bitbucketCloudConfig }}',
+data__githubConfig = '{{ githubConfig }}',
+data__gitProxyConfig = '{{ gitProxyConfig }}',
 data__gitlabEnterpriseConfig = '{{ gitlabEnterpriseConfig }}',
 data__bitbucketDataCenterConfig = '{{ bitbucketDataCenterConfig }}',
-data__bitbucketCloudConfig = '{{ bitbucketCloudConfig }}',
-data__name = '{{ name }}',
+data__cryptoKeyConfig = '{{ cryptoKeyConfig }}',
+data__etag = '{{ etag }}',
 data__labels = '{{ labels }}',
 data__disabled = {{ disabled }},
-data__annotations = '{{ annotations }}',
-data__etag = '{{ etag }}',
-data__cryptoKeyConfig = '{{ cryptoKeyConfig }}',
-data__gitProxyConfig = '{{ gitProxyConfig }}'
+data__gitlabConfig = '{{ gitlabConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND connectionsId = '{{ connectionsId }}' --required
+AND validateOnly = {{ validateOnly}}
+AND allowMissing = {{ allowMissing}}
 AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
-AND allowMissing = {{ allowMissing}}
-AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
 done,
@@ -692,9 +579,9 @@ DELETE FROM google.developerconnect.connections
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND connectionsId = '{{ connectionsId }}' --required
-AND requestId = '{{ requestId }}'
-AND validateOnly = '{{ validateOnly }}'
 AND etag = '{{ etag }}'
+AND validateOnly = '{{ validateOnly }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>

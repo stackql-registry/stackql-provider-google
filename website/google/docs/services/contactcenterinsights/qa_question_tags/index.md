@@ -280,17 +280,17 @@ Creates a QaQuestionTag.
 
 ```sql
 INSERT INTO google.contactcenterinsights.qa_question_tags (
+data__qaQuestionIds,
 data__name,
 data__displayName,
-data__qaQuestionIds,
 projectsId,
 locationsId,
 qaQuestionTagId
 )
 SELECT 
+'{{ qaQuestionIds }}',
 '{{ name }}',
 '{{ displayName }}',
-'{{ qaQuestionIds }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ qaQuestionTagId }}'
@@ -315,6 +315,11 @@ updateTime
     - name: locationsId
       value: string
       description: Required parameter for the qa_question_tags resource.
+    - name: qaQuestionIds
+      value: array
+      description: >
+        Optional. The list of Scorecard Question IDs that the tag applies to. Each QaQuestionId is represented as a full resource name containing the Question ID. Lastly, Since a tag may not necessarily be referenced by any Scorecard Questions, we treat this field as optional.
+        
     - name: name
       value: string
       description: >
@@ -324,11 +329,6 @@ updateTime
       value: string
       description: >
         Required. A user-specified display name for the tag.
-        
-    - name: qaQuestionIds
-      value: array
-      description: >
-        Optional. The list of Scorecard Question IDs that the tag applies to. Each QaQuestionId is represented as a full resource name containing the Question ID. Lastly, Since a tag may not necessarily be referenced by any Scorecard Questions, we treat this field as optional.
         
     - name: qaQuestionTagId
       value: string
@@ -352,9 +352,9 @@ Updates a QaQuestionTag.
 ```sql
 UPDATE google.contactcenterinsights.qa_question_tags
 SET 
+data__qaQuestionIds = '{{ qaQuestionIds }}',
 data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__qaQuestionIds = '{{ qaQuestionIds }}'
+data__displayName = '{{ displayName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

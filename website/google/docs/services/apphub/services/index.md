@@ -204,7 +204,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-applicationsId"><code>applicationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists Services in an Application.</td>
 </tr>
 <tr>
@@ -357,10 +357,10 @@ FROM google.apphub.services
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND applicationsId = '{{ applicationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -382,11 +382,11 @@ Creates a Service in an Application.
 
 ```sql
 INSERT INTO google.apphub.services (
-data__name,
-data__displayName,
-data__description,
 data__attributes,
+data__displayName,
+data__name,
 data__discoveredService,
+data__description,
 projectsId,
 locationsId,
 applicationsId,
@@ -394,11 +394,11 @@ serviceId,
 requestId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
-'{{ description }}',
 '{{ attributes }}',
+'{{ displayName }}',
+'{{ name }}',
 '{{ discoveredService }}',
+'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ applicationsId }}',
@@ -428,30 +428,30 @@ response
     - name: applicationsId
       value: string
       description: Required parameter for the services resource.
-    - name: name
-      value: string
+    - name: attributes
+      value: object
       description: >
-        Identifier. The resource name of a Service. Format: `"projects/{host-project-id}/locations/{location}/applications/{application-id}/services/{service-id}"`
+        Optional. Consumer provided attributes.
         
     - name: displayName
       value: string
       description: >
         Optional. User-defined name for the Service. Can have a maximum length of 63 characters.
         
-    - name: description
+    - name: name
       value: string
       description: >
-        Optional. User-defined description of a Service. Can have a maximum length of 2048 characters.
-        
-    - name: attributes
-      value: object
-      description: >
-        Optional. Consumer provided attributes.
+        Identifier. The resource name of a Service. Format: `"projects/{host-project-id}/locations/{location}/applications/{application-id}/services/{service-id}"`
         
     - name: discoveredService
       value: string
       description: >
         Required. Immutable. The resource name of the original discovered service.
+        
+    - name: description
+      value: string
+      description: >
+        Optional. User-defined description of a Service. Can have a maximum length of 2048 characters.
         
     - name: serviceId
       value: string
@@ -477,11 +477,11 @@ Updates a Service in an Application.
 ```sql
 UPDATE google.apphub.services
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
 data__attributes = '{{ attributes }}',
-data__discoveredService = '{{ discoveredService }}'
+data__displayName = '{{ displayName }}',
+data__name = '{{ name }}',
+data__discoveredService = '{{ discoveredService }}',
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

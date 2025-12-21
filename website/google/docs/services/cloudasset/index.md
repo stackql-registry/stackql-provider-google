@@ -18,7 +18,7 @@ cloudasset service documentation.
 
 :::info[Service Summary]
 
-total resources: __5__  
+total resources: __6__  
 
 :::
 
@@ -27,9 +27,10 @@ total resources: __5__
 <div class="providerDocColumn">
 <a href="/services/cloudasset/asset_history/">asset_history</a><br />
 <a href="/services/cloudasset/assets/">assets</a><br />
-<a href="/services/cloudasset/cloudasset_iam_policies/">cloudasset_iam_policies</a>
+<a href="/services/cloudasset/cloudasset/">cloudasset</a>
 </div>
 <div class="providerDocColumn">
+<a href="/services/cloudasset/cloudasset_iam_policies/">cloudasset_iam_policies</a><br />
 <a href="/services/cloudasset/feeds/">feeds</a><br />
 <a href="/services/cloudasset/saved_queries/">saved_queries</a>
 </div>

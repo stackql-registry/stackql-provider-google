@@ -164,7 +164,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-qaScorecardSources"><code>qaScorecardSources</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-qaScorecardSources"><code>qaScorecardSources</code></a></td>
     <td>Lists QaScorecards.</td>
 </tr>
 <tr>
@@ -297,8 +297,8 @@ updateTime
 FROM google.contactcenterinsights.qa_scorecards
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND qaScorecardSources = '{{ qaScorecardSources }}'
 ;
 ```
@@ -322,18 +322,18 @@ Create a QaScorecard.
 ```sql
 INSERT INTO google.contactcenterinsights.qa_scorecards (
 data__name,
+data__isDefault,
 data__displayName,
 data__description,
-data__isDefault,
 projectsId,
 locationsId,
 qaScorecardId
 )
 SELECT 
 '{{ name }}',
+{{ isDefault }},
 '{{ displayName }}',
 '{{ description }}',
-{{ isDefault }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ qaScorecardId }}'
@@ -365,6 +365,11 @@ updateTime
       description: >
         Identifier. The scorecard name. Format: projects/{project}/locations/{location}/qaScorecards/{qa_scorecard}
         
+    - name: isDefault
+      value: boolean
+      description: >
+        Whether the scorecard is the default one for the project. A default scorecard cannot be deleted and will always appear first in scorecard selector.
+        
     - name: displayName
       value: string
       description: >
@@ -374,11 +379,6 @@ updateTime
       value: string
       description: >
         A text description explaining the intent of the scorecard.
-        
-    - name: isDefault
-      value: boolean
-      description: >
-        Whether the scorecard is the default one for the project. A default scorecard cannot be deleted and will always appear first in scorecard selector.
         
     - name: qaScorecardId
       value: string
@@ -403,9 +403,9 @@ Updates a QaScorecard.
 UPDATE google.contactcenterinsights.qa_scorecards
 SET 
 data__name = '{{ name }}',
+data__isDefault = {{ isDefault }},
 data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
-data__isDefault = {{ isDefault }}
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

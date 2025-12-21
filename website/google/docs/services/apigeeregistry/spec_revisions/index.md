@@ -142,7 +142,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_apis_versions_specs_list_revisions"><CopyableCode code="projects_locations_apis_versions_specs_list_revisions" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a>, <a href="#parameter-specsId"><code>specsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists all revisions of a spec. Revisions are returned in descending order of revision creation time.</td>
 </tr>
 <tr>
@@ -245,9 +245,9 @@ AND locationsId = '{{ locationsId }}' -- required
 AND apisId = '{{ apisId }}' -- required
 AND versionsId = '{{ versionsId }}' -- required
 AND specsId = '{{ specsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>

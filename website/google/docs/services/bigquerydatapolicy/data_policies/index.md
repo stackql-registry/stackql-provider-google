@@ -52,27 +52,42 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Output only. Resource name of this data policy, in the format of `projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/dataPolicies/&#123;data_policy_id&#125;`.</td>
+    <td>Identifier. Resource name of this data policy, in the format of `projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/dataPolicies/&#123;data_policy_id&#125;`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="dataMaskingPolicy" /></td>
     <td><code>object</code></td>
-    <td>The data masking policy that specifies the data masking rule to use. (id: DataMaskingPolicy)</td>
+    <td>Optional. The data masking policy that specifies the data masking rule to use. It must be set if the data policy type is DATA_MASKING_POLICY. (id: DataMaskingPolicy)</td>
 </tr>
 <tr>
     <td><CopyableCode code="dataPolicyId" /></td>
     <td><code>string</code></td>
-    <td>User-assigned (human readable) ID of the data policy that needs to be unique within a project. Used as &#123;data_policy_id&#125; in part of the resource name.</td>
+    <td>Output only. User-assigned (human readable) ID of the data policy that needs to be unique within a project. Used as &#123;data_policy_id&#125; in part of the resource name.</td>
 </tr>
 <tr>
     <td><CopyableCode code="dataPolicyType" /></td>
     <td><code>string</code></td>
-    <td>Required. Data policy type. Type of data policy.</td>
+    <td>Required. Type of data policy.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="etag" /></td>
+    <td><code>string</code></td>
+    <td>The etag for this Data Policy. This field is used for UpdateDataPolicy calls. If Data Policy exists, this field is required and must match the server's etag. It will also be populated in the response of GetDataPolicy, CreateDataPolicy, and UpdateDataPolicy calls.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="grantees" /></td>
+    <td><code>array</code></td>
+    <td>Optional. The list of IAM principals that have Fine Grained Access to the underlying data goverened by this data policy. Uses the [IAM V2 principal syntax](https://cloud.google.com/iam/docs/principal-identifiers#v2) Only supports principal types users, groups, serviceaccounts, cloudidentity. This field is supported in V2 Data Policy only. In case of V1 data policies (i.e. verion = 1 and policy_tag is set), this field is not populated.</td>
 </tr>
 <tr>
     <td><CopyableCode code="policyTag" /></td>
     <td><code>string</code></td>
-    <td>Policy tag resource name, in the format of `projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/taxonomies/&#123;taxonomy_id&#125;/policyTags/&#123;policyTag_id&#125;`.</td>
+    <td>Output only. Policy tag resource name, in the format of `projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/taxonomies/&#123;taxonomy_id&#125;/policyTags/&#123;policyTag_id&#125;`. policy_tag is supported only for V1 data policies.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="version" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The version of the Data Policy resource.</td>
 </tr>
 </tbody>
 </table>
@@ -91,27 +106,42 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Output only. Resource name of this data policy, in the format of `projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/dataPolicies/&#123;data_policy_id&#125;`.</td>
+    <td>Identifier. Resource name of this data policy, in the format of `projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/dataPolicies/&#123;data_policy_id&#125;`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="dataMaskingPolicy" /></td>
     <td><code>object</code></td>
-    <td>The data masking policy that specifies the data masking rule to use. (id: DataMaskingPolicy)</td>
+    <td>Optional. The data masking policy that specifies the data masking rule to use. It must be set if the data policy type is DATA_MASKING_POLICY. (id: DataMaskingPolicy)</td>
 </tr>
 <tr>
     <td><CopyableCode code="dataPolicyId" /></td>
     <td><code>string</code></td>
-    <td>User-assigned (human readable) ID of the data policy that needs to be unique within a project. Used as &#123;data_policy_id&#125; in part of the resource name.</td>
+    <td>Output only. User-assigned (human readable) ID of the data policy that needs to be unique within a project. Used as &#123;data_policy_id&#125; in part of the resource name.</td>
 </tr>
 <tr>
     <td><CopyableCode code="dataPolicyType" /></td>
     <td><code>string</code></td>
-    <td>Required. Data policy type. Type of data policy.</td>
+    <td>Required. Type of data policy.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="etag" /></td>
+    <td><code>string</code></td>
+    <td>The etag for this Data Policy. This field is used for UpdateDataPolicy calls. If Data Policy exists, this field is required and must match the server's etag. It will also be populated in the response of GetDataPolicy, CreateDataPolicy, and UpdateDataPolicy calls.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="grantees" /></td>
+    <td><code>array</code></td>
+    <td>Optional. The list of IAM principals that have Fine Grained Access to the underlying data goverened by this data policy. Uses the [IAM V2 principal syntax](https://cloud.google.com/iam/docs/principal-identifiers#v2) Only supports principal types users, groups, serviceaccounts, cloudidentity. This field is supported in V2 Data Policy only. In case of V1 data policies (i.e. verion = 1 and policy_tag is set), this field is not populated.</td>
 </tr>
 <tr>
     <td><CopyableCode code="policyTag" /></td>
     <td><code>string</code></td>
-    <td>Policy tag resource name, in the format of `projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/taxonomies/&#123;taxonomy_id&#125;/policyTags/&#123;policyTag_id&#125;`.</td>
+    <td>Output only. Policy tag resource name, in the format of `projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/taxonomies/&#123;taxonomy_id&#125;/policyTags/&#123;policyTag_id&#125;`. policy_tag is supported only for V1 data policies.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="version" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The version of the Data Policy resource.</td>
 </tr>
 </tbody>
 </table>
@@ -152,7 +182,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
-    <td>Creates a new data policy under a project with the given `dataPolicyId` (used as the display name), policy tag, and data policy type.</td>
+    <td>Creates a new data policy under a project with the given `data_policy_id` (used as the display name), and data policy type.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
@@ -165,15 +195,8 @@ The following methods are available for this resource:
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataPoliciesId"><code>dataPoliciesId</code></a></td>
-    <td><a href="#parameter-force"><code>force</code></a></td>
-    <td>Deletes the data policy specified by its resource name.</td>
-</tr>
-<tr>
-    <td><a href="#rename"><CopyableCode code="rename" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataPoliciesId"><code>dataPoliciesId</code></a></td>
     <td></td>
-    <td>Renames the id (display name) of the specified data policy.</td>
+    <td>Deletes the data policy specified by its resource name.</td>
 </tr>
 </tbody>
 </table>
@@ -216,11 +239,6 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
-<tr id="parameter-force">
-    <td><CopyableCode code="force" /></td>
-    <td><code>boolean</code></td>
-    <td></td>
-</tr>
 <tr id="parameter-pageSize">
     <td><CopyableCode code="pageSize" /></td>
     <td><code>integer (int32)</code></td>
@@ -258,7 +276,10 @@ name,
 dataMaskingPolicy,
 dataPolicyId,
 dataPolicyType,
-policyTag
+etag,
+grantees,
+policyTag,
+version
 FROM google.bigquerydatapolicy.data_policies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
@@ -276,7 +297,10 @@ name,
 dataMaskingPolicy,
 dataPolicyId,
 dataPolicyType,
-policyTag
+etag,
+grantees,
+policyTag,
+version
 FROM google.bigquerydatapolicy.data_policies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
@@ -300,22 +324,18 @@ AND filter = '{{ filter }}'
 >
 <TabItem value="create">
 
-Creates a new data policy under a project with the given `dataPolicyId` (used as the display name), policy tag, and data policy type.
+Creates a new data policy under a project with the given `data_policy_id` (used as the display name), and data policy type.
 
 ```sql
 INSERT INTO google.bigquerydatapolicy.data_policies (
-data__policyTag,
-data__dataMaskingPolicy,
-data__dataPolicyType,
 data__dataPolicyId,
+data__dataPolicy,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ policyTag }}',
-'{{ dataMaskingPolicy }}',
-'{{ dataPolicyType }}',
 '{{ dataPolicyId }}',
+'{{ dataPolicy }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -323,7 +343,10 @@ name,
 dataMaskingPolicy,
 dataPolicyId,
 dataPolicyType,
-policyTag
+etag,
+grantees,
+policyTag,
+version
 ;
 ```
 </TabItem>
@@ -339,26 +362,15 @@ policyTag
     - name: locationsId
       value: string
       description: Required parameter for the data_policies resource.
-    - name: policyTag
-      value: string
-      description: >
-        Policy tag resource name, in the format of `projects/{project_number}/locations/{location_id}/taxonomies/{taxonomy_id}/policyTags/{policyTag_id}`.
-        
-    - name: dataMaskingPolicy
-      value: object
-      description: >
-        The data masking policy that specifies the data masking rule to use.
-        
-    - name: dataPolicyType
-      value: string
-      description: >
-        Required. Data policy type. Type of data policy.
-        
-      valid_values: ['DATA_POLICY_TYPE_UNSPECIFIED', 'COLUMN_LEVEL_SECURITY_POLICY', 'DATA_MASKING_POLICY']
     - name: dataPolicyId
       value: string
       description: >
-        User-assigned (human readable) ID of the data policy that needs to be unique within a project. Used as {data_policy_id} in part of the resource name.
+        Required. User-assigned (human readable) ID of the data policy that needs to be unique within a project. Used as {data_policy_id} in part of the resource name.
+        
+    - name: dataPolicy
+      value: object
+      description: >
+        Required. The data policy to create. The `name` field does not need to be provided for the data policy creation.
         
 ```
 </TabItem>
@@ -380,10 +392,11 @@ Updates the metadata for an existing data policy. The target data policy can be 
 ```sql
 UPDATE google.bigquerydatapolicy.data_policies
 SET 
-data__policyTag = '{{ policyTag }}',
 data__dataMaskingPolicy = '{{ dataMaskingPolicy }}',
+data__name = '{{ name }}',
+data__etag = '{{ etag }}',
 data__dataPolicyType = '{{ dataPolicyType }}',
-data__dataPolicyId = '{{ dataPolicyId }}'
+data__grantees = '{{ grantees }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -395,7 +408,10 @@ name,
 dataMaskingPolicy,
 dataPolicyId,
 dataPolicyType,
-policyTag;
+etag,
+grantees,
+policyTag,
+version;
 ```
 </TabItem>
 </Tabs>
@@ -418,34 +434,6 @@ DELETE FROM google.bigquerydatapolicy.data_policies
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND dataPoliciesId = '{{ dataPoliciesId }}' --required
-AND force = '{{ force }}'
-;
-```
-</TabItem>
-</Tabs>
-
-
-## Lifecycle Methods
-
-<Tabs
-    defaultValue="rename"
-    values={[
-        { label: 'rename', value: 'rename' }
-    ]}
->
-<TabItem value="rename">
-
-Renames the id (display name) of the specified data policy.
-
-```sql
-EXEC google.bigquerydatapolicy.data_policies.rename 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@dataPoliciesId='{{ dataPoliciesId }}' --required 
-@@json=
-'{
-"newDataPolicyId": "{{ newDataPolicyId }}"
-}'
 ;
 ```
 </TabItem>

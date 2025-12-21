@@ -136,28 +136,28 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a>, <a href="#parameter-authorizedViewsId"><code>authorizedViewsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-analysesId"><code>analysesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-analysesId"><code>analysesId</code></a></td>
     <td></td>
     <td>Gets an analysis.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a>, <a href="#parameter-authorizedViewsId"><code>authorizedViewsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists analyses.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a>, <a href="#parameter-authorizedViewsId"><code>authorizedViewsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a></td>
     <td></td>
     <td>Creates an analysis. The long running operation is done when the analysis has completed.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a>, <a href="#parameter-authorizedViewsId"><code>authorizedViewsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-analysesId"><code>analysesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-analysesId"><code>analysesId</code></a></td>
     <td></td>
     <td>Deletes an analysis.</td>
 </tr>
@@ -179,16 +179,6 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tbody>
 <tr id="parameter-analysesId">
     <td><CopyableCode code="analysesId" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr id="parameter-authorizedViewSetsId">
-    <td><CopyableCode code="authorizedViewSetsId" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr id="parameter-authorizedViewsId">
-    <td><CopyableCode code="authorizedViewsId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -248,8 +238,6 @@ requestTime
 FROM google.contactcenterinsights.analyses
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND authorizedViewSetsId = '{{ authorizedViewSetsId }}' -- required
-AND authorizedViewsId = '{{ authorizedViewsId }}' -- required
 AND conversationsId = '{{ conversationsId }}' -- required
 AND analysesId = '{{ analysesId }}' -- required
 ;
@@ -269,12 +257,10 @@ requestTime
 FROM google.contactcenterinsights.analyses
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND authorizedViewSetsId = '{{ authorizedViewSetsId }}' -- required
-AND authorizedViewsId = '{{ authorizedViewsId }}' -- required
 AND conversationsId = '{{ conversationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -296,21 +282,17 @@ Creates an analysis. The long running operation is done when the analysis has co
 
 ```sql
 INSERT INTO google.contactcenterinsights.analyses (
-data__name,
 data__annotatorSelector,
+data__name,
 projectsId,
 locationsId,
-authorizedViewSetsId,
-authorizedViewsId,
 conversationsId
 )
 SELECT 
-'{{ name }}',
 '{{ annotatorSelector }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ authorizedViewSetsId }}',
-'{{ authorizedViewsId }}',
 '{{ conversationsId }}'
 RETURNING
 name,
@@ -333,24 +315,18 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the analyses resource.
-    - name: authorizedViewSetsId
-      value: string
-      description: Required parameter for the analyses resource.
-    - name: authorizedViewsId
-      value: string
-      description: Required parameter for the analyses resource.
     - name: conversationsId
       value: string
       description: Required parameter for the analyses resource.
-    - name: name
-      value: string
-      description: >
-        Immutable. The resource name of the analysis. Format: projects/{project}/locations/{location}/conversations/{conversation}/analyses/{analysis}
-        
     - name: annotatorSelector
       value: object
       description: >
         To select the annotators to run and the phrase matchers to use (if any). If not specified, all annotators will be run.
+        
+    - name: name
+      value: string
+      description: >
+        Immutable. The resource name of the analysis. Format: projects/{project}/locations/{location}/conversations/{conversation}/analyses/{analysis}
         
 ```
 </TabItem>
@@ -373,8 +349,6 @@ Deletes an analysis.
 DELETE FROM google.contactcenterinsights.analyses
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
-AND authorizedViewSetsId = '{{ authorizedViewSetsId }}' --required
-AND authorizedViewsId = '{{ authorizedViewsId }}' --required
 AND conversationsId = '{{ conversationsId }}' --required
 AND analysesId = '{{ analysesId }}' --required
 ;

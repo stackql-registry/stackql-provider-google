@@ -1576,7 +1576,8 @@ EXEC google.storage.objects.compose
 '{
 "destination": "{{ destination }}", 
 "kind": "{{ kind }}", 
-"sourceObjects": "{{ sourceObjects }}"
+"sourceObjects": "{{ sourceObjects }}", 
+"deleteSourceObjects": {{ deleteSourceObjects }}
 }'
 ;
 ```

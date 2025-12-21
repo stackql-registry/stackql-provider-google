@@ -194,7 +194,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_gateway_security_policies_rules_list"><CopyableCode code="projects_locations_gateway_security_policies_rules_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-gatewaySecurityPoliciesId"><code>gatewaySecurityPoliciesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists GatewaySecurityPolicyRules in a given project and location.</td>
 </tr>
 <tr>
@@ -330,8 +330,8 @@ FROM google.networksecurity.rules
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND gatewaySecurityPoliciesId = '{{ gatewaySecurityPoliciesId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -353,28 +353,28 @@ Creates a new GatewaySecurityPolicy in a given project and location.
 
 ```sql
 INSERT INTO google.networksecurity.rules (
-data__basicProfile,
 data__name,
-data__enabled,
-data__priority,
 data__description,
-data__sessionMatcher,
-data__applicationMatcher,
 data__tlsInspectionEnabled,
+data__priority,
+data__basicProfile,
+data__sessionMatcher,
+data__enabled,
+data__applicationMatcher,
 projectsId,
 locationsId,
 gatewaySecurityPoliciesId,
 gatewaySecurityPolicyRuleId
 )
 SELECT 
-'{{ basicProfile }}',
 '{{ name }}',
-{{ enabled }},
-{{ priority }},
 '{{ description }}',
-'{{ sessionMatcher }}',
-'{{ applicationMatcher }}',
 {{ tlsInspectionEnabled }},
+{{ priority }},
+'{{ basicProfile }}',
+'{{ sessionMatcher }}',
+{{ enabled }},
+'{{ applicationMatcher }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ gatewaySecurityPoliciesId }}',
@@ -403,46 +403,46 @@ response
     - name: gatewaySecurityPoliciesId
       value: string
       description: Required parameter for the rules resource.
-    - name: basicProfile
-      value: string
-      description: >
-        Required. Profile which tells what the primitive action should be.
-        
-      valid_values: ['BASIC_PROFILE_UNSPECIFIED', 'ALLOW', 'DENY']
     - name: name
       value: string
       description: >
         Required. Immutable. Name of the resource. ame is the full resource name so projects/{project}/locations/{location}/gatewaySecurityPolicies/{gateway_security_policy}/rules/{rule} rule should match the pattern: (^&#91;a-z&#93;([a-z0-9-]{0,61}[a-z0-9])?$).
-        
-    - name: enabled
-      value: boolean
-      description: >
-        Required. Whether the rule is enforced.
-        
-    - name: priority
-      value: integer
-      description: >
-        Required. Priority of the rule. Lower number corresponds to higher precedence.
         
     - name: description
       value: string
       description: >
         Optional. Free-text description of the resource.
         
+    - name: tlsInspectionEnabled
+      value: boolean
+      description: >
+        Optional. Flag to enable TLS inspection of traffic matching on , can only be true if the parent GatewaySecurityPolicy references a TLSInspectionConfig.
+        
+    - name: priority
+      value: integer
+      description: >
+        Required. Priority of the rule. Lower number corresponds to higher precedence.
+        
+    - name: basicProfile
+      value: string
+      description: >
+        Required. Profile which tells what the primitive action should be.
+        
+      valid_values: ['BASIC_PROFILE_UNSPECIFIED', 'ALLOW', 'DENY']
     - name: sessionMatcher
       value: string
       description: >
         Required. CEL expression for matching on session criteria.
         
+    - name: enabled
+      value: boolean
+      description: >
+        Required. Whether the rule is enforced.
+        
     - name: applicationMatcher
       value: string
       description: >
         Optional. CEL expression for matching on L7/application level criteria.
-        
-    - name: tlsInspectionEnabled
-      value: boolean
-      description: >
-        Optional. Flag to enable TLS inspection of traffic matching on , can only be true if the parent GatewaySecurityPolicy references a TLSInspectionConfig.
         
     - name: gatewaySecurityPolicyRuleId
       value: string
@@ -466,14 +466,14 @@ Updates the parameters of a single GatewaySecurityPolicyRule.
 ```sql
 UPDATE google.networksecurity.rules
 SET 
-data__basicProfile = '{{ basicProfile }}',
 data__name = '{{ name }}',
-data__enabled = {{ enabled }},
-data__priority = {{ priority }},
 data__description = '{{ description }}',
+data__tlsInspectionEnabled = {{ tlsInspectionEnabled }},
+data__priority = {{ priority }},
+data__basicProfile = '{{ basicProfile }}',
 data__sessionMatcher = '{{ sessionMatcher }}',
-data__applicationMatcher = '{{ applicationMatcher }}',
-data__tlsInspectionEnabled = {{ tlsInspectionEnabled }}
+data__enabled = {{ enabled }},
+data__applicationMatcher = '{{ applicationMatcher }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

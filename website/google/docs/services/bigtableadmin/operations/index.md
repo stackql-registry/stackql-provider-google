@@ -32,13 +32,13 @@ Creates, updates, deletes, gets or lists an <code>operations</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="get"
+    defaultValue="list"
     values={[
-        { label: 'get', value: 'get' },
-        { label: 'list', value: 'list' }
+        { label: 'list', value: 'list' },
+        { label: 'get', value: 'get' }
     ]}
 >
-<TabItem value="get">
+<TabItem value="list">
 
 <table>
 <thead>
@@ -77,7 +77,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="list">
+<TabItem value="get">
 
 <table>
 <thead>
@@ -134,18 +134,18 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
+    <td><a href="#list"><CopyableCode code="list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
+</tr>
+<tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-operationsId"><code>operationsId</code></a></td>
     <td></td>
     <td>Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.</td>
-</tr>
-<tr>
-    <td><a href="#list"><CopyableCode code="list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
 </tr>
 </tbody>
 </table>
@@ -188,34 +188,23 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
+<tr id="parameter-returnPartialSuccess">
+    <td><CopyableCode code="returnPartialSuccess" /></td>
+    <td><code>boolean</code></td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="get"
+    defaultValue="list"
     values={[
-        { label: 'get', value: 'get' },
-        { label: 'list', value: 'list' }
+        { label: 'list', value: 'list' },
+        { label: 'get', value: 'get' }
     ]}
 >
-<TabItem value="get">
-
-Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.
-
-```sql
-SELECT
-name,
-done,
-error,
-metadata,
-response
-FROM google.bigtableadmin.operations
-WHERE operationsId = '{{ operationsId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="list">
 
 Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.
@@ -230,8 +219,25 @@ response
 FROM google.bigtableadmin.operations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND pageSize = '{{ pageSize }}'
+;
+```
+</TabItem>
+<TabItem value="get">
+
+Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.
+
+```sql
+SELECT
+name,
+done,
+error,
+metadata,
+response
+FROM google.bigtableadmin.operations
+WHERE operationsId = '{{ operationsId }}' -- required
 ;
 ```
 </TabItem>
