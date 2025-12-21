@@ -284,7 +284,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists workflows in a given project and location. The default order is not specified.</td>
 </tr>
 <tr>
@@ -447,10 +447,10 @@ userEnvVars
 FROM google.workflows.workflows
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -472,31 +472,31 @@ Creates a new workflow. If a workflow with the specified name already exists in 
 
 ```sql
 INSERT INTO google.workflows.workflows (
-data__name,
+data__tags,
+data__userEnvVars,
 data__description,
-data__labels,
 data__serviceAccount,
-data__sourceContents,
+data__executionHistoryLevel,
 data__cryptoKeyName,
 data__callLogLevel,
-data__userEnvVars,
-data__executionHistoryLevel,
-data__tags,
+data__sourceContents,
+data__labels,
+data__name,
 projectsId,
 locationsId,
 workflowId
 )
 SELECT 
-'{{ name }}',
+'{{ tags }}',
+'{{ userEnvVars }}',
 '{{ description }}',
-'{{ labels }}',
 '{{ serviceAccount }}',
-'{{ sourceContents }}',
+'{{ executionHistoryLevel }}',
 '{{ cryptoKeyName }}',
 '{{ callLogLevel }}',
-'{{ userEnvVars }}',
-'{{ executionHistoryLevel }}',
-'{{ tags }}',
+'{{ sourceContents }}',
+'{{ labels }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ workflowId }}'
@@ -521,31 +521,32 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the workflows resource.
-    - name: name
-      value: string
+    - name: tags
+      value: object
       description: >
-        The resource name of the workflow. Format: projects/{project}/locations/{location}/workflows/{workflow}. This is a workflow-wide field and is not tied to a specific revision.
+        Optional. Input only. Immutable. Tags associated with this workflow.
+        
+    - name: userEnvVars
+      value: object
+      description: >
+        Optional. User-defined environment variables associated with this workflow revision. This map has a maximum length of 20. Each string can take up to 4KiB. Keys cannot be empty strings and cannot start with "GOOGLE" or "WORKFLOWS".
         
     - name: description
       value: string
       description: >
         Description of the workflow provided by the user. Must be at most 1000 Unicode characters long. This is a workflow-wide field and is not tied to a specific revision.
         
-    - name: labels
-      value: object
-      description: >
-        Labels associated with this workflow. Labels can contain at most 64 entries. Keys and values can be no longer than 63 characters and can only contain lowercase letters, numeric characters, underscores, and dashes. Label keys must start with a letter. International characters are allowed. This is a workflow-wide field and is not tied to a specific revision.
-        
     - name: serviceAccount
       value: string
       description: >
         The service account associated with the latest workflow version. This service account represents the identity of the workflow and determines what permissions the workflow has. Format: projects/{project}/serviceAccounts/{account} or {account} Using `-` as a wildcard for the `{project}` or not providing one at all will infer the project from the account. The `{account}` value can be the `email` address or the `unique_id` of the service account. If not provided, workflow will use the project's default service account. Modifying this field for an existing workflow results in a new workflow revision.
         
-    - name: sourceContents
+    - name: executionHistoryLevel
       value: string
       description: >
-        Workflow code to be executed. The size limit is 128KB.
+        Optional. Describes the execution history level to apply to this workflow.
         
+      valid_values: ['EXECUTION_HISTORY_LEVEL_UNSPECIFIED', 'EXECUTION_HISTORY_BASIC', 'EXECUTION_HISTORY_DETAILED']
     - name: cryptoKeyName
       value: string
       description: >
@@ -557,21 +558,20 @@ response
         Optional. Describes the level of platform logging to apply to calls and call responses during executions of this workflow. If both the workflow and the execution specify a logging level, the execution level takes precedence.
         
       valid_values: ['CALL_LOG_LEVEL_UNSPECIFIED', 'LOG_ALL_CALLS', 'LOG_ERRORS_ONLY', 'LOG_NONE']
-    - name: userEnvVars
-      value: object
-      description: >
-        Optional. User-defined environment variables associated with this workflow revision. This map has a maximum length of 20. Each string can take up to 4KiB. Keys cannot be empty strings and cannot start with "GOOGLE" or "WORKFLOWS".
-        
-    - name: executionHistoryLevel
+    - name: sourceContents
       value: string
       description: >
-        Optional. Describes the execution history level to apply to this workflow.
+        Workflow code to be executed. The size limit is 128KB.
         
-      valid_values: ['EXECUTION_HISTORY_LEVEL_UNSPECIFIED', 'EXECUTION_HISTORY_BASIC', 'EXECUTION_HISTORY_DETAILED']
-    - name: tags
+    - name: labels
       value: object
       description: >
-        Optional. Input only. Immutable. Tags associated with this workflow.
+        Labels associated with this workflow. Labels can contain at most 64 entries. Keys and values can be no longer than 63 characters and can only contain lowercase letters, numeric characters, underscores, and dashes. Label keys must start with a letter. International characters are allowed. This is a workflow-wide field and is not tied to a specific revision.
+        
+    - name: name
+      value: string
+      description: >
+        The resource name of the workflow. Format: projects/{project}/locations/{location}/workflows/{workflow}. This is a workflow-wide field and is not tied to a specific revision.
         
     - name: workflowId
       value: string
@@ -595,16 +595,16 @@ Updates an existing workflow. Running this method has no impact on already runni
 ```sql
 UPDATE google.workflows.workflows
 SET 
-data__name = '{{ name }}',
+data__tags = '{{ tags }}',
+data__userEnvVars = '{{ userEnvVars }}',
 data__description = '{{ description }}',
-data__labels = '{{ labels }}',
 data__serviceAccount = '{{ serviceAccount }}',
-data__sourceContents = '{{ sourceContents }}',
+data__executionHistoryLevel = '{{ executionHistoryLevel }}',
 data__cryptoKeyName = '{{ cryptoKeyName }}',
 data__callLogLevel = '{{ callLogLevel }}',
-data__userEnvVars = '{{ userEnvVars }}',
-data__executionHistoryLevel = '{{ executionHistoryLevel }}',
-data__tags = '{{ tags }}'
+data__sourceContents = '{{ sourceContents }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

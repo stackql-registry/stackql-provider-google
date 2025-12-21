@@ -53,7 +53,7 @@ The following methods are available for this resource:
     <td><a href="#callback_generate_token"><CopyableCode code="callback_generate_token" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
-    <td><a href="#parameter-state"><code>state</code></a>, <a href="#parameter-code"><code>code</code></a>, <a href="#parameter-gcpProjectId"><code>gcpProjectId</code></a>, <a href="#parameter-redirectUri"><code>redirectUri</code></a>, <a href="#parameter-product"><code>product</code></a></td>
+    <td><a href="#parameter-code"><code>code</code></a>, <a href="#parameter-product"><code>product</code></a>, <a href="#parameter-gcpProjectId"><code>gcpProjectId</code></a>, <a href="#parameter-state"><code>state</code></a>, <a href="#parameter-redirectUri"><code>redirectUri</code></a></td>
     <td>Receives the auth code and auth config id to combine that with the client id and secret to retrieve access tokens from the token endpoint. Returns either a success or error message when it's done.</td>
 </tr>
 </tbody>
@@ -114,11 +114,11 @@ Receives the auth code and auth config id to combine that with the client id and
 
 ```sql
 EXEC google.integrations.callback.callback_generate_token 
-@state='{{ state }}', 
 @code='{{ code }}', 
+@product='{{ product }}', 
 @gcpProjectId='{{ gcpProjectId }}', 
-@redirectUri='{{ redirectUri }}', 
-@product='{{ product }}'
+@state='{{ state }}', 
+@redirectUri='{{ redirectUri }}'
 ;
 ```
 </TabItem>

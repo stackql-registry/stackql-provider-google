@@ -32,13 +32,37 @@ Creates, updates, deletes, gets or lists a <code>service_account</code> resource
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_get_service_account"
+    defaultValue="organizations_get_service_account"
     values={[
+        { label: 'organizations_get_service_account', value: 'organizations_get_service_account' },
         { label: 'projects_get_service_account', value: 'projects_get_service_account' },
-        { label: 'folders_get_service_account', value: 'folders_get_service_account' },
-        { label: 'organizations_get_service_account', value: 'organizations_get_service_account' }
+        { label: 'folders_get_service_account', value: 'folders_get_service_account' }
     ]}
 >
+<TabItem value="organizations_get_service_account">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>The resource name of the Access Approval service account. Format is one of: * "projects/&#123;project&#125;/serviceAccount" * "folders/&#123;folder&#125;/serviceAccount" * "organizations/&#123;organization&#125;/serviceAccount"</td>
+</tr>
+<tr>
+    <td><CopyableCode code="accountEmail" /></td>
+    <td><code>string</code></td>
+    <td>Email address of the service account.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
 <TabItem value="projects_get_service_account">
 
 <table>
@@ -64,30 +88,6 @@ The following fields are returned by `SELECT` queries:
 </table>
 </TabItem>
 <TabItem value="folders_get_service_account">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>The resource name of the Access Approval service account. Format is one of: * "projects/&#123;project&#125;/serviceAccount" * "folders/&#123;folder&#125;/serviceAccount" * "organizations/&#123;organization&#125;/serviceAccount"</td>
-</tr>
-<tr>
-    <td><CopyableCode code="accountEmail" /></td>
-    <td><code>string</code></td>
-    <td>Email address of the service account.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="organizations_get_service_account">
 
 <table>
 <thead>
@@ -129,6 +129,13 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
+    <td><a href="#organizations_get_service_account"><CopyableCode code="organizations_get_service_account" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
+    <td></td>
+    <td>Retrieves the service account that is used by Access Approval to access KMS keys for signing approved approval requests.</td>
+</tr>
+<tr>
     <td><a href="#projects_get_service_account"><CopyableCode code="projects_get_service_account" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
@@ -139,13 +146,6 @@ The following methods are available for this resource:
     <td><a href="#folders_get_service_account"><CopyableCode code="folders_get_service_account" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
-    <td></td>
-    <td>Retrieves the service account that is used by Access Approval to access KMS keys for signing approved approval requests.</td>
-</tr>
-<tr>
-    <td><a href="#organizations_get_service_account"><CopyableCode code="organizations_get_service_account" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
     <td></td>
     <td>Retrieves the service account that is used by Access Approval to access KMS keys for signing approved approval requests.</td>
 </tr>
@@ -186,13 +186,26 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_get_service_account"
+    defaultValue="organizations_get_service_account"
     values={[
+        { label: 'organizations_get_service_account', value: 'organizations_get_service_account' },
         { label: 'projects_get_service_account', value: 'projects_get_service_account' },
-        { label: 'folders_get_service_account', value: 'folders_get_service_account' },
-        { label: 'organizations_get_service_account', value: 'organizations_get_service_account' }
+        { label: 'folders_get_service_account', value: 'folders_get_service_account' }
     ]}
 >
+<TabItem value="organizations_get_service_account">
+
+Retrieves the service account that is used by Access Approval to access KMS keys for signing approved approval requests.
+
+```sql
+SELECT
+name,
+accountEmail
+FROM google.accessapproval.service_account
+WHERE organizationsId = '{{ organizationsId }}' -- required
+;
+```
+</TabItem>
 <TabItem value="projects_get_service_account">
 
 Retrieves the service account that is used by Access Approval to access KMS keys for signing approved approval requests.
@@ -216,19 +229,6 @@ name,
 accountEmail
 FROM google.accessapproval.service_account
 WHERE foldersId = '{{ foldersId }}' -- required
-;
-```
-</TabItem>
-<TabItem value="organizations_get_service_account">
-
-Retrieves the service account that is used by Access Approval to access KMS keys for signing approved approval requests.
-
-```sql
-SELECT
-name,
-accountEmail
-FROM google.accessapproval.service_account
-WHERE organizationsId = '{{ organizationsId }}' -- required
 ;
 ```
 </TabItem>

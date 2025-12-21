@@ -18,7 +18,7 @@ apigee service documentation.
 
 :::info[Service Summary]
 
-total resources: __90__  
+total resources: __91__  
 
 :::
 
@@ -69,10 +69,10 @@ total resources: __90__
 <a href="/services/apigee/host_queries_result/">host_queries_result</a><br />
 <a href="/services/apigee/host_queries_result_view/">host_queries_result_view</a><br />
 <a href="/services/apigee/host_security_reports/">host_security_reports</a><br />
-<a href="/services/apigee/host_security_reports_result/">host_security_reports_result</a>
+<a href="/services/apigee/host_security_reports_result/">host_security_reports_result</a><br />
+<a href="/services/apigee/host_security_reports_result_view/">host_security_reports_result_view</a>
 </div>
 <div class="providerDocColumn">
-<a href="/services/apigee/host_security_reports_result_view/">host_security_reports_result_view</a><br />
 <a href="/services/apigee/host_stats/">host_stats</a><br />
 <a href="/services/apigee/ingress_config/">ingress_config</a><br />
 <a href="/services/apigee/instances/">instances</a><br />
@@ -100,6 +100,7 @@ total resources: __90__
 <a href="/services/apigee/runtime_config/">runtime_config</a><br />
 <a href="/services/apigee/security_actions/">security_actions</a><br />
 <a href="/services/apigee/security_actions_config/">security_actions_config</a><br />
+<a href="/services/apigee/security_feedback/">security_feedback</a><br />
 <a href="/services/apigee/security_incidents/">security_incidents</a><br />
 <a href="/services/apigee/security_monitoring_conditions/">security_monitoring_conditions</a><br />
 <a href="/services/apigee/security_profiles/">security_profiles</a><br />

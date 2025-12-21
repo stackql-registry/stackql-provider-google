@@ -123,66 +123,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Name of the `Automation`. Format is `projects/&#123;project&#125;/locations/&#123;location&#125;/deliveryPipelines/&#123;delivery_pipeline&#125;/automations/&#123;automation&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="annotations" /></td>
-    <td><code>object</code></td>
-    <td>Optional. User annotations. These attributes can only be set and used by the user, and not by Cloud Deploy. Annotations must meet the following constraints: * Annotations are key/value pairs. * Valid annotation keys have two segments: an optional prefix and name, separated by a slash (`/`). * The name segment is required and must be 63 characters or less, beginning and ending with an alphanumeric character (`[a-z0-9A-Z]`) with dashes (`-`), underscores (`_`), dots (`.`), and alphanumerics between. * The prefix is optional. If specified, the prefix must be a DNS subdomain: a series of DNS labels separated by dots(`.`), not longer than 253 characters in total, followed by a slash (`/`). See https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/#syntax-and-character-set for more details.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Time at which the automation was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Description of the `Automation`. Max length is 255 characters.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="etag" /></td>
-    <td><code>string</code></td>
-    <td>Optional. The weak etag of the `Automation` resource. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Labels are attributes that can be set and used by both the user and by Cloud Deploy. Labels must meet the following constraints: * Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. * All characters must use UTF-8 encoding, and international characters are allowed. * Keys must start with a lowercase letter or international character. * Each resource is limited to a maximum of 64 labels. Both keys and values are additionally constrained to be &lt;= 63 characters.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="rules" /></td>
-    <td><code>array</code></td>
-    <td>Required. List of Automation rules associated with the Automation resource. Must have at least one rule and limited to 250 rules per Delivery Pipeline. Note: the order of the rules here is not the same as the order of execution.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="selector" /></td>
-    <td><code>object</code></td>
-    <td>Required. Selected resources to which the automation will be applied. (id: AutomationResourceSelector)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="serviceAccount" /></td>
-    <td><code>string</code></td>
-    <td>Required. Email address of the user-managed IAM service account that creates Cloud Deploy release and rollout resources.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="suspended" /></td>
-    <td><code>boolean</code></td>
-    <td>Optional. When Suspended, automation is deactivated from execution.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="uid" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Unique identifier of the `Automation`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Time at which the automation was updated.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -214,28 +154,28 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deliveryPipelinesId"><code>deliveryPipelinesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists Automations in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deliveryPipelinesId"><code>deliveryPipelinesId</code></a></td>
-    <td><a href="#parameter-automationId"><code>automationId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-automationId"><code>automationId</code></a></td>
     <td>Creates a new Automation in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deliveryPipelinesId"><code>deliveryPipelinesId</code></a>, <a href="#parameter-automationsId"><code>automationsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Updates the parameters of a single Automation resource.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deliveryPipelinesId"><code>deliveryPipelinesId</code></a>, <a href="#parameter-automationsId"><code>automationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
     <td>Deletes a single Automation resource.</td>
 </tr>
 </tbody>
@@ -368,26 +308,15 @@ Lists Automations in a given project and location.
 
 ```sql
 SELECT
-name,
-annotations,
-createTime,
-description,
-etag,
-labels,
-rules,
-selector,
-serviceAccount,
-suspended,
-uid,
-updateTime
+*
 FROM google.clouddeploy.automations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND deliveryPipelinesId = '{{ deliveryPipelinesId }}' -- required
-AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -410,35 +339,35 @@ Creates a new Automation in a given project and location.
 ```sql
 INSERT INTO google.clouddeploy.automations (
 data__description,
-data__annotations,
+data__rules,
 data__labels,
 data__etag,
-data__suspended,
 data__serviceAccount,
+data__suspended,
+data__annotations,
 data__selector,
-data__rules,
 projectsId,
 locationsId,
 deliveryPipelinesId,
-automationId,
 requestId,
-validateOnly
+validateOnly,
+automationId
 )
 SELECT 
 '{{ description }}',
-'{{ annotations }}',
+'{{ rules }}',
 '{{ labels }}',
 '{{ etag }}',
-{{ suspended }},
 '{{ serviceAccount }}',
+{{ suspended }},
+'{{ annotations }}',
 '{{ selector }}',
-'{{ rules }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ deliveryPipelinesId }}',
-'{{ automationId }}',
 '{{ requestId }}',
-'{{ validateOnly }}'
+'{{ validateOnly }}',
+'{{ automationId }}'
 RETURNING
 name,
 done,
@@ -468,10 +397,10 @@ response
       description: >
         Optional. Description of the `Automation`. Max length is 255 characters.
         
-    - name: annotations
-      value: object
+    - name: rules
+      value: array
       description: >
-        Optional. User annotations. These attributes can only be set and used by the user, and not by Cloud Deploy. Annotations must meet the following constraints: * Annotations are key/value pairs. * Valid annotation keys have two segments: an optional prefix and name, separated by a slash (`/`). * The name segment is required and must be 63 characters or less, beginning and ending with an alphanumeric character (`[a-z0-9A-Z]`) with dashes (`-`), underscores (`_`), dots (`.`), and alphanumerics between. * The prefix is optional. If specified, the prefix must be a DNS subdomain: a series of DNS labels separated by dots(`.`), not longer than 253 characters in total, followed by a slash (`/`). See https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/#syntax-and-character-set for more details.
+        Required. List of Automation rules associated with the Automation resource. Must have at least one rule and limited to 250 rules per Delivery Pipeline. Note: the order of the rules here is not the same as the order of execution.
         
     - name: labels
       value: object
@@ -483,32 +412,32 @@ response
       description: >
         Optional. The weak etag of the `Automation` resource. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
         
+    - name: serviceAccount
+      value: string
+      description: >
+        Required. Email address of the user-managed IAM service account that creates Cloud Deploy release and rollout resources.
+        
     - name: suspended
       value: boolean
       description: >
         Optional. When Suspended, automation is deactivated from execution.
         
-    - name: serviceAccount
-      value: string
+    - name: annotations
+      value: object
       description: >
-        Required. Email address of the user-managed IAM service account that creates Cloud Deploy release and rollout resources.
+        Optional. User annotations. These attributes can only be set and used by the user, and not by Cloud Deploy. Annotations must meet the following constraints: * Annotations are key/value pairs. * Valid annotation keys have two segments: an optional prefix and name, separated by a slash (`/`). * The name segment is required and must be 63 characters or less, beginning and ending with an alphanumeric character (`[a-z0-9A-Z]`) with dashes (`-`), underscores (`_`), dots (`.`), and alphanumerics between. * The prefix is optional. If specified, the prefix must be a DNS subdomain: a series of DNS labels separated by dots(`.`), not longer than 253 characters in total, followed by a slash (`/`). See https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/#syntax-and-character-set for more details.
         
     - name: selector
       value: object
       description: >
         Required. Selected resources to which the automation will be applied.
         
-    - name: rules
-      value: array
-      description: >
-        Required. List of Automation rules associated with the Automation resource. Must have at least one rule and limited to 250 rules per Delivery Pipeline. Note: the order of the rules here is not the same as the order of execution.
-        
-    - name: automationId
-      value: string
     - name: requestId
       value: string
     - name: validateOnly
       value: boolean
+    - name: automationId
+      value: string
 ```
 </TabItem>
 </Tabs>
@@ -530,22 +459,22 @@ Updates the parameters of a single Automation resource.
 UPDATE google.clouddeploy.automations
 SET 
 data__description = '{{ description }}',
-data__annotations = '{{ annotations }}',
+data__rules = '{{ rules }}',
 data__labels = '{{ labels }}',
 data__etag = '{{ etag }}',
-data__suspended = {{ suspended }},
 data__serviceAccount = '{{ serviceAccount }}',
-data__selector = '{{ selector }}',
-data__rules = '{{ rules }}'
+data__suspended = {{ suspended }},
+data__annotations = '{{ annotations }}',
+data__selector = '{{ selector }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND deliveryPipelinesId = '{{ deliveryPipelinesId }}' --required
 AND automationsId = '{{ automationsId }}' --required
 AND updateMask = '{{ updateMask}}'
-AND requestId = '{{ requestId}}'
-AND allowMissing = {{ allowMissing}}
 AND validateOnly = {{ validateOnly}}
+AND allowMissing = {{ allowMissing}}
+AND requestId = '{{ requestId}}'
 RETURNING
 name,
 done,
@@ -575,9 +504,9 @@ WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND deliveryPipelinesId = '{{ deliveryPipelinesId }}' --required
 AND automationsId = '{{ automationsId }}' --required
-AND requestId = '{{ requestId }}'
-AND allowMissing = '{{ allowMissing }}'
 AND validateOnly = '{{ validateOnly }}'
+AND allowMissing = '{{ allowMissing }}'
+AND requestId = '{{ requestId }}'
 AND etag = '{{ etag }}'
 ;
 ```

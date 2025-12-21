@@ -85,6 +85,11 @@ The following fields are returned by `SELECT` queries:
     <td>[Output Only] If errors are generated during processing of the operation, this field will be populated.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="firewallPolicyRuleOperationMetadata" /></td>
+    <td><code>object</code></td>
+    <td> (id: FirewallPolicyRuleOperationMetadata)</td>
+</tr>
+<tr>
     <td><CopyableCode code="httpErrorMessage" /></td>
     <td><code>string</code></td>
     <td>[Output Only] If the operation fails, this field contains the HTTP error message that was returned, such as `NOT FOUND`.</td>
@@ -107,12 +112,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of the resource. Always `compute#operation` for Operation resources. (default: compute#operation)</td>
+    <td>Output only. [Output Only] Type of the resource. Always `compute#operation` for Operation resources. (default: compute#operation)</td>
 </tr>
 <tr>
     <td><CopyableCode code="operationGroupId" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] An ID that represents a group of operations, such as when a group of operations results from a `bulkInsert` API request.</td>
+    <td>Output only. [Output Only] An ID that represents a group of operations, such as when a group of operations results from a `bulkInsert` API request.</td>
 </tr>
 <tr>
     <td><CopyableCode code="operationType" /></td>
@@ -137,7 +142,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="selfLinkWithId" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for this resource with the resource id.</td>
+    <td>Output only. [Output Only] Server-defined URL for this resource with the resource id.</td>
 </tr>
 <tr>
     <td><CopyableCode code="setAutoscalerLinkOperationMetadata" /></td>
@@ -147,7 +152,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="setCommonInstanceMetadataOperationMetadata" /></td>
     <td><code>object</code></td>
-    <td>[Output Only] If the operation is for projects.setCommonInstanceMetadata, this field will contain information on all underlying zonal actions and their state. (id: SetCommonInstanceMetadataOperationMetadata)</td>
+    <td>Output only. [Output Only] If the operation is for projects.setCommonInstanceMetadata, this field will contain information on all underlying zonal actions and their state. (id: SetCommonInstanceMetadataOperationMetadata)</td>
 </tr>
 <tr>
     <td><CopyableCode code="startTime" /></td>
@@ -239,6 +244,11 @@ The following fields are returned by `SELECT` queries:
     <td>[Output Only] If errors are generated during processing of the operation, this field will be populated.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="firewallPolicyRuleOperationMetadata" /></td>
+    <td><code>object</code></td>
+    <td> (id: FirewallPolicyRuleOperationMetadata)</td>
+</tr>
+<tr>
     <td><CopyableCode code="httpErrorMessage" /></td>
     <td><code>string</code></td>
     <td>[Output Only] If the operation fails, this field contains the HTTP error message that was returned, such as `NOT FOUND`.</td>
@@ -261,12 +271,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of the resource. Always `compute#operation` for Operation resources. (default: compute#operation)</td>
+    <td>Output only. [Output Only] Type of the resource. Always `compute#operation` for Operation resources. (default: compute#operation)</td>
 </tr>
 <tr>
     <td><CopyableCode code="operationGroupId" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] An ID that represents a group of operations, such as when a group of operations results from a `bulkInsert` API request.</td>
+    <td>Output only. [Output Only] An ID that represents a group of operations, such as when a group of operations results from a `bulkInsert` API request.</td>
 </tr>
 <tr>
     <td><CopyableCode code="operationType" /></td>
@@ -291,7 +301,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="selfLinkWithId" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for this resource with the resource id.</td>
+    <td>Output only. [Output Only] Server-defined URL for this resource with the resource id.</td>
 </tr>
 <tr>
     <td><CopyableCode code="setAutoscalerLinkOperationMetadata" /></td>
@@ -301,7 +311,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="setCommonInstanceMetadataOperationMetadata" /></td>
     <td><code>object</code></td>
-    <td>[Output Only] If the operation is for projects.setCommonInstanceMetadata, this field will contain information on all underlying zonal actions and their state. (id: SetCommonInstanceMetadataOperationMetadata)</td>
+    <td>Output only. [Output Only] If the operation is for projects.setCommonInstanceMetadata, this field will contain information on all underlying zonal actions and their state. (id: SetCommonInstanceMetadataOperationMetadata)</td>
 </tr>
 <tr>
     <td><CopyableCode code="startTime" /></td>
@@ -374,7 +384,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a></td>
     <td>Lists all operations for a project.</td>
 </tr>
 </tbody>
@@ -453,6 +463,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+firewallPolicyRuleOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -494,6 +505,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+firewallPolicyRuleOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -517,10 +529,10 @@ warnings,
 zone
 FROM google.deploymentmanager.operations
 WHERE project = '{{ project }}' -- required
-AND maxResults = '{{ maxResults }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND maxResults = '{{ maxResults }}'
 ;
 ```
 </TabItem>

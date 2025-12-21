@@ -88,13 +88,6 @@ The following methods are available for this resource:
     <td>Update run-as service account for provisioned client</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_clients_provision"><CopyableCode code="projects_locations_clients_provision" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Perform the provisioning steps to enable a user GCP project to use IP. If GCP project already registered on IP end via Apigee Integration, provisioning will fail.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_clients_provision_client_post_processor"><CopyableCode code="projects_locations_clients_provision_client_post_processor" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
@@ -109,20 +102,6 @@ The following methods are available for this resource:
     <td>Perform the deprovisioning steps to disable a user GCP project to use IP and purge all related data in a wipeout-compliant way.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_clients_change_config"><CopyableCode code="projects_locations_clients_change_config" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Updates the client customer configuration for the given project and location resource name</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_clients_switch"><CopyableCode code="projects_locations_clients_switch" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Update client from GMEK to CMEK</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_clients_switch_variable_masking"><CopyableCode code="projects_locations_clients_switch_variable_masking" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
@@ -130,11 +109,32 @@ The following methods are available for this resource:
     <td>Update variable masking for provisioned client</td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_clients_provision"><CopyableCode code="projects_locations_clients_provision" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Perform the provisioning steps to enable a user GCP project to use IP. If GCP project already registered on IP end via Apigee Integration, provisioning will fail.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_clients_change_config"><CopyableCode code="projects_locations_clients_change_config" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Updates the client customer configuration for the given project and location resource name</td>
+</tr>
+<tr>
     <td><a href="#projects_locations_clients_toggle_http"><CopyableCode code="projects_locations_clients_toggle_http" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Enable/Disable http call for provisioned client</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_clients_switch"><CopyableCode code="projects_locations_clients_switch" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Update client from GMEK to CMEK</td>
 </tr>
 </tbody>
 </table>
@@ -216,38 +216,17 @@ AND locationsId = '{{ locationsId }}' --required;
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_clients_provision"
+    defaultValue="projects_locations_clients_provision_client_post_processor"
     values={[
-        { label: 'projects_locations_clients_provision', value: 'projects_locations_clients_provision' },
         { label: 'projects_locations_clients_provision_client_post_processor', value: 'projects_locations_clients_provision_client_post_processor' },
         { label: 'projects_locations_clients_deprovision', value: 'projects_locations_clients_deprovision' },
-        { label: 'projects_locations_clients_change_config', value: 'projects_locations_clients_change_config' },
-        { label: 'projects_locations_clients_switch', value: 'projects_locations_clients_switch' },
         { label: 'projects_locations_clients_switch_variable_masking', value: 'projects_locations_clients_switch_variable_masking' },
-        { label: 'projects_locations_clients_toggle_http', value: 'projects_locations_clients_toggle_http' }
+        { label: 'projects_locations_clients_provision', value: 'projects_locations_clients_provision' },
+        { label: 'projects_locations_clients_change_config', value: 'projects_locations_clients_change_config' },
+        { label: 'projects_locations_clients_toggle_http', value: 'projects_locations_clients_toggle_http' },
+        { label: 'projects_locations_clients_switch', value: 'projects_locations_clients_switch' }
     ]}
 >
-<TabItem value="projects_locations_clients_provision">
-
-Perform the provisioning steps to enable a user GCP project to use IP. If GCP project already registered on IP end via Apigee Integration, provisioning will fail.
-
-```sql
-EXEC google.integrations.clients.projects_locations_clients_provision 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
-@@json=
-'{
-"cloudKmsConfig": "{{ cloudKmsConfig }}", 
-"createSampleWorkflows": {{ createSampleWorkflows }}, 
-"provisionGmek": {{ provisionGmek }}, 
-"runAsServiceAccount": "{{ runAsServiceAccount }}", 
-"skipCpProvision": {{ skipCpProvision }}, 
-"enableHttpCall": {{ enableHttpCall }}, 
-"enableManagedAiFeatures": {{ enableManagedAiFeatures }}
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_clients_provision_client_post_processor">
 
 Perform post provisioning steps after client is provisioned.
@@ -274,6 +253,42 @@ EXEC google.integrations.clients.projects_locations_clients_deprovision
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_clients_switch_variable_masking">
+
+Update variable masking for provisioned client
+
+```sql
+EXEC google.integrations.clients.projects_locations_clients_switch_variable_masking 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"enableVariableMasking": {{ enableVariableMasking }}
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_clients_provision">
+
+Perform the provisioning steps to enable a user GCP project to use IP. If GCP project already registered on IP end via Apigee Integration, provisioning will fail.
+
+```sql
+EXEC google.integrations.clients.projects_locations_clients_provision 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"runAsServiceAccount": "{{ runAsServiceAccount }}", 
+"createSampleWorkflows": {{ createSampleWorkflows }}, 
+"enableManagedAiFeatures": {{ enableManagedAiFeatures }}, 
+"skipCpProvision": {{ skipCpProvision }}, 
+"enableHttpCall": {{ enableHttpCall }}, 
+"cloudKmsConfig": "{{ cloudKmsConfig }}", 
+"provisionGmek": {{ provisionGmek }}
+}'
+;
+```
+</TabItem>
 <TabItem value="projects_locations_clients_change_config">
 
 Updates the client customer configuration for the given project and location resource name
@@ -290,36 +305,6 @@ EXEC google.integrations.clients.projects_locations_clients_change_config
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_clients_switch">
-
-Update client from GMEK to CMEK
-
-```sql
-EXEC google.integrations.clients.projects_locations_clients_switch 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
-@@json=
-'{
-"cloudKmsConfig": "{{ cloudKmsConfig }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_clients_switch_variable_masking">
-
-Update variable masking for provisioned client
-
-```sql
-EXEC google.integrations.clients.projects_locations_clients_switch_variable_masking 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
-@@json=
-'{
-"enableVariableMasking": {{ enableVariableMasking }}
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_clients_toggle_http">
 
 Enable/Disable http call for provisioned client
@@ -331,6 +316,21 @@ EXEC google.integrations.clients.projects_locations_clients_toggle_http
 @@json=
 '{
 "enableHttpCall": {{ enableHttpCall }}
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_clients_switch">
+
+Update client from GMEK to CMEK
+
+```sql
+EXEC google.integrations.clients.projects_locations_clients_switch 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"cloudKmsConfig": "{{ cloudKmsConfig }}"
 }'
 ;
 ```

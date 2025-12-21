@@ -194,7 +194,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-tensorboardsId"><code>tensorboardsId</code></a>, <a href="#parameter-experimentsId"><code>experimentsId</code></a>, <a href="#parameter-runsId"><code>runsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td><a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists TensorboardTimeSeries in a Location.</td>
 </tr>
 <tr>
@@ -219,10 +219,17 @@ The following methods are available for this resource:
     <td>Deletes a TensorboardTimeSeries.</td>
 </tr>
 <tr>
+    <td><a href="#export_tensorboard_time_series"><CopyableCode code="export_tensorboard_time_series" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-tensorboardsId"><code>tensorboardsId</code></a>, <a href="#parameter-experimentsId"><code>experimentsId</code></a>, <a href="#parameter-runsId"><code>runsId</code></a>, <a href="#parameter-timeSeriesId"><code>timeSeriesId</code></a></td>
+    <td></td>
+    <td>Exports a TensorboardTimeSeries' data. Data is returned in paginated responses.</td>
+</tr>
+<tr>
     <td><a href="#read"><CopyableCode code="read" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-tensorboardsId"><code>tensorboardsId</code></a>, <a href="#parameter-experimentsId"><code>experimentsId</code></a>, <a href="#parameter-runsId"><code>runsId</code></a>, <a href="#parameter-timeSeriesId"><code>timeSeriesId</code></a></td>
-    <td><a href="#parameter-maxDataPoints"><code>maxDataPoints</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxDataPoints"><code>maxDataPoints</code></a></td>
     <td>Reads a TensorboardTimeSeries' data. By default, if the number of data points stored is less than 1000, all data is returned. Otherwise, 1000 data points is randomly selected from this time series and returned. This value can be changed by changing max_data_points, which can't be greater than 10k.</td>
 </tr>
 <tr>
@@ -231,13 +238,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-tensorboardsId"><code>tensorboardsId</code></a>, <a href="#parameter-experimentsId"><code>experimentsId</code></a>, <a href="#parameter-runsId"><code>runsId</code></a>, <a href="#parameter-timeSeriesId"><code>timeSeriesId</code></a></td>
     <td><a href="#parameter-blobIds"><code>blobIds</code></a></td>
     <td>Gets bytes of TensorboardBlobs. This is to allow reading blob data stored in consumer project's Cloud Storage bucket without users having to obtain Cloud Storage access permission.</td>
-</tr>
-<tr>
-    <td><a href="#export_tensorboard_time_series"><CopyableCode code="export_tensorboard_time_series" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-tensorboardsId"><code>tensorboardsId</code></a>, <a href="#parameter-experimentsId"><code>experimentsId</code></a>, <a href="#parameter-runsId"><code>runsId</code></a>, <a href="#parameter-timeSeriesId"><code>timeSeriesId</code></a></td>
-    <td></td>
-    <td>Exports a TensorboardTimeSeries' data. Data is returned in paginated responses.</td>
 </tr>
 </tbody>
 </table>
@@ -390,11 +390,11 @@ AND locationsId = '{{ locationsId }}' -- required
 AND tensorboardsId = '{{ tensorboardsId }}' -- required
 AND experimentsId = '{{ experimentsId }}' -- required
 AND runsId = '{{ runsId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 AND readMask = '{{ readMask }}'
+AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -416,12 +416,12 @@ Creates a TensorboardTimeSeries.
 
 ```sql
 INSERT INTO google.aiplatform.time_series (
-data__displayName,
-data__description,
-data__valueType,
-data__etag,
 data__pluginName,
+data__description,
+data__displayName,
+data__etag,
 data__pluginData,
+data__valueType,
 projectsId,
 locationsId,
 tensorboardsId,
@@ -430,12 +430,12 @@ runsId,
 tensorboardTimeSeriesId
 )
 SELECT 
-'{{ displayName }}',
-'{{ description }}',
-'{{ valueType }}',
-'{{ etag }}',
 '{{ pluginName }}',
+'{{ description }}',
+'{{ displayName }}',
+'{{ etag }}',
 '{{ pluginData }}',
+'{{ valueType }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ tensorboardsId }}',
@@ -477,15 +477,30 @@ valueType
     - name: runsId
       value: string
       description: Required parameter for the time_series resource.
-    - name: displayName
+    - name: pluginName
       value: string
       description: >
-        Required. User provided name of this TensorboardTimeSeries. This value should be unique among all TensorboardTimeSeries resources belonging to the same TensorboardRun resource (parent resource).
+        Immutable. Name of the plugin this time series pertain to. Such as Scalar, Tensor, Blob
         
     - name: description
       value: string
       description: >
         Description of this TensorboardTimeSeries.
+        
+    - name: displayName
+      value: string
+      description: >
+        Required. User provided name of this TensorboardTimeSeries. This value should be unique among all TensorboardTimeSeries resources belonging to the same TensorboardRun resource (parent resource).
+        
+    - name: etag
+      value: string
+      description: >
+        Used to perform a consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+        
+    - name: pluginData
+      value: string
+      description: >
+        Data of the current plugin, with the size limited to 65KB.
         
     - name: valueType
       value: string
@@ -493,21 +508,6 @@ valueType
         Required. Immutable. Type of TensorboardTimeSeries value.
         
       valid_values: ['VALUE_TYPE_UNSPECIFIED', 'SCALAR', 'TENSOR', 'BLOB_SEQUENCE']
-    - name: etag
-      value: string
-      description: >
-        Used to perform a consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
-        
-    - name: pluginName
-      value: string
-      description: >
-        Immutable. Name of the plugin this time series pertain to. Such as Scalar, Tensor, Blob
-        
-    - name: pluginData
-      value: string
-      description: >
-        Data of the current plugin, with the size limited to 65KB.
-        
     - name: tensorboardTimeSeriesId
       value: string
 ```
@@ -530,12 +530,12 @@ Updates a TensorboardTimeSeries.
 ```sql
 UPDATE google.aiplatform.time_series
 SET 
-data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
-data__valueType = '{{ valueType }}',
-data__etag = '{{ etag }}',
 data__pluginName = '{{ pluginName }}',
-data__pluginData = '{{ pluginData }}'
+data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
+data__etag = '{{ etag }}',
+data__pluginData = '{{ pluginData }}',
+data__valueType = '{{ valueType }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -589,13 +589,35 @@ AND timeSeriesId = '{{ timeSeriesId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="read"
+    defaultValue="export_tensorboard_time_series"
     values={[
+        { label: 'export_tensorboard_time_series', value: 'export_tensorboard_time_series' },
         { label: 'read', value: 'read' },
-        { label: 'read_blob_data', value: 'read_blob_data' },
-        { label: 'export_tensorboard_time_series', value: 'export_tensorboard_time_series' }
+        { label: 'read_blob_data', value: 'read_blob_data' }
     ]}
 >
+<TabItem value="export_tensorboard_time_series">
+
+Exports a TensorboardTimeSeries' data. Data is returned in paginated responses.
+
+```sql
+EXEC google.aiplatform.time_series.export_tensorboard_time_series 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@tensorboardsId='{{ tensorboardsId }}' --required, 
+@experimentsId='{{ experimentsId }}' --required, 
+@runsId='{{ runsId }}' --required, 
+@timeSeriesId='{{ timeSeriesId }}' --required 
+@@json=
+'{
+"orderBy": "{{ orderBy }}", 
+"pageToken": "{{ pageToken }}", 
+"filter": "{{ filter }}", 
+"pageSize": {{ pageSize }}
+}'
+;
+```
+</TabItem>
 <TabItem value="read">
 
 Reads a TensorboardTimeSeries' data. By default, if the number of data points stored is less than 1000, all data is returned. Otherwise, 1000 data points is randomly selected from this time series and returned. This value can be changed by changing max_data_points, which can't be greater than 10k.
@@ -608,8 +630,8 @@ EXEC google.aiplatform.time_series.read
 @experimentsId='{{ experimentsId }}' --required, 
 @runsId='{{ runsId }}' --required, 
 @timeSeriesId='{{ timeSeriesId }}' --required, 
-@maxDataPoints='{{ maxDataPoints }}', 
-@filter='{{ filter }}'
+@filter='{{ filter }}', 
+@maxDataPoints='{{ maxDataPoints }}'
 ;
 ```
 </TabItem>
@@ -626,28 +648,6 @@ EXEC google.aiplatform.time_series.read_blob_data
 @runsId='{{ runsId }}' --required, 
 @timeSeriesId='{{ timeSeriesId }}' --required, 
 @blobIds='{{ blobIds }}'
-;
-```
-</TabItem>
-<TabItem value="export_tensorboard_time_series">
-
-Exports a TensorboardTimeSeries' data. Data is returned in paginated responses.
-
-```sql
-EXEC google.aiplatform.time_series.export_tensorboard_time_series 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@tensorboardsId='{{ tensorboardsId }}' --required, 
-@experimentsId='{{ experimentsId }}' --required, 
-@runsId='{{ runsId }}' --required, 
-@timeSeriesId='{{ timeSeriesId }}' --required 
-@@json=
-'{
-"filter": "{{ filter }}", 
-"pageSize": {{ pageSize }}, 
-"pageToken": "{{ pageToken }}", 
-"orderBy": "{{ orderBy }}"
-}'
 ;
 ```
 </TabItem>

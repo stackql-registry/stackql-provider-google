@@ -214,14 +214,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Retrieve a collection of unit kinds.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-unitKindId"><code>unitKindId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-unitKindId"><code>unitKindId</code></a></td>
     <td>Create a new unit kind.</td>
 </tr>
 <tr>
@@ -235,7 +235,7 @@ The following methods are available for this resource:
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-unitKindsId"><code>unitKindsId</code></a></td>
-    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
     <td>Delete a single unit kind.</td>
 </tr>
 </tbody>
@@ -372,10 +372,10 @@ updateTime
 FROM google.saasservicemgmt.unit_kinds
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -397,34 +397,34 @@ Create a new unit kind.
 
 ```sql
 INSERT INTO google.saasservicemgmt.unit_kinds (
-data__name,
+data__annotations,
 data__defaultRelease,
+data__outputVariableMappings,
+data__name,
+data__labels,
+data__saas,
 data__dependencies,
 data__inputVariableMappings,
-data__outputVariableMappings,
-data__saas,
-data__labels,
-data__annotations,
 projectsId,
 locationsId,
-unitKindId,
+requestId,
 validateOnly,
-requestId
+unitKindId
 )
 SELECT 
-'{{ name }}',
+'{{ annotations }}',
 '{{ defaultRelease }}',
+'{{ outputVariableMappings }}',
+'{{ name }}',
+'{{ labels }}',
+'{{ saas }}',
 '{{ dependencies }}',
 '{{ inputVariableMappings }}',
-'{{ outputVariableMappings }}',
-'{{ saas }}',
-'{{ labels }}',
-'{{ annotations }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ unitKindId }}',
+'{{ requestId }}',
 '{{ validateOnly }}',
-'{{ requestId }}'
+'{{ unitKindId }}'
 RETURNING
 name,
 annotations,
@@ -453,15 +453,35 @@ updateTime
     - name: locationsId
       value: string
       description: Required parameter for the unit_kinds resource.
-    - name: name
-      value: string
+    - name: annotations
+      value: object
       description: >
-        Identifier. The resource name (full URI of the resource) following the standard naming scheme: "projects/{project}/locations/{location}/unitKinds/{unitKind}"
+        Optional. Annotations is an unstructured key-value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/user-guide/annotations
         
     - name: defaultRelease
       value: string
       description: >
         Optional. A reference to the Release object to use as default for creating new units of this UnitKind (optional). If not specified, a new unit must explicitly reference which release to use for its creation.
+        
+    - name: outputVariableMappings
+      value: array
+      description: >
+        Optional. List of outputVariables for this unit kind will be passed to this unit's outputVariables. Maximum 100.
+        
+    - name: name
+      value: string
+      description: >
+        Identifier. The resource name (full URI of the resource) following the standard naming scheme: "projects/{project}/locations/{location}/unitKinds/{unitKind}"
+        
+    - name: labels
+      value: object
+      description: >
+        Optional. The labels on the resource, which can be used for categorization. similar to Kubernetes resource labels.
+        
+    - name: saas
+      value: string
+      description: >
+        Required. Immutable. A reference to the Saas that defines the product (managed service) that the producer wants to manage with SaaS Runtime. Part of the SaaS Runtime common data model. Immutable once set.
         
     - name: dependencies
       value: array
@@ -473,31 +493,11 @@ updateTime
       description: >
         Optional. List of inputVariables for this release that will either be retrieved from a dependency’s outputVariables, or will be passed on to a dependency’s inputVariables. Maximum 100.
         
-    - name: outputVariableMappings
-      value: array
-      description: >
-        Optional. List of outputVariables for this unit kind will be passed to this unit's outputVariables. Maximum 100.
-        
-    - name: saas
-      value: string
-      description: >
-        Required. Immutable. A reference to the Saas that defines the product (managed service) that the producer wants to manage with SaaS Runtime. Part of the SaaS Runtime common data model. Immutable once set.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. The labels on the resource, which can be used for categorization. similar to Kubernetes resource labels.
-        
-    - name: annotations
-      value: object
-      description: >
-        Optional. Annotations is an unstructured key-value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/user-guide/annotations
-        
-    - name: unitKindId
+    - name: requestId
       value: string
     - name: validateOnly
       value: boolean
-    - name: requestId
+    - name: unitKindId
       value: string
 ```
 </TabItem>
@@ -519,14 +519,14 @@ Update a single unit kind.
 ```sql
 UPDATE google.saasservicemgmt.unit_kinds
 SET 
-data__name = '{{ name }}',
+data__annotations = '{{ annotations }}',
 data__defaultRelease = '{{ defaultRelease }}',
-data__dependencies = '{{ dependencies }}',
-data__inputVariableMappings = '{{ inputVariableMappings }}',
 data__outputVariableMappings = '{{ outputVariableMappings }}',
-data__saas = '{{ saas }}',
+data__name = '{{ name }}',
 data__labels = '{{ labels }}',
-data__annotations = '{{ annotations }}'
+data__saas = '{{ saas }}',
+data__dependencies = '{{ dependencies }}',
+data__inputVariableMappings = '{{ inputVariableMappings }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -569,9 +569,9 @@ DELETE FROM google.saasservicemgmt.unit_kinds
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND unitKindsId = '{{ unitKindsId }}' --required
-AND etag = '{{ etag }}'
-AND validateOnly = '{{ validateOnly }}'
 AND requestId = '{{ requestId }}'
+AND validateOnly = '{{ validateOnly }}'
+AND etag = '{{ etag }}'
 ;
 ```
 </TabItem>

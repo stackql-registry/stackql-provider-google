@@ -311,22 +311,22 @@ Creates a Control. If the Control to create already exists, an ALREADY_EXISTS er
 
 ```sql
 INSERT INTO google.retail.controls (
-data__name,
-data__displayName,
-data__rule,
 data__solutionTypes,
 data__searchSolutionUseCase,
+data__name,
+data__rule,
+data__displayName,
 projectsId,
 locationsId,
 catalogsId,
 controlId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
-'{{ rule }}',
 '{{ solutionTypes }}',
 '{{ searchSolutionUseCase }}',
+'{{ name }}',
+'{{ rule }}',
+'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ catalogsId }}',
@@ -356,21 +356,6 @@ solutionTypes
     - name: catalogsId
       value: string
       description: Required parameter for the controls resource.
-    - name: name
-      value: string
-      description: >
-        Immutable. Fully qualified name `projects/*/locations/global/catalogs/*/controls/*`
-        
-    - name: displayName
-      value: string
-      description: >
-        Required. The human readable control display name. Used in Retail UI. This field must be a UTF-8 encoded string with a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT error is thrown.
-        
-    - name: rule
-      value: object
-      description: >
-        A rule control - a condition-action pair. Enacts a set action when the condition is triggered. For example: Boost "gShoe" when query full matches "Running Shoes".
-        
     - name: solutionTypes
       value: array
       description: >
@@ -380,6 +365,21 @@ solutionTypes
       value: array
       description: >
         Specifies the use case for the control. Affects what condition fields can be set. Only settable by search controls. Will default to SEARCH_SOLUTION_USE_CASE_SEARCH if not specified. Currently only allow one search_solution_use_case per control.
+        
+    - name: name
+      value: string
+      description: >
+        Immutable. Fully qualified name `projects/*/locations/global/catalogs/*/controls/*`
+        
+    - name: rule
+      value: object
+      description: >
+        A rule control - a condition-action pair. Enacts a set action when the condition is triggered. For example: Boost "gShoe" when query full matches "Running Shoes".
+        
+    - name: displayName
+      value: string
+      description: >
+        Required. The human readable control display name. Used in Retail UI. This field must be a UTF-8 encoded string with a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT error is thrown.
         
     - name: controlId
       value: string
@@ -403,11 +403,11 @@ Updates a Control. Control cannot be set to a different oneof field, if so an IN
 ```sql
 UPDATE google.retail.controls
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__rule = '{{ rule }}',
 data__solutionTypes = '{{ solutionTypes }}',
-data__searchSolutionUseCase = '{{ searchSolutionUseCase }}'
+data__searchSolutionUseCase = '{{ searchSolutionUseCase }}',
+data__name = '{{ name }}',
+data__rule = '{{ rule }}',
+data__displayName = '{{ displayName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -32,13 +32,13 @@ Creates, updates, deletes, gets or lists a <code>revisions_deployments</code> re
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="organizations_environments_apis_revisions_get_deployments"
+    defaultValue="organizations_environments_sharedflows_revisions_get_deployments"
     values={[
-        { label: 'organizations_environments_apis_revisions_get_deployments', value: 'organizations_environments_apis_revisions_get_deployments' },
-        { label: 'organizations_environments_sharedflows_revisions_get_deployments', value: 'organizations_environments_sharedflows_revisions_get_deployments' }
+        { label: 'organizations_environments_sharedflows_revisions_get_deployments', value: 'organizations_environments_sharedflows_revisions_get_deployments' },
+        { label: 'organizations_environments_apis_revisions_get_deployments', value: 'organizations_environments_apis_revisions_get_deployments' }
     ]}
 >
-<TabItem value="organizations_environments_apis_revisions_get_deployments">
+<TabItem value="organizations_environments_sharedflows_revisions_get_deployments">
 
 <table>
 <thead>
@@ -107,7 +107,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="organizations_environments_sharedflows_revisions_get_deployments">
+<TabItem value="organizations_environments_apis_revisions_get_deployments">
 
 <table>
 <thead>
@@ -194,18 +194,18 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#organizations_environments_apis_revisions_get_deployments"><CopyableCode code="organizations_environments_apis_revisions_get_deployments" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
-    <td></td>
-    <td>Gets the deployment of an API proxy revision and actual state reported by runtime pods.</td>
-</tr>
-<tr>
     <td><a href="#organizations_environments_sharedflows_revisions_get_deployments"><CopyableCode code="organizations_environments_sharedflows_revisions_get_deployments" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-sharedflowsId"><code>sharedflowsId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
     <td></td>
     <td>Gets the deployment of a shared flow revision and actual state reported by runtime pods.</td>
+</tr>
+<tr>
+    <td><a href="#organizations_environments_apis_revisions_get_deployments"><CopyableCode code="organizations_environments_apis_revisions_get_deployments" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
+    <td></td>
+    <td>Gets the deployment of an API proxy revision and actual state reported by runtime pods.</td>
 </tr>
 </tbody>
 </table>
@@ -254,37 +254,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="organizations_environments_apis_revisions_get_deployments"
+    defaultValue="organizations_environments_sharedflows_revisions_get_deployments"
     values={[
-        { label: 'organizations_environments_apis_revisions_get_deployments', value: 'organizations_environments_apis_revisions_get_deployments' },
-        { label: 'organizations_environments_sharedflows_revisions_get_deployments', value: 'organizations_environments_sharedflows_revisions_get_deployments' }
+        { label: 'organizations_environments_sharedflows_revisions_get_deployments', value: 'organizations_environments_sharedflows_revisions_get_deployments' },
+        { label: 'organizations_environments_apis_revisions_get_deployments', value: 'organizations_environments_apis_revisions_get_deployments' }
     ]}
 >
-<TabItem value="organizations_environments_apis_revisions_get_deployments">
-
-Gets the deployment of an API proxy revision and actual state reported by runtime pods.
-
-```sql
-SELECT
-apiProxy,
-deployStartTime,
-environment,
-errors,
-instances,
-pods,
-proxyDeploymentType,
-revision,
-routeConflicts,
-serviceAccount,
-state
-FROM google.apigee.revisions_deployments
-WHERE organizationsId = '{{ organizationsId }}' -- required
-AND environmentsId = '{{ environmentsId }}' -- required
-AND apisId = '{{ apisId }}' -- required
-AND revisionsId = '{{ revisionsId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="organizations_environments_sharedflows_revisions_get_deployments">
 
 Gets the deployment of a shared flow revision and actual state reported by runtime pods.
@@ -306,6 +281,31 @@ FROM google.apigee.revisions_deployments
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND environmentsId = '{{ environmentsId }}' -- required
 AND sharedflowsId = '{{ sharedflowsId }}' -- required
+AND revisionsId = '{{ revisionsId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="organizations_environments_apis_revisions_get_deployments">
+
+Gets the deployment of an API proxy revision and actual state reported by runtime pods.
+
+```sql
+SELECT
+apiProxy,
+deployStartTime,
+environment,
+errors,
+instances,
+pods,
+proxyDeploymentType,
+revision,
+routeConflicts,
+serviceAccount,
+state
+FROM google.apigee.revisions_deployments
+WHERE organizationsId = '{{ organizationsId }}' -- required
+AND environmentsId = '{{ environmentsId }}' -- required
+AND apisId = '{{ apisId }}' -- required
 AND revisionsId = '{{ revisionsId }}' -- required
 ;
 ```

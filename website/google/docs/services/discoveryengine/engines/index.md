@@ -55,6 +55,11 @@ The following fields are returned by `SELECT` queries:
     <td>Immutable. Identifier. The fully qualified resource name of the engine. This field must be a UTF-8 encoded string with a length limit of 1024 characters. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/collections/&#123;collection&#125;/engines/&#123;engine&#125;` engine should be 1-63 characters, and valid characters are /a-z0-9*/. Otherwise, an INVALID_ARGUMENT error is returned.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="appType" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Immutable. This the application type which this engine resource represents. NOTE: this is a new concept independ of existing industry vertical or solution type.</td>
+</tr>
+<tr>
     <td><CopyableCode code="chatEngineConfig" /></td>
     <td><code>object</code></td>
     <td>Configurations for the Chat Engine. Only applicable if solution_type is SOLUTION_TYPE_CHAT. (id: GoogleCloudDiscoveryengineV1EngineChatEngineConfig)</td>
@@ -65,9 +70,19 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Additional information of the Chat Engine. Only applicable if solution_type is SOLUTION_TYPE_CHAT. (id: GoogleCloudDiscoveryengineV1EngineChatEngineMetadata)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="cmekConfig" /></td>
+    <td><code>object</code></td>
+    <td>Output only. CMEK-related information for the Engine. (id: GoogleCloudDiscoveryengineV1CmekConfig)</td>
+</tr>
+<tr>
     <td><CopyableCode code="commonConfig" /></td>
     <td><code>object</code></td>
     <td>Common config spec that specifies the metadata of the engine. (id: GoogleCloudDiscoveryengineV1EngineCommonConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="configurableBillingApproach" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Configuration for configurable billing approach.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -92,7 +107,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="features" /></td>
     <td><code>object</code></td>
-    <td>Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback` * `session-sharing` * `personalization-memory` - Enables personalization based on user preferences.</td>
+    <td>Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback` * `session-sharing` * `personalization-memory` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload`</td>
 </tr>
 <tr>
     <td><CopyableCode code="industryVertical" /></td>
@@ -103,6 +118,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="mediaRecommendationEngineConfig" /></td>
     <td><code>object</code></td>
     <td>Configurations for the Media Engine. Only applicable on the data stores with solution_type SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical. (id: GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="modelConfigs" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Maps a model name to its specific configuration for this engine. This allows admin users to turn on/off individual models. This only stores models whose states are overridden by the admin. When the state is unspecified, or model_configs is empty for this model, the system will decide if this model should be available or not based on the default configuration. For example, a preview model should be disabled by default if the admin has not chosen to enable it.</td>
 </tr>
 <tr>
     <td><CopyableCode code="searchEngineConfig" /></td>
@@ -139,6 +159,11 @@ The following fields are returned by `SELECT` queries:
     <td>Immutable. Identifier. The fully qualified resource name of the engine. This field must be a UTF-8 encoded string with a length limit of 1024 characters. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/collections/&#123;collection&#125;/engines/&#123;engine&#125;` engine should be 1-63 characters, and valid characters are /a-z0-9*/. Otherwise, an INVALID_ARGUMENT error is returned.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="appType" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Immutable. This the application type which this engine resource represents. NOTE: this is a new concept independ of existing industry vertical or solution type.</td>
+</tr>
+<tr>
     <td><CopyableCode code="chatEngineConfig" /></td>
     <td><code>object</code></td>
     <td>Configurations for the Chat Engine. Only applicable if solution_type is SOLUTION_TYPE_CHAT. (id: GoogleCloudDiscoveryengineV1EngineChatEngineConfig)</td>
@@ -149,9 +174,19 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Additional information of the Chat Engine. Only applicable if solution_type is SOLUTION_TYPE_CHAT. (id: GoogleCloudDiscoveryengineV1EngineChatEngineMetadata)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="cmekConfig" /></td>
+    <td><code>object</code></td>
+    <td>Output only. CMEK-related information for the Engine. (id: GoogleCloudDiscoveryengineV1CmekConfig)</td>
+</tr>
+<tr>
     <td><CopyableCode code="commonConfig" /></td>
     <td><code>object</code></td>
     <td>Common config spec that specifies the metadata of the engine. (id: GoogleCloudDiscoveryengineV1EngineCommonConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="configurableBillingApproach" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Configuration for configurable billing approach.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -176,7 +211,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="features" /></td>
     <td><code>object</code></td>
-    <td>Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback` * `session-sharing` * `personalization-memory` - Enables personalization based on user preferences.</td>
+    <td>Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback` * `session-sharing` * `personalization-memory` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload`</td>
 </tr>
 <tr>
     <td><CopyableCode code="industryVertical" /></td>
@@ -187,6 +222,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="mediaRecommendationEngineConfig" /></td>
     <td><code>object</code></td>
     <td>Configurations for the Media Engine. Only applicable on the data stores with solution_type SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical. (id: GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="modelConfigs" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Maps a model name to its specific configuration for this engine. This allows admin users to turn on/off individual models. This only stores models whose states are overridden by the admin. When the state is unspecified, or model_configs is empty for this model, the system will decide if this model should be available or not based on the default configuration. For example, a preview model should be disabled by default if the admin has not chosen to enable it.</td>
 </tr>
 <tr>
     <td><CopyableCode code="searchEngineConfig" /></td>
@@ -234,7 +274,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_collections_engines_list"><CopyableCode code="projects_locations_collections_engines_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all the Engines associated with the project.</td>
 </tr>
 <tr>
@@ -338,9 +378,12 @@ Gets a Engine.
 ```sql
 SELECT
 name,
+appType,
 chatEngineConfig,
 chatEngineMetadata,
+cmekConfig,
 commonConfig,
+configurableBillingApproach,
 createTime,
 dataStoreIds,
 disableAnalytics,
@@ -348,6 +391,7 @@ displayName,
 features,
 industryVertical,
 mediaRecommendationEngineConfig,
+modelConfigs,
 searchEngineConfig,
 solutionType,
 updateTime
@@ -366,9 +410,12 @@ Lists all the Engines associated with the project.
 ```sql
 SELECT
 name,
+appType,
 chatEngineConfig,
 chatEngineMetadata,
+cmekConfig,
 commonConfig,
+configurableBillingApproach,
 createTime,
 dataStoreIds,
 disableAnalytics,
@@ -376,6 +423,7 @@ displayName,
 features,
 industryVertical,
 mediaRecommendationEngineConfig,
+modelConfigs,
 searchEngineConfig,
 solutionType,
 updateTime
@@ -383,9 +431,9 @@ FROM google.discoveryengine.engines
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND collectionsId = '{{ collectionsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -407,16 +455,19 @@ Creates a Engine.
 
 ```sql
 INSERT INTO google.discoveryengine.engines (
-data__chatEngineConfig,
-data__searchEngineConfig,
-data__mediaRecommendationEngineConfig,
-data__name,
-data__displayName,
 data__dataStoreIds,
-data__solutionType,
+data__configurableBillingApproach,
 data__industryVertical,
-data__commonConfig,
+data__mediaRecommendationEngineConfig,
+data__chatEngineConfig,
+data__appType,
 data__disableAnalytics,
+data__name,
+data__modelConfigs,
+data__solutionType,
+data__displayName,
+data__searchEngineConfig,
+data__commonConfig,
 data__features,
 projectsId,
 locationsId,
@@ -424,16 +475,19 @@ collectionsId,
 engineId
 )
 SELECT 
-'{{ chatEngineConfig }}',
-'{{ searchEngineConfig }}',
-'{{ mediaRecommendationEngineConfig }}',
-'{{ name }}',
-'{{ displayName }}',
 '{{ dataStoreIds }}',
-'{{ solutionType }}',
+'{{ configurableBillingApproach }}',
 '{{ industryVertical }}',
-'{{ commonConfig }}',
+'{{ mediaRecommendationEngineConfig }}',
+'{{ chatEngineConfig }}',
+'{{ appType }}',
 {{ disableAnalytics }},
+'{{ name }}',
+'{{ modelConfigs }}',
+'{{ solutionType }}',
+'{{ displayName }}',
+'{{ searchEngineConfig }}',
+'{{ commonConfig }}',
 '{{ features }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -463,35 +517,53 @@ response
     - name: collectionsId
       value: string
       description: Required parameter for the engines resource.
+    - name: dataStoreIds
+      value: array
+      description: >
+        Optional. The data stores associated with this engine. For SOLUTION_TYPE_SEARCH and SOLUTION_TYPE_RECOMMENDATION type of engines, they can only associate with at most one data store. If solution_type is SOLUTION_TYPE_CHAT, multiple DataStores in the same Collection can be associated here. Note that when used in CreateEngineRequest, one DataStore id must be provided as the system will use it for necessary initializations.
+        
+    - name: configurableBillingApproach
+      value: string
+      description: >
+        Optional. Configuration for configurable billing approach.
+        
+      valid_values: ['CONFIGURABLE_BILLING_APPROACH_UNSPECIFIED', 'CONFIGURABLE_BILLING_APPROACH_ENABLED']
+    - name: industryVertical
+      value: string
+      description: >
+        Optional. The industry vertical that the engine registers. The restriction of the Engine industry vertical is based on DataStore: Vertical on Engine has to match vertical of the DataStore linked to the engine.
+        
+      valid_values: ['INDUSTRY_VERTICAL_UNSPECIFIED', 'GENERIC', 'MEDIA', 'HEALTHCARE_FHIR']
+    - name: mediaRecommendationEngineConfig
+      value: object
+      description: >
+        Configurations for the Media Engine. Only applicable on the data stores with solution_type SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical.
+        
     - name: chatEngineConfig
       value: object
       description: >
         Configurations for the Chat Engine. Only applicable if solution_type is SOLUTION_TYPE_CHAT.
         
-    - name: searchEngineConfig
-      value: object
+    - name: appType
+      value: string
       description: >
-        Configurations for the Search Engine. Only applicable if solution_type is SOLUTION_TYPE_SEARCH.
+        Optional. Immutable. This the application type which this engine resource represents. NOTE: this is a new concept independ of existing industry vertical or solution type.
         
-    - name: mediaRecommendationEngineConfig
-      value: object
+      valid_values: ['APP_TYPE_UNSPECIFIED', 'APP_TYPE_INTRANET']
+    - name: disableAnalytics
+      value: boolean
       description: >
-        Configurations for the Media Engine. Only applicable on the data stores with solution_type SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical.
+        Optional. Whether to disable analytics for searches performed on this engine.
         
     - name: name
       value: string
       description: >
         Immutable. Identifier. The fully qualified resource name of the engine. This field must be a UTF-8 encoded string with a length limit of 1024 characters. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}` engine should be 1-63 characters, and valid characters are /a-z0-9*/. Otherwise, an INVALID_ARGUMENT error is returned.
         
-    - name: displayName
-      value: string
+    - name: modelConfigs
+      value: object
       description: >
-        Required. The display name of the engine. Should be human readable. UTF-8 encoded string with limit of 1024 characters.
-        
-    - name: dataStoreIds
-      value: array
-      description: >
-        Optional. The data stores associated with this engine. For SOLUTION_TYPE_SEARCH and SOLUTION_TYPE_RECOMMENDATION type of engines, they can only associate with at most one data store. If solution_type is SOLUTION_TYPE_CHAT, multiple DataStores in the same Collection can be associated here. Note that when used in CreateEngineRequest, one DataStore id must be provided as the system will use it for necessary initializations.
+        Optional. Maps a model name to its specific configuration for this engine. This allows admin users to turn on/off individual models. This only stores models whose states are overridden by the admin. When the state is unspecified, or model_configs is empty for this model, the system will decide if this model should be available or not based on the default configuration. For example, a preview model should be disabled by default if the admin has not chosen to enable it.
         
     - name: solutionType
       value: string
@@ -499,26 +571,25 @@ response
         Required. The solutions of the engine.
         
       valid_values: ['SOLUTION_TYPE_UNSPECIFIED', 'SOLUTION_TYPE_RECOMMENDATION', 'SOLUTION_TYPE_SEARCH', 'SOLUTION_TYPE_CHAT', 'SOLUTION_TYPE_GENERATIVE_CHAT']
-    - name: industryVertical
+    - name: displayName
       value: string
       description: >
-        Optional. The industry vertical that the engine registers. The restriction of the Engine industry vertical is based on DataStore: Vertical on Engine has to match vertical of the DataStore linked to the engine.
+        Required. The display name of the engine. Should be human readable. UTF-8 encoded string with limit of 1024 characters.
         
-      valid_values: ['INDUSTRY_VERTICAL_UNSPECIFIED', 'GENERIC', 'MEDIA', 'HEALTHCARE_FHIR']
+    - name: searchEngineConfig
+      value: object
+      description: >
+        Configurations for the Search Engine. Only applicable if solution_type is SOLUTION_TYPE_SEARCH.
+        
     - name: commonConfig
       value: object
       description: >
         Common config spec that specifies the metadata of the engine.
         
-    - name: disableAnalytics
-      value: boolean
-      description: >
-        Optional. Whether to disable analytics for searches performed on this engine.
-        
     - name: features
       value: object
       description: >
-        Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback` * `session-sharing` * `personalization-memory` - Enables personalization based on user preferences.
+        Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback` * `session-sharing` * `personalization-memory` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload`
         
     - name: engineId
       value: string
@@ -542,16 +613,19 @@ Updates an Engine
 ```sql
 UPDATE google.discoveryengine.engines
 SET 
-data__chatEngineConfig = '{{ chatEngineConfig }}',
-data__searchEngineConfig = '{{ searchEngineConfig }}',
-data__mediaRecommendationEngineConfig = '{{ mediaRecommendationEngineConfig }}',
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
 data__dataStoreIds = '{{ dataStoreIds }}',
-data__solutionType = '{{ solutionType }}',
+data__configurableBillingApproach = '{{ configurableBillingApproach }}',
 data__industryVertical = '{{ industryVertical }}',
-data__commonConfig = '{{ commonConfig }}',
+data__mediaRecommendationEngineConfig = '{{ mediaRecommendationEngineConfig }}',
+data__chatEngineConfig = '{{ chatEngineConfig }}',
+data__appType = '{{ appType }}',
 data__disableAnalytics = {{ disableAnalytics }},
+data__name = '{{ name }}',
+data__modelConfigs = '{{ modelConfigs }}',
+data__solutionType = '{{ solutionType }}',
+data__displayName = '{{ displayName }}',
+data__searchEngineConfig = '{{ searchEngineConfig }}',
+data__commonConfig = '{{ commonConfig }}',
 data__features = '{{ features }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
@@ -561,9 +635,12 @@ AND enginesId = '{{ enginesId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
+appType,
 chatEngineConfig,
 chatEngineMetadata,
+cmekConfig,
 commonConfig,
+configurableBillingApproach,
 createTime,
 dataStoreIds,
 disableAnalytics,
@@ -571,6 +648,7 @@ displayName,
 features,
 industryVertical,
 mediaRecommendationEngineConfig,
+modelConfigs,
 searchEngineConfig,
 solutionType,
 updateTime;

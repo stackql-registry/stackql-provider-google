@@ -55,6 +55,11 @@ The following fields are returned by `SELECT` queries:
     <td>Immutable. The resource name for a TagKey. Must be in the format `tagKeys/&#123;tag_key_id&#125;`, where `tag_key_id` is the generated numeric id for the TagKey.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="allowedValuesRegex" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Regular expression constraint for freeform tag values. If present, it implicitly allows freeform values (constrained by the regex).</td>
+</tr>
+<tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. Creation time.</td>
@@ -117,6 +122,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
     <td>Immutable. The resource name for a TagKey. Must be in the format `tagKeys/&#123;tag_key_id&#125;`, where `tag_key_id` is the generated numeric id for the TagKey.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="allowedValuesRegex" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Regular expression constraint for freeform tag values. If present, it implicitly allows freeform values (constrained by the regex).</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -194,7 +204,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all TagKeys for a parent resource.</td>
 </tr>
 <tr>
@@ -208,7 +218,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-tagKeysId"><code>tagKeysId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the attributes of the TagKey resource.</td>
 </tr>
 <tr>
@@ -288,6 +298,7 @@ Retrieves a TagKey. This method will return `PERMISSION_DENIED` if the key does 
 ```sql
 SELECT
 name,
+allowedValuesRegex,
 createTime,
 description,
 etag,
@@ -309,6 +320,7 @@ Lists all TagKeys for a parent resource.
 ```sql
 SELECT
 name,
+allowedValuesRegex,
 createTime,
 description,
 etag,
@@ -319,8 +331,8 @@ purposeData,
 shortName,
 updateTime
 FROM google.cloudresourcemanager.tag_keys
-WHERE parent = '{{ parent }}'
-AND pageSize = '{{ pageSize }}'
+WHERE pageSize = '{{ pageSize }}'
+AND parent = '{{ parent }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -343,22 +355,24 @@ Creates a new TagKey. If another request with the same parameters is sent while 
 
 ```sql
 INSERT INTO google.cloudresourcemanager.tag_keys (
-data__name,
-data__parent,
 data__shortName,
-data__description,
-data__etag,
 data__purpose,
+data__etag,
+data__allowedValuesRegex,
+data__name,
+data__description,
+data__parent,
 data__purposeData,
 validateOnly
 )
 SELECT 
-'{{ name }}',
-'{{ parent }}',
 '{{ shortName }}',
-'{{ description }}',
-'{{ etag }}',
 '{{ purpose }}',
+'{{ etag }}',
+'{{ allowedValuesRegex }}',
+'{{ name }}',
+'{{ description }}',
+'{{ parent }}',
 '{{ purposeData }}',
 '{{ validateOnly }}'
 RETURNING
@@ -376,30 +390,10 @@ response
 # Description fields are for documentation purposes
 - name: tag_keys
   props:
-    - name: name
-      value: string
-      description: >
-        Immutable. The resource name for a TagKey. Must be in the format `tagKeys/{tag_key_id}`, where `tag_key_id` is the generated numeric id for the TagKey.
-        
-    - name: parent
-      value: string
-      description: >
-        Immutable. The resource name of the TagKey's parent. A TagKey can be parented by an Organization or a Project. For a TagKey parented by an Organization, its parent must be in the form `organizations/{org_id}`. For a TagKey parented by a Project, its parent can be in the form `projects/{project_id}` or `projects/{project_number}`.
-        
     - name: shortName
       value: string
       description: >
         Required. Immutable. The user friendly name for a TagKey. The short name should be unique for TagKeys within the same tag namespace. The short name must be 1-256 characters, beginning and ending with an alphanumeric character ([a-z0-9A-Z]) with dashes (-), underscores (_), dots (.), and alphanumerics between.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. User-assigned description of the TagKey. Must not exceed 256 characters. Read-write.
-        
-    - name: etag
-      value: string
-      description: >
-        Optional. Entity tag which users can pass to prevent race conditions. This field is always set in server responses. See UpdateTagKeyRequest for details.
         
     - name: purpose
       value: string
@@ -407,6 +401,31 @@ response
         Optional. A purpose denotes that this Tag is intended for use in policies of a specific policy engine, and will involve that policy engine in management operations involving this Tag. A purpose does not grant a policy engine exclusive rights to the Tag, and it may be referenced by other policy engines. A purpose cannot be changed once set.
         
       valid_values: ['PURPOSE_UNSPECIFIED', 'GCE_FIREWALL', 'DATA_GOVERNANCE']
+    - name: etag
+      value: string
+      description: >
+        Optional. Entity tag which users can pass to prevent race conditions. This field is always set in server responses. See UpdateTagKeyRequest for details.
+        
+    - name: allowedValuesRegex
+      value: string
+      description: >
+        Optional. Regular expression constraint for freeform tag values. If present, it implicitly allows freeform values (constrained by the regex).
+        
+    - name: name
+      value: string
+      description: >
+        Immutable. The resource name for a TagKey. Must be in the format `tagKeys/{tag_key_id}`, where `tag_key_id` is the generated numeric id for the TagKey.
+        
+    - name: description
+      value: string
+      description: >
+        Optional. User-assigned description of the TagKey. Must not exceed 256 characters. Read-write.
+        
+    - name: parent
+      value: string
+      description: >
+        Immutable. The resource name of the TagKey's parent. A TagKey can be parented by an Organization or a Project. For a TagKey parented by an Organization, its parent must be in the form `organizations/{org_id}`. For a TagKey parented by a Project, its parent can be in the form `projects/{project_id}` or `projects/{project_number}`.
+        
     - name: purposeData
       value: object
       description: >
@@ -434,17 +453,18 @@ Updates the attributes of the TagKey resource.
 ```sql
 UPDATE google.cloudresourcemanager.tag_keys
 SET 
-data__name = '{{ name }}',
-data__parent = '{{ parent }}',
 data__shortName = '{{ shortName }}',
-data__description = '{{ description }}',
-data__etag = '{{ etag }}',
 data__purpose = '{{ purpose }}',
+data__etag = '{{ etag }}',
+data__allowedValuesRegex = '{{ allowedValuesRegex }}',
+data__name = '{{ name }}',
+data__description = '{{ description }}',
+data__parent = '{{ parent }}',
 data__purposeData = '{{ purposeData }}'
 WHERE 
 tagKeysId = '{{ tagKeysId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND validateOnly = {{ validateOnly}}
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

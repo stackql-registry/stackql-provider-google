@@ -187,27 +187,20 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_products_integrations_executions_suspensions_list"><CopyableCode code="projects_locations_products_integrations_executions_suspensions_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-productsId"><code>productsId</code></a>, <a href="#parameter-integrationsId"><code>integrationsId</code></a>, <a href="#parameter-executionsId"><code>executionsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>* Lists suspensions associated with a specific execution. Only those with permissions to resolve the relevant suspensions will be able to view them.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_integrations_executions_suspensions_list"><CopyableCode code="projects_locations_integrations_executions_suspensions_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-integrationsId"><code>integrationsId</code></a>, <a href="#parameter-executionsId"><code>executionsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>* Lists suspensions associated with a specific execution. Only those with permissions to resolve the relevant suspensions will be able to view them.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_products_integrations_executions_suspensions_resolve"><CopyableCode code="projects_locations_products_integrations_executions_suspensions_resolve" /></a></td>
+    <td><a href="#projects_locations_integrations_executions_suspensions_lift"><CopyableCode code="projects_locations_integrations_executions_suspensions_lift" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-productsId"><code>productsId</code></a>, <a href="#parameter-integrationsId"><code>integrationsId</code></a>, <a href="#parameter-executionsId"><code>executionsId</code></a>, <a href="#parameter-suspensionsId"><code>suspensionsId</code></a></td>
-    <td></td>
-    <td>* Resolves (lifts/rejects) any number of suspensions. If the integration is already running, only the status of the suspension is updated. Otherwise, the suspended integration will begin execution again.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_products_integrations_executions_suspensions_lift"><CopyableCode code="projects_locations_products_integrations_executions_suspensions_lift" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-productsId"><code>productsId</code></a>, <a href="#parameter-integrationsId"><code>integrationsId</code></a>, <a href="#parameter-executionsId"><code>executionsId</code></a>, <a href="#parameter-suspensionsId"><code>suspensionsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-integrationsId"><code>integrationsId</code></a>, <a href="#parameter-executionsId"><code>executionsId</code></a>, <a href="#parameter-suspensionsId"><code>suspensionsId</code></a></td>
     <td></td>
     <td>* Lifts suspension for the Suspension task. Fetch corresponding suspension with provided suspension Id, resolve suspension, and set up suspension result for the Suspension Task.</td>
 </tr>
@@ -219,11 +212,18 @@ The following methods are available for this resource:
     <td>* Resolves (lifts/rejects) any number of suspensions. If the integration is already running, only the status of the suspension is updated. Otherwise, the suspended integration will begin execution again.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_integrations_executions_suspensions_lift"><CopyableCode code="projects_locations_integrations_executions_suspensions_lift" /></a></td>
+    <td><a href="#projects_locations_products_integrations_executions_suspensions_lift"><CopyableCode code="projects_locations_products_integrations_executions_suspensions_lift" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-integrationsId"><code>integrationsId</code></a>, <a href="#parameter-executionsId"><code>executionsId</code></a>, <a href="#parameter-suspensionsId"><code>suspensionsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-productsId"><code>productsId</code></a>, <a href="#parameter-integrationsId"><code>integrationsId</code></a>, <a href="#parameter-executionsId"><code>executionsId</code></a>, <a href="#parameter-suspensionsId"><code>suspensionsId</code></a></td>
     <td></td>
     <td>* Lifts suspension for the Suspension task. Fetch corresponding suspension with provided suspension Id, resolve suspension, and set up suspension result for the Suspension Task.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_products_integrations_executions_suspensions_resolve"><CopyableCode code="projects_locations_products_integrations_executions_suspensions_resolve" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-productsId"><code>productsId</code></a>, <a href="#parameter-integrationsId"><code>integrationsId</code></a>, <a href="#parameter-executionsId"><code>executionsId</code></a>, <a href="#parameter-suspensionsId"><code>suspensionsId</code></a></td>
+    <td></td>
+    <td>* Resolves (lifts/rejects) any number of suspensions. If the integration is already running, only the status of the suspension is updated. Otherwise, the suspended integration will begin execution again.</td>
 </tr>
 </tbody>
 </table>
@@ -325,9 +325,9 @@ AND locationsId = '{{ locationsId }}' -- required
 AND productsId = '{{ productsId }}' -- required
 AND integrationsId = '{{ integrationsId }}' -- required
 AND executionsId = '{{ executionsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -353,10 +353,10 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND integrationsId = '{{ integrationsId }}' -- required
 AND executionsId = '{{ executionsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -366,23 +366,40 @@ AND orderBy = '{{ orderBy }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_products_integrations_executions_suspensions_resolve"
+    defaultValue="projects_locations_integrations_executions_suspensions_lift"
     values={[
-        { label: 'projects_locations_products_integrations_executions_suspensions_resolve', value: 'projects_locations_products_integrations_executions_suspensions_resolve' },
-        { label: 'projects_locations_products_integrations_executions_suspensions_lift', value: 'projects_locations_products_integrations_executions_suspensions_lift' },
+        { label: 'projects_locations_integrations_executions_suspensions_lift', value: 'projects_locations_integrations_executions_suspensions_lift' },
         { label: 'projects_locations_integrations_executions_suspensions_resolve', value: 'projects_locations_integrations_executions_suspensions_resolve' },
-        { label: 'projects_locations_integrations_executions_suspensions_lift', value: 'projects_locations_integrations_executions_suspensions_lift' }
+        { label: 'projects_locations_products_integrations_executions_suspensions_lift', value: 'projects_locations_products_integrations_executions_suspensions_lift' },
+        { label: 'projects_locations_products_integrations_executions_suspensions_resolve', value: 'projects_locations_products_integrations_executions_suspensions_resolve' }
     ]}
 >
-<TabItem value="projects_locations_products_integrations_executions_suspensions_resolve">
+<TabItem value="projects_locations_integrations_executions_suspensions_lift">
+
+* Lifts suspension for the Suspension task. Fetch corresponding suspension with provided suspension Id, resolve suspension, and set up suspension result for the Suspension Task.
+
+```sql
+EXEC google.integrations.suspensions.projects_locations_integrations_executions_suspensions_lift 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@integrationsId='{{ integrationsId }}' --required, 
+@executionsId='{{ executionsId }}' --required, 
+@suspensionsId='{{ suspensionsId }}' --required 
+@@json=
+'{
+"suspensionResult": "{{ suspensionResult }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_integrations_executions_suspensions_resolve">
 
 * Resolves (lifts/rejects) any number of suspensions. If the integration is already running, only the status of the suspension is updated. Otherwise, the suspended integration will begin execution again.
 
 ```sql
-EXEC google.integrations.suspensions.projects_locations_products_integrations_executions_suspensions_resolve 
+EXEC google.integrations.suspensions.projects_locations_integrations_executions_suspensions_resolve 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@productsId='{{ productsId }}' --required, 
 @integrationsId='{{ integrationsId }}' --required, 
 @executionsId='{{ executionsId }}' --required, 
 @suspensionsId='{{ suspensionsId }}' --required 
@@ -412,38 +429,21 @@ EXEC google.integrations.suspensions.projects_locations_products_integrations_ex
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_integrations_executions_suspensions_resolve">
+<TabItem value="projects_locations_products_integrations_executions_suspensions_resolve">
 
 * Resolves (lifts/rejects) any number of suspensions. If the integration is already running, only the status of the suspension is updated. Otherwise, the suspended integration will begin execution again.
 
 ```sql
-EXEC google.integrations.suspensions.projects_locations_integrations_executions_suspensions_resolve 
+EXEC google.integrations.suspensions.projects_locations_products_integrations_executions_suspensions_resolve 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
+@productsId='{{ productsId }}' --required, 
 @integrationsId='{{ integrationsId }}' --required, 
 @executionsId='{{ executionsId }}' --required, 
 @suspensionsId='{{ suspensionsId }}' --required 
 @@json=
 '{
 "suspension": "{{ suspension }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_integrations_executions_suspensions_lift">
-
-* Lifts suspension for the Suspension task. Fetch corresponding suspension with provided suspension Id, resolve suspension, and set up suspension result for the Suspension Task.
-
-```sql
-EXEC google.integrations.suspensions.projects_locations_integrations_executions_suspensions_lift 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@integrationsId='{{ integrationsId }}' --required, 
-@executionsId='{{ executionsId }}' --required, 
-@suspensionsId='{{ suspensionsId }}' --required 
-@@json=
-'{
-"suspensionResult": "{{ suspensionResult }}"
 }'
 ;
 ```

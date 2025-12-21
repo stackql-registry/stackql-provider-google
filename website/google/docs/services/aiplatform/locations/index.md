@@ -144,15 +144,8 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists information about the supported locations for this service.</td>
-</tr>
-<tr>
-    <td><a href="#evaluate_instances"><CopyableCode code="evaluate_instances" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Evaluates instances based on a given metric.</td>
 </tr>
 <tr>
     <td><a href="#evaluate_dataset"><CopyableCode code="evaluate_dataset" /></a></td>
@@ -162,18 +155,18 @@ The following methods are available for this resource:
     <td>Evaluates a dataset based on a set of given metrics.</td>
 </tr>
 <tr>
-    <td><a href="#generate_instance_rubrics"><CopyableCode code="generate_instance_rubrics" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Generates rubrics for a given prompt. A rubric represents a single testable criterion for evaluation. One input prompt could have multiple rubrics This RPC allows users to get suggested rubrics based on provided prompt, which can then be reviewed and used for subsequent evaluations.</td>
-</tr>
-<tr>
     <td><a href="#deploy"><CopyableCode code="deploy" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Deploys a model to a new endpoint.</td>
+</tr>
+<tr>
+    <td><a href="#generate_instance_rubrics"><CopyableCode code="generate_instance_rubrics" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Generates rubrics for a given prompt. A rubric represents a single testable criterion for evaluation. One input prompt could have multiple rubrics This RPC allows users to get suggested rubrics based on provided prompt, which can then be reviewed and used for subsequent evaluations.</td>
 </tr>
 <tr>
     <td><a href="#augment_prompt"><CopyableCode code="augment_prompt" /></a></td>
@@ -188,6 +181,20 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Given an input text, it returns a score that evaluates the factuality of the text. It also extracts and returns claims from the text and provides supporting facts.</td>
+</tr>
+<tr>
+    <td><a href="#evaluate_instances"><CopyableCode code="evaluate_instances" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Evaluates instances based on a given metric.</td>
+</tr>
+<tr>
+    <td><a href="#generate_synthetic_data"><CopyableCode code="generate_synthetic_data" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Generates synthetic data based on the provided configuration.</td>
 </tr>
 </tbody>
 </table>
@@ -278,9 +285,9 @@ metadata
 FROM google.aiplatform.locations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND extraLocationTypes = '{{ extraLocationTypes }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -290,65 +297,17 @@ AND extraLocationTypes = '{{ extraLocationTypes }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="evaluate_instances"
+    defaultValue="evaluate_dataset"
     values={[
-        { label: 'evaluate_instances', value: 'evaluate_instances' },
         { label: 'evaluate_dataset', value: 'evaluate_dataset' },
-        { label: 'generate_instance_rubrics', value: 'generate_instance_rubrics' },
         { label: 'deploy', value: 'deploy' },
+        { label: 'generate_instance_rubrics', value: 'generate_instance_rubrics' },
         { label: 'augment_prompt', value: 'augment_prompt' },
-        { label: 'corroborate_content', value: 'corroborate_content' }
+        { label: 'corroborate_content', value: 'corroborate_content' },
+        { label: 'evaluate_instances', value: 'evaluate_instances' },
+        { label: 'generate_synthetic_data', value: 'generate_synthetic_data' }
     ]}
 >
-<TabItem value="evaluate_instances">
-
-Evaluates instances based on a given metric.
-
-```sql
-EXEC google.aiplatform.locations.evaluate_instances 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
-@@json=
-'{
-"exactMatchInput": "{{ exactMatchInput }}", 
-"bleuInput": "{{ bleuInput }}", 
-"rougeInput": "{{ rougeInput }}", 
-"fluencyInput": "{{ fluencyInput }}", 
-"coherenceInput": "{{ coherenceInput }}", 
-"safetyInput": "{{ safetyInput }}", 
-"groundednessInput": "{{ groundednessInput }}", 
-"fulfillmentInput": "{{ fulfillmentInput }}", 
-"summarizationQualityInput": "{{ summarizationQualityInput }}", 
-"pairwiseSummarizationQualityInput": "{{ pairwiseSummarizationQualityInput }}", 
-"summarizationHelpfulnessInput": "{{ summarizationHelpfulnessInput }}", 
-"summarizationVerbosityInput": "{{ summarizationVerbosityInput }}", 
-"questionAnsweringQualityInput": "{{ questionAnsweringQualityInput }}", 
-"pairwiseQuestionAnsweringQualityInput": "{{ pairwiseQuestionAnsweringQualityInput }}", 
-"questionAnsweringRelevanceInput": "{{ questionAnsweringRelevanceInput }}", 
-"questionAnsweringHelpfulnessInput": "{{ questionAnsweringHelpfulnessInput }}", 
-"questionAnsweringCorrectnessInput": "{{ questionAnsweringCorrectnessInput }}", 
-"pointwiseMetricInput": "{{ pointwiseMetricInput }}", 
-"pairwiseMetricInput": "{{ pairwiseMetricInput }}", 
-"toolCallValidInput": "{{ toolCallValidInput }}", 
-"toolNameMatchInput": "{{ toolNameMatchInput }}", 
-"toolParameterKeyMatchInput": "{{ toolParameterKeyMatchInput }}", 
-"toolParameterKvMatchInput": "{{ toolParameterKvMatchInput }}", 
-"cometInput": "{{ cometInput }}", 
-"metricxInput": "{{ metricxInput }}", 
-"trajectoryExactMatchInput": "{{ trajectoryExactMatchInput }}", 
-"trajectoryInOrderMatchInput": "{{ trajectoryInOrderMatchInput }}", 
-"trajectoryAnyOrderMatchInput": "{{ trajectoryAnyOrderMatchInput }}", 
-"trajectoryPrecisionInput": "{{ trajectoryPrecisionInput }}", 
-"trajectoryRecallInput": "{{ trajectoryRecallInput }}", 
-"trajectorySingleToolUseInput": "{{ trajectorySingleToolUseInput }}", 
-"rubricBasedInstructionFollowingInput": "{{ rubricBasedInstructionFollowingInput }}", 
-"metrics": "{{ metrics }}", 
-"instance": "{{ instance }}", 
-"autoraterConfig": "{{ autoraterConfig }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="evaluate_dataset">
 
 Evaluates a dataset based on a set of given metrics.
@@ -360,26 +319,9 @@ EXEC google.aiplatform.locations.evaluate_dataset
 @@json=
 '{
 "dataset": "{{ dataset }}", 
-"metrics": "{{ metrics }}", 
 "outputConfig": "{{ outputConfig }}", 
-"autoraterConfig": "{{ autoraterConfig }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="generate_instance_rubrics">
-
-Generates rubrics for a given prompt. A rubric represents a single testable criterion for evaluation. One input prompt could have multiple rubrics This RPC allows users to get suggested rubrics based on provided prompt, which can then be reviewed and used for subsequent evaluations.
-
-```sql
-EXEC google.aiplatform.locations.generate_instance_rubrics 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
-@@json=
-'{
-"contents": "{{ contents }}", 
-"predefinedRubricGenerationSpec": "{{ predefinedRubricGenerationSpec }}", 
-"rubricGenerationSpec": "{{ rubricGenerationSpec }}"
+"autoraterConfig": "{{ autoraterConfig }}", 
+"metrics": "{{ metrics }}"
 }'
 ;
 ```
@@ -394,11 +336,29 @@ EXEC google.aiplatform.locations.deploy
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"publisherModelName": "{{ publisherModelName }}", 
 "huggingFaceModelId": "{{ huggingFaceModelId }}", 
 "modelConfig": "{{ modelConfig }}", 
-"endpointConfig": "{{ endpointConfig }}", 
-"deployConfig": "{{ deployConfig }}"
+"publisherModelName": "{{ publisherModelName }}", 
+"deployConfig": "{{ deployConfig }}", 
+"endpointConfig": "{{ endpointConfig }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="generate_instance_rubrics">
+
+Generates rubrics for a given prompt. A rubric represents a single testable criterion for evaluation. One input prompt could have multiple rubrics This RPC allows users to get suggested rubrics based on provided prompt, which can then be reviewed and used for subsequent evaluations.
+
+```sql
+EXEC google.aiplatform.locations.generate_instance_rubrics 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"rubricGenerationSpec": "{{ rubricGenerationSpec }}", 
+"agentConfig": "{{ agentConfig }}", 
+"predefinedRubricGenerationSpec": "{{ predefinedRubricGenerationSpec }}", 
+"contents": "{{ contents }}"
 }'
 ;
 ```
@@ -413,9 +373,9 @@ EXEC google.aiplatform.locations.augment_prompt
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"vertexRagStore": "{{ vertexRagStore }}", 
+"model": "{{ model }}", 
 "contents": "{{ contents }}", 
-"model": "{{ model }}"
+"vertexRagStore": "{{ vertexRagStore }}"
 }'
 ;
 ```
@@ -433,6 +393,73 @@ EXEC google.aiplatform.locations.corroborate_content
 "content": "{{ content }}", 
 "facts": "{{ facts }}", 
 "parameters": "{{ parameters }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="evaluate_instances">
+
+Evaluates instances based on a given metric.
+
+```sql
+EXEC google.aiplatform.locations.evaluate_instances 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"trajectoryExactMatchInput": "{{ trajectoryExactMatchInput }}", 
+"toolNameMatchInput": "{{ toolNameMatchInput }}", 
+"bleuInput": "{{ bleuInput }}", 
+"pairwiseSummarizationQualityInput": "{{ pairwiseSummarizationQualityInput }}", 
+"trajectoryAnyOrderMatchInput": "{{ trajectoryAnyOrderMatchInput }}", 
+"toolParameterKeyMatchInput": "{{ toolParameterKeyMatchInput }}", 
+"cometInput": "{{ cometInput }}", 
+"metrics": "{{ metrics }}", 
+"questionAnsweringRelevanceInput": "{{ questionAnsweringRelevanceInput }}", 
+"toolParameterKvMatchInput": "{{ toolParameterKvMatchInput }}", 
+"groundednessInput": "{{ groundednessInput }}", 
+"pointwiseMetricInput": "{{ pointwiseMetricInput }}", 
+"questionAnsweringQualityInput": "{{ questionAnsweringQualityInput }}", 
+"pairwiseMetricInput": "{{ pairwiseMetricInput }}", 
+"coherenceInput": "{{ coherenceInput }}", 
+"fluencyInput": "{{ fluencyInput }}", 
+"rougeInput": "{{ rougeInput }}", 
+"questionAnsweringCorrectnessInput": "{{ questionAnsweringCorrectnessInput }}", 
+"autoraterConfig": "{{ autoraterConfig }}", 
+"summarizationHelpfulnessInput": "{{ summarizationHelpfulnessInput }}", 
+"trajectoryPrecisionInput": "{{ trajectoryPrecisionInput }}", 
+"instance": "{{ instance }}", 
+"questionAnsweringHelpfulnessInput": "{{ questionAnsweringHelpfulnessInput }}", 
+"toolCallValidInput": "{{ toolCallValidInput }}", 
+"summarizationVerbosityInput": "{{ summarizationVerbosityInput }}", 
+"trajectorySingleToolUseInput": "{{ trajectorySingleToolUseInput }}", 
+"safetyInput": "{{ safetyInput }}", 
+"summarizationQualityInput": "{{ summarizationQualityInput }}", 
+"trajectoryInOrderMatchInput": "{{ trajectoryInOrderMatchInput }}", 
+"trajectoryRecallInput": "{{ trajectoryRecallInput }}", 
+"metricxInput": "{{ metricxInput }}", 
+"rubricBasedInstructionFollowingInput": "{{ rubricBasedInstructionFollowingInput }}", 
+"fulfillmentInput": "{{ fulfillmentInput }}", 
+"pairwiseQuestionAnsweringQualityInput": "{{ pairwiseQuestionAnsweringQualityInput }}", 
+"exactMatchInput": "{{ exactMatchInput }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="generate_synthetic_data">
+
+Generates synthetic data based on the provided configuration.
+
+```sql
+EXEC google.aiplatform.locations.generate_synthetic_data 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"outputFieldSpecs": "{{ outputFieldSpecs }}", 
+"examples": "{{ examples }}", 
+"count": {{ count }}, 
+"taskDescription": "{{ taskDescription }}"
 }'
 ;
 ```

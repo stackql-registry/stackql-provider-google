@@ -18,7 +18,7 @@ backupdr service documentation.
 
 :::info[Service Summary]
 
-total resources: __15__  
+total resources: __16__  
 
 :::
 
@@ -31,10 +31,11 @@ total resources: __15__
 <a href="/services/backupdr/backup_vaults_iam_policies/">backup_vaults_iam_policies</a><br />
 <a href="/services/backupdr/backup_vaults_usable/">backup_vaults_usable</a><br />
 <a href="/services/backupdr/backups/">backups</a><br />
-<a href="/services/backupdr/data_source_references/">data_source_references</a><br />
-<a href="/services/backupdr/data_sources/">data_sources</a>
+<a href="/services/backupdr/backups_for_resource_type/">backups_for_resource_type</a><br />
+<a href="/services/backupdr/data_source_references/">data_source_references</a>
 </div>
 <div class="providerDocColumn">
+<a href="/services/backupdr/data_sources/">data_sources</a><br />
 <a href="/services/backupdr/locations/">locations</a><br />
 <a href="/services/backupdr/management_servers/">management_servers</a><br />
 <a href="/services/backupdr/management_servers_iam_policies/">management_servers_iam_policies</a><br />

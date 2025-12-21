@@ -97,14 +97,14 @@ The following methods are available for this resource:
     <td><a href="#organizations_environments_optimized_stats_get"><CopyableCode code="organizations_environments_optimized_stats_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-optimizedStatsId"><code>optimizedStatsId</code></a></td>
-    <td><a href="#parameter-select"><code>select</code></a>, <a href="#parameter-timeUnit"><code>timeUnit</code></a>, <a href="#parameter-timeRange"><code>timeRange</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-sort"><code>sort</code></a>, <a href="#parameter-sortby"><code>sortby</code></a>, <a href="#parameter-aggTable"><code>aggTable</code></a>, <a href="#parameter-limit"><code>limit</code></a>, <a href="#parameter-offset"><code>offset</code></a>, <a href="#parameter-topk"><code>topk</code></a>, <a href="#parameter-tsAscending"><code>tsAscending</code></a>, <a href="#parameter-realtime"><code>realtime</code></a>, <a href="#parameter-sonar"><code>sonar</code></a>, <a href="#parameter-tzo"><code>tzo</code></a>, <a href="#parameter-accuracy"><code>accuracy</code></a></td>
+    <td><a href="#parameter-sort"><code>sort</code></a>, <a href="#parameter-tsAscending"><code>tsAscending</code></a>, <a href="#parameter-offset"><code>offset</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-limit"><code>limit</code></a>, <a href="#parameter-realtime"><code>realtime</code></a>, <a href="#parameter-sortby"><code>sortby</code></a>, <a href="#parameter-sonar"><code>sonar</code></a>, <a href="#parameter-tzo"><code>tzo</code></a>, <a href="#parameter-accuracy"><code>accuracy</code></a>, <a href="#parameter-select"><code>select</code></a>, <a href="#parameter-timeUnit"><code>timeUnit</code></a>, <a href="#parameter-aggTable"><code>aggTable</code></a>, <a href="#parameter-topk"><code>topk</code></a>, <a href="#parameter-timeRange"><code>timeRange</code></a></td>
     <td>Similar to GetStats except that the response is less verbose.</td>
 </tr>
 <tr>
     <td><a href="#organizations_optimized_host_stats_get"><CopyableCode code="organizations_optimized_host_stats_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-optimizedHostStatsId"><code>optimizedHostStatsId</code></a></td>
-    <td><a href="#parameter-select"><code>select</code></a>, <a href="#parameter-timeUnit"><code>timeUnit</code></a>, <a href="#parameter-timeRange"><code>timeRange</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-sort"><code>sort</code></a>, <a href="#parameter-sortby"><code>sortby</code></a>, <a href="#parameter-limit"><code>limit</code></a>, <a href="#parameter-offset"><code>offset</code></a>, <a href="#parameter-topk"><code>topk</code></a>, <a href="#parameter-tsAscending"><code>tsAscending</code></a>, <a href="#parameter-realtime"><code>realtime</code></a>, <a href="#parameter-tzo"><code>tzo</code></a>, <a href="#parameter-accuracy"><code>accuracy</code></a>, <a href="#parameter-envgroupHostname"><code>envgroupHostname</code></a></td>
+    <td><a href="#parameter-realtime"><code>realtime</code></a>, <a href="#parameter-topk"><code>topk</code></a>, <a href="#parameter-sort"><code>sort</code></a>, <a href="#parameter-tzo"><code>tzo</code></a>, <a href="#parameter-offset"><code>offset</code></a>, <a href="#parameter-timeUnit"><code>timeUnit</code></a>, <a href="#parameter-timeRange"><code>timeRange</code></a>, <a href="#parameter-limit"><code>limit</code></a>, <a href="#parameter-select"><code>select</code></a>, <a href="#parameter-tsAscending"><code>tsAscending</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-accuracy"><code>accuracy</code></a>, <a href="#parameter-sortby"><code>sortby</code></a>, <a href="#parameter-envgroupHostname"><code>envgroupHostname</code></a></td>
     <td>Similar to GetHostStats except that the response is less verbose.</td>
 </tr>
 </tbody>
@@ -246,21 +246,21 @@ FROM google.apigee.optimized_stats
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND environmentsId = '{{ environmentsId }}' -- required
 AND optimizedStatsId = '{{ optimizedStatsId }}' -- required
-AND select = '{{ select }}'
-AND timeUnit = '{{ timeUnit }}'
-AND timeRange = '{{ timeRange }}'
-AND filter = '{{ filter }}'
 AND sort = '{{ sort }}'
-AND sortby = '{{ sortby }}'
-AND aggTable = '{{ aggTable }}'
-AND limit = '{{ limit }}'
-AND offset = '{{ offset }}'
-AND topk = '{{ topk }}'
 AND tsAscending = '{{ tsAscending }}'
+AND offset = '{{ offset }}'
+AND filter = '{{ filter }}'
+AND limit = '{{ limit }}'
 AND realtime = '{{ realtime }}'
+AND sortby = '{{ sortby }}'
 AND sonar = '{{ sonar }}'
 AND tzo = '{{ tzo }}'
 AND accuracy = '{{ accuracy }}'
+AND select = '{{ select }}'
+AND timeUnit = '{{ timeUnit }}'
+AND aggTable = '{{ aggTable }}'
+AND topk = '{{ topk }}'
+AND timeRange = '{{ timeRange }}'
 ;
 ```
 </TabItem>
@@ -274,19 +274,19 @@ Response
 FROM google.apigee.optimized_stats
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND optimizedHostStatsId = '{{ optimizedHostStatsId }}' -- required
-AND select = '{{ select }}'
+AND realtime = '{{ realtime }}'
+AND topk = '{{ topk }}'
+AND sort = '{{ sort }}'
+AND tzo = '{{ tzo }}'
+AND offset = '{{ offset }}'
 AND timeUnit = '{{ timeUnit }}'
 AND timeRange = '{{ timeRange }}'
-AND filter = '{{ filter }}'
-AND sort = '{{ sort }}'
-AND sortby = '{{ sortby }}'
 AND limit = '{{ limit }}'
-AND offset = '{{ offset }}'
-AND topk = '{{ topk }}'
+AND select = '{{ select }}'
 AND tsAscending = '{{ tsAscending }}'
-AND realtime = '{{ realtime }}'
-AND tzo = '{{ tzo }}'
+AND filter = '{{ filter }}'
 AND accuracy = '{{ accuracy }}'
+AND sortby = '{{ sortby }}'
 AND envgroupHostname = '{{ envgroupHostname }}'
 ;
 ```

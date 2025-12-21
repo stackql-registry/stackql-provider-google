@@ -174,14 +174,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists logging servers configured for a given private cloud.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a></td>
-    <td><a href="#parameter-loggingServerId"><code>loggingServerId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-loggingServerId"><code>loggingServerId</code></a></td>
     <td>Create a new logging server for a given private cloud.</td>
 </tr>
 <tr>
@@ -321,10 +321,10 @@ FROM google.vmwareengine.logging_servers
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND privateCloudsId = '{{ privateCloudsId }}' -- required
-AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -346,26 +346,26 @@ Create a new logging server for a given private cloud.
 
 ```sql
 INSERT INTO google.vmwareengine.logging_servers (
-data__hostname,
-data__port,
 data__protocol,
 data__sourceType,
+data__port,
+data__hostname,
 projectsId,
 locationsId,
 privateCloudsId,
-loggingServerId,
-requestId
+requestId,
+loggingServerId
 )
 SELECT 
-'{{ hostname }}',
-{{ port }},
 '{{ protocol }}',
 '{{ sourceType }}',
+{{ port }},
+'{{ hostname }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ privateCloudsId }}',
-'{{ loggingServerId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ loggingServerId }}'
 RETURNING
 name,
 done,
@@ -390,16 +390,6 @@ response
     - name: privateCloudsId
       value: string
       description: Required parameter for the logging_servers resource.
-    - name: hostname
-      value: string
-      description: >
-        Required. Fully-qualified domain name (FQDN) or IP Address of the logging server.
-        
-    - name: port
-      value: integer
-      description: >
-        Required. Port number at which the logging server receives logs.
-        
     - name: protocol
       value: string
       description: >
@@ -412,9 +402,19 @@ response
         Required. The type of component that produces logs that will be forwarded to this logging server.
         
       valid_values: ['SOURCE_TYPE_UNSPECIFIED', 'ESXI', 'VCSA']
-    - name: loggingServerId
+    - name: port
+      value: integer
+      description: >
+        Required. Port number at which the logging server receives logs.
+        
+    - name: hostname
       value: string
+      description: >
+        Required. Fully-qualified domain name (FQDN) or IP Address of the logging server.
+        
     - name: requestId
+      value: string
+    - name: loggingServerId
       value: string
 ```
 </TabItem>
@@ -436,10 +436,10 @@ Updates the parameters of a single logging server. Only fields specified in `upd
 ```sql
 UPDATE google.vmwareengine.logging_servers
 SET 
-data__hostname = '{{ hostname }}',
-data__port = {{ port }},
 data__protocol = '{{ protocol }}',
-data__sourceType = '{{ sourceType }}'
+data__sourceType = '{{ sourceType }}',
+data__port = {{ port }},
+data__hostname = '{{ hostname }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

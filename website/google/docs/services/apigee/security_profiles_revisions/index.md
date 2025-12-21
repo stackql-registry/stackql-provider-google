@@ -132,7 +132,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_security_profiles_list_revisions"><CopyableCode code="organizations_security_profiles_list_revisions" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-securityProfilesId"><code>securityProfilesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>ListSecurityProfileRevisions lists all the revisions of the security profile.</td>
 </tr>
 </tbody>
@@ -203,8 +203,8 @@ scoringConfigs
 FROM google.apigee.security_profiles_revisions
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND securityProfilesId = '{{ securityProfilesId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>

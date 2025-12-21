@@ -94,6 +94,11 @@ The following fields are returned by `SELECT` queries:
     <td>The business status for the place.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="consumerAlert" /></td>
+    <td><code>object</code></td>
+    <td>The consumer alert message for the place when we detect suspicious review activity on a business or a business violates our policies. (id: GoogleMapsPlacesV1PlaceConsumerAlert)</td>
+</tr>
+<tr>
     <td><CopyableCode code="containingPlaces" /></td>
     <td><code>array</code></td>
     <td>List of places in which the current place is located.</td>
@@ -212,6 +217,16 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="menuForChildren" /></td>
     <td><code>boolean</code></td>
     <td>Place has a children's menu.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="movedPlace" /></td>
+    <td><code>string</code></td>
+    <td>If this Place is permanently closed and has moved to a new Place, this field contains the new Place's resource name, in `places/&#123;place_id&#125;` format. If this Place moved multiple times, this field will represent the first moved place. This field will not be populated if this Place has not moved.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="movedPlaceId" /></td>
+    <td><code>string</code></td>
+    <td>If this Place is permanently closed and has moved to a new Place, this field contains the new Place's place ID. If this Place moved multiple times, this field will represent the first moved Place. This field will not be populated if this Place has not moved.</td>
 </tr>
 <tr>
     <td><CopyableCode code="nationalPhoneNumber" /></td>
@@ -432,8 +447,15 @@ The following methods are available for this resource:
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-placesId"><code>placesId</code></a></td>
-    <td><a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-regionCode"><code>regionCode</code></a>, <a href="#parameter-sessionToken"><code>sessionToken</code></a></td>
+    <td><a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-sessionToken"><code>sessionToken</code></a>, <a href="#parameter-regionCode"><code>regionCode</code></a></td>
     <td>Get the details of a place based on its resource name, which is a string in the `places/&#123;place_id&#125;` format.</td>
+</tr>
+<tr>
+    <td><a href="#autocomplete"><CopyableCode code="autocomplete" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td></td>
+    <td></td>
+    <td>Returns predictions for the given input.</td>
 </tr>
 <tr>
     <td><a href="#search_nearby"><CopyableCode code="search_nearby" /></a></td>
@@ -448,13 +470,6 @@ The following methods are available for this resource:
     <td></td>
     <td></td>
     <td>Text query based place search.</td>
-</tr>
-<tr>
-    <td><a href="#autocomplete"><CopyableCode code="autocomplete" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td></td>
-    <td></td>
-    <td>Returns predictions for the given input.</td>
 </tr>
 </tbody>
 </table>
@@ -518,6 +533,7 @@ adrFormatAddress,
 allowsDogs,
 attributions,
 businessStatus,
+consumerAlert,
 containingPlaces,
 curbsidePickup,
 currentOpeningHours,
@@ -542,6 +558,8 @@ internationalPhoneNumber,
 liveMusic,
 location,
 menuForChildren,
+movedPlace,
+movedPlaceId,
 nationalPhoneNumber,
 neighborhoodSummary,
 outdoorSeating,
@@ -584,8 +602,8 @@ websiteUri
 FROM google.places.places
 WHERE placesId = '{{ placesId }}' -- required
 AND languageCode = '{{ languageCode }}'
-AND regionCode = '{{ regionCode }}'
 AND sessionToken = '{{ sessionToken }}'
+AND regionCode = '{{ regionCode }}'
 ;
 ```
 </TabItem>
@@ -595,13 +613,37 @@ AND sessionToken = '{{ sessionToken }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="search_nearby"
+    defaultValue="autocomplete"
     values={[
+        { label: 'autocomplete', value: 'autocomplete' },
         { label: 'search_nearby', value: 'search_nearby' },
-        { label: 'search_text', value: 'search_text' },
-        { label: 'autocomplete', value: 'autocomplete' }
+        { label: 'search_text', value: 'search_text' }
     ]}
 >
+<TabItem value="autocomplete">
+
+Returns predictions for the given input.
+
+```sql
+EXEC google.places.places.autocomplete 
+@@json=
+'{
+"origin": "{{ origin }}", 
+"locationRestriction": "{{ locationRestriction }}", 
+"languageCode": "{{ languageCode }}", 
+"includePureServiceAreaBusinesses": {{ includePureServiceAreaBusinesses }}, 
+"inputOffset": {{ inputOffset }}, 
+"includedRegionCodes": "{{ includedRegionCodes }}", 
+"input": "{{ input }}", 
+"includedPrimaryTypes": "{{ includedPrimaryTypes }}", 
+"locationBias": "{{ locationBias }}", 
+"includeQueryPredictions": {{ includeQueryPredictions }}, 
+"sessionToken": "{{ sessionToken }}", 
+"regionCode": "{{ regionCode }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="search_nearby">
 
 Search for places near locations.
@@ -610,16 +652,16 @@ Search for places near locations.
 EXEC google.places.places.search_nearby 
 @@json=
 '{
-"languageCode": "{{ languageCode }}", 
-"regionCode": "{{ regionCode }}", 
-"includedTypes": "{{ includedTypes }}", 
+"routingParameters": "{{ routingParameters }}", 
 "excludedTypes": "{{ excludedTypes }}", 
-"includedPrimaryTypes": "{{ includedPrimaryTypes }}", 
-"excludedPrimaryTypes": "{{ excludedPrimaryTypes }}", 
 "maxResultCount": {{ maxResultCount }}, 
-"locationRestriction": "{{ locationRestriction }}", 
+"includedTypes": "{{ includedTypes }}", 
 "rankPreference": "{{ rankPreference }}", 
-"routingParameters": "{{ routingParameters }}"
+"languageCode": "{{ languageCode }}", 
+"includedPrimaryTypes": "{{ includedPrimaryTypes }}", 
+"regionCode": "{{ regionCode }}", 
+"excludedPrimaryTypes": "{{ excludedPrimaryTypes }}", 
+"locationRestriction": "{{ locationRestriction }}"
 }'
 ;
 ```
@@ -632,48 +674,24 @@ Text query based place search.
 EXEC google.places.places.search_text 
 @@json=
 '{
-"textQuery": "{{ textQuery }}", 
+"pageSize": {{ pageSize }}, 
+"evOptions": "{{ evOptions }}", 
 "languageCode": "{{ languageCode }}", 
-"regionCode": "{{ regionCode }}", 
+"priceLevels": "{{ priceLevels }}", 
 "rankPreference": "{{ rankPreference }}", 
-"includedType": "{{ includedType }}", 
+"pageToken": "{{ pageToken }}", 
 "openNow": {{ openNow }}, 
 "minRating": {{ minRating }}, 
+"includedType": "{{ includedType }}", 
+"regionCode": "{{ regionCode }}", 
 "maxResultCount": {{ maxResultCount }}, 
-"pageSize": {{ pageSize }}, 
-"pageToken": "{{ pageToken }}", 
-"priceLevels": "{{ priceLevels }}", 
 "strictTypeFiltering": {{ strictTypeFiltering }}, 
+"includePureServiceAreaBusinesses": {{ includePureServiceAreaBusinesses }}, 
 "locationBias": "{{ locationBias }}", 
-"locationRestriction": "{{ locationRestriction }}", 
-"evOptions": "{{ evOptions }}", 
 "routingParameters": "{{ routingParameters }}", 
 "searchAlongRouteParameters": "{{ searchAlongRouteParameters }}", 
-"includePureServiceAreaBusinesses": {{ includePureServiceAreaBusinesses }}
-}'
-;
-```
-</TabItem>
-<TabItem value="autocomplete">
-
-Returns predictions for the given input.
-
-```sql
-EXEC google.places.places.autocomplete 
-@@json=
-'{
-"input": "{{ input }}", 
-"locationBias": "{{ locationBias }}", 
-"locationRestriction": "{{ locationRestriction }}", 
-"includedPrimaryTypes": "{{ includedPrimaryTypes }}", 
-"includedRegionCodes": "{{ includedRegionCodes }}", 
-"languageCode": "{{ languageCode }}", 
-"regionCode": "{{ regionCode }}", 
-"origin": "{{ origin }}", 
-"inputOffset": {{ inputOffset }}, 
-"includeQueryPredictions": {{ includeQueryPredictions }}, 
-"sessionToken": "{{ sessionToken }}", 
-"includePureServiceAreaBusinesses": {{ includePureServiceAreaBusinesses }}
+"textQuery": "{{ textQuery }}", 
+"locationRestriction": "{{ locationRestriction }}"
 }'
 ;
 ```

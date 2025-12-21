@@ -281,18 +281,18 @@ Creates an attestor, and returns a copy of the new attestor. Returns `NOT_FOUND`
 
 ```sql
 INSERT INTO google.binaryauthorization.attestors (
-data__name,
-data__description,
-data__userOwnedGrafeasNote,
 data__etag,
+data__name,
+data__userOwnedGrafeasNote,
+data__description,
 projectsId,
 attestorId
 )
 SELECT 
-'{{ name }}',
-'{{ description }}',
-'{{ userOwnedGrafeasNote }}',
 '{{ etag }}',
+'{{ name }}',
+'{{ userOwnedGrafeasNote }}',
+'{{ description }}',
 '{{ projectsId }}',
 '{{ attestorId }}'
 RETURNING
@@ -313,25 +313,25 @@ userOwnedGrafeasNote
     - name: projectsId
       value: string
       description: Required parameter for the attestors resource.
+    - name: etag
+      value: string
+      description: >
+        Optional. A checksum, returned by the server, that can be sent on update requests to ensure the attestor has an up-to-date value before attempting to update it. See https://google.aip.dev/154.
+        
     - name: name
       value: string
       description: >
         Required. The resource name, in the format: `projects/*/attestors/*`. This field may not be updated.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. A descriptive comment. This field may be updated. The field may be displayed in chooser dialogs.
         
     - name: userOwnedGrafeasNote
       value: object
       description: >
         This specifies how an attestation will be read, and how it will be used during policy enforcement.
         
-    - name: etag
+    - name: description
       value: string
       description: >
-        Optional. A checksum, returned by the server, that can be sent on update requests to ensure the attestor has an up-to-date value before attempting to update it. See https://google.aip.dev/154.
+        Optional. A descriptive comment. This field may be updated. The field may be displayed in chooser dialogs.
         
     - name: attestorId
       value: string
@@ -355,10 +355,10 @@ Updates an attestor. Returns `NOT_FOUND` if the attestor does not exist.
 ```sql
 REPLACE google.binaryauthorization.attestors
 SET 
+data__etag = '{{ etag }}',
 data__name = '{{ name }}',
-data__description = '{{ description }}',
 data__userOwnedGrafeasNote = '{{ userOwnedGrafeasNote }}',
-data__etag = '{{ etag }}'
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND attestorsId = '{{ attestorsId }}' --required
@@ -413,9 +413,9 @@ EXEC google.binaryauthorization.attestors.validate_attestation_occurrence
 @attestorsId='{{ attestorsId }}' --required 
 @@json=
 '{
+"occurrenceResourceUri": "{{ occurrenceResourceUri }}", 
 "attestation": "{{ attestation }}", 
-"occurrenceNote": "{{ occurrenceNote }}", 
-"occurrenceResourceUri": "{{ occurrenceResourceUri }}"
+"occurrenceNote": "{{ occurrenceNote }}"
 }'
 ;
 ```

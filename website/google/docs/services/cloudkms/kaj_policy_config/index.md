@@ -83,14 +83,14 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
     <td></td>
-    <td>Gets the KeyAccessJustificationsPolicyConfig for a given organization/folder/projects.</td>
+    <td>Gets the KeyAccessJustificationsPolicyConfig for a given organization, folder, or project.</td>
 </tr>
 <tr>
     <td><a href="#update_kaj_policy_config"><CopyableCode code="update_kaj_policy_config" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates the KeyAccessJustificationsPolicyConfig for a given organization/folder/projects.</td>
+    <td>Updates the KeyAccessJustificationsPolicyConfig for a given organization, folder, or project.</td>
 </tr>
 </tbody>
 </table>
@@ -131,7 +131,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get_kaj_policy_config">
 
-Gets the KeyAccessJustificationsPolicyConfig for a given organization/folder/projects.
+Gets the KeyAccessJustificationsPolicyConfig for a given organization, folder, or project.
 
 ```sql
 SELECT
@@ -155,7 +155,7 @@ WHERE organizationsId = '{{ organizationsId }}' -- required
 >
 <TabItem value="update_kaj_policy_config">
 
-Updates the KeyAccessJustificationsPolicyConfig for a given organization/folder/projects.
+Updates the KeyAccessJustificationsPolicyConfig for a given organization, folder, or project.
 
 ```sql
 UPDATE google.cloudkms.kaj_policy_config

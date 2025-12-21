@@ -164,7 +164,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-tensorboardsId"><code>tensorboardsId</code></a>, <a href="#parameter-experimentsId"><code>experimentsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td><a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists TensorboardRuns in a Location.</td>
 </tr>
 <tr>
@@ -330,11 +330,11 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND tensorboardsId = '{{ tensorboardsId }}' -- required
 AND experimentsId = '{{ experimentsId }}' -- required
+AND readMask = '{{ readMask }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
-AND readMask = '{{ readMask }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -357,10 +357,10 @@ Creates a TensorboardRun.
 
 ```sql
 INSERT INTO google.aiplatform.runs (
-data__displayName,
 data__description,
 data__labels,
 data__etag,
+data__displayName,
 projectsId,
 locationsId,
 tensorboardsId,
@@ -368,10 +368,10 @@ experimentsId,
 tensorboardRunId
 )
 SELECT 
-'{{ displayName }}',
 '{{ description }}',
 '{{ labels }}',
 '{{ etag }}',
+'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ tensorboardsId }}',
@@ -429,11 +429,6 @@ tensorboardRuns
     - name: experimentsId
       value: string
       description: Required parameter for the runs resource.
-    - name: displayName
-      value: string
-      description: >
-        Required. User provided name of this TensorboardRun. This value must be unique among all TensorboardRuns belonging to the same parent TensorboardExperiment.
-        
     - name: description
       value: string
       description: >
@@ -448,6 +443,11 @@ tensorboardRuns
       value: string
       description: >
         Used to perform a consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+        
+    - name: displayName
+      value: string
+      description: >
+        Required. User provided name of this TensorboardRun. This value must be unique among all TensorboardRuns belonging to the same parent TensorboardExperiment.
         
     - name: requests
       value: array
@@ -476,10 +476,10 @@ Updates a TensorboardRun.
 ```sql
 UPDATE google.aiplatform.runs
 SET 
-data__displayName = '{{ displayName }}',
 data__description = '{{ description }}',
 data__labels = '{{ labels }}',
-data__etag = '{{ etag }}'
+data__etag = '{{ etag }}',
+data__displayName = '{{ displayName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

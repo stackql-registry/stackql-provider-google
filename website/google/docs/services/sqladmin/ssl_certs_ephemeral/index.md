@@ -100,14 +100,14 @@ Generates a short-lived X509 certificate containing the provided public key and 
 
 ```sql
 INSERT INTO google.sqladmin.ssl_certs_ephemeral (
-data__public_key,
 data__access_token,
+data__public_key,
 project,
 instance
 )
 SELECT 
-'{{ public_key }}',
 '{{ access_token }}',
+'{{ public_key }}',
 '{{ project }}',
 '{{ instance }}'
 RETURNING
@@ -135,15 +135,15 @@ sha1Fingerprint
     - name: instance
       value: string
       description: Required parameter for the ssl_certs_ephemeral resource.
-    - name: public_key
-      value: string
-      description: >
-        PEM encoded public key to include in the signed certificate.
-        
     - name: access_token
       value: string
       description: >
         Access token to include in the signed certificate.
+        
+    - name: public_key
+      value: string
+      description: >
+        PEM encoded public key to include in the signed certificate.
         
 ```
 </TabItem>

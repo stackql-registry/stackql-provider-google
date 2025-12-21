@@ -52,7 +52,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Identifier. Name of the TcpRoute resource. It matches pattern `projects/*/locations/global/tcpRoutes/tcp_route_name>`.</td>
+    <td>Identifier. Name of the TcpRoute resource. It matches pattern `projects/*/locations/*/tcpRoutes/tcp_route_name>`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -67,7 +67,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="gateways" /></td>
     <td><code>array</code></td>
-    <td>Optional. Gateways defines a list of gateways this TcpRoute is attached to, as one of the routing rules to route the requests served by the gateway. Each gateway reference should match the pattern: `projects/*/locations/global/gateways/`</td>
+    <td>Optional. Gateways defines a list of gateways this TcpRoute is attached to, as one of the routing rules to route the requests served by the gateway. Each gateway reference should match the pattern: `projects/*/locations/*/gateways/`</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -77,7 +77,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="meshes" /></td>
     <td><code>array</code></td>
-    <td>Optional. Meshes defines a list of meshes this TcpRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: `projects/*/locations/global/meshes/` The attached Mesh should be of a type SIDECAR</td>
+    <td>Optional. Meshes defines a list of meshes this TcpRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: `projects/*/locations/*/meshes/` The attached Mesh should be of a type SIDECAR</td>
 </tr>
 <tr>
     <td><CopyableCode code="rules" /></td>
@@ -108,51 +108,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Identifier. Name of the TcpRoute resource. It matches pattern `projects/*/locations/global/tcpRoutes/tcp_route_name>`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp when the resource was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Optional. A free-text description of the resource. Max length 1024 characters.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="gateways" /></td>
-    <td><code>array</code></td>
-    <td>Optional. Gateways defines a list of gateways this TcpRoute is attached to, as one of the routing rules to route the requests served by the gateway. Each gateway reference should match the pattern: `projects/*/locations/global/gateways/`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Set of label tags associated with the TcpRoute resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="meshes" /></td>
-    <td><code>array</code></td>
-    <td>Optional. Meshes defines a list of meshes this TcpRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: `projects/*/locations/global/meshes/` The attached Mesh should be of a type SIDECAR</td>
-</tr>
-<tr>
-    <td><CopyableCode code="rules" /></td>
-    <td><code>array</code></td>
-    <td>Required. Rules that define how traffic is routed and handled. At least one RouteRule must be supplied. If there are multiple rules then the action taken will be the first rule to match.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="selfLink" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Server-defined URL of this resource</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp when the resource was updated.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -184,7 +139,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists TcpRoute in a given project and location.</td>
 </tr>
 <tr>
@@ -304,21 +259,13 @@ Lists TcpRoute in a given project and location.
 
 ```sql
 SELECT
-name,
-createTime,
-description,
-gateways,
-labels,
-meshes,
-rules,
-selfLink,
-updateTime
+*
 FROM google.networkservices.tcp_routes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -340,23 +287,23 @@ Creates a new TcpRoute in a given project and location.
 
 ```sql
 INSERT INTO google.networkservices.tcp_routes (
+data__labels,
 data__name,
-data__description,
+data__gateways,
 data__rules,
 data__meshes,
-data__gateways,
-data__labels,
+data__description,
 projectsId,
 locationsId,
 tcpRouteId
 )
 SELECT 
+'{{ labels }}',
 '{{ name }}',
-'{{ description }}',
+'{{ gateways }}',
 '{{ rules }}',
 '{{ meshes }}',
-'{{ gateways }}',
-'{{ labels }}',
+'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ tcpRouteId }}'
@@ -381,15 +328,20 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the tcp_routes resource.
+    - name: labels
+      value: object
+      description: >
+        Optional. Set of label tags associated with the TcpRoute resource.
+        
     - name: name
       value: string
       description: >
-        Identifier. Name of the TcpRoute resource. It matches pattern `projects/*/locations/global/tcpRoutes/tcp_route_name>`.
+        Identifier. Name of the TcpRoute resource. It matches pattern `projects/*/locations/*/tcpRoutes/tcp_route_name>`.
         
-    - name: description
-      value: string
+    - name: gateways
+      value: array
       description: >
-        Optional. A free-text description of the resource. Max length 1024 characters.
+        Optional. Gateways defines a list of gateways this TcpRoute is attached to, as one of the routing rules to route the requests served by the gateway. Each gateway reference should match the pattern: `projects/*/locations/*/gateways/`
         
     - name: rules
       value: array
@@ -399,17 +351,12 @@ response
     - name: meshes
       value: array
       description: >
-        Optional. Meshes defines a list of meshes this TcpRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: `projects/*/locations/global/meshes/` The attached Mesh should be of a type SIDECAR
+        Optional. Meshes defines a list of meshes this TcpRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: `projects/*/locations/*/meshes/` The attached Mesh should be of a type SIDECAR
         
-    - name: gateways
-      value: array
+    - name: description
+      value: string
       description: >
-        Optional. Gateways defines a list of gateways this TcpRoute is attached to, as one of the routing rules to route the requests served by the gateway. Each gateway reference should match the pattern: `projects/*/locations/global/gateways/`
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Set of label tags associated with the TcpRoute resource.
+        Optional. A free-text description of the resource. Max length 1024 characters.
         
     - name: tcpRouteId
       value: string
@@ -433,12 +380,12 @@ Updates the parameters of a single TcpRoute.
 ```sql
 UPDATE google.networkservices.tcp_routes
 SET 
+data__labels = '{{ labels }}',
 data__name = '{{ name }}',
-data__description = '{{ description }}',
+data__gateways = '{{ gateways }}',
 data__rules = '{{ rules }}',
 data__meshes = '{{ meshes }}',
-data__gateways = '{{ gateways }}',
-data__labels = '{{ labels }}'
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

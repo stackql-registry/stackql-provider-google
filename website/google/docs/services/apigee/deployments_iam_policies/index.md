@@ -186,8 +186,8 @@ Sets the IAM policy on a deployment, if the policy already exists it will be rep
 ```sql
 REPLACE google.apigee.deployments_iam_policies
 SET 
-data__policy = '{{ policy }}',
-data__updateMask = '{{ updateMask }}'
+data__updateMask = '{{ updateMask }}',
+data__policy = '{{ policy }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND environmentsId = '{{ environmentsId }}' --required

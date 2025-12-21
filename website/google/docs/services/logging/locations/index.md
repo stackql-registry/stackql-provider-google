@@ -32,98 +32,20 @@ Creates, updates, deletes, gets or lists a <code>locations</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_locations_get"
+    defaultValue="organizations_locations_get"
     values={[
-        { label: 'projects_locations_get', value: 'projects_locations_get' },
         { label: 'organizations_locations_get', value: 'organizations_locations_get' },
-        { label: 'folders_locations_get', value: 'folders_locations_get' },
         { label: 'billing_accounts_locations_get', value: 'billing_accounts_locations_get' },
-        { label: 'locations_list', value: 'locations_list' },
-        { label: 'projects_locations_list', value: 'projects_locations_list' },
+        { label: 'projects_locations_get', value: 'projects_locations_get' },
+        { label: 'folders_locations_get', value: 'folders_locations_get' },
         { label: 'organizations_locations_list', value: 'organizations_locations_list' },
+        { label: 'billing_accounts_locations_list', value: 'billing_accounts_locations_list' },
+        { label: 'projects_locations_list', value: 'projects_locations_list' },
         { label: 'folders_locations_list', value: 'folders_locations_list' },
-        { label: 'billing_accounts_locations_list', value: 'billing_accounts_locations_list' }
+        { label: 'locations_list', value: 'locations_list' }
     ]}
 >
-<TabItem value="projects_locations_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Resource name for the location, which may vary between implementations. For example: "projects/example-project/locations/us-east1"</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>The friendly name for this location, typically a nearby city name. For example, "Tokyo".</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Cross-service attributes for the location. For example &#123;"cloud.googleapis.com/region": "us-east1"&#125; </td>
-</tr>
-<tr>
-    <td><CopyableCode code="locationId" /></td>
-    <td><code>string</code></td>
-    <td>The canonical id for this location. For example: "us-east1".</td>
-</tr>
-<tr>
-    <td><CopyableCode code="metadata" /></td>
-    <td><code>object</code></td>
-    <td>Service-specific metadata. For example the available capacity at the given location.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="organizations_locations_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Resource name for the location, which may vary between implementations. For example: "projects/example-project/locations/us-east1"</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>The friendly name for this location, typically a nearby city name. For example, "Tokyo".</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Cross-service attributes for the location. For example &#123;"cloud.googleapis.com/region": "us-east1"&#125; </td>
-</tr>
-<tr>
-    <td><CopyableCode code="locationId" /></td>
-    <td><code>string</code></td>
-    <td>The canonical id for this location. For example: "us-east1".</td>
-</tr>
-<tr>
-    <td><CopyableCode code="metadata" /></td>
-    <td><code>object</code></td>
-    <td>Service-specific metadata. For example the available capacity at the given location.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="folders_locations_get">
 
 <table>
 <thead>
@@ -201,7 +123,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="locations_list">
+<TabItem value="projects_locations_get">
 
 <table>
 <thead>
@@ -240,7 +162,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_list">
+<TabItem value="folders_locations_get">
 
 <table>
 <thead>
@@ -318,6 +240,84 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
+<TabItem value="billing_accounts_locations_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Resource name for the location, which may vary between implementations. For example: "projects/example-project/locations/us-east1"</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td>The friendly name for this location, typically a nearby city name. For example, "Tokyo".</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Cross-service attributes for the location. For example &#123;"cloud.googleapis.com/region": "us-east1"&#125; </td>
+</tr>
+<tr>
+    <td><CopyableCode code="locationId" /></td>
+    <td><code>string</code></td>
+    <td>The canonical id for this location. For example: "us-east1".</td>
+</tr>
+<tr>
+    <td><CopyableCode code="metadata" /></td>
+    <td><code>object</code></td>
+    <td>Service-specific metadata. For example the available capacity at the given location.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_locations_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Resource name for the location, which may vary between implementations. For example: "projects/example-project/locations/us-east1"</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td>The friendly name for this location, typically a nearby city name. For example, "Tokyo".</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Cross-service attributes for the location. For example &#123;"cloud.googleapis.com/region": "us-east1"&#125; </td>
+</tr>
+<tr>
+    <td><CopyableCode code="locationId" /></td>
+    <td><code>string</code></td>
+    <td>The canonical id for this location. For example: "us-east1".</td>
+</tr>
+<tr>
+    <td><CopyableCode code="metadata" /></td>
+    <td><code>object</code></td>
+    <td>Service-specific metadata. For example the available capacity at the given location.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
 <TabItem value="folders_locations_list">
 
 <table>
@@ -357,7 +357,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="billing_accounts_locations_list">
+<TabItem value="locations_list">
 
 <table>
 <thead>
@@ -414,23 +414,9 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_locations_get"><CopyableCode code="projects_locations_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Gets information about a location.</td>
-</tr>
-<tr>
     <td><a href="#organizations_locations_get"><CopyableCode code="organizations_locations_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Gets information about a location.</td>
-</tr>
-<tr>
-    <td><a href="#folders_locations_get"><CopyableCode code="folders_locations_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Gets information about a location.</td>
 </tr>
@@ -442,38 +428,52 @@ The following methods are available for this resource:
     <td>Gets information about a location.</td>
 </tr>
 <tr>
-    <td><a href="#locations_list"><CopyableCode code="locations_list" /></a></td>
+    <td><a href="#projects_locations_get"><CopyableCode code="projects_locations_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-name"><code>name</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a></td>
-    <td>Lists information about the supported locations for this service.</td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Gets information about a location.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_list"><CopyableCode code="projects_locations_list" /></a></td>
+    <td><a href="#folders_locations_get"><CopyableCode code="folders_locations_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a></td>
-    <td>Lists information about the supported locations for this service.</td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Gets information about a location.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_list"><CopyableCode code="organizations_locations_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a></td>
-    <td>Lists information about the supported locations for this service.</td>
-</tr>
-<tr>
-    <td><a href="#folders_locations_list"><CopyableCode code="folders_locations_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists information about the supported locations for this service.</td>
 </tr>
 <tr>
     <td><a href="#billing_accounts_locations_list"><CopyableCode code="billing_accounts_locations_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-billingAccountsId"><code>billingAccountsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a></td>
+    <td>Lists information about the supported locations for this service.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_list"><CopyableCode code="projects_locations_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td><a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td>Lists information about the supported locations for this service.</td>
+</tr>
+<tr>
+    <td><a href="#folders_locations_list"><CopyableCode code="folders_locations_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td>Lists information about the supported locations for this service.</td>
+</tr>
+<tr>
+    <td><a href="#locations_list"><CopyableCode code="locations_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-name"><code>name</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists information about the supported locations for this service.</td>
 </tr>
 </tbody>
@@ -548,36 +548,19 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_locations_get"
+    defaultValue="organizations_locations_get"
     values={[
-        { label: 'projects_locations_get', value: 'projects_locations_get' },
         { label: 'organizations_locations_get', value: 'organizations_locations_get' },
-        { label: 'folders_locations_get', value: 'folders_locations_get' },
         { label: 'billing_accounts_locations_get', value: 'billing_accounts_locations_get' },
-        { label: 'locations_list', value: 'locations_list' },
-        { label: 'projects_locations_list', value: 'projects_locations_list' },
+        { label: 'projects_locations_get', value: 'projects_locations_get' },
+        { label: 'folders_locations_get', value: 'folders_locations_get' },
         { label: 'organizations_locations_list', value: 'organizations_locations_list' },
+        { label: 'billing_accounts_locations_list', value: 'billing_accounts_locations_list' },
+        { label: 'projects_locations_list', value: 'projects_locations_list' },
         { label: 'folders_locations_list', value: 'folders_locations_list' },
-        { label: 'billing_accounts_locations_list', value: 'billing_accounts_locations_list' }
+        { label: 'locations_list', value: 'locations_list' }
     ]}
 >
-<TabItem value="projects_locations_get">
-
-Gets information about a location.
-
-```sql
-SELECT
-name,
-displayName,
-labels,
-locationId,
-metadata
-FROM google.logging.locations
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="organizations_locations_get">
 
 Gets information about a location.
@@ -591,23 +574,6 @@ locationId,
 metadata
 FROM google.logging.locations
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-;
-```
-</TabItem>
-<TabItem value="folders_locations_get">
-
-Gets information about a location.
-
-```sql
-SELECT
-name,
-displayName,
-labels,
-locationId,
-metadata
-FROM google.logging.locations
-WHERE foldersId = '{{ foldersId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 ;
 ```
@@ -629,29 +595,9 @@ AND locationsId = '{{ locationsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="locations_list">
+<TabItem value="projects_locations_get">
 
-Lists information about the supported locations for this service.
-
-```sql
-SELECT
-name,
-displayName,
-labels,
-locationId,
-metadata
-FROM google.logging.locations
-WHERE name = '{{ name }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND extraLocationTypes = '{{ extraLocationTypes }}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_list">
-
-Lists information about the supported locations for this service.
+Gets information about a location.
 
 ```sql
 SELECT
@@ -662,10 +608,24 @@ locationId,
 metadata
 FROM google.logging.locations
 WHERE projectsId = '{{ projectsId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND extraLocationTypes = '{{ extraLocationTypes }}'
+AND locationsId = '{{ locationsId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="folders_locations_get">
+
+Gets information about a location.
+
+```sql
+SELECT
+name,
+displayName,
+labels,
+locationId,
+metadata
+FROM google.logging.locations
+WHERE foldersId = '{{ foldersId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
 ;
 ```
 </TabItem>
@@ -683,9 +643,49 @@ metadata
 FROM google.logging.locations
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND filter = '{{ filter }}'
+AND extraLocationTypes = '{{ extraLocationTypes }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="billing_accounts_locations_list">
+
+Lists information about the supported locations for this service.
+
+```sql
+SELECT
+name,
+displayName,
+labels,
+locationId,
+metadata
+FROM google.logging.locations
+WHERE billingAccountsId = '{{ billingAccountsId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 AND extraLocationTypes = '{{ extraLocationTypes }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_list">
+
+Lists information about the supported locations for this service.
+
+```sql
+SELECT
+name,
+displayName,
+labels,
+locationId,
+metadata
+FROM google.logging.locations
+WHERE projectsId = '{{ projectsId }}' -- required
+AND extraLocationTypes = '{{ extraLocationTypes }}'
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -703,13 +703,13 @@ metadata
 FROM google.logging.locations
 WHERE foldersId = '{{ foldersId }}' -- required
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND extraLocationTypes = '{{ extraLocationTypes }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
-<TabItem value="billing_accounts_locations_list">
+<TabItem value="locations_list">
 
 Lists information about the supported locations for this service.
 
@@ -721,11 +721,11 @@ labels,
 locationId,
 metadata
 FROM google.logging.locations
-WHERE billingAccountsId = '{{ billingAccountsId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
+WHERE name = '{{ name }}' -- required
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND extraLocationTypes = '{{ extraLocationTypes }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>

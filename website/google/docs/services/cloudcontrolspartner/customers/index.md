@@ -88,31 +88,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Identifier. Format: `organizations/&#123;organization&#125;/locations/&#123;location&#125;/customers/&#123;customer&#125;`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="customerOnboardingState" /></td>
-    <td><code>object</code></td>
-    <td>Output only. Container for customer onboarding steps (id: CustomerOnboardingState)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>Required. Display name for the customer</td>
-</tr>
-<tr>
-    <td><CopyableCode code="isOnboarded" /></td>
-    <td><code>boolean</code></td>
-    <td>Output only. Indicates whether a customer is fully onboarded</td>
-</tr>
-<tr>
-    <td><CopyableCode code="organizationDomain" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The customer organization domain, extracted from CRM Organization’s display_name field. e.g. "google.com"</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -265,11 +240,7 @@ Lists customers of a partner identified by its Google Cloud organization ID
 
 ```sql
 SELECT
-name,
-customerOnboardingState,
-displayName,
-isOnboarded,
-organizationDomain
+*
 FROM google.cloudcontrolspartner.customers
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
@@ -298,15 +269,15 @@ Creates a new customer.
 
 ```sql
 INSERT INTO google.cloudcontrolspartner.customers (
-data__name,
 data__displayName,
+data__name,
 organizationsId,
 locationsId,
 customerId
 )
 SELECT 
-'{{ name }}',
 '{{ displayName }}',
+'{{ name }}',
 '{{ organizationsId }}',
 '{{ locationsId }}',
 '{{ customerId }}'
@@ -331,15 +302,15 @@ organizationDomain
     - name: locationsId
       value: string
       description: Required parameter for the customers resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. Format: `organizations/{organization}/locations/{location}/customers/{customer}`
-        
     - name: displayName
       value: string
       description: >
         Required. Display name for the customer
+        
+    - name: name
+      value: string
+      description: >
+        Identifier. Format: `organizations/{organization}/locations/{location}/customers/{customer}`
         
     - name: customerId
       value: string
@@ -363,8 +334,8 @@ Update details of a single customer
 ```sql
 UPDATE google.cloudcontrolspartner.customers
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}'
+data__displayName = '{{ displayName }}',
+data__name = '{{ name }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

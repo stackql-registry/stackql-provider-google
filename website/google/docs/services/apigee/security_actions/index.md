@@ -214,7 +214,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_environments_security_actions_list"><CopyableCode code="organizations_environments_security_actions_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Returns a list of SecurityActions. This returns both enabled and disabled actions.</td>
 </tr>
 <tr>
@@ -239,18 +239,18 @@ The following methods are available for this resource:
     <td>Delete a SecurityAction.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_environments_security_actions_enable"><CopyableCode code="organizations_environments_security_actions_enable" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-securityActionsId"><code>securityActionsId</code></a></td>
-    <td></td>
-    <td>Enable a SecurityAction. The `state` of the SecurityAction after enabling is `ENABLED`. `EnableSecurityAction` can be called on SecurityActions in the state `DISABLED`; SecurityActions in a different state (including `ENABLED) return an error.</td>
-</tr>
-<tr>
     <td><a href="#organizations_environments_security_actions_disable"><CopyableCode code="organizations_environments_security_actions_disable" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-securityActionsId"><code>securityActionsId</code></a></td>
     <td></td>
     <td>Disable a SecurityAction. The `state` of the SecurityAction after disabling is `DISABLED`. `DisableSecurityAction` can be called on SecurityActions in the state `ENABLED`; SecurityActions in a different state (including `DISABLED`) return an error.</td>
+</tr>
+<tr>
+    <td><a href="#organizations_environments_security_actions_enable"><CopyableCode code="organizations_environments_security_actions_enable" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-securityActionsId"><code>securityActionsId</code></a></td>
+    <td></td>
+    <td>Enable a SecurityAction. The `state` of the SecurityAction after enabling is `ENABLED`. `EnableSecurityAction` can be called on SecurityActions in the state `DISABLED`; SecurityActions in a different state (including `ENABLED) return an error.</td>
 </tr>
 </tbody>
 </table>
@@ -366,8 +366,8 @@ updateTime
 FROM google.apigee.security_actions
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND environmentsId = '{{ environmentsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
 ;
 ```
@@ -390,31 +390,31 @@ CreateSecurityAction creates a SecurityAction.
 
 ```sql
 INSERT INTO google.apigee.security_actions (
-data__name,
-data__description,
-data__state,
+data__flag,
 data__allow,
 data__deny,
-data__flag,
-data__expireTime,
-data__ttl,
-data__apiProxies,
+data__name,
+data__state,
 data__conditionConfig,
+data__expireTime,
+data__apiProxies,
+data__description,
+data__ttl,
 organizationsId,
 environmentsId,
 securityActionId
 )
 SELECT 
-'{{ name }}',
-'{{ description }}',
-'{{ state }}',
+'{{ flag }}',
 '{{ allow }}',
 '{{ deny }}',
-'{{ flag }}',
-'{{ expireTime }}',
-'{{ ttl }}',
-'{{ apiProxies }}',
+'{{ name }}',
+'{{ state }}',
 '{{ conditionConfig }}',
+'{{ expireTime }}',
+'{{ apiProxies }}',
+'{{ description }}',
+'{{ ttl }}',
 '{{ organizationsId }}',
 '{{ environmentsId }}',
 '{{ securityActionId }}'
@@ -446,22 +446,11 @@ updateTime
     - name: environmentsId
       value: string
       description: Required parameter for the security_actions resource.
-    - name: name
-      value: string
+    - name: flag
+      value: object
       description: >
-        Immutable. This field is ignored during creation as per AIP-133. Please set the `security_action_id` field in the CreateSecurityActionRequest when creating a new SecurityAction. Format: organizations/{org}/environments/{env}/securityActions/{security_action}
+        Flag a request through if it matches this SecurityAction.
         
-    - name: description
-      value: string
-      description: >
-        Optional. An optional user provided description of the SecurityAction.
-        
-    - name: state
-      value: string
-      description: >
-        Required. Only an ENABLED SecurityAction is enforced. An ENABLED SecurityAction past its expiration time will not be enforced.
-        
-      valid_values: ['STATE_UNSPECIFIED', 'ENABLED', 'DISABLED']
     - name: allow
       value: object
       description: >
@@ -472,30 +461,41 @@ updateTime
       description: >
         Deny a request through if it matches this SecurityAction.
         
-    - name: flag
+    - name: name
+      value: string
+      description: >
+        Immutable. This field is ignored during creation as per AIP-133. Please set the `security_action_id` field in the CreateSecurityActionRequest when creating a new SecurityAction. Format: organizations/{org}/environments/{env}/securityActions/{security_action}
+        
+    - name: state
+      value: string
+      description: >
+        Required. Only an ENABLED SecurityAction is enforced. An ENABLED SecurityAction past its expiration time will not be enforced.
+        
+      valid_values: ['STATE_UNSPECIFIED', 'ENABLED', 'DISABLED']
+    - name: conditionConfig
       value: object
       description: >
-        Flag a request through if it matches this SecurityAction.
+        Required. A valid SecurityAction must contain at least one condition.
         
     - name: expireTime
       value: string
       description: >
         The expiration for this SecurityAction.
         
-    - name: ttl
-      value: string
-      description: >
-        Input only. The TTL for this SecurityAction.
-        
     - name: apiProxies
       value: array
       description: >
         Optional. If unset, this would apply to all proxies in the environment. If set, this action is enforced only if at least one proxy in the repeated list is deployed at the time of enforcement. If set, several restrictions are enforced on SecurityActions. There can be at most 100 enabled actions with proxies set in an env. Several other restrictions apply on conditions and are detailed later.
         
-    - name: conditionConfig
-      value: object
+    - name: description
+      value: string
       description: >
-        Required. A valid SecurityAction must contain at least one condition.
+        Optional. An optional user provided description of the SecurityAction.
+        
+    - name: ttl
+      value: string
+      description: >
+        Input only. The TTL for this SecurityAction.
         
     - name: securityActionId
       value: string
@@ -519,16 +519,16 @@ Update a SecurityAction.
 ```sql
 UPDATE google.apigee.security_actions
 SET 
-data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__state = '{{ state }}',
+data__flag = '{{ flag }}',
 data__allow = '{{ allow }}',
 data__deny = '{{ deny }}',
-data__flag = '{{ flag }}',
+data__name = '{{ name }}',
+data__state = '{{ state }}',
+data__conditionConfig = '{{ conditionConfig }}',
 data__expireTime = '{{ expireTime }}',
-data__ttl = '{{ ttl }}',
 data__apiProxies = '{{ apiProxies }}',
-data__conditionConfig = '{{ conditionConfig }}'
+data__description = '{{ description }}',
+data__ttl = '{{ ttl }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND environmentsId = '{{ environmentsId }}' --required
@@ -578,30 +578,30 @@ AND securityActionsId = '{{ securityActionsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="organizations_environments_security_actions_enable"
+    defaultValue="organizations_environments_security_actions_disable"
     values={[
-        { label: 'organizations_environments_security_actions_enable', value: 'organizations_environments_security_actions_enable' },
-        { label: 'organizations_environments_security_actions_disable', value: 'organizations_environments_security_actions_disable' }
+        { label: 'organizations_environments_security_actions_disable', value: 'organizations_environments_security_actions_disable' },
+        { label: 'organizations_environments_security_actions_enable', value: 'organizations_environments_security_actions_enable' }
     ]}
 >
-<TabItem value="organizations_environments_security_actions_enable">
-
-Enable a SecurityAction. The `state` of the SecurityAction after enabling is `ENABLED`. `EnableSecurityAction` can be called on SecurityActions in the state `DISABLED`; SecurityActions in a different state (including `ENABLED) return an error.
-
-```sql
-EXEC google.apigee.security_actions.organizations_environments_security_actions_enable 
-@organizationsId='{{ organizationsId }}' --required, 
-@environmentsId='{{ environmentsId }}' --required, 
-@securityActionsId='{{ securityActionsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="organizations_environments_security_actions_disable">
 
 Disable a SecurityAction. The `state` of the SecurityAction after disabling is `DISABLED`. `DisableSecurityAction` can be called on SecurityActions in the state `ENABLED`; SecurityActions in a different state (including `DISABLED`) return an error.
 
 ```sql
 EXEC google.apigee.security_actions.organizations_environments_security_actions_disable 
+@organizationsId='{{ organizationsId }}' --required, 
+@environmentsId='{{ environmentsId }}' --required, 
+@securityActionsId='{{ securityActionsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="organizations_environments_security_actions_enable">
+
+Enable a SecurityAction. The `state` of the SecurityAction after enabling is `ENABLED`. `EnableSecurityAction` can be called on SecurityActions in the state `DISABLED`; SecurityActions in a different state (including `ENABLED) return an error.
+
+```sql
+EXEC google.apigee.security_actions.organizations_environments_security_actions_enable 
 @organizationsId='{{ organizationsId }}' --required, 
 @environmentsId='{{ environmentsId }}' --required, 
 @securityActionsId='{{ securityActionsId }}' --required

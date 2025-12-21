@@ -174,7 +174,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List all tables in a specified database.</td>
 </tr>
 <tr>
@@ -326,8 +326,8 @@ AND locationsId = '{{ locationsId }}' -- required
 AND catalogsId = '{{ catalogsId }}' -- required
 AND databasesId = '{{ databasesId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND view = '{{ view }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -349,9 +349,9 @@ Creates a new table.
 
 ```sql
 INSERT INTO google.biglake.tables (
-data__hiveOptions,
-data__type,
 data__etag,
+data__type,
+data__hiveOptions,
 projectsId,
 locationsId,
 catalogsId,
@@ -359,9 +359,9 @@ databasesId,
 tableId
 )
 SELECT 
-'{{ hiveOptions }}',
-'{{ type }}',
 '{{ etag }}',
+'{{ type }}',
+'{{ hiveOptions }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ catalogsId }}',
@@ -397,10 +397,10 @@ updateTime
     - name: databasesId
       value: string
       description: Required parameter for the tables resource.
-    - name: hiveOptions
-      value: object
+    - name: etag
+      value: string
       description: >
-        Options of a Hive table.
+        The checksum of a table object computed by the server based on the value of other fields. It may be sent on update requests to ensure the client has an up-to-date value before proceeding. It is only checked for update table operations.
         
     - name: type
       value: string
@@ -408,10 +408,10 @@ updateTime
         The table type.
         
       valid_values: ['TYPE_UNSPECIFIED', 'HIVE']
-    - name: etag
-      value: string
+    - name: hiveOptions
+      value: object
       description: >
-        The checksum of a table object computed by the server based on the value of other fields. It may be sent on update requests to ensure the client has an up-to-date value before proceeding. It is only checked for update table operations.
+        Options of a Hive table.
         
     - name: tableId
       value: string
@@ -435,9 +435,9 @@ Updates an existing table specified by the table ID.
 ```sql
 UPDATE google.biglake.tables
 SET 
-data__hiveOptions = '{{ hiveOptions }}',
+data__etag = '{{ etag }}',
 data__type = '{{ type }}',
-data__etag = '{{ etag }}'
+data__hiveOptions = '{{ hiveOptions }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

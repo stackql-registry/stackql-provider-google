@@ -34,11 +34,11 @@ total resources: __50__
 <a href="/services/dataplex/attributes_iam_policies/">attributes_iam_policies</a><br />
 <a href="/services/dataplex/categories/">categories</a><br />
 <a href="/services/dataplex/categories_iam_policies/">categories_iam_policies</a><br />
+<a href="/services/dataplex/change_requests_iam_policies/">change_requests_iam_policies</a><br />
 <a href="/services/dataplex/content/">content</a><br />
 <a href="/services/dataplex/content_iam_policies/">content_iam_policies</a><br />
 <a href="/services/dataplex/contentitems/">contentitems</a><br />
 <a href="/services/dataplex/contentitems_iam_policies/">contentitems_iam_policies</a><br />
-<a href="/services/dataplex/data_assets_iam_policies/">data_assets_iam_policies</a><br />
 <a href="/services/dataplex/data_attribute_bindings/">data_attribute_bindings</a><br />
 <a href="/services/dataplex/data_attribute_bindings_iam_policies/">data_attribute_bindings_iam_policies</a><br />
 <a href="/services/dataplex/data_products_iam_policies/">data_products_iam_policies</a><br />

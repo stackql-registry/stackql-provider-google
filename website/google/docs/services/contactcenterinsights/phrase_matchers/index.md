@@ -204,7 +204,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists phrase matchers.</td>
 </tr>
 <tr>
@@ -335,9 +335,9 @@ versionTag
 FROM google.contactcenterinsights.phrase_matchers
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -359,24 +359,24 @@ Creates a phrase matcher.
 
 ```sql
 INSERT INTO google.contactcenterinsights.phrase_matchers (
-data__name,
-data__versionTag,
 data__displayName,
-data__type,
-data__active,
 data__phraseMatchRuleGroups,
+data__versionTag,
+data__type,
+data__name,
 data__roleMatch,
+data__active,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ name }}',
-'{{ versionTag }}',
 '{{ displayName }}',
-'{{ type }}',
-{{ active }},
 '{{ phraseMatchRuleGroups }}',
+'{{ versionTag }}',
+'{{ type }}',
+'{{ name }}',
 '{{ roleMatch }}',
+{{ active }},
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -406,20 +406,20 @@ versionTag
     - name: locationsId
       value: string
       description: Required parameter for the phrase_matchers resource.
-    - name: name
+    - name: displayName
       value: string
       description: >
-        The resource name of the phrase matcher. Format: projects/{project}/locations/{location}/phraseMatchers/{phrase_matcher}
+        The human-readable name of the phrase matcher.
+        
+    - name: phraseMatchRuleGroups
+      value: array
+      description: >
+        A list of phase match rule groups that are included in this matcher.
         
     - name: versionTag
       value: string
       description: >
         The customized version tag to use for the phrase matcher. If not specified, it will default to `revision_id`.
-        
-    - name: displayName
-      value: string
-      description: >
-        The human-readable name of the phrase matcher.
         
     - name: type
       value: string
@@ -427,15 +427,10 @@ versionTag
         Required. The type of this phrase matcher.
         
       valid_values: ['PHRASE_MATCHER_TYPE_UNSPECIFIED', 'ALL_OF', 'ANY_OF']
-    - name: active
-      value: boolean
+    - name: name
+      value: string
       description: >
-        Applies the phrase matcher only when it is active.
-        
-    - name: phraseMatchRuleGroups
-      value: array
-      description: >
-        A list of phase match rule groups that are included in this matcher.
+        The resource name of the phrase matcher. Format: projects/{project}/locations/{location}/phraseMatchers/{phrase_matcher}
         
     - name: roleMatch
       value: string
@@ -443,6 +438,11 @@ versionTag
         The role whose utterances the phrase matcher should be matched against. If the role is ROLE_UNSPECIFIED it will be matched against any utterances in the transcript.
         
       valid_values: ['ROLE_UNSPECIFIED', 'HUMAN_AGENT', 'AUTOMATED_AGENT', 'END_USER', 'ANY_AGENT']
+    - name: active
+      value: boolean
+      description: >
+        Applies the phrase matcher only when it is active.
+        
 ```
 </TabItem>
 </Tabs>
@@ -463,13 +463,13 @@ Updates a phrase matcher.
 ```sql
 UPDATE google.contactcenterinsights.phrase_matchers
 SET 
-data__name = '{{ name }}',
-data__versionTag = '{{ versionTag }}',
 data__displayName = '{{ displayName }}',
-data__type = '{{ type }}',
-data__active = {{ active }},
 data__phraseMatchRuleGroups = '{{ phraseMatchRuleGroups }}',
-data__roleMatch = '{{ roleMatch }}'
+data__versionTag = '{{ versionTag }}',
+data__type = '{{ type }}',
+data__name = '{{ name }}',
+data__roleMatch = '{{ roleMatch }}',
+data__active = {{ active }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -184,7 +184,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists ServiceLbPolicies in a given project and location.</td>
 </tr>
 <tr>
@@ -311,8 +311,8 @@ updateTime
 FROM google.networkservices.service_lb_policies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -335,24 +335,24 @@ Creates a new ServiceLbPolicy in a given project and location.
 ```sql
 INSERT INTO google.networkservices.service_lb_policies (
 data__name,
-data__labels,
 data__description,
-data__loadBalancingAlgorithm,
-data__autoCapacityDrain,
-data__failoverConfig,
 data__isolationConfig,
+data__labels,
+data__loadBalancingAlgorithm,
+data__failoverConfig,
+data__autoCapacityDrain,
 projectsId,
 locationsId,
 serviceLbPolicyId
 )
 SELECT 
 '{{ name }}',
-'{{ labels }}',
 '{{ description }}',
-'{{ loadBalancingAlgorithm }}',
-'{{ autoCapacityDrain }}',
-'{{ failoverConfig }}',
 '{{ isolationConfig }}',
+'{{ labels }}',
+'{{ loadBalancingAlgorithm }}',
+'{{ failoverConfig }}',
+'{{ autoCapacityDrain }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ serviceLbPolicyId }}'
@@ -382,15 +382,20 @@ response
       description: >
         Identifier. Name of the ServiceLbPolicy resource. It matches pattern `projects/{project}/locations/{location}/serviceLbPolicies/{service_lb_policy_name}`.
         
-    - name: labels
-      value: object
-      description: >
-        Optional. Set of label tags associated with the ServiceLbPolicy resource.
-        
     - name: description
       value: string
       description: >
         Optional. A free-text description of the resource. Max length 1024 characters.
+        
+    - name: isolationConfig
+      value: object
+      description: >
+        Optional. Configuration to provide isolation support for the associated Backend Service.
+        
+    - name: labels
+      value: object
+      description: >
+        Optional. Set of label tags associated with the ServiceLbPolicy resource.
         
     - name: loadBalancingAlgorithm
       value: string
@@ -398,20 +403,15 @@ response
         Optional. The type of load balancing algorithm to be used. The default behavior is WATERFALL_BY_REGION.
         
       valid_values: ['LOAD_BALANCING_ALGORITHM_UNSPECIFIED', 'SPRAY_TO_WORLD', 'SPRAY_TO_REGION', 'WATERFALL_BY_REGION', 'WATERFALL_BY_ZONE']
-    - name: autoCapacityDrain
-      value: object
-      description: >
-        Optional. Configuration to automatically move traffic away for unhealthy IG/NEG for the associated Backend Service.
-        
     - name: failoverConfig
       value: object
       description: >
         Optional. Configuration related to health based failover.
         
-    - name: isolationConfig
+    - name: autoCapacityDrain
       value: object
       description: >
-        Optional. Configuration to provide isolation support for the associated Backend Service.
+        Optional. Configuration to automatically move traffic away for unhealthy IG/NEG for the associated Backend Service.
         
     - name: serviceLbPolicyId
       value: string
@@ -436,12 +436,12 @@ Updates the parameters of a single ServiceLbPolicy.
 UPDATE google.networkservices.service_lb_policies
 SET 
 data__name = '{{ name }}',
-data__labels = '{{ labels }}',
 data__description = '{{ description }}',
+data__isolationConfig = '{{ isolationConfig }}',
+data__labels = '{{ labels }}',
 data__loadBalancingAlgorithm = '{{ loadBalancingAlgorithm }}',
-data__autoCapacityDrain = '{{ autoCapacityDrain }}',
 data__failoverConfig = '{{ failoverConfig }}',
-data__isolationConfig = '{{ isolationConfig }}'
+data__autoCapacityDrain = '{{ autoCapacityDrain }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -317,22 +317,22 @@ Creates a analysis rule.
 
 ```sql
 INSERT INTO google.contactcenterinsights.analysis_rules (
-data__name,
-data__displayName,
-data__conversationFilter,
-data__annotatorSelector,
-data__analysisPercentage,
 data__active,
+data__conversationFilter,
+data__displayName,
+data__annotatorSelector,
+data__name,
+data__analysisPercentage,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
-'{{ conversationFilter }}',
-'{{ annotatorSelector }}',
-{{ analysisPercentage }},
 {{ active }},
+'{{ conversationFilter }}',
+'{{ displayName }}',
+'{{ annotatorSelector }}',
+'{{ name }}',
+{{ analysisPercentage }},
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -359,35 +359,35 @@ updateTime
     - name: locationsId
       value: string
       description: Required parameter for the analysis_rules resource.
-    - name: name
-      value: string
+    - name: active
+      value: boolean
       description: >
-        Identifier. The resource name of the analysis rule. Format: projects/{project}/locations/{location}/analysisRules/{analysis_rule}
-        
-    - name: displayName
-      value: string
-      description: >
-        Display Name of the analysis rule.
+        If true, apply this rule to conversations. Otherwise, this rule is inactive and saved as a draft.
         
     - name: conversationFilter
       value: string
       description: >
         Filter for the conversations that should apply this analysis rule. An empty filter means this analysis rule applies to all conversations. Refer to https://cloud.google.com/contact-center/insights/docs/filtering for details.
         
+    - name: displayName
+      value: string
+      description: >
+        Display Name of the analysis rule.
+        
     - name: annotatorSelector
       value: object
       description: >
         Selector of annotators to run and the phrase matchers to use for conversations that matches the conversation_filter. If not specified, NO annotators will be run.
         
+    - name: name
+      value: string
+      description: >
+        Identifier. The resource name of the analysis rule. Format: projects/{project}/locations/{location}/analysisRules/{analysis_rule}
+        
     - name: analysisPercentage
       value: number
       description: >
         Percentage of conversations that we should apply this analysis setting automatically, between [0, 1]. For example, 0.1 means 10%. Conversations are sampled in a determenestic way. The original runtime_percentage & upload percentage will be replaced by defining filters on the conversation.
-        
-    - name: active
-      value: boolean
-      description: >
-        If true, apply this rule to conversations. Otherwise, this rule is inactive and saved as a draft.
         
 ```
 </TabItem>
@@ -409,12 +409,12 @@ Updates a analysis rule.
 ```sql
 UPDATE google.contactcenterinsights.analysis_rules
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
+data__active = {{ active }},
 data__conversationFilter = '{{ conversationFilter }}',
+data__displayName = '{{ displayName }}',
 data__annotatorSelector = '{{ annotatorSelector }}',
-data__analysisPercentage = {{ analysisPercentage }},
-data__active = {{ active }}
+data__name = '{{ name }}',
+data__analysisPercentage = {{ analysisPercentage }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

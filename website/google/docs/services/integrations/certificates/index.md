@@ -35,8 +35,8 @@ The following fields are returned by `SELECT` queries:
     defaultValue="projects_locations_products_certificates_get"
     values={[
         { label: 'projects_locations_products_certificates_get', value: 'projects_locations_products_certificates_get' },
-        { label: 'projects_locations_products_certificates_list', value: 'projects_locations_products_certificates_list' },
         { label: 'projects_locations_certificates_get', value: 'projects_locations_certificates_get' },
+        { label: 'projects_locations_products_certificates_list', value: 'projects_locations_products_certificates_list' },
         { label: 'projects_locations_certificates_list', value: 'projects_locations_certificates_list' }
     ]}
 >
@@ -99,7 +99,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_products_certificates_list">
+<TabItem value="projects_locations_certificates_get">
 
 <table>
 <thead>
@@ -158,7 +158,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_certificates_get">
+<TabItem value="projects_locations_products_certificates_list">
 
 <table>
 <thead>
@@ -301,13 +301,6 @@ The following methods are available for this resource:
     <td>Get a certificates in the specified project.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_products_certificates_list"><CopyableCode code="projects_locations_products_certificates_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-productsId"><code>productsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
-    <td>List all the certificates that match the filter. Restrict to certificate of current client only.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_certificates_get"><CopyableCode code="projects_locations_certificates_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-certificatesId"><code>certificatesId</code></a></td>
@@ -315,10 +308,17 @@ The following methods are available for this resource:
     <td>Get a certificates in the specified project.</td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_products_certificates_list"><CopyableCode code="projects_locations_products_certificates_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-productsId"><code>productsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>List all the certificates that match the filter. Restrict to certificate of current client only.</td>
+</tr>
+<tr>
     <td><a href="#projects_locations_certificates_list"><CopyableCode code="projects_locations_certificates_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List all the certificates that match the filter. Restrict to certificate of current client only.</td>
 </tr>
 <tr>
@@ -433,8 +433,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="projects_locations_products_certificates_get"
     values={[
         { label: 'projects_locations_products_certificates_get', value: 'projects_locations_products_certificates_get' },
-        { label: 'projects_locations_products_certificates_list', value: 'projects_locations_products_certificates_list' },
         { label: 'projects_locations_certificates_get', value: 'projects_locations_certificates_get' },
+        { label: 'projects_locations_products_certificates_list', value: 'projects_locations_products_certificates_list' },
         { label: 'projects_locations_certificates_list', value: 'projects_locations_certificates_list' }
     ]}
 >
@@ -461,32 +461,6 @@ AND certificatesId = '{{ certificatesId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_products_certificates_list">
-
-List all the certificates that match the filter. Restrict to certificate of current client only.
-
-```sql
-SELECT
-name,
-certificateStatus,
-credentialId,
-description,
-displayName,
-rawCertificate,
-requestorId,
-validEndTime,
-validStartTime
-FROM google.integrations.certificates
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND productsId = '{{ productsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND readMask = '{{ readMask }}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_certificates_get">
 
 Get a certificates in the specified project.
@@ -509,6 +483,32 @@ AND certificatesId = '{{ certificatesId }}' -- required
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_products_certificates_list">
+
+List all the certificates that match the filter. Restrict to certificate of current client only.
+
+```sql
+SELECT
+name,
+certificateStatus,
+credentialId,
+description,
+displayName,
+rawCertificate,
+requestorId,
+validEndTime,
+validStartTime
+FROM google.integrations.certificates
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND productsId = '{{ productsId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
+AND readMask = '{{ readMask }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
 <TabItem value="projects_locations_certificates_list">
 
 List all the certificates that match the filter. Restrict to certificate of current client only.
@@ -528,9 +528,9 @@ FROM google.integrations.certificates
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND readMask = '{{ readMask }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -553,22 +553,22 @@ Creates a new certificate. The certificate will be registered to the trawler ser
 
 ```sql
 INSERT INTO google.integrations.certificates (
-data__displayName,
-data__description,
 data__requestorId,
-data__credentialId,
+data__displayName,
 data__certificateStatus,
+data__description,
+data__credentialId,
 data__rawCertificate,
 projectsId,
 locationsId,
 productsId
 )
 SELECT 
-'{{ displayName }}',
-'{{ description }}',
 '{{ requestorId }}',
-'{{ credentialId }}',
+'{{ displayName }}',
 '{{ certificateStatus }}',
+'{{ description }}',
+'{{ credentialId }}',
 '{{ rawCertificate }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -592,21 +592,21 @@ Creates a new certificate. The certificate will be registered to the trawler ser
 
 ```sql
 INSERT INTO google.integrations.certificates (
-data__displayName,
-data__description,
 data__requestorId,
-data__credentialId,
+data__displayName,
 data__certificateStatus,
+data__description,
+data__credentialId,
 data__rawCertificate,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ displayName }}',
-'{{ description }}',
 '{{ requestorId }}',
-'{{ credentialId }}',
+'{{ displayName }}',
 '{{ certificateStatus }}',
+'{{ description }}',
+'{{ credentialId }}',
 '{{ rawCertificate }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
@@ -638,25 +638,15 @@ validStartTime
     - name: productsId
       value: string
       description: Required parameter for the certificates resource.
-    - name: displayName
-      value: string
-      description: >
-        Required. Name of the certificate
-        
-    - name: description
-      value: string
-      description: >
-        Description of the certificate
-        
     - name: requestorId
       value: string
       description: >
         Immutable. Requestor ID to be used to register certificate with trawler
         
-    - name: credentialId
+    - name: displayName
       value: string
       description: >
-        Immutable. Credential id that will be used to register with trawler
+        Required. Name of the certificate
         
     - name: certificateStatus
       value: string
@@ -664,6 +654,16 @@ validStartTime
         Status of the certificate
         
       valid_values: ['STATE_UNSPECIFIED', 'ACTIVE', 'EXPIRED']
+    - name: description
+      value: string
+      description: >
+        Description of the certificate
+        
+    - name: credentialId
+      value: string
+      description: >
+        Immutable. Credential id that will be used to register with trawler
+        
     - name: rawCertificate
       value: object
       description: >
@@ -690,11 +690,11 @@ Updates the certificate by id. If new certificate file is updated, it will regis
 ```sql
 UPDATE google.integrations.certificates
 SET 
-data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
 data__requestorId = '{{ requestorId }}',
-data__credentialId = '{{ credentialId }}',
+data__displayName = '{{ displayName }}',
 data__certificateStatus = '{{ certificateStatus }}',
+data__description = '{{ description }}',
+data__credentialId = '{{ credentialId }}',
 data__rawCertificate = '{{ rawCertificate }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
@@ -721,11 +721,11 @@ Updates the certificate by id. If new certificate file is updated, it will regis
 ```sql
 UPDATE google.integrations.certificates
 SET 
-data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
 data__requestorId = '{{ requestorId }}',
-data__credentialId = '{{ credentialId }}',
+data__displayName = '{{ displayName }}',
 data__certificateStatus = '{{ certificateStatus }}',
+data__description = '{{ description }}',
+data__credentialId = '{{ credentialId }}',
 data__rawCertificate = '{{ rawCertificate }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

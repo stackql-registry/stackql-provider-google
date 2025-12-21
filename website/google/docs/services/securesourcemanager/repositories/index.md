@@ -184,7 +184,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td><a href="#parameter-instance"><code>instance</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Repositories in a given project and location. The instance field is required in the query parameter for requests using the securesourcemanager.googleapis.com endpoint.</td>
 </tr>
 <tr>
@@ -331,10 +331,10 @@ uris
 FROM google.securesourcemanager.repositories
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND instance = '{{ instance }}'
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND instance = '{{ instance }}'
 ;
 ```
 </TabItem>
@@ -356,21 +356,21 @@ Creates a new repository in a given project and location. The Repository.Instanc
 
 ```sql
 INSERT INTO google.securesourcemanager.repositories (
-data__name,
-data__description,
-data__instance,
-data__etag,
 data__initialConfig,
+data__etag,
+data__name,
+data__instance,
+data__description,
 projectsId,
 locationsId,
 repositoryId
 )
 SELECT 
-'{{ name }}',
-'{{ description }}',
-'{{ instance }}',
-'{{ etag }}',
 '{{ initialConfig }}',
+'{{ etag }}',
+'{{ name }}',
+'{{ instance }}',
+'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ repositoryId }}'
@@ -395,30 +395,30 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the repositories resource.
-    - name: name
-      value: string
+    - name: initialConfig
+      value: object
       description: >
-        Optional. A unique identifier for a repository. The name should be of the format: `projects/{project}/locations/{location_id}/repositories/{repository_id}`
-        
-    - name: description
-      value: string
-      description: >
-        Optional. Description of the repository, which cannot exceed 500 characters.
-        
-    - name: instance
-      value: string
-      description: >
-        Optional. The name of the instance in which the repository is hosted, formatted as `projects/{project_number}/locations/{location_id}/instances/{instance_id}` When creating repository via securesourcemanager.googleapis.com, this field is used as input. When creating repository via *.sourcemanager.dev, this field is output only.
+        Input only. Initial configurations for the repository.
         
     - name: etag
       value: string
       description: >
         Optional. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
         
-    - name: initialConfig
-      value: object
+    - name: name
+      value: string
       description: >
-        Input only. Initial configurations for the repository.
+        Optional. A unique identifier for a repository. The name should be of the format: `projects/{project}/locations/{location_id}/repositories/{repository_id}`
+        
+    - name: instance
+      value: string
+      description: >
+        Optional. The name of the instance in which the repository is hosted, formatted as `projects/{project_number}/locations/{location_id}/instances/{instance_id}` When creating repository via securesourcemanager.googleapis.com, this field is used as input. When creating repository via *.sourcemanager.dev, this field is output only.
+        
+    - name: description
+      value: string
+      description: >
+        Optional. Description of the repository, which cannot exceed 500 characters.
         
     - name: repositoryId
       value: string
@@ -442,11 +442,11 @@ Updates the metadata of a repository.
 ```sql
 UPDATE google.securesourcemanager.repositories
 SET 
-data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__instance = '{{ instance }}',
+data__initialConfig = '{{ initialConfig }}',
 data__etag = '{{ etag }}',
-data__initialConfig = '{{ initialConfig }}'
+data__name = '{{ name }}',
+data__instance = '{{ instance }}',
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

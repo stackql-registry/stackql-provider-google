@@ -164,7 +164,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_host_queries_list"><CopyableCode code="organizations_host_queries_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-submittedBy"><code>submittedBy</code></a>, <a href="#parameter-status"><code>status</code></a>, <a href="#parameter-from"><code>from</code></a>, <a href="#parameter-to"><code>to</code></a>, <a href="#parameter-dataset"><code>dataset</code></a>, <a href="#parameter-inclQueriesWithoutReport"><code>inclQueriesWithoutReport</code></a>, <a href="#parameter-envgroupHostname"><code>envgroupHostname</code></a></td>
+    <td><a href="#parameter-envgroupHostname"><code>envgroupHostname</code></a>, <a href="#parameter-inclQueriesWithoutReport"><code>inclQueriesWithoutReport</code></a>, <a href="#parameter-from"><code>from</code></a>, <a href="#parameter-submittedBy"><code>submittedBy</code></a>, <a href="#parameter-status"><code>status</code></a>, <a href="#parameter-dataset"><code>dataset</code></a>, <a href="#parameter-to"><code>to</code></a></td>
     <td>Return a list of Asynchronous Queries at host level.</td>
 </tr>
 <tr>
@@ -281,13 +281,13 @@ SELECT
 queries
 FROM google.apigee.host_queries
 WHERE organizationsId = '{{ organizationsId }}' -- required
+AND envgroupHostname = '{{ envgroupHostname }}'
+AND inclQueriesWithoutReport = '{{ inclQueriesWithoutReport }}'
+AND from = '{{ from }}'
 AND submittedBy = '{{ submittedBy }}'
 AND status = '{{ status }}'
-AND from = '{{ from }}'
-AND to = '{{ to }}'
 AND dataset = '{{ dataset }}'
-AND inclQueriesWithoutReport = '{{ inclQueriesWithoutReport }}'
-AND envgroupHostname = '{{ envgroupHostname }}'
+AND to = '{{ to }}'
 ;
 ```
 </TabItem>
@@ -310,29 +310,29 @@ Submit a query at host level to be processed in the background. If the submissio
 ```sql
 INSERT INTO google.apigee.host_queries (
 data__metrics,
+data__envgroupHostname,
 data__dimensions,
+data__limit,
+data__csvDelimiter,
 data__timeRange,
 data__filter,
 data__groupByTimeUnit,
-data__limit,
-data__outputFormat,
-data__csvDelimiter,
-data__envgroupHostname,
 data__reportDefinitionId,
+data__outputFormat,
 data__name,
 organizationsId
 )
 SELECT 
 '{{ metrics }}',
+'{{ envgroupHostname }}',
 '{{ dimensions }}',
+{{ limit }},
+'{{ csvDelimiter }}',
 '{{ timeRange }}',
 '{{ filter }}',
 '{{ groupByTimeUnit }}',
-{{ limit }},
-'{{ outputFormat }}',
-'{{ csvDelimiter }}',
-'{{ envgroupHostname }}',
 '{{ reportDefinitionId }}',
+'{{ outputFormat }}',
 '{{ name }}',
 '{{ organizationsId }}'
 RETURNING
@@ -366,10 +366,25 @@ updated
       description: >
         A list of Metrics.
         
+    - name: envgroupHostname
+      value: string
+      description: >
+        Hostname needs to be specified if query intends to run at host level. This field is only allowed when query is submitted by CreateHostAsyncQuery where analytics data will be grouped by organization and hostname.
+        
     - name: dimensions
       value: array
       description: >
         A list of dimensions. https://docs.apigee.com/api-platform/analytics/analytics-reference#dimensions
+        
+    - name: limit
+      value: integer
+      description: >
+        Maximum number of rows that can be returned in the result.
+        
+    - name: csvDelimiter
+      value: string
+      description: >
+        Delimiter used in the CSV file, if `outputFormat` is set to `csv`. Defaults to the `,` (comma) character. Supported delimiter characters include comma (`,`), pipe (`|`), and tab (`\t`).
         
     - name: timeRange
       value: any
@@ -386,30 +401,15 @@ updated
       description: >
         Time unit used to group the result set. Valid values include: second, minute, hour, day, week, or month. If a query includes groupByTimeUnit, then the result is an aggregation based on the specified time unit and the resultant timestamp does not include milliseconds precision. If a query omits groupByTimeUnit, then the resultant timestamp includes milliseconds precision.
         
-    - name: limit
-      value: integer
+    - name: reportDefinitionId
+      value: string
       description: >
-        Maximum number of rows that can be returned in the result.
+        Asynchronous Report ID.
         
     - name: outputFormat
       value: string
       description: >
         Valid values include: `csv` or `json`. Defaults to `json`. Note: Configure the delimiter for CSV output using the csvDelimiter property.
-        
-    - name: csvDelimiter
-      value: string
-      description: >
-        Delimiter used in the CSV file, if `outputFormat` is set to `csv`. Defaults to the `,` (comma) character. Supported delimiter characters include comma (`,`), pipe (`|`), and tab (`\t`).
-        
-    - name: envgroupHostname
-      value: string
-      description: >
-        Hostname needs to be specified if query intends to run at host level. This field is only allowed when query is submitted by CreateHostAsyncQuery where analytics data will be grouped by organization and hostname.
-        
-    - name: reportDefinitionId
-      value: string
-      description: >
-        Asynchronous Report ID.
         
     - name: name
       value: string

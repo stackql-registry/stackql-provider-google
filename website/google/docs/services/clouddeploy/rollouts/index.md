@@ -324,22 +324,15 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deliveryPipelinesId"><code>deliveryPipelinesId</code></a>, <a href="#parameter-releasesId"><code>releasesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists Rollouts in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deliveryPipelinesId"><code>deliveryPipelinesId</code></a>, <a href="#parameter-releasesId"><code>releasesId</code></a></td>
-    <td><a href="#parameter-rolloutId"><code>rolloutId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-overrideDeployPolicy"><code>overrideDeployPolicy</code></a>, <a href="#parameter-startingPhaseId"><code>startingPhaseId</code></a></td>
+    <td><a href="#parameter-overrideDeployPolicy"><code>overrideDeployPolicy</code></a>, <a href="#parameter-startingPhaseId"><code>startingPhaseId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-rolloutId"><code>rolloutId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a new Rollout in a given project and location.</td>
-</tr>
-<tr>
-    <td><a href="#approve"><CopyableCode code="approve" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deliveryPipelinesId"><code>deliveryPipelinesId</code></a>, <a href="#parameter-releasesId"><code>releasesId</code></a>, <a href="#parameter-rolloutsId"><code>rolloutsId</code></a></td>
-    <td></td>
-    <td>Approves a Rollout.</td>
 </tr>
 <tr>
     <td><a href="#advance"><CopyableCode code="advance" /></a></td>
@@ -349,18 +342,25 @@ The following methods are available for this resource:
     <td>Advances a Rollout in a given project and location.</td>
 </tr>
 <tr>
-    <td><a href="#cancel"><CopyableCode code="cancel" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deliveryPipelinesId"><code>deliveryPipelinesId</code></a>, <a href="#parameter-releasesId"><code>releasesId</code></a>, <a href="#parameter-rolloutsId"><code>rolloutsId</code></a></td>
-    <td></td>
-    <td>Cancels a Rollout in a given project and location.</td>
-</tr>
-<tr>
     <td><a href="#ignore_job"><CopyableCode code="ignore_job" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deliveryPipelinesId"><code>deliveryPipelinesId</code></a>, <a href="#parameter-releasesId"><code>releasesId</code></a>, <a href="#parameter-rolloutsId"><code>rolloutsId</code></a></td>
     <td></td>
     <td>Ignores the specified Job in a Rollout.</td>
+</tr>
+<tr>
+    <td><a href="#approve"><CopyableCode code="approve" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deliveryPipelinesId"><code>deliveryPipelinesId</code></a>, <a href="#parameter-releasesId"><code>releasesId</code></a>, <a href="#parameter-rolloutsId"><code>rolloutsId</code></a></td>
+    <td></td>
+    <td>Approves a Rollout.</td>
+</tr>
+<tr>
+    <td><a href="#cancel"><CopyableCode code="cancel" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deliveryPipelinesId"><code>deliveryPipelinesId</code></a>, <a href="#parameter-releasesId"><code>releasesId</code></a>, <a href="#parameter-rolloutsId"><code>rolloutsId</code></a></td>
+    <td></td>
+    <td>Cancels a Rollout in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#retry_job"><CopyableCode code="retry_job" /></a></td>
@@ -539,9 +539,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND deliveryPipelinesId = '{{ deliveryPipelinesId }}' -- required
 AND releasesId = '{{ releasesId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -564,38 +564,38 @@ Creates a new Rollout in a given project and location.
 
 ```sql
 INSERT INTO google.clouddeploy.rollouts (
-data__name,
-data__description,
-data__annotations,
-data__labels,
-data__targetId,
 data__etag,
+data__name,
+data__annotations,
+data__targetId,
+data__description,
+data__labels,
 projectsId,
 locationsId,
 deliveryPipelinesId,
 releasesId,
-rolloutId,
-requestId,
-validateOnly,
 overrideDeployPolicy,
-startingPhaseId
+startingPhaseId,
+requestId,
+rolloutId,
+validateOnly
 )
 SELECT 
-'{{ name }}',
-'{{ description }}',
-'{{ annotations }}',
-'{{ labels }}',
-'{{ targetId }}',
 '{{ etag }}',
+'{{ name }}',
+'{{ annotations }}',
+'{{ targetId }}',
+'{{ description }}',
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ deliveryPipelinesId }}',
 '{{ releasesId }}',
-'{{ rolloutId }}',
-'{{ requestId }}',
-'{{ validateOnly }}',
 '{{ overrideDeployPolicy }}',
-'{{ startingPhaseId }}'
+'{{ startingPhaseId }}',
+'{{ requestId }}',
+'{{ rolloutId }}',
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -623,46 +623,46 @@ response
     - name: releasesId
       value: string
       description: Required parameter for the rollouts resource.
+    - name: etag
+      value: string
+      description: >
+        This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
+        
     - name: name
       value: string
       description: >
         Identifier. Name of the `Rollout`. Format is `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/releases/{release}/rollouts/{rollout}`. The `rollout` component must match `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`
-        
-    - name: description
-      value: string
-      description: >
-        Optional. Description of the `Rollout` for user purposes. Max length is 255 characters.
         
     - name: annotations
       value: object
       description: >
         Optional. User annotations. These attributes can only be set and used by the user, and not by Cloud Deploy. See https://google.aip.dev/128#annotations for more details such as format and size limitations.
         
-    - name: labels
-      value: object
-      description: >
-        Labels are attributes that can be set and used by both the user and by Cloud Deploy. Labels must meet the following constraints: * Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. * All characters must use UTF-8 encoding, and international characters are allowed. * Keys must start with a lowercase letter or international character. * Each resource is limited to a maximum of 64 labels. Both keys and values are additionally constrained to be <= 128 bytes.
-        
     - name: targetId
       value: string
       description: >
         Required. The ID of Target to which this `Rollout` is deploying.
         
-    - name: etag
+    - name: description
       value: string
       description: >
-        This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
+        Optional. Description of the `Rollout` for user purposes. Max length is 255 characters.
         
-    - name: rolloutId
-      value: string
-    - name: requestId
-      value: string
-    - name: validateOnly
-      value: boolean
+    - name: labels
+      value: object
+      description: >
+        Labels are attributes that can be set and used by both the user and by Cloud Deploy. Labels must meet the following constraints: * Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. * All characters must use UTF-8 encoding, and international characters are allowed. * Keys must start with a lowercase letter or international character. * Each resource is limited to a maximum of 64 labels. Both keys and values are additionally constrained to be <= 128 bytes.
+        
     - name: overrideDeployPolicy
       value: string
     - name: startingPhaseId
       value: string
+    - name: requestId
+      value: string
+    - name: rolloutId
+      value: string
+    - name: validateOnly
+      value: boolean
 ```
 </TabItem>
 </Tabs>
@@ -671,34 +671,15 @@ response
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="approve"
+    defaultValue="advance"
     values={[
-        { label: 'approve', value: 'approve' },
         { label: 'advance', value: 'advance' },
-        { label: 'cancel', value: 'cancel' },
         { label: 'ignore_job', value: 'ignore_job' },
+        { label: 'approve', value: 'approve' },
+        { label: 'cancel', value: 'cancel' },
         { label: 'retry_job', value: 'retry_job' }
     ]}
 >
-<TabItem value="approve">
-
-Approves a Rollout.
-
-```sql
-EXEC google.clouddeploy.rollouts.approve 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@deliveryPipelinesId='{{ deliveryPipelinesId }}' --required, 
-@releasesId='{{ releasesId }}' --required, 
-@rolloutsId='{{ rolloutsId }}' --required 
-@@json=
-'{
-"approved": {{ approved }}, 
-"overrideDeployPolicy": "{{ overrideDeployPolicy }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="advance">
 
 Advances a Rollout in a given project and location.
@@ -714,6 +695,45 @@ EXEC google.clouddeploy.rollouts.advance
 '{
 "phaseId": "{{ phaseId }}", 
 "overrideDeployPolicy": "{{ overrideDeployPolicy }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="ignore_job">
+
+Ignores the specified Job in a Rollout.
+
+```sql
+EXEC google.clouddeploy.rollouts.ignore_job 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@deliveryPipelinesId='{{ deliveryPipelinesId }}' --required, 
+@releasesId='{{ releasesId }}' --required, 
+@rolloutsId='{{ rolloutsId }}' --required 
+@@json=
+'{
+"overrideDeployPolicy": "{{ overrideDeployPolicy }}", 
+"jobId": "{{ jobId }}", 
+"phaseId": "{{ phaseId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="approve">
+
+Approves a Rollout.
+
+```sql
+EXEC google.clouddeploy.rollouts.approve 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@deliveryPipelinesId='{{ deliveryPipelinesId }}' --required, 
+@releasesId='{{ releasesId }}' --required, 
+@rolloutsId='{{ rolloutsId }}' --required 
+@@json=
+'{
+"overrideDeployPolicy": "{{ overrideDeployPolicy }}", 
+"approved": {{ approved }}
 }'
 ;
 ```
@@ -736,26 +756,6 @@ EXEC google.clouddeploy.rollouts.cancel
 ;
 ```
 </TabItem>
-<TabItem value="ignore_job">
-
-Ignores the specified Job in a Rollout.
-
-```sql
-EXEC google.clouddeploy.rollouts.ignore_job 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@deliveryPipelinesId='{{ deliveryPipelinesId }}' --required, 
-@releasesId='{{ releasesId }}' --required, 
-@rolloutsId='{{ rolloutsId }}' --required 
-@@json=
-'{
-"phaseId": "{{ phaseId }}", 
-"jobId": "{{ jobId }}", 
-"overrideDeployPolicy": "{{ overrideDeployPolicy }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="retry_job">
 
 Retries the specified Job in a Rollout.
@@ -769,9 +769,9 @@ EXEC google.clouddeploy.rollouts.retry_job
 @rolloutsId='{{ rolloutsId }}' --required 
 @@json=
 '{
+"overrideDeployPolicy": "{{ overrideDeployPolicy }}", 
 "phaseId": "{{ phaseId }}", 
-"jobId": "{{ jobId }}", 
-"overrideDeployPolicy": "{{ overrideDeployPolicy }}"
+"jobId": "{{ jobId }}"
 }'
 ;
 ```

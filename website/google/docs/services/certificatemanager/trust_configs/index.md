@@ -80,6 +80,11 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Set of labels associated with a TrustConfig.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="spiffeTrustStores" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Defines a mapping from a trust domain to a TrustStore. This is used for SPIFFE certificate validation.</td>
+</tr>
+<tr>
     <td><CopyableCode code="trustStores" /></td>
     <td><code>array</code></td>
     <td>Optional. Set of trust stores to perform validation against. This field is supported when TrustConfig is configured with Load Balancers, currently not supported for SPIFFE certificate validation. Only one TrustStore specified is currently allowed.</td>
@@ -132,6 +137,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="labels" /></td>
     <td><code>object</code></td>
     <td>Optional. Set of labels associated with a TrustConfig.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="spiffeTrustStores" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Defines a mapping from a trust domain to a TrustStore. This is used for SPIFFE certificate validation.</td>
 </tr>
 <tr>
     <td><CopyableCode code="trustStores" /></td>
@@ -288,6 +298,7 @@ createTime,
 description,
 etag,
 labels,
+spiffeTrustStores,
 trustStores,
 updateTime
 FROM google.certificatemanager.trust_configs
@@ -309,6 +320,7 @@ createTime,
 description,
 etag,
 labels,
+spiffeTrustStores,
 trustStores,
 updateTime
 FROM google.certificatemanager.trust_configs
@@ -343,6 +355,7 @@ data__name,
 data__labels,
 data__description,
 data__etag,
+data__spiffeTrustStores,
 data__trustStores,
 data__allowlistedCertificates,
 projectsId,
@@ -354,6 +367,7 @@ SELECT
 '{{ labels }}',
 '{{ description }}',
 '{{ etag }}',
+'{{ spiffeTrustStores }}',
 '{{ trustStores }}',
 '{{ allowlistedCertificates }}',
 '{{ projectsId }}',
@@ -400,6 +414,11 @@ response
       description: >
         This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
         
+    - name: spiffeTrustStores
+      value: object
+      description: >
+        Optional. Defines a mapping from a trust domain to a TrustStore. This is used for SPIFFE certificate validation.
+        
     - name: trustStores
       value: array
       description: >
@@ -436,6 +455,7 @@ data__name = '{{ name }}',
 data__labels = '{{ labels }}',
 data__description = '{{ description }}',
 data__etag = '{{ etag }}',
+data__spiffeTrustStores = '{{ spiffeTrustStores }}',
 data__trustStores = '{{ trustStores }}',
 data__allowlistedCertificates = '{{ allowlistedCertificates }}'
 WHERE 

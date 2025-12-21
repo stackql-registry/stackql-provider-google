@@ -62,7 +62,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
-    <td>Optional. A user-specified description of the pool. Cannot exceed 256 characters.</td>
+    <td>Optional. A description of the pool. Cannot exceed 256 characters.</td>
 </tr>
 <tr>
     <td><CopyableCode code="disabled" /></td>
@@ -72,7 +72,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Optional. A user-specified display name of the pool in Google Cloud Console. Cannot exceed 32 characters.</td>
+    <td>Optional. A display name for the pool. Cannot exceed 32 characters.</td>
 </tr>
 <tr>
     <td><CopyableCode code="expireTime" /></td>
@@ -121,7 +121,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
-    <td>Optional. A user-specified description of the pool. Cannot exceed 256 characters.</td>
+    <td>Optional. A description of the pool. Cannot exceed 256 characters.</td>
 </tr>
 <tr>
     <td><CopyableCode code="disabled" /></td>
@@ -131,7 +131,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Optional. A user-specified display name of the pool in Google Cloud Console. Cannot exceed 32 characters.</td>
+    <td>Optional. A display name for the pool. Cannot exceed 32 characters.</td>
 </tr>
 <tr>
     <td><CopyableCode code="expireTime" /></td>
@@ -397,12 +397,12 @@ response
     - name: displayName
       value: string
       description: >
-        Optional. A user-specified display name of the pool in Google Cloud Console. Cannot exceed 32 characters.
+        Optional. A display name for the pool. Cannot exceed 32 characters.
         
     - name: description
       value: string
       description: >
-        Optional. A user-specified description of the pool. Cannot exceed 256 characters.
+        Optional. A description of the pool. Cannot exceed 256 characters.
         
     - name: disabled
       value: boolean

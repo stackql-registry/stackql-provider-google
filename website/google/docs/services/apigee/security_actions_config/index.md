@@ -172,8 +172,8 @@ UpdateSecurityActionConfig updates the current SecurityActions configuration. Th
 ```sql
 UPDATE google.apigee.security_actions_config
 SET 
-data__name = '{{ name }}',
-data__enabled = {{ enabled }}
+data__enabled = {{ enabled }},
+data__name = '{{ name }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND environmentsId = '{{ environmentsId }}' --required

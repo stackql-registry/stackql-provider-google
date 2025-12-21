@@ -293,22 +293,22 @@ Creates a rule.
 
 ```sql
 INSERT INTO google.artifactregistry.rules (
-data__name,
-data__action,
 data__operation,
+data__name,
 data__condition,
 data__packageId,
+data__action,
 projectsId,
 locationsId,
 repositoriesId,
 ruleId
 )
 SELECT 
-'{{ name }}',
-'{{ action }}',
 '{{ operation }}',
+'{{ name }}',
 '{{ condition }}',
 '{{ packageId }}',
+'{{ action }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ repositoriesId }}',
@@ -337,20 +337,14 @@ packageId
     - name: repositoriesId
       value: string
       description: Required parameter for the rules resource.
+    - name: operation
+      value: string
+      valid_values: ['OPERATION_UNSPECIFIED', 'DOWNLOAD']
     - name: name
       value: string
       description: >
         The name of the rule, for example: `projects/p1/locations/us-central1/repositories/repo1/rules/rule1`.
         
-    - name: action
-      value: string
-      description: >
-        The action this rule takes.
-        
-      valid_values: ['ACTION_UNSPECIFIED', 'ALLOW', 'DENY']
-    - name: operation
-      value: string
-      valid_values: ['OPERATION_UNSPECIFIED', 'DOWNLOAD']
     - name: condition
       value: object
       description: >
@@ -361,6 +355,12 @@ packageId
       description: >
         The package ID the rule applies to. If empty, this rule applies to all packages inside the repository.
         
+    - name: action
+      value: string
+      description: >
+        The action this rule takes.
+        
+      valid_values: ['ACTION_UNSPECIFIED', 'ALLOW', 'DENY']
     - name: ruleId
       value: string
 ```
@@ -383,11 +383,11 @@ Updates a rule.
 ```sql
 UPDATE google.artifactregistry.rules
 SET 
-data__name = '{{ name }}',
-data__action = '{{ action }}',
 data__operation = '{{ operation }}',
+data__name = '{{ name }}',
 data__condition = '{{ condition }}',
-data__packageId = '{{ packageId }}'
+data__packageId = '{{ packageId }}',
+data__action = '{{ action }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -86,21 +86,21 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a>, <a href="#parameter-configId"><code>configId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a>, <a href="#parameter-contextsId"><code>contextsId</code></a>, <a href="#parameter-configId"><code>configId</code></a></td>
     <td><a href="#parameter-defaultToGlobal"><code>defaultToGlobal</code></a></td>
     <td>Get schema config at global level or for a subject.</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="replace" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a>, <a href="#parameter-configId"><code>configId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a>, <a href="#parameter-contextsId"><code>contextsId</code></a>, <a href="#parameter-configId"><code>configId</code></a></td>
     <td></td>
     <td>Update config at global level or for a subject. Creates a SchemaSubject-level SchemaConfig if it does not exist.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a>, <a href="#parameter-configId"><code>configId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a>, <a href="#parameter-contextsId"><code>contextsId</code></a>, <a href="#parameter-configId"><code>configId</code></a></td>
     <td></td>
     <td>Delete schema config for a subject.</td>
 </tr>
@@ -122,6 +122,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tbody>
 <tr id="parameter-configId">
     <td><CopyableCode code="configId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-contextsId">
+    <td><CopyableCode code="contextsId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -169,6 +174,7 @@ FROM google.managedkafka.config
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND schemaRegistriesId = '{{ schemaRegistriesId }}' -- required
+AND contextsId = '{{ contextsId }}' -- required
 AND configId = '{{ configId }}' -- required
 AND defaultToGlobal = '{{ defaultToGlobal }}'
 ;
@@ -192,12 +198,13 @@ Update config at global level or for a subject. Creates a SchemaSubject-level Sc
 ```sql
 REPLACE google.managedkafka.config
 SET 
-data__compatibility = '{{ compatibility }}',
-data__normalize = {{ normalize }}
+data__normalize = {{ normalize }},
+data__compatibility = '{{ compatibility }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND schemaRegistriesId = '{{ schemaRegistriesId }}' --required
+AND contextsId = '{{ contextsId }}' --required
 AND configId = '{{ configId }}' --required
 RETURNING
 alias,
@@ -225,6 +232,7 @@ DELETE FROM google.managedkafka.config
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND schemaRegistriesId = '{{ schemaRegistriesId }}' --required
+AND contextsId = '{{ contextsId }}' --required
 AND configId = '{{ configId }}' --required
 ;
 ```

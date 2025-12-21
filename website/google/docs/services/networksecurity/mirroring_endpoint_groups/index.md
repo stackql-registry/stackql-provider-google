@@ -194,7 +194,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_mirroring_endpoint_groups_list"><CopyableCode code="projects_locations_mirroring_endpoint_groups_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists endpoint groups in a given project and location. See https://google.aip.dev/132.</td>
 </tr>
 <tr>
@@ -208,7 +208,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_mirroring_endpoint_groups_patch"><CopyableCode code="projects_locations_mirroring_endpoint_groups_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-mirroringEndpointGroupsId"><code>mirroringEndpointGroupsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates an endpoint group. See https://google.aip.dev/134.</td>
 </tr>
 <tr>
@@ -338,10 +338,10 @@ updateTime
 FROM google.networksecurity.mirroring_endpoint_groups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -365,8 +365,8 @@ Creates an endpoint group in a given project and location. See https://google.ai
 INSERT INTO google.networksecurity.mirroring_endpoint_groups (
 data__name,
 data__labels,
-data__mirroringDeploymentGroup,
 data__description,
+data__mirroringDeploymentGroup,
 projectsId,
 locationsId,
 mirroringEndpointGroupId,
@@ -375,8 +375,8 @@ requestId
 SELECT 
 '{{ name }}',
 '{{ labels }}',
-'{{ mirroringDeploymentGroup }}',
 '{{ description }}',
+'{{ mirroringDeploymentGroup }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ mirroringEndpointGroupId }}',
@@ -412,15 +412,15 @@ response
       description: >
         Optional. Labels are key/value pairs that help to organize and filter resources.
         
-    - name: mirroringDeploymentGroup
-      value: string
-      description: >
-        Immutable. The deployment group that this DIRECT endpoint group is connected to, for example: `projects/123456789/locations/global/mirroringDeploymentGroups/my-dg`. See https://google.aip.dev/124.
-        
     - name: description
       value: string
       description: >
         Optional. User-provided description of the endpoint group. Used as additional context for the endpoint group.
+        
+    - name: mirroringDeploymentGroup
+      value: string
+      description: >
+        Immutable. The deployment group that this DIRECT endpoint group is connected to, for example: `projects/123456789/locations/global/mirroringDeploymentGroups/my-dg`. See https://google.aip.dev/124.
         
     - name: mirroringEndpointGroupId
       value: string
@@ -448,14 +448,14 @@ UPDATE google.networksecurity.mirroring_endpoint_groups
 SET 
 data__name = '{{ name }}',
 data__labels = '{{ labels }}',
-data__mirroringDeploymentGroup = '{{ mirroringDeploymentGroup }}',
-data__description = '{{ description }}'
+data__description = '{{ description }}',
+data__mirroringDeploymentGroup = '{{ mirroringDeploymentGroup }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND mirroringEndpointGroupsId = '{{ mirroringEndpointGroupsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

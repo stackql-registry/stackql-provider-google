@@ -353,24 +353,24 @@ Creates a new WorkflowConfig in a given Repository.
 
 ```sql
 INSERT INTO google.dataform.workflow_configs (
+data__disabled,
 data__name,
 data__releaseConfig,
-data__invocationConfig,
 data__cronSchedule,
+data__invocationConfig,
 data__timeZone,
-data__disabled,
 projectsId,
 locationsId,
 repositoriesId,
 workflowConfigId
 )
 SELECT 
+{{ disabled }},
 '{{ name }}',
 '{{ releaseConfig }}',
-'{{ invocationConfig }}',
 '{{ cronSchedule }}',
+'{{ invocationConfig }}',
 '{{ timeZone }}',
-{{ disabled }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ repositoriesId }}',
@@ -404,6 +404,11 @@ updateTime
     - name: repositoriesId
       value: string
       description: Required parameter for the workflow_configs resource.
+    - name: disabled
+      value: boolean
+      description: >
+        Optional. Disables automatic creation of workflow invocations.
+        
     - name: name
       value: string
       description: >
@@ -414,25 +419,20 @@ updateTime
       description: >
         Required. The name of the release config whose release_compilation_result should be executed. Must be in the format `projects/*/locations/*/repositories/*/releaseConfigs/*`.
         
-    - name: invocationConfig
-      value: object
-      description: >
-        Optional. If left unset, a default InvocationConfig will be used.
-        
     - name: cronSchedule
       value: string
       description: >
         Optional. Optional schedule (in cron format) for automatic execution of this workflow config.
         
+    - name: invocationConfig
+      value: object
+      description: >
+        Optional. If left unset, a default InvocationConfig will be used.
+        
     - name: timeZone
       value: string
       description: >
         Optional. Specifies the time zone to be used when interpreting cron_schedule. Must be a time zone name from the time zone database (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). If left unspecified, the default is UTC.
-        
-    - name: disabled
-      value: boolean
-      description: >
-        Optional. Disables automatic creation of workflow invocations.
         
     - name: workflowConfigId
       value: string
@@ -456,12 +456,12 @@ Updates a single WorkflowConfig. **Note:** *This method does not fully implement
 ```sql
 UPDATE google.dataform.workflow_configs
 SET 
+data__disabled = {{ disabled }},
 data__name = '{{ name }}',
 data__releaseConfig = '{{ releaseConfig }}',
-data__invocationConfig = '{{ invocationConfig }}',
 data__cronSchedule = '{{ cronSchedule }}',
-data__timeZone = '{{ timeZone }}',
-data__disabled = {{ disabled }}
+data__invocationConfig = '{{ invocationConfig }}',
+data__timeZone = '{{ timeZone }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

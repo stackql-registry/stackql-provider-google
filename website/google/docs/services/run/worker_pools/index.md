@@ -92,7 +92,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="customAudiences" /></td>
     <td><code>array</code></td>
-    <td>One or more custom audiences that you want this worker pool to support. Specify each custom audience as the full URL in a string. The custom audiences are encoded in the token and used to authenticate requests. For more information, see https://cloud.google.com/run/docs/configuring/custom-audiences.</td>
+    <td>Not supported, and ignored by Cloud Run.</td>
 </tr>
 <tr>
     <td><CopyableCode code="deleteTime" /></td>
@@ -183,6 +183,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="terminalCondition" /></td>
     <td><code>object</code></td>
     <td>Defines a status condition for a resource. (id: GoogleCloudRunV2Condition)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="threatDetectionEnabled" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. Indicates whether Cloud Run Threat Detection monitoring is enabled for the parent project of this worker pool.</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -251,7 +256,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="customAudiences" /></td>
     <td><code>array</code></td>
-    <td>One or more custom audiences that you want this worker pool to support. Specify each custom audience as the full URL in a string. The custom audiences are encoded in the token and used to authenticate requests. For more information, see https://cloud.google.com/run/docs/configuring/custom-audiences.</td>
+    <td>Not supported, and ignored by Cloud Run.</td>
 </tr>
 <tr>
     <td><CopyableCode code="deleteTime" /></td>
@@ -344,6 +349,11 @@ The following fields are returned by `SELECT` queries:
     <td>Defines a status condition for a resource. (id: GoogleCloudRunV2Condition)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="threatDetectionEnabled" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. Indicates whether Cloud Run Threat Detection monitoring is enabled for the parent project of this worker pool.</td>
+</tr>
+<tr>
     <td><CopyableCode code="uid" /></td>
     <td><code>string</code></td>
     <td>Output only. Server assigned unique identifier for the trigger. The value is a UUID4 string and guaranteed to remain unchanged until the resource is deleted.</td>
@@ -384,21 +394,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
     <td>Lists WorkerPools. Results are sorted by creation time, descending.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-workerPoolId"><code>workerPoolId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-workerPoolId"><code>workerPoolId</code></a></td>
     <td>Creates a new WorkerPool in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workerPoolsId"><code>workerPoolsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-forceNewRevision"><code>forceNewRevision</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-forceNewRevision"><code>forceNewRevision</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Updates a WorkerPool.</td>
 </tr>
 <tr>
@@ -529,6 +539,7 @@ satisfiesPzs,
 scaling,
 template,
 terminalCondition,
+threatDetectionEnabled,
 uid,
 updateTime
 FROM google.run.worker_pools
@@ -571,13 +582,14 @@ satisfiesPzs,
 scaling,
 template,
 terminalCondition,
+threatDetectionEnabled,
 uid,
 updateTime
 FROM google.run.worker_pools
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND showDeleted = '{{ showDeleted }}'
 ;
 ```
@@ -600,42 +612,42 @@ Creates a new WorkerPool in a given project and location.
 
 ```sql
 INSERT INTO google.run.worker_pools (
-data__name,
+data__etag,
 data__description,
-data__labels,
 data__annotations,
-data__client,
+data__labels,
 data__clientVersion,
 data__launchStage,
-data__binaryAuthorization,
+data__client,
+data__name,
 data__template,
 data__instanceSplits,
 data__scaling,
 data__customAudiences,
-data__etag,
+data__binaryAuthorization,
 projectsId,
 locationsId,
-workerPoolId,
-validateOnly
+validateOnly,
+workerPoolId
 )
 SELECT 
-'{{ name }}',
+'{{ etag }}',
 '{{ description }}',
-'{{ labels }}',
 '{{ annotations }}',
-'{{ client }}',
+'{{ labels }}',
 '{{ clientVersion }}',
 '{{ launchStage }}',
-'{{ binaryAuthorization }}',
+'{{ client }}',
+'{{ name }}',
 '{{ template }}',
 '{{ instanceSplits }}',
 '{{ scaling }}',
 '{{ customAudiences }}',
-'{{ etag }}',
+'{{ binaryAuthorization }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ workerPoolId }}',
-'{{ validateOnly }}'
+'{{ validateOnly }}',
+'{{ workerPoolId }}'
 RETURNING
 name,
 done,
@@ -657,30 +669,25 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the worker_pools resource.
-    - name: name
+    - name: etag
       value: string
       description: >
-        The fully qualified name of this WorkerPool. In CreateWorkerPoolRequest, this field is ignored, and instead composed from CreateWorkerPoolRequest.parent and CreateWorkerPoolRequest.worker_id. Format: `projects/{project}/locations/{location}/workerPools/{worker_id}`
+        Optional. A system-generated fingerprint for this version of the resource. May be used to detect modification conflict during updates.
         
     - name: description
       value: string
       description: >
         User-provided description of the WorkerPool. This field currently has a 512-character limit.
         
-    - name: labels
-      value: object
-      description: >
-        Optional. Unstructured key value map that can be used to organize and categorize objects. User-provided labels are shared with Google's billing system, so they can be used to filter, or break down billing charges by team, component, environment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels. Cloud Run API v2 does not support labels with `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and they will be rejected. All system labels in v1 now have a corresponding field in v2 WorkerPool.
-        
     - name: annotations
       value: object
       description: >
         Optional. Unstructured key value map that may be set by external tools to store and arbitrary metadata. They are not queryable and should be preserved when modifying objects. Cloud Run API v2 does not support annotations with `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and they will be rejected in new resources. All system annotations in v1 now have a corresponding field in v2 WorkerPool. This field follows Kubernetes annotations' namespacing, limits, and rules.
         
-    - name: client
-      value: string
+    - name: labels
+      value: object
       description: >
-        Arbitrary identifier for the API client.
+        Optional. Unstructured key value map that can be used to organize and categorize objects. User-provided labels are shared with Google's billing system, so they can be used to filter, or break down billing charges by team, component, environment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels. Cloud Run API v2 does not support labels with `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and they will be rejected. All system labels in v1 now have a corresponding field in v2 WorkerPool.
         
     - name: clientVersion
       value: string
@@ -693,10 +700,15 @@ response
         Optional. The launch stage as defined by [Google Cloud Platform Launch Stages](https://cloud.google.com/terms/launch-stages). Cloud Run supports `ALPHA`, `BETA`, and `GA`. If no value is specified, GA is assumed. Set the launch stage to a preview stage on input to allow use of preview features in that stage. On read (or output), describes whether the resource uses preview features. For example, if ALPHA is provided as input, but only BETA and GA-level features are used, this field will be BETA on output.
         
       valid_values: ['LAUNCH_STAGE_UNSPECIFIED', 'UNIMPLEMENTED', 'PRELAUNCH', 'EARLY_ACCESS', 'ALPHA', 'BETA', 'GA', 'DEPRECATED']
-    - name: binaryAuthorization
-      value: object
+    - name: client
+      value: string
       description: >
-        Optional. Settings for the Binary Authorization feature.
+        Arbitrary identifier for the API client.
+        
+    - name: name
+      value: string
+      description: >
+        The fully qualified name of this WorkerPool. In CreateWorkerPoolRequest, this field is ignored, and instead composed from CreateWorkerPoolRequest.parent and CreateWorkerPoolRequest.worker_id. Format: `projects/{project}/locations/{location}/workerPools/{worker_id}`
         
     - name: template
       value: object
@@ -716,17 +728,17 @@ response
     - name: customAudiences
       value: array
       description: >
-        One or more custom audiences that you want this worker pool to support. Specify each custom audience as the full URL in a string. The custom audiences are encoded in the token and used to authenticate requests. For more information, see https://cloud.google.com/run/docs/configuring/custom-audiences.
+        Not supported, and ignored by Cloud Run.
         
-    - name: etag
-      value: string
+    - name: binaryAuthorization
+      value: object
       description: >
-        Optional. A system-generated fingerprint for this version of the resource. May be used to detect modification conflict during updates.
+        Optional. Settings for the Binary Authorization feature.
         
-    - name: workerPoolId
-      value: string
     - name: validateOnly
       value: boolean
+    - name: workerPoolId
+      value: string
 ```
 </TabItem>
 </Tabs>
@@ -747,27 +759,27 @@ Updates a WorkerPool.
 ```sql
 UPDATE google.run.worker_pools
 SET 
-data__name = '{{ name }}',
+data__etag = '{{ etag }}',
 data__description = '{{ description }}',
-data__labels = '{{ labels }}',
 data__annotations = '{{ annotations }}',
-data__client = '{{ client }}',
+data__labels = '{{ labels }}',
 data__clientVersion = '{{ clientVersion }}',
 data__launchStage = '{{ launchStage }}',
-data__binaryAuthorization = '{{ binaryAuthorization }}',
+data__client = '{{ client }}',
+data__name = '{{ name }}',
 data__template = '{{ template }}',
 data__instanceSplits = '{{ instanceSplits }}',
 data__scaling = '{{ scaling }}',
 data__customAudiences = '{{ customAudiences }}',
-data__etag = '{{ etag }}'
+data__binaryAuthorization = '{{ binaryAuthorization }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND workerPoolsId = '{{ workerPoolsId }}' --required
 AND updateMask = '{{ updateMask}}'
-AND validateOnly = {{ validateOnly}}
 AND allowMissing = {{ allowMissing}}
 AND forceNewRevision = {{ forceNewRevision}}
+AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
 done,

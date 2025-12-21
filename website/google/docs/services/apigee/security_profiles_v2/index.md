@@ -75,6 +75,11 @@ The following fields are returned by `SELECT` queries:
     <td>Required. The configuration for each assessment in this profile. Key is the name/id of the assessment.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="riskAssessmentType" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The risk assessment type of the security profile. Defaults to ADVANCED_API_SECURITY.</td>
+</tr>
+<tr>
     <td><CopyableCode code="updateTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The time of the security profile update.</td>
@@ -119,6 +124,11 @@ The following fields are returned by `SELECT` queries:
     <td>Required. The configuration for each assessment in this profile. Key is the name/id of the assessment.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="riskAssessmentType" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The risk assessment type of the security profile. Defaults to ADVANCED_API_SECURITY.</td>
+</tr>
+<tr>
     <td><CopyableCode code="updateTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The time of the security profile update.</td>
@@ -147,14 +157,14 @@ The following methods are available for this resource:
     <td><a href="#organizations_security_profiles_v2_get"><CopyableCode code="organizations_security_profiles_v2_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-securityProfilesV2Id"><code>securityProfilesV2Id</code></a></td>
-    <td></td>
+    <td><a href="#parameter-riskAssessmentType"><code>riskAssessmentType</code></a></td>
     <td>Get a security profile v2.</td>
 </tr>
 <tr>
     <td><a href="#organizations_security_profiles_v2_list"><CopyableCode code="organizations_security_profiles_v2_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-riskAssessmentType"><code>riskAssessmentType</code></a></td>
     <td>List security profiles v2.</td>
 </tr>
 <tr>
@@ -175,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_security_profiles_v2_delete"><CopyableCode code="organizations_security_profiles_v2_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-securityProfilesV2Id"><code>securityProfilesV2Id</code></a></td>
-    <td></td>
+    <td><a href="#parameter-riskAssessmentType"><code>riskAssessmentType</code></a></td>
     <td>Delete a security profile v2.</td>
 </tr>
 </tbody>
@@ -214,6 +224,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
+<tr id="parameter-riskAssessmentType">
+    <td><CopyableCode code="riskAssessmentType" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-securityProfileV2Id">
     <td><CopyableCode code="securityProfileV2Id" /></td>
     <td><code>string</code></td>
@@ -247,10 +262,12 @@ createTime,
 description,
 googleDefined,
 profileAssessmentConfigs,
+riskAssessmentType,
 updateTime
 FROM google.apigee.security_profiles_v2
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND securityProfilesV2Id = '{{ securityProfilesV2Id }}' -- required
+AND riskAssessmentType = '{{ riskAssessmentType }}'
 ;
 ```
 </TabItem>
@@ -265,11 +282,13 @@ createTime,
 description,
 googleDefined,
 profileAssessmentConfigs,
+riskAssessmentType,
 updateTime
 FROM google.apigee.security_profiles_v2
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND riskAssessmentType = '{{ riskAssessmentType }}'
 ;
 ```
 </TabItem>
@@ -291,16 +310,18 @@ Create a security profile v2.
 
 ```sql
 INSERT INTO google.apigee.security_profiles_v2 (
-data__name,
 data__description,
 data__profileAssessmentConfigs,
+data__riskAssessmentType,
+data__name,
 organizationsId,
 securityProfileV2Id
 )
 SELECT 
-'{{ name }}',
 '{{ description }}',
 '{{ profileAssessmentConfigs }}',
+'{{ riskAssessmentType }}',
+'{{ name }}',
 '{{ organizationsId }}',
 '{{ securityProfileV2Id }}'
 RETURNING
@@ -309,6 +330,7 @@ createTime,
 description,
 googleDefined,
 profileAssessmentConfigs,
+riskAssessmentType,
 updateTime
 ;
 ```
@@ -322,11 +344,6 @@ updateTime
     - name: organizationsId
       value: string
       description: Required parameter for the security_profiles_v2 resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. Name of the security profile v2 resource. Format: organizations/{org}/securityProfilesV2/{profile}
-        
     - name: description
       value: string
       description: >
@@ -336,6 +353,17 @@ updateTime
       value: object
       description: >
         Required. The configuration for each assessment in this profile. Key is the name/id of the assessment.
+        
+    - name: riskAssessmentType
+      value: string
+      description: >
+        Optional. The risk assessment type of the security profile. Defaults to ADVANCED_API_SECURITY.
+        
+      valid_values: ['RISK_ASSESSMENT_TYPE_UNSPECIFIED', 'APIGEE', 'API_HUB']
+    - name: name
+      value: string
+      description: >
+        Identifier. Name of the security profile v2 resource. Format: organizations/{org}/securityProfilesV2/{profile}
         
     - name: securityProfileV2Id
       value: string
@@ -359,9 +387,10 @@ Update a security profile V2.
 ```sql
 UPDATE google.apigee.security_profiles_v2
 SET 
-data__name = '{{ name }}',
 data__description = '{{ description }}',
-data__profileAssessmentConfigs = '{{ profileAssessmentConfigs }}'
+data__profileAssessmentConfigs = '{{ profileAssessmentConfigs }}',
+data__riskAssessmentType = '{{ riskAssessmentType }}',
+data__name = '{{ name }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND securityProfilesV2Id = '{{ securityProfilesV2Id }}' --required
@@ -372,6 +401,7 @@ createTime,
 description,
 googleDefined,
 profileAssessmentConfigs,
+riskAssessmentType,
 updateTime;
 ```
 </TabItem>
@@ -394,6 +424,7 @@ Delete a security profile v2.
 DELETE FROM google.apigee.security_profiles_v2
 WHERE organizationsId = '{{ organizationsId }}' --required
 AND securityProfilesV2Id = '{{ securityProfilesV2Id }}' --required
+AND riskAssessmentType = '{{ riskAssessmentType }}'
 ;
 ```
 </TabItem>

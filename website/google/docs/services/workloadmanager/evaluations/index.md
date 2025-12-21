@@ -234,7 +234,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists Evaluations in a given project and location.</td>
 </tr>
 <tr>
@@ -243,6 +243,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td><a href="#parameter-evaluationId"><code>evaluationId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new Evaluation in a given project and location.</td>
+</tr>
+<tr>
+    <td><a href="#patch"><CopyableCode code="patch" /></a></td>
+    <td><CopyableCode code="update" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-evaluationsId"><code>evaluationsId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td>Updates the parameters of a single Evaluation.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
@@ -317,6 +324,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
+<tr id="parameter-updateMask">
+    <td><CopyableCode code="updateMask" /></td>
+    <td><code>string (google-fieldmask)</code></td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 
@@ -381,8 +393,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -404,32 +416,32 @@ Creates a new Evaluation in a given project and location.
 
 ```sql
 INSERT INTO google.workloadmanager.evaluations (
-data__name,
-data__description,
-data__resourceFilter,
-data__ruleNames,
-data__labels,
+data__kmsKey,
 data__schedule,
+data__ruleNames,
+data__resourceFilter,
+data__labels,
+data__bigQueryDestination,
+data__description,
+data__name,
 data__customRulesBucket,
 data__evaluationType,
-data__bigQueryDestination,
-data__kmsKey,
 projectsId,
 locationsId,
 evaluationId,
 requestId
 )
 SELECT 
-'{{ name }}',
-'{{ description }}',
-'{{ resourceFilter }}',
-'{{ ruleNames }}',
-'{{ labels }}',
+'{{ kmsKey }}',
 '{{ schedule }}',
+'{{ ruleNames }}',
+'{{ resourceFilter }}',
+'{{ labels }}',
+'{{ bigQueryDestination }}',
+'{{ description }}',
+'{{ name }}',
 '{{ customRulesBucket }}',
 '{{ evaluationType }}',
-'{{ bigQueryDestination }}',
-'{{ kmsKey }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ evaluationId }}',
@@ -455,35 +467,45 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the evaluations resource.
-    - name: name
+    - name: kmsKey
       value: string
       description: >
-        name of resource names have the form 'projects/{project_id}/locations/{location_id}/evaluations/{evaluation_id}'
+        Optional. Immutable. Customer-managed encryption key name, in the format projects/*/locations/*/keyRings/*/cryptoKeys/*.
         
-    - name: description
+    - name: schedule
       value: string
       description: >
-        Description of the Evaluation
-        
-    - name: resourceFilter
-      value: object
-      description: >
-        annotations as key value pairs
+        crontab format schedule for scheduled evaluation, currently only support the following schedule: "0 */1 * * *", "0 */6 * * *", "0 */12 * * *", "0 0 */1 * *", "0 0 */7 * *",
         
     - name: ruleNames
       value: array
       description: >
         the name of the rule
         
+    - name: resourceFilter
+      value: object
+      description: >
+        annotations as key value pairs
+        
     - name: labels
       value: object
       description: >
         Labels as key value pairs
         
-    - name: schedule
+    - name: bigQueryDestination
+      value: object
+      description: >
+        Optional. BigQuery destination
+        
+    - name: description
       value: string
       description: >
-        crontab format schedule for scheduled evaluation, currently only support the following schedule: "0 */1 * * *", "0 */6 * * *", "0 */12 * * *", "0 0 */1 * *", "0 0 */7 * *",
+        Description of the Evaluation
+        
+    - name: name
+      value: string
+      description: >
+        name of resource names have the form 'projects/{project_id}/locations/{location_id}/evaluations/{evaluation_id}'
         
     - name: customRulesBucket
       value: string
@@ -496,20 +518,52 @@ response
         Evaluation type
         
       valid_values: ['EVALUATION_TYPE_UNSPECIFIED', 'SAP', 'SQL_SERVER', 'OTHER', 'SCC_IAC']
-    - name: bigQueryDestination
-      value: object
-      description: >
-        Optional. BigQuery destination
-        
-    - name: kmsKey
-      value: string
-      description: >
-        Optional. Immutable. Customer-managed encryption key name, in the format projects/*/locations/*/keyRings/*/cryptoKeys/*.
-        
     - name: evaluationId
       value: string
     - name: requestId
       value: string
+```
+</TabItem>
+</Tabs>
+
+
+## `UPDATE` examples
+
+<Tabs
+    defaultValue="patch"
+    values={[
+        { label: 'patch', value: 'patch' }
+    ]}
+>
+<TabItem value="patch">
+
+Updates the parameters of a single Evaluation.
+
+```sql
+UPDATE google.workloadmanager.evaluations
+SET 
+data__kmsKey = '{{ kmsKey }}',
+data__schedule = '{{ schedule }}',
+data__ruleNames = '{{ ruleNames }}',
+data__resourceFilter = '{{ resourceFilter }}',
+data__labels = '{{ labels }}',
+data__bigQueryDestination = '{{ bigQueryDestination }}',
+data__description = '{{ description }}',
+data__name = '{{ name }}',
+data__customRulesBucket = '{{ customRulesBucket }}',
+data__evaluationType = '{{ evaluationType }}'
+WHERE 
+projectsId = '{{ projectsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND evaluationsId = '{{ evaluationsId }}' --required
+AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
+RETURNING
+name,
+done,
+error,
+metadata,
+response;
 ```
 </TabItem>
 </Tabs>

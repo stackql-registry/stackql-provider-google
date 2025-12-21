@@ -209,20 +209,20 @@ Creates a new canary evaluation for an organization.
 
 ```sql
 INSERT INTO google.apigee.canaryevaluations (
-data__startTime,
+data__treatment,
+data__control,
 data__endTime,
 data__metricLabels,
-data__control,
-data__treatment,
+data__startTime,
 organizationsId,
 instancesId
 )
 SELECT 
-'{{ startTime }}',
+'{{ treatment }}',
+'{{ control }}',
 '{{ endTime }}',
 '{{ metricLabels }}',
-'{{ control }}',
-'{{ treatment }}',
+'{{ startTime }}',
 '{{ organizationsId }}',
 '{{ instancesId }}'
 RETURNING
@@ -246,10 +246,15 @@ response
     - name: instancesId
       value: string
       description: Required parameter for the canaryevaluations resource.
-    - name: startTime
+    - name: treatment
       value: string
       description: >
-        Required. Start time for the canary evaluation's analysis.
+        Required. The newer version that is serving requests.
+        
+    - name: control
+      value: string
+      description: >
+        Required. The stable version that is serving requests.
         
     - name: endTime
       value: string
@@ -261,15 +266,10 @@ response
       description: >
         Required. Labels used to filter the metrics used for a canary evaluation.
         
-    - name: control
+    - name: startTime
       value: string
       description: >
-        Required. The stable version that is serving requests.
-        
-    - name: treatment
-      value: string
-      description: >
-        Required. The newer version that is serving requests.
+        Required. Start time for the canary evaluation's analysis.
         
 ```
 </TabItem>

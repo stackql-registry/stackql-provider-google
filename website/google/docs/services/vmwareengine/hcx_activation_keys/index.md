@@ -151,7 +151,7 @@ The following methods are available for this resource:
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a></td>
-    <td><a href="#parameter-hcxActivationKeyId"><code>hcxActivationKeyId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-hcxActivationKeyId"><code>hcxActivationKeyId</code></a></td>
     <td>Creates a new HCX activation key in a given private cloud.</td>
 </tr>
 </tbody>
@@ -282,15 +282,15 @@ INSERT INTO google.vmwareengine.hcx_activation_keys (
 projectsId,
 locationsId,
 privateCloudsId,
-hcxActivationKeyId,
-requestId
+requestId,
+hcxActivationKeyId
 )
 SELECT 
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ privateCloudsId }}',
-'{{ hcxActivationKeyId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ hcxActivationKeyId }}'
 RETURNING
 name,
 done,
@@ -315,9 +315,9 @@ response
     - name: privateCloudsId
       value: string
       description: Required parameter for the hcx_activation_keys resource.
-    - name: hcxActivationKeyId
-      value: string
     - name: requestId
+      value: string
+    - name: hcxActivationKeyId
       value: string
 ```
 </TabItem>

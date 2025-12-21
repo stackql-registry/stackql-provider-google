@@ -398,7 +398,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_locations_discovery_configs_list"><CopyableCode code="organizations_locations_discovery_configs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists discovery configurations.</td>
 </tr>
 <tr>
@@ -610,9 +610,9 @@ updateTime
 FROM google.dlp.discovery_configs
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -635,14 +635,14 @@ Creates a config for discovery to scan and profile storage.
 
 ```sql
 INSERT INTO google.dlp.discovery_configs (
-data__discoveryConfig,
 data__configId,
+data__discoveryConfig,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ discoveryConfig }}',
 '{{ configId }}',
+'{{ discoveryConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -668,14 +668,14 @@ Creates a config for discovery to scan and profile storage.
 
 ```sql
 INSERT INTO google.dlp.discovery_configs (
-data__discoveryConfig,
 data__configId,
+data__discoveryConfig,
 organizationsId,
 locationsId
 )
 SELECT 
-'{{ discoveryConfig }}',
 '{{ configId }}',
+'{{ discoveryConfig }}',
 '{{ organizationsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -710,15 +710,15 @@ updateTime
     - name: organizationsId
       value: string
       description: Required parameter for the discovery_configs resource.
-    - name: discoveryConfig
-      value: object
-      description: >
-        Required. The DiscoveryConfig to create.
-        
     - name: configId
       value: string
       description: >
         The config ID can contain uppercase and lowercase letters, numbers, and hyphens; that is, it must match the regular expression: `[a-zA-Z\d-_]+`. The maximum length is 100 characters. Can be empty to allow the system to generate one.
+        
+    - name: discoveryConfig
+      value: object
+      description: >
+        Configuration for discovery to scan resources for profile generation. Only one discovery configuration may exist per organization, folder, or project. The generated data profiles are retained according to the [data retention policy] (https://cloud.google.com/sensitive-data-protection/docs/data-profiles#retention).
         
 ```
 </TabItem>

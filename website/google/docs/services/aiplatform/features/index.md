@@ -204,7 +204,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featureGroupsId"><code>featureGroupsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-latestStatsCount"><code>latestStatsCount</code></a></td>
+    <td><a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-latestStatsCount"><code>latestStatsCount</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists Features in a given FeatureGroup.</td>
 </tr>
 <tr>
@@ -369,12 +369,12 @@ FROM google.aiplatform.features
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND featureGroupsId = '{{ featureGroupsId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 AND readMask = '{{ readMask }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 AND latestStatsCount = '{{ latestStatsCount }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -397,28 +397,28 @@ Creates a new Feature in a given FeatureGroup.
 
 ```sql
 INSERT INTO google.aiplatform.features (
-data__name,
-data__description,
 data__valueType,
-data__labels,
-data__etag,
-data__disableMonitoring,
-data__versionColumnName,
 data__pointOfContact,
+data__description,
+data__name,
+data__versionColumnName,
+data__disableMonitoring,
+data__etag,
+data__labels,
 projectsId,
 locationsId,
 featureGroupsId,
 featureId
 )
 SELECT 
-'{{ name }}',
-'{{ description }}',
 '{{ valueType }}',
-'{{ labels }}',
-'{{ etag }}',
-{{ disableMonitoring }},
-'{{ versionColumnName }}',
 '{{ pointOfContact }}',
+'{{ description }}',
+'{{ name }}',
+'{{ versionColumnName }}',
+{{ disableMonitoring }},
+'{{ etag }}',
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ featureGroupsId }}',
@@ -472,46 +472,46 @@ response
     - name: featureGroupsId
       value: string
       description: Required parameter for the features resource.
-    - name: name
-      value: string
-      description: >
-        Immutable. Name of the Feature. Format: `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}/features/{feature}` `projects/{project}/locations/{location}/featureGroups/{feature_group}/features/{feature}` The last part feature is assigned by the client. The feature can be up to 64 characters long and can consist only of ASCII Latin letters A-Z and a-z, underscore(_), and ASCII digits 0-9 starting with a letter. The value will be unique given an entity type.
-        
-    - name: description
-      value: string
-      description: >
-        Description of the Feature.
-        
     - name: valueType
       value: string
       description: >
         Immutable. Only applicable for Vertex AI Feature Store (Legacy). Type of Feature value.
         
       valid_values: ['VALUE_TYPE_UNSPECIFIED', 'BOOL', 'BOOL_ARRAY', 'DOUBLE', 'DOUBLE_ARRAY', 'INT64', 'INT64_ARRAY', 'STRING', 'STRING_ARRAY', 'BYTES', 'STRUCT']
-    - name: labels
-      value: object
-      description: >
-        Optional. The labels with user-defined metadata to organize your Features. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information on and examples of labels. No more than 64 user labels can be associated with one Feature (System labels are excluded)." System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
-        
-    - name: etag
+    - name: pointOfContact
       value: string
       description: >
-        Used to perform a consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+        Entity responsible for maintaining this feature. Can be comma separated list of email addresses or URIs.
         
-    - name: disableMonitoring
-      value: boolean
+    - name: description
+      value: string
       description: >
-        Optional. Only applicable for Vertex AI Feature Store (Legacy). If not set, use the monitoring_config defined for the EntityType this Feature belongs to. Only Features with type (Feature.ValueType) BOOL, STRING, DOUBLE or INT64 can enable monitoring. If set to true, all types of data monitoring are disabled despite the config on EntityType.
+        Description of the Feature.
+        
+    - name: name
+      value: string
+      description: >
+        Immutable. Name of the Feature. Format: `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}/features/{feature}` `projects/{project}/locations/{location}/featureGroups/{feature_group}/features/{feature}` The last part feature is assigned by the client. The feature can be up to 64 characters long and can consist only of ASCII Latin letters A-Z and a-z, underscore(_), and ASCII digits 0-9 starting with a letter. The value will be unique given an entity type.
         
     - name: versionColumnName
       value: string
       description: >
         Only applicable for Vertex AI Feature Store. The name of the BigQuery Table/View column hosting data for this version. If no value is provided, will use feature_id.
         
-    - name: pointOfContact
+    - name: disableMonitoring
+      value: boolean
+      description: >
+        Optional. Only applicable for Vertex AI Feature Store (Legacy). If not set, use the monitoring_config defined for the EntityType this Feature belongs to. Only Features with type (Feature.ValueType) BOOL, STRING, DOUBLE or INT64 can enable monitoring. If set to true, all types of data monitoring are disabled despite the config on EntityType.
+        
+    - name: etag
       value: string
       description: >
-        Entity responsible for maintaining this feature. Can be comma separated list of email addresses or URIs.
+        Used to perform a consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+        
+    - name: labels
+      value: object
+      description: >
+        Optional. The labels with user-defined metadata to organize your Features. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information on and examples of labels. No more than 64 user labels can be associated with one Feature (System labels are excluded)." System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
         
     - name: requests
       value: array
@@ -540,14 +540,14 @@ Updates the parameters of a single Feature.
 ```sql
 UPDATE google.aiplatform.features
 SET 
-data__name = '{{ name }}',
-data__description = '{{ description }}',
 data__valueType = '{{ valueType }}',
-data__labels = '{{ labels }}',
-data__etag = '{{ etag }}',
-data__disableMonitoring = {{ disableMonitoring }},
+data__pointOfContact = '{{ pointOfContact }}',
+data__description = '{{ description }}',
+data__name = '{{ name }}',
 data__versionColumnName = '{{ versionColumnName }}',
-data__pointOfContact = '{{ pointOfContact }}'
+data__disableMonitoring = {{ disableMonitoring }},
+data__etag = '{{ etag }}',
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

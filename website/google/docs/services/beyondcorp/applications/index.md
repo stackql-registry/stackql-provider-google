@@ -67,7 +67,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="endpointMatchers" /></td>
     <td><code>array</code></td>
-    <td>Required. Endpoint matchers associated with an application. A combination of hostname and ports as endpoint matchers is used to match the application. Match conditions for OR logic. An array of match conditions to allow for multiple matching criteria. The rule is considered a match if one of the conditions is met. The conditions can be one of the following combinations (Hostname), (Hostname & Ports) EXAMPLES: Hostname - ("*.example.com"), ("xyz.example.com") Hostname and Ports - ("example.com" and "22"), ("example.com" and "22,33") etc</td>
+    <td>Optional. An array of conditions to match the application's network endpoint. Each element in the array is an EndpointMatcher object, which defines a specific combination of a hostname pattern and one or more ports. The application is considered matched if at least one of the EndpointMatcher conditions in this array is met (the conditions are combined using OR logic). Each EndpointMatcher must contain a hostname pattern, such as "example.com", and one or more port numbers specified as a string, such as "443". Hostname and port number examples: "*.example.com", "443" "example.com" and "22" "example.com" and "22,33"</td>
+</tr>
+<tr>
+    <td><CopyableCode code="schema" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Type of the external application.</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -111,7 +116,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="endpointMatchers" /></td>
     <td><code>array</code></td>
-    <td>Required. Endpoint matchers associated with an application. A combination of hostname and ports as endpoint matchers is used to match the application. Match conditions for OR logic. An array of match conditions to allow for multiple matching criteria. The rule is considered a match if one of the conditions is met. The conditions can be one of the following combinations (Hostname), (Hostname & Ports) EXAMPLES: Hostname - ("*.example.com"), ("xyz.example.com") Hostname and Ports - ("example.com" and "22"), ("example.com" and "22,33") etc</td>
+    <td>Optional. An array of conditions to match the application's network endpoint. Each element in the array is an EndpointMatcher object, which defines a specific combination of a hostname pattern and one or more ports. The application is considered matched if at least one of the EndpointMatcher conditions in this array is met (the conditions are combined using OR logic). Each EndpointMatcher must contain a hostname pattern, such as "example.com", and one or more port numbers specified as a string, such as "443". Hostname and port number examples: "*.example.com", "443" "example.com" and "22" "example.com" and "22,33"</td>
+</tr>
+<tr>
+    <td><CopyableCode code="schema" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Type of the external application.</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -154,7 +164,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_security_gateways_applications_list"><CopyableCode code="projects_locations_security_gateways_applications_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-securityGatewaysId"><code>securityGatewaysId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Applications in a given project and location.</td>
 </tr>
 <tr>
@@ -168,7 +178,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_security_gateways_applications_patch"><CopyableCode code="projects_locations_security_gateways_applications_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-securityGatewaysId"><code>securityGatewaysId</code></a>, <a href="#parameter-applicationsId"><code>applicationsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a single Application.</td>
 </tr>
 <tr>
@@ -276,6 +286,7 @@ name,
 createTime,
 displayName,
 endpointMatchers,
+schema,
 updateTime,
 upstreams
 FROM google.beyondcorp.applications
@@ -296,6 +307,7 @@ name,
 createTime,
 displayName,
 endpointMatchers,
+schema,
 updateTime,
 upstreams
 FROM google.beyondcorp.applications
@@ -303,9 +315,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND securityGatewaysId = '{{ securityGatewaysId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -327,10 +339,11 @@ Creates a new Application in a given project and location.
 
 ```sql
 INSERT INTO google.beyondcorp.applications (
-data__name,
 data__endpointMatchers,
-data__displayName,
+data__schema,
 data__upstreams,
+data__name,
+data__displayName,
 projectsId,
 locationsId,
 securityGatewaysId,
@@ -338,10 +351,11 @@ applicationId,
 requestId
 )
 SELECT 
-'{{ name }}',
 '{{ endpointMatchers }}',
-'{{ displayName }}',
+'{{ schema }}',
 '{{ upstreams }}',
+'{{ name }}',
+'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ securityGatewaysId }}',
@@ -371,25 +385,31 @@ response
     - name: securityGatewaysId
       value: string
       description: Required parameter for the applications resource.
+    - name: endpointMatchers
+      value: array
+      description: >
+        Optional. An array of conditions to match the application's network endpoint. Each element in the array is an EndpointMatcher object, which defines a specific combination of a hostname pattern and one or more ports. The application is considered matched if at least one of the EndpointMatcher conditions in this array is met (the conditions are combined using OR logic). Each EndpointMatcher must contain a hostname pattern, such as "example.com", and one or more port numbers specified as a string, such as "443". Hostname and port number examples: "*.example.com", "443" "example.com" and "22" "example.com" and "22,33"
+        
+    - name: schema
+      value: string
+      description: >
+        Optional. Type of the external application.
+        
+      valid_values: ['SCHEMA_UNSPECIFIED', 'PROXY_GATEWAY', 'API_GATEWAY']
+    - name: upstreams
+      value: array
+      description: >
+        Optional. Which upstream resources to forward traffic to.
+        
     - name: name
       value: string
       description: >
         Identifier. Name of the resource.
         
-    - name: endpointMatchers
-      value: array
-      description: >
-        Required. Endpoint matchers associated with an application. A combination of hostname and ports as endpoint matchers is used to match the application. Match conditions for OR logic. An array of match conditions to allow for multiple matching criteria. The rule is considered a match if one of the conditions is met. The conditions can be one of the following combinations (Hostname), (Hostname & Ports) EXAMPLES: Hostname - ("*.example.com"), ("xyz.example.com") Hostname and Ports - ("example.com" and "22"), ("example.com" and "22,33") etc
-        
     - name: displayName
       value: string
       description: >
         Optional. An arbitrary user-provided name for the application resource. Cannot exceed 64 characters.
-        
-    - name: upstreams
-      value: array
-      description: >
-        Optional. Which upstream resources to forward traffic to.
         
     - name: applicationId
       value: string
@@ -415,17 +435,18 @@ Updates the parameters of a single Application.
 ```sql
 UPDATE google.beyondcorp.applications
 SET 
-data__name = '{{ name }}',
 data__endpointMatchers = '{{ endpointMatchers }}',
-data__displayName = '{{ displayName }}',
-data__upstreams = '{{ upstreams }}'
+data__schema = '{{ schema }}',
+data__upstreams = '{{ upstreams }}',
+data__name = '{{ name }}',
+data__displayName = '{{ displayName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND securityGatewaysId = '{{ securityGatewaysId }}' --required
 AND applicationsId = '{{ applicationsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

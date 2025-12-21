@@ -50,23 +50,9 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_locations_buckets_create_async"><CopyableCode code="projects_locations_buckets_create_async" /></a></td>
-    <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-bucketId"><code>bucketId</code></a></td>
-    <td>Creates a log bucket asynchronously that can be used to store log entries.After a bucket has been created, the bucket's location cannot be changed.</td>
-</tr>
-<tr>
     <td><a href="#organizations_locations_buckets_create_async"><CopyableCode code="organizations_locations_buckets_create_async" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-bucketId"><code>bucketId</code></a></td>
-    <td>Creates a log bucket asynchronously that can be used to store log entries.After a bucket has been created, the bucket's location cannot be changed.</td>
-</tr>
-<tr>
-    <td><a href="#folders_locations_buckets_create_async"><CopyableCode code="folders_locations_buckets_create_async" /></a></td>
-    <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td><a href="#parameter-bucketId"><code>bucketId</code></a></td>
     <td>Creates a log bucket asynchronously that can be used to store log entries.After a bucket has been created, the bucket's location cannot be changed.</td>
 </tr>
@@ -78,11 +64,18 @@ The following methods are available for this resource:
     <td>Creates a log bucket asynchronously that can be used to store log entries.After a bucket has been created, the bucket's location cannot be changed.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_buckets_update_async"><CopyableCode code="projects_locations_buckets_update_async" /></a></td>
-    <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates a log bucket asynchronously.If the bucket has a lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a bucket has been created, the bucket's location cannot be changed.</td>
+    <td><a href="#projects_locations_buckets_create_async"><CopyableCode code="projects_locations_buckets_create_async" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-bucketId"><code>bucketId</code></a></td>
+    <td>Creates a log bucket asynchronously that can be used to store log entries.After a bucket has been created, the bucket's location cannot be changed.</td>
+</tr>
+<tr>
+    <td><a href="#folders_locations_buckets_create_async"><CopyableCode code="folders_locations_buckets_create_async" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-bucketId"><code>bucketId</code></a></td>
+    <td>Creates a log bucket asynchronously that can be used to store log entries.After a bucket has been created, the bucket's location cannot be changed.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_buckets_update_async"><CopyableCode code="organizations_locations_buckets_update_async" /></a></td>
@@ -92,16 +85,23 @@ The following methods are available for this resource:
     <td>Updates a log bucket asynchronously.If the bucket has a lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a bucket has been created, the bucket's location cannot be changed.</td>
 </tr>
 <tr>
-    <td><a href="#folders_locations_buckets_update_async"><CopyableCode code="folders_locations_buckets_update_async" /></a></td>
+    <td><a href="#billing_accounts_locations_buckets_update_async"><CopyableCode code="billing_accounts_locations_buckets_update_async" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a></td>
+    <td><a href="#parameter-billingAccountsId"><code>billingAccountsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a log bucket asynchronously.If the bucket has a lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a bucket has been created, the bucket's location cannot be changed.</td>
 </tr>
 <tr>
-    <td><a href="#billing_accounts_locations_buckets_update_async"><CopyableCode code="billing_accounts_locations_buckets_update_async" /></a></td>
+    <td><a href="#projects_locations_buckets_update_async"><CopyableCode code="projects_locations_buckets_update_async" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-billingAccountsId"><code>billingAccountsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td>Updates a log bucket asynchronously.If the bucket has a lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a bucket has been created, the bucket's location cannot be changed.</td>
+</tr>
+<tr>
+    <td><a href="#folders_locations_buckets_update_async"><CopyableCode code="folders_locations_buckets_update_async" /></a></td>
+    <td><CopyableCode code="update" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bucketsId"><code>bucketsId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a log bucket asynchronously.If the bucket has a lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a bucket has been created, the bucket's location cannot be changed.</td>
 </tr>
@@ -167,115 +167,41 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `INSERT` examples
 
 <Tabs
-    defaultValue="projects_locations_buckets_create_async"
+    defaultValue="organizations_locations_buckets_create_async"
     values={[
-        { label: 'projects_locations_buckets_create_async', value: 'projects_locations_buckets_create_async' },
         { label: 'organizations_locations_buckets_create_async', value: 'organizations_locations_buckets_create_async' },
-        { label: 'folders_locations_buckets_create_async', value: 'folders_locations_buckets_create_async' },
         { label: 'billing_accounts_locations_buckets_create_async', value: 'billing_accounts_locations_buckets_create_async' },
+        { label: 'projects_locations_buckets_create_async', value: 'projects_locations_buckets_create_async' },
+        { label: 'folders_locations_buckets_create_async', value: 'folders_locations_buckets_create_async' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
-<TabItem value="projects_locations_buckets_create_async">
-
-Creates a log bucket asynchronously that can be used to store log entries.After a bucket has been created, the bucket's location cannot be changed.
-
-```sql
-INSERT INTO google.logging.buckets_async (
-data__description,
-data__retentionDays,
-data__locked,
-data__analyticsEnabled,
-data__restrictedFields,
-data__indexConfigs,
-data__cmekSettings,
-projectsId,
-locationsId,
-bucketId
-)
-SELECT 
-'{{ description }}',
-{{ retentionDays }},
-{{ locked }},
-{{ analyticsEnabled }},
-'{{ restrictedFields }}',
-'{{ indexConfigs }}',
-'{{ cmekSettings }}',
-'{{ projectsId }}',
-'{{ locationsId }}',
-'{{ bucketId }}'
-RETURNING
-name,
-done,
-error,
-metadata,
-response
-;
-```
-</TabItem>
 <TabItem value="organizations_locations_buckets_create_async">
 
 Creates a log bucket asynchronously that can be used to store log entries.After a bucket has been created, the bucket's location cannot be changed.
 
 ```sql
 INSERT INTO google.logging.buckets_async (
-data__description,
+data__indexConfigs,
+data__analyticsEnabled,
 data__retentionDays,
 data__locked,
-data__analyticsEnabled,
-data__restrictedFields,
-data__indexConfigs,
 data__cmekSettings,
+data__restrictedFields,
+data__description,
 organizationsId,
 locationsId,
 bucketId
 )
 SELECT 
-'{{ description }}',
+'{{ indexConfigs }}',
+{{ analyticsEnabled }},
 {{ retentionDays }},
 {{ locked }},
-{{ analyticsEnabled }},
-'{{ restrictedFields }}',
-'{{ indexConfigs }}',
 '{{ cmekSettings }}',
+'{{ restrictedFields }}',
+'{{ description }}',
 '{{ organizationsId }}',
-'{{ locationsId }}',
-'{{ bucketId }}'
-RETURNING
-name,
-done,
-error,
-metadata,
-response
-;
-```
-</TabItem>
-<TabItem value="folders_locations_buckets_create_async">
-
-Creates a log bucket asynchronously that can be used to store log entries.After a bucket has been created, the bucket's location cannot be changed.
-
-```sql
-INSERT INTO google.logging.buckets_async (
-data__description,
-data__retentionDays,
-data__locked,
-data__analyticsEnabled,
-data__restrictedFields,
-data__indexConfigs,
-data__cmekSettings,
-foldersId,
-locationsId,
-bucketId
-)
-SELECT 
-'{{ description }}',
-{{ retentionDays }},
-{{ locked }},
-{{ analyticsEnabled }},
-'{{ restrictedFields }}',
-'{{ indexConfigs }}',
-'{{ cmekSettings }}',
-'{{ foldersId }}',
 '{{ locationsId }}',
 '{{ bucketId }}'
 RETURNING
@@ -293,26 +219,100 @@ Creates a log bucket asynchronously that can be used to store log entries.After 
 
 ```sql
 INSERT INTO google.logging.buckets_async (
-data__description,
+data__indexConfigs,
+data__analyticsEnabled,
 data__retentionDays,
 data__locked,
-data__analyticsEnabled,
-data__restrictedFields,
-data__indexConfigs,
 data__cmekSettings,
+data__restrictedFields,
+data__description,
 billingAccountsId,
 locationsId,
 bucketId
 )
 SELECT 
-'{{ description }}',
+'{{ indexConfigs }}',
+{{ analyticsEnabled }},
 {{ retentionDays }},
 {{ locked }},
-{{ analyticsEnabled }},
-'{{ restrictedFields }}',
-'{{ indexConfigs }}',
 '{{ cmekSettings }}',
+'{{ restrictedFields }}',
+'{{ description }}',
 '{{ billingAccountsId }}',
+'{{ locationsId }}',
+'{{ bucketId }}'
+RETURNING
+name,
+done,
+error,
+metadata,
+response
+;
+```
+</TabItem>
+<TabItem value="projects_locations_buckets_create_async">
+
+Creates a log bucket asynchronously that can be used to store log entries.After a bucket has been created, the bucket's location cannot be changed.
+
+```sql
+INSERT INTO google.logging.buckets_async (
+data__indexConfigs,
+data__analyticsEnabled,
+data__retentionDays,
+data__locked,
+data__cmekSettings,
+data__restrictedFields,
+data__description,
+projectsId,
+locationsId,
+bucketId
+)
+SELECT 
+'{{ indexConfigs }}',
+{{ analyticsEnabled }},
+{{ retentionDays }},
+{{ locked }},
+'{{ cmekSettings }}',
+'{{ restrictedFields }}',
+'{{ description }}',
+'{{ projectsId }}',
+'{{ locationsId }}',
+'{{ bucketId }}'
+RETURNING
+name,
+done,
+error,
+metadata,
+response
+;
+```
+</TabItem>
+<TabItem value="folders_locations_buckets_create_async">
+
+Creates a log bucket asynchronously that can be used to store log entries.After a bucket has been created, the bucket's location cannot be changed.
+
+```sql
+INSERT INTO google.logging.buckets_async (
+data__indexConfigs,
+data__analyticsEnabled,
+data__retentionDays,
+data__locked,
+data__cmekSettings,
+data__restrictedFields,
+data__description,
+foldersId,
+locationsId,
+bucketId
+)
+SELECT 
+'{{ indexConfigs }}',
+{{ analyticsEnabled }},
+{{ retentionDays }},
+{{ locked }},
+'{{ cmekSettings }}',
+'{{ restrictedFields }}',
+'{{ description }}',
+'{{ foldersId }}',
 '{{ locationsId }}',
 '{{ bucketId }}'
 RETURNING
@@ -330,25 +330,30 @@ response
 # Description fields are for documentation purposes
 - name: buckets_async
   props:
-    - name: projectsId
+    - name: organizationsId
       value: string
       description: Required parameter for the buckets_async resource.
     - name: locationsId
       value: string
       description: Required parameter for the buckets_async resource.
-    - name: organizationsId
+    - name: billingAccountsId
+      value: string
+      description: Required parameter for the buckets_async resource.
+    - name: projectsId
       value: string
       description: Required parameter for the buckets_async resource.
     - name: foldersId
       value: string
       description: Required parameter for the buckets_async resource.
-    - name: billingAccountsId
-      value: string
-      description: Required parameter for the buckets_async resource.
-    - name: description
-      value: string
+    - name: indexConfigs
+      value: array
       description: >
-        Optional. Describes this bucket.
+        Optional. A list of indexed fields and related configuration data.
+        
+    - name: analyticsEnabled
+      value: boolean
+      description: >
+        Optional. Whether log analytics is enabled for this bucket.Once enabled, log analytics features cannot be disabled.
         
     - name: retentionDays
       value: integer
@@ -360,25 +365,20 @@ response
       description: >
         Optional. Whether the bucket is locked.The retention period on a locked bucket cannot be changed. Locked buckets may only be deleted if they are empty.
         
-    - name: analyticsEnabled
-      value: boolean
+    - name: cmekSettings
+      value: object
       description: >
-        Optional. Whether log analytics is enabled for this bucket.Once enabled, log analytics features cannot be disabled.
+        Optional. The CMEK settings of the log bucket. If present, new log entries written to this log bucket are encrypted using the CMEK key provided in this configuration. If a log bucket has CMEK settings, the CMEK settings cannot be disabled later by updating the log bucket. Changing the KMS key is allowed.
         
     - name: restrictedFields
       value: array
       description: >
         Optional. Log entry field paths that are denied access in this bucket.The following fields and their children are eligible: textPayload, jsonPayload, protoPayload, httpRequest, labels, sourceLocation.Restricting a repeated field will restrict all values. Adding a parent will block all child fields. (e.g. foo.bar will block foo.bar.baz)
         
-    - name: indexConfigs
-      value: array
+    - name: description
+      value: string
       description: >
-        Optional. A list of indexed fields and related configuration data.
-        
-    - name: cmekSettings
-      value: object
-      description: >
-        Optional. The CMEK settings of the log bucket. If present, new log entries written to this log bucket are encrypted using the CMEK key provided in this configuration. If a log bucket has CMEK settings, the CMEK settings cannot be disabled later by updating the log bucket. Changing the KMS key is allowed.
+        Optional. Describes this bucket.
         
     - name: bucketId
       value: string
@@ -390,41 +390,14 @@ response
 ## `UPDATE` examples
 
 <Tabs
-    defaultValue="projects_locations_buckets_update_async"
+    defaultValue="organizations_locations_buckets_update_async"
     values={[
-        { label: 'projects_locations_buckets_update_async', value: 'projects_locations_buckets_update_async' },
         { label: 'organizations_locations_buckets_update_async', value: 'organizations_locations_buckets_update_async' },
-        { label: 'folders_locations_buckets_update_async', value: 'folders_locations_buckets_update_async' },
-        { label: 'billing_accounts_locations_buckets_update_async', value: 'billing_accounts_locations_buckets_update_async' }
+        { label: 'billing_accounts_locations_buckets_update_async', value: 'billing_accounts_locations_buckets_update_async' },
+        { label: 'projects_locations_buckets_update_async', value: 'projects_locations_buckets_update_async' },
+        { label: 'folders_locations_buckets_update_async', value: 'folders_locations_buckets_update_async' }
     ]}
 >
-<TabItem value="projects_locations_buckets_update_async">
-
-Updates a log bucket asynchronously.If the bucket has a lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a bucket has been created, the bucket's location cannot be changed.
-
-```sql
-UPDATE google.logging.buckets_async
-SET 
-data__description = '{{ description }}',
-data__retentionDays = {{ retentionDays }},
-data__locked = {{ locked }},
-data__analyticsEnabled = {{ analyticsEnabled }},
-data__restrictedFields = '{{ restrictedFields }}',
-data__indexConfigs = '{{ indexConfigs }}',
-data__cmekSettings = '{{ cmekSettings }}'
-WHERE 
-projectsId = '{{ projectsId }}' --required
-AND locationsId = '{{ locationsId }}' --required
-AND bucketsId = '{{ bucketsId }}' --required
-AND updateMask = '{{ updateMask}}'
-RETURNING
-name,
-done,
-error,
-metadata,
-response;
-```
-</TabItem>
 <TabItem value="organizations_locations_buckets_update_async">
 
 Updates a log bucket asynchronously.If the bucket has a lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a bucket has been created, the bucket's location cannot be changed.
@@ -432,42 +405,15 @@ Updates a log bucket asynchronously.If the bucket has a lifecycle_state of DELET
 ```sql
 UPDATE google.logging.buckets_async
 SET 
-data__description = '{{ description }}',
+data__indexConfigs = '{{ indexConfigs }}',
+data__analyticsEnabled = {{ analyticsEnabled }},
 data__retentionDays = {{ retentionDays }},
 data__locked = {{ locked }},
-data__analyticsEnabled = {{ analyticsEnabled }},
+data__cmekSettings = '{{ cmekSettings }}',
 data__restrictedFields = '{{ restrictedFields }}',
-data__indexConfigs = '{{ indexConfigs }}',
-data__cmekSettings = '{{ cmekSettings }}'
+data__description = '{{ description }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
-AND locationsId = '{{ locationsId }}' --required
-AND bucketsId = '{{ bucketsId }}' --required
-AND updateMask = '{{ updateMask}}'
-RETURNING
-name,
-done,
-error,
-metadata,
-response;
-```
-</TabItem>
-<TabItem value="folders_locations_buckets_update_async">
-
-Updates a log bucket asynchronously.If the bucket has a lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a bucket has been created, the bucket's location cannot be changed.
-
-```sql
-UPDATE google.logging.buckets_async
-SET 
-data__description = '{{ description }}',
-data__retentionDays = {{ retentionDays }},
-data__locked = {{ locked }},
-data__analyticsEnabled = {{ analyticsEnabled }},
-data__restrictedFields = '{{ restrictedFields }}',
-data__indexConfigs = '{{ indexConfigs }}',
-data__cmekSettings = '{{ cmekSettings }}'
-WHERE 
-foldersId = '{{ foldersId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND bucketsId = '{{ bucketsId }}' --required
 AND updateMask = '{{ updateMask}}'
@@ -486,15 +432,69 @@ Updates a log bucket asynchronously.If the bucket has a lifecycle_state of DELET
 ```sql
 UPDATE google.logging.buckets_async
 SET 
-data__description = '{{ description }}',
+data__indexConfigs = '{{ indexConfigs }}',
+data__analyticsEnabled = {{ analyticsEnabled }},
 data__retentionDays = {{ retentionDays }},
 data__locked = {{ locked }},
-data__analyticsEnabled = {{ analyticsEnabled }},
+data__cmekSettings = '{{ cmekSettings }}',
 data__restrictedFields = '{{ restrictedFields }}',
-data__indexConfigs = '{{ indexConfigs }}',
-data__cmekSettings = '{{ cmekSettings }}'
+data__description = '{{ description }}'
 WHERE 
 billingAccountsId = '{{ billingAccountsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND bucketsId = '{{ bucketsId }}' --required
+AND updateMask = '{{ updateMask}}'
+RETURNING
+name,
+done,
+error,
+metadata,
+response;
+```
+</TabItem>
+<TabItem value="projects_locations_buckets_update_async">
+
+Updates a log bucket asynchronously.If the bucket has a lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a bucket has been created, the bucket's location cannot be changed.
+
+```sql
+UPDATE google.logging.buckets_async
+SET 
+data__indexConfigs = '{{ indexConfigs }}',
+data__analyticsEnabled = {{ analyticsEnabled }},
+data__retentionDays = {{ retentionDays }},
+data__locked = {{ locked }},
+data__cmekSettings = '{{ cmekSettings }}',
+data__restrictedFields = '{{ restrictedFields }}',
+data__description = '{{ description }}'
+WHERE 
+projectsId = '{{ projectsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND bucketsId = '{{ bucketsId }}' --required
+AND updateMask = '{{ updateMask}}'
+RETURNING
+name,
+done,
+error,
+metadata,
+response;
+```
+</TabItem>
+<TabItem value="folders_locations_buckets_update_async">
+
+Updates a log bucket asynchronously.If the bucket has a lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a bucket has been created, the bucket's location cannot be changed.
+
+```sql
+UPDATE google.logging.buckets_async
+SET 
+data__indexConfigs = '{{ indexConfigs }}',
+data__analyticsEnabled = {{ analyticsEnabled }},
+data__retentionDays = {{ retentionDays }},
+data__locked = {{ locked }},
+data__cmekSettings = '{{ cmekSettings }}',
+data__restrictedFields = '{{ restrictedFields }}',
+data__description = '{{ description }}'
+WHERE 
+foldersId = '{{ foldersId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND bucketsId = '{{ bucketsId }}' --required
 AND updateMask = '{{ updateMask}}'

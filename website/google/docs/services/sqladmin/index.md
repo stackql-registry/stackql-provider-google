@@ -18,7 +18,7 @@ sqladmin service documentation.
 
 :::info[Service Summary]
 
-total resources: __16__  
+total resources: __17__  
 
 :::
 
@@ -32,6 +32,7 @@ total resources: __16__
 <a href="/services/sqladmin/flags/">flags</a><br />
 <a href="/services/sqladmin/instances/">instances</a><br />
 <a href="/services/sqladmin/instances_disk_shrink_config/">instances_disk_shrink_config</a><br />
+<a href="/services/sqladmin/instances_entra_id_certificate/">instances_entra_id_certificate</a><br />
 <a href="/services/sqladmin/instances_latest_recovery_time/">instances_latest_recovery_time</a>
 </div>
 <div class="providerDocColumn">

@@ -164,7 +164,7 @@ The following methods are available for this resource:
     <td><a href="#projects_instances_databases_backup_schedules_list"><CopyableCode code="projects_instances_databases_backup_schedules_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists all the backup schedules for the database.</td>
 </tr>
 <tr>
@@ -294,8 +294,8 @@ FROM google.spanner.backup_schedules
 WHERE projectsId = '{{ projectsId }}' -- required
 AND instancesId = '{{ instancesId }}' -- required
 AND databasesId = '{{ databasesId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -317,11 +317,11 @@ Creates a new backup schedule.
 
 ```sql
 INSERT INTO google.spanner.backup_schedules (
-data__name,
-data__spec,
 data__retentionDuration,
-data__encryptionConfig,
 data__fullBackupSpec,
+data__spec,
+data__name,
+data__encryptionConfig,
 data__incrementalBackupSpec,
 projectsId,
 instancesId,
@@ -329,11 +329,11 @@ databasesId,
 backupScheduleId
 )
 SELECT 
-'{{ name }}',
-'{{ spec }}',
 '{{ retentionDuration }}',
-'{{ encryptionConfig }}',
 '{{ fullBackupSpec }}',
+'{{ spec }}',
+'{{ name }}',
+'{{ encryptionConfig }}',
 '{{ incrementalBackupSpec }}',
 '{{ projectsId }}',
 '{{ instancesId }}',
@@ -365,30 +365,30 @@ updateTime
     - name: databasesId
       value: string
       description: Required parameter for the backup_schedules resource.
-    - name: name
+    - name: retentionDuration
       value: string
       description: >
-        Identifier. Output only for the CreateBackupSchedule operation. Required for the UpdateBackupSchedule operation. A globally unique identifier for the backup schedule which cannot be changed. Values are of the form `projects//instances//databases//backupSchedules/a-z*[a-z0-9]` The final segment of the name must be between 2 and 60 characters in length.
+        Optional. The retention duration of a backup that must be at least 6 hours and at most 366 days. The backup is eligible to be automatically deleted once the retention period has elapsed.
+        
+    - name: fullBackupSpec
+      value: object
+      description: >
+        The schedule creates only full backups.
         
     - name: spec
       value: object
       description: >
         Optional. The schedule specification based on which the backup creations are triggered.
         
-    - name: retentionDuration
+    - name: name
       value: string
       description: >
-        Optional. The retention duration of a backup that must be at least 6 hours and at most 366 days. The backup is eligible to be automatically deleted once the retention period has elapsed.
+        Identifier. Output only for the CreateBackupSchedule operation. Required for the UpdateBackupSchedule operation. A globally unique identifier for the backup schedule which cannot be changed. Values are of the form `projects//instances//databases//backupSchedules/a-z*[a-z0-9]` The final segment of the name must be between 2 and 60 characters in length.
         
     - name: encryptionConfig
       value: object
       description: >
         Optional. The encryption configuration that is used to encrypt the backup. If this field is not specified, the backup uses the same encryption configuration as the database.
-        
-    - name: fullBackupSpec
-      value: object
-      description: >
-        The schedule creates only full backups.
         
     - name: incrementalBackupSpec
       value: object
@@ -417,11 +417,11 @@ Updates a backup schedule.
 ```sql
 UPDATE google.spanner.backup_schedules
 SET 
-data__name = '{{ name }}',
-data__spec = '{{ spec }}',
 data__retentionDuration = '{{ retentionDuration }}',
-data__encryptionConfig = '{{ encryptionConfig }}',
 data__fullBackupSpec = '{{ fullBackupSpec }}',
+data__spec = '{{ spec }}',
+data__name = '{{ name }}',
+data__encryptionConfig = '{{ encryptionConfig }}',
 data__incrementalBackupSpec = '{{ incrementalBackupSpec }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

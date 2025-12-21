@@ -139,14 +139,14 @@ The following methods are available for this resource:
     <td><a href="#organizations_apis_list"><CopyableCode code="organizations_apis_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-includeRevisions"><code>includeRevisions</code></a>, <a href="#parameter-includeMetaData"><code>includeMetaData</code></a>, <a href="#parameter-space"><code>space</code></a></td>
+    <td><a href="#parameter-includeMetaData"><code>includeMetaData</code></a>, <a href="#parameter-space"><code>space</code></a>, <a href="#parameter-includeRevisions"><code>includeRevisions</code></a></td>
     <td>Lists the names of all API proxies in an organization. The names returned correspond to the names defined in the configuration files for each API proxy. If the resource has the `space` attribute set, the response may not return all resources. To learn more, read the [Apigee Spaces Overview](https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).</td>
 </tr>
 <tr>
     <td><a href="#organizations_apis_create"><CopyableCode code="organizations_apis_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-name"><code>name</code></a>, <a href="#parameter-action"><code>action</code></a>, <a href="#parameter-validate"><code>validate</code></a>, <a href="#parameter-space"><code>space</code></a></td>
+    <td><a href="#parameter-action"><code>action</code></a>, <a href="#parameter-validate"><code>validate</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-space"><code>space</code></a></td>
     <td>Creates an API proxy. The API proxy created will not be accessible at runtime until it is deployed to an environment. Create a new API proxy by setting the `name` query parameter to the name of the API proxy. Import an API proxy configuration bundle stored in zip format on your local machine to your organization by doing the following: * Set the `name` query parameter to the name of the API proxy. * Set the `action` query parameter to `import`. * Set the `Content-Type` header to `multipart/form-data`. * Pass as a file the name of API proxy configuration bundle stored in zip format on your local machine using the `file` form field. **Note**: To validate the API proxy configuration bundle only without importing it, set the `action` query parameter to `validate`. When importing an API proxy configuration bundle, if the API proxy does not exist, it will be created. If the API proxy exists, then a new revision is created. Invalid API proxy configurations are rejected, and a list of validation errors is returned to the client.</td>
 </tr>
 <tr>
@@ -272,9 +272,9 @@ SELECT
 proxies
 FROM google.apigee.apis
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND includeRevisions = '{{ includeRevisions }}'
 AND includeMetaData = '{{ includeMetaData }}'
 AND space = '{{ space }}'
+AND includeRevisions = '{{ includeRevisions }}'
 ;
 ```
 </TabItem>
@@ -296,23 +296,23 @@ Creates an API proxy. The API proxy created will not be accessible at runtime un
 
 ```sql
 INSERT INTO google.apigee.apis (
-data__contentType,
 data__data,
 data__extensions,
+data__contentType,
 organizationsId,
-name,
 action,
 validate,
+name,
 space
 )
 SELECT 
-'{{ contentType }}',
 '{{ data }}',
 '{{ extensions }}',
+'{{ contentType }}',
 '{{ organizationsId }}',
-'{{ name }}',
 '{{ action }}',
 '{{ validate }}',
+'{{ name }}',
 '{{ space }}'
 RETURNING
 name,
@@ -352,11 +352,6 @@ type
     - name: organizationsId
       value: string
       description: Required parameter for the apis resource.
-    - name: contentType
-      value: string
-      description: >
-        The HTTP Content-Type header value specifying the content type of the body.
-        
     - name: data
       value: string
       description: >
@@ -367,12 +362,17 @@ type
       description: >
         Application specific response metadata. Must be set in the first response for streaming APIs.
         
-    - name: name
+    - name: contentType
       value: string
+      description: >
+        The HTTP Content-Type header value specifying the content type of the body.
+        
     - name: action
       value: string
     - name: validate
       value: boolean
+    - name: name
+      value: string
     - name: space
       value: string
 ```
@@ -395,8 +395,8 @@ Updates an existing API proxy.
 ```sql
 UPDATE google.apigee.apis
 SET 
-data__labels = '{{ labels }}',
-data__space = '{{ space }}'
+data__space = '{{ space }}',
+data__labels = '{{ labels }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND apisId = '{{ apisId }}' --required

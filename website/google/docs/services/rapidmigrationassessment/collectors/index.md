@@ -138,81 +138,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>name of resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="bucket" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Store cloud storage bucket name (which is a guid) created with this Collector.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="clientVersion" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Client version.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="collectionDays" /></td>
-    <td><code>integer (int32)</code></td>
-    <td>How many days to collect data.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Create time stamp.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>User specified description of the Collector.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>User specified name of the Collector.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="eulaUri" /></td>
-    <td><code>string</code></td>
-    <td>Uri for EULA (End User License Agreement) from customer.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="expectedAssetCount" /></td>
-    <td><code>string (int64)</code></td>
-    <td>User specified expected asset count.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="guestOsScan" /></td>
-    <td><code>object</code></td>
-    <td>Output only. Reference to MC Source Guest Os Scan. (id: GuestOsScan)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Labels as key value pairs.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="serviceAccount" /></td>
-    <td><code>string</code></td>
-    <td>Service Account email used to ingest data to this Collector.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="state" /></td>
-    <td><code>string</code></td>
-    <td>Output only. State of the Collector.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Update time stamp.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="vsphereScan" /></td>
-    <td><code>object</code></td>
-    <td>Output only. Reference to MC Source vsphere_scan. (id: VSphereScan)</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -244,7 +169,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists Collectors in a given project and location.</td>
 </tr>
 <tr>
@@ -258,7 +183,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectorsId"><code>collectorsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a single Collector.</td>
 </tr>
 <tr>
@@ -401,28 +326,14 @@ Lists Collectors in a given project and location.
 
 ```sql
 SELECT
-name,
-bucket,
-clientVersion,
-collectionDays,
-createTime,
-description,
-displayName,
-eulaUri,
-expectedAssetCount,
-guestOsScan,
-labels,
-serviceAccount,
-state,
-updateTime,
-vsphereScan
+*
 FROM google.rapidmigrationassessment.collectors
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -445,13 +356,13 @@ Create a Collector to manage the on-prem appliance which collects information ab
 ```sql
 INSERT INTO google.rapidmigrationassessment.collectors (
 data__name,
+data__expectedAssetCount,
+data__eulaUri,
+data__serviceAccount,
+data__collectionDays,
+data__description,
 data__labels,
 data__displayName,
-data__description,
-data__serviceAccount,
-data__expectedAssetCount,
-data__collectionDays,
-data__eulaUri,
 projectsId,
 locationsId,
 collectorId,
@@ -459,13 +370,13 @@ requestId
 )
 SELECT 
 '{{ name }}',
+'{{ expectedAssetCount }}',
+'{{ eulaUri }}',
+'{{ serviceAccount }}',
+{{ collectionDays }},
+'{{ description }}',
 '{{ labels }}',
 '{{ displayName }}',
-'{{ description }}',
-'{{ serviceAccount }}',
-'{{ expectedAssetCount }}',
-{{ collectionDays }},
-'{{ eulaUri }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ collectorId }}',
@@ -496,6 +407,31 @@ response
       description: >
         name of resource.
         
+    - name: expectedAssetCount
+      value: string
+      description: >
+        User specified expected asset count.
+        
+    - name: eulaUri
+      value: string
+      description: >
+        Uri for EULA (End User License Agreement) from customer.
+        
+    - name: serviceAccount
+      value: string
+      description: >
+        Service Account email used to ingest data to this Collector.
+        
+    - name: collectionDays
+      value: integer
+      description: >
+        How many days to collect data.
+        
+    - name: description
+      value: string
+      description: >
+        User specified description of the Collector.
+        
     - name: labels
       value: object
       description: >
@@ -505,31 +441,6 @@ response
       value: string
       description: >
         User specified name of the Collector.
-        
-    - name: description
-      value: string
-      description: >
-        User specified description of the Collector.
-        
-    - name: serviceAccount
-      value: string
-      description: >
-        Service Account email used to ingest data to this Collector.
-        
-    - name: expectedAssetCount
-      value: string
-      description: >
-        User specified expected asset count.
-        
-    - name: collectionDays
-      value: integer
-      description: >
-        How many days to collect data.
-        
-    - name: eulaUri
-      value: string
-      description: >
-        Uri for EULA (End User License Agreement) from customer.
         
     - name: collectorId
       value: string
@@ -556,19 +467,19 @@ Updates the parameters of a single Collector.
 UPDATE google.rapidmigrationassessment.collectors
 SET 
 data__name = '{{ name }}',
-data__labels = '{{ labels }}',
-data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
-data__serviceAccount = '{{ serviceAccount }}',
 data__expectedAssetCount = '{{ expectedAssetCount }}',
+data__eulaUri = '{{ eulaUri }}',
+data__serviceAccount = '{{ serviceAccount }}',
 data__collectionDays = {{ collectionDays }},
-data__eulaUri = '{{ eulaUri }}'
+data__description = '{{ description }}',
+data__labels = '{{ labels }}',
+data__displayName = '{{ displayName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND collectorsId = '{{ collectorsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

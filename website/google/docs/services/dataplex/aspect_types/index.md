@@ -65,6 +65,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The time when the AspectType was created.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="dataClassification" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Immutable. Stores data classification of the aspect.</td>
+</tr>
+<tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
     <td>Optional. Description of the AspectType.</td>
@@ -132,6 +137,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The time when the AspectType was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="dataClassification" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Immutable. Stores data classification of the aspect.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -320,6 +330,7 @@ SELECT
 name,
 authorization,
 createTime,
+dataClassification,
 description,
 displayName,
 etag,
@@ -344,6 +355,7 @@ SELECT
 name,
 authorization,
 createTime,
+dataClassification,
 description,
 displayName,
 etag,
@@ -384,6 +396,7 @@ data__description,
 data__displayName,
 data__labels,
 data__etag,
+data__dataClassification,
 data__authorization,
 data__metadataTemplate,
 projectsId,
@@ -396,6 +409,7 @@ SELECT
 '{{ displayName }}',
 '{{ labels }}',
 '{{ etag }}',
+'{{ dataClassification }}',
 '{{ authorization }}',
 '{{ metadataTemplate }}',
 '{{ projectsId }}',
@@ -443,6 +457,12 @@ response
       description: >
         The service computes this checksum. The client may send it on update and delete requests to ensure it has an up-to-date value before proceeding.
         
+    - name: dataClassification
+      value: string
+      description: >
+        Optional. Immutable. Stores data classification of the aspect.
+        
+      valid_values: ['DATA_CLASSIFICATION_UNSPECIFIED', 'METADATA_AND_DATA']
     - name: authorization
       value: object
       description: >
@@ -481,6 +501,7 @@ data__description = '{{ description }}',
 data__displayName = '{{ displayName }}',
 data__labels = '{{ labels }}',
 data__etag = '{{ etag }}',
+data__dataClassification = '{{ dataClassification }}',
 data__authorization = '{{ authorization }}',
 data__metadataTemplate = '{{ metadataTemplate }}'
 WHERE 

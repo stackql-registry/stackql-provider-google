@@ -51,7 +51,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Identifier. Name of the AutokeyConfig resource, e.g. `folders/&#123;FOLDER_NUMBER&#125;/autokeyConfig` `projects/&#123;PROJECT_NUMBER&#125;/autokeyConfig`.</td>
+    <td>Identifier. Name of the AutokeyConfig resource, e.g. `folders/&#123;FOLDER_NUMBER&#125;/autokeyConfig`</td>
 </tr>
 <tr>
     <td><CopyableCode code="etag" /></td>

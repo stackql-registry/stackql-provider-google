@@ -85,6 +85,11 @@ The following fields are returned by `SELECT` queries:
     <td>The description of the instance (2048 characters or less).</td>
 </tr>
 <tr>
+    <td><CopyableCode code="directoryServices" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Directory Services configuration for Kerberos-based authentication. Should only be set if protocol is "NFS_V4_1". (id: DirectoryServicesConfig)</td>
+</tr>
+<tr>
     <td><CopyableCode code="etag" /></td>
     <td><code>string</code></td>
     <td>Server-specified ETag for the instance resource to prevent simultaneous updates from overwriting each other.</td>
@@ -222,6 +227,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
     <td>The description of the instance (2048 characters or less).</td>
+</tr>
+<tr>
+    <td><CopyableCode code="directoryServices" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Directory Services configuration for Kerberos-based authentication. Should only be set if protocol is "NFS_V4_1". (id: DirectoryServicesConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="etag" /></td>
@@ -480,6 +490,7 @@ customPerformanceSupported,
 deletionProtectionEnabled,
 deletionProtectionReason,
 description,
+directoryServices,
 etag,
 fileShares,
 kmsKeyName,
@@ -518,6 +529,7 @@ customPerformanceSupported,
 deletionProtectionEnabled,
 deletionProtectionReason,
 description,
+directoryServices,
 etag,
 fileShares,
 kmsKeyName,
@@ -574,6 +586,7 @@ data__kmsKeyName,
 data__replication,
 data__tags,
 data__protocol,
+data__directoryServices,
 data__performanceConfig,
 data__deletionProtectionEnabled,
 data__deletionProtectionReason,
@@ -592,6 +605,7 @@ SELECT
 '{{ replication }}',
 '{{ tags }}',
 '{{ protocol }}',
+'{{ directoryServices }}',
 '{{ performanceConfig }}',
 {{ deletionProtectionEnabled }},
 '{{ deletionProtectionReason }}',
@@ -671,6 +685,11 @@ response
         Immutable. The protocol indicates the access protocol for all shares in the instance. This field is immutable and it cannot be changed after the instance has been created. Default value: `NFS_V3`.
         
       valid_values: ['FILE_PROTOCOL_UNSPECIFIED', 'NFS_V3', 'NFS_V4_1']
+    - name: directoryServices
+      value: object
+      description: >
+        Optional. Directory Services configuration for Kerberos-based authentication. Should only be set if protocol is "NFS_V4_1".
+        
     - name: performanceConfig
       value: object
       description: >
@@ -718,6 +737,7 @@ data__kmsKeyName = '{{ kmsKeyName }}',
 data__replication = '{{ replication }}',
 data__tags = '{{ tags }}',
 data__protocol = '{{ protocol }}',
+data__directoryServices = '{{ directoryServices }}',
 data__performanceConfig = '{{ performanceConfig }}',
 data__deletionProtectionEnabled = {{ deletionProtectionEnabled }},
 data__deletionProtectionReason = '{{ deletionProtectionReason }}'

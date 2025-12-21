@@ -194,7 +194,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Returns list of all available backup policies.</td>
 </tr>
 <tr>
@@ -333,10 +333,10 @@ weeklyBackupLimit
 FROM google.netapp.backup_policies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -359,24 +359,24 @@ Creates new backup policy
 ```sql
 INSERT INTO google.netapp.backup_policies (
 data__name,
-data__dailyBackupLimit,
-data__weeklyBackupLimit,
-data__monthlyBackupLimit,
-data__description,
 data__enabled,
+data__weeklyBackupLimit,
+data__dailyBackupLimit,
+data__description,
 data__labels,
+data__monthlyBackupLimit,
 projectsId,
 locationsId,
 backupPolicyId
 )
 SELECT 
 '{{ name }}',
-{{ dailyBackupLimit }},
-{{ weeklyBackupLimit }},
-{{ monthlyBackupLimit }},
-'{{ description }}',
 {{ enabled }},
+{{ weeklyBackupLimit }},
+{{ dailyBackupLimit }},
+'{{ description }}',
 '{{ labels }}',
+{{ monthlyBackupLimit }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ backupPolicyId }}'
@@ -406,35 +406,35 @@ response
       description: >
         Identifier. The resource name of the backup policy. Format: `projects/{project_id}/locations/{location}/backupPolicies/{backup_policy_id}`.
         
-    - name: dailyBackupLimit
-      value: integer
+    - name: enabled
+      value: boolean
       description: >
-        Number of daily backups to keep. Note that the minimum daily backup limit is 2.
+        If enabled, make backups automatically according to the schedules. This will be applied to all volumes that have this policy attached and enforced on volume level. If not specified, default is true.
         
     - name: weeklyBackupLimit
       value: integer
       description: >
         Number of weekly backups to keep. Note that the sum of daily, weekly and monthly backups should be greater than 1.
         
-    - name: monthlyBackupLimit
+    - name: dailyBackupLimit
       value: integer
       description: >
-        Number of monthly backups to keep. Note that the sum of daily, weekly and monthly backups should be greater than 1.
+        Number of daily backups to keep. Note that the minimum daily backup limit is 2.
         
     - name: description
       value: string
       description: >
         Description of the backup policy.
         
-    - name: enabled
-      value: boolean
-      description: >
-        If enabled, make backups automatically according to the schedules. This will be applied to all volumes that have this policy attached and enforced on volume level. If not specified, default is true.
-        
     - name: labels
       value: object
       description: >
         Resource labels to represent user provided metadata.
+        
+    - name: monthlyBackupLimit
+      value: integer
+      description: >
+        Number of monthly backups to keep. Note that the sum of daily, weekly and monthly backups should be greater than 1.
         
     - name: backupPolicyId
       value: string
@@ -459,12 +459,12 @@ Updates settings of a specific backup policy.
 UPDATE google.netapp.backup_policies
 SET 
 data__name = '{{ name }}',
-data__dailyBackupLimit = {{ dailyBackupLimit }},
-data__weeklyBackupLimit = {{ weeklyBackupLimit }},
-data__monthlyBackupLimit = {{ monthlyBackupLimit }},
-data__description = '{{ description }}',
 data__enabled = {{ enabled }},
-data__labels = '{{ labels }}'
+data__weeklyBackupLimit = {{ weeklyBackupLimit }},
+data__dailyBackupLimit = {{ dailyBackupLimit }},
+data__description = '{{ description }}',
+data__labels = '{{ labels }}',
+data__monthlyBackupLimit = {{ monthlyBackupLimit }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

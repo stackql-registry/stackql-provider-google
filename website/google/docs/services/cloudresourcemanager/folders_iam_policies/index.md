@@ -168,8 +168,8 @@ Sets the access control policy on a folder, replacing any existing policy. The `
 ```sql
 REPLACE google.cloudresourcemanager.folders_iam_policies
 SET 
-data__policy = '{{ policy }}',
-data__updateMask = '{{ updateMask }}'
+data__updateMask = '{{ updateMask }}',
+data__policy = '{{ policy }}'
 WHERE 
 foldersId = '{{ foldersId }}' --required
 RETURNING

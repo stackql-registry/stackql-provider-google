@@ -314,21 +314,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists ContactCenters in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-contactCenterId"><code>contactCenterId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-contactCenterId"><code>contactCenterId</code></a></td>
     <td>Creates a new ContactCenter in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-contactCentersId"><code>contactCentersId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a single ContactCenter.</td>
 </tr>
 <tr>
@@ -482,10 +482,10 @@ userEmail
 FROM google.contactcenteraiplatform.contact_centers
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -507,48 +507,48 @@ Creates a new ContactCenter in a given project and location.
 
 ```sql
 INSERT INTO google.contactcenteraiplatform.contact_centers (
-data__name,
-data__labels,
-data__customerDomainPrefix,
-data__displayName,
-data__instanceConfig,
-data__samlParams,
-data__userEmail,
-data__ccaipManagedUsers,
-data__adminUser,
-data__kmsKey,
-data__privateAccess,
 data__early,
 data__normal,
-data__critical,
-data__advancedReportingEnabled,
+data__kmsKey,
+data__instanceConfig,
+data__privateAccess,
 data__featureConfig,
+data__advancedReportingEnabled,
+data__customerDomainPrefix,
+data__samlParams,
+data__labels,
+data__displayName,
+data__critical,
+data__ccaipManagedUsers,
+data__userEmail,
+data__adminUser,
+data__name,
 projectsId,
 locationsId,
-contactCenterId,
-requestId
+requestId,
+contactCenterId
 )
 SELECT 
-'{{ name }}',
-'{{ labels }}',
-'{{ customerDomainPrefix }}',
-'{{ displayName }}',
-'{{ instanceConfig }}',
-'{{ samlParams }}',
-'{{ userEmail }}',
-{{ ccaipManagedUsers }},
-'{{ adminUser }}',
-'{{ kmsKey }}',
-'{{ privateAccess }}',
 '{{ early }}',
 '{{ normal }}',
-'{{ critical }}',
-{{ advancedReportingEnabled }},
+'{{ kmsKey }}',
+'{{ instanceConfig }}',
+'{{ privateAccess }}',
 '{{ featureConfig }}',
+{{ advancedReportingEnabled }},
+'{{ customerDomainPrefix }}',
+'{{ samlParams }}',
+'{{ labels }}',
+'{{ displayName }}',
+'{{ critical }}',
+{{ ccaipManagedUsers }},
+'{{ userEmail }}',
+'{{ adminUser }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ contactCenterId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ contactCenterId }}'
 RETURNING
 name,
 done,
@@ -570,61 +570,6 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the contact_centers resource.
-    - name: name
-      value: string
-      description: >
-        name of resource
-        
-    - name: labels
-      value: object
-      description: >
-        Labels as key value pairs
-        
-    - name: customerDomainPrefix
-      value: string
-      description: >
-        Required. Immutable. At least 2 and max 16 char long, must conform to [RFC 1035](https://www.ietf.org/rfc/rfc1035.txt).
-        
-    - name: displayName
-      value: string
-      description: >
-        Required. A user friendly name for the ContactCenter.
-        
-    - name: instanceConfig
-      value: object
-      description: >
-        The configuration of this instance, it is currently immutable once created.
-        
-    - name: samlParams
-      value: object
-      description: >
-        Optional. Params that sets up Google as IdP.
-        
-    - name: userEmail
-      value: string
-      description: >
-        Optional. Email address of the first admin user.
-        
-    - name: ccaipManagedUsers
-      value: boolean
-      description: >
-        Optional. Whether to enable users to be created in the CCAIP-instance concurrently to having users in Cloud identity
-        
-    - name: adminUser
-      value: object
-      description: >
-        Optional. Info about the first admin user, such as given name and family name.
-        
-    - name: kmsKey
-      value: string
-      description: >
-        Immutable. The KMS key name to encrypt the user input (`ContactCenter`).
-        
-    - name: privateAccess
-      value: object
-      description: >
-        Optional. VPC-SC related networking configuration.
-        
     - name: early
       value: object
       description: >
@@ -635,24 +580,79 @@ response
       description: >
         Optional. Normal release channel.
         
-    - name: critical
+    - name: kmsKey
+      value: string
+      description: >
+        Immutable. The KMS key name to encrypt the user input (`ContactCenter`).
+        
+    - name: instanceConfig
       value: object
       description: >
-        Optional. Critical release channel.
+        The configuration of this instance, it is currently immutable once created.
         
-    - name: advancedReportingEnabled
-      value: boolean
+    - name: privateAccess
+      value: object
       description: >
-        Optional. Whether the advanced reporting feature is enabled.
+        Optional. VPC-SC related networking configuration.
         
     - name: featureConfig
       value: object
       description: >
         Optional. Feature configuration to populate the feature flags.
         
-    - name: contactCenterId
+    - name: advancedReportingEnabled
+      value: boolean
+      description: >
+        Optional. Whether the advanced reporting feature is enabled.
+        
+    - name: customerDomainPrefix
       value: string
+      description: >
+        Required. Immutable. At least 2 and max 16 char long, must conform to [RFC 1035](https://www.ietf.org/rfc/rfc1035.txt).
+        
+    - name: samlParams
+      value: object
+      description: >
+        Optional. Params that sets up Google as IdP.
+        
+    - name: labels
+      value: object
+      description: >
+        Labels as key value pairs
+        
+    - name: displayName
+      value: string
+      description: >
+        Required. A user friendly name for the ContactCenter.
+        
+    - name: critical
+      value: object
+      description: >
+        Optional. Critical release channel.
+        
+    - name: ccaipManagedUsers
+      value: boolean
+      description: >
+        Optional. Whether to enable users to be created in the CCAIP-instance concurrently to having users in Cloud identity
+        
+    - name: userEmail
+      value: string
+      description: >
+        Optional. Email address of the first admin user.
+        
+    - name: adminUser
+      value: object
+      description: >
+        Optional. Info about the first admin user, such as given name and family name.
+        
+    - name: name
+      value: string
+      description: >
+        name of resource
+        
     - name: requestId
+      value: string
+    - name: contactCenterId
       value: string
 ```
 </TabItem>
@@ -674,28 +674,28 @@ Updates the parameters of a single ContactCenter.
 ```sql
 UPDATE google.contactcenteraiplatform.contact_centers
 SET 
-data__name = '{{ name }}',
-data__labels = '{{ labels }}',
-data__customerDomainPrefix = '{{ customerDomainPrefix }}',
-data__displayName = '{{ displayName }}',
-data__instanceConfig = '{{ instanceConfig }}',
-data__samlParams = '{{ samlParams }}',
-data__userEmail = '{{ userEmail }}',
-data__ccaipManagedUsers = {{ ccaipManagedUsers }},
-data__adminUser = '{{ adminUser }}',
-data__kmsKey = '{{ kmsKey }}',
-data__privateAccess = '{{ privateAccess }}',
 data__early = '{{ early }}',
 data__normal = '{{ normal }}',
-data__critical = '{{ critical }}',
+data__kmsKey = '{{ kmsKey }}',
+data__instanceConfig = '{{ instanceConfig }}',
+data__privateAccess = '{{ privateAccess }}',
+data__featureConfig = '{{ featureConfig }}',
 data__advancedReportingEnabled = {{ advancedReportingEnabled }},
-data__featureConfig = '{{ featureConfig }}'
+data__customerDomainPrefix = '{{ customerDomainPrefix }}',
+data__samlParams = '{{ samlParams }}',
+data__labels = '{{ labels }}',
+data__displayName = '{{ displayName }}',
+data__critical = '{{ critical }}',
+data__ccaipManagedUsers = {{ ccaipManagedUsers }},
+data__userEmail = '{{ userEmail }}',
+data__adminUser = '{{ adminUser }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND contactCentersId = '{{ contactCentersId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

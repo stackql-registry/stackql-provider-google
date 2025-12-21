@@ -134,7 +134,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_product_sets_list"><CopyableCode code="projects_locations_product_sets_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists ProductSets in an unspecified order. Possible errors: * Returns INVALID_ARGUMENT if page_size is greater than 100, or less than 1.</td>
 </tr>
 <tr>
@@ -258,8 +258,8 @@ indexTime
 FROM google.vision.product_sets
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -281,15 +281,15 @@ Creates and returns a new ProductSet resource. Possible errors: * Returns INVALI
 
 ```sql
 INSERT INTO google.vision.product_sets (
-data__name,
 data__displayName,
+data__name,
 projectsId,
 locationsId,
 productSetId
 )
 SELECT 
-'{{ name }}',
 '{{ displayName }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ productSetId }}'
@@ -313,15 +313,15 @@ indexTime
     - name: locationsId
       value: string
       description: Required parameter for the product_sets resource.
-    - name: name
-      value: string
-      description: >
-        The resource name of the ProductSet. Format is: `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`. This field is ignored when creating a ProductSet.
-        
     - name: displayName
       value: string
       description: >
         The user-provided name for this ProductSet. Must not be empty. Must be at most 4096 characters long.
+        
+    - name: name
+      value: string
+      description: >
+        The resource name of the ProductSet. Format is: `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`. This field is ignored when creating a ProductSet.
         
     - name: productSetId
       value: string
@@ -345,8 +345,8 @@ Makes changes to a ProductSet resource. Only display_name can be updated current
 ```sql
 UPDATE google.vision.product_sets
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}'
+data__displayName = '{{ displayName }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

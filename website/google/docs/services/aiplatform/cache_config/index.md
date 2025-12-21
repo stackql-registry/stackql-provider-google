@@ -155,8 +155,8 @@ Updates a cache config.
 ```sql
 UPDATE google.aiplatform.cache_config
 SET 
-data__name = '{{ name }}',
-data__disableCache = {{ disableCache }}
+data__disableCache = {{ disableCache }},
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 RETURNING

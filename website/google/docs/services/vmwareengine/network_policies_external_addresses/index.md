@@ -82,7 +82,7 @@ The following methods are available for this resource:
     <td><a href="#fetch_external_addresses"><CopyableCode code="fetch_external_addresses" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-networkPoliciesId"><code>networkPoliciesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists external IP addresses assigned to VMware workload VMs within the scope of the given network policy.</td>
 </tr>
 </tbody>
@@ -149,8 +149,8 @@ FROM google.vmwareengine.network_policies_external_addresses
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND networkPoliciesId = '{{ networkPoliciesId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>

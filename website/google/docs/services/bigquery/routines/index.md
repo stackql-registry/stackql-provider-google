@@ -67,7 +67,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="definitionBody" /></td>
     <td><code>string</code></td>
-    <td>Required. The body of the routine. For functions, this is the expression in the AS clause. If language=SQL, it is the substring inside (but excluding) the parentheses. For example, for the function created with the following statement: `CREATE FUNCTION JoinLines(x string, y string) as (concat(x, "\n", y))` The definition_body is `concat(x, "\n", y)` (\n is not replaced with linebreak). If language=JAVASCRIPT, it is the evaluated string in the AS clause. For example, for the function created with the following statement: `CREATE FUNCTION f() RETURNS STRING LANGUAGE js AS 'return "\n";\n'` The definition_body is `return "\n";\n` Note that both \n are replaced with linebreaks.</td>
+    <td>Required. The body of the routine. For functions, this is the expression in the AS clause. If `language = "SQL"`, it is the substring inside (but excluding) the parentheses. For example, for the function created with the following statement: `CREATE FUNCTION JoinLines(x string, y string) as (concat(x, "\n", y))` The definition_body is `concat(x, "\n", y)` (\n is not replaced with linebreak). If `language="JAVASCRIPT"`, it is the evaluated string in the AS clause. For example, for the function created with the following statement: `CREATE FUNCTION f() RETURNS STRING LANGUAGE js AS 'return "\n";\n'` The definition_body is `return "\n";\n` Note that both \n are replaced with linebreaks. If `definition_body` references another routine, then that routine must be fully qualified with its project ID.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -122,7 +122,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="returnType" /></td>
     <td><code>object</code></td>
-    <td>The data type of a variable such as a function argument. Examples include: * INT64: `&#123;"typeKind": "INT64"&#125;` * ARRAY: &#123; "typeKind": "ARRAY", "arrayElementType": &#123;"typeKind": "STRING"&#125; &#125; * STRUCT&gt;: &#123; "typeKind": "STRUCT", "structType": &#123; "fields": [ &#123; "name": "x", "type": &#123;"typeKind": "STRING"&#125; &#125;, &#123; "name": "y", "type": &#123; "typeKind": "ARRAY", "arrayElementType": &#123;"typeKind": "DATE"&#125; &#125; &#125; ] &#125; &#125; * RANGE: &#123; "typeKind": "RANGE", "rangeElementType": &#123;"typeKind": "DATE"&#125; &#125; (id: StandardSqlDataType)</td>
+    <td>Optional if language = "SQL"; required otherwise. Cannot be set if routine_type = "TABLE_VALUED_FUNCTION". If absent, the return type is inferred from definition_body at query time in each query that references this routine. If present, then the evaluated result will be cast to the specified returned type at query time. For example, for the functions created with the following statements: * `CREATE FUNCTION Add(x FLOAT64, y FLOAT64) RETURNS FLOAT64 AS (x + y);` * `CREATE FUNCTION Increment(x FLOAT64) AS (Add(x, 1));` * `CREATE FUNCTION Decrement(x FLOAT64) RETURNS FLOAT64 AS (Add(x, -1));` The return_type is `&#123;type_kind: "FLOAT64"&#125;` for `Add` and `Decrement`, and is absent for `Increment` (inferred as FLOAT64 at query time). Suppose the function `Add` is replaced by `CREATE OR REPLACE FUNCTION Add(x INT64, y INT64) AS (x + y);` Then the inferred return type of `Increment` is automatically changed to INT64 at query time, while the return type of `Decrement` remains FLOAT64. (id: StandardSqlDataType)</td>
 </tr>
 <tr>
     <td><CopyableCode code="routineReference" /></td>
@@ -181,7 +181,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="definitionBody" /></td>
     <td><code>string</code></td>
-    <td>Required. The body of the routine. For functions, this is the expression in the AS clause. If language=SQL, it is the substring inside (but excluding) the parentheses. For example, for the function created with the following statement: `CREATE FUNCTION JoinLines(x string, y string) as (concat(x, "\n", y))` The definition_body is `concat(x, "\n", y)` (\n is not replaced with linebreak). If language=JAVASCRIPT, it is the evaluated string in the AS clause. For example, for the function created with the following statement: `CREATE FUNCTION f() RETURNS STRING LANGUAGE js AS 'return "\n";\n'` The definition_body is `return "\n";\n` Note that both \n are replaced with linebreaks.</td>
+    <td>Required. The body of the routine. For functions, this is the expression in the AS clause. If `language = "SQL"`, it is the substring inside (but excluding) the parentheses. For example, for the function created with the following statement: `CREATE FUNCTION JoinLines(x string, y string) as (concat(x, "\n", y))` The definition_body is `concat(x, "\n", y)` (\n is not replaced with linebreak). If `language="JAVASCRIPT"`, it is the evaluated string in the AS clause. For example, for the function created with the following statement: `CREATE FUNCTION f() RETURNS STRING LANGUAGE js AS 'return "\n";\n'` The definition_body is `return "\n";\n` Note that both \n are replaced with linebreaks. If `definition_body` references another routine, then that routine must be fully qualified with its project ID.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -236,7 +236,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="returnType" /></td>
     <td><code>object</code></td>
-    <td>The data type of a variable such as a function argument. Examples include: * INT64: `&#123;"typeKind": "INT64"&#125;` * ARRAY: &#123; "typeKind": "ARRAY", "arrayElementType": &#123;"typeKind": "STRING"&#125; &#125; * STRUCT&gt;: &#123; "typeKind": "STRUCT", "structType": &#123; "fields": [ &#123; "name": "x", "type": &#123;"typeKind": "STRING"&#125; &#125;, &#123; "name": "y", "type": &#123; "typeKind": "ARRAY", "arrayElementType": &#123;"typeKind": "DATE"&#125; &#125; &#125; ] &#125; &#125; * RANGE: &#123; "typeKind": "RANGE", "rangeElementType": &#123;"typeKind": "DATE"&#125; &#125; (id: StandardSqlDataType)</td>
+    <td>Optional if language = "SQL"; required otherwise. Cannot be set if routine_type = "TABLE_VALUED_FUNCTION". If absent, the return type is inferred from definition_body at query time in each query that references this routine. If present, then the evaluated result will be cast to the specified returned type at query time. For example, for the functions created with the following statements: * `CREATE FUNCTION Add(x FLOAT64, y FLOAT64) RETURNS FLOAT64 AS (x + y);` * `CREATE FUNCTION Increment(x FLOAT64) AS (Add(x, 1));` * `CREATE FUNCTION Decrement(x FLOAT64) RETURNS FLOAT64 AS (Add(x, -1));` The return_type is `&#123;type_kind: "FLOAT64"&#125;` for `Add` and `Decrement`, and is absent for `Increment` (inferred as FLOAT64 at query time). Suppose the function `Add` is replaced by `CREATE OR REPLACE FUNCTION Add(x INT64, y INT64) AS (x + y);` Then the inferred return type of `Increment` is automatically changed to INT64 at query time, while the return type of `Decrement` remains FLOAT64. (id: StandardSqlDataType)</td>
 </tr>
 <tr>
     <td><CopyableCode code="routineReference" /></td>
@@ -294,7 +294,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+datasetId"><code>+datasetId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists all routines in the specified dataset. Requires the READER dataset role.</td>
 </tr>
 <tr>
@@ -444,10 +444,10 @@ strictMode
 FROM google.bigquery.routines
 WHERE projectId = '{{ projectId }}' -- required
 AND +datasetId = '{{ +datasetId }}' -- required
-AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
 AND pageToken = '{{ pageToken }}'
 AND readMask = '{{ readMask }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -469,44 +469,44 @@ Creates a new routine in the dataset.
 
 ```sql
 INSERT INTO google.bigquery.routines (
-data__arguments,
-data__dataGovernanceType,
-data__definitionBody,
-data__description,
-data__determinismLevel,
-data__externalRuntimeOptions,
-data__importedLibraries,
 data__language,
+data__externalRuntimeOptions,
+data__returnType,
+data__sparkOptions,
+data__returnTableType,
+data__importedLibraries,
 data__pythonOptions,
 data__remoteFunctionOptions,
-data__returnTableType,
-data__returnType,
-data__routineReference,
-data__routineType,
 data__securityMode,
-data__sparkOptions,
+data__routineType,
+data__determinismLevel,
+data__description,
 data__strictMode,
+data__arguments,
+data__routineReference,
+data__definitionBody,
+data__dataGovernanceType,
 projectId,
 +datasetId
 )
 SELECT 
-'{{ arguments }}',
-'{{ dataGovernanceType }}',
-'{{ definitionBody }}',
-'{{ description }}',
-'{{ determinismLevel }}',
-'{{ externalRuntimeOptions }}',
-'{{ importedLibraries }}',
 '{{ language }}',
+'{{ externalRuntimeOptions }}',
+'{{ returnType }}',
+'{{ sparkOptions }}',
+'{{ returnTableType }}',
+'{{ importedLibraries }}',
 '{{ pythonOptions }}',
 '{{ remoteFunctionOptions }}',
-'{{ returnTableType }}',
-'{{ returnType }}',
-'{{ routineReference }}',
-'{{ routineType }}',
 '{{ securityMode }}',
-'{{ sparkOptions }}',
+'{{ routineType }}',
+'{{ determinismLevel }}',
+'{{ description }}',
 {{ strictMode }},
+'{{ arguments }}',
+'{{ routineReference }}',
+'{{ definitionBody }}',
+'{{ dataGovernanceType }}',
 '{{ projectId }}',
 '{{ +datasetId }}'
 RETURNING
@@ -545,49 +545,37 @@ strictMode
     - name: +datasetId
       value: string
       description: Required parameter for the routines resource.
-    - name: arguments
-      value: array
-      description: >
-        Optional.
-        
-    - name: dataGovernanceType
-      value: string
-      description: >
-        Optional. If set to `DATA_MASKING`, the function is validated and made available as a masking function. For more information, see [Create custom masking routines](https://cloud.google.com/bigquery/docs/user-defined-functions#custom-mask).
-        
-      valid_values: ['DATA_GOVERNANCE_TYPE_UNSPECIFIED', 'DATA_MASKING']
-    - name: definitionBody
-      value: string
-      description: >
-        Required. The body of the routine. For functions, this is the expression in the AS clause. If language=SQL, it is the substring inside (but excluding) the parentheses. For example, for the function created with the following statement: `CREATE FUNCTION JoinLines(x string, y string) as (concat(x, "\n", y))` The definition_body is `concat(x, "\n", y)` (\n is not replaced with linebreak). If language=JAVASCRIPT, it is the evaluated string in the AS clause. For example, for the function created with the following statement: `CREATE FUNCTION f() RETURNS STRING LANGUAGE js AS 'return "\n";\n'` The definition_body is `return "\n";\n` Note that both \n are replaced with linebreaks.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. The description of the routine, if defined.
-        
-    - name: determinismLevel
-      value: string
-      description: >
-        Optional. The determinism level of the JavaScript UDF, if defined.
-        
-      valid_values: ['DETERMINISM_LEVEL_UNSPECIFIED', 'DETERMINISTIC', 'NOT_DETERMINISTIC']
-    - name: externalRuntimeOptions
-      value: object
-      description: >
-        Optional. Options for the runtime of the external system executing the routine. This field is only applicable for Python UDFs. [Preview](https://cloud.google.com/products/#product-launch-stages)
-        
-    - name: importedLibraries
-      value: array
-      description: >
-        Optional. If language = "JAVASCRIPT", this field stores the path of the imported JAVASCRIPT libraries.
-        
     - name: language
       value: string
       description: >
         Optional. Defaults to "SQL" if remote_function_options field is absent, not set otherwise.
         
       valid_values: ['LANGUAGE_UNSPECIFIED', 'SQL', 'JAVASCRIPT', 'PYTHON', 'JAVA', 'SCALA']
+    - name: externalRuntimeOptions
+      value: object
+      description: >
+        Optional. Options for the runtime of the external system executing the routine. This field is only applicable for Python UDFs. [Preview](https://cloud.google.com/products/#product-launch-stages)
+        
+    - name: returnType
+      value: object
+      description: >
+        Optional if language = "SQL"; required otherwise. Cannot be set if routine_type = "TABLE_VALUED_FUNCTION". If absent, the return type is inferred from definition_body at query time in each query that references this routine. If present, then the evaluated result will be cast to the specified returned type at query time. For example, for the functions created with the following statements: * `CREATE FUNCTION Add(x FLOAT64, y FLOAT64) RETURNS FLOAT64 AS (x + y);` * `CREATE FUNCTION Increment(x FLOAT64) AS (Add(x, 1));` * `CREATE FUNCTION Decrement(x FLOAT64) RETURNS FLOAT64 AS (Add(x, -1));` The return_type is `{type_kind: "FLOAT64"}` for `Add` and `Decrement`, and is absent for `Increment` (inferred as FLOAT64 at query time). Suppose the function `Add` is replaced by `CREATE OR REPLACE FUNCTION Add(x INT64, y INT64) AS (x + y);` Then the inferred return type of `Increment` is automatically changed to INT64 at query time, while the return type of `Decrement` remains FLOAT64.
+        
+    - name: sparkOptions
+      value: object
+      description: >
+        Optional. Spark specific options.
+        
+    - name: returnTableType
+      value: object
+      description: >
+        Optional. Can be set only if routine_type = "TABLE_VALUED_FUNCTION". If absent, the return table type is inferred from definition_body at query time in each query that references this routine. If present, then the columns in the evaluated table result will be cast to match the column types specified in return table type, at query time.
+        
+    - name: importedLibraries
+      value: array
+      description: >
+        Optional. If language = "JAVASCRIPT", this field stores the path of the imported JAVASCRIPT libraries.
+        
     - name: pythonOptions
       value: object
       description: >
@@ -598,43 +586,55 @@ strictMode
       description: >
         Optional. Remote function specific options.
         
-    - name: returnTableType
-      value: object
-      description: >
-        Optional. Can be set only if routine_type = "TABLE_VALUED_FUNCTION". If absent, the return table type is inferred from definition_body at query time in each query that references this routine. If present, then the columns in the evaluated table result will be cast to match the column types specified in return table type, at query time.
-        
-    - name: returnType
-      value: object
-      description: >
-        The data type of a variable such as a function argument. Examples include: * INT64: `{"typeKind": "INT64"}` * ARRAY: { "typeKind": "ARRAY", "arrayElementType": {"typeKind": "STRING"} } * STRUCT>: { "typeKind": "STRUCT", "structType": { "fields": [ { "name": "x", "type": {"typeKind": "STRING"} }, { "name": "y", "type": { "typeKind": "ARRAY", "arrayElementType": {"typeKind": "DATE"} } } ] } } * RANGE: { "typeKind": "RANGE", "rangeElementType": {"typeKind": "DATE"} }
-        
-    - name: routineReference
-      value: object
-      description: >
-        Id path of a routine.
-        
-    - name: routineType
-      value: string
-      description: >
-        Required. The type of routine.
-        
-      valid_values: ['ROUTINE_TYPE_UNSPECIFIED', 'SCALAR_FUNCTION', 'PROCEDURE', 'TABLE_VALUED_FUNCTION', 'AGGREGATE_FUNCTION']
     - name: securityMode
       value: string
       description: >
         Optional. The security mode of the routine, if defined. If not defined, the security mode is automatically determined from the routine's configuration.
         
       valid_values: ['SECURITY_MODE_UNSPECIFIED', 'DEFINER', 'INVOKER']
-    - name: sparkOptions
-      value: object
+    - name: routineType
+      value: string
       description: >
-        Optional. Spark specific options.
+        Required. The type of routine.
+        
+      valid_values: ['ROUTINE_TYPE_UNSPECIFIED', 'SCALAR_FUNCTION', 'PROCEDURE', 'TABLE_VALUED_FUNCTION', 'AGGREGATE_FUNCTION']
+    - name: determinismLevel
+      value: string
+      description: >
+        Optional. The determinism level of the JavaScript UDF, if defined.
+        
+      valid_values: ['DETERMINISM_LEVEL_UNSPECIFIED', 'DETERMINISTIC', 'NOT_DETERMINISTIC']
+    - name: description
+      value: string
+      description: >
+        Optional. The description of the routine, if defined.
         
     - name: strictMode
       value: boolean
       description: >
         Optional. Use this option to catch many common errors. Error checking is not exhaustive, and successfully creating a procedure doesn't guarantee that the procedure will successfully execute at runtime. If `strictMode` is set to `TRUE`, the procedure body is further checked for errors such as non-existent tables or columns. The `CREATE PROCEDURE` statement fails if the body fails any of these checks. If `strictMode` is set to `FALSE`, the procedure body is checked only for syntax. For procedures that invoke themselves recursively, specify `strictMode=FALSE` to avoid non-existent procedure errors during validation. Default value is `TRUE`.
         
+    - name: arguments
+      value: array
+      description: >
+        Optional.
+        
+    - name: routineReference
+      value: object
+      description: >
+        Id path of a routine.
+        
+    - name: definitionBody
+      value: string
+      description: >
+        Required. The body of the routine. For functions, this is the expression in the AS clause. If `language = "SQL"`, it is the substring inside (but excluding) the parentheses. For example, for the function created with the following statement: `CREATE FUNCTION JoinLines(x string, y string) as (concat(x, "\n", y))` The definition_body is `concat(x, "\n", y)` (\n is not replaced with linebreak). If `language="JAVASCRIPT"`, it is the evaluated string in the AS clause. For example, for the function created with the following statement: `CREATE FUNCTION f() RETURNS STRING LANGUAGE js AS 'return "\n";\n'` The definition_body is `return "\n";\n` Note that both \n are replaced with linebreaks. If `definition_body` references another routine, then that routine must be fully qualified with its project ID.
+        
+    - name: dataGovernanceType
+      value: string
+      description: >
+        Optional. If set to `DATA_MASKING`, the function is validated and made available as a masking function. For more information, see [Create custom masking routines](https://cloud.google.com/bigquery/docs/user-defined-functions#custom-mask).
+        
+      valid_values: ['DATA_GOVERNANCE_TYPE_UNSPECIFIED', 'DATA_MASKING']
 ```
 </TabItem>
 </Tabs>
@@ -655,23 +655,23 @@ Updates information in an existing routine. The update method replaces the entir
 ```sql
 REPLACE google.bigquery.routines
 SET 
-data__arguments = '{{ arguments }}',
-data__dataGovernanceType = '{{ dataGovernanceType }}',
-data__definitionBody = '{{ definitionBody }}',
-data__description = '{{ description }}',
-data__determinismLevel = '{{ determinismLevel }}',
-data__externalRuntimeOptions = '{{ externalRuntimeOptions }}',
-data__importedLibraries = '{{ importedLibraries }}',
 data__language = '{{ language }}',
+data__externalRuntimeOptions = '{{ externalRuntimeOptions }}',
+data__returnType = '{{ returnType }}',
+data__sparkOptions = '{{ sparkOptions }}',
+data__returnTableType = '{{ returnTableType }}',
+data__importedLibraries = '{{ importedLibraries }}',
 data__pythonOptions = '{{ pythonOptions }}',
 data__remoteFunctionOptions = '{{ remoteFunctionOptions }}',
-data__returnTableType = '{{ returnTableType }}',
-data__returnType = '{{ returnType }}',
-data__routineReference = '{{ routineReference }}',
-data__routineType = '{{ routineType }}',
 data__securityMode = '{{ securityMode }}',
-data__sparkOptions = '{{ sparkOptions }}',
-data__strictMode = {{ strictMode }}
+data__routineType = '{{ routineType }}',
+data__determinismLevel = '{{ determinismLevel }}',
+data__description = '{{ description }}',
+data__strictMode = {{ strictMode }},
+data__arguments = '{{ arguments }}',
+data__routineReference = '{{ routineReference }}',
+data__definitionBody = '{{ definitionBody }}',
+data__dataGovernanceType = '{{ dataGovernanceType }}'
 WHERE 
 projectId = '{{ projectId }}' --required
 AND +datasetId = '{{ +datasetId }}' --required

@@ -18,13 +18,14 @@ oslogin service documentation.
 
 :::info[Service Summary]
 
-total resources: __4__  
+total resources: __5__  
 
 :::
 
 ## Resources
 <div class="row">
 <div class="providerDocColumn">
+<a href="/services/oslogin/locations/">locations</a><br />
 <a href="/services/oslogin/projects/">projects</a><br />
 <a href="/services/oslogin/ssh_public_keys/">ssh_public_keys</a>
 </div>

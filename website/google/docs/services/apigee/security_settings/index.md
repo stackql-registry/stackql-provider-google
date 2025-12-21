@@ -160,8 +160,8 @@ UpdateSecuritySettings updates the current security settings for API Security.
 ```sql
 UPDATE google.apigee.security_settings
 SET 
-data__name = '{{ name }}',
-data__mlRetrainingFeedbackEnabled = {{ mlRetrainingFeedbackEnabled }}
+data__mlRetrainingFeedbackEnabled = {{ mlRetrainingFeedbackEnabled }},
+data__name = '{{ name }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND updateMask = '{{ updateMask}}'

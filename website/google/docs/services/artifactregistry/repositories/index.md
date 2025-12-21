@@ -294,7 +294,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists repositories.</td>
 </tr>
 <tr>
@@ -317,6 +317,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
     <td></td>
     <td>Deletes a repository and all of its contents. The returned Operation will finish once the repository has been deleted. It will not have any Operation metadata and will return a google.protobuf.Empty response.</td>
+</tr>
+<tr>
+    <td><a href="#export_artifact"><CopyableCode code="export_artifact" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
+    <td></td>
+    <td>Exports an artifact.</td>
 </tr>
 </tbody>
 </table>
@@ -453,10 +460,10 @@ vulnerabilityScanningConfig
 FROM google.artifactregistry.repositories
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -478,39 +485,39 @@ Creates a repository. The returned Operation will finish once the repository has
 
 ```sql
 INSERT INTO google.artifactregistry.repositories (
+data__kmsKeyName,
 data__mavenConfig,
-data__dockerConfig,
-data__virtualRepositoryConfig,
-data__remoteRepositoryConfig,
 data__name,
-data__format,
+data__disallowUnspecifiedMode,
+data__cleanupPolicyDryRun,
+data__remoteRepositoryConfig,
 data__description,
 data__labels,
-data__kmsKeyName,
-data__mode,
-data__cleanupPolicies,
-data__cleanupPolicyDryRun,
+data__dockerConfig,
+data__format,
 data__vulnerabilityScanningConfig,
-data__disallowUnspecifiedMode,
+data__virtualRepositoryConfig,
+data__cleanupPolicies,
+data__mode,
 projectsId,
 locationsId,
 repositoryId
 )
 SELECT 
+'{{ kmsKeyName }}',
 '{{ mavenConfig }}',
-'{{ dockerConfig }}',
-'{{ virtualRepositoryConfig }}',
-'{{ remoteRepositoryConfig }}',
 '{{ name }}',
-'{{ format }}',
+{{ disallowUnspecifiedMode }},
+{{ cleanupPolicyDryRun }},
+'{{ remoteRepositoryConfig }}',
 '{{ description }}',
 '{{ labels }}',
-'{{ kmsKeyName }}',
-'{{ mode }}',
-'{{ cleanupPolicies }}',
-{{ cleanupPolicyDryRun }},
+'{{ dockerConfig }}',
+'{{ format }}',
 '{{ vulnerabilityScanningConfig }}',
-{{ disallowUnspecifiedMode }},
+'{{ virtualRepositoryConfig }}',
+'{{ cleanupPolicies }}',
+'{{ mode }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ repositoryId }}'
@@ -535,37 +542,36 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the repositories resource.
+    - name: kmsKeyName
+      value: string
+      description: >
+        The Cloud KMS resource name of the customer managed encryption key that's used to encrypt the contents of the Repository. Has the form: `projects/my-project/locations/my-region/keyRings/my-kr/cryptoKeys/my-key`. This value may not be changed after the Repository has been created.
+        
     - name: mavenConfig
       value: object
       description: >
         Maven repository config contains repository level configuration for the repositories of maven type.
-        
-    - name: dockerConfig
-      value: object
-      description: >
-        Docker repository config contains repository level configuration for the repositories of docker type.
-        
-    - name: virtualRepositoryConfig
-      value: object
-      description: >
-        Configuration specific for a Virtual Repository.
-        
-    - name: remoteRepositoryConfig
-      value: object
-      description: >
-        Configuration specific for a Remote Repository.
         
     - name: name
       value: string
       description: >
         The name of the repository, for example: `projects/p1/locations/us-central1/repositories/repo1`. For each location in a project, repository names must be unique.
         
-    - name: format
-      value: string
+    - name: disallowUnspecifiedMode
+      value: boolean
       description: >
-        Optional. The format of packages that are stored in the repository.
+        Optional. If this is true, an unspecified repo type will be treated as error rather than defaulting to standard.
         
-      valid_values: ['FORMAT_UNSPECIFIED', 'DOCKER', 'MAVEN', 'NPM', 'APT', 'YUM', 'GOOGET', 'PYTHON', 'KFP', 'GO', 'GENERIC']
+    - name: cleanupPolicyDryRun
+      value: boolean
+      description: >
+        Optional. If true, the cleanup pipeline is prevented from deleting versions in this repository.
+        
+    - name: remoteRepositoryConfig
+      value: object
+      description: >
+        Configuration specific for a Remote Repository.
+        
     - name: description
       value: string
       description: >
@@ -576,10 +582,31 @@ response
       description: >
         Labels with user-defined metadata. This field may contain up to 64 entries. Label keys and values may be no longer than 63 characters. Label keys must begin with a lowercase letter and may only contain lowercase letters, numeric characters, underscores, and dashes.
         
-    - name: kmsKeyName
+    - name: dockerConfig
+      value: object
+      description: >
+        Docker repository config contains repository level configuration for the repositories of docker type.
+        
+    - name: format
       value: string
       description: >
-        The Cloud KMS resource name of the customer managed encryption key that's used to encrypt the contents of the Repository. Has the form: `projects/my-project/locations/my-region/keyRings/my-kr/cryptoKeys/my-key`. This value may not be changed after the Repository has been created.
+        Optional. The format of packages that are stored in the repository.
+        
+      valid_values: ['FORMAT_UNSPECIFIED', 'DOCKER', 'MAVEN', 'NPM', 'APT', 'YUM', 'GOOGET', 'PYTHON', 'KFP', 'GO', 'GENERIC', 'RUBY']
+    - name: vulnerabilityScanningConfig
+      value: object
+      description: >
+        Optional. Config and state for vulnerability scanning of resources within this Repository.
+        
+    - name: virtualRepositoryConfig
+      value: object
+      description: >
+        Configuration specific for a Virtual Repository.
+        
+    - name: cleanupPolicies
+      value: object
+      description: >
+        Optional. Cleanup policies for this repository. Cleanup policies indicate when certain package versions can be automatically deleted. Map keys are policy IDs supplied by users during policy creation. They must unique within a repository and be under 128 characters in length.
         
     - name: mode
       value: string
@@ -587,26 +614,6 @@ response
         Optional. The mode of the repository.
         
       valid_values: ['MODE_UNSPECIFIED', 'STANDARD_REPOSITORY', 'VIRTUAL_REPOSITORY', 'REMOTE_REPOSITORY', 'AOSS_REPOSITORY', 'ASSURED_OSS_REPOSITORY']
-    - name: cleanupPolicies
-      value: object
-      description: >
-        Optional. Cleanup policies for this repository. Cleanup policies indicate when certain package versions can be automatically deleted. Map keys are policy IDs supplied by users during policy creation. They must unique within a repository and be under 128 characters in length.
-        
-    - name: cleanupPolicyDryRun
-      value: boolean
-      description: >
-        Optional. If true, the cleanup pipeline is prevented from deleting versions in this repository.
-        
-    - name: vulnerabilityScanningConfig
-      value: object
-      description: >
-        Optional. Config and state for vulnerability scanning of resources within this Repository.
-        
-    - name: disallowUnspecifiedMode
-      value: boolean
-      description: >
-        Optional. If this is true, an unspecified repo type will be treated as error rather than defaulting to standard.
-        
     - name: repositoryId
       value: string
 ```
@@ -629,20 +636,20 @@ Updates a repository.
 ```sql
 UPDATE google.artifactregistry.repositories
 SET 
+data__kmsKeyName = '{{ kmsKeyName }}',
 data__mavenConfig = '{{ mavenConfig }}',
-data__dockerConfig = '{{ dockerConfig }}',
-data__virtualRepositoryConfig = '{{ virtualRepositoryConfig }}',
-data__remoteRepositoryConfig = '{{ remoteRepositoryConfig }}',
 data__name = '{{ name }}',
-data__format = '{{ format }}',
+data__disallowUnspecifiedMode = {{ disallowUnspecifiedMode }},
+data__cleanupPolicyDryRun = {{ cleanupPolicyDryRun }},
+data__remoteRepositoryConfig = '{{ remoteRepositoryConfig }}',
 data__description = '{{ description }}',
 data__labels = '{{ labels }}',
-data__kmsKeyName = '{{ kmsKeyName }}',
-data__mode = '{{ mode }}',
-data__cleanupPolicies = '{{ cleanupPolicies }}',
-data__cleanupPolicyDryRun = {{ cleanupPolicyDryRun }},
+data__dockerConfig = '{{ dockerConfig }}',
+data__format = '{{ format }}',
 data__vulnerabilityScanningConfig = '{{ vulnerabilityScanningConfig }}',
-data__disallowUnspecifiedMode = {{ disallowUnspecifiedMode }}
+data__virtualRepositoryConfig = '{{ virtualRepositoryConfig }}',
+data__cleanupPolicies = '{{ cleanupPolicies }}',
+data__mode = '{{ mode }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -691,6 +698,35 @@ DELETE FROM google.artifactregistry.repositories
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND repositoriesId = '{{ repositoriesId }}' --required
+;
+```
+</TabItem>
+</Tabs>
+
+
+## Lifecycle Methods
+
+<Tabs
+    defaultValue="export_artifact"
+    values={[
+        { label: 'export_artifact', value: 'export_artifact' }
+    ]}
+>
+<TabItem value="export_artifact">
+
+Exports an artifact.
+
+```sql
+EXEC google.artifactregistry.repositories.export_artifact 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@repositoriesId='{{ repositoriesId }}' --required 
+@@json=
+'{
+"gcsPath": "{{ gcsPath }}", 
+"sourceTag": "{{ sourceTag }}", 
+"sourceVersion": "{{ sourceVersion }}"
+}'
 ;
 ```
 </TabItem>

@@ -204,7 +204,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists all the sources in a given project and location.</td>
 </tr>
 <tr>
@@ -218,7 +218,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a source.</td>
 </tr>
 <tr>
@@ -350,10 +350,10 @@ updateTime
 FROM google.migrationcenter.sources
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -375,22 +375,22 @@ Creates a new source in a given project and location.
 
 ```sql
 INSERT INTO google.migrationcenter.sources (
-data__displayName,
 data__description,
-data__type,
 data__priority,
+data__displayName,
 data__managed,
+data__type,
 projectsId,
 locationsId,
 sourceId,
 requestId
 )
 SELECT 
-'{{ displayName }}',
 '{{ description }}',
-'{{ type }}',
 {{ priority }},
+'{{ displayName }}',
 {{ managed }},
+'{{ type }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ sourceId }}',
@@ -416,15 +416,25 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the sources resource.
+    - name: description
+      value: string
+      description: >
+        Free-text description.
+        
+    - name: priority
+      value: integer
+      description: >
+        The information confidence of the source. The higher the value, the higher the confidence.
+        
     - name: displayName
       value: string
       description: >
         User-friendly display name.
         
-    - name: description
-      value: string
+    - name: managed
+      value: boolean
       description: >
-        Free-text description.
+        If `true`, the source is managed by other service(s).
         
     - name: type
       value: string
@@ -432,16 +442,6 @@ response
         Data source type.
         
       valid_values: ['SOURCE_TYPE_UNKNOWN', 'SOURCE_TYPE_UPLOAD', 'SOURCE_TYPE_GUEST_OS_SCAN', 'SOURCE_TYPE_INVENTORY_SCAN', 'SOURCE_TYPE_CUSTOM', 'SOURCE_TYPE_DISCOVERY_CLIENT']
-    - name: priority
-      value: integer
-      description: >
-        The information confidence of the source. The higher the value, the higher the confidence.
-        
-    - name: managed
-      value: boolean
-      description: >
-        If `true`, the source is managed by other service(s).
-        
     - name: sourceId
       value: string
     - name: requestId
@@ -466,17 +466,17 @@ Updates the parameters of a source.
 ```sql
 UPDATE google.migrationcenter.sources
 SET 
-data__displayName = '{{ displayName }}',
 data__description = '{{ description }}',
-data__type = '{{ type }}',
 data__priority = {{ priority }},
-data__managed = {{ managed }}
+data__displayName = '{{ displayName }}',
+data__managed = {{ managed }},
+data__type = '{{ type }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND sourcesId = '{{ sourcesId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

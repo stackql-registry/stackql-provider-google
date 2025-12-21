@@ -89,17 +89,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="initialNodeCount" /></td>
     <td><code>integer (int32)</code></td>
-    <td>The initial node count for the pool. You must ensure that your Compute Engine [resource quota](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/quotas) is sufficient for this number of instances. You must also have available firewall and routes quota.</td>
+    <td>The initial node count for the pool. You must ensure that your Compute Engine [resource quota](https://cloud.google.com/compute/quotas) is sufficient for this number of instances. You must also have available firewall and routes quota.</td>
 </tr>
 <tr>
     <td><CopyableCode code="instanceGroupUrls" /></td>
     <td><code>array</code></td>
-    <td>Output only. The resource URLs of the [managed instance groups](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/instance-groups/creating-groups-of-managed-instances) associated with this node pool. During the node pool blue-green upgrade operation, the URLs contain both blue and green resources.</td>
+    <td>Output only. The resource URLs of the [managed instance groups](https://cloud.google.com/compute/docs/instance-groups/creating-groups-of-managed-instances) associated with this node pool. During the node pool blue-green upgrade operation, the URLs contain both blue and green resources.</td>
 </tr>
 <tr>
     <td><CopyableCode code="locations" /></td>
     <td><code>array</code></td>
-    <td>The list of Google Compute Engine [zones](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/zones#available) in which the NodePool's nodes should be located. If this value is unspecified during node pool creation, the [Cluster.Locations](https://&#123;$universe.dns_names.final_documentation_domain&#125;/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters#Cluster.FIELDS.locations) value will be used, instead. Warning: changing node pool locations will result in nodes being added and/or removed.</td>
+    <td>The list of Google Compute Engine [zones](https://cloud.google.com/compute/docs/zones#available) in which the NodePool's nodes should be located. If this value is unspecified during node pool creation, the [Cluster.Locations](https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters#Cluster.FIELDS.locations) value will be used, instead. Warning: changing node pool locations will result in nodes being added and/or removed.</td>
 </tr>
 <tr>
     <td><CopyableCode code="management" /></td>
@@ -115,6 +115,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="networkConfig" /></td>
     <td><code>object</code></td>
     <td>Networking configuration for this NodePool. If specified, it overrides the cluster-level defaults. (id: NodeNetworkConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="nodeDrainConfig" /></td>
+    <td><code>object</code></td>
+    <td>Specifies the node drain configuration for this node pool. (id: NodeDrainConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="placementPolicy" /></td>
@@ -159,7 +164,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="version" /></td>
     <td><code>string</code></td>
-    <td>The version of Kubernetes running on this NodePool's nodes. If unspecified, it defaults as described [here](https://&#123;$universe.dns_names.final_documentation_domain&#125;/kubernetes-engine/versioning#specifying_node_version).</td>
+    <td>The version of Kubernetes running on this NodePool's nodes. If unspecified, it defaults as described [here](https://cloud.google.com/kubernetes-engine/versioning#specifying_node_version).</td>
 </tr>
 </tbody>
 </table>
@@ -213,17 +218,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="initialNodeCount" /></td>
     <td><code>integer (int32)</code></td>
-    <td>The initial node count for the pool. You must ensure that your Compute Engine [resource quota](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/quotas) is sufficient for this number of instances. You must also have available firewall and routes quota.</td>
+    <td>The initial node count for the pool. You must ensure that your Compute Engine [resource quota](https://cloud.google.com/compute/quotas) is sufficient for this number of instances. You must also have available firewall and routes quota.</td>
 </tr>
 <tr>
     <td><CopyableCode code="instanceGroupUrls" /></td>
     <td><code>array</code></td>
-    <td>Output only. The resource URLs of the [managed instance groups](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/instance-groups/creating-groups-of-managed-instances) associated with this node pool. During the node pool blue-green upgrade operation, the URLs contain both blue and green resources.</td>
+    <td>Output only. The resource URLs of the [managed instance groups](https://cloud.google.com/compute/docs/instance-groups/creating-groups-of-managed-instances) associated with this node pool. During the node pool blue-green upgrade operation, the URLs contain both blue and green resources.</td>
 </tr>
 <tr>
     <td><CopyableCode code="locations" /></td>
     <td><code>array</code></td>
-    <td>The list of Google Compute Engine [zones](https://&#123;$universe.dns_names.final_documentation_domain&#125;/compute/docs/zones#available) in which the NodePool's nodes should be located. If this value is unspecified during node pool creation, the [Cluster.Locations](https://&#123;$universe.dns_names.final_documentation_domain&#125;/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters#Cluster.FIELDS.locations) value will be used, instead. Warning: changing node pool locations will result in nodes being added and/or removed.</td>
+    <td>The list of Google Compute Engine [zones](https://cloud.google.com/compute/docs/zones#available) in which the NodePool's nodes should be located. If this value is unspecified during node pool creation, the [Cluster.Locations](https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters#Cluster.FIELDS.locations) value will be used, instead. Warning: changing node pool locations will result in nodes being added and/or removed.</td>
 </tr>
 <tr>
     <td><CopyableCode code="management" /></td>
@@ -239,6 +244,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="networkConfig" /></td>
     <td><code>object</code></td>
     <td>Networking configuration for this NodePool. If specified, it overrides the cluster-level defaults. (id: NodeNetworkConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="nodeDrainConfig" /></td>
+    <td><code>object</code></td>
+    <td>Specifies the node drain configuration for this node pool. (id: NodeDrainConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="placementPolicy" /></td>
@@ -283,7 +293,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="version" /></td>
     <td><code>string</code></td>
-    <td>The version of Kubernetes running on this NodePool's nodes. If unspecified, it defaults as described [here](https://&#123;$universe.dns_names.final_documentation_domain&#125;/kubernetes-engine/versioning#specifying_node_version).</td>
+    <td>The version of Kubernetes running on this NodePool's nodes. If unspecified, it defaults as described [here](https://cloud.google.com/kubernetes-engine/versioning#specifying_node_version).</td>
 </tr>
 </tbody>
 </table>
@@ -347,7 +357,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_clusters_node_pools_get"><CopyableCode code="projects_locations_clusters_node_pools_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a>, <a href="#parameter-nodePoolsId"><code>nodePoolsId</code></a></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-clusterId"><code>clusterId</code></a>, <a href="#parameter-nodePoolId"><code>nodePoolId</code></a></td>
+    <td><a href="#parameter-clusterId"><code>clusterId</code></a>, <a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-nodePoolId"><code>nodePoolId</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
     <td>Retrieves the requested node pool.</td>
 </tr>
 <tr>
@@ -403,7 +413,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_clusters_node_pools_delete"><CopyableCode code="projects_locations_clusters_node_pools_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a>, <a href="#parameter-nodePoolsId"><code>nodePoolsId</code></a></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-clusterId"><code>clusterId</code></a>, <a href="#parameter-nodePoolId"><code>nodePoolId</code></a></td>
+    <td><a href="#parameter-clusterId"><code>clusterId</code></a>, <a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-nodePoolId"><code>nodePoolId</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
     <td>Deletes a node pool from a cluster.</td>
 </tr>
 <tr>
@@ -414,11 +424,11 @@ The following methods are available for this resource:
     <td>Deletes a node pool from a cluster.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_clusters_node_pools_set_autoscaling"><CopyableCode code="projects_locations_clusters_node_pools_set_autoscaling" /></a></td>
+    <td><a href="#projects_locations_clusters_node_pools_set_size"><CopyableCode code="projects_locations_clusters_node_pools_set_size" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a>, <a href="#parameter-nodePoolsId"><code>nodePoolsId</code></a></td>
     <td></td>
-    <td>Sets the autoscaling settings for the specified node pool.</td>
+    <td>Sets the size for a specific node pool. The new size will be used for all replicas, including future replicas created by modifying NodePool.locations.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_clusters_node_pools_complete_upgrade"><CopyableCode code="projects_locations_clusters_node_pools_complete_upgrade" /></a></td>
@@ -428,13 +438,6 @@ The following methods are available for this resource:
     <td>CompleteNodePoolUpgrade will signal an on-going node pool upgrade to complete.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_clusters_node_pools_rollback"><CopyableCode code="projects_locations_clusters_node_pools_rollback" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a>, <a href="#parameter-nodePoolsId"><code>nodePoolsId</code></a></td>
-    <td></td>
-    <td>Rolls back a previously Aborted or Failed NodePool upgrade. This makes no changes if the last upgrade successfully completed.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_clusters_node_pools_set_management"><CopyableCode code="projects_locations_clusters_node_pools_set_management" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a>, <a href="#parameter-nodePoolsId"><code>nodePoolsId</code></a></td>
@@ -442,11 +445,18 @@ The following methods are available for this resource:
     <td>Sets the NodeManagement options for a node pool.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_clusters_node_pools_set_size"><CopyableCode code="projects_locations_clusters_node_pools_set_size" /></a></td>
+    <td><a href="#projects_locations_clusters_node_pools_set_autoscaling"><CopyableCode code="projects_locations_clusters_node_pools_set_autoscaling" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a>, <a href="#parameter-nodePoolsId"><code>nodePoolsId</code></a></td>
     <td></td>
-    <td>Sets the size for a specific node pool. The new size will be used for all replicas, including future replicas created by modifying NodePool.locations.</td>
+    <td>Sets the autoscaling settings for the specified node pool.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_clusters_node_pools_rollback"><CopyableCode code="projects_locations_clusters_node_pools_rollback" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a>, <a href="#parameter-nodePoolsId"><code>nodePoolsId</code></a></td>
+    <td></td>
+    <td>Rolls back a previously Aborted or Failed NodePool upgrade. This makes no changes if the last upgrade successfully completed.</td>
 </tr>
 <tr>
     <td><a href="#projects_zones_clusters_node_pools_autoscaling"><CopyableCode code="projects_zones_clusters_node_pools_autoscaling" /></a></td>
@@ -463,18 +473,18 @@ The following methods are available for this resource:
     <td>Rolls back a previously Aborted or Failed NodePool upgrade. This makes no changes if the last upgrade successfully completed.</td>
 </tr>
 <tr>
-    <td><a href="#projects_zones_clusters_node_pools_set_management"><CopyableCode code="projects_zones_clusters_node_pools_set_management" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-clusterId"><code>clusterId</code></a>, <a href="#parameter-nodePoolId"><code>nodePoolId</code></a></td>
-    <td></td>
-    <td>Sets the NodeManagement options for a node pool.</td>
-</tr>
-<tr>
     <td><a href="#projects_zones_clusters_node_pools_set_size"><CopyableCode code="projects_zones_clusters_node_pools_set_size" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-clusterId"><code>clusterId</code></a>, <a href="#parameter-nodePoolId"><code>nodePoolId</code></a></td>
     <td></td>
     <td>Sets the size for a specific node pool. The new size will be used for all replicas, including future replicas created by modifying NodePool.locations.</td>
+</tr>
+<tr>
+    <td><a href="#projects_zones_clusters_node_pools_set_management"><CopyableCode code="projects_zones_clusters_node_pools_set_management" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-clusterId"><code>clusterId</code></a>, <a href="#parameter-nodePoolId"><code>nodePoolId</code></a></td>
+    <td></td>
+    <td>Sets the NodeManagement options for a node pool.</td>
 </tr>
 </tbody>
 </table>
@@ -595,6 +605,7 @@ locations,
 management,
 maxPodsConstraint,
 networkConfig,
+nodeDrainConfig,
 placementPolicy,
 podIpv4CidrSize,
 queuedProvisioning,
@@ -609,10 +620,10 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND clustersId = '{{ clustersId }}' -- required
 AND nodePoolsId = '{{ nodePoolsId }}' -- required
-AND projectId = '{{ projectId }}'
-AND zone = '{{ zone }}'
 AND clusterId = '{{ clusterId }}'
+AND projectId = '{{ projectId }}'
 AND nodePoolId = '{{ nodePoolId }}'
+AND zone = '{{ zone }}'
 ;
 ```
 </TabItem>
@@ -635,6 +646,7 @@ locations,
 management,
 maxPodsConstraint,
 networkConfig,
+nodeDrainConfig,
 placementPolicy,
 podIpv4CidrSize,
 queuedProvisioning,
@@ -704,21 +716,21 @@ Creates a node pool for a cluster.
 
 ```sql
 INSERT INTO google.container.node_pools (
-data__projectId,
 data__zone,
-data__clusterId,
 data__nodePool,
+data__clusterId,
 data__parent,
+data__projectId,
 projectsId,
 locationsId,
 clustersId
 )
 SELECT 
-'{{ projectId }}',
 '{{ zone }}',
-'{{ clusterId }}',
 '{{ nodePool }}',
+'{{ clusterId }}',
 '{{ parent }}',
+'{{ projectId }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ clustersId }}'
@@ -747,21 +759,21 @@ Creates a node pool for a cluster.
 
 ```sql
 INSERT INTO google.container.node_pools (
-data__projectId,
 data__zone,
-data__clusterId,
 data__nodePool,
+data__clusterId,
 data__parent,
+data__projectId,
 projectId,
 zone,
 clusterId
 )
 SELECT 
-'{{ projectId }}',
 '{{ zone }}',
-'{{ clusterId }}',
 '{{ nodePool }}',
+'{{ clusterId }}',
 '{{ parent }}',
+'{{ projectId }}',
 '{{ projectId }}',
 '{{ zone }}',
 '{{ clusterId }}'
@@ -808,30 +820,30 @@ zone
     - name: clusterId
       value: string
       description: Required parameter for the node_pools resource.
-    - name: projectId
-      value: string
-      description: >
-        Deprecated. The Google Developers Console [project ID or project number](https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the parent field.
-        
     - name: zone
       value: string
       description: >
-        Deprecated. The name of the Google Compute Engine [zone](https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available) in which the cluster resides. This field has been deprecated and replaced by the parent field.
-        
-    - name: clusterId
-      value: string
-      description: >
-        Deprecated. The name of the cluster. This field has been deprecated and replaced by the parent field.
+        Deprecated. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/zones#available) in which the cluster resides. This field has been deprecated and replaced by the parent field.
         
     - name: nodePool
       value: object
       description: >
         NodePool contains the name and configuration for a cluster's node pool. Node pools are a set of nodes (i.e. VM's), with a common configuration and specification, under the control of the cluster master. They may have a set of Kubernetes labels applied to them, which may be used to reference them during pod scheduling. They may also be resized up or down, to accommodate the workload.
         
+    - name: clusterId
+      value: string
+      description: >
+        Deprecated. The name of the cluster. This field has been deprecated and replaced by the parent field.
+        
     - name: parent
       value: string
       description: >
         The parent (project, location, cluster name) where the node pool will be created. Specified in the format `projects/*/locations/*/clusters/*`.
+        
+    - name: projectId
+      value: string
+      description: >
+        Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the parent field.
         
 ```
 </TabItem>
@@ -853,41 +865,42 @@ Updates the version and/or image type for the specified node pool.
 ```sql
 UPDATE google.container.node_pools
 SET 
-data__projectId = '{{ projectId }}',
 data__zone = '{{ zone }}',
-data__clusterId = '{{ clusterId }}',
-data__nodePoolId = '{{ nodePoolId }}',
-data__nodeVersion = '{{ nodeVersion }}',
-data__imageType = '{{ imageType }}',
-data__name = '{{ name }}',
-data__locations = '{{ locations }}',
-data__workloadMetadataConfig = '{{ workloadMetadataConfig }}',
-data__upgradeSettings = '{{ upgradeSettings }}',
-data__tags = '{{ tags }}',
-data__taints = '{{ taints }}',
-data__labels = '{{ labels }}',
-data__linuxNodeConfig = '{{ linuxNodeConfig }}',
-data__kubeletConfig = '{{ kubeletConfig }}',
-data__nodeNetworkConfig = '{{ nodeNetworkConfig }}',
-data__gcfsConfig = '{{ gcfsConfig }}',
-data__confidentialNodes = '{{ confidentialNodes }}',
-data__gvnic = '{{ gvnic }}',
-data__etag = '{{ etag }}',
-data__fastSocket = '{{ fastSocket }}',
-data__loggingConfig = '{{ loggingConfig }}',
-data__resourceLabels = '{{ resourceLabels }}',
-data__windowsNodeConfig = '{{ windowsNodeConfig }}',
-data__accelerators = '{{ accelerators }}',
-data__machineType = '{{ machineType }}',
-data__diskType = '{{ diskType }}',
-data__diskSizeGb = '{{ diskSizeGb }}',
-data__resourceManagerTags = '{{ resourceManagerTags }}',
-data__containerdConfig = '{{ containerdConfig }}',
-data__queuedProvisioning = '{{ queuedProvisioning }}',
-data__storagePools = '{{ storagePools }}',
-data__maxRunDuration = '{{ maxRunDuration }}',
 data__flexStart = {{ flexStart }},
-data__bootDisk = '{{ bootDisk }}'
+data__projectId = '{{ projectId }}',
+data__resourceLabels = '{{ resourceLabels }}',
+data__nodeVersion = '{{ nodeVersion }}',
+data__bootDisk = '{{ bootDisk }}',
+data__nodePoolId = '{{ nodePoolId }}',
+data__locations = '{{ locations }}',
+data__fastSocket = '{{ fastSocket }}',
+data__tags = '{{ tags }}',
+data__loggingConfig = '{{ loggingConfig }}',
+data__containerdConfig = '{{ containerdConfig }}',
+data__windowsNodeConfig = '{{ windowsNodeConfig }}',
+data__clusterId = '{{ clusterId }}',
+data__resourceManagerTags = '{{ resourceManagerTags }}',
+data__diskSizeGb = '{{ diskSizeGb }}',
+data__linuxNodeConfig = '{{ linuxNodeConfig }}',
+data__diskType = '{{ diskType }}',
+data__storagePools = '{{ storagePools }}',
+data__gcfsConfig = '{{ gcfsConfig }}',
+data__kubeletConfig = '{{ kubeletConfig }}',
+data__nodeDrainConfig = '{{ nodeDrainConfig }}',
+data__name = '{{ name }}',
+data__nodeNetworkConfig = '{{ nodeNetworkConfig }}',
+data__workloadMetadataConfig = '{{ workloadMetadataConfig }}',
+data__etag = '{{ etag }}',
+data__machineType = '{{ machineType }}',
+data__confidentialNodes = '{{ confidentialNodes }}',
+data__imageType = '{{ imageType }}',
+data__accelerators = '{{ accelerators }}',
+data__taints = '{{ taints }}',
+data__upgradeSettings = '{{ upgradeSettings }}',
+data__labels = '{{ labels }}',
+data__gvnic = '{{ gvnic }}',
+data__queuedProvisioning = '{{ queuedProvisioning }}',
+data__maxRunDuration = '{{ maxRunDuration }}'
 WHERE 
 projectId = '{{ projectId }}' --required
 AND zone = '{{ zone }}' --required
@@ -929,41 +942,42 @@ Updates the version and/or image type for the specified node pool.
 ```sql
 REPLACE google.container.node_pools
 SET 
-data__projectId = '{{ projectId }}',
 data__zone = '{{ zone }}',
-data__clusterId = '{{ clusterId }}',
-data__nodePoolId = '{{ nodePoolId }}',
-data__nodeVersion = '{{ nodeVersion }}',
-data__imageType = '{{ imageType }}',
-data__name = '{{ name }}',
-data__locations = '{{ locations }}',
-data__workloadMetadataConfig = '{{ workloadMetadataConfig }}',
-data__upgradeSettings = '{{ upgradeSettings }}',
-data__tags = '{{ tags }}',
-data__taints = '{{ taints }}',
-data__labels = '{{ labels }}',
-data__linuxNodeConfig = '{{ linuxNodeConfig }}',
-data__kubeletConfig = '{{ kubeletConfig }}',
-data__nodeNetworkConfig = '{{ nodeNetworkConfig }}',
-data__gcfsConfig = '{{ gcfsConfig }}',
-data__confidentialNodes = '{{ confidentialNodes }}',
-data__gvnic = '{{ gvnic }}',
-data__etag = '{{ etag }}',
-data__fastSocket = '{{ fastSocket }}',
-data__loggingConfig = '{{ loggingConfig }}',
-data__resourceLabels = '{{ resourceLabels }}',
-data__windowsNodeConfig = '{{ windowsNodeConfig }}',
-data__accelerators = '{{ accelerators }}',
-data__machineType = '{{ machineType }}',
-data__diskType = '{{ diskType }}',
-data__diskSizeGb = '{{ diskSizeGb }}',
-data__resourceManagerTags = '{{ resourceManagerTags }}',
-data__containerdConfig = '{{ containerdConfig }}',
-data__queuedProvisioning = '{{ queuedProvisioning }}',
-data__storagePools = '{{ storagePools }}',
-data__maxRunDuration = '{{ maxRunDuration }}',
 data__flexStart = {{ flexStart }},
-data__bootDisk = '{{ bootDisk }}'
+data__projectId = '{{ projectId }}',
+data__resourceLabels = '{{ resourceLabels }}',
+data__nodeVersion = '{{ nodeVersion }}',
+data__bootDisk = '{{ bootDisk }}',
+data__nodePoolId = '{{ nodePoolId }}',
+data__locations = '{{ locations }}',
+data__fastSocket = '{{ fastSocket }}',
+data__tags = '{{ tags }}',
+data__loggingConfig = '{{ loggingConfig }}',
+data__containerdConfig = '{{ containerdConfig }}',
+data__windowsNodeConfig = '{{ windowsNodeConfig }}',
+data__clusterId = '{{ clusterId }}',
+data__resourceManagerTags = '{{ resourceManagerTags }}',
+data__diskSizeGb = '{{ diskSizeGb }}',
+data__linuxNodeConfig = '{{ linuxNodeConfig }}',
+data__diskType = '{{ diskType }}',
+data__storagePools = '{{ storagePools }}',
+data__gcfsConfig = '{{ gcfsConfig }}',
+data__kubeletConfig = '{{ kubeletConfig }}',
+data__nodeDrainConfig = '{{ nodeDrainConfig }}',
+data__name = '{{ name }}',
+data__nodeNetworkConfig = '{{ nodeNetworkConfig }}',
+data__workloadMetadataConfig = '{{ workloadMetadataConfig }}',
+data__etag = '{{ etag }}',
+data__machineType = '{{ machineType }}',
+data__confidentialNodes = '{{ confidentialNodes }}',
+data__imageType = '{{ imageType }}',
+data__accelerators = '{{ accelerators }}',
+data__taints = '{{ taints }}',
+data__upgradeSettings = '{{ upgradeSettings }}',
+data__labels = '{{ labels }}',
+data__gvnic = '{{ gvnic }}',
+data__queuedProvisioning = '{{ queuedProvisioning }}',
+data__maxRunDuration = '{{ maxRunDuration }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -1009,10 +1023,10 @@ WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND clustersId = '{{ clustersId }}' --required
 AND nodePoolsId = '{{ nodePoolsId }}' --required
-AND projectId = '{{ projectId }}'
-AND zone = '{{ zone }}'
 AND clusterId = '{{ clusterId }}'
+AND projectId = '{{ projectId }}'
 AND nodePoolId = '{{ nodePoolId }}'
+AND zone = '{{ zone }}'
 ;
 ```
 </TabItem>
@@ -1036,37 +1050,37 @@ AND name = '{{ name }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_clusters_node_pools_set_autoscaling"
+    defaultValue="projects_locations_clusters_node_pools_set_size"
     values={[
-        { label: 'projects_locations_clusters_node_pools_set_autoscaling', value: 'projects_locations_clusters_node_pools_set_autoscaling' },
-        { label: 'projects_locations_clusters_node_pools_complete_upgrade', value: 'projects_locations_clusters_node_pools_complete_upgrade' },
-        { label: 'projects_locations_clusters_node_pools_rollback', value: 'projects_locations_clusters_node_pools_rollback' },
-        { label: 'projects_locations_clusters_node_pools_set_management', value: 'projects_locations_clusters_node_pools_set_management' },
         { label: 'projects_locations_clusters_node_pools_set_size', value: 'projects_locations_clusters_node_pools_set_size' },
+        { label: 'projects_locations_clusters_node_pools_complete_upgrade', value: 'projects_locations_clusters_node_pools_complete_upgrade' },
+        { label: 'projects_locations_clusters_node_pools_set_management', value: 'projects_locations_clusters_node_pools_set_management' },
+        { label: 'projects_locations_clusters_node_pools_set_autoscaling', value: 'projects_locations_clusters_node_pools_set_autoscaling' },
+        { label: 'projects_locations_clusters_node_pools_rollback', value: 'projects_locations_clusters_node_pools_rollback' },
         { label: 'projects_zones_clusters_node_pools_autoscaling', value: 'projects_zones_clusters_node_pools_autoscaling' },
         { label: 'projects_zones_clusters_node_pools_rollback', value: 'projects_zones_clusters_node_pools_rollback' },
-        { label: 'projects_zones_clusters_node_pools_set_management', value: 'projects_zones_clusters_node_pools_set_management' },
-        { label: 'projects_zones_clusters_node_pools_set_size', value: 'projects_zones_clusters_node_pools_set_size' }
+        { label: 'projects_zones_clusters_node_pools_set_size', value: 'projects_zones_clusters_node_pools_set_size' },
+        { label: 'projects_zones_clusters_node_pools_set_management', value: 'projects_zones_clusters_node_pools_set_management' }
     ]}
 >
-<TabItem value="projects_locations_clusters_node_pools_set_autoscaling">
+<TabItem value="projects_locations_clusters_node_pools_set_size">
 
-Sets the autoscaling settings for the specified node pool.
+Sets the size for a specific node pool. The new size will be used for all replicas, including future replicas created by modifying NodePool.locations.
 
 ```sql
-EXEC google.container.node_pools.projects_locations_clusters_node_pools_set_autoscaling 
+EXEC google.container.node_pools.projects_locations_clusters_node_pools_set_size 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @clustersId='{{ clustersId }}' --required, 
 @nodePoolsId='{{ nodePoolsId }}' --required 
 @@json=
 '{
-"projectId": "{{ projectId }}", 
-"zone": "{{ zone }}", 
 "clusterId": "{{ clusterId }}", 
+"name": "{{ name }}", 
+"zone": "{{ zone }}", 
 "nodePoolId": "{{ nodePoolId }}", 
-"autoscaling": "{{ autoscaling }}", 
-"name": "{{ name }}"
+"nodeCount": {{ nodeCount }}, 
+"projectId": "{{ projectId }}"
 }'
 ;
 ```
@@ -1084,28 +1098,6 @@ EXEC google.container.node_pools.projects_locations_clusters_node_pools_complete
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_clusters_node_pools_rollback">
-
-Rolls back a previously Aborted or Failed NodePool upgrade. This makes no changes if the last upgrade successfully completed.
-
-```sql
-EXEC google.container.node_pools.projects_locations_clusters_node_pools_rollback 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@clustersId='{{ clustersId }}' --required, 
-@nodePoolsId='{{ nodePoolsId }}' --required 
-@@json=
-'{
-"projectId": "{{ projectId }}", 
-"zone": "{{ zone }}", 
-"clusterId": "{{ clusterId }}", 
-"nodePoolId": "{{ nodePoolId }}", 
-"name": "{{ name }}", 
-"respectPdb": {{ respectPdb }}
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_clusters_node_pools_set_management">
 
 Sets the NodeManagement options for a node pool.
@@ -1118,33 +1110,55 @@ EXEC google.container.node_pools.projects_locations_clusters_node_pools_set_mana
 @nodePoolsId='{{ nodePoolsId }}' --required 
 @@json=
 '{
+"nodePoolId": "{{ nodePoolId }}", 
+"clusterId": "{{ clusterId }}", 
 "projectId": "{{ projectId }}", 
 "zone": "{{ zone }}", 
-"clusterId": "{{ clusterId }}", 
-"nodePoolId": "{{ nodePoolId }}", 
-"management": "{{ management }}", 
-"name": "{{ name }}"
+"name": "{{ name }}", 
+"management": "{{ management }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_clusters_node_pools_set_size">
+<TabItem value="projects_locations_clusters_node_pools_set_autoscaling">
 
-Sets the size for a specific node pool. The new size will be used for all replicas, including future replicas created by modifying NodePool.locations.
+Sets the autoscaling settings for the specified node pool.
 
 ```sql
-EXEC google.container.node_pools.projects_locations_clusters_node_pools_set_size 
+EXEC google.container.node_pools.projects_locations_clusters_node_pools_set_autoscaling 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @clustersId='{{ clustersId }}' --required, 
 @nodePoolsId='{{ nodePoolsId }}' --required 
 @@json=
 '{
-"projectId": "{{ projectId }}", 
+"autoscaling": "{{ autoscaling }}", 
+"clusterId": "{{ clusterId }}", 
+"name": "{{ name }}", 
+"zone": "{{ zone }}", 
+"nodePoolId": "{{ nodePoolId }}", 
+"projectId": "{{ projectId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_clusters_node_pools_rollback">
+
+Rolls back a previously Aborted or Failed NodePool upgrade. This makes no changes if the last upgrade successfully completed.
+
+```sql
+EXEC google.container.node_pools.projects_locations_clusters_node_pools_rollback 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@clustersId='{{ clustersId }}' --required, 
+@nodePoolsId='{{ nodePoolsId }}' --required 
+@@json=
+'{
+"respectPdb": {{ respectPdb }}, 
 "zone": "{{ zone }}", 
 "clusterId": "{{ clusterId }}", 
 "nodePoolId": "{{ nodePoolId }}", 
-"nodeCount": {{ nodeCount }}, 
+"projectId": "{{ projectId }}", 
 "name": "{{ name }}"
 }'
 ;
@@ -1162,12 +1176,12 @@ EXEC google.container.node_pools.projects_zones_clusters_node_pools_autoscaling
 @nodePoolId='{{ nodePoolId }}' --required 
 @@json=
 '{
-"projectId": "{{ projectId }}", 
-"zone": "{{ zone }}", 
-"clusterId": "{{ clusterId }}", 
-"nodePoolId": "{{ nodePoolId }}", 
 "autoscaling": "{{ autoscaling }}", 
-"name": "{{ name }}"
+"clusterId": "{{ clusterId }}", 
+"name": "{{ name }}", 
+"zone": "{{ zone }}", 
+"nodePoolId": "{{ nodePoolId }}", 
+"projectId": "{{ projectId }}"
 }'
 ;
 ```
@@ -1184,33 +1198,11 @@ EXEC google.container.node_pools.projects_zones_clusters_node_pools_rollback
 @nodePoolId='{{ nodePoolId }}' --required 
 @@json=
 '{
-"projectId": "{{ projectId }}", 
+"respectPdb": {{ respectPdb }}, 
 "zone": "{{ zone }}", 
 "clusterId": "{{ clusterId }}", 
 "nodePoolId": "{{ nodePoolId }}", 
-"name": "{{ name }}", 
-"respectPdb": {{ respectPdb }}
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_zones_clusters_node_pools_set_management">
-
-Sets the NodeManagement options for a node pool.
-
-```sql
-EXEC google.container.node_pools.projects_zones_clusters_node_pools_set_management 
-@projectId='{{ projectId }}' --required, 
-@zone='{{ zone }}' --required, 
-@clusterId='{{ clusterId }}' --required, 
-@nodePoolId='{{ nodePoolId }}' --required 
-@@json=
-'{
 "projectId": "{{ projectId }}", 
-"zone": "{{ zone }}", 
-"clusterId": "{{ clusterId }}", 
-"nodePoolId": "{{ nodePoolId }}", 
-"management": "{{ management }}", 
 "name": "{{ name }}"
 }'
 ;
@@ -1228,12 +1220,34 @@ EXEC google.container.node_pools.projects_zones_clusters_node_pools_set_size
 @nodePoolId='{{ nodePoolId }}' --required 
 @@json=
 '{
-"projectId": "{{ projectId }}", 
-"zone": "{{ zone }}", 
 "clusterId": "{{ clusterId }}", 
+"name": "{{ name }}", 
+"zone": "{{ zone }}", 
 "nodePoolId": "{{ nodePoolId }}", 
 "nodeCount": {{ nodeCount }}, 
-"name": "{{ name }}"
+"projectId": "{{ projectId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_zones_clusters_node_pools_set_management">
+
+Sets the NodeManagement options for a node pool.
+
+```sql
+EXEC google.container.node_pools.projects_zones_clusters_node_pools_set_management 
+@projectId='{{ projectId }}' --required, 
+@zone='{{ zone }}' --required, 
+@clusterId='{{ clusterId }}' --required, 
+@nodePoolId='{{ nodePoolId }}' --required 
+@@json=
+'{
+"nodePoolId": "{{ nodePoolId }}", 
+"clusterId": "{{ clusterId }}", 
+"projectId": "{{ projectId }}", 
+"zone": "{{ zone }}", 
+"name": "{{ name }}", 
+"management": "{{ management }}"
 }'
 ;
 ```

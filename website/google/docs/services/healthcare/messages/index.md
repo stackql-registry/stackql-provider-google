@@ -428,7 +428,7 @@ sendTime
     - name: message
       value: object
       description: >
-        Required. HL7v2 message.
+        A complete HL7v2 message. See [Introduction to HL7 Standards] (https://www.hl7.org/implement/standards/index.cfm?ref=common) for details on the standard.
         
 ```
 </TabItem>
@@ -450,8 +450,8 @@ Update the message. The contents of the message in Message.data and data extract
 ```sql
 UPDATE google.healthcare.messages
 SET 
-data__data = '{{ data }}',
-data__labels = '{{ labels }}'
+data__labels = '{{ labels }}',
+data__data = '{{ data }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -91,14 +91,14 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-groupsId"><code>groupsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-groupsId"><code>groupsId</code></a></td>
     <td></td>
     <td>Get the specified group.</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="replace" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-groupsId"><code>groupsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-groupsId"><code>groupsId</code></a></td>
     <td></td>
     <td>Replace the data for the specified group. Fails if the group does not exist.</td>
 </tr>
@@ -120,11 +120,6 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tbody>
 <tr id="parameter-groupsId">
     <td><CopyableCode code="groupsId" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr id="parameter-locationsId">
-    <td><CopyableCode code="locationsId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -156,7 +151,6 @@ resolutionStatus,
 trackingIssues
 FROM google.clouderrorreporting.groups
 WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
 AND groupsId = '{{ groupsId }}' -- required
 ;
 ```
@@ -185,7 +179,6 @@ data__trackingIssues = '{{ trackingIssues }}',
 data__resolutionStatus = '{{ resolutionStatus }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
-AND locationsId = '{{ locationsId }}' --required
 AND groupsId = '{{ groupsId }}' --required
 RETURNING
 name,

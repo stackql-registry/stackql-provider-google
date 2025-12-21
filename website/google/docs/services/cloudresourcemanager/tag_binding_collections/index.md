@@ -96,11 +96,11 @@ The following methods are available for this resource:
     <td>Returns tag bindings directly attached to a GCP resource.</td>
 </tr>
 <tr>
-    <td><a href="#update"><CopyableCode code="update" /></a></td>
-    <td><CopyableCode code="replace" /></td>
+    <td><a href="#patch"><CopyableCode code="patch" /></a></td>
+    <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-tagBindingCollectionsId"><code>tagBindingCollectionsId</code></a></td>
-    <td></td>
-    <td>Updates tag bindings directly attached to a GCP resource.</td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td>Updates tag bindings directly attached to a GCP resource. Update_mask can be kept empty or "*".</td>
 </tr>
 </tbody>
 </table>
@@ -126,6 +126,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-tagBindingCollectionsId">
     <td><CopyableCode code="tagBindingCollectionsId" /></td>
     <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-updateMask">
+    <td><CopyableCode code="updateMask" /></td>
+    <td><code>string (google-fieldmask)</code></td>
     <td></td>
 </tr>
 </tbody>
@@ -158,28 +163,29 @@ AND tagBindingCollectionsId = '{{ tagBindingCollectionsId }}' -- required
 </Tabs>
 
 
-## `REPLACE` examples
+## `UPDATE` examples
 
 <Tabs
-    defaultValue="update"
+    defaultValue="patch"
     values={[
-        { label: 'update', value: 'update' }
+        { label: 'patch', value: 'patch' }
     ]}
 >
-<TabItem value="update">
+<TabItem value="patch">
 
-Updates tag bindings directly attached to a GCP resource.
+Updates tag bindings directly attached to a GCP resource. Update_mask can be kept empty or "*".
 
 ```sql
-REPLACE google.cloudresourcemanager.tag_binding_collections
+UPDATE google.cloudresourcemanager.tag_binding_collections
 SET 
-data__name = '{{ name }}',
 data__fullResourceName = '{{ fullResourceName }}',
 data__tags = '{{ tags }}',
-data__etag = '{{ etag }}'
+data__etag = '{{ etag }}',
+data__name = '{{ name }}'
 WHERE 
 locationsId = '{{ locationsId }}' --required
 AND tagBindingCollectionsId = '{{ tagBindingCollectionsId }}' --required
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

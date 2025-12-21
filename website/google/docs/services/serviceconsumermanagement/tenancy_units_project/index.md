@@ -124,16 +124,16 @@ Add a new tenant project to the tenancy unit. There can be a maximum of 1024 ten
 
 ```sql
 INSERT INTO google.serviceconsumermanagement.tenancy_units_project (
-data__tag,
 data__projectConfig,
+data__tag,
 servicesId,
 servicesId1,
 servicesId2,
 tenancyUnitsId
 )
 SELECT 
-'{{ tag }}',
 '{{ projectConfig }}',
+'{{ tag }}',
 '{{ servicesId }}',
 '{{ servicesId1 }}',
 '{{ servicesId2 }}',
@@ -165,15 +165,15 @@ response
     - name: tenancyUnitsId
       value: string
       description: Required parameter for the tenancy_units_project resource.
-    - name: tag
-      value: string
-      description: >
-        Required. Tag of the added project. Must be less than 128 characters. Required.
-        
     - name: projectConfig
       value: object
       description: >
         Configuration of the new tenant project to be added to tenancy unit resources.
+        
+    - name: tag
+      value: string
+      description: >
+        Required. Tag of the added project. Must be less than 128 characters. Required.
         
 ```
 </TabItem>

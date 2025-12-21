@@ -166,9 +166,9 @@ Updates an organization's settings.
 ```sql
 UPDATE google.securitycenter.organization_settings
 SET 
-data__name = '{{ name }}',
 data__enableAssetDiscovery = {{ enableAssetDiscovery }},
-data__assetDiscoveryConfig = '{{ assetDiscoveryConfig }}'
+data__assetDiscoveryConfig = '{{ assetDiscoveryConfig }}',
+data__name = '{{ name }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND updateMask = '{{ updateMask}}'

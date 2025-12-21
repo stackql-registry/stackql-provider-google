@@ -254,7 +254,7 @@ The following methods are available for this resource:
     <td><a href="#projects_instances_list"><CopyableCode code="projects_instances_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-instanceDeadline"><code>instanceDeadline</code></a></td>
+    <td><a href="#parameter-instanceDeadline"><code>instanceDeadline</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists all instances in the given project.</td>
 </tr>
 <tr>
@@ -401,10 +401,10 @@ state,
 updateTime
 FROM google.spanner.instances
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageSize = '{{ pageSize }}'
+AND instanceDeadline = '{{ instanceDeadline }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND instanceDeadline = '{{ instanceDeadline }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>

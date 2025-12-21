@@ -186,8 +186,8 @@ Sets the access control policy on a Bigtable resource. Replaces any existing pol
 ```sql
 REPLACE google.bigtableadmin.schema_bundles_iam_policies
 SET 
-data__policy = '{{ policy }}',
-data__updateMask = '{{ updateMask }}'
+data__updateMask = '{{ updateMask }}',
+data__policy = '{{ policy }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instancesId = '{{ instancesId }}' --required

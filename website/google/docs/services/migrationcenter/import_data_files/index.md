@@ -310,8 +310,8 @@ Creates an import data file.
 
 ```sql
 INSERT INTO google.migrationcenter.import_data_files (
-data__displayName,
 data__format,
+data__displayName,
 data__uploadFileInfo,
 projectsId,
 locationsId,
@@ -320,8 +320,8 @@ importDataFileId,
 requestId
 )
 SELECT 
-'{{ displayName }}',
 '{{ format }}',
+'{{ displayName }}',
 '{{ uploadFileInfo }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -352,17 +352,17 @@ response
     - name: importJobsId
       value: string
       description: Required parameter for the import_data_files resource.
-    - name: displayName
-      value: string
-      description: >
-        User-friendly display name. Maximum length is 63 characters.
-        
     - name: format
       value: string
       description: >
         Required. The payload format.
         
       valid_values: ['IMPORT_JOB_FORMAT_UNSPECIFIED', 'IMPORT_JOB_FORMAT_RVTOOLS_XLSX', 'IMPORT_JOB_FORMAT_RVTOOLS_CSV', 'IMPORT_JOB_FORMAT_EXPORTED_AWS_CSV', 'IMPORT_JOB_FORMAT_EXPORTED_AZURE_CSV', 'IMPORT_JOB_FORMAT_STRATOZONE_CSV', 'IMPORT_JOB_FORMAT_DATABASE_ZIP']
+    - name: displayName
+      value: string
+      description: >
+        User-friendly display name. Maximum length is 63 characters.
+        
     - name: uploadFileInfo
       value: object
       description: >

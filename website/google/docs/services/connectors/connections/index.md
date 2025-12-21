@@ -50,6 +50,20 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
+    <td><a href="#exchange_auth_code"><CopyableCode code="exchange_auth_code" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
+    <td></td>
+    <td>ExchangeAuthCode exchanges the OAuth authorization code (and other necessary data) for an access token (and associated credentials).</td>
+</tr>
+<tr>
+    <td><a href="#execute_sql_query"><CopyableCode code="execute_sql_query" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
+    <td></td>
+    <td>Executes a SQL statement specified in the body of the request. An example of this SQL statement in the case of Salesforce connector would be 'select * from Account a, Order o where a.Id = o.AccountId'.</td>
+</tr>
+<tr>
     <td><a href="#check_status"><CopyableCode code="check_status" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
@@ -64,25 +78,11 @@ The following methods are available for this resource:
     <td>Reports readiness status of the connector. Similar logic to GetStatus but modified for kubernetes health check to understand.</td>
 </tr>
 <tr>
-    <td><a href="#exchange_auth_code"><CopyableCode code="exchange_auth_code" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
-    <td></td>
-    <td>ExchangeAuthCode exchanges the OAuth authorization code (and other necessary data) for an access token (and associated credentials).</td>
-</tr>
-<tr>
     <td><a href="#refresh_access_token"><CopyableCode code="refresh_access_token" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
     <td></td>
     <td>RefreshAccessToken exchanges the OAuth refresh token (and other necessary data) for a new access token (and new associated credentials).</td>
-</tr>
-<tr>
-    <td><a href="#execute_sql_query"><CopyableCode code="execute_sql_query" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
-    <td></td>
-    <td>Executes a SQL statement specified in the body of the request. An example of this SQL statement in the case of Salesforce connector would be 'select * from Account a, Order o where a.Id = o.AccountId'.</td>
 </tr>
 </tbody>
 </table>
@@ -121,15 +121,47 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="check_status"
+    defaultValue="exchange_auth_code"
     values={[
+        { label: 'exchange_auth_code', value: 'exchange_auth_code' },
+        { label: 'execute_sql_query', value: 'execute_sql_query' },
         { label: 'check_status', value: 'check_status' },
         { label: 'check_readiness', value: 'check_readiness' },
-        { label: 'exchange_auth_code', value: 'exchange_auth_code' },
-        { label: 'refresh_access_token', value: 'refresh_access_token' },
-        { label: 'execute_sql_query', value: 'execute_sql_query' }
+        { label: 'refresh_access_token', value: 'refresh_access_token' }
     ]}
 >
+<TabItem value="exchange_auth_code">
+
+ExchangeAuthCode exchanges the OAuth authorization code (and other necessary data) for an access token (and associated credentials).
+
+```sql
+EXEC google.connectors.connections.exchange_auth_code 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@connectionsId='{{ connectionsId }}' --required 
+@@json=
+'{
+"authCodeData": "{{ authCodeData }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="execute_sql_query">
+
+Executes a SQL statement specified in the body of the request. An example of this SQL statement in the case of Salesforce connector would be 'select * from Account a, Order o where a.Id = o.AccountId'.
+
+```sql
+EXEC google.connectors.connections.execute_sql_query 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@connectionsId='{{ connectionsId }}' --required 
+@@json=
+'{
+"query": "{{ query }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="check_status">
 
 Reports the status of the connection. Note that when the connection is in a state that is not ACTIVE, the implementation of this RPC method must return a Status with the corresponding State instead of returning a gRPC status code that is not "OK", which indicates that ConnectionStatus itself, not the connection, failed.
@@ -154,22 +186,6 @@ EXEC google.connectors.connections.check_readiness
 ;
 ```
 </TabItem>
-<TabItem value="exchange_auth_code">
-
-ExchangeAuthCode exchanges the OAuth authorization code (and other necessary data) for an access token (and associated credentials).
-
-```sql
-EXEC google.connectors.connections.exchange_auth_code 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@connectionsId='{{ connectionsId }}' --required 
-@@json=
-'{
-"authCodeData": "{{ authCodeData }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="refresh_access_token">
 
 RefreshAccessToken exchanges the OAuth refresh token (and other necessary data) for a new access token (and new associated credentials).
@@ -182,22 +198,6 @@ EXEC google.connectors.connections.refresh_access_token
 @@json=
 '{
 "refreshToken": "{{ refreshToken }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="execute_sql_query">
-
-Executes a SQL statement specified in the body of the request. An example of this SQL statement in the case of Salesforce connector would be 'select * from Account a, Order o where a.Id = o.AccountId'.
-
-```sql
-EXEC google.connectors.connections.execute_sql_query 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@connectionsId='{{ connectionsId }}' --required 
-@@json=
-'{
-"query": "{{ query }}"
 }'
 ;
 ```

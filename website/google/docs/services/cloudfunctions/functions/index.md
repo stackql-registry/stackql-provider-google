@@ -254,7 +254,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Returns a list of functions that belong to the requested project.</td>
 </tr>
 <tr>
@@ -279,34 +279,6 @@ The following methods are available for this resource:
     <td>Deletes a function with the given name from the specified project. If the given function is used by some trigger, the trigger will be updated to remove this function.</td>
 </tr>
 <tr>
-    <td><a href="#setup_function_upgrade_config"><CopyableCode code="setup_function_upgrade_config" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-functionsId"><code>functionsId</code></a></td>
-    <td></td>
-    <td>Creates a 2nd Gen copy of the function configuration based on the 1st Gen function with the given name. This is the first step of the multi step process to upgrade 1st Gen functions to 2nd Gen. Only 2nd Gen configuration is setup as part of this request and traffic continues to be served by 1st Gen.</td>
-</tr>
-<tr>
-    <td><a href="#abort_function_upgrade"><CopyableCode code="abort_function_upgrade" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-functionsId"><code>functionsId</code></a></td>
-    <td></td>
-    <td>Aborts generation upgrade process for a function with the given name from the specified project. Deletes all 2nd Gen copy related configuration and resources which were created during the upgrade process.</td>
-</tr>
-<tr>
-    <td><a href="#redirect_function_upgrade_traffic"><CopyableCode code="redirect_function_upgrade_traffic" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-functionsId"><code>functionsId</code></a></td>
-    <td></td>
-    <td>Changes the traffic target of a function from the original 1st Gen function to the 2nd Gen copy. This is the second step of the multi step process to upgrade 1st Gen functions to 2nd Gen. After this operation, all new traffic will be served by 2nd Gen copy.</td>
-</tr>
-<tr>
-    <td><a href="#rollback_function_upgrade_traffic"><CopyableCode code="rollback_function_upgrade_traffic" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-functionsId"><code>functionsId</code></a></td>
-    <td></td>
-    <td>Reverts the traffic target of a function from the 2nd Gen copy to the original 1st Gen function. After this operation, all new traffic would be served by the 1st Gen.</td>
-</tr>
-<tr>
     <td><a href="#commit_function_upgrade"><CopyableCode code="commit_function_upgrade" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-functionsId"><code>functionsId</code></a></td>
@@ -321,11 +293,46 @@ The following methods are available for this resource:
     <td>Returns a signed URL for uploading a function source code. For more information about the signed URL usage see: https://cloud.google.com/storage/docs/access-control/signed-urls. Once the function source code upload is complete, the used signed URL should be provided in CreateFunction or UpdateFunction request as a reference to the function source code. When uploading source code to the generated signed URL, please follow these restrictions: * Source file type should be a zip file. * No credentials should be attached - the signed URLs provide access to the target bucket using internal service identity; if credentials were attached, the identity from the credentials would be used, but that identity does not have permissions to upload files to the URL. When making a HTTP PUT request, specify this header: * `content-type: application/zip` Do not specify this header: * `Authorization: Bearer YOUR_TOKEN`</td>
 </tr>
 <tr>
+    <td><a href="#redirect_function_upgrade_traffic"><CopyableCode code="redirect_function_upgrade_traffic" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-functionsId"><code>functionsId</code></a></td>
+    <td></td>
+    <td>Changes the traffic target of a function from the original 1st Gen function to the 2nd Gen copy. This is the second step of the multi step process to upgrade 1st Gen functions to 2nd Gen. After this operation, all new traffic will be served by 2nd Gen copy.</td>
+</tr>
+<tr>
+    <td><a href="#commit_function_upgrade_as_gen2"><CopyableCode code="commit_function_upgrade_as_gen2" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-functionsId"><code>functionsId</code></a></td>
+    <td></td>
+    <td>Commits a function upgrade from GCF Gen1 to GCF Gen2. This action deletes the Gen1 function, leaving the Gen2 function active and manageable by the GCFv2 API.</td>
+</tr>
+<tr>
+    <td><a href="#abort_function_upgrade"><CopyableCode code="abort_function_upgrade" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-functionsId"><code>functionsId</code></a></td>
+    <td></td>
+    <td>Aborts generation upgrade process for a function with the given name from the specified project. Deletes all 2nd Gen copy related configuration and resources which were created during the upgrade process.</td>
+</tr>
+<tr>
     <td><a href="#generate_download_url"><CopyableCode code="generate_download_url" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-functionsId"><code>functionsId</code></a></td>
     <td></td>
     <td>Returns a signed URL for downloading deployed function source code. The URL is only valid for a limited period and should be used within 30 minutes of generation. For more information about the signed URL usage see: https://cloud.google.com/storage/docs/access-control/signed-urls</td>
+</tr>
+<tr>
+    <td><a href="#setup_function_upgrade_config"><CopyableCode code="setup_function_upgrade_config" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-functionsId"><code>functionsId</code></a></td>
+    <td></td>
+    <td>Creates a 2nd Gen copy of the function configuration based on the 1st Gen function with the given name. This is the first step of the multi step process to upgrade 1st Gen functions to 2nd Gen. Only 2nd Gen configuration is setup as part of this request and traffic continues to be served by 1st Gen.</td>
+</tr>
+<tr>
+    <td><a href="#rollback_function_upgrade_traffic"><CopyableCode code="rollback_function_upgrade_traffic" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-functionsId"><code>functionsId</code></a></td>
+    <td></td>
+    <td>Reverts the traffic target of a function from the 2nd Gen copy to the original 1st Gen function. After this operation, all new traffic would be served by the 1st Gen.</td>
 </tr>
 <tr>
     <td><a href="#detach_function"><CopyableCode code="detach_function" /></a></td>
@@ -467,10 +474,10 @@ url
 FROM google.cloudfunctions.functions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -492,26 +499,26 @@ Creates a new function. If a function with the given name already exists in the 
 
 ```sql
 INSERT INTO google.cloudfunctions.functions (
-data__name,
 data__description,
-data__buildConfig,
-data__serviceConfig,
 data__eventTrigger,
-data__labels,
+data__name,
 data__environment,
+data__serviceConfig,
+data__labels,
+data__buildConfig,
 data__kmsKeyName,
 projectsId,
 locationsId,
 functionId
 )
 SELECT 
-'{{ name }}',
 '{{ description }}',
-'{{ buildConfig }}',
-'{{ serviceConfig }}',
 '{{ eventTrigger }}',
-'{{ labels }}',
+'{{ name }}',
 '{{ environment }}',
+'{{ serviceConfig }}',
+'{{ labels }}',
+'{{ buildConfig }}',
 '{{ kmsKeyName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -537,35 +544,20 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the functions resource.
-    - name: name
-      value: string
-      description: >
-        A user-defined name of the function. Function names must be unique globally and match pattern `projects/*/locations/*/functions/*`
-        
     - name: description
       value: string
       description: >
         User-provided description of a function.
-        
-    - name: buildConfig
-      value: object
-      description: >
-        Describes the Build step of the function that builds a container from the given source.
-        
-    - name: serviceConfig
-      value: object
-      description: >
-        Describes the Service being deployed. Currently deploys services to Cloud Run (fully managed).
         
     - name: eventTrigger
       value: object
       description: >
         An Eventarc trigger managed by Google Cloud Functions that fires events in response to a condition in another service.
         
-    - name: labels
-      value: object
+    - name: name
+      value: string
       description: >
-        Labels associated with this Cloud Function.
+        A user-defined name of the function. Function names must be unique globally and match pattern `projects/*/locations/*/functions/*`
         
     - name: environment
       value: string
@@ -573,6 +565,21 @@ response
         Describe whether the function is 1st Gen or 2nd Gen.
         
       valid_values: ['ENVIRONMENT_UNSPECIFIED', 'GEN_1', 'GEN_2']
+    - name: serviceConfig
+      value: object
+      description: >
+        Describes the Service being deployed. Currently deploys services to Cloud Run (fully managed).
+        
+    - name: labels
+      value: object
+      description: >
+        Labels associated with this Cloud Function.
+        
+    - name: buildConfig
+      value: object
+      description: >
+        Describes the Build step of the function that builds a container from the given source.
+        
     - name: kmsKeyName
       value: string
       description: >
@@ -600,13 +607,13 @@ Updates existing function.
 ```sql
 UPDATE google.cloudfunctions.functions
 SET 
-data__name = '{{ name }}',
 data__description = '{{ description }}',
-data__buildConfig = '{{ buildConfig }}',
-data__serviceConfig = '{{ serviceConfig }}',
 data__eventTrigger = '{{ eventTrigger }}',
-data__labels = '{{ labels }}',
+data__name = '{{ name }}',
 data__environment = '{{ environment }}',
+data__serviceConfig = '{{ serviceConfig }}',
+data__labels = '{{ labels }}',
+data__buildConfig = '{{ buildConfig }}',
 data__kmsKeyName = '{{ kmsKeyName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
@@ -650,70 +657,19 @@ AND functionsId = '{{ functionsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="setup_function_upgrade_config"
+    defaultValue="commit_function_upgrade"
     values={[
-        { label: 'setup_function_upgrade_config', value: 'setup_function_upgrade_config' },
-        { label: 'abort_function_upgrade', value: 'abort_function_upgrade' },
-        { label: 'redirect_function_upgrade_traffic', value: 'redirect_function_upgrade_traffic' },
-        { label: 'rollback_function_upgrade_traffic', value: 'rollback_function_upgrade_traffic' },
         { label: 'commit_function_upgrade', value: 'commit_function_upgrade' },
         { label: 'generate_upload_url', value: 'generate_upload_url' },
+        { label: 'redirect_function_upgrade_traffic', value: 'redirect_function_upgrade_traffic' },
+        { label: 'commit_function_upgrade_as_gen2', value: 'commit_function_upgrade_as_gen2' },
+        { label: 'abort_function_upgrade', value: 'abort_function_upgrade' },
         { label: 'generate_download_url', value: 'generate_download_url' },
+        { label: 'setup_function_upgrade_config', value: 'setup_function_upgrade_config' },
+        { label: 'rollback_function_upgrade_traffic', value: 'rollback_function_upgrade_traffic' },
         { label: 'detach_function', value: 'detach_function' }
     ]}
 >
-<TabItem value="setup_function_upgrade_config">
-
-Creates a 2nd Gen copy of the function configuration based on the 1st Gen function with the given name. This is the first step of the multi step process to upgrade 1st Gen functions to 2nd Gen. Only 2nd Gen configuration is setup as part of this request and traffic continues to be served by 1st Gen.
-
-```sql
-EXEC google.cloudfunctions.functions.setup_function_upgrade_config 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@functionsId='{{ functionsId }}' --required 
-@@json=
-'{
-"triggerServiceAccount": "{{ triggerServiceAccount }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="abort_function_upgrade">
-
-Aborts generation upgrade process for a function with the given name from the specified project. Deletes all 2nd Gen copy related configuration and resources which were created during the upgrade process.
-
-```sql
-EXEC google.cloudfunctions.functions.abort_function_upgrade 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@functionsId='{{ functionsId }}' --required
-;
-```
-</TabItem>
-<TabItem value="redirect_function_upgrade_traffic">
-
-Changes the traffic target of a function from the original 1st Gen function to the 2nd Gen copy. This is the second step of the multi step process to upgrade 1st Gen functions to 2nd Gen. After this operation, all new traffic will be served by 2nd Gen copy.
-
-```sql
-EXEC google.cloudfunctions.functions.redirect_function_upgrade_traffic 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@functionsId='{{ functionsId }}' --required
-;
-```
-</TabItem>
-<TabItem value="rollback_function_upgrade_traffic">
-
-Reverts the traffic target of a function from the 2nd Gen copy to the original 1st Gen function. After this operation, all new traffic would be served by the 1st Gen.
-
-```sql
-EXEC google.cloudfunctions.functions.rollback_function_upgrade_traffic 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@functionsId='{{ functionsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="commit_function_upgrade">
 
 Finalizes the upgrade after which function upgrade can not be rolled back. This is the last step of the multi step process to upgrade 1st Gen functions to 2nd Gen. Deletes all original 1st Gen related configuration and resources.
@@ -742,12 +698,76 @@ EXEC google.cloudfunctions.functions.generate_upload_url
 ;
 ```
 </TabItem>
+<TabItem value="redirect_function_upgrade_traffic">
+
+Changes the traffic target of a function from the original 1st Gen function to the 2nd Gen copy. This is the second step of the multi step process to upgrade 1st Gen functions to 2nd Gen. After this operation, all new traffic will be served by 2nd Gen copy.
+
+```sql
+EXEC google.cloudfunctions.functions.redirect_function_upgrade_traffic 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@functionsId='{{ functionsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="commit_function_upgrade_as_gen2">
+
+Commits a function upgrade from GCF Gen1 to GCF Gen2. This action deletes the Gen1 function, leaving the Gen2 function active and manageable by the GCFv2 API.
+
+```sql
+EXEC google.cloudfunctions.functions.commit_function_upgrade_as_gen2 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@functionsId='{{ functionsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="abort_function_upgrade">
+
+Aborts generation upgrade process for a function with the given name from the specified project. Deletes all 2nd Gen copy related configuration and resources which were created during the upgrade process.
+
+```sql
+EXEC google.cloudfunctions.functions.abort_function_upgrade 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@functionsId='{{ functionsId }}' --required
+;
+```
+</TabItem>
 <TabItem value="generate_download_url">
 
 Returns a signed URL for downloading deployed function source code. The URL is only valid for a limited period and should be used within 30 minutes of generation. For more information about the signed URL usage see: https://cloud.google.com/storage/docs/access-control/signed-urls
 
 ```sql
 EXEC google.cloudfunctions.functions.generate_download_url 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@functionsId='{{ functionsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="setup_function_upgrade_config">
+
+Creates a 2nd Gen copy of the function configuration based on the 1st Gen function with the given name. This is the first step of the multi step process to upgrade 1st Gen functions to 2nd Gen. Only 2nd Gen configuration is setup as part of this request and traffic continues to be served by 1st Gen.
+
+```sql
+EXEC google.cloudfunctions.functions.setup_function_upgrade_config 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@functionsId='{{ functionsId }}' --required 
+@@json=
+'{
+"triggerServiceAccount": "{{ triggerServiceAccount }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="rollback_function_upgrade_traffic">
+
+Reverts the traffic target of a function from the 2nd Gen copy to the original 1st Gen function. After this operation, all new traffic would be served by the 1st Gen.
+
+```sql
+EXEC google.cloudfunctions.functions.rollback_function_upgrade_traffic 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @functionsId='{{ functionsId }}' --required

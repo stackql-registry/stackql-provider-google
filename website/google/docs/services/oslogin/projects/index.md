@@ -56,6 +56,13 @@ The following methods are available for this resource:
     <td></td>
     <td>Deletes a POSIX account.</td>
 </tr>
+<tr>
+    <td><a href="#provision_posix_account"><CopyableCode code="provision_posix_account" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-usersId"><code>usersId</code></a>, <a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td></td>
+    <td>Adds a POSIX account and returns the profile information. Default POSIX account information is set when no username and UID exist as part of the login profile.</td>
+</tr>
 </tbody>
 </table>
 
@@ -101,6 +108,32 @@ Deletes a POSIX account.
 DELETE FROM google.oslogin.projects
 WHERE usersId = '{{ usersId }}' --required
 AND projectsId = '{{ projectsId }}' --required
+;
+```
+</TabItem>
+</Tabs>
+
+
+## Lifecycle Methods
+
+<Tabs
+    defaultValue="provision_posix_account"
+    values={[
+        { label: 'provision_posix_account', value: 'provision_posix_account' }
+    ]}
+>
+<TabItem value="provision_posix_account">
+
+Adds a POSIX account and returns the profile information. Default POSIX account information is set when no username and UID exist as part of the login profile.
+
+```sql
+EXEC google.oslogin.projects.provision_posix_account 
+@usersId='{{ usersId }}' --required, 
+@projectsId='{{ projectsId }}' --required 
+@@json=
+'{
+"regions": "{{ regions }}"
+}'
 ;
 ```
 </TabItem>

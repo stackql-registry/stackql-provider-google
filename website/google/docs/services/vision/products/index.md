@@ -366,21 +366,21 @@ Creates and returns a new product resource. Possible errors: * Returns INVALID_A
 
 ```sql
 INSERT INTO google.vision.products (
-data__name,
 data__displayName,
+data__productLabels,
+data__name,
 data__description,
 data__productCategory,
-data__productLabels,
 projectsId,
 locationsId,
 productId
 )
 SELECT 
-'{{ name }}',
 '{{ displayName }}',
+'{{ productLabels }}',
+'{{ name }}',
 '{{ description }}',
 '{{ productCategory }}',
-'{{ productLabels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ productId }}'
@@ -405,15 +405,20 @@ productLabels
     - name: locationsId
       value: string
       description: Required parameter for the products resource.
-    - name: name
-      value: string
-      description: >
-        The resource name of the product. Format is: `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`. This field is ignored when creating a product.
-        
     - name: displayName
       value: string
       description: >
         The user-provided name for this Product. Must not be empty. Must be at most 4096 characters long.
+        
+    - name: productLabels
+      value: array
+      description: >
+        Key-value pairs that can be attached to a product. At query time, constraints can be specified based on the product_labels. Note that integer values can be provided as strings, e.g. "1199". Only strings with integer values can match a range-based restriction which is to be supported soon. Multiple values can be assigned to the same key. One product may have up to 500 product_labels. Notice that the total number of distinct product_labels over all products in one ProductSet cannot exceed 1M, otherwise the product search pipeline will refuse to work for that ProductSet.
+        
+    - name: name
+      value: string
+      description: >
+        The resource name of the product. Format is: `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`. This field is ignored when creating a product.
         
     - name: description
       value: string
@@ -424,11 +429,6 @@ productLabels
       value: string
       description: >
         Immutable. The category for the product identified by the reference image. This should be one of "homegoods-v2", "apparel-v2", "toys-v2", "packagedgoods-v1" or "general-v1". The legacy categories "homegoods", "apparel", and "toys" are still supported, but these should not be used for new products.
-        
-    - name: productLabels
-      value: array
-      description: >
-        Key-value pairs that can be attached to a product. At query time, constraints can be specified based on the product_labels. Note that integer values can be provided as strings, e.g. "1199". Only strings with integer values can match a range-based restriction which is to be supported soon. Multiple values can be assigned to the same key. One product may have up to 500 product_labels. Notice that the total number of distinct product_labels over all products in one ProductSet cannot exceed 1M, otherwise the product search pipeline will refuse to work for that ProductSet.
         
     - name: productId
       value: string
@@ -452,11 +452,11 @@ Makes changes to a Product resource. Only the `display_name`, `description`, and
 ```sql
 UPDATE google.vision.products
 SET 
-data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
+data__productLabels = '{{ productLabels }}',
+data__name = '{{ name }}',
 data__description = '{{ description }}',
-data__productCategory = '{{ productCategory }}',
-data__productLabels = '{{ productLabels }}'
+data__productCategory = '{{ productCategory }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -514,9 +514,9 @@ EXEC google.vision.products.projects_locations_products_purge
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
+"force": {{ force }}, 
 "productSetPurgeConfig": "{{ productSetPurgeConfig }}", 
-"deleteOrphanProducts": {{ deleteOrphanProducts }}, 
-"force": {{ force }}
+"deleteOrphanProducts": {{ deleteOrphanProducts }}
 }'
 ;
 ```

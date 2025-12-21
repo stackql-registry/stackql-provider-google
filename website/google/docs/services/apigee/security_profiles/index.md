@@ -364,21 +364,21 @@ CreateSecurityProfile create a new custom security profile.
 ```sql
 INSERT INTO google.apigee.security_profiles (
 data__name,
+data__environments,
 data__displayName,
 data__scoringConfigs,
-data__environments,
-data__profileConfig,
 data__description,
+data__profileConfig,
 organizationsId,
 securityProfileId
 )
 SELECT 
 '{{ name }}',
+'{{ environments }}',
 '{{ displayName }}',
 '{{ scoringConfigs }}',
-'{{ environments }}',
-'{{ profileConfig }}',
 '{{ description }}',
+'{{ profileConfig }}',
 '{{ organizationsId }}',
 '{{ securityProfileId }}'
 RETURNING
@@ -411,6 +411,11 @@ scoringConfigs
       description: >
         Immutable. Name of the security profile resource. Format: organizations/{org}/securityProfiles/{profile}
         
+    - name: environments
+      value: array
+      description: >
+        List of environments attached to security profile.
+        
     - name: displayName
       value: string
       description: >
@@ -421,20 +426,15 @@ scoringConfigs
       description: >
         List of profile scoring configs in this revision.
         
-    - name: environments
-      value: array
+    - name: description
+      value: string
       description: >
-        List of environments attached to security profile.
+        Description of the security profile.
         
     - name: profileConfig
       value: object
       description: >
         Required. Customized profile configuration that computes the security score.
-        
-    - name: description
-      value: string
-      description: >
-        Description of the security profile.
         
     - name: securityProfileId
       value: string
@@ -459,11 +459,11 @@ UpdateSecurityProfile update the metadata of security profile.
 UPDATE google.apigee.security_profiles
 SET 
 data__name = '{{ name }}',
+data__environments = '{{ environments }}',
 data__displayName = '{{ displayName }}',
 data__scoringConfigs = '{{ scoringConfigs }}',
-data__environments = '{{ environments }}',
-data__profileConfig = '{{ profileConfig }}',
-data__description = '{{ description }}'
+data__description = '{{ description }}',
+data__profileConfig = '{{ profileConfig }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND securityProfilesId = '{{ securityProfilesId }}' --required

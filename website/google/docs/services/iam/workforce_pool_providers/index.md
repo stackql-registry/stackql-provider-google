@@ -62,12 +62,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="attributeMapping" /></td>
     <td><code>object</code></td>
-    <td>Required. Maps attributes from the authentication credentials issued by an external identity provider to Google Cloud attributes, such as `subject` and `segment`. Each key must be a string specifying the Google Cloud IAM attribute to map to. The following keys are supported: * `google.subject`: The principal IAM is authenticating. You can reference this value in IAM bindings. This is also the subject that appears in Cloud Logging logs. This is a required field and the mapped subject cannot exceed 127 bytes. * `google.groups`: Groups the authenticating user belongs to. You can grant groups access to resources using an IAM `principalSet` binding; access applies to all members of the group. * `google.display_name`: The name of the authenticated user. This is an optional field and the mapped display name cannot exceed 100 bytes. If not set, `google.subject` will be displayed instead. This attribute cannot be referenced in IAM bindings. * `google.profile_photo`: The URL that specifies the authenticated user's thumbnail photo. This is an optional field. When set, the image will be visible as the user's profile picture. If not set, a generic user icon will be displayed instead. This attribute cannot be referenced in IAM bindings. * `google.posix_username`: The Linux username used by OS Login. This is an optional field and the mapped POSIX username cannot exceed 32 characters, The key must match the regex "^a-zA-Z0-9._&#123;0,31&#125;$". This attribute cannot be referenced in IAM bindings. You can also provide custom attributes by specifying `attribute.&#123;custom_attribute&#125;`, where &#123;custom_attribute&#125; is the name of the custom attribute to be mapped. You can define a maximum of 50 custom attributes. The maximum length of a mapped attribute key is 100 characters, and the key may only contain the characters [a-z0-9_]. You can reference these attributes in IAM policies to define fine-grained access for a workforce pool to Google Cloud resources. For example: * `google.subject`: `principal://iam.googleapis.com/locations/global/workforcePools/&#123;pool&#125;/subject/&#123;value&#125;` * `google.groups`: `principalSet://iam.googleapis.com/locations/global/workforcePools/&#123;pool&#125;/group/&#123;value&#125;` * `attribute.&#123;custom_attribute&#125;`: `principalSet://iam.googleapis.com/locations/global/workforcePools/&#123;pool&#125;/attribute.&#123;custom_attribute&#125;/&#123;value&#125;` Each value must be a [Common Expression Language] (https://opensource.google/projects/cel) function that maps an identity provider credential to the normalized attribute specified by the corresponding map key. You can use the `assertion` keyword in the expression to access a JSON representation of the authentication credential issued by the provider. The maximum length of an attribute mapping expression is 2048 characters. When evaluated, the total size of all mapped attributes must not exceed 4KB. For OIDC providers, you must supply a custom mapping that includes the `google.subject` attribute. For example, the following maps the `sub` claim of the incoming credential to the `subject` attribute on a Google token: ``` &#123;"google.subject": "assertion.sub"&#125; ```</td>
+    <td>Required. Maps attributes from the authentication credentials issued by an external identity provider to Google Cloud attributes, such as `subject` and `segment`. Each key must be a string specifying the Google Cloud IAM attribute to map to. The following keys are supported: * `google.subject`: The principal IAM is authenticating. You can reference this value in IAM bindings. This is also the subject that appears in Cloud Logging logs. This is a required field and the mapped subject cannot exceed 127 bytes. * `google.groups`: Groups the authenticating user belongs to. You can grant groups access to resources using an IAM `principalSet` binding; access applies to all members of the group. * `google.display_name`: The name of the authenticated user. This is an optional field and the mapped display name cannot exceed 100 bytes. If not set, `google.subject` will be displayed instead. This attribute cannot be referenced in IAM bindings. * `google.profile_photo`: The URL that specifies the authenticated user's thumbnail photo. This is an optional field. When set, the image will be visible as the user's profile picture. If not set, a generic user icon will be displayed instead. This attribute cannot be referenced in IAM bindings. * `google.posix_username`: The Linux username used by OS Login. This is an optional field and the mapped POSIX username cannot exceed 32 characters, The key must match the regex "^a-zA-Z0-9._&#123;0,31&#125;$". This attribute cannot be referenced in IAM bindings. You can also provide custom attributes by specifying `attribute.&#123;custom_attribute&#125;`, where &#123;custom_attribute&#125; is the name of the custom attribute to be mapped. You can define a maximum of 50 custom attributes. The maximum length of a mapped attribute key is 100 characters, and the key may only contain the characters [a-z0-9_]. You can reference these attributes in IAM policies to define fine-grained access for a workforce pool to Google Cloud resources. For example: * `google.subject`: `principal://iam.googleapis.com/locations/global/workforcePools/&#123;pool&#125;/subject/&#123;value&#125;` * `google.groups`: `principalSet://iam.googleapis.com/locations/global/workforcePools/&#123;pool&#125;/group/&#123;value&#125;` * `attribute.&#123;custom_attribute&#125;`: `principalSet://iam.googleapis.com/locations/global/workforcePools/&#123;pool&#125;/attribute.&#123;custom_attribute&#125;/&#123;value&#125;` Each value must be a [Common Expression Language] (https://opensource.google/projects/cel) function that maps an identity provider credential to the normalized attribute specified by the corresponding map key. You can use the `assertion` keyword in the expression to access a JSON representation of the authentication credential issued by the provider. The maximum length of an attribute mapping expression is 2048 characters. When evaluated, the total size of all mapped attributes must not exceed 16 KB. For OIDC providers, you must supply a custom mapping that includes the `google.subject` attribute. For example, the following maps the `sub` claim of the incoming credential to the `subject` attribute on a Google token: ``` &#123;"google.subject": "assertion.sub"&#125; ```</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
-    <td>Optional. A user-specified description of the provider. Cannot exceed 256 characters.</td>
+    <td>Optional. A description of the provider. Cannot exceed 256 characters.</td>
 </tr>
 <tr>
     <td><CopyableCode code="detailedAuditLogging" /></td>
@@ -82,12 +82,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Optional. A user-specified display name for the provider. Cannot exceed 32 characters.</td>
+    <td>Optional. A display name for the provider. Cannot exceed 32 characters.</td>
 </tr>
 <tr>
     <td><CopyableCode code="expireTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. Time after which the workload pool provider will be permanently purged and cannot be recovered.</td>
+    <td>Output only. Time after which the workforce identity pool provider will be permanently purged and cannot be recovered.</td>
 </tr>
 <tr>
     <td><CopyableCode code="extendedAttributesOauth2Client" /></td>
@@ -108,6 +108,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="saml" /></td>
     <td><code>object</code></td>
     <td>A SAML identity provider configuration. (id: GoogleIamAdminV1WorkforcePoolProviderSaml)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="scimUsage" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Agentspace only. Specifies whether the workforce identity pool provider uses SCIM-managed groups instead of the `google.groups` attribute mapping for authorization checks. The `scim_usage` and `extended_attributes_oauth2_client` fields are mutually exclusive. A request that enables both fields on the same workforce identity pool provider will produce an error.</td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
@@ -141,12 +146,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="attributeMapping" /></td>
     <td><code>object</code></td>
-    <td>Required. Maps attributes from the authentication credentials issued by an external identity provider to Google Cloud attributes, such as `subject` and `segment`. Each key must be a string specifying the Google Cloud IAM attribute to map to. The following keys are supported: * `google.subject`: The principal IAM is authenticating. You can reference this value in IAM bindings. This is also the subject that appears in Cloud Logging logs. This is a required field and the mapped subject cannot exceed 127 bytes. * `google.groups`: Groups the authenticating user belongs to. You can grant groups access to resources using an IAM `principalSet` binding; access applies to all members of the group. * `google.display_name`: The name of the authenticated user. This is an optional field and the mapped display name cannot exceed 100 bytes. If not set, `google.subject` will be displayed instead. This attribute cannot be referenced in IAM bindings. * `google.profile_photo`: The URL that specifies the authenticated user's thumbnail photo. This is an optional field. When set, the image will be visible as the user's profile picture. If not set, a generic user icon will be displayed instead. This attribute cannot be referenced in IAM bindings. * `google.posix_username`: The Linux username used by OS Login. This is an optional field and the mapped POSIX username cannot exceed 32 characters, The key must match the regex "^a-zA-Z0-9._&#123;0,31&#125;$". This attribute cannot be referenced in IAM bindings. You can also provide custom attributes by specifying `attribute.&#123;custom_attribute&#125;`, where &#123;custom_attribute&#125; is the name of the custom attribute to be mapped. You can define a maximum of 50 custom attributes. The maximum length of a mapped attribute key is 100 characters, and the key may only contain the characters [a-z0-9_]. You can reference these attributes in IAM policies to define fine-grained access for a workforce pool to Google Cloud resources. For example: * `google.subject`: `principal://iam.googleapis.com/locations/global/workforcePools/&#123;pool&#125;/subject/&#123;value&#125;` * `google.groups`: `principalSet://iam.googleapis.com/locations/global/workforcePools/&#123;pool&#125;/group/&#123;value&#125;` * `attribute.&#123;custom_attribute&#125;`: `principalSet://iam.googleapis.com/locations/global/workforcePools/&#123;pool&#125;/attribute.&#123;custom_attribute&#125;/&#123;value&#125;` Each value must be a [Common Expression Language] (https://opensource.google/projects/cel) function that maps an identity provider credential to the normalized attribute specified by the corresponding map key. You can use the `assertion` keyword in the expression to access a JSON representation of the authentication credential issued by the provider. The maximum length of an attribute mapping expression is 2048 characters. When evaluated, the total size of all mapped attributes must not exceed 4KB. For OIDC providers, you must supply a custom mapping that includes the `google.subject` attribute. For example, the following maps the `sub` claim of the incoming credential to the `subject` attribute on a Google token: ``` &#123;"google.subject": "assertion.sub"&#125; ```</td>
+    <td>Required. Maps attributes from the authentication credentials issued by an external identity provider to Google Cloud attributes, such as `subject` and `segment`. Each key must be a string specifying the Google Cloud IAM attribute to map to. The following keys are supported: * `google.subject`: The principal IAM is authenticating. You can reference this value in IAM bindings. This is also the subject that appears in Cloud Logging logs. This is a required field and the mapped subject cannot exceed 127 bytes. * `google.groups`: Groups the authenticating user belongs to. You can grant groups access to resources using an IAM `principalSet` binding; access applies to all members of the group. * `google.display_name`: The name of the authenticated user. This is an optional field and the mapped display name cannot exceed 100 bytes. If not set, `google.subject` will be displayed instead. This attribute cannot be referenced in IAM bindings. * `google.profile_photo`: The URL that specifies the authenticated user's thumbnail photo. This is an optional field. When set, the image will be visible as the user's profile picture. If not set, a generic user icon will be displayed instead. This attribute cannot be referenced in IAM bindings. * `google.posix_username`: The Linux username used by OS Login. This is an optional field and the mapped POSIX username cannot exceed 32 characters, The key must match the regex "^a-zA-Z0-9._&#123;0,31&#125;$". This attribute cannot be referenced in IAM bindings. You can also provide custom attributes by specifying `attribute.&#123;custom_attribute&#125;`, where &#123;custom_attribute&#125; is the name of the custom attribute to be mapped. You can define a maximum of 50 custom attributes. The maximum length of a mapped attribute key is 100 characters, and the key may only contain the characters [a-z0-9_]. You can reference these attributes in IAM policies to define fine-grained access for a workforce pool to Google Cloud resources. For example: * `google.subject`: `principal://iam.googleapis.com/locations/global/workforcePools/&#123;pool&#125;/subject/&#123;value&#125;` * `google.groups`: `principalSet://iam.googleapis.com/locations/global/workforcePools/&#123;pool&#125;/group/&#123;value&#125;` * `attribute.&#123;custom_attribute&#125;`: `principalSet://iam.googleapis.com/locations/global/workforcePools/&#123;pool&#125;/attribute.&#123;custom_attribute&#125;/&#123;value&#125;` Each value must be a [Common Expression Language] (https://opensource.google/projects/cel) function that maps an identity provider credential to the normalized attribute specified by the corresponding map key. You can use the `assertion` keyword in the expression to access a JSON representation of the authentication credential issued by the provider. The maximum length of an attribute mapping expression is 2048 characters. When evaluated, the total size of all mapped attributes must not exceed 16 KB. For OIDC providers, you must supply a custom mapping that includes the `google.subject` attribute. For example, the following maps the `sub` claim of the incoming credential to the `subject` attribute on a Google token: ``` &#123;"google.subject": "assertion.sub"&#125; ```</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
-    <td>Optional. A user-specified description of the provider. Cannot exceed 256 characters.</td>
+    <td>Optional. A description of the provider. Cannot exceed 256 characters.</td>
 </tr>
 <tr>
     <td><CopyableCode code="detailedAuditLogging" /></td>
@@ -161,12 +166,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Optional. A user-specified display name for the provider. Cannot exceed 32 characters.</td>
+    <td>Optional. A display name for the provider. Cannot exceed 32 characters.</td>
 </tr>
 <tr>
     <td><CopyableCode code="expireTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. Time after which the workload pool provider will be permanently purged and cannot be recovered.</td>
+    <td>Output only. Time after which the workforce identity pool provider will be permanently purged and cannot be recovered.</td>
 </tr>
 <tr>
     <td><CopyableCode code="extendedAttributesOauth2Client" /></td>
@@ -187,6 +192,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="saml" /></td>
     <td><code>object</code></td>
     <td>A SAML identity provider configuration. (id: GoogleIamAdminV1WorkforcePoolProviderSaml)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="scimUsage" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Agentspace only. Specifies whether the workforce identity pool provider uses SCIM-managed groups instead of the `google.groups` attribute mapping for authorization checks. The `scim_usage` and `extended_attributes_oauth2_client` fields are mutually exclusive. A request that enables both fields on the same workforce identity pool provider will produce an error.</td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
@@ -341,6 +351,7 @@ extendedAttributesOauth2Client,
 extraAttributesOauth2Client,
 oidc,
 saml,
+scimUsage,
 state
 FROM google.iam.workforce_pool_providers
 WHERE locationsId = '{{ locationsId }}' -- required
@@ -367,6 +378,7 @@ extendedAttributesOauth2Client,
 extraAttributesOauth2Client,
 oidc,
 saml,
+scimUsage,
 state
 FROM google.iam.workforce_pool_providers
 WHERE locationsId = '{{ locationsId }}' -- required
@@ -406,6 +418,7 @@ data__oidc,
 data__extraAttributesOauth2Client,
 data__detailedAuditLogging,
 data__extendedAttributesOauth2Client,
+data__scimUsage,
 locationsId,
 workforcePoolsId,
 workforcePoolProviderId
@@ -422,6 +435,7 @@ SELECT
 '{{ extraAttributesOauth2Client }}',
 {{ detailedAuditLogging }},
 '{{ extendedAttributesOauth2Client }}',
+'{{ scimUsage }}',
 '{{ locationsId }}',
 '{{ workforcePoolsId }}',
 '{{ workforcePoolProviderId }}'
@@ -454,12 +468,12 @@ response
     - name: displayName
       value: string
       description: >
-        Optional. A user-specified display name for the provider. Cannot exceed 32 characters.
+        Optional. A display name for the provider. Cannot exceed 32 characters.
         
     - name: description
       value: string
       description: >
-        Optional. A user-specified description of the provider. Cannot exceed 256 characters.
+        Optional. A description of the provider. Cannot exceed 256 characters.
         
     - name: disabled
       value: boolean
@@ -469,7 +483,7 @@ response
     - name: attributeMapping
       value: object
       description: >
-        Required. Maps attributes from the authentication credentials issued by an external identity provider to Google Cloud attributes, such as `subject` and `segment`. Each key must be a string specifying the Google Cloud IAM attribute to map to. The following keys are supported: * `google.subject`: The principal IAM is authenticating. You can reference this value in IAM bindings. This is also the subject that appears in Cloud Logging logs. This is a required field and the mapped subject cannot exceed 127 bytes. * `google.groups`: Groups the authenticating user belongs to. You can grant groups access to resources using an IAM `principalSet` binding; access applies to all members of the group. * `google.display_name`: The name of the authenticated user. This is an optional field and the mapped display name cannot exceed 100 bytes. If not set, `google.subject` will be displayed instead. This attribute cannot be referenced in IAM bindings. * `google.profile_photo`: The URL that specifies the authenticated user's thumbnail photo. This is an optional field. When set, the image will be visible as the user's profile picture. If not set, a generic user icon will be displayed instead. This attribute cannot be referenced in IAM bindings. * `google.posix_username`: The Linux username used by OS Login. This is an optional field and the mapped POSIX username cannot exceed 32 characters, The key must match the regex "^a-zA-Z0-9._{0,31}$". This attribute cannot be referenced in IAM bindings. You can also provide custom attributes by specifying `attribute.{custom_attribute}`, where {custom_attribute} is the name of the custom attribute to be mapped. You can define a maximum of 50 custom attributes. The maximum length of a mapped attribute key is 100 characters, and the key may only contain the characters [a-z0-9_]. You can reference these attributes in IAM policies to define fine-grained access for a workforce pool to Google Cloud resources. For example: * `google.subject`: `principal://iam.googleapis.com/locations/global/workforcePools/{pool}/subject/{value}` * `google.groups`: `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool}/group/{value}` * `attribute.{custom_attribute}`: `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool}/attribute.{custom_attribute}/{value}` Each value must be a [Common Expression Language] (https://opensource.google/projects/cel) function that maps an identity provider credential to the normalized attribute specified by the corresponding map key. You can use the `assertion` keyword in the expression to access a JSON representation of the authentication credential issued by the provider. The maximum length of an attribute mapping expression is 2048 characters. When evaluated, the total size of all mapped attributes must not exceed 4KB. For OIDC providers, you must supply a custom mapping that includes the `google.subject` attribute. For example, the following maps the `sub` claim of the incoming credential to the `subject` attribute on a Google token: ``` {"google.subject": "assertion.sub"} ```
+        Required. Maps attributes from the authentication credentials issued by an external identity provider to Google Cloud attributes, such as `subject` and `segment`. Each key must be a string specifying the Google Cloud IAM attribute to map to. The following keys are supported: * `google.subject`: The principal IAM is authenticating. You can reference this value in IAM bindings. This is also the subject that appears in Cloud Logging logs. This is a required field and the mapped subject cannot exceed 127 bytes. * `google.groups`: Groups the authenticating user belongs to. You can grant groups access to resources using an IAM `principalSet` binding; access applies to all members of the group. * `google.display_name`: The name of the authenticated user. This is an optional field and the mapped display name cannot exceed 100 bytes. If not set, `google.subject` will be displayed instead. This attribute cannot be referenced in IAM bindings. * `google.profile_photo`: The URL that specifies the authenticated user's thumbnail photo. This is an optional field. When set, the image will be visible as the user's profile picture. If not set, a generic user icon will be displayed instead. This attribute cannot be referenced in IAM bindings. * `google.posix_username`: The Linux username used by OS Login. This is an optional field and the mapped POSIX username cannot exceed 32 characters, The key must match the regex "^a-zA-Z0-9._{0,31}$". This attribute cannot be referenced in IAM bindings. You can also provide custom attributes by specifying `attribute.{custom_attribute}`, where {custom_attribute} is the name of the custom attribute to be mapped. You can define a maximum of 50 custom attributes. The maximum length of a mapped attribute key is 100 characters, and the key may only contain the characters [a-z0-9_]. You can reference these attributes in IAM policies to define fine-grained access for a workforce pool to Google Cloud resources. For example: * `google.subject`: `principal://iam.googleapis.com/locations/global/workforcePools/{pool}/subject/{value}` * `google.groups`: `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool}/group/{value}` * `attribute.{custom_attribute}`: `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool}/attribute.{custom_attribute}/{value}` Each value must be a [Common Expression Language] (https://opensource.google/projects/cel) function that maps an identity provider credential to the normalized attribute specified by the corresponding map key. You can use the `assertion` keyword in the expression to access a JSON representation of the authentication credential issued by the provider. The maximum length of an attribute mapping expression is 2048 characters. When evaluated, the total size of all mapped attributes must not exceed 16 KB. For OIDC providers, you must supply a custom mapping that includes the `google.subject` attribute. For example, the following maps the `sub` claim of the incoming credential to the `subject` attribute on a Google token: ``` {"google.subject": "assertion.sub"} ```
         
     - name: attributeCondition
       value: string
@@ -501,6 +515,12 @@ response
       description: >
         Optional. The configuration for OAuth 2.0 client used to get the extended group memberships for user identities. Only the `AZURE_AD_GROUPS_ID` attribute type is supported. Extended groups supports a subset of Google Cloud services. When the user accesses these services, extended group memberships override the mapped `google.groups` attribute. Extended group memberships cannot be used in attribute mapping or attribute condition expressions. To keep extended group memberships up to date, extended groups are retrieved when the user signs in and at regular intervals during the user's active session. Each user identity in the workforce identity pool must map to a unique Microsoft Entra ID user.
         
+    - name: scimUsage
+      value: string
+      description: >
+        Optional. Agentspace only. Specifies whether the workforce identity pool provider uses SCIM-managed groups instead of the `google.groups` attribute mapping for authorization checks. The `scim_usage` and `extended_attributes_oauth2_client` fields are mutually exclusive. A request that enables both fields on the same workforce identity pool provider will produce an error.
+        
+      valid_values: ['SCIM_USAGE_UNSPECIFIED', 'ENABLED_FOR_GROUPS']
     - name: workforcePoolProviderId
       value: string
 ```
@@ -533,7 +553,8 @@ data__saml = '{{ saml }}',
 data__oidc = '{{ oidc }}',
 data__extraAttributesOauth2Client = '{{ extraAttributesOauth2Client }}',
 data__detailedAuditLogging = {{ detailedAuditLogging }},
-data__extendedAttributesOauth2Client = '{{ extendedAttributesOauth2Client }}'
+data__extendedAttributesOauth2Client = '{{ extendedAttributesOauth2Client }}',
+data__scimUsage = '{{ scimUsage }}'
 WHERE 
 locationsId = '{{ locationsId }}' --required
 AND workforcePoolsId = '{{ workforcePoolsId }}' --required

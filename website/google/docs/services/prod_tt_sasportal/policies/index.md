@@ -86,18 +86,18 @@ The following methods are available for this resource:
     <td>Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.</td>
 </tr>
 <tr>
-    <td><a href="#policies_set"><CopyableCode code="policies_set" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td></td>
-    <td></td>
-    <td>Sets the access control policy on the specified resource. Replaces any existing policy.</td>
-</tr>
-<tr>
     <td><a href="#policies_test"><CopyableCode code="policies_test" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
     <td></td>
     <td>Returns permissions that a caller has on the specified resource.</td>
+</tr>
+<tr>
+    <td><a href="#policies_set"><CopyableCode code="policies_set" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td></td>
+    <td></td>
+    <td>Sets the access control policy on the specified resource. Replaces any existing policy.</td>
 </tr>
 </tbody>
 </table>
@@ -144,27 +144,12 @@ FROM google.prod_tt_sasportal.policies
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="policies_set"
+    defaultValue="policies_test"
     values={[
-        { label: 'policies_set', value: 'policies_set' },
-        { label: 'policies_test', value: 'policies_test' }
+        { label: 'policies_test', value: 'policies_test' },
+        { label: 'policies_set', value: 'policies_set' }
     ]}
 >
-<TabItem value="policies_set">
-
-Sets the access control policy on the specified resource. Replaces any existing policy.
-
-```sql
-EXEC google.prod_tt_sasportal.policies.policies_set 
-@@json=
-'{
-"resource": "{{ resource }}", 
-"policy": "{{ policy }}", 
-"disableNotification": {{ disableNotification }}
-}'
-;
-```
-</TabItem>
 <TabItem value="policies_test">
 
 Returns permissions that a caller has on the specified resource.
@@ -173,8 +158,23 @@ Returns permissions that a caller has on the specified resource.
 EXEC google.prod_tt_sasportal.policies.policies_test 
 @@json=
 '{
-"resource": "{{ resource }}", 
-"permissions": "{{ permissions }}"
+"permissions": "{{ permissions }}", 
+"resource": "{{ resource }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="policies_set">
+
+Sets the access control policy on the specified resource. Replaces any existing policy.
+
+```sql
+EXEC google.prod_tt_sasportal.policies.policies_set 
+@@json=
+'{
+"disableNotification": {{ disableNotification }}, 
+"policy": "{{ policy }}", 
+"resource": "{{ resource }}"
 }'
 ;
 ```

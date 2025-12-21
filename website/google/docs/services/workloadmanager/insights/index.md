@@ -144,9 +144,9 @@ EXEC google.workloadmanager.insights.write_insight
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"insight": "{{ insight }}", 
 "requestId": "{{ requestId }}", 
-"agentVersion": "{{ agentVersion }}"
+"agentVersion": "{{ agentVersion }}", 
+"insight": "{{ insight }}"
 }'
 ;
 ```

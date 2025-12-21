@@ -67,7 +67,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="snapshot" /></td>
     <td><code>object</code></td>
-    <td>A QaScorecard represents a collection of questions to be scored during analysis. (id: GoogleCloudContactcenterinsightsV1QaScorecard)</td>
+    <td>The snapshot of the scorecard at the time of this revision's creation. (id: GoogleCloudContactcenterinsightsV1QaScorecard)</td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
@@ -106,7 +106,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="snapshot" /></td>
     <td><code>object</code></td>
-    <td>A QaScorecard represents a collection of questions to be scored during analysis. (id: GoogleCloudContactcenterinsightsV1QaScorecard)</td>
+    <td>The snapshot of the scorecard at the time of this revision's creation. (id: GoogleCloudContactcenterinsightsV1QaScorecard)</td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
@@ -144,7 +144,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-qaScorecardsId"><code>qaScorecardsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-qaScorecardSources"><code>qaScorecardSources</code></a></td>
+    <td><a href="#parameter-qaScorecardSources"><code>qaScorecardSources</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists all revisions under the parent QaScorecard.</td>
 </tr>
 <tr>
@@ -162,13 +162,6 @@ The following methods are available for this resource:
     <td>Deletes a QaScorecardRevision.</td>
 </tr>
 <tr>
-    <td><a href="#tune_qa_scorecard_revision"><CopyableCode code="tune_qa_scorecard_revision" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-qaScorecardsId"><code>qaScorecardsId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
-    <td></td>
-    <td>Fine tune one or more QaModels.</td>
-</tr>
-<tr>
     <td><a href="#deploy"><CopyableCode code="deploy" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-qaScorecardsId"><code>qaScorecardsId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
@@ -181,6 +174,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-qaScorecardsId"><code>qaScorecardsId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
     <td></td>
     <td>Undeploy a QaScorecardRevision.</td>
+</tr>
+<tr>
+    <td><a href="#tune_qa_scorecard_revision"><CopyableCode code="tune_qa_scorecard_revision" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-qaScorecardsId"><code>qaScorecardsId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
+    <td></td>
+    <td>Fine tune one or more QaModels.</td>
 </tr>
 </tbody>
 </table>
@@ -294,10 +294,10 @@ FROM google.contactcenterinsights.revisions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND qaScorecardsId = '{{ qaScorecardsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND qaScorecardSources = '{{ qaScorecardSources }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -319,16 +319,16 @@ Creates a QaScorecardRevision.
 
 ```sql
 INSERT INTO google.contactcenterinsights.revisions (
-data__name,
 data__snapshot,
+data__name,
 projectsId,
 locationsId,
 qaScorecardsId,
 qaScorecardRevisionId
 )
 SELECT 
-'{{ name }}',
 '{{ snapshot }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ qaScorecardsId }}',
@@ -357,15 +357,15 @@ state
     - name: qaScorecardsId
       value: string
       description: Required parameter for the revisions resource.
+    - name: snapshot
+      value: object
+      description: >
+        The snapshot of the scorecard at the time of this revision's creation.
+        
     - name: name
       value: string
       description: >
         Identifier. The name of the scorecard revision. Format: projects/{project}/locations/{location}/qaScorecards/{qa_scorecard}/revisions/{revision}
-        
-    - name: snapshot
-      value: object
-      description: >
-        A QaScorecard represents a collection of questions to be scored during analysis.
         
     - name: qaScorecardRevisionId
       value: string
@@ -402,31 +402,13 @@ AND force = '{{ force }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="tune_qa_scorecard_revision"
+    defaultValue="deploy"
     values={[
-        { label: 'tune_qa_scorecard_revision', value: 'tune_qa_scorecard_revision' },
         { label: 'deploy', value: 'deploy' },
-        { label: 'undeploy', value: 'undeploy' }
+        { label: 'undeploy', value: 'undeploy' },
+        { label: 'tune_qa_scorecard_revision', value: 'tune_qa_scorecard_revision' }
     ]}
 >
-<TabItem value="tune_qa_scorecard_revision">
-
-Fine tune one or more QaModels.
-
-```sql
-EXEC google.contactcenterinsights.revisions.tune_qa_scorecard_revision 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@qaScorecardsId='{{ qaScorecardsId }}' --required, 
-@revisionsId='{{ revisionsId }}' --required 
-@@json=
-'{
-"filter": "{{ filter }}", 
-"validateOnly": {{ validateOnly }}
-}'
-;
-```
-</TabItem>
 <TabItem value="deploy">
 
 Deploy a QaScorecardRevision.
@@ -450,6 +432,24 @@ EXEC google.contactcenterinsights.revisions.undeploy
 @locationsId='{{ locationsId }}' --required, 
 @qaScorecardsId='{{ qaScorecardsId }}' --required, 
 @revisionsId='{{ revisionsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="tune_qa_scorecard_revision">
+
+Fine tune one or more QaModels.
+
+```sql
+EXEC google.contactcenterinsights.revisions.tune_qa_scorecard_revision 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@qaScorecardsId='{{ qaScorecardsId }}' --required, 
+@revisionsId='{{ revisionsId }}' --required 
+@@json=
+'{
+"filter": "{{ filter }}", 
+"validateOnly": {{ validateOnly }}
+}'
 ;
 ```
 </TabItem>

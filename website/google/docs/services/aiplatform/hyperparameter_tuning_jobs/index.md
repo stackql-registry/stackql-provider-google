@@ -77,7 +77,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>Output only. Only populated when job's state is JOB_STATE_FAILED or JOB_STATE_CANCELLED. (id: GoogleRpcStatus)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: GoogleRpcStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -181,7 +181,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>Output only. Only populated when job's state is JOB_STATE_FAILED or JOB_STATE_CANCELLED. (id: GoogleRpcStatus)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: GoogleRpcStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -274,7 +274,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
     <td>Lists HyperparameterTuningJobs in a Location.</td>
 </tr>
 <tr>
@@ -419,9 +419,9 @@ updateTime
 FROM google.aiplatform.hyperparameter_tuning_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 AND readMask = '{{ readMask }}'
 ;
 ```
@@ -444,26 +444,26 @@ Creates a HyperparameterTuningJob
 
 ```sql
 INSERT INTO google.aiplatform.hyperparameter_tuning_jobs (
-data__displayName,
 data__studySpec,
+data__trialJobSpec,
+data__labels,
 data__maxTrialCount,
 data__parallelTrialCount,
 data__maxFailedTrialCount,
-data__trialJobSpec,
-data__labels,
 data__encryptionSpec,
+data__displayName,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ displayName }}',
 '{{ studySpec }}',
+'{{ trialJobSpec }}',
+'{{ labels }}',
 {{ maxTrialCount }},
 {{ parallelTrialCount }},
 {{ maxFailedTrialCount }},
-'{{ trialJobSpec }}',
-'{{ labels }}',
 '{{ encryptionSpec }}',
+'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -500,15 +500,20 @@ updateTime
     - name: locationsId
       value: string
       description: Required parameter for the hyperparameter_tuning_jobs resource.
-    - name: displayName
-      value: string
-      description: >
-        Required. The display name of the HyperparameterTuningJob. The name can be up to 128 characters long and can consist of any UTF-8 characters.
-        
     - name: studySpec
       value: object
       description: >
         Required. Study configuration of the HyperparameterTuningJob.
+        
+    - name: trialJobSpec
+      value: object
+      description: >
+        Required. The spec of a trial job. The same spec applies to the CustomJobs created in all the trials.
+        
+    - name: labels
+      value: object
+      description: >
+        The labels with user-defined metadata to organize HyperparameterTuningJobs. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
         
     - name: maxTrialCount
       value: integer
@@ -525,20 +530,15 @@ updateTime
       description: >
         The number of failed Trials that need to be seen before failing the HyperparameterTuningJob. If set to 0, Vertex AI decides how many Trials must fail before the whole job fails.
         
-    - name: trialJobSpec
-      value: object
-      description: >
-        Required. The spec of a trial job. The same spec applies to the CustomJobs created in all the trials.
-        
-    - name: labels
-      value: object
-      description: >
-        The labels with user-defined metadata to organize HyperparameterTuningJobs. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
-        
     - name: encryptionSpec
       value: object
       description: >
         Customer-managed encryption key options for a HyperparameterTuningJob. If this is set, then all resources created by the HyperparameterTuningJob will be encrypted with the provided encryption key.
+        
+    - name: displayName
+      value: string
+      description: >
+        Required. The display name of the HyperparameterTuningJob. The name can be up to 128 characters long and can consist of any UTF-8 characters.
         
 ```
 </TabItem>

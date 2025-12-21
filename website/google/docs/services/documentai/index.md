@@ -18,7 +18,7 @@ documentai service documentation.
 
 :::info[Service Summary]
 
-total resources: __7__  
+total resources: __9__  
 
 :::
 
@@ -28,11 +28,13 @@ total resources: __7__
 <a href="/services/documentai/evaluations/">evaluations</a><br />
 <a href="/services/documentai/human_review_config/">human_review_config</a><br />
 <a href="/services/documentai/locations/">locations</a><br />
-<a href="/services/documentai/operations/">operations</a>
+<a href="/services/documentai/operations/">operations</a><br />
+<a href="/services/documentai/processor_types/">processor_types</a>
 </div>
 <div class="providerDocColumn">
-<a href="/services/documentai/processor_types/">processor_types</a><br />
 <a href="/services/documentai/processor_versions/">processor_versions</a><br />
-<a href="/services/documentai/processors/">processors</a>
+<a href="/services/documentai/processors/">processors</a><br />
+<a href="/services/documentai/schema_versions/">schema_versions</a><br />
+<a href="/services/documentai/schemas/">schemas</a>
 </div>
 </div>

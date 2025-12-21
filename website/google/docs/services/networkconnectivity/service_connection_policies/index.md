@@ -55,6 +55,11 @@ The following fields are returned by `SELECT` queries:
     <td>Immutable. The name of a ServiceConnectionPolicy. Format: projects/&#123;project&#125;/locations/&#123;location&#125;/serviceConnectionPolicies/&#123;service_connection_policy&#125; See: https://google.aip.dev/122#fields-representing-resource-names</td>
 </tr>
 <tr>
+    <td><CopyableCode code="autoCreatedSubnetInfo" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Information for the automatically created subnetwork and its associated IR. (id: AutoCreatedSubnetworkInfo)</td>
+</tr>
+<tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. Time when the ServiceConnectionPolicy was created.</td>
@@ -122,6 +127,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
     <td>Immutable. The name of a ServiceConnectionPolicy. Format: projects/&#123;project&#125;/locations/&#123;location&#125;/serviceConnectionPolicies/&#123;service_connection_policy&#125; See: https://google.aip.dev/122#fields-representing-resource-names</td>
+</tr>
+<tr>
+    <td><CopyableCode code="autoCreatedSubnetInfo" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Information for the automatically created subnetwork and its associated IR. (id: AutoCreatedSubnetworkInfo)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -204,14 +214,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists ServiceConnectionPolicies in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-serviceConnectionPolicyId"><code>serviceConnectionPolicyId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-subnetworkMode"><code>subnetworkMode</code></a>, <a href="#parameter-autoSubnetworkConfig.prefixLength"><code>autoSubnetworkConfig.prefixLength</code></a>, <a href="#parameter-autoSubnetworkConfig.ipStack"><code>autoSubnetworkConfig.ipStack</code></a>, <a href="#parameter-autoSubnetworkConfig.allocRangeSpace"><code>autoSubnetworkConfig.allocRangeSpace</code></a>, <a href="#parameter-serviceConnectionPolicyId"><code>serviceConnectionPolicyId</code></a></td>
     <td>Creates a new ServiceConnectionPolicy in a given project and location.</td>
 </tr>
 <tr>
@@ -259,6 +269,21 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
+<tr id="parameter-autoSubnetworkConfig.allocRangeSpace">
+    <td><CopyableCode code="autoSubnetworkConfig.allocRangeSpace" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-autoSubnetworkConfig.ipStack">
+    <td><CopyableCode code="autoSubnetworkConfig.ipStack" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-autoSubnetworkConfig.prefixLength">
+    <td><CopyableCode code="autoSubnetworkConfig.prefixLength" /></td>
+    <td><code>integer (int32)</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-etag">
     <td><CopyableCode code="etag" /></td>
     <td><code>string</code></td>
@@ -294,6 +319,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
+<tr id="parameter-subnetworkMode">
+    <td><CopyableCode code="subnetworkMode" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-updateMask">
     <td><CopyableCode code="updateMask" /></td>
     <td><code>string (google-fieldmask)</code></td>
@@ -318,6 +348,7 @@ Gets details of a single ServiceConnectionPolicy.
 ```sql
 SELECT
 name,
+autoCreatedSubnetInfo,
 createTime,
 description,
 etag,
@@ -342,6 +373,7 @@ Lists ServiceConnectionPolicies in a given project and location.
 ```sql
 SELECT
 name,
+autoCreatedSubnetInfo,
 createTime,
 description,
 etag,
@@ -355,10 +387,10 @@ updateTime
 FROM google.networkconnectivity.service_connection_policies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -381,29 +413,37 @@ Creates a new ServiceConnectionPolicy in a given project and location.
 ```sql
 INSERT INTO google.networkconnectivity.service_connection_policies (
 data__name,
+data__network,
+data__pscConfig,
 data__labels,
 data__description,
-data__network,
 data__serviceClass,
-data__pscConfig,
 data__etag,
 projectsId,
 locationsId,
-serviceConnectionPolicyId,
-requestId
+requestId,
+subnetworkMode,
+autoSubnetworkConfig.prefixLength,
+autoSubnetworkConfig.ipStack,
+autoSubnetworkConfig.allocRangeSpace,
+serviceConnectionPolicyId
 )
 SELECT 
 '{{ name }}',
+'{{ network }}',
+'{{ pscConfig }}',
 '{{ labels }}',
 '{{ description }}',
-'{{ network }}',
 '{{ serviceClass }}',
-'{{ pscConfig }}',
 '{{ etag }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ serviceConnectionPolicyId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ subnetworkMode }}',
+'{{ autoSubnetworkConfig.prefixLength }}',
+'{{ autoSubnetworkConfig.ipStack }}',
+'{{ autoSubnetworkConfig.allocRangeSpace }}',
+'{{ serviceConnectionPolicyId }}'
 RETURNING
 name,
 done,
@@ -430,6 +470,16 @@ response
       description: >
         Immutable. The name of a ServiceConnectionPolicy. Format: projects/{project}/locations/{location}/serviceConnectionPolicies/{service_connection_policy} See: https://google.aip.dev/122#fields-representing-resource-names
         
+    - name: network
+      value: string
+      description: >
+        The resource path of the consumer network. Example: - projects/{projectNumOrId}/global/networks/{resourceId}.
+        
+    - name: pscConfig
+      value: object
+      description: >
+        Configuration used for Private Service Connect connections. Used when Infrastructure is PSC.
+        
     - name: labels
       value: object
       description: >
@@ -440,29 +490,27 @@ response
       description: >
         A description of this resource.
         
-    - name: network
-      value: string
-      description: >
-        The resource path of the consumer network. Example: - projects/{projectNumOrId}/global/networks/{resourceId}.
-        
     - name: serviceClass
       value: string
       description: >
         The service class identifier for which this ServiceConnectionPolicy is for. The service class identifier is a unique, symbolic representation of a ServiceClass. It is provided by the Service Producer. Google services have a prefix of gcp or google-cloud. For example, gcp-memorystore-redis or google-cloud-sql. 3rd party services do not. For example, test-service-a3dfcx.
-        
-    - name: pscConfig
-      value: object
-      description: >
-        Configuration used for Private Service Connect connections. Used when Infrastructure is PSC.
         
     - name: etag
       value: string
       description: >
         Optional. The etag is computed by the server, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
         
-    - name: serviceConnectionPolicyId
-      value: string
     - name: requestId
+      value: string
+    - name: subnetworkMode
+      value: string
+    - name: autoSubnetworkConfig.prefixLength
+      value: integer (int32)
+    - name: autoSubnetworkConfig.ipStack
+      value: string
+    - name: autoSubnetworkConfig.allocRangeSpace
+      value: string
+    - name: serviceConnectionPolicyId
       value: string
 ```
 </TabItem>
@@ -485,11 +533,11 @@ Updates the parameters of a single ServiceConnectionPolicy.
 UPDATE google.networkconnectivity.service_connection_policies
 SET 
 data__name = '{{ name }}',
+data__network = '{{ network }}',
+data__pscConfig = '{{ pscConfig }}',
 data__labels = '{{ labels }}',
 data__description = '{{ description }}',
-data__network = '{{ network }}',
 data__serviceClass = '{{ serviceClass }}',
-data__pscConfig = '{{ pscConfig }}',
 data__etag = '{{ etag }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

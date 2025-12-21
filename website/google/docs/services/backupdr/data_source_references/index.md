@@ -35,6 +35,7 @@ The following fields are returned by `SELECT` queries:
     defaultValue="get"
     values={[
         { label: 'get', value: 'get' },
+        { label: 'list', value: 'list' },
         { label: 'fetch_for_resource_type', value: 'fetch_for_resource_type' }
     ]}
 >
@@ -83,6 +84,65 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="dataSourceGcpResourceInfo" /></td>
     <td><code>object</code></td>
     <td>Output only. The GCP resource that the DataSource is associated with. (id: DataSourceGcpResourceInfo)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="totalStoredBytes" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Output only. Total size of the storage used by all backup resources for the referenced datasource.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. The resource name of the DataSourceReference. Format: projects/&#123;project&#125;/locations/&#123;location&#125;/dataSourceReferences/&#123;data_source_reference&#125;</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time when the DataSourceReference was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="dataSource" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The resource name of the DataSource. Format: projects/&#123;project&#125;/locations/&#123;location&#125;/backupVaults/&#123;backupVault&#125;/dataSources/&#123;dataSource&#125;</td>
+</tr>
+<tr>
+    <td><CopyableCode code="dataSourceBackupConfigInfo" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Information of backup configuration on the DataSource. (id: DataSourceBackupConfigInfo)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="dataSourceBackupConfigState" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The backup configuration state of the DataSource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="dataSourceBackupCount" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Output only. Number of backups in the DataSource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="dataSourceGcpResourceInfo" /></td>
+    <td><code>object</code></td>
+    <td>Output only. The GCP resource that the DataSource is associated with. (id: DataSourceGcpResourceInfo)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="totalStoredBytes" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Output only. Total size of the storage used by all backup resources for the referenced datasource.</td>
 </tr>
 </tbody>
 </table>
@@ -134,6 +194,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataSourceReferencesId"><code>dataSourceReferencesId</code></a></td>
     <td></td>
     <td>Gets details of a single DataSourceReference.</td>
+</tr>
+<tr>
+    <td><a href="#list"><CopyableCode code="list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td>Lists DataSourceReferences for a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#fetch_for_resource_type"><CopyableCode code="fetch_for_resource_type" /></a></td>
@@ -207,6 +274,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="get"
     values={[
         { label: 'get', value: 'get' },
+        { label: 'list', value: 'list' },
         { label: 'fetch_for_resource_type', value: 'fetch_for_resource_type' }
     ]}
 >
@@ -222,11 +290,36 @@ dataSource,
 dataSourceBackupConfigInfo,
 dataSourceBackupConfigState,
 dataSourceBackupCount,
-dataSourceGcpResourceInfo
+dataSourceGcpResourceInfo,
+totalStoredBytes
 FROM google.backupdr.data_source_references
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND dataSourceReferencesId = '{{ dataSourceReferencesId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="list">
+
+Lists DataSourceReferences for a given project and location.
+
+```sql
+SELECT
+name,
+createTime,
+dataSource,
+dataSourceBackupConfigInfo,
+dataSourceBackupConfigState,
+dataSourceBackupCount,
+dataSourceGcpResourceInfo,
+totalStoredBytes
+FROM google.backupdr.data_source_references
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>

@@ -209,15 +209,15 @@ Provisions instance resources for the Registry.
 
 ```sql
 INSERT INTO google.apigeeregistry.instances (
-data__name,
 data__config,
+data__name,
 projectsId,
 locationsId,
 instanceId
 )
 SELECT 
-'{{ name }}',
 '{{ config }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ instanceId }}'
@@ -242,15 +242,15 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the instances resource.
-    - name: name
-      value: string
-      description: >
-        Format: `projects/*/locations/*/instance`. Currently only `locations/global` is supported.
-        
     - name: config
       value: object
       description: >
         Required. Config of the Instance.
+        
+    - name: name
+      value: string
+      description: >
+        Format: `projects/*/locations/*/instance`. Currently only `locations/global` is supported.
         
     - name: instanceId
       value: string

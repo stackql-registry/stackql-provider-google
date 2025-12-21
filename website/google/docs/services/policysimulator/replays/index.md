@@ -35,8 +35,8 @@ The following fields are returned by `SELECT` queries:
     defaultValue="projects_locations_replays_get"
     values={[
         { label: 'projects_locations_replays_get', value: 'projects_locations_replays_get' },
-        { label: 'folders_locations_replays_get', value: 'folders_locations_replays_get' },
-        { label: 'organizations_locations_replays_get', value: 'organizations_locations_replays_get' }
+        { label: 'organizations_locations_replays_get', value: 'organizations_locations_replays_get' },
+        { label: 'folders_locations_replays_get', value: 'folders_locations_replays_get' }
     ]}
 >
 <TabItem value="projects_locations_replays_get">
@@ -73,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="folders_locations_replays_get">
+<TabItem value="organizations_locations_replays_get">
 
 <table>
 <thead>
@@ -107,7 +107,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="organizations_locations_replays_get">
+<TabItem value="folders_locations_replays_get">
 
 <table>
 <thead>
@@ -166,16 +166,16 @@ The following methods are available for this resource:
     <td>Gets the specified Replay. Each `Replay` is available for at least 7 days.</td>
 </tr>
 <tr>
-    <td><a href="#folders_locations_replays_get"><CopyableCode code="folders_locations_replays_get" /></a></td>
+    <td><a href="#organizations_locations_replays_get"><CopyableCode code="organizations_locations_replays_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-replaysId"><code>replaysId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-replaysId"><code>replaysId</code></a></td>
     <td></td>
     <td>Gets the specified Replay. Each `Replay` is available for at least 7 days.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_locations_replays_get"><CopyableCode code="organizations_locations_replays_get" /></a></td>
+    <td><a href="#folders_locations_replays_get"><CopyableCode code="folders_locations_replays_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-replaysId"><code>replaysId</code></a></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-replaysId"><code>replaysId</code></a></td>
     <td></td>
     <td>Gets the specified Replay. Each `Replay` is available for at least 7 days.</td>
 </tr>
@@ -187,16 +187,16 @@ The following methods are available for this resource:
     <td>Creates and starts a Replay using the given ReplayConfig.</td>
 </tr>
 <tr>
-    <td><a href="#folders_locations_replays_create"><CopyableCode code="folders_locations_replays_create" /></a></td>
+    <td><a href="#organizations_locations_replays_create"><CopyableCode code="organizations_locations_replays_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Creates and starts a Replay using the given ReplayConfig.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_locations_replays_create"><CopyableCode code="organizations_locations_replays_create" /></a></td>
+    <td><a href="#folders_locations_replays_create"><CopyableCode code="folders_locations_replays_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Creates and starts a Replay using the given ReplayConfig.</td>
 </tr>
@@ -250,8 +250,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="projects_locations_replays_get"
     values={[
         { label: 'projects_locations_replays_get', value: 'projects_locations_replays_get' },
-        { label: 'folders_locations_replays_get', value: 'folders_locations_replays_get' },
-        { label: 'organizations_locations_replays_get', value: 'organizations_locations_replays_get' }
+        { label: 'organizations_locations_replays_get', value: 'organizations_locations_replays_get' },
+        { label: 'folders_locations_replays_get', value: 'folders_locations_replays_get' }
     ]}
 >
 <TabItem value="projects_locations_replays_get">
@@ -266,23 +266,6 @@ resultsSummary,
 state
 FROM google.policysimulator.replays
 WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND replaysId = '{{ replaysId }}' -- required
-;
-```
-</TabItem>
-<TabItem value="folders_locations_replays_get">
-
-Gets the specified Replay. Each `Replay` is available for at least 7 days.
-
-```sql
-SELECT
-name,
-config,
-resultsSummary,
-state
-FROM google.policysimulator.replays
-WHERE foldersId = '{{ foldersId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND replaysId = '{{ replaysId }}' -- required
 ;
@@ -305,6 +288,23 @@ AND replaysId = '{{ replaysId }}' -- required
 ;
 ```
 </TabItem>
+<TabItem value="folders_locations_replays_get">
+
+Gets the specified Replay. Each `Replay` is available for at least 7 days.
+
+```sql
+SELECT
+name,
+config,
+resultsSummary,
+state
+FROM google.policysimulator.replays
+WHERE foldersId = '{{ foldersId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND replaysId = '{{ replaysId }}' -- required
+;
+```
+</TabItem>
 </Tabs>
 
 
@@ -314,8 +314,8 @@ AND replaysId = '{{ replaysId }}' -- required
     defaultValue="projects_locations_replays_create"
     values={[
         { label: 'projects_locations_replays_create', value: 'projects_locations_replays_create' },
-        { label: 'folders_locations_replays_create', value: 'folders_locations_replays_create' },
         { label: 'organizations_locations_replays_create', value: 'organizations_locations_replays_create' },
+        { label: 'folders_locations_replays_create', value: 'folders_locations_replays_create' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
@@ -332,29 +332,6 @@ locationsId
 SELECT 
 '{{ config }}',
 '{{ projectsId }}',
-'{{ locationsId }}'
-RETURNING
-name,
-done,
-error,
-metadata,
-response
-;
-```
-</TabItem>
-<TabItem value="folders_locations_replays_create">
-
-Creates and starts a Replay using the given ReplayConfig.
-
-```sql
-INSERT INTO google.policysimulator.replays (
-data__config,
-foldersId,
-locationsId
-)
-SELECT 
-'{{ config }}',
-'{{ foldersId }}',
 '{{ locationsId }}'
 RETURNING
 name,
@@ -388,6 +365,29 @@ response
 ;
 ```
 </TabItem>
+<TabItem value="folders_locations_replays_create">
+
+Creates and starts a Replay using the given ReplayConfig.
+
+```sql
+INSERT INTO google.policysimulator.replays (
+data__config,
+foldersId,
+locationsId
+)
+SELECT 
+'{{ config }}',
+'{{ foldersId }}',
+'{{ locationsId }}'
+RETURNING
+name,
+done,
+error,
+metadata,
+response
+;
+```
+</TabItem>
 <TabItem value="manifest">
 
 ```yaml
@@ -400,10 +400,10 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the replays resource.
-    - name: foldersId
+    - name: organizationsId
       value: string
       description: Required parameter for the replays resource.
-    - name: organizationsId
+    - name: foldersId
       value: string
       description: Required parameter for the replays resource.
     - name: config

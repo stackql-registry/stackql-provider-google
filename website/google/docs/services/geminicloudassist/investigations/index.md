@@ -52,82 +52,72 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Identifier. name of resource</td>
+    <td>Identifier. Name of the investigation, of the form: projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/investigations/&#123;investigation_id&#125;</td>
 </tr>
 <tr>
     <td><CopyableCode code="annotations" /></td>
     <td><code>object</code></td>
-    <td>Optional. Annotations on the investigation. Unlike labels, these may carry semantic meaning in running the investigation, and will not be read by other systems such as billing. (id: InvestigationAnnotations)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="clarificationsNeeded" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Questions that the system needs to ask the user. The results will be passed back by the UI as new Observations. The ID for those observations will be the key of the entry in the clarifications_needed map.</td>
+    <td>Optional. Additional annotations on the investigation. (id: InvestigationAnnotations)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. [Output only] Create time stamp</td>
-</tr>
-<tr>
-    <td><CopyableCode code="dataVersion" /></td>
-    <td><code>integer (int32)</code></td>
-    <td>Optional. The data model version of this Investigation. Should be either 1 or 2. Treat 0 as 1. If 1, use V1 Investigation data model. If 2, use the Investigation Observation data model.</td>
+    <td>Output only. The time when the investigation was created.</td>
 </tr>
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>Output only. [Output only] If the investigation execution state is FAILED, this field will contain the error message. (id: Status)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: Status)</td>
 </tr>
 <tr>
     <td><CopyableCode code="executionState" /></td>
     <td><code>string</code></td>
-    <td>Output only. [Output only] The execution state of this investigation.</td>
+    <td>Output only. The execution state of the investigation.</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
     <td><code>object</code></td>
-    <td>Optional. Labels as key value pairs</td>
+    <td>Optional. User-defined labels for the investigation.</td>
 </tr>
 <tr>
     <td><CopyableCode code="observations" /></td>
     <td><code>object</code></td>
-    <td>Optional. A map from observation ID to the observation. This is a map so that we can cleanly overwrite old observations with the version from the latest revision. See Observation for guidance on choosing IDs.</td>
+    <td>Optional. Observations about the project state that comprise the contents of the investigation.</td>
 </tr>
 <tr>
     <td><CopyableCode code="observerStatuses" /></td>
     <td><code>object</code></td>
-    <td>Optional. Plural version of above. Code will transition to this over time.</td>
+    <td>Optional. Statuses of observers which have been invoked in order to run the investigation.</td>
 </tr>
 <tr>
     <td><CopyableCode code="operation" /></td>
     <td><code>string</code></td>
-    <td>Output only. The Run operation most recently performed on the investigation.</td>
+    <td>Output only. The resource name of the Run operation most recently performed on the investigation, of the form: projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/operations/&#123;operation_id&#125;</td>
 </tr>
 <tr>
     <td><CopyableCode code="revision" /></td>
     <td><code>string</code></td>
-    <td>Output only. [Output only] Current revision of the investigation</td>
+    <td>Output only. Resource name of the investigation's current revision, of the form: projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/investigations/&#123;investigation_id&#125;/revisions/&#123;revision_id&#125;</td>
 </tr>
 <tr>
     <td><CopyableCode code="revisionIndex" /></td>
     <td><code>integer (int32)</code></td>
-    <td>Output only. [Output only] Index of the current revision of the investigation. 1-based.</td>
+    <td>Output only. Index of the current revision of the investigation.</td>
 </tr>
 <tr>
     <td><CopyableCode code="revisionPredecessor" /></td>
     <td><code>string</code></td>
-    <td>Optional. The name of the revision that was this revision's predecessor. The UI, for example, will set this to the existing revision when when a new revision is created due to an edit.</td>
+    <td>Optional. The name of the revision that was this revision's predecessor.</td>
 </tr>
 <tr>
     <td><CopyableCode code="title" /></td>
     <td><code>string</code></td>
-    <td>Required. Human-readable display title for the investigation.</td>
+    <td>Optional. Human-readable display title for the investigation.</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. [Output only] Update time stamp</td>
+    <td>Output only. The time when the investigation was last updated.</td>
 </tr>
 </tbody>
 </table>
@@ -146,82 +136,72 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Identifier. name of resource</td>
+    <td>Identifier. Name of the investigation, of the form: projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/investigations/&#123;investigation_id&#125;</td>
 </tr>
 <tr>
     <td><CopyableCode code="annotations" /></td>
     <td><code>object</code></td>
-    <td>Optional. Annotations on the investigation. Unlike labels, these may carry semantic meaning in running the investigation, and will not be read by other systems such as billing. (id: InvestigationAnnotations)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="clarificationsNeeded" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Questions that the system needs to ask the user. The results will be passed back by the UI as new Observations. The ID for those observations will be the key of the entry in the clarifications_needed map.</td>
+    <td>Optional. Additional annotations on the investigation. (id: InvestigationAnnotations)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. [Output only] Create time stamp</td>
-</tr>
-<tr>
-    <td><CopyableCode code="dataVersion" /></td>
-    <td><code>integer (int32)</code></td>
-    <td>Optional. The data model version of this Investigation. Should be either 1 or 2. Treat 0 as 1. If 1, use V1 Investigation data model. If 2, use the Investigation Observation data model.</td>
+    <td>Output only. The time when the investigation was created.</td>
 </tr>
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>Output only. [Output only] If the investigation execution state is FAILED, this field will contain the error message. (id: Status)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: Status)</td>
 </tr>
 <tr>
     <td><CopyableCode code="executionState" /></td>
     <td><code>string</code></td>
-    <td>Output only. [Output only] The execution state of this investigation.</td>
+    <td>Output only. The execution state of the investigation.</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
     <td><code>object</code></td>
-    <td>Optional. Labels as key value pairs</td>
+    <td>Optional. User-defined labels for the investigation.</td>
 </tr>
 <tr>
     <td><CopyableCode code="observations" /></td>
     <td><code>object</code></td>
-    <td>Optional. A map from observation ID to the observation. This is a map so that we can cleanly overwrite old observations with the version from the latest revision. See Observation for guidance on choosing IDs.</td>
+    <td>Optional. Observations about the project state that comprise the contents of the investigation.</td>
 </tr>
 <tr>
     <td><CopyableCode code="observerStatuses" /></td>
     <td><code>object</code></td>
-    <td>Optional. Plural version of above. Code will transition to this over time.</td>
+    <td>Optional. Statuses of observers which have been invoked in order to run the investigation.</td>
 </tr>
 <tr>
     <td><CopyableCode code="operation" /></td>
     <td><code>string</code></td>
-    <td>Output only. The Run operation most recently performed on the investigation.</td>
+    <td>Output only. The resource name of the Run operation most recently performed on the investigation, of the form: projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/operations/&#123;operation_id&#125;</td>
 </tr>
 <tr>
     <td><CopyableCode code="revision" /></td>
     <td><code>string</code></td>
-    <td>Output only. [Output only] Current revision of the investigation</td>
+    <td>Output only. Resource name of the investigation's current revision, of the form: projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/investigations/&#123;investigation_id&#125;/revisions/&#123;revision_id&#125;</td>
 </tr>
 <tr>
     <td><CopyableCode code="revisionIndex" /></td>
     <td><code>integer (int32)</code></td>
-    <td>Output only. [Output only] Index of the current revision of the investigation. 1-based.</td>
+    <td>Output only. Index of the current revision of the investigation.</td>
 </tr>
 <tr>
     <td><CopyableCode code="revisionPredecessor" /></td>
     <td><code>string</code></td>
-    <td>Optional. The name of the revision that was this revision's predecessor. The UI, for example, will set this to the existing revision when when a new revision is created due to an edit.</td>
+    <td>Optional. The name of the revision that was this revision's predecessor.</td>
 </tr>
 <tr>
     <td><CopyableCode code="title" /></td>
     <td><code>string</code></td>
-    <td>Required. Human-readable display title for the investigation.</td>
+    <td>Optional. Human-readable display title for the investigation.</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. [Output only] Update time stamp</td>
+    <td>Output only. The time when the investigation was last updated.</td>
 </tr>
 </tbody>
 </table>
@@ -254,15 +234,15 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists Investigations in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-investigationId"><code>investigationId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Creates a new Investigation in a given project and location.</td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-investigationId"><code>investigationId</code></a></td>
+    <td>Creates a new Investigation in a given project.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
@@ -364,9 +344,7 @@ Gets details of a single Investigation.
 SELECT
 name,
 annotations,
-clarificationsNeeded,
 createTime,
-dataVersion,
 error,
 executionState,
 labels,
@@ -393,9 +371,7 @@ Lists Investigations in a given project and location.
 SELECT
 name,
 annotations,
-clarificationsNeeded,
 createTime,
-dataVersion,
 error,
 executionState,
 labels,
@@ -410,9 +386,9 @@ updateTime
 FROM google.geminicloudassist.investigations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -431,44 +407,38 @@ AND orderBy = '{{ orderBy }}'
 >
 <TabItem value="create">
 
-Creates a new Investigation in a given project and location.
+Creates a new Investigation in a given project.
 
 ```sql
 INSERT INTO google.geminicloudassist.investigations (
 data__name,
-data__labels,
+data__observerStatuses,
 data__revisionPredecessor,
 data__annotations,
 data__title,
 data__observations,
-data__observerStatuses,
-data__dataVersion,
-data__clarificationsNeeded,
+data__labels,
 projectsId,
 locationsId,
-investigationId,
-requestId
+requestId,
+investigationId
 )
 SELECT 
 '{{ name }}',
-'{{ labels }}',
+'{{ observerStatuses }}',
 '{{ revisionPredecessor }}',
 '{{ annotations }}',
 '{{ title }}',
 '{{ observations }}',
-'{{ observerStatuses }}',
-{{ dataVersion }},
-'{{ clarificationsNeeded }}',
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ investigationId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ investigationId }}'
 RETURNING
 name,
 annotations,
-clarificationsNeeded,
 createTime,
-dataVersion,
 error,
 executionState,
 labels,
@@ -498,51 +468,41 @@ updateTime
     - name: name
       value: string
       description: >
-        Identifier. name of resource
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Labels as key value pairs
-        
-    - name: revisionPredecessor
-      value: string
-      description: >
-        Optional. The name of the revision that was this revision's predecessor. The UI, for example, will set this to the existing revision when when a new revision is created due to an edit.
-        
-    - name: annotations
-      value: object
-      description: >
-        Optional. Annotations on the investigation. Unlike labels, these may carry semantic meaning in running the investigation, and will not be read by other systems such as billing.
-        
-    - name: title
-      value: string
-      description: >
-        Required. Human-readable display title for the investigation.
-        
-    - name: observations
-      value: object
-      description: >
-        Optional. A map from observation ID to the observation. This is a map so that we can cleanly overwrite old observations with the version from the latest revision. See Observation for guidance on choosing IDs.
+        Identifier. Name of the investigation, of the form: projects/{project_number}/locations/{location_id}/investigations/{investigation_id}
         
     - name: observerStatuses
       value: object
       description: >
-        Optional. Plural version of above. Code will transition to this over time.
+        Optional. Statuses of observers which have been invoked in order to run the investigation.
         
-    - name: dataVersion
-      value: integer
+    - name: revisionPredecessor
+      value: string
       description: >
-        Optional. The data model version of this Investigation. Should be either 1 or 2. Treat 0 as 1. If 1, use V1 Investigation data model. If 2, use the Investigation Observation data model.
+        Optional. The name of the revision that was this revision's predecessor.
         
-    - name: clarificationsNeeded
+    - name: annotations
       value: object
       description: >
-        Optional. Questions that the system needs to ask the user. The results will be passed back by the UI as new Observations. The ID for those observations will be the key of the entry in the clarifications_needed map.
+        Optional. Additional annotations on the investigation.
         
-    - name: investigationId
+    - name: title
       value: string
+      description: >
+        Optional. Human-readable display title for the investigation.
+        
+    - name: observations
+      value: object
+      description: >
+        Optional. Observations about the project state that comprise the contents of the investigation.
+        
+    - name: labels
+      value: object
+      description: >
+        Optional. User-defined labels for the investigation.
+        
     - name: requestId
+      value: string
+    - name: investigationId
       value: string
 ```
 </TabItem>
@@ -565,14 +525,12 @@ Updates the parameters of a single Investigation.
 UPDATE google.geminicloudassist.investigations
 SET 
 data__name = '{{ name }}',
-data__labels = '{{ labels }}',
+data__observerStatuses = '{{ observerStatuses }}',
 data__revisionPredecessor = '{{ revisionPredecessor }}',
 data__annotations = '{{ annotations }}',
 data__title = '{{ title }}',
 data__observations = '{{ observations }}',
-data__observerStatuses = '{{ observerStatuses }}',
-data__dataVersion = {{ dataVersion }},
-data__clarificationsNeeded = '{{ clarificationsNeeded }}'
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -582,9 +540,7 @@ AND requestId = '{{ requestId}}'
 RETURNING
 name,
 annotations,
-clarificationsNeeded,
 createTime,
-dataVersion,
 error,
 executionState,
 labels,

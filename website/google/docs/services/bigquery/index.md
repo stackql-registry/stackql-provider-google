@@ -33,10 +33,10 @@ total resources: __11__
 <a href="/services/bigquery/routines/">routines</a>
 </div>
 <div class="providerDocColumn">
+<a href="/services/bigquery/routines_iam_policies/">routines_iam_policies</a><br />
 <a href="/services/bigquery/row_access_policies/">row_access_policies</a><br />
 <a href="/services/bigquery/service_account/">service_account</a><br />
 <a href="/services/bigquery/tabledata/">tabledata</a><br />
-<a href="/services/bigquery/tables/">tables</a><br />
-<a href="/services/bigquery/tables_iam_policies/">tables_iam_policies</a>
+<a href="/services/bigquery/tables/">tables</a>
 </div>
 </div>

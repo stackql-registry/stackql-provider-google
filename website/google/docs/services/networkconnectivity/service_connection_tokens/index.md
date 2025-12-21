@@ -184,7 +184,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists ServiceConnectionTokens in a given project and location.</td>
 </tr>
 <tr>
@@ -198,7 +198,7 @@ The following methods are available for this resource:
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-serviceConnectionTokensId"><code>serviceConnectionTokensId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes a single ServiceConnectionToken.</td>
 </tr>
 </tbody>
@@ -319,10 +319,10 @@ updateTime
 FROM google.networkconnectivity.service_connection_tokens
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -344,22 +344,22 @@ Creates a new ServiceConnectionToken in a given project and location.
 
 ```sql
 INSERT INTO google.networkconnectivity.service_connection_tokens (
-data__name,
-data__labels,
 data__description,
+data__name,
 data__network,
 data__etag,
+data__labels,
 projectsId,
 locationsId,
 serviceConnectionTokenId,
 requestId
 )
 SELECT 
-'{{ name }}',
-'{{ labels }}',
 '{{ description }}',
+'{{ name }}',
 '{{ network }}',
 '{{ etag }}',
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ serviceConnectionTokenId }}',
@@ -385,20 +385,15 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the service_connection_tokens resource.
-    - name: name
-      value: string
-      description: >
-        Immutable. The name of a ServiceConnectionToken. Format: projects/{project}/locations/{location}/ServiceConnectionTokens/{service_connection_token} See: https://google.aip.dev/122#fields-representing-resource-names
-        
-    - name: labels
-      value: object
-      description: >
-        User-defined labels.
-        
     - name: description
       value: string
       description: >
         A description of this resource.
+        
+    - name: name
+      value: string
+      description: >
+        Immutable. The name of a ServiceConnectionToken. Format: projects/{project}/locations/{location}/ServiceConnectionTokens/{service_connection_token} See: https://google.aip.dev/122#fields-representing-resource-names
         
     - name: network
       value: string
@@ -409,6 +404,11 @@ response
       value: string
       description: >
         Optional. The etag is computed by the server, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
+        
+    - name: labels
+      value: object
+      description: >
+        User-defined labels.
         
     - name: serviceConnectionTokenId
       value: string
@@ -436,8 +436,8 @@ DELETE FROM google.networkconnectivity.service_connection_tokens
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND serviceConnectionTokensId = '{{ serviceConnectionTokensId }}' --required
-AND requestId = '{{ requestId }}'
 AND etag = '{{ etag }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>

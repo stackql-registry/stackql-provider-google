@@ -164,7 +164,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_authorization_policies_list"><CopyableCode code="projects_locations_authorization_policies_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists AuthorizationPolicies in a given project and location.</td>
 </tr>
 <tr>
@@ -287,8 +287,8 @@ updateTime
 FROM google.networksecurity.authorization_policies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -310,21 +310,21 @@ Creates a new AuthorizationPolicy in a given project and location.
 
 ```sql
 INSERT INTO google.networksecurity.authorization_policies (
-data__name,
-data__description,
-data__labels,
 data__action,
 data__rules,
+data__labels,
+data__name,
+data__description,
 projectsId,
 locationsId,
 authorizationPolicyId
 )
 SELECT 
-'{{ name }}',
-'{{ description }}',
-'{{ labels }}',
 '{{ action }}',
 '{{ rules }}',
+'{{ labels }}',
+'{{ name }}',
+'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ authorizationPolicyId }}'
@@ -349,21 +349,6 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the authorization_policies resource.
-    - name: name
-      value: string
-      description: >
-        Required. Name of the AuthorizationPolicy resource. It matches pattern `projects/{project}/locations/{location}/authorizationPolicies/`.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. Free-text description of the resource.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Set of label tags associated with the AuthorizationPolicy resource.
-        
     - name: action
       value: string
       description: >
@@ -374,6 +359,21 @@ response
       value: array
       description: >
         Optional. List of rules to match. Note that at least one of the rules must match in order for the action specified in the 'action' field to be taken. A rule is a match if there is a matching source and destination. If left blank, the action specified in the `action` field will be applied on every request.
+        
+    - name: labels
+      value: object
+      description: >
+        Optional. Set of label tags associated with the AuthorizationPolicy resource.
+        
+    - name: name
+      value: string
+      description: >
+        Required. Name of the AuthorizationPolicy resource. It matches pattern `projects/{project}/locations/{location}/authorizationPolicies/`.
+        
+    - name: description
+      value: string
+      description: >
+        Optional. Free-text description of the resource.
         
     - name: authorizationPolicyId
       value: string
@@ -397,11 +397,11 @@ Updates the parameters of a single AuthorizationPolicy.
 ```sql
 UPDATE google.networksecurity.authorization_policies
 SET 
-data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__labels = '{{ labels }}',
 data__action = '{{ action }}',
-data__rules = '{{ rules }}'
+data__rules = '{{ rules }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

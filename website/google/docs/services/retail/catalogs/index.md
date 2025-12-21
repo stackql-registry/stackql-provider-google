@@ -87,7 +87,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_catalogs_list"><CopyableCode code="projects_locations_catalogs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists all the Catalogs associated with the project.</td>
 </tr>
 <tr>
@@ -115,7 +115,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_catalogs_complete_query"><CopyableCode code="projects_locations_catalogs_complete_query" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a></td>
-    <td><a href="#parameter-query"><code>query</code></a>, <a href="#parameter-visitorId"><code>visitorId</code></a>, <a href="#parameter-languageCodes"><code>languageCodes</code></a>, <a href="#parameter-deviceType"><code>deviceType</code></a>, <a href="#parameter-dataset"><code>dataset</code></a>, <a href="#parameter-maxSuggestions"><code>maxSuggestions</code></a>, <a href="#parameter-enableAttributeSuggestions"><code>enableAttributeSuggestions</code></a>, <a href="#parameter-entity"><code>entity</code></a></td>
+    <td><a href="#parameter-enableAttributeSuggestions"><code>enableAttributeSuggestions</code></a>, <a href="#parameter-query"><code>query</code></a>, <a href="#parameter-visitorId"><code>visitorId</code></a>, <a href="#parameter-deviceType"><code>deviceType</code></a>, <a href="#parameter-languageCodes"><code>languageCodes</code></a>, <a href="#parameter-dataset"><code>dataset</code></a>, <a href="#parameter-maxSuggestions"><code>maxSuggestions</code></a>, <a href="#parameter-entity"><code>entity</code></a></td>
     <td>Completes the specified prefix with keyword suggestions. This feature is only available for users who have Retail Search enabled. Enable Retail Search on Cloud Console before using this feature.</td>
 </tr>
 </tbody>
@@ -227,8 +227,8 @@ productLevelConfig
 FROM google.retail.catalogs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -250,9 +250,9 @@ Updates the Catalogs.
 ```sql
 UPDATE google.retail.catalogs
 SET 
-data__name = '{{ name }}',
+data__productLevelConfig = '{{ productLevelConfig }}',
 data__displayName = '{{ displayName }}',
-data__productLevelConfig = '{{ productLevelConfig }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -288,8 +288,8 @@ EXEC google.retail.catalogs.projects_locations_catalogs_export_analytics_metrics
 @catalogsId='{{ catalogsId }}' --required 
 @@json=
 '{
-"outputConfig": "{{ outputConfig }}", 
-"filter": "{{ filter }}"
+"filter": "{{ filter }}", 
+"outputConfig": "{{ outputConfig }}"
 }'
 ;
 ```
@@ -305,8 +305,8 @@ EXEC google.retail.catalogs.projects_locations_catalogs_set_default_branch
 @catalogsId='{{ catalogsId }}' --required 
 @@json=
 '{
-"branchId": "{{ branchId }}", 
 "note": "{{ note }}", 
+"branchId": "{{ branchId }}", 
 "force": {{ force }}
 }'
 ;
@@ -321,13 +321,13 @@ EXEC google.retail.catalogs.projects_locations_catalogs_complete_query
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @catalogsId='{{ catalogsId }}' --required, 
+@enableAttributeSuggestions={{ enableAttributeSuggestions }}, 
 @query='{{ query }}', 
 @visitorId='{{ visitorId }}', 
-@languageCodes='{{ languageCodes }}', 
 @deviceType='{{ deviceType }}', 
+@languageCodes='{{ languageCodes }}', 
 @dataset='{{ dataset }}', 
 @maxSuggestions='{{ maxSuggestions }}', 
-@enableAttributeSuggestions={{ enableAttributeSuggestions }}, 
 @entity='{{ entity }}'
 ;
 ```

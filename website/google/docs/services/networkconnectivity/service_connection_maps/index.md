@@ -97,7 +97,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="serviceClass" /></td>
     <td><code>string</code></td>
-    <td>The service class identifier this ServiceConnectionMap is for. The user of ServiceConnectionMap create API needs to have networkconnecitivty.serviceclasses.use iam permission for the service class.</td>
+    <td>The service class identifier this ServiceConnectionMap is for. The user of ServiceConnectionMap create API needs to have networkconnectivity.serviceClasses.use IAM permission for the service class.</td>
 </tr>
 <tr>
     <td><CopyableCode code="serviceClassUri" /></td>
@@ -176,7 +176,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="serviceClass" /></td>
     <td><code>string</code></td>
-    <td>The service class identifier this ServiceConnectionMap is for. The user of ServiceConnectionMap create API needs to have networkconnecitivty.serviceclasses.use iam permission for the service class.</td>
+    <td>The service class identifier this ServiceConnectionMap is for. The user of ServiceConnectionMap create API needs to have networkconnectivity.serviceClasses.use IAM permission for the service class.</td>
 </tr>
 <tr>
     <td><CopyableCode code="serviceClassUri" /></td>
@@ -224,7 +224,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists ServiceConnectionMaps in a given project and location.</td>
 </tr>
 <tr>
@@ -379,10 +379,10 @@ updateTime
 FROM google.networkconnectivity.service_connection_maps
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -404,28 +404,28 @@ Creates a new ServiceConnectionMap in a given project and location.
 
 ```sql
 INSERT INTO google.networkconnectivity.service_connection_maps (
-data__name,
 data__labels,
-data__description,
 data__serviceClass,
-data__producerPscConfigs,
+data__description,
 data__consumerPscConfigs,
-data__token,
 data__etag,
+data__producerPscConfigs,
+data__name,
+data__token,
 projectsId,
 locationsId,
 serviceConnectionMapId,
 requestId
 )
 SELECT 
-'{{ name }}',
 '{{ labels }}',
-'{{ description }}',
 '{{ serviceClass }}',
-'{{ producerPscConfigs }}',
+'{{ description }}',
 '{{ consumerPscConfigs }}',
-'{{ token }}',
 '{{ etag }}',
+'{{ producerPscConfigs }}',
+'{{ name }}',
+'{{ token }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ serviceConnectionMapId }}',
@@ -451,45 +451,45 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the service_connection_maps resource.
-    - name: name
-      value: string
-      description: >
-        Immutable. The name of a ServiceConnectionMap. Format: projects/{project}/locations/{location}/serviceConnectionMaps/{service_connection_map} See: https://google.aip.dev/122#fields-representing-resource-names
-        
     - name: labels
       value: object
       description: >
         User-defined labels.
+        
+    - name: serviceClass
+      value: string
+      description: >
+        The service class identifier this ServiceConnectionMap is for. The user of ServiceConnectionMap create API needs to have networkconnectivity.serviceClasses.use IAM permission for the service class.
         
     - name: description
       value: string
       description: >
         A description of this resource.
         
-    - name: serviceClass
+    - name: consumerPscConfigs
+      value: array
+      description: >
+        The PSC configurations on consumer side.
+        
+    - name: etag
       value: string
       description: >
-        The service class identifier this ServiceConnectionMap is for. The user of ServiceConnectionMap create API needs to have networkconnecitivty.serviceclasses.use iam permission for the service class.
+        Optional. The etag is computed by the server, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
         
     - name: producerPscConfigs
       value: array
       description: >
         The PSC configurations on producer side.
         
-    - name: consumerPscConfigs
-      value: array
+    - name: name
+      value: string
       description: >
-        The PSC configurations on consumer side.
+        Immutable. The name of a ServiceConnectionMap. Format: projects/{project}/locations/{location}/serviceConnectionMaps/{service_connection_map} See: https://google.aip.dev/122#fields-representing-resource-names
         
     - name: token
       value: string
       description: >
         The token provided by the consumer. This token authenticates that the consumer can create a connection within the specified project and network.
-        
-    - name: etag
-      value: string
-      description: >
-        Optional. The etag is computed by the server, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
         
     - name: serviceConnectionMapId
       value: string
@@ -515,14 +515,14 @@ Updates the parameters of a single ServiceConnectionMap.
 ```sql
 UPDATE google.networkconnectivity.service_connection_maps
 SET 
-data__name = '{{ name }}',
 data__labels = '{{ labels }}',
-data__description = '{{ description }}',
 data__serviceClass = '{{ serviceClass }}',
-data__producerPscConfigs = '{{ producerPscConfigs }}',
+data__description = '{{ description }}',
 data__consumerPscConfigs = '{{ consumerPscConfigs }}',
-data__token = '{{ token }}',
-data__etag = '{{ etag }}'
+data__etag = '{{ etag }}',
+data__producerPscConfigs = '{{ producerPscConfigs }}',
+data__name = '{{ name }}',
+data__token = '{{ token }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

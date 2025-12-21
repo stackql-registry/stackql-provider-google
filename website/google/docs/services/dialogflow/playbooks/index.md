@@ -55,6 +55,11 @@ The following fields are returned by `SELECT` queries:
     <td>The unique identifier of the playbook. Format: `projects//locations//agents//playbooks/`.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="codeBlock" /></td>
+    <td><code>object</code></td>
+    <td>Optional. The playbook's scoped code block, which may implement handlers and actions. (id: GoogleCloudDialogflowCxV3CodeBlock)</td>
+</tr>
+<tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The timestamp of initial playbook creation.</td>
@@ -73,6 +78,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="handlers" /></td>
     <td><code>array</code></td>
     <td>Optional. A list of registered handlers to execuate based on the specified triggers.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="inlineActions" /></td>
+    <td><code>array</code></td>
+    <td>Optional. Output only. Names of inline actions scoped to this playbook. These actions are in addition to those belonging to referenced tools, child playbooks, and flows, e.g. actions that are defined in the playbook's code block.</td>
 </tr>
 <tr>
     <td><CopyableCode code="inputParameterDefinitions" /></td>
@@ -144,6 +154,11 @@ The following fields are returned by `SELECT` queries:
     <td>The unique identifier of the playbook. Format: `projects//locations//agents//playbooks/`.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="codeBlock" /></td>
+    <td><code>object</code></td>
+    <td>Optional. The playbook's scoped code block, which may implement handlers and actions. (id: GoogleCloudDialogflowCxV3CodeBlock)</td>
+</tr>
+<tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The timestamp of initial playbook creation.</td>
@@ -162,6 +177,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="handlers" /></td>
     <td><code>array</code></td>
     <td>Optional. A list of registered handlers to execuate based on the specified triggers.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="inlineActions" /></td>
+    <td><code>array</code></td>
+    <td>Optional. Output only. Names of inline actions scoped to this playbook. These actions are in addition to those belonging to referenced tools, child playbooks, and flows, e.g. actions that are defined in the playbook's code block.</td>
 </tr>
 <tr>
     <td><CopyableCode code="inputParameterDefinitions" /></td>
@@ -352,10 +372,12 @@ Retrieves the specified Playbook.
 ```sql
 SELECT
 name,
+codeBlock,
 createTime,
 displayName,
 goal,
 handlers,
+inlineActions,
 inputParameterDefinitions,
 instruction,
 llmModelSettings,
@@ -381,10 +403,12 @@ Returns a list of playbooks in the specified agent.
 ```sql
 SELECT
 name,
+codeBlock,
 createTime,
 displayName,
 goal,
 handlers,
+inlineActions,
 inputParameterDefinitions,
 instruction,
 llmModelSettings,
@@ -429,6 +453,7 @@ data__inputParameterDefinitions,
 data__outputParameterDefinitions,
 data__instruction,
 data__referencedTools,
+data__codeBlock,
 data__llmModelSettings,
 data__handlers,
 data__playbookType,
@@ -444,6 +469,7 @@ SELECT
 '{{ outputParameterDefinitions }}',
 '{{ instruction }}',
 '{{ referencedTools }}',
+'{{ codeBlock }}',
 '{{ llmModelSettings }}',
 '{{ handlers }}',
 '{{ playbookType }}',
@@ -452,10 +478,12 @@ SELECT
 '{{ agentsId }}'
 RETURNING
 name,
+codeBlock,
 createTime,
 displayName,
 goal,
 handlers,
+inlineActions,
 inputParameterDefinitions,
 instruction,
 llmModelSettings,
@@ -519,6 +547,11 @@ updateTime
       description: >
         Optional. The resource name of tools referenced by the current playbook in the instructions. If not provided explicitly, they are will be implied using the tool being referenced in goal and steps.
         
+    - name: codeBlock
+      value: object
+      description: >
+        Optional. The playbook's scoped code block, which may implement handlers and actions.
+        
     - name: llmModelSettings
       value: object
       description: >
@@ -562,6 +595,7 @@ data__inputParameterDefinitions = '{{ inputParameterDefinitions }}',
 data__outputParameterDefinitions = '{{ outputParameterDefinitions }}',
 data__instruction = '{{ instruction }}',
 data__referencedTools = '{{ referencedTools }}',
+data__codeBlock = '{{ codeBlock }}',
 data__llmModelSettings = '{{ llmModelSettings }}',
 data__handlers = '{{ handlers }}',
 data__playbookType = '{{ playbookType }}'
@@ -573,10 +607,12 @@ AND playbooksId = '{{ playbooksId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
+codeBlock,
 createTime,
 displayName,
 goal,
 handlers,
+inlineActions,
 inputParameterDefinitions,
 instruction,
 llmModelSettings,

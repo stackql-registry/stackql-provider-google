@@ -335,32 +335,32 @@ Creates an environment in an organization.
 
 ```sql
 INSERT INTO google.apigee.environments (
-data__name,
-data__description,
-data__properties,
-data__displayName,
-data__deploymentType,
 data__apiProxyType,
-data__nodeConfig,
-data__forwardProxyUri,
-data__type,
+data__description,
 data__hasAttachedFlowHooks,
+data__forwardProxyUri,
+data__nodeConfig,
+data__properties,
 data__clientIpResolutionConfig,
+data__displayName,
+data__type,
+data__name,
+data__deploymentType,
 organizationsId,
 name
 )
 SELECT 
-'{{ name }}',
-'{{ description }}',
-'{{ properties }}',
-'{{ displayName }}',
-'{{ deploymentType }}',
 '{{ apiProxyType }}',
-'{{ nodeConfig }}',
-'{{ forwardProxyUri }}',
-'{{ type }}',
+'{{ description }}',
 {{ hasAttachedFlowHooks }},
+'{{ forwardProxyUri }}',
+'{{ nodeConfig }}',
+'{{ properties }}',
 '{{ clientIpResolutionConfig }}',
+'{{ displayName }}',
+'{{ type }}',
+'{{ name }}',
+'{{ deploymentType }}',
 '{{ organizationsId }}',
 '{{ name }}'
 RETURNING
@@ -394,42 +394,43 @@ response
       description: >
         DEPRECATED: DO NOT USE Revision ID of the security profile.
         
-    - name: description
-      value: string
-      description: >
-        Optional. Description of the environment.
-        
-    - name: properties
-      value: object
-      description: >
-        Optional. Key-value pairs that may be used for customizing the environment.
-        
-    - name: displayName
-      value: string
-      description: >
-        Optional. Display name for this environment.
-        
-    - name: deploymentType
-      value: string
-      description: >
-        Optional. Deployment type supported by the environment. The deployment type can be set when creating the environment and cannot be changed. When you enable archive deployment, you will be **prevented from performing** a [subset of actions](https://cloud.google.com/apigee/docs/api-platform/local-development/overview#prevented-actions) within the environment, including: * Managing the deployment of API proxy or shared flow revisions * Creating, updating, or deleting resource files * Creating, updating, or deleting target servers
-        
-      valid_values: ['DEPLOYMENT_TYPE_UNSPECIFIED', 'PROXY', 'ARCHIVE']
     - name: apiProxyType
       value: string
       description: >
         Optional. API Proxy type supported by the environment. The type can be set when creating the Environment and cannot be changed.
         
       valid_values: ['API_PROXY_TYPE_UNSPECIFIED', 'PROGRAMMABLE', 'CONFIGURABLE']
+    - name: description
+      value: string
+      description: >
+        Optional. Description of the environment.
+        
+    - name: hasAttachedFlowHooks
+      value: boolean
+    - name: forwardProxyUri
+      value: string
+      description: >
+        Optional. URI of the forward proxy to be applied to the runtime instances in this environment. Must be in the format of {scheme}://{hostname}:{port}. Note that the only supported scheme is "http". The port must be supplied. To remove a forward proxy setting, update the field to an empty value. Note: At this time, PUT operations to add forwardProxyUri to an existing environment fail if the environment has nodeConfig set up. To successfully add the forwardProxyUri setting in this case, include the NodeConfig details with the request.
+        
     - name: nodeConfig
       value: object
       description: >
         Optional. NodeConfig of the environment.
         
-    - name: forwardProxyUri
+    - name: properties
+      value: object
+      description: >
+        Optional. Key-value pairs that may be used for customizing the environment.
+        
+    - name: clientIpResolutionConfig
+      value: object
+      description: >
+        Optional. The algorithm to resolve IP. This will affect Analytics, API Security, and other features that use the client ip. To remove a client ip resolution config, update the field to an empty value. Example: '{ "clientIpResolutionConfig" = {} }' For more information, see: https://cloud.google.com/apigee/docs/api-platform/system-administration/client-ip-resolution.
+        
+    - name: displayName
       value: string
       description: >
-        Optional. URI of the forward proxy to be applied to the runtime instances in this environment. Must be in the format of {scheme}://{hostname}:{port}. Note that the only supported scheme is "http". The port must be supplied. To remove a forward proxy setting, update the field to an empty value. Note: At this time, PUT operations to add forwardProxyUri to an existing environment fail if the environment has nodeConfig set up. To successfully add the forwardProxyUri setting in this case, include the NodeConfig details with the request.
+        Optional. Display name for this environment.
         
     - name: type
       value: string
@@ -437,13 +438,12 @@ response
         Optional. EnvironmentType selected for the environment.
         
       valid_values: ['ENVIRONMENT_TYPE_UNSPECIFIED', 'BASE', 'INTERMEDIATE', 'COMPREHENSIVE']
-    - name: hasAttachedFlowHooks
-      value: boolean
-    - name: clientIpResolutionConfig
-      value: object
+    - name: deploymentType
+      value: string
       description: >
-        Optional. The algorithm to resolve IP. This will affect Analytics, API Security, and other features that use the client ip. To remove a client ip resolution config, update the field to an empty value. Example: '{ "clientIpResolutionConfig" = {} }' For more information, see: https://cloud.google.com/apigee/docs/api-platform/system-administration/client-ip-resolution.
+        Optional. Deployment type supported by the environment. The deployment type can be set when creating the environment and cannot be changed. When you enable archive deployment, you will be **prevented from performing** a [subset of actions](https://cloud.google.com/apigee/docs/api-platform/local-development/overview#prevented-actions) within the environment, including: * Managing the deployment of API proxy or shared flow revisions * Creating, updating, or deleting resource files * Creating, updating, or deleting target servers
         
+      valid_values: ['DEPLOYMENT_TYPE_UNSPECIFIED', 'PROXY', 'ARCHIVE']
     - name: name
       value: string
 ```
@@ -466,17 +466,17 @@ Updates an existing environment. When updating properties, you must pass all exi
 ```sql
 UPDATE google.apigee.environments
 SET 
-data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__properties = '{{ properties }}',
-data__displayName = '{{ displayName }}',
-data__deploymentType = '{{ deploymentType }}',
 data__apiProxyType = '{{ apiProxyType }}',
-data__nodeConfig = '{{ nodeConfig }}',
-data__forwardProxyUri = '{{ forwardProxyUri }}',
-data__type = '{{ type }}',
+data__description = '{{ description }}',
 data__hasAttachedFlowHooks = {{ hasAttachedFlowHooks }},
-data__clientIpResolutionConfig = '{{ clientIpResolutionConfig }}'
+data__forwardProxyUri = '{{ forwardProxyUri }}',
+data__nodeConfig = '{{ nodeConfig }}',
+data__properties = '{{ properties }}',
+data__clientIpResolutionConfig = '{{ clientIpResolutionConfig }}',
+data__displayName = '{{ displayName }}',
+data__type = '{{ type }}',
+data__name = '{{ name }}',
+data__deploymentType = '{{ deploymentType }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND environmentsId = '{{ environmentsId }}' --required
@@ -515,17 +515,17 @@ Updates an existing environment. When updating properties, you must pass all exi
 ```sql
 REPLACE google.apigee.environments
 SET 
-data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__properties = '{{ properties }}',
-data__displayName = '{{ displayName }}',
-data__deploymentType = '{{ deploymentType }}',
 data__apiProxyType = '{{ apiProxyType }}',
-data__nodeConfig = '{{ nodeConfig }}',
-data__forwardProxyUri = '{{ forwardProxyUri }}',
-data__type = '{{ type }}',
+data__description = '{{ description }}',
 data__hasAttachedFlowHooks = {{ hasAttachedFlowHooks }},
-data__clientIpResolutionConfig = '{{ clientIpResolutionConfig }}'
+data__forwardProxyUri = '{{ forwardProxyUri }}',
+data__nodeConfig = '{{ nodeConfig }}',
+data__properties = '{{ properties }}',
+data__clientIpResolutionConfig = '{{ clientIpResolutionConfig }}',
+data__displayName = '{{ displayName }}',
+data__type = '{{ type }}',
+data__name = '{{ name }}',
+data__deploymentType = '{{ deploymentType }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND environmentsId = '{{ environmentsId }}' --required
@@ -606,17 +606,17 @@ EXEC google.apigee.environments.organizations_environments_modify_environment
 @updateMask='{{ updateMask }}' 
 @@json=
 '{
-"name": "{{ name }}", 
-"description": "{{ description }}", 
-"properties": "{{ properties }}", 
-"displayName": "{{ displayName }}", 
-"deploymentType": "{{ deploymentType }}", 
 "apiProxyType": "{{ apiProxyType }}", 
-"nodeConfig": "{{ nodeConfig }}", 
-"forwardProxyUri": "{{ forwardProxyUri }}", 
-"type": "{{ type }}", 
+"description": "{{ description }}", 
 "hasAttachedFlowHooks": {{ hasAttachedFlowHooks }}, 
-"clientIpResolutionConfig": "{{ clientIpResolutionConfig }}"
+"forwardProxyUri": "{{ forwardProxyUri }}", 
+"nodeConfig": "{{ nodeConfig }}", 
+"properties": "{{ properties }}", 
+"clientIpResolutionConfig": "{{ clientIpResolutionConfig }}", 
+"displayName": "{{ displayName }}", 
+"type": "{{ type }}", 
+"name": "{{ name }}", 
+"deploymentType": "{{ deploymentType }}"
 }'
 ;
 ```
@@ -660,8 +660,8 @@ EXEC google.apigee.environments.organizations_security_profiles_environments_com
 '{
 "timeRange": "{{ timeRange }}", 
 "filters": "{{ filters }}", 
-"pageSize": {{ pageSize }}, 
-"pageToken": "{{ pageToken }}"
+"pageToken": "{{ pageToken }}", 
+"pageSize": {{ pageSize }}
 }'
 ;
 ```

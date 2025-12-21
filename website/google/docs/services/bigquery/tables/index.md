@@ -630,62 +630,62 @@ Creates a new, empty table in the dataset.
 
 ```sql
 INSERT INTO google.bigquery.tables (
-data__biglakeConfiguration,
-data__clustering,
-data__defaultCollation,
-data__defaultRoundingMode,
-data__description,
 data__encryptionConfiguration,
-data__expirationTime,
-data__externalCatalogTableOptions,
-data__externalDataConfiguration,
-data__friendlyName,
-data__kind,
-data__labels,
-data__managedTableType,
+data__schema,
+data__tableReplicationInfo,
+data__defaultCollation,
 data__materializedView,
-data__maxStaleness,
-data__model,
+data__timePartitioning,
+data__labels,
+data__requirePartitionFilter,
+data__expirationTime,
 data__partitionDefinition,
 data__rangePartitioning,
-data__requirePartitionFilter,
-data__resourceTags,
-data__schema,
-data__tableConstraints,
 data__tableReference,
-data__tableReplicationInfo,
-data__timePartitioning,
+data__defaultRoundingMode,
+data__description,
+data__tableConstraints,
+data__biglakeConfiguration,
+data__friendlyName,
+data__clustering,
+data__resourceTags,
+data__maxStaleness,
+data__model,
 data__view,
+data__kind,
+data__externalDataConfiguration,
+data__externalCatalogTableOptions,
+data__managedTableType,
 projectId,
 +datasetId
 )
 SELECT 
-'{{ biglakeConfiguration }}',
-'{{ clustering }}',
-'{{ defaultCollation }}',
-'{{ defaultRoundingMode }}',
-'{{ description }}',
 '{{ encryptionConfiguration }}',
-'{{ expirationTime }}',
-'{{ externalCatalogTableOptions }}',
-'{{ externalDataConfiguration }}',
-'{{ friendlyName }}',
-'{{ kind }}',
-'{{ labels }}',
-'{{ managedTableType }}',
+'{{ schema }}',
+'{{ tableReplicationInfo }}',
+'{{ defaultCollation }}',
 '{{ materializedView }}',
-'{{ maxStaleness }}',
-'{{ model }}',
+'{{ timePartitioning }}',
+'{{ labels }}',
+{{ requirePartitionFilter }},
+'{{ expirationTime }}',
 '{{ partitionDefinition }}',
 '{{ rangePartitioning }}',
-{{ requirePartitionFilter }},
-'{{ resourceTags }}',
-'{{ schema }}',
-'{{ tableConstraints }}',
 '{{ tableReference }}',
-'{{ tableReplicationInfo }}',
-'{{ timePartitioning }}',
+'{{ defaultRoundingMode }}',
+'{{ description }}',
+'{{ tableConstraints }}',
+'{{ biglakeConfiguration }}',
+'{{ friendlyName }}',
+'{{ clustering }}',
+'{{ resourceTags }}',
+'{{ maxStaleness }}',
+'{{ model }}',
 '{{ view }}',
+'{{ kind }}',
+'{{ externalDataConfiguration }}',
+'{{ externalCatalogTableOptions }}',
+'{{ managedTableType }}',
 '{{ projectId }}',
 '{{ +datasetId }}'
 RETURNING
@@ -756,20 +756,66 @@ view
     - name: +datasetId
       value: string
       description: Required parameter for the tables resource.
-    - name: biglakeConfiguration
+    - name: encryptionConfiguration
       value: object
       description: >
-        Optional. Specifies the configuration of a BigQuery table for Apache Iceberg.
+        Custom encryption configuration (e.g., Cloud KMS keys).
         
-    - name: clustering
+    - name: schema
       value: object
       description: >
-        Clustering specification for the table. Must be specified with time-based partitioning, data in the table will be first partitioned and subsequently clustered.
+        Optional. Describes the schema of this table.
+        
+    - name: tableReplicationInfo
+      value: object
+      description: >
+        Optional. Table replication info for table created `AS REPLICA` DDL like: `CREATE MATERIALIZED VIEW mv1 AS REPLICA OF src_mv`
         
     - name: defaultCollation
       value: string
       description: >
         Optional. Defines the default collation specification of new STRING fields in the table. During table creation or update, if a STRING field is added to this table without explicit collation specified, then the table inherits the table default collation. A change to this field affects only fields added afterwards, and does not alter the existing fields. The following values are supported: * 'und:ci': undetermined locale, case insensitive. * '': empty string. Default to case-sensitive behavior.
+        
+    - name: materializedView
+      value: object
+      description: >
+        Optional. The materialized view definition.
+        
+    - name: timePartitioning
+      value: object
+      description: >
+        If specified, configures time-based partitioning for this table.
+        
+    - name: labels
+      value: object
+      description: >
+        The labels associated with this table. You can use these to organize and group your tables. Label keys and values can be no longer than 63 characters, can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. Label values are optional. Label keys must start with a letter and each label in the list must have a different key.
+        
+    - name: requirePartitionFilter
+      value: boolean
+      description: >
+        Optional. If set to true, queries over this table require a partition filter that can be used for partition elimination to be specified.
+        
+      default: false
+    - name: expirationTime
+      value: string
+      description: >
+        Optional. The time when this table expires, in milliseconds since the epoch. If not present, the table will persist indefinitely. Expired tables will be deleted and their storage reclaimed. The defaultTableExpirationMs property of the encapsulating dataset can be used to set a default expirationTime on newly created tables.
+        
+    - name: partitionDefinition
+      value: object
+      description: >
+        Optional. The partition information for all table formats, including managed partitioned tables, hive partitioned tables, iceberg partitioned, and metastore partitioned tables. This field is only populated for metastore partitioned tables. For other table formats, this is an output only field.
+        
+    - name: rangePartitioning
+      value: object
+      description: >
+        If specified, configures range partitioning for this table.
+        
+    - name: tableReference
+      value: object
+      description: >
+        Required. Reference describing the ID of this table.
         
     - name: defaultRoundingMode
       value: string
@@ -782,52 +828,30 @@ view
       description: >
         Optional. A user-friendly description of this table.
         
-    - name: encryptionConfiguration
+    - name: tableConstraints
       value: object
       description: >
-        Custom encryption configuration (e.g., Cloud KMS keys).
+        Optional. Tables Primary Key and Foreign Key information
         
-    - name: expirationTime
-      value: string
-      description: >
-        Optional. The time when this table expires, in milliseconds since the epoch. If not present, the table will persist indefinitely. Expired tables will be deleted and their storage reclaimed. The defaultTableExpirationMs property of the encapsulating dataset can be used to set a default expirationTime on newly created tables.
-        
-    - name: externalCatalogTableOptions
+    - name: biglakeConfiguration
       value: object
       description: >
-        Optional. Options defining open source compatible table.
-        
-    - name: externalDataConfiguration
-      value: object
-      description: >
-        Optional. Describes the data format, location, and other properties of a table stored outside of BigQuery. By defining these properties, the data source can then be queried as if it were a standard BigQuery table.
+        Optional. Specifies the configuration of a BigQuery table for Apache Iceberg.
         
     - name: friendlyName
       value: string
       description: >
         Optional. A descriptive name for this table.
         
-    - name: kind
-      value: string
-      description: >
-        The type of resource ID.
-        
-      default: bigquery#table
-    - name: labels
+    - name: clustering
       value: object
       description: >
-        The labels associated with this table. You can use these to organize and group your tables. Label keys and values can be no longer than 63 characters, can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. Label values are optional. Label keys must start with a letter and each label in the list must have a different key.
+        Clustering specification for the table. Must be specified with time-based partitioning, data in the table will be first partitioned and subsequently clustered.
         
-    - name: managedTableType
-      value: string
-      description: >
-        Optional. If set, overrides the default managed table type configured in the dataset.
-        
-      valid_values: ['MANAGED_TABLE_TYPE_UNSPECIFIED', 'NATIVE', 'BIGLAKE']
-    - name: materializedView
+    - name: resourceTags
       value: object
       description: >
-        Optional. The materialized view definition.
+        [Optional] The tags associated with this table. Tag keys are globally unique. See additional information on [tags](https://cloud.google.com/iam/docs/tags-access-control#definitions). An object containing a list of "key": value pairs. The key is the namespaced friendly name of the tag key, e.g. "12345/environment" where 12345 is parent id. The value is the friendly short name of the tag value, e.g. "production".
         
     - name: maxStaleness
       value: string
@@ -839,57 +863,33 @@ view
       description: >
         Deprecated.
         
-    - name: partitionDefinition
-      value: object
-      description: >
-        Optional. The partition information for all table formats, including managed partitioned tables, hive partitioned tables, iceberg partitioned, and metastore partitioned tables. This field is only populated for metastore partitioned tables. For other table formats, this is an output only field.
-        
-    - name: rangePartitioning
-      value: object
-      description: >
-        If specified, configures range partitioning for this table.
-        
-    - name: requirePartitionFilter
-      value: boolean
-      description: >
-        Optional. If set to true, queries over this table require a partition filter that can be used for partition elimination to be specified.
-        
-      default: false
-    - name: resourceTags
-      value: object
-      description: >
-        [Optional] The tags associated with this table. Tag keys are globally unique. See additional information on [tags](https://cloud.google.com/iam/docs/tags-access-control#definitions). An object containing a list of "key": value pairs. The key is the namespaced friendly name of the tag key, e.g. "12345/environment" where 12345 is parent id. The value is the friendly short name of the tag value, e.g. "production".
-        
-    - name: schema
-      value: object
-      description: >
-        Optional. Describes the schema of this table.
-        
-    - name: tableConstraints
-      value: object
-      description: >
-        Optional. Tables Primary Key and Foreign Key information
-        
-    - name: tableReference
-      value: object
-      description: >
-        Required. Reference describing the ID of this table.
-        
-    - name: tableReplicationInfo
-      value: object
-      description: >
-        Optional. Table replication info for table created `AS REPLICA` DDL like: `CREATE MATERIALIZED VIEW mv1 AS REPLICA OF src_mv`
-        
-    - name: timePartitioning
-      value: object
-      description: >
-        If specified, configures time-based partitioning for this table.
-        
     - name: view
       value: object
       description: >
         Optional. The view definition.
         
+    - name: kind
+      value: string
+      description: >
+        The type of resource ID.
+        
+      default: bigquery#table
+    - name: externalDataConfiguration
+      value: object
+      description: >
+        Optional. Describes the data format, location, and other properties of a table stored outside of BigQuery. By defining these properties, the data source can then be queried as if it were a standard BigQuery table.
+        
+    - name: externalCatalogTableOptions
+      value: object
+      description: >
+        Optional. Options defining open source compatible table.
+        
+    - name: managedTableType
+      value: string
+      description: >
+        Optional. If set, overrides the default managed table type configured in the dataset.
+        
+      valid_values: ['MANAGED_TABLE_TYPE_UNSPECIFIED', 'NATIVE', 'BIGLAKE']
 ```
 </TabItem>
 </Tabs>
@@ -910,32 +910,32 @@ Updates information in an existing table. The update method replaces the entire 
 ```sql
 UPDATE google.bigquery.tables
 SET 
-data__biglakeConfiguration = '{{ biglakeConfiguration }}',
-data__clustering = '{{ clustering }}',
-data__defaultCollation = '{{ defaultCollation }}',
-data__defaultRoundingMode = '{{ defaultRoundingMode }}',
-data__description = '{{ description }}',
 data__encryptionConfiguration = '{{ encryptionConfiguration }}',
-data__expirationTime = '{{ expirationTime }}',
-data__externalCatalogTableOptions = '{{ externalCatalogTableOptions }}',
-data__externalDataConfiguration = '{{ externalDataConfiguration }}',
-data__friendlyName = '{{ friendlyName }}',
-data__kind = '{{ kind }}',
-data__labels = '{{ labels }}',
-data__managedTableType = '{{ managedTableType }}',
+data__schema = '{{ schema }}',
+data__tableReplicationInfo = '{{ tableReplicationInfo }}',
+data__defaultCollation = '{{ defaultCollation }}',
 data__materializedView = '{{ materializedView }}',
-data__maxStaleness = '{{ maxStaleness }}',
-data__model = '{{ model }}',
+data__timePartitioning = '{{ timePartitioning }}',
+data__labels = '{{ labels }}',
+data__requirePartitionFilter = {{ requirePartitionFilter }},
+data__expirationTime = '{{ expirationTime }}',
 data__partitionDefinition = '{{ partitionDefinition }}',
 data__rangePartitioning = '{{ rangePartitioning }}',
-data__requirePartitionFilter = {{ requirePartitionFilter }},
-data__resourceTags = '{{ resourceTags }}',
-data__schema = '{{ schema }}',
-data__tableConstraints = '{{ tableConstraints }}',
 data__tableReference = '{{ tableReference }}',
-data__tableReplicationInfo = '{{ tableReplicationInfo }}',
-data__timePartitioning = '{{ timePartitioning }}',
-data__view = '{{ view }}'
+data__defaultRoundingMode = '{{ defaultRoundingMode }}',
+data__description = '{{ description }}',
+data__tableConstraints = '{{ tableConstraints }}',
+data__biglakeConfiguration = '{{ biglakeConfiguration }}',
+data__friendlyName = '{{ friendlyName }}',
+data__clustering = '{{ clustering }}',
+data__resourceTags = '{{ resourceTags }}',
+data__maxStaleness = '{{ maxStaleness }}',
+data__model = '{{ model }}',
+data__view = '{{ view }}',
+data__kind = '{{ kind }}',
+data__externalDataConfiguration = '{{ externalDataConfiguration }}',
+data__externalCatalogTableOptions = '{{ externalCatalogTableOptions }}',
+data__managedTableType = '{{ managedTableType }}'
 WHERE 
 projectId = '{{ projectId }}' --required
 AND +datasetId = '{{ +datasetId }}' --required
@@ -1014,32 +1014,32 @@ Updates information in an existing table. The update method replaces the entire 
 ```sql
 REPLACE google.bigquery.tables
 SET 
-data__biglakeConfiguration = '{{ biglakeConfiguration }}',
-data__clustering = '{{ clustering }}',
-data__defaultCollation = '{{ defaultCollation }}',
-data__defaultRoundingMode = '{{ defaultRoundingMode }}',
-data__description = '{{ description }}',
 data__encryptionConfiguration = '{{ encryptionConfiguration }}',
-data__expirationTime = '{{ expirationTime }}',
-data__externalCatalogTableOptions = '{{ externalCatalogTableOptions }}',
-data__externalDataConfiguration = '{{ externalDataConfiguration }}',
-data__friendlyName = '{{ friendlyName }}',
-data__kind = '{{ kind }}',
-data__labels = '{{ labels }}',
-data__managedTableType = '{{ managedTableType }}',
+data__schema = '{{ schema }}',
+data__tableReplicationInfo = '{{ tableReplicationInfo }}',
+data__defaultCollation = '{{ defaultCollation }}',
 data__materializedView = '{{ materializedView }}',
-data__maxStaleness = '{{ maxStaleness }}',
-data__model = '{{ model }}',
+data__timePartitioning = '{{ timePartitioning }}',
+data__labels = '{{ labels }}',
+data__requirePartitionFilter = {{ requirePartitionFilter }},
+data__expirationTime = '{{ expirationTime }}',
 data__partitionDefinition = '{{ partitionDefinition }}',
 data__rangePartitioning = '{{ rangePartitioning }}',
-data__requirePartitionFilter = {{ requirePartitionFilter }},
-data__resourceTags = '{{ resourceTags }}',
-data__schema = '{{ schema }}',
-data__tableConstraints = '{{ tableConstraints }}',
 data__tableReference = '{{ tableReference }}',
-data__tableReplicationInfo = '{{ tableReplicationInfo }}',
-data__timePartitioning = '{{ timePartitioning }}',
-data__view = '{{ view }}'
+data__defaultRoundingMode = '{{ defaultRoundingMode }}',
+data__description = '{{ description }}',
+data__tableConstraints = '{{ tableConstraints }}',
+data__biglakeConfiguration = '{{ biglakeConfiguration }}',
+data__friendlyName = '{{ friendlyName }}',
+data__clustering = '{{ clustering }}',
+data__resourceTags = '{{ resourceTags }}',
+data__maxStaleness = '{{ maxStaleness }}',
+data__model = '{{ model }}',
+data__view = '{{ view }}',
+data__kind = '{{ kind }}',
+data__externalDataConfiguration = '{{ externalDataConfiguration }}',
+data__externalCatalogTableOptions = '{{ externalCatalogTableOptions }}',
+data__managedTableType = '{{ managedTableType }}'
 WHERE 
 projectId = '{{ projectId }}' --required
 AND +datasetId = '{{ +datasetId }}' --required

@@ -396,17 +396,17 @@ Create a QaQuestion.
 
 ```sql
 INSERT INTO google.contactcenterinsights.qa_questions (
-data__name,
-data__abbreviation,
-data__questionType,
-data__predefinedQuestionConfig,
-data__questionBody,
+data__tuningMetadata,
 data__answerInstructions,
 data__answerChoices,
+data__predefinedQuestionConfig,
 data__tags,
 data__order,
+data__questionType,
+data__questionBody,
+data__name,
+data__abbreviation,
 data__metrics,
-data__tuningMetadata,
 projectsId,
 locationsId,
 qaScorecardsId,
@@ -414,17 +414,17 @@ revisionsId,
 qaQuestionId
 )
 SELECT 
-'{{ name }}',
-'{{ abbreviation }}',
-'{{ questionType }}',
-'{{ predefinedQuestionConfig }}',
-'{{ questionBody }}',
+'{{ tuningMetadata }}',
 '{{ answerInstructions }}',
 '{{ answerChoices }}',
+'{{ predefinedQuestionConfig }}',
 '{{ tags }}',
 {{ order }},
+'{{ questionType }}',
+'{{ questionBody }}',
+'{{ name }}',
+'{{ abbreviation }}',
 '{{ metrics }}',
-'{{ tuningMetadata }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ qaScorecardsId }}',
@@ -465,31 +465,10 @@ updateTime
     - name: revisionsId
       value: string
       description: Required parameter for the qa_questions resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the question. Format: projects/{project}/locations/{location}/qaScorecards/{qa_scorecard}/revisions/{revision}/qaQuestions/{qa_question}
-        
-    - name: abbreviation
-      value: string
-      description: >
-        Short, descriptive string, used in the UI where it's not practical to display the full question body. E.g., "Greeting".
-        
-    - name: questionType
-      value: string
-      description: >
-        The type of question.
-        
-      valid_values: ['QA_QUESTION_TYPE_UNSPECIFIED', 'CUSTOMIZABLE', 'PREDEFINED']
-    - name: predefinedQuestionConfig
+    - name: tuningMetadata
       value: object
       description: >
-        The configuration of the predefined question. This field will only be set if the Question Type is predefined.
-        
-    - name: questionBody
-      value: string
-      description: >
-        Question text. E.g., "Did the agent greet the customer?"
+        Metadata about the tuning operation for the question.This field will only be populated if and only if the question is part of a scorecard revision that has been tuned.
         
     - name: answerInstructions
       value: string
@@ -501,6 +480,11 @@ updateTime
       description: >
         A list of valid answers to the question, which the LLM must choose from.
         
+    - name: predefinedQuestionConfig
+      value: object
+      description: >
+        The configuration of the predefined question. This field will only be set if the Question Type is predefined.
+        
     - name: tags
       value: array
       description: >
@@ -511,15 +495,31 @@ updateTime
       description: >
         Defines the order of the question within its parent scorecard revision.
         
+    - name: questionType
+      value: string
+      description: >
+        The type of question.
+        
+      valid_values: ['QA_QUESTION_TYPE_UNSPECIFIED', 'CUSTOMIZABLE', 'PREDEFINED']
+    - name: questionBody
+      value: string
+      description: >
+        Question text. E.g., "Did the agent greet the customer?"
+        
+    - name: name
+      value: string
+      description: >
+        Identifier. The resource name of the question. Format: projects/{project}/locations/{location}/qaScorecards/{qa_scorecard}/revisions/{revision}/qaQuestions/{qa_question}
+        
+    - name: abbreviation
+      value: string
+      description: >
+        Short, descriptive string, used in the UI where it's not practical to display the full question body. E.g., "Greeting".
+        
     - name: metrics
       value: object
       description: >
         Metrics of the underlying tuned LLM over a holdout/test set while fine tuning the underlying LLM for the given question. This field will only be populated if and only if the question is part of a scorecard revision that has been tuned.
-        
-    - name: tuningMetadata
-      value: object
-      description: >
-        Metadata about the tuning operation for the question.This field will only be populated if and only if the question is part of a scorecard revision that has been tuned.
         
     - name: qaQuestionId
       value: string
@@ -543,17 +543,17 @@ Updates a QaQuestion.
 ```sql
 UPDATE google.contactcenterinsights.qa_questions
 SET 
-data__name = '{{ name }}',
-data__abbreviation = '{{ abbreviation }}',
-data__questionType = '{{ questionType }}',
-data__predefinedQuestionConfig = '{{ predefinedQuestionConfig }}',
-data__questionBody = '{{ questionBody }}',
+data__tuningMetadata = '{{ tuningMetadata }}',
 data__answerInstructions = '{{ answerInstructions }}',
 data__answerChoices = '{{ answerChoices }}',
+data__predefinedQuestionConfig = '{{ predefinedQuestionConfig }}',
 data__tags = '{{ tags }}',
 data__order = {{ order }},
-data__metrics = '{{ metrics }}',
-data__tuningMetadata = '{{ tuningMetadata }}'
+data__questionType = '{{ questionType }}',
+data__questionBody = '{{ questionBody }}',
+data__name = '{{ name }}',
+data__abbreviation = '{{ abbreviation }}',
+data__metrics = '{{ metrics }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

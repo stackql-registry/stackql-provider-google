@@ -174,7 +174,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-consentStoresId"><code>consentStoresId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the Consent artifacts in the specified consent store.</td>
 </tr>
 <tr>
@@ -302,8 +302,8 @@ AND locationsId = '{{ locationsId }}' -- required
 AND datasetsId = '{{ datasetsId }}' -- required
 AND consentStoresId = '{{ consentStoresId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -325,28 +325,28 @@ Creates a new Consent artifact in the parent consent store.
 
 ```sql
 INSERT INTO google.healthcare.consent_artifacts (
-data__name,
 data__userId,
-data__userSignature,
-data__guardianSignature,
-data__witnessSignature,
 data__consentContentScreenshots,
-data__consentContentVersion,
 data__metadata,
+data__userSignature,
+data__witnessSignature,
+data__consentContentVersion,
+data__guardianSignature,
+data__name,
 projectsId,
 locationsId,
 datasetsId,
 consentStoresId
 )
 SELECT 
-'{{ name }}',
 '{{ userId }}',
-'{{ userSignature }}',
-'{{ guardianSignature }}',
-'{{ witnessSignature }}',
 '{{ consentContentScreenshots }}',
-'{{ consentContentVersion }}',
 '{{ metadata }}',
+'{{ userSignature }}',
+'{{ witnessSignature }}',
+'{{ consentContentVersion }}',
+'{{ guardianSignature }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ datasetsId }}',
@@ -381,45 +381,45 @@ witnessSignature
     - name: consentStoresId
       value: string
       description: Required parameter for the consent_artifacts resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. Resource name of the Consent artifact, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consentArtifacts/{consent_artifact_id}`. Cannot be changed after creation.
-        
     - name: userId
       value: string
       description: >
         Required. User's UUID provided by the client.
-        
-    - name: userSignature
-      value: object
-      description: >
-        Optional. User's signature.
-        
-    - name: guardianSignature
-      value: object
-      description: >
-        Optional. A signature from a guardian.
-        
-    - name: witnessSignature
-      value: object
-      description: >
-        Optional. A signature from a witness.
         
     - name: consentContentScreenshots
       value: array
       description: >
         Optional. Screenshots, PDFs, or other binary information documenting the user's consent.
         
+    - name: metadata
+      value: object
+      description: >
+        Optional. Metadata associated with the Consent artifact. For example, the consent locale or user agent version.
+        
+    - name: userSignature
+      value: object
+      description: >
+        Optional. User's signature.
+        
+    - name: witnessSignature
+      value: object
+      description: >
+        Optional. A signature from a witness.
+        
     - name: consentContentVersion
       value: string
       description: >
         Optional. An string indicating the version of the consent information shown to the user.
         
-    - name: metadata
+    - name: guardianSignature
       value: object
       description: >
-        Optional. Metadata associated with the Consent artifact. For example, the consent locale or user agent version.
+        Optional. A signature from a guardian.
+        
+    - name: name
+      value: string
+      description: >
+        Identifier. Resource name of the Consent artifact, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consentArtifacts/{consent_artifact_id}`. Cannot be changed after creation.
         
 ```
 </TabItem>

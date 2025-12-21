@@ -53,7 +53,7 @@ The following methods are available for this resource:
     <td><a href="#import_ssh_public_key"><CopyableCode code="import_ssh_public_key" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-usersId"><code>usersId</code></a></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-regions"><code>regions</code></a></td>
+    <td><a href="#parameter-regions"><code>regions</code></a>, <a href="#parameter-projectId"><code>projectId</code></a></td>
     <td>Adds an SSH public key and returns the profile information. Default POSIX account information is set when no username and UID exist as part of the login profile.</td>
 </tr>
 </tbody>
@@ -105,12 +105,12 @@ Adds an SSH public key and returns the profile information. Default POSIX accoun
 ```sql
 EXEC google.oslogin.users.import_ssh_public_key 
 @usersId='{{ usersId }}' --required, 
-@projectId='{{ projectId }}', 
-@regions='{{ regions }}' 
+@regions='{{ regions }}', 
+@projectId='{{ projectId }}' 
 @@json=
 '{
-"key": "{{ key }}", 
-"expirationTimeUsec": "{{ expirationTimeUsec }}"
+"expirationTimeUsec": "{{ expirationTimeUsec }}", 
+"key": "{{ key }}"
 }'
 ;
 ```

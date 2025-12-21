@@ -66,7 +66,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="operation" /></td>
     <td><code>object</code></td>
-    <td>Represents an Operation resource. Google Compute Engine has three Operation resources: * [Global](https://cloud.google.com/compute/docs/reference/rest/v1/globalOperations) * [Regional](https://cloud.google.com/compute/docs/reference/rest/v1/regionOperations) * [Zonal](https://cloud.google.com/compute/docs/reference/rest/v1/zoneOperations) You can use an operation resource to manage asynchronous API requests. For more information, read Handling API responses. Operations can be global, regional or zonal. - For global operations, use the `globalOperations` resource. - For regional operations, use the `regionOperations` resource. - For zonal operations, use the `zoneOperations` resource. For more information, read Global, Regional, and Zonal Resources. Note that completed Operation resources have a limited retention period. (id: Operation)</td>
+    <td>Output only. The Operation that most recently ran, or is currently running, on this type. (id: Operation)</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
@@ -97,7 +97,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists all resource types for Deployment Manager.</td>
 </tr>
 </tbody>
@@ -165,10 +165,10 @@ operation,
 selfLink
 FROM google.deploymentmanager.types
 WHERE project = '{{ project }}' -- required
-AND maxResults = '{{ maxResults }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>

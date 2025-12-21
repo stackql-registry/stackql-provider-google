@@ -91,8 +91,8 @@ This method lets you retrieve insights about areas using a variety of filter suc
 EXEC google.areainsights.areainsights.compute_insights 
 @@json=
 '{
-"insights": "{{ insights }}", 
-"filter": "{{ filter }}"
+"filter": "{{ filter }}", 
+"insights": "{{ insights }}"
 }'
 ;
 ```

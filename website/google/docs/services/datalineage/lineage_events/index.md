@@ -134,7 +134,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-processesId"><code>processesId</code></a>, <a href="#parameter-runsId"><code>runsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists lineage events in the given project and location. The list order is not defined.</td>
 </tr>
 <tr>
@@ -258,8 +258,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND processesId = '{{ processesId }}' -- required
 AND runsId = '{{ runsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -281,10 +281,10 @@ Creates a new lineage event.
 
 ```sql
 INSERT INTO google.datalineage.lineage_events (
-data__name,
-data__links,
 data__startTime,
 data__endTime,
+data__links,
+data__name,
 projectsId,
 locationsId,
 processesId,
@@ -292,10 +292,10 @@ runsId,
 requestId
 )
 SELECT 
-'{{ name }}',
-'{{ links }}',
 '{{ startTime }}',
 '{{ endTime }}',
+'{{ links }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ processesId }}',
@@ -327,16 +327,6 @@ startTime
     - name: runsId
       value: string
       description: Required parameter for the lineage_events resource.
-    - name: name
-      value: string
-      description: >
-        Immutable. The resource name of the lineage event. Format: `projects/{project}/locations/{location}/processes/{process}/runs/{run}/lineageEvents/{lineage_event}`. Can be specified or auto-assigned. {lineage_event} must be not longer than 200 characters and only contain characters in a set: `a-zA-Z0-9_-:.`
-        
-    - name: links
-      value: array
-      description: >
-        Optional. List of source-target pairs. Can't contain more than 100 tuples.
-        
     - name: startTime
       value: string
       description: >
@@ -346,6 +336,16 @@ startTime
       value: string
       description: >
         Optional. The end of the transformation which resulted in this lineage event. For streaming scenarios, it should be the end of the period from which the lineage is being reported.
+        
+    - name: links
+      value: array
+      description: >
+        Optional. List of source-target pairs. Can't contain more than 100 tuples.
+        
+    - name: name
+      value: string
+      description: >
+        Immutable. The resource name of the lineage event. Format: `projects/{project}/locations/{location}/processes/{process}/runs/{run}/lineageEvents/{lineage_event}`. Can be specified or auto-assigned. {lineage_event} must be not longer than 200 characters and only contain characters in a set: `a-zA-Z0-9_-:.`
         
     - name: requestId
       value: string

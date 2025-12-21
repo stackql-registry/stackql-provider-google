@@ -144,7 +144,7 @@ The following methods are available for this resource:
     <td><a href="#projects_schemas_list"><CopyableCode code="projects_schemas_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists schemas in a project.</td>
 </tr>
 <tr>
@@ -162,11 +162,11 @@ The following methods are available for this resource:
     <td>Deletes a schema.</td>
 </tr>
 <tr>
-    <td><a href="#projects_schemas_commit"><CopyableCode code="projects_schemas_commit" /></a></td>
+    <td><a href="#projects_schemas_validate"><CopyableCode code="projects_schemas_validate" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-schemasId"><code>schemasId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
-    <td>Commits a new schema revision to an existing schema.</td>
+    <td>Validates a schema.</td>
 </tr>
 <tr>
     <td><a href="#projects_schemas_rollback"><CopyableCode code="projects_schemas_rollback" /></a></td>
@@ -176,18 +176,18 @@ The following methods are available for this resource:
     <td>Creates a new schema revision that is a copy of the provided revision_id.</td>
 </tr>
 <tr>
-    <td><a href="#projects_schemas_validate"><CopyableCode code="projects_schemas_validate" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td></td>
-    <td>Validates a schema.</td>
-</tr>
-<tr>
     <td><a href="#projects_schemas_validate_message"><CopyableCode code="projects_schemas_validate_message" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
     <td>Validates a message against a schema.</td>
+</tr>
+<tr>
+    <td><a href="#projects_schemas_commit"><CopyableCode code="projects_schemas_commit" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-schemasId"><code>schemasId</code></a></td>
+    <td></td>
+    <td>Commits a new schema revision to an existing schema.</td>
 </tr>
 </tbody>
 </table>
@@ -278,8 +278,8 @@ revisionId,
 type
 FROM google.pubsub.schemas
 WHERE projectsId = '{{ projectsId }}' -- required
-AND view = '{{ view }}'
 AND pageSize = '{{ pageSize }}'
+AND view = '{{ view }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -302,16 +302,16 @@ Creates a schema.
 
 ```sql
 INSERT INTO google.pubsub.schemas (
+data__definition,
 data__name,
 data__type,
-data__definition,
 projectsId,
 schemaId
 )
 SELECT 
+'{{ definition }}',
 '{{ name }}',
 '{{ type }}',
-'{{ definition }}',
 '{{ projectsId }}',
 '{{ schemaId }}'
 RETURNING
@@ -332,6 +332,11 @@ type
     - name: projectsId
       value: string
       description: Required parameter for the schemas resource.
+    - name: definition
+      value: string
+      description: >
+        The definition of the schema. This should contain a string representing the full definition of the schema that is a valid schema definition of the type specified in `type`.
+        
     - name: name
       value: string
       description: >
@@ -343,11 +348,6 @@ type
         The type of the schema definition.
         
       valid_values: ['TYPE_UNSPECIFIED', 'PROTOCOL_BUFFER', 'AVRO']
-    - name: definition
-      value: string
-      description: >
-        The definition of the schema. This should contain a string representing the full definition of the schema that is a valid schema definition of the type specified in `type`.
-        
     - name: schemaId
       value: string
 ```
@@ -380,22 +380,21 @@ AND schemasId = '{{ schemasId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_schemas_commit"
+    defaultValue="projects_schemas_validate"
     values={[
-        { label: 'projects_schemas_commit', value: 'projects_schemas_commit' },
-        { label: 'projects_schemas_rollback', value: 'projects_schemas_rollback' },
         { label: 'projects_schemas_validate', value: 'projects_schemas_validate' },
-        { label: 'projects_schemas_validate_message', value: 'projects_schemas_validate_message' }
+        { label: 'projects_schemas_rollback', value: 'projects_schemas_rollback' },
+        { label: 'projects_schemas_validate_message', value: 'projects_schemas_validate_message' },
+        { label: 'projects_schemas_commit', value: 'projects_schemas_commit' }
     ]}
 >
-<TabItem value="projects_schemas_commit">
+<TabItem value="projects_schemas_validate">
 
-Commits a new schema revision to an existing schema.
+Validates a schema.
 
 ```sql
-EXEC google.pubsub.schemas.projects_schemas_commit 
-@projectsId='{{ projectsId }}' --required, 
-@schemasId='{{ schemasId }}' --required 
+EXEC google.pubsub.schemas.projects_schemas_validate 
+@projectsId='{{ projectsId }}' --required 
 @@json=
 '{
 "schema": "{{ schema }}"
@@ -418,20 +417,6 @@ EXEC google.pubsub.schemas.projects_schemas_rollback
 ;
 ```
 </TabItem>
-<TabItem value="projects_schemas_validate">
-
-Validates a schema.
-
-```sql
-EXEC google.pubsub.schemas.projects_schemas_validate 
-@projectsId='{{ projectsId }}' --required 
-@@json=
-'{
-"schema": "{{ schema }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_schemas_validate_message">
 
 Validates a message against a schema.
@@ -441,10 +426,25 @@ EXEC google.pubsub.schemas.projects_schemas_validate_message
 @projectsId='{{ projectsId }}' --required 
 @@json=
 '{
-"name": "{{ name }}", 
 "schema": "{{ schema }}", 
 "message": "{{ message }}", 
+"name": "{{ name }}", 
 "encoding": "{{ encoding }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_schemas_commit">
+
+Commits a new schema revision to an existing schema.
+
+```sql
+EXEC google.pubsub.schemas.projects_schemas_commit 
+@projectsId='{{ projectsId }}' --required, 
+@schemasId='{{ schemasId }}' --required 
+@@json=
+'{
+"schema": "{{ schema }}"
 }'
 ;
 ```

@@ -190,10 +190,10 @@ Updates the settings for the given resource. This method applies to all feature 
 ```sql
 UPDATE google.logging.logging_settings
 SET 
-data__kmsKeyName = '{{ kmsKeyName }}',
-data__storageLocation = '{{ storageLocation }}',
 data__disableDefaultSink = {{ disableDefaultSink }},
-data__defaultSinkConfig = '{{ defaultSinkConfig }}'
+data__defaultSinkConfig = '{{ defaultSinkConfig }}',
+data__storageLocation = '{{ storageLocation }}',
+data__kmsKeyName = '{{ kmsKeyName }}'
 WHERE 
 name = '{{ name }}' --required
 AND updateMask = '{{ updateMask}}'

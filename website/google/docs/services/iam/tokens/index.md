@@ -52,22 +52,22 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Identifier. The resource name of the SCIM Token. Format: `locations/&#123;location&#125;/workforcePools/&#123;workforce_pool&#125;/providers/ &#123;workforce_pool_provider&#125;/scimTenants/&#123;scim_tenant&#125;/tokens/&#123;token&#125;`</td>
+    <td>Identifier. Agentspace only. The resource name of the SCIM Token. Format: `locations/&#123;location&#125;/workforcePools/&#123;workforce_pool&#125;/providers/ &#123;workforce_pool_provider&#125;/scimTenants/&#123;scim_tenant&#125;/tokens/&#123;token&#125;`</td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Optional. The user-specified display name of the scim token. Cannot exceed 32 characters.</td>
+    <td>Optional. Agentspace only. The display name of the SCIM token. Cannot exceed 32 characters.</td>
 </tr>
 <tr>
     <td><CopyableCode code="securityToken" /></td>
     <td><code>string</code></td>
-    <td>Output only. The token string. Provide this to the IdP for authentication. Will be set only during creation.</td>
+    <td>Output only. Agentspace only. The token string. Provide this to the IdP for authentication. Will be set only during creation.</td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the token.</td>
+    <td>Output only. Agentspace only. The state of the token.</td>
 </tr>
 </tbody>
 </table>
@@ -86,22 +86,22 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Identifier. The resource name of the SCIM Token. Format: `locations/&#123;location&#125;/workforcePools/&#123;workforce_pool&#125;/providers/ &#123;workforce_pool_provider&#125;/scimTenants/&#123;scim_tenant&#125;/tokens/&#123;token&#125;`</td>
+    <td>Identifier. Agentspace only. The resource name of the SCIM Token. Format: `locations/&#123;location&#125;/workforcePools/&#123;workforce_pool&#125;/providers/ &#123;workforce_pool_provider&#125;/scimTenants/&#123;scim_tenant&#125;/tokens/&#123;token&#125;`</td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Optional. The user-specified display name of the scim token. Cannot exceed 32 characters.</td>
+    <td>Optional. Agentspace only. The display name of the SCIM token. Cannot exceed 32 characters.</td>
 </tr>
 <tr>
     <td><CopyableCode code="securityToken" /></td>
     <td><code>string</code></td>
-    <td>Output only. The token string. Provide this to the IdP for authentication. Will be set only during creation.</td>
+    <td>Output only. Agentspace only. The token string. Provide this to the IdP for authentication. Will be set only during creation.</td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the token.</td>
+    <td>Output only. Agentspace only. The state of the token.</td>
 </tr>
 </tbody>
 </table>
@@ -128,42 +128,42 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workforcePoolsId"><code>workforcePoolsId</code></a>, <a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-scimTenantsId"><code>scimTenantsId</code></a>, <a href="#parameter-tokensId"><code>tokensId</code></a></td>
     <td></td>
-    <td>Gets an individual WorkforcePoolProviderScimToken.</td>
+    <td>Agentspace only. Gets an individual WorkforcePoolProviderScimToken.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workforcePoolsId"><code>workforcePoolsId</code></a>, <a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-scimTenantsId"><code>scimTenantsId</code></a></td>
     <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
-    <td>Lists all non-deleted WorkforcePoolProviderScimTokenss in a WorkforcePoolProviderScimTenant. If `show_deleted` is set to `true`, then deleted SCIM tokens are also listed.</td>
+    <td>Agentspace only. Lists all non-deleted WorkforcePoolProviderScimTokenss in a WorkforcePoolProviderScimTenant. If `show_deleted` is set to `true`, then deleted SCIM tokens are also listed.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workforcePoolsId"><code>workforcePoolsId</code></a>, <a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-scimTenantsId"><code>scimTenantsId</code></a></td>
     <td><a href="#parameter-workforcePoolProviderScimTokenId"><code>workforcePoolProviderScimTokenId</code></a></td>
-    <td>Creates a new WorkforcePoolProviderScimToken in a WorkforcePoolProviderScimTenant. You cannot reuse the name of a deleted SCIM token until 30 days after deletion.</td>
+    <td>Agentspace only. Creates a new WorkforcePoolProviderScimToken in a WorkforcePoolProviderScimTenant. You cannot reuse the name of a deleted SCIM token until 30 days after deletion.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workforcePoolsId"><code>workforcePoolsId</code></a>, <a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-scimTenantsId"><code>scimTenantsId</code></a>, <a href="#parameter-tokensId"><code>tokensId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates an existing WorkforcePoolProviderScimToken.</td>
+    <td>Agentspace only. Updates an existing WorkforcePoolProviderScimToken.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workforcePoolsId"><code>workforcePoolsId</code></a>, <a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-scimTenantsId"><code>scimTenantsId</code></a>, <a href="#parameter-tokensId"><code>tokensId</code></a></td>
     <td></td>
-    <td>Deletes a WorkforcePoolProviderScimToken. You can undelete a scim token for 30 days. After 30 days, deletion is permanent. You cannot update deleted scim tokens. However, you can view and list them.</td>
+    <td>Agentspace only. Deletes a WorkforcePoolProviderScimToken. You can undelete a SCIM token for 30 days. After 30 days, the SCIM token is permanently deleted. You cannot update deleted SCIM tokens, however, you can view and list them.</td>
 </tr>
 <tr>
     <td><a href="#undelete"><CopyableCode code="undelete" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workforcePoolsId"><code>workforcePoolsId</code></a>, <a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-scimTenantsId"><code>scimTenantsId</code></a>, <a href="#parameter-tokensId"><code>tokensId</code></a></td>
     <td></td>
-    <td>Undeletes a WorkforcePoolProviderScimToken, as long as it was deleted fewer than 30 days ago.</td>
+    <td>Agentspace only. Undeletes a WorkforcePoolProviderScimToken,that was deleted fewer than 30 days ago.</td>
 </tr>
 </tbody>
 </table>
@@ -245,7 +245,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get">
 
-Gets an individual WorkforcePoolProviderScimToken.
+Agentspace only. Gets an individual WorkforcePoolProviderScimToken.
 
 ```sql
 SELECT
@@ -264,7 +264,7 @@ AND tokensId = '{{ tokensId }}' -- required
 </TabItem>
 <TabItem value="list">
 
-Lists all non-deleted WorkforcePoolProviderScimTokenss in a WorkforcePoolProviderScimTenant. If `show_deleted` is set to `true`, then deleted SCIM tokens are also listed.
+Agentspace only. Lists all non-deleted WorkforcePoolProviderScimTokenss in a WorkforcePoolProviderScimTenant. If `show_deleted` is set to `true`, then deleted SCIM tokens are also listed.
 
 ```sql
 SELECT
@@ -297,7 +297,7 @@ AND showDeleted = '{{ showDeleted }}'
 >
 <TabItem value="create">
 
-Creates a new WorkforcePoolProviderScimToken in a WorkforcePoolProviderScimTenant. You cannot reuse the name of a deleted SCIM token until 30 days after deletion.
+Agentspace only. Creates a new WorkforcePoolProviderScimToken in a WorkforcePoolProviderScimTenant. You cannot reuse the name of a deleted SCIM token until 30 days after deletion.
 
 ```sql
 INSERT INTO google.iam.tokens (
@@ -346,12 +346,12 @@ state
     - name: name
       value: string
       description: >
-        Identifier. The resource name of the SCIM Token. Format: `locations/{location}/workforcePools/{workforce_pool}/providers/ {workforce_pool_provider}/scimTenants/{scim_tenant}/tokens/{token}`
+        Identifier. Agentspace only. The resource name of the SCIM Token. Format: `locations/{location}/workforcePools/{workforce_pool}/providers/ {workforce_pool_provider}/scimTenants/{scim_tenant}/tokens/{token}`
         
     - name: displayName
       value: string
       description: >
-        Optional. The user-specified display name of the scim token. Cannot exceed 32 characters.
+        Optional. Agentspace only. The display name of the SCIM token. Cannot exceed 32 characters.
         
     - name: workforcePoolProviderScimTokenId
       value: string
@@ -370,7 +370,7 @@ state
 >
 <TabItem value="patch">
 
-Updates an existing WorkforcePoolProviderScimToken.
+Agentspace only. Updates an existing WorkforcePoolProviderScimToken.
 
 ```sql
 UPDATE google.iam.tokens
@@ -404,7 +404,7 @@ state;
 >
 <TabItem value="delete">
 
-Deletes a WorkforcePoolProviderScimToken. You can undelete a scim token for 30 days. After 30 days, deletion is permanent. You cannot update deleted scim tokens. However, you can view and list them.
+Agentspace only. Deletes a WorkforcePoolProviderScimToken. You can undelete a SCIM token for 30 days. After 30 days, the SCIM token is permanently deleted. You cannot update deleted SCIM tokens, however, you can view and list them.
 
 ```sql
 DELETE FROM google.iam.tokens
@@ -429,7 +429,7 @@ AND tokensId = '{{ tokensId }}' --required
 >
 <TabItem value="undelete">
 
-Undeletes a WorkforcePoolProviderScimToken, as long as it was deleted fewer than 30 days ago.
+Agentspace only. Undeletes a WorkforcePoolProviderScimToken,that was deleted fewer than 30 days ago.
 
 ```sql
 EXEC google.iam.tokens.undelete 

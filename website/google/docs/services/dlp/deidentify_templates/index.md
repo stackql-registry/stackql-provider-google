@@ -431,7 +431,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_deidentify_templates_list"><CopyableCode code="projects_locations_deidentify_templates_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-locationId"><code>locationId</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists DeidentifyTemplates. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.</td>
 </tr>
 <tr>
@@ -445,7 +445,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_locations_deidentify_templates_list"><CopyableCode code="organizations_locations_deidentify_templates_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-locationId"><code>locationId</code></a></td>
+    <td><a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists DeidentifyTemplates. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.</td>
 </tr>
 <tr>
@@ -459,14 +459,14 @@ The following methods are available for this resource:
     <td><a href="#projects_deidentify_templates_list"><CopyableCode code="projects_deidentify_templates_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-locationId"><code>locationId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists DeidentifyTemplates. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_deidentify_templates_list"><CopyableCode code="organizations_deidentify_templates_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-locationId"><code>locationId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-locationId"><code>locationId</code></a></td>
     <td>Lists DeidentifyTemplates. See https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid to learn more.</td>
 </tr>
 <tr>
@@ -680,10 +680,10 @@ updateTime
 FROM google.dlp.deidentify_templates
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND locationId = '{{ locationId }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -720,10 +720,10 @@ updateTime
 FROM google.dlp.deidentify_templates
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
 AND locationId = '{{ locationId }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -759,10 +759,10 @@ displayName,
 updateTime
 FROM google.dlp.deidentify_templates
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND locationId = '{{ locationId }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -780,8 +780,8 @@ displayName,
 updateTime
 FROM google.dlp.deidentify_templates
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 AND locationId = '{{ locationId }}'
 ;
@@ -808,16 +808,16 @@ Creates a DeidentifyTemplate for reusing frequently used configuration for de-id
 
 ```sql
 INSERT INTO google.dlp.deidentify_templates (
-data__deidentifyTemplate,
-data__templateId,
 data__locationId,
+data__templateId,
+data__deidentifyTemplate,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ deidentifyTemplate }}',
-'{{ templateId }}',
 '{{ locationId }}',
+'{{ templateId }}',
+'{{ deidentifyTemplate }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -836,16 +836,16 @@ Creates a DeidentifyTemplate for reusing frequently used configuration for de-id
 
 ```sql
 INSERT INTO google.dlp.deidentify_templates (
-data__deidentifyTemplate,
-data__templateId,
 data__locationId,
+data__templateId,
+data__deidentifyTemplate,
 organizationsId,
 locationsId
 )
 SELECT 
-'{{ deidentifyTemplate }}',
-'{{ templateId }}',
 '{{ locationId }}',
+'{{ templateId }}',
+'{{ deidentifyTemplate }}',
 '{{ organizationsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -864,15 +864,15 @@ Creates a DeidentifyTemplate for reusing frequently used configuration for de-id
 
 ```sql
 INSERT INTO google.dlp.deidentify_templates (
-data__deidentifyTemplate,
-data__templateId,
 data__locationId,
+data__templateId,
+data__deidentifyTemplate,
 projectsId
 )
 SELECT 
-'{{ deidentifyTemplate }}',
-'{{ templateId }}',
 '{{ locationId }}',
+'{{ templateId }}',
+'{{ deidentifyTemplate }}',
 '{{ projectsId }}'
 RETURNING
 name,
@@ -890,15 +890,15 @@ Creates a DeidentifyTemplate for reusing frequently used configuration for de-id
 
 ```sql
 INSERT INTO google.dlp.deidentify_templates (
-data__deidentifyTemplate,
-data__templateId,
 data__locationId,
+data__templateId,
+data__deidentifyTemplate,
 organizationsId
 )
 SELECT 
-'{{ deidentifyTemplate }}',
-'{{ templateId }}',
 '{{ locationId }}',
+'{{ templateId }}',
+'{{ deidentifyTemplate }}',
 '{{ organizationsId }}'
 RETURNING
 name,
@@ -925,20 +925,20 @@ updateTime
     - name: organizationsId
       value: string
       description: Required parameter for the deidentify_templates resource.
-    - name: deidentifyTemplate
-      value: object
+    - name: locationId
+      value: string
       description: >
-        Required. The DeidentifyTemplate to create.
+        Deprecated. This field has no effect.
         
     - name: templateId
       value: string
       description: >
         The template id can contain uppercase and lowercase letters, numbers, and hyphens; that is, it must match the regular expression: `[a-zA-Z\d-_]+`. The maximum length is 100 characters. Can be empty to allow the system to generate one.
         
-    - name: locationId
-      value: string
+    - name: deidentifyTemplate
+      value: object
       description: >
-        Deprecated. This field has no effect.
+        DeidentifyTemplates contains instructions on how to de-identify content. See https://cloud.google.com/sensitive-data-protection/docs/concepts-templates to learn more.
         
 ```
 </TabItem>
@@ -963,8 +963,8 @@ Updates the DeidentifyTemplate. See https://cloud.google.com/sensitive-data-prot
 ```sql
 UPDATE google.dlp.deidentify_templates
 SET 
-data__deidentifyTemplate = '{{ deidentifyTemplate }}',
-data__updateMask = '{{ updateMask }}'
+data__updateMask = '{{ updateMask }}',
+data__deidentifyTemplate = '{{ deidentifyTemplate }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -985,8 +985,8 @@ Updates the DeidentifyTemplate. See https://cloud.google.com/sensitive-data-prot
 ```sql
 UPDATE google.dlp.deidentify_templates
 SET 
-data__deidentifyTemplate = '{{ deidentifyTemplate }}',
-data__updateMask = '{{ updateMask }}'
+data__updateMask = '{{ updateMask }}',
+data__deidentifyTemplate = '{{ deidentifyTemplate }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -1007,8 +1007,8 @@ Updates the DeidentifyTemplate. See https://cloud.google.com/sensitive-data-prot
 ```sql
 UPDATE google.dlp.deidentify_templates
 SET 
-data__deidentifyTemplate = '{{ deidentifyTemplate }}',
-data__updateMask = '{{ updateMask }}'
+data__updateMask = '{{ updateMask }}',
+data__deidentifyTemplate = '{{ deidentifyTemplate }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND deidentifyTemplatesId = '{{ deidentifyTemplatesId }}' --required
@@ -1028,8 +1028,8 @@ Updates the DeidentifyTemplate. See https://cloud.google.com/sensitive-data-prot
 ```sql
 UPDATE google.dlp.deidentify_templates
 SET 
-data__deidentifyTemplate = '{{ deidentifyTemplate }}',
-data__updateMask = '{{ updateMask }}'
+data__updateMask = '{{ updateMask }}',
+data__deidentifyTemplate = '{{ deidentifyTemplate }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND deidentifyTemplatesId = '{{ deidentifyTemplatesId }}' --required

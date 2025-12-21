@@ -112,7 +112,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="serviceAccount" /></td>
     <td><code>string</code></td>
-    <td>Optional. The user-managed service account to which to delegate service agent permissions. You can grant Cloud Storage bucket permissions to this service account instead of to the Transfer Service service agent. Format is `projects/-/serviceAccounts/ACCOUNT_EMAIL_OR_UNIQUEID` Either the service account email (`SERVICE_ACCOUNT_NAME@PROJECT_ID.iam.gserviceaccount.com`) or the unique ID (`123456789012345678901`) are accepted in the string. The `-` wildcard character is required; replacing it with a project ID is invalid. See https://cloud.google.com//storage-transfer/docs/delegate-service-agent-permissions for required permissions.</td>
+    <td>Optional. The user-managed service account to which to delegate service agent permissions. You can grant Cloud Storage bucket permissions to this service account instead of to the Transfer Service service agent. Either the service account email (`SERVICE_ACCOUNT_NAME@PROJECT_ID.iam.gserviceaccount.com`) or the unique ID (`123456789012345678901`) are accepted. See https://docs.cloud.google.com/storage-transfer/docs/delegate-service-agent-permissions for required permissions.</td>
 </tr>
 <tr>
     <td><CopyableCode code="status" /></td>
@@ -201,7 +201,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="serviceAccount" /></td>
     <td><code>string</code></td>
-    <td>Optional. The user-managed service account to which to delegate service agent permissions. You can grant Cloud Storage bucket permissions to this service account instead of to the Transfer Service service agent. Format is `projects/-/serviceAccounts/ACCOUNT_EMAIL_OR_UNIQUEID` Either the service account email (`SERVICE_ACCOUNT_NAME@PROJECT_ID.iam.gserviceaccount.com`) or the unique ID (`123456789012345678901`) are accepted in the string. The `-` wildcard character is required; replacing it with a project ID is invalid. See https://cloud.google.com//storage-transfer/docs/delegate-service-agent-permissions for required permissions.</td>
+    <td>Optional. The user-managed service account to which to delegate service agent permissions. You can grant Cloud Storage bucket permissions to this service account instead of to the Transfer Service service agent. Either the service account email (`SERVICE_ACCOUNT_NAME@PROJECT_ID.iam.gserviceaccount.com`) or the unique ID (`123456789012345678901`) are accepted. See https://docs.cloud.google.com/storage-transfer/docs/delegate-service-agent-permissions for required permissions.</td>
 </tr>
 <tr>
     <td><CopyableCode code="status" /></td>
@@ -244,7 +244,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-filter"><code>filter</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists transfer jobs.</td>
 </tr>
 <tr>
@@ -378,8 +378,8 @@ status,
 transferSpec
 FROM google.storagetransfer.transfer_jobs
 WHERE filter = '{{ filter }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -402,31 +402,31 @@ Creates a transfer job that runs periodically.
 ```sql
 INSERT INTO google.storagetransfer.transfer_jobs (
 data__name,
-data__description,
-data__projectId,
-data__serviceAccount,
-data__transferSpec,
 data__replicationSpec,
+data__status,
+data__description,
 data__notificationConfig,
-data__loggingConfig,
+data__transferSpec,
+data__latestOperationName,
 data__schedule,
 data__eventStream,
-data__status,
-data__latestOperationName
+data__projectId,
+data__serviceAccount,
+data__loggingConfig
 )
 SELECT 
 '{{ name }}',
-'{{ description }}',
-'{{ projectId }}',
-'{{ serviceAccount }}',
-'{{ transferSpec }}',
 '{{ replicationSpec }}',
+'{{ status }}',
+'{{ description }}',
 '{{ notificationConfig }}',
-'{{ loggingConfig }}',
+'{{ transferSpec }}',
+'{{ latestOperationName }}',
 '{{ schedule }}',
 '{{ eventStream }}',
-'{{ status }}',
-'{{ latestOperationName }}'
+'{{ projectId }}',
+'{{ serviceAccount }}',
+'{{ loggingConfig }}'
 RETURNING
 name,
 creationTime,
@@ -457,40 +457,36 @@ transferSpec
       description: >
         A unique name (within the transfer project) assigned when the job is created. If this field is empty in a CreateTransferJobRequest, Storage Transfer Service assigns a unique name. Otherwise, the specified name is used as the unique name for this job. If the specified name is in use by a job, the creation request fails with an ALREADY_EXISTS error. This name must start with `"transferJobs/"` prefix and end with a letter or a number, and should be no more than 128 characters. For transfers involving PosixFilesystem, this name must start with `transferJobs/OPI` specifically. For all other transfer types, this name must not start with `transferJobs/OPI`. Non-PosixFilesystem example: `"transferJobs/^(?!OPI)[A-Za-z0-9-._~]*[A-Za-z0-9]$"` PosixFilesystem example: `"transferJobs/OPI^[A-Za-z0-9-._~]*[A-Za-z0-9]$"` Applications must not rely on the enforcement of naming requirements involving OPI. Invalid job names fail with an INVALID_ARGUMENT error.
         
-    - name: description
-      value: string
-      description: >
-        A description provided by the user for the job. Its max length is 1024 bytes when Unicode-encoded.
-        
-    - name: projectId
-      value: string
-      description: >
-        The ID of the Google Cloud project that owns the job.
-        
-    - name: serviceAccount
-      value: string
-      description: >
-        Optional. The user-managed service account to which to delegate service agent permissions. You can grant Cloud Storage bucket permissions to this service account instead of to the Transfer Service service agent. Format is `projects/-/serviceAccounts/ACCOUNT_EMAIL_OR_UNIQUEID` Either the service account email (`SERVICE_ACCOUNT_NAME@PROJECT_ID.iam.gserviceaccount.com`) or the unique ID (`123456789012345678901`) are accepted in the string. The `-` wildcard character is required; replacing it with a project ID is invalid. See https://cloud.google.com//storage-transfer/docs/delegate-service-agent-permissions for required permissions.
-        
-    - name: transferSpec
-      value: object
-      description: >
-        Transfer specification.
-        
     - name: replicationSpec
       value: object
       description: >
         Replication specification.
+        
+    - name: status
+      value: string
+      description: >
+        Status of the job. This value MUST be specified for `CreateTransferJobRequests`. **Note:** The effect of the new job status takes place during a subsequent job run. For example, if you change the job status from ENABLED to DISABLED, and an operation spawned by the transfer is running, the status change would not affect the current operation.
+        
+      valid_values: ['STATUS_UNSPECIFIED', 'ENABLED', 'DISABLED', 'DELETED']
+    - name: description
+      value: string
+      description: >
+        A description provided by the user for the job. Its max length is 1024 bytes when Unicode-encoded.
         
     - name: notificationConfig
       value: object
       description: >
         Notification configuration.
         
-    - name: loggingConfig
+    - name: transferSpec
       value: object
       description: >
-        Logging configuration.
+        Transfer specification.
+        
+    - name: latestOperationName
+      value: string
+      description: >
+        The name of the most recently started TransferOperation of this JobConfig. Present if a TransferOperation has been created for this JobConfig.
         
     - name: schedule
       value: object
@@ -502,16 +498,20 @@ transferSpec
       description: >
         Specifies the event stream for the transfer job for event-driven transfers. When EventStream is specified, the Schedule fields are ignored.
         
-    - name: status
+    - name: projectId
       value: string
       description: >
-        Status of the job. This value MUST be specified for `CreateTransferJobRequests`. **Note:** The effect of the new job status takes place during a subsequent job run. For example, if you change the job status from ENABLED to DISABLED, and an operation spawned by the transfer is running, the status change would not affect the current operation.
+        The ID of the Google Cloud project that owns the job.
         
-      valid_values: ['STATUS_UNSPECIFIED', 'ENABLED', 'DISABLED', 'DELETED']
-    - name: latestOperationName
+    - name: serviceAccount
       value: string
       description: >
-        The name of the most recently started TransferOperation of this JobConfig. Present if a TransferOperation has been created for this JobConfig.
+        Optional. The user-managed service account to which to delegate service agent permissions. You can grant Cloud Storage bucket permissions to this service account instead of to the Transfer Service service agent. Either the service account email (`SERVICE_ACCOUNT_NAME@PROJECT_ID.iam.gserviceaccount.com`) or the unique ID (`123456789012345678901`) are accepted. See https://docs.cloud.google.com/storage-transfer/docs/delegate-service-agent-permissions for required permissions.
+        
+    - name: loggingConfig
+      value: object
+      description: >
+        Logging configuration.
         
 ```
 </TabItem>
@@ -533,9 +533,9 @@ Updates a transfer job. Updating a job's transfer spec does not affect transfer 
 ```sql
 UPDATE google.storagetransfer.transfer_jobs
 SET 
-data__projectId = '{{ projectId }}',
+data__updateTransferJobFieldMask = '{{ updateTransferJobFieldMask }}',
 data__transferJob = '{{ transferJob }}',
-data__updateTransferJobFieldMask = '{{ updateTransferJobFieldMask }}'
+data__projectId = '{{ projectId }}'
 WHERE 
 transferJobsId = '{{ transferJobsId }}' --required
 RETURNING

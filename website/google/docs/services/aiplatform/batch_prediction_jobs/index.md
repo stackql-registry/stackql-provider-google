@@ -92,7 +92,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>Output only. Only populated when the job's state is JOB_STATE_FAILED or JOB_STATE_CANCELLED. (id: GoogleRpcStatus)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: GoogleRpcStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="explanationSpec" /></td>
@@ -127,7 +127,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="model" /></td>
     <td><code>string</code></td>
-    <td>The name of the Model resource that produces the predictions via this job, must share the same ancestor Location. Starting this job has no impact on any existing deployments of the Model and their resources. Exactly one of model and unmanaged_container_model must be set. The model resource name may contain version id or version alias to specify the version. Example: `projects/&#123;project&#125;/locations/&#123;location&#125;/models/&#123;model&#125;@2` or `projects/&#123;project&#125;/locations/&#123;location&#125;/models/&#123;model&#125;@golden` if no version is specified, the default version will be deployed. The model resource could also be a publisher model. Example: `publishers/&#123;publisher&#125;/models/&#123;model&#125;` or `projects/&#123;project&#125;/locations/&#123;location&#125;/publishers/&#123;publisher&#125;/models/&#123;model&#125;`</td>
+    <td>The name of the Model resource that produces the predictions via this job, must share the same ancestor Location. Starting this job has no impact on any existing deployments of the Model and their resources. Exactly one of model, unmanaged_container_model, or endpoint must be set. The model resource name may contain version id or version alias to specify the version. Example: `projects/&#123;project&#125;/locations/&#123;location&#125;/models/&#123;model&#125;@2` or `projects/&#123;project&#125;/locations/&#123;location&#125;/models/&#123;model&#125;@golden` if no version is specified, the default version will be deployed. The model resource could also be a publisher model. Example: `publishers/&#123;publisher&#125;/models/&#123;model&#125;` or `projects/&#123;project&#125;/locations/&#123;location&#125;/publishers/&#123;publisher&#125;/models/&#123;model&#125;`</td>
 </tr>
 <tr>
     <td><CopyableCode code="modelParameters" /></td>
@@ -187,7 +187,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="unmanagedContainerModel" /></td>
     <td><code>object</code></td>
-    <td>Contains model information necessary to perform batch prediction without requiring uploading to model registry. Exactly one of model and unmanaged_container_model must be set. (id: GoogleCloudAiplatformV1UnmanagedContainerModel)</td>
+    <td>Contains model information necessary to perform batch prediction without requiring uploading to model registry. Exactly one of model, unmanaged_container_model, or endpoint must be set. (id: GoogleCloudAiplatformV1UnmanagedContainerModel)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -251,7 +251,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>Output only. Only populated when the job's state is JOB_STATE_FAILED or JOB_STATE_CANCELLED. (id: GoogleRpcStatus)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: GoogleRpcStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="explanationSpec" /></td>
@@ -286,7 +286,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="model" /></td>
     <td><code>string</code></td>
-    <td>The name of the Model resource that produces the predictions via this job, must share the same ancestor Location. Starting this job has no impact on any existing deployments of the Model and their resources. Exactly one of model and unmanaged_container_model must be set. The model resource name may contain version id or version alias to specify the version. Example: `projects/&#123;project&#125;/locations/&#123;location&#125;/models/&#123;model&#125;@2` or `projects/&#123;project&#125;/locations/&#123;location&#125;/models/&#123;model&#125;@golden` if no version is specified, the default version will be deployed. The model resource could also be a publisher model. Example: `publishers/&#123;publisher&#125;/models/&#123;model&#125;` or `projects/&#123;project&#125;/locations/&#123;location&#125;/publishers/&#123;publisher&#125;/models/&#123;model&#125;`</td>
+    <td>The name of the Model resource that produces the predictions via this job, must share the same ancestor Location. Starting this job has no impact on any existing deployments of the Model and their resources. Exactly one of model, unmanaged_container_model, or endpoint must be set. The model resource name may contain version id or version alias to specify the version. Example: `projects/&#123;project&#125;/locations/&#123;location&#125;/models/&#123;model&#125;@2` or `projects/&#123;project&#125;/locations/&#123;location&#125;/models/&#123;model&#125;@golden` if no version is specified, the default version will be deployed. The model resource could also be a publisher model. Example: `publishers/&#123;publisher&#125;/models/&#123;model&#125;` or `projects/&#123;project&#125;/locations/&#123;location&#125;/publishers/&#123;publisher&#125;/models/&#123;model&#125;`</td>
 </tr>
 <tr>
     <td><CopyableCode code="modelParameters" /></td>
@@ -346,7 +346,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="unmanagedContainerModel" /></td>
     <td><code>object</code></td>
-    <td>Contains model information necessary to perform batch prediction without requiring uploading to model registry. Exactly one of model and unmanaged_container_model must be set. (id: GoogleCloudAiplatformV1UnmanagedContainerModel)</td>
+    <td>Contains model information necessary to perform batch prediction without requiring uploading to model registry. Exactly one of model, unmanaged_container_model, or endpoint must be set. (id: GoogleCloudAiplatformV1UnmanagedContainerModel)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -376,22 +376,22 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-batchPredictionJobsId"><code>batchPredictionJobsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-batchPredictionJobsId"><code>batchPredictionJobsId</code></a></td>
     <td></td>
     <td>Gets a BatchPredictionJob</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td></td>
-    <td><a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists BatchPredictionJobs in a Location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
-    <td><a href="#parameter-parent"><code>parent</code></a></td>
     <td>Creates a BatchPredictionJob. A BatchPredictionJob once created will right away be attempted to start.</td>
 </tr>
 <tr>
@@ -454,11 +454,6 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
-<tr id="parameter-parent">
-    <td><CopyableCode code="parent" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
 <tr id="parameter-readMask">
     <td><CopyableCode code="readMask" /></td>
     <td><code>string (google-fieldmask)</code></td>
@@ -512,7 +507,9 @@ state,
 unmanagedContainerModel,
 updateTime
 FROM google.aiplatform.batch_prediction_jobs
-WHERE batchPredictionJobsId = '{{ batchPredictionJobsId }}' -- required
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND batchPredictionJobsId = '{{ batchPredictionJobsId }}' -- required
 ;
 ```
 </TabItem>
@@ -552,11 +549,12 @@ state,
 unmanagedContainerModel,
 updateTime
 FROM google.aiplatform.batch_prediction_jobs
-WHERE parent = '{{ parent }}'
-AND filter = '{{ filter }}'
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND readMask = '{{ readMask }}'
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -578,40 +576,42 @@ Creates a BatchPredictionJob. A BatchPredictionJob once created will right away 
 
 ```sql
 INSERT INTO google.aiplatform.batch_prediction_jobs (
-data__displayName,
-data__model,
-data__unmanagedContainerModel,
-data__inputConfig,
-data__instanceConfig,
-data__modelParameters,
 data__outputConfig,
 data__dedicatedResources,
-data__serviceAccount,
-data__manualBatchTuningParameters,
-data__generateExplanation,
-data__explanationSpec,
-data__labels,
-data__encryptionSpec,
 data__disableContainerLogging,
-parent
+data__labels,
+data__inputConfig,
+data__model,
+data__displayName,
+data__explanationSpec,
+data__generateExplanation,
+data__modelParameters,
+data__serviceAccount,
+data__unmanagedContainerModel,
+data__manualBatchTuningParameters,
+data__instanceConfig,
+data__encryptionSpec,
+projectsId,
+locationsId
 )
 SELECT 
-'{{ displayName }}',
-'{{ model }}',
-'{{ unmanagedContainerModel }}',
-'{{ inputConfig }}',
-'{{ instanceConfig }}',
-'{{ modelParameters }}',
 '{{ outputConfig }}',
 '{{ dedicatedResources }}',
-'{{ serviceAccount }}',
-'{{ manualBatchTuningParameters }}',
-{{ generateExplanation }},
-'{{ explanationSpec }}',
-'{{ labels }}',
-'{{ encryptionSpec }}',
 {{ disableContainerLogging }},
-'{{ parent }}'
+'{{ labels }}',
+'{{ inputConfig }}',
+'{{ model }}',
+'{{ displayName }}',
+'{{ explanationSpec }}',
+{{ generateExplanation }},
+'{{ modelParameters }}',
+'{{ serviceAccount }}',
+'{{ unmanagedContainerModel }}',
+'{{ manualBatchTuningParameters }}',
+'{{ instanceConfig }}',
+'{{ encryptionSpec }}',
+'{{ projectsId }}',
+'{{ locationsId }}'
 RETURNING
 name,
 completionStats,
@@ -651,36 +651,12 @@ updateTime
 # Description fields are for documentation purposes
 - name: batch_prediction_jobs
   props:
-    - name: displayName
+    - name: projectsId
       value: string
-      description: >
-        Required. The user-defined name of this BatchPredictionJob.
-        
-    - name: model
+      description: Required parameter for the batch_prediction_jobs resource.
+    - name: locationsId
       value: string
-      description: >
-        The name of the Model resource that produces the predictions via this job, must share the same ancestor Location. Starting this job has no impact on any existing deployments of the Model and their resources. Exactly one of model and unmanaged_container_model must be set. The model resource name may contain version id or version alias to specify the version. Example: `projects/{project}/locations/{location}/models/{model}@2` or `projects/{project}/locations/{location}/models/{model}@golden` if no version is specified, the default version will be deployed. The model resource could also be a publisher model. Example: `publishers/{publisher}/models/{model}` or `projects/{project}/locations/{location}/publishers/{publisher}/models/{model}`
-        
-    - name: unmanagedContainerModel
-      value: object
-      description: >
-        Contains model information necessary to perform batch prediction without requiring uploading to model registry. Exactly one of model and unmanaged_container_model must be set.
-        
-    - name: inputConfig
-      value: object
-      description: >
-        Required. Input configuration of the instances on which predictions are performed. The schema of any single instance may be specified via the Model's PredictSchemata's instance_schema_uri.
-        
-    - name: instanceConfig
-      value: object
-      description: >
-        Configuration for how to convert batch prediction input instances to the prediction instances that are sent to the Model.
-        
-    - name: modelParameters
-      value: any
-      description: >
-        The parameters that govern the predictions. The schema of the parameters may be specified via the Model's PredictSchemata's parameters_schema_uri.
-        
+      description: Required parameter for the batch_prediction_jobs resource.
     - name: outputConfig
       value: object
       description: >
@@ -691,43 +667,71 @@ updateTime
       description: >
         The config of resources used by the Model during the batch prediction. If the Model supports DEDICATED_RESOURCES this config may be provided (and the job will use these resources), if the Model doesn't support AUTOMATIC_RESOURCES, this config must be provided.
         
-    - name: serviceAccount
-      value: string
-      description: >
-        The service account that the DeployedModel's container runs as. If not specified, a system generated one will be used, which has minimal permissions and the custom container, if used, may not have enough permission to access other Google Cloud resources. Users deploying the Model must have the `iam.serviceAccounts.actAs` permission on this service account.
-        
-    - name: manualBatchTuningParameters
-      value: object
-      description: >
-        Immutable. Parameters configuring the batch behavior. Currently only applicable when dedicated_resources are used (in other cases Vertex AI does the tuning itself).
-        
-    - name: generateExplanation
+    - name: disableContainerLogging
       value: boolean
       description: >
-        Generate explanation with the batch prediction results. When set to `true`, the batch prediction output changes based on the `predictions_format` field of the BatchPredictionJob.output_config object: * `bigquery`: output includes a column named `explanation`. The value is a struct that conforms to the Explanation object. * `jsonl`: The JSON objects on each line include an additional entry keyed `explanation`. The value of the entry is a JSON object that conforms to the Explanation object. * `csv`: Generating explanations for CSV format is not supported. If this field is set to true, either the Model.explanation_spec or explanation_spec must be populated.
-        
-    - name: explanationSpec
-      value: object
-      description: >
-        Explanation configuration for this BatchPredictionJob. Can be specified only if generate_explanation is set to `true`. This value overrides the value of Model.explanation_spec. All fields of explanation_spec are optional in the request. If a field of the explanation_spec object is not populated, the corresponding field of the Model.explanation_spec object is inherited.
+        For custom-trained Models and AutoML Tabular Models, the container of the DeployedModel instances will send `stderr` and `stdout` streams to Cloud Logging by default. Please note that the logs incur cost, which are subject to [Cloud Logging pricing](https://cloud.google.com/logging/pricing). User can disable container logging by setting this flag to true.
         
     - name: labels
       value: object
       description: >
         The labels with user-defined metadata to organize BatchPredictionJobs. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
         
+    - name: inputConfig
+      value: object
+      description: >
+        Required. Input configuration of the instances on which predictions are performed. The schema of any single instance may be specified via the Model's PredictSchemata's instance_schema_uri.
+        
+    - name: model
+      value: string
+      description: >
+        The name of the Model resource that produces the predictions via this job, must share the same ancestor Location. Starting this job has no impact on any existing deployments of the Model and their resources. Exactly one of model, unmanaged_container_model, or endpoint must be set. The model resource name may contain version id or version alias to specify the version. Example: `projects/{project}/locations/{location}/models/{model}@2` or `projects/{project}/locations/{location}/models/{model}@golden` if no version is specified, the default version will be deployed. The model resource could also be a publisher model. Example: `publishers/{publisher}/models/{model}` or `projects/{project}/locations/{location}/publishers/{publisher}/models/{model}`
+        
+    - name: displayName
+      value: string
+      description: >
+        Required. The user-defined name of this BatchPredictionJob.
+        
+    - name: explanationSpec
+      value: object
+      description: >
+        Explanation configuration for this BatchPredictionJob. Can be specified only if generate_explanation is set to `true`. This value overrides the value of Model.explanation_spec. All fields of explanation_spec are optional in the request. If a field of the explanation_spec object is not populated, the corresponding field of the Model.explanation_spec object is inherited.
+        
+    - name: generateExplanation
+      value: boolean
+      description: >
+        Generate explanation with the batch prediction results. When set to `true`, the batch prediction output changes based on the `predictions_format` field of the BatchPredictionJob.output_config object: * `bigquery`: output includes a column named `explanation`. The value is a struct that conforms to the Explanation object. * `jsonl`: The JSON objects on each line include an additional entry keyed `explanation`. The value of the entry is a JSON object that conforms to the Explanation object. * `csv`: Generating explanations for CSV format is not supported. If this field is set to true, either the Model.explanation_spec or explanation_spec must be populated.
+        
+    - name: modelParameters
+      value: any
+      description: >
+        The parameters that govern the predictions. The schema of the parameters may be specified via the Model's PredictSchemata's parameters_schema_uri.
+        
+    - name: serviceAccount
+      value: string
+      description: >
+        The service account that the DeployedModel's container runs as. If not specified, a system generated one will be used, which has minimal permissions and the custom container, if used, may not have enough permission to access other Google Cloud resources. Users deploying the Model must have the `iam.serviceAccounts.actAs` permission on this service account.
+        
+    - name: unmanagedContainerModel
+      value: object
+      description: >
+        Contains model information necessary to perform batch prediction without requiring uploading to model registry. Exactly one of model, unmanaged_container_model, or endpoint must be set.
+        
+    - name: manualBatchTuningParameters
+      value: object
+      description: >
+        Immutable. Parameters configuring the batch behavior. Currently only applicable when dedicated_resources are used (in other cases Vertex AI does the tuning itself).
+        
+    - name: instanceConfig
+      value: object
+      description: >
+        Configuration for how to convert batch prediction input instances to the prediction instances that are sent to the Model.
+        
     - name: encryptionSpec
       value: object
       description: >
         Customer-managed encryption key options for a BatchPredictionJob. If this is set, then all resources created by the BatchPredictionJob will be encrypted with the provided encryption key.
         
-    - name: disableContainerLogging
-      value: boolean
-      description: >
-        For custom-trained Models and AutoML Tabular Models, the container of the DeployedModel instances will send `stderr` and `stdout` streams to Cloud Logging by default. Please note that the logs incur cost, which are subject to [Cloud Logging pricing](https://cloud.google.com/logging/pricing). User can disable container logging by setting this flag to true.
-        
-    - name: parent
-      value: string
 ```
 </TabItem>
 </Tabs>

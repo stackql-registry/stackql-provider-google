@@ -99,11 +99,11 @@ Validates an address.
 EXEC google.addressvalidation.addressvalidation.validate_address 
 @@json=
 '{
-"address": "{{ address }}", 
-"previousResponseId": "{{ previousResponseId }}", 
-"enableUspsCass": {{ enableUspsCass }}, 
 "languageOptions": "{{ languageOptions }}", 
-"sessionToken": "{{ sessionToken }}"
+"previousResponseId": "{{ previousResponseId }}", 
+"address": "{{ address }}", 
+"sessionToken": "{{ sessionToken }}", 
+"enableUspsCass": {{ enableUspsCass }}
 }'
 ;
 ```

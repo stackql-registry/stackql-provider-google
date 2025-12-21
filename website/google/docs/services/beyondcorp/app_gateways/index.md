@@ -224,14 +224,14 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_app_gateways_list"><CopyableCode code="projects_locations_app_gateways_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists AppGateways in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_app_gateways_create"><CopyableCode code="projects_locations_app_gateways_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-appGatewayId"><code>appGatewayId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-appGatewayId"><code>appGatewayId</code></a></td>
     <td>Creates a new AppGateway in a given project and location.</td>
 </tr>
 <tr>
@@ -369,8 +369,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -399,9 +399,9 @@ data__type,
 data__hostType,
 projectsId,
 locationsId,
-appGatewayId,
 requestId,
-validateOnly
+validateOnly,
+appGatewayId
 )
 SELECT 
 '{{ name }}',
@@ -411,9 +411,9 @@ SELECT
 '{{ hostType }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ appGatewayId }}',
 '{{ requestId }}',
-'{{ validateOnly }}'
+'{{ validateOnly }}',
+'{{ appGatewayId }}'
 RETURNING
 name,
 done,
@@ -462,12 +462,12 @@ response
         Required. The type of hosting used by the AppGateway.
         
       valid_values: ['HOST_TYPE_UNSPECIFIED', 'GCP_REGIONAL_MIG']
-    - name: appGatewayId
-      value: string
     - name: requestId
       value: string
     - name: validateOnly
       value: boolean
+    - name: appGatewayId
+      value: string
 ```
 </TabItem>
 </Tabs>

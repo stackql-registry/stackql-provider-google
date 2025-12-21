@@ -84,11 +84,6 @@ The following fields are returned by `SELECT` queries:
     <td><code>object</code></td>
     <td>Google Service Control selects service configurations based on traffic percentage. (id: TrafficPercentStrategy)</td>
 </tr>
-<tr>
-    <td><CopyableCode code="universe" /></td>
-    <td><code>string</code></td>
-    <td>The TPC universe which the rollout will be rolled out to.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -137,11 +132,6 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="trafficPercentStrategy" /></td>
     <td><code>object</code></td>
     <td>Google Service Control selects service configurations based on traffic percentage. (id: TrafficPercentStrategy)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="universe" /></td>
-    <td><code>string</code></td>
-    <td>The TPC universe which the rollout will be rolled out to.</td>
 </tr>
 </tbody>
 </table>
@@ -249,8 +239,7 @@ deleteServiceStrategy,
 rolloutId,
 serviceName,
 status,
-trafficPercentStrategy,
-universe
+trafficPercentStrategy
 FROM google.servicemanagement.rollouts
 WHERE serviceName = '{{ serviceName }}' -- required
 AND rolloutId = '{{ rolloutId }}' -- required
@@ -269,8 +258,7 @@ deleteServiceStrategy,
 rolloutId,
 serviceName,
 status,
-trafficPercentStrategy,
-universe
+trafficPercentStrategy
 FROM google.servicemanagement.rollouts
 WHERE serviceName = '{{ serviceName }}' -- required
 AND pageToken = '{{ pageToken }}'
@@ -304,7 +292,6 @@ data__status,
 data__trafficPercentStrategy,
 data__deleteServiceStrategy,
 data__serviceName,
-data__universe,
 serviceName
 )
 SELECT 
@@ -315,7 +302,6 @@ SELECT
 '{{ trafficPercentStrategy }}',
 '{{ deleteServiceStrategy }}',
 '{{ serviceName }}',
-'{{ universe }}',
 '{{ serviceName }}'
 RETURNING
 name,
@@ -370,11 +356,6 @@ response
       value: string
       description: >
         The name of the service associated with this Rollout.
-        
-    - name: universe
-      value: string
-      description: >
-        The TPC universe which the rollout will be rolled out to.
         
 ```
 </TabItem>

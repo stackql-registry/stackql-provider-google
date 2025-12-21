@@ -166,8 +166,8 @@ Updates the Capability.
 ```sql
 UPDATE google.cloudresourcemanager.capabilities
 SET 
-data__name = '{{ name }}',
-data__value = {{ value }}
+data__value = {{ value }},
+data__name = '{{ name }}'
 WHERE 
 foldersId = '{{ foldersId }}' --required
 AND capabilitiesId = '{{ capabilitiesId }}' --required

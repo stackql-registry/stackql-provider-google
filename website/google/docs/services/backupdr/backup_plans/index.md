@@ -95,6 +95,11 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Applicable only for CloudSQL resource_type. Configures how long logs will be stored. It is defined in “days”. This value should be greater than or equal to minimum enforced log retention duration of the backup vault.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="maxCustomOnDemandRetentionDays" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Optional. Optional field to configure the maximum number of days for which a backup can be retained. This field is only applicable for on-demand backups taken with custom retention value.</td>
+</tr>
+<tr>
     <td><CopyableCode code="resourceType" /></td>
     <td><code>string</code></td>
     <td>Required. The resource type to which the `BackupPlan` will be applied. Examples include, "compute.googleapis.com/Instance", "sqladmin.googleapis.com/Instance", "alloydb.googleapis.com/Cluster", "compute.googleapis.com/Disk".</td>
@@ -182,6 +187,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="logRetentionDays" /></td>
     <td><code>string (int64)</code></td>
     <td>Optional. Applicable only for CloudSQL resource_type. Configures how long logs will be stored. It is defined in “days”. This value should be greater than or equal to minimum enforced log retention duration of the backup vault.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="maxCustomOnDemandRetentionDays" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Optional. Optional field to configure the maximum number of days for which a backup can be retained. This field is only applicable for on-demand backups taken with custom retention value.</td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceType" /></td>
@@ -361,6 +371,7 @@ description,
 etag,
 labels,
 logRetentionDays,
+maxCustomOnDemandRetentionDays,
 resourceType,
 revisionId,
 revisionName,
@@ -389,6 +400,7 @@ description,
 etag,
 labels,
 logRetentionDays,
+maxCustomOnDemandRetentionDays,
 resourceType,
 revisionId,
 revisionName,
@@ -426,6 +438,7 @@ INSERT INTO google.backupdr.backup_plans (
 data__description,
 data__labels,
 data__backupRules,
+data__maxCustomOnDemandRetentionDays,
 data__resourceType,
 data__etag,
 data__backupVault,
@@ -439,6 +452,7 @@ SELECT
 '{{ description }}',
 '{{ labels }}',
 '{{ backupRules }}',
+{{ maxCustomOnDemandRetentionDays }},
 '{{ resourceType }}',
 '{{ etag }}',
 '{{ backupVault }}',
@@ -482,6 +496,11 @@ response
       value: array
       description: >
         Optional. The backup rules for this `BackupPlan`.
+        
+    - name: maxCustomOnDemandRetentionDays
+      value: integer
+      description: >
+        Optional. Optional field to configure the maximum number of days for which a backup can be retained. This field is only applicable for on-demand backups taken with custom retention value.
         
     - name: resourceType
       value: string
@@ -530,6 +549,7 @@ SET
 data__description = '{{ description }}',
 data__labels = '{{ labels }}',
 data__backupRules = '{{ backupRules }}',
+data__maxCustomOnDemandRetentionDays = {{ maxCustomOnDemandRetentionDays }},
 data__resourceType = '{{ resourceType }}',
 data__etag = '{{ etag }}',
 data__backupVault = '{{ backupVault }}',

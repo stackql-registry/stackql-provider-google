@@ -52,7 +52,7 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#completions"><CopyableCode code="completions" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-endpointsId"><code>endpointsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-endpointsId"><code>endpointsId</code></a></td>
     <td></td>
     <td>Exposes an OpenAI-compatible endpoint for chat completions.</td>
 </tr>
@@ -77,6 +77,16 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
+<tr id="parameter-locationsId">
+    <td><CopyableCode code="locationsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-projectsId">
+    <td><CopyableCode code="projectsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 
@@ -94,12 +104,14 @@ Exposes an OpenAI-compatible endpoint for chat completions.
 
 ```sql
 EXEC google.aiplatform.chat.completions 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
 @endpointsId='{{ endpointsId }}' --required 
 @@json=
 '{
-"contentType": "{{ contentType }}", 
+"extensions": "{{ extensions }}", 
 "data": "{{ data }}", 
-"extensions": "{{ extensions }}"
+"contentType": "{{ contentType }}"
 }'
 ;
 ```

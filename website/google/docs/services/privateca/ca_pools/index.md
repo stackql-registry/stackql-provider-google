@@ -55,6 +55,11 @@ The following fields are returned by `SELECT` queries:
     <td>Identifier. The resource name for this CaPool in the format `projects/*/locations/*/caPools/*`.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="encryptionSpec" /></td>
+    <td><code>object</code></td>
+    <td>Optional. When EncryptionSpec is provided, the Subject, SubjectAltNames, and the PEM-encoded certificate fields will be encrypted at rest. (id: EncryptionSpec)</td>
+</tr>
+<tr>
     <td><CopyableCode code="issuancePolicy" /></td>
     <td><code>object</code></td>
     <td>Optional. The IssuancePolicy to control how Certificates will be issued from this CaPool. (id: IssuancePolicy)</td>
@@ -92,6 +97,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
     <td>Identifier. The resource name for this CaPool in the format `projects/*/locations/*/caPools/*`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="encryptionSpec" /></td>
+    <td><code>object</code></td>
+    <td>Optional. When EncryptionSpec is provided, the Subject, SubjectAltNames, and the PEM-encoded certificate fields will be encrypted at rest. (id: EncryptionSpec)</td>
 </tr>
 <tr>
     <td><CopyableCode code="issuancePolicy" /></td>
@@ -144,7 +154,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists CaPools.</td>
 </tr>
 <tr>
@@ -158,7 +168,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-caPoolsId"><code>caPoolsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Update a CaPool.</td>
 </tr>
 <tr>
@@ -258,6 +268,7 @@ Returns a CaPool.
 ```sql
 SELECT
 name,
+encryptionSpec,
 issuancePolicy,
 labels,
 publishingOptions,
@@ -276,6 +287,7 @@ Lists CaPools.
 ```sql
 SELECT
 name,
+encryptionSpec,
 issuancePolicy,
 labels,
 publishingOptions,
@@ -283,10 +295,10 @@ tier
 FROM google.privateca.ca_pools
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -308,22 +320,24 @@ Create a CaPool.
 
 ```sql
 INSERT INTO google.privateca.ca_pools (
-data__name,
 data__tier,
 data__issuancePolicy,
-data__publishingOptions,
 data__labels,
+data__name,
+data__publishingOptions,
+data__encryptionSpec,
 projectsId,
 locationsId,
 caPoolId,
 requestId
 )
 SELECT 
-'{{ name }}',
 '{{ tier }}',
 '{{ issuancePolicy }}',
-'{{ publishingOptions }}',
 '{{ labels }}',
+'{{ name }}',
+'{{ publishingOptions }}',
+'{{ encryptionSpec }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ caPoolId }}',
@@ -349,11 +363,6 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the ca_pools resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name for this CaPool in the format `projects/*/locations/*/caPools/*`.
-        
     - name: tier
       value: string
       description: >
@@ -365,15 +374,25 @@ response
       description: >
         Optional. The IssuancePolicy to control how Certificates will be issued from this CaPool.
         
+    - name: labels
+      value: object
+      description: >
+        Optional. Labels with user-defined metadata.
+        
+    - name: name
+      value: string
+      description: >
+        Identifier. The resource name for this CaPool in the format `projects/*/locations/*/caPools/*`.
+        
     - name: publishingOptions
       value: object
       description: >
         Optional. The PublishingOptions to follow when issuing Certificates from any CertificateAuthority in this CaPool.
         
-    - name: labels
+    - name: encryptionSpec
       value: object
       description: >
-        Optional. Labels with user-defined metadata.
+        Optional. When EncryptionSpec is provided, the Subject, SubjectAltNames, and the PEM-encoded certificate fields will be encrypted at rest.
         
     - name: caPoolId
       value: string
@@ -399,17 +418,18 @@ Update a CaPool.
 ```sql
 UPDATE google.privateca.ca_pools
 SET 
-data__name = '{{ name }}',
 data__tier = '{{ tier }}',
 data__issuancePolicy = '{{ issuancePolicy }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
 data__publishingOptions = '{{ publishingOptions }}',
-data__labels = '{{ labels }}'
+data__encryptionSpec = '{{ encryptionSpec }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND caPoolsId = '{{ caPoolsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

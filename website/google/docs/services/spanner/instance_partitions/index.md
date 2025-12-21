@@ -55,6 +55,11 @@ The following fields are returned by `SELECT` queries:
     <td>Required. A unique identifier for the instance partition. Values are of the form `projects//instances//instancePartitions/a-z*[a-z0-9]`. The final segment of the name must be between 2 and 64 characters in length. An instance partition's name cannot be changed after the instance partition is created.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="autoscalingConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. The autoscaling configuration. Autoscaling is enabled if this field is set. When autoscaling is enabled, fields in compute_capacity are treated as OUTPUT_ONLY fields and reflect the current compute capacity allocated to the instance partition. (id: AutoscalingConfig)</td>
+</tr>
+<tr>
     <td><CopyableCode code="config" /></td>
     <td><code>string</code></td>
     <td>Required. The name of the instance partition's configuration. Values are of the form `projects//instanceConfigs/`. See also InstanceConfig and ListInstanceConfigs.</td>
@@ -122,6 +127,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
     <td>Required. A unique identifier for the instance partition. Values are of the form `projects//instances//instancePartitions/a-z*[a-z0-9]`. The final segment of the name must be between 2 and 64 characters in length. An instance partition's name cannot be changed after the instance partition is created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="autoscalingConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. The autoscaling configuration. Autoscaling is enabled if this field is set. When autoscaling is enabled, fields in compute_capacity are treated as OUTPUT_ONLY fields and reflect the current compute capacity allocated to the instance partition. (id: AutoscalingConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="config" /></td>
@@ -298,6 +308,7 @@ Gets information about a particular instance partition.
 ```sql
 SELECT
 name,
+autoscalingConfig,
 config,
 createTime,
 displayName,
@@ -322,6 +333,7 @@ Lists all instance partitions for the given instance.
 ```sql
 SELECT
 name,
+autoscalingConfig,
 config,
 createTime,
 displayName,
@@ -359,14 +371,14 @@ Creates an instance partition and begins preparing it to be used. The returned l
 
 ```sql
 INSERT INTO google.spanner.instance_partitions (
-data__instancePartitionId,
 data__instancePartition,
+data__instancePartitionId,
 projectsId,
 instancesId
 )
 SELECT 
-'{{ instancePartitionId }}',
 '{{ instancePartition }}',
+'{{ instancePartitionId }}',
 '{{ projectsId }}',
 '{{ instancesId }}'
 RETURNING
@@ -390,15 +402,15 @@ response
     - name: instancesId
       value: string
       description: Required parameter for the instance_partitions resource.
-    - name: instancePartitionId
-      value: string
-      description: >
-        Required. The ID of the instance partition to create. Valid identifiers are of the form `a-z*[a-z0-9]` and must be between 2 and 64 characters in length.
-        
     - name: instancePartition
       value: object
       description: >
         An isolated set of Cloud Spanner resources that databases can define placements on.
+        
+    - name: instancePartitionId
+      value: string
+      description: >
+        Required. The ID of the instance partition to create. Valid identifiers are of the form `a-z*[a-z0-9]` and must be between 2 and 64 characters in length.
         
 ```
 </TabItem>
@@ -420,8 +432,8 @@ Updates an instance partition, and begins allocating or releasing resources as r
 ```sql
 UPDATE google.spanner.instance_partitions
 SET 
-data__instancePartition = '{{ instancePartition }}',
-data__fieldMask = '{{ fieldMask }}'
+data__fieldMask = '{{ fieldMask }}',
+data__instancePartition = '{{ instancePartition }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instancesId = '{{ instancesId }}' --required

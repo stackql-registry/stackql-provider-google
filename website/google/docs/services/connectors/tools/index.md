@@ -54,6 +54,16 @@ The following fields are returned by `SELECT` queries:
     <td>Name of the tool.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="annotations" /></td>
+    <td><code>object</code></td>
+    <td>Annotations for the tool. (id: ToolAnnotations)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="dependsOn" /></td>
+    <td><code>array</code></td>
+    <td>List of tool names that this tool depends on.</td>
+</tr>
+<tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
     <td>Description of the tool.</td>
@@ -166,6 +176,8 @@ Lists all available tools.
 ```sql
 SELECT
 name,
+annotations,
+dependsOn,
 description,
 inputSchema,
 outputSchema

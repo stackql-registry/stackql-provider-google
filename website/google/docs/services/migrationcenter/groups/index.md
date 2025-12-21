@@ -154,7 +154,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all groups in a given project and location.</td>
 </tr>
 <tr>
@@ -290,10 +290,10 @@ updateTime
 FROM google.migrationcenter.groups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -315,18 +315,18 @@ Creates a new group in a given project and location.
 
 ```sql
 INSERT INTO google.migrationcenter.groups (
-data__labels,
-data__displayName,
 data__description,
+data__displayName,
+data__labels,
 projectsId,
 locationsId,
 groupId,
 requestId
 )
 SELECT 
-'{{ labels }}',
-'{{ displayName }}',
 '{{ description }}',
+'{{ displayName }}',
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ groupId }}',
@@ -352,20 +352,20 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the groups resource.
-    - name: labels
-      value: object
+    - name: description
+      value: string
       description: >
-        Labels as key value pairs.
+        Optional. The description of the group.
         
     - name: displayName
       value: string
       description: >
         Optional. User-friendly display name.
         
-    - name: description
-      value: string
+    - name: labels
+      value: object
       description: >
-        Optional. The description of the group.
+        Labels as key value pairs.
         
     - name: groupId
       value: string
@@ -391,9 +391,9 @@ Updates the parameters of a group.
 ```sql
 UPDATE google.migrationcenter.groups
 SET 
-data__labels = '{{ labels }}',
+data__description = '{{ description }}',
 data__displayName = '{{ displayName }}',
-data__description = '{{ description }}'
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

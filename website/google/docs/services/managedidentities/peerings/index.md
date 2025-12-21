@@ -174,7 +174,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Peerings in a given project.</td>
 </tr>
 <tr>
@@ -302,10 +302,10 @@ statusMessage,
 updateTime
 FROM google.managedidentities.peerings
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -327,16 +327,16 @@ Creates a Peering for Managed AD instance.
 
 ```sql
 INSERT INTO google.managedidentities.peerings (
-data__labels,
 data__authorizedNetwork,
 data__domainResource,
+data__labels,
 projectsId,
 peeringId
 )
 SELECT 
-'{{ labels }}',
 '{{ authorizedNetwork }}',
 '{{ domainResource }}',
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ peeringId }}'
 RETURNING
@@ -357,11 +357,6 @@ response
     - name: projectsId
       value: string
       description: Required parameter for the peerings resource.
-    - name: labels
-      value: object
-      description: >
-        Optional. Resource labels to represent user-provided metadata.
-        
     - name: authorizedNetwork
       value: string
       description: >
@@ -371,6 +366,11 @@ response
       value: string
       description: >
         Required. Full domain resource path for the Managed AD Domain involved in peering. The resource path should be in the form: `projects/{project_id}/locations/global/domains/{domain_name}`
+        
+    - name: labels
+      value: object
+      description: >
+        Optional. Resource labels to represent user-provided metadata.
         
     - name: peeringId
       value: string
@@ -394,9 +394,9 @@ Updates the labels for specified Peering.
 ```sql
 UPDATE google.managedidentities.peerings
 SET 
-data__labels = '{{ labels }}',
 data__authorizedNetwork = '{{ authorizedNetwork }}',
-data__domainResource = '{{ domainResource }}'
+data__domainResource = '{{ domainResource }}',
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND peeringsId = '{{ peeringsId }}' --required

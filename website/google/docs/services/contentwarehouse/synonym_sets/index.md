@@ -124,7 +124,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Returns all SynonymSets (for all contexts) for the specified location.</td>
 </tr>
 <tr>
@@ -229,8 +229,8 @@ synonyms
 FROM google.contentwarehouse.synonym_sets
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -252,16 +252,16 @@ Creates a SynonymSet for a single context. Throws an ALREADY_EXISTS exception if
 
 ```sql
 INSERT INTO google.contentwarehouse.synonym_sets (
+data__name,
 data__context,
 data__synonyms,
-data__name,
 projectsId,
 locationsId
 )
 SELECT 
+'{{ name }}',
 '{{ context }}',
 '{{ synonyms }}',
-'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -283,6 +283,11 @@ synonyms
     - name: locationsId
       value: string
       description: Required parameter for the synonym_sets resource.
+    - name: name
+      value: string
+      description: >
+        The resource name of the SynonymSet This is mandatory for google.api.resource. Format: projects/{project_number}/locations/{location}/synonymSets/{context}.
+        
     - name: context
       value: string
       description: >
@@ -292,11 +297,6 @@ synonyms
       value: array
       description: >
         List of Synonyms for the context.
-        
-    - name: name
-      value: string
-      description: >
-        The resource name of the SynonymSet This is mandatory for google.api.resource. Format: projects/{project_number}/locations/{location}/synonymSets/{context}.
         
 ```
 </TabItem>
@@ -318,9 +318,9 @@ Remove the existing SynonymSet for the context and replaces it with a new one. T
 ```sql
 UPDATE google.contentwarehouse.synonym_sets
 SET 
+data__name = '{{ name }}',
 data__context = '{{ context }}',
-data__synonyms = '{{ synonyms }}',
-data__name = '{{ name }}'
+data__synonyms = '{{ synonyms }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

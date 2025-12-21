@@ -134,7 +134,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List AuthorizedViewSets</td>
 </tr>
 <tr>
@@ -267,9 +267,9 @@ FROM google.contactcenterinsights.authorized_view_sets
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -291,15 +291,15 @@ Create AuthorizedViewSet
 
 ```sql
 INSERT INTO google.contactcenterinsights.authorized_view_sets (
-data__name,
 data__displayName,
+data__name,
 projectsId,
 locationsId,
 authorizedViewSetId
 )
 SELECT 
-'{{ name }}',
 '{{ displayName }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ authorizedViewSetId }}'
@@ -323,15 +323,15 @@ updateTime
     - name: locationsId
       value: string
       description: Required parameter for the authorized_view_sets resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the AuthorizedViewSet. Format: projects/{project}/locations/{location}/authorizedViewSets/{authorized_view_set}
-        
     - name: displayName
       value: string
       description: >
         Display Name. Limit 64 characters.
+        
+    - name: name
+      value: string
+      description: >
+        Identifier. The resource name of the AuthorizedViewSet. Format: projects/{project}/locations/{location}/authorizedViewSets/{authorized_view_set}
         
     - name: authorizedViewSetId
       value: string
@@ -355,8 +355,8 @@ Updates an AuthorizedViewSet.
 ```sql
 UPDATE google.contactcenterinsights.authorized_view_sets
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}'
+data__displayName = '{{ displayName }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

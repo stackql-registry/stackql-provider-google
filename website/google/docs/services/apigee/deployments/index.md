@@ -35,8 +35,8 @@ The following fields are returned by `SELECT` queries:
     defaultValue="organizations_apis_revisions_deployments_list"
     values={[
         { label: 'organizations_apis_revisions_deployments_list', value: 'organizations_apis_revisions_deployments_list' },
-        { label: 'organizations_environments_apis_deployments_list', value: 'organizations_environments_apis_deployments_list' },
         { label: 'organizations_environments_sharedflows_deployments_list', value: 'organizations_environments_sharedflows_deployments_list' },
+        { label: 'organizations_environments_apis_deployments_list', value: 'organizations_environments_apis_deployments_list' },
         { label: 'organizations_environments_deployments_get', value: 'organizations_environments_deployments_get' },
         { label: 'organizations_sharedflows_revisions_deployments_list', value: 'organizations_sharedflows_revisions_deployments_list' },
         { label: 'organizations_apis_deployments_list', value: 'organizations_apis_deployments_list' },
@@ -64,7 +64,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="organizations_environments_apis_deployments_list">
+<TabItem value="organizations_environments_sharedflows_deployments_list">
 
 <table>
 <thead>
@@ -83,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="organizations_environments_sharedflows_deployments_list">
+<TabItem value="organizations_environments_apis_deployments_list">
 
 <table>
 <thead>
@@ -291,18 +291,18 @@ The following methods are available for this resource:
     <td>Lists all deployments of an API proxy revision.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_environments_apis_deployments_list"><CopyableCode code="organizations_environments_apis_deployments_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a></td>
-    <td></td>
-    <td>Lists all deployments of an API proxy in an environment.</td>
-</tr>
-<tr>
     <td><a href="#organizations_environments_sharedflows_deployments_list"><CopyableCode code="organizations_environments_sharedflows_deployments_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-sharedflowsId"><code>sharedflowsId</code></a></td>
     <td></td>
     <td>Lists all deployments of a shared flow in an environment.</td>
+</tr>
+<tr>
+    <td><a href="#organizations_environments_apis_deployments_list"><CopyableCode code="organizations_environments_apis_deployments_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a></td>
+    <td></td>
+    <td>Lists all deployments of an API proxy in an environment.</td>
 </tr>
 <tr>
     <td><a href="#organizations_environments_deployments_get"><CopyableCode code="organizations_environments_deployments_get" /></a></td>
@@ -347,18 +347,18 @@ The following methods are available for this resource:
     <td>Lists all deployments of API proxies or shared flows.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_environments_apis_revisions_deployments_generate_deploy_change_report"><CopyableCode code="organizations_environments_apis_revisions_deployments_generate_deploy_change_report" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
-    <td><a href="#parameter-override"><code>override</code></a></td>
-    <td>Generates a report for a dry run analysis of a DeployApiProxy request without committing the deployment. In addition to the standard validations performed when adding deployments, additional analysis will be done to detect possible traffic routing changes that would result from this deployment being created. Any potential routing conflicts or unsafe changes will be reported in the response. This routing analysis is not performed for a non-dry-run DeployApiProxy request. For a request path `organizations/&#123;org&#125;/environments/&#123;env&#125;/apis/&#123;api&#125;/revisions/&#123;rev&#125;/deployments:generateDeployChangeReport`, two permissions are required: * `apigee.deployments.create` on the resource `organizations/&#123;org&#125;/environments/&#123;env&#125;` * `apigee.proxyrevisions.deploy` on the resource `organizations/&#123;org&#125;/apis/&#123;api&#125;/revisions/&#123;rev&#125;`</td>
-</tr>
-<tr>
     <td><a href="#organizations_environments_apis_revisions_deployments_generate_undeploy_change_report"><CopyableCode code="organizations_environments_apis_revisions_deployments_generate_undeploy_change_report" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
     <td></td>
     <td>Generates a report for a dry run analysis of an UndeployApiProxy request without committing the undeploy. In addition to the standard validations performed when removing deployments, additional analysis will be done to detect possible traffic routing changes that would result from this deployment being removed. Any potential routing conflicts or unsafe changes will be reported in the response. This routing analysis is not performed for a non-dry-run UndeployApiProxy request. For a request path `organizations/&#123;org&#125;/environments/&#123;env&#125;/apis/&#123;api&#125;/revisions/&#123;rev&#125;/deployments:generateUndeployChangeReport`, two permissions are required: * `apigee.deployments.delete` on the resource `organizations/&#123;org&#125;/environments/&#123;env&#125;` * `apigee.proxyrevisions.undeploy` on the resource `organizations/&#123;org&#125;/apis/&#123;api&#125;/revisions/&#123;rev&#125;`</td>
+</tr>
+<tr>
+    <td><a href="#organizations_environments_apis_revisions_deployments_generate_deploy_change_report"><CopyableCode code="organizations_environments_apis_revisions_deployments_generate_deploy_change_report" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
+    <td><a href="#parameter-override"><code>override</code></a></td>
+    <td>Generates a report for a dry run analysis of a DeployApiProxy request without committing the deployment. In addition to the standard validations performed when adding deployments, additional analysis will be done to detect possible traffic routing changes that would result from this deployment being created. Any potential routing conflicts or unsafe changes will be reported in the response. This routing analysis is not performed for a non-dry-run DeployApiProxy request. For a request path `organizations/&#123;org&#125;/environments/&#123;env&#125;/apis/&#123;api&#125;/revisions/&#123;rev&#125;/deployments:generateDeployChangeReport`, two permissions are required: * `apigee.deployments.create` on the resource `organizations/&#123;org&#125;/environments/&#123;env&#125;` * `apigee.proxyrevisions.deploy` on the resource `organizations/&#123;org&#125;/apis/&#123;api&#125;/revisions/&#123;rev&#125;`</td>
 </tr>
 </tbody>
 </table>
@@ -425,8 +425,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="organizations_apis_revisions_deployments_list"
     values={[
         { label: 'organizations_apis_revisions_deployments_list', value: 'organizations_apis_revisions_deployments_list' },
-        { label: 'organizations_environments_apis_deployments_list', value: 'organizations_environments_apis_deployments_list' },
         { label: 'organizations_environments_sharedflows_deployments_list', value: 'organizations_environments_sharedflows_deployments_list' },
+        { label: 'organizations_environments_apis_deployments_list', value: 'organizations_environments_apis_deployments_list' },
         { label: 'organizations_environments_deployments_get', value: 'organizations_environments_deployments_get' },
         { label: 'organizations_sharedflows_revisions_deployments_list', value: 'organizations_sharedflows_revisions_deployments_list' },
         { label: 'organizations_apis_deployments_list', value: 'organizations_apis_deployments_list' },
@@ -449,20 +449,6 @@ AND revisionsId = '{{ revisionsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="organizations_environments_apis_deployments_list">
-
-Lists all deployments of an API proxy in an environment.
-
-```sql
-SELECT
-deployments
-FROM google.apigee.deployments
-WHERE organizationsId = '{{ organizationsId }}' -- required
-AND environmentsId = '{{ environmentsId }}' -- required
-AND apisId = '{{ apisId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="organizations_environments_sharedflows_deployments_list">
 
 Lists all deployments of a shared flow in an environment.
@@ -474,6 +460,20 @@ FROM google.apigee.deployments
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND environmentsId = '{{ environmentsId }}' -- required
 AND sharedflowsId = '{{ sharedflowsId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="organizations_environments_apis_deployments_list">
+
+Lists all deployments of an API proxy in an environment.
+
+```sql
+SELECT
+deployments
+FROM google.apigee.deployments
+WHERE organizationsId = '{{ organizationsId }}' -- required
+AND environmentsId = '{{ environmentsId }}' -- required
+AND apisId = '{{ apisId }}' -- required
 ;
 ```
 </TabItem>
@@ -574,12 +574,25 @@ AND sharedFlows = '{{ sharedFlows }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="organizations_environments_apis_revisions_deployments_generate_deploy_change_report"
+    defaultValue="organizations_environments_apis_revisions_deployments_generate_undeploy_change_report"
     values={[
-        { label: 'organizations_environments_apis_revisions_deployments_generate_deploy_change_report', value: 'organizations_environments_apis_revisions_deployments_generate_deploy_change_report' },
-        { label: 'organizations_environments_apis_revisions_deployments_generate_undeploy_change_report', value: 'organizations_environments_apis_revisions_deployments_generate_undeploy_change_report' }
+        { label: 'organizations_environments_apis_revisions_deployments_generate_undeploy_change_report', value: 'organizations_environments_apis_revisions_deployments_generate_undeploy_change_report' },
+        { label: 'organizations_environments_apis_revisions_deployments_generate_deploy_change_report', value: 'organizations_environments_apis_revisions_deployments_generate_deploy_change_report' }
     ]}
 >
+<TabItem value="organizations_environments_apis_revisions_deployments_generate_undeploy_change_report">
+
+Generates a report for a dry run analysis of an UndeployApiProxy request without committing the undeploy. In addition to the standard validations performed when removing deployments, additional analysis will be done to detect possible traffic routing changes that would result from this deployment being removed. Any potential routing conflicts or unsafe changes will be reported in the response. This routing analysis is not performed for a non-dry-run UndeployApiProxy request. For a request path `organizations/&#123;org&#125;/environments/&#123;env&#125;/apis/&#123;api&#125;/revisions/&#123;rev&#125;/deployments:generateUndeployChangeReport`, two permissions are required: * `apigee.deployments.delete` on the resource `organizations/&#123;org&#125;/environments/&#123;env&#125;` * `apigee.proxyrevisions.undeploy` on the resource `organizations/&#123;org&#125;/apis/&#123;api&#125;/revisions/&#123;rev&#125;`
+
+```sql
+EXEC google.apigee.deployments.organizations_environments_apis_revisions_deployments_generate_undeploy_change_report 
+@organizationsId='{{ organizationsId }}' --required, 
+@environmentsId='{{ environmentsId }}' --required, 
+@apisId='{{ apisId }}' --required, 
+@revisionsId='{{ revisionsId }}' --required
+;
+```
+</TabItem>
 <TabItem value="organizations_environments_apis_revisions_deployments_generate_deploy_change_report">
 
 Generates a report for a dry run analysis of a DeployApiProxy request without committing the deployment. In addition to the standard validations performed when adding deployments, additional analysis will be done to detect possible traffic routing changes that would result from this deployment being created. Any potential routing conflicts or unsafe changes will be reported in the response. This routing analysis is not performed for a non-dry-run DeployApiProxy request. For a request path `organizations/&#123;org&#125;/environments/&#123;env&#125;/apis/&#123;api&#125;/revisions/&#123;rev&#125;/deployments:generateDeployChangeReport`, two permissions are required: * `apigee.deployments.create` on the resource `organizations/&#123;org&#125;/environments/&#123;env&#125;` * `apigee.proxyrevisions.deploy` on the resource `organizations/&#123;org&#125;/apis/&#123;api&#125;/revisions/&#123;rev&#125;`
@@ -591,19 +604,6 @@ EXEC google.apigee.deployments.organizations_environments_apis_revisions_deploym
 @apisId='{{ apisId }}' --required, 
 @revisionsId='{{ revisionsId }}' --required, 
 @override={{ override }}
-;
-```
-</TabItem>
-<TabItem value="organizations_environments_apis_revisions_deployments_generate_undeploy_change_report">
-
-Generates a report for a dry run analysis of an UndeployApiProxy request without committing the undeploy. In addition to the standard validations performed when removing deployments, additional analysis will be done to detect possible traffic routing changes that would result from this deployment being removed. Any potential routing conflicts or unsafe changes will be reported in the response. This routing analysis is not performed for a non-dry-run UndeployApiProxy request. For a request path `organizations/&#123;org&#125;/environments/&#123;env&#125;/apis/&#123;api&#125;/revisions/&#123;rev&#125;/deployments:generateUndeployChangeReport`, two permissions are required: * `apigee.deployments.delete` on the resource `organizations/&#123;org&#125;/environments/&#123;env&#125;` * `apigee.proxyrevisions.undeploy` on the resource `organizations/&#123;org&#125;/apis/&#123;api&#125;/revisions/&#123;rev&#125;`
-
-```sql
-EXEC google.apigee.deployments.organizations_environments_apis_revisions_deployments_generate_undeploy_change_report 
-@organizationsId='{{ organizationsId }}' --required, 
-@environmentsId='{{ environmentsId }}' --required, 
-@apisId='{{ apisId }}' --required, 
-@revisionsId='{{ revisionsId }}' --required
 ;
 ```
 </TabItem>

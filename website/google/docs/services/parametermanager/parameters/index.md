@@ -164,14 +164,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists Parameters in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-parameterId"><code>parameterId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-parameterId"><code>parameterId</code></a></td>
     <td>Creates a new Parameter in a given project and location.</td>
 </tr>
 <tr>
@@ -302,10 +302,10 @@ updateTime
 FROM google.parametermanager.parameters
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -327,24 +327,24 @@ Creates a new Parameter in a given project and location.
 
 ```sql
 INSERT INTO google.parametermanager.parameters (
-data__name,
 data__labels,
+data__name,
 data__format,
 data__kmsKey,
 projectsId,
 locationsId,
-parameterId,
-requestId
+requestId,
+parameterId
 )
 SELECT 
-'{{ name }}',
 '{{ labels }}',
+'{{ name }}',
 '{{ format }}',
 '{{ kmsKey }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ parameterId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ parameterId }}'
 RETURNING
 name,
 createTime,
@@ -368,15 +368,15 @@ updateTime
     - name: locationsId
       value: string
       description: Required parameter for the parameters resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. [Output only] The resource name of the Parameter in the format `projects/*/locations/*/parameters/*`.
-        
     - name: labels
       value: object
       description: >
         Optional. Labels as key value pairs
+        
+    - name: name
+      value: string
+      description: >
+        Identifier. [Output only] The resource name of the Parameter in the format `projects/*/locations/*/parameters/*`.
         
     - name: format
       value: string
@@ -389,9 +389,9 @@ updateTime
       description: >
         Optional. Customer managed encryption key (CMEK) to use for encrypting the Parameter Versions. If not set, the default Google-managed encryption key will be used. Cloud KMS CryptoKeys must reside in the same location as the Parameter. The expected format is `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
         
-    - name: parameterId
-      value: string
     - name: requestId
+      value: string
+    - name: parameterId
       value: string
 ```
 </TabItem>
@@ -413,8 +413,8 @@ Updates a single Parameter.
 ```sql
 UPDATE google.parametermanager.parameters
 SET 
-data__name = '{{ name }}',
 data__labels = '{{ labels }}',
+data__name = '{{ name }}',
 data__format = '{{ format }}',
 data__kmsKey = '{{ kmsKey }}'
 WHERE 

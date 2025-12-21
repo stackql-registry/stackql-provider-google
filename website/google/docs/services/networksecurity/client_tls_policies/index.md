@@ -174,7 +174,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_client_tls_policies_list"><CopyableCode code="projects_locations_client_tls_policies_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists ClientTlsPolicies in a given project and location.</td>
 </tr>
 <tr>
@@ -299,8 +299,8 @@ updateTime
 FROM google.networksecurity.client_tls_policies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -322,22 +322,22 @@ Creates a new ClientTlsPolicy in a given project and location.
 
 ```sql
 INSERT INTO google.networksecurity.client_tls_policies (
-data__name,
-data__description,
-data__labels,
 data__sni,
 data__clientCertificate,
+data__labels,
+data__description,
+data__name,
 data__serverValidationCa,
 projectsId,
 locationsId,
 clientTlsPolicyId
 )
 SELECT 
-'{{ name }}',
-'{{ description }}',
-'{{ labels }}',
 '{{ sni }}',
 '{{ clientCertificate }}',
+'{{ labels }}',
+'{{ description }}',
+'{{ name }}',
 '{{ serverValidationCa }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -363,21 +363,6 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the client_tls_policies resource.
-    - name: name
-      value: string
-      description: >
-        Required. Name of the ClientTlsPolicy resource. It matches the pattern `projects/{project}/locations/{location}/clientTlsPolicies/{client_tls_policy}`
-        
-    - name: description
-      value: string
-      description: >
-        Optional. Free-text description of the resource.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Set of label tags associated with the resource.
-        
     - name: sni
       value: string
       description: >
@@ -387,6 +372,21 @@ response
       value: object
       description: >
         Optional. Defines a mechanism to provision client identity (public and private keys) for peer to peer authentication. The presence of this dictates mTLS.
+        
+    - name: labels
+      value: object
+      description: >
+        Optional. Set of label tags associated with the resource.
+        
+    - name: description
+      value: string
+      description: >
+        Optional. Free-text description of the resource.
+        
+    - name: name
+      value: string
+      description: >
+        Required. Name of the ClientTlsPolicy resource. It matches the pattern `projects/{project}/locations/{location}/clientTlsPolicies/{client_tls_policy}`
         
     - name: serverValidationCa
       value: array
@@ -415,11 +415,11 @@ Updates the parameters of a single ClientTlsPolicy.
 ```sql
 UPDATE google.networksecurity.client_tls_policies
 SET 
-data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__labels = '{{ labels }}',
 data__sni = '{{ sni }}',
 data__clientCertificate = '{{ clientCertificate }}',
+data__labels = '{{ labels }}',
+data__description = '{{ description }}',
+data__name = '{{ name }}',
 data__serverValidationCa = '{{ serverValidationCa }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

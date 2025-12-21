@@ -52,22 +52,27 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Identifier. The unique name of the materialized view. Format: `projects/&#123;project&#125;/instances/&#123;instance&#125;/materializedViews/&#123;materialized_view&#125;`</td>
+    <td>Identifier. The unique name of the materialized view. Format: `projects/&#123;project&#125;/instances/&#123;instance&#125;/materializedViews/&#123;materialized_view&#125;` Views: `SCHEMA_VIEW`, `REPLICATION_VIEW`, `FULL`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="clusterStates" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Map from cluster ID to per-cluster materialized view state. If it could not be determined whether or not the materialized view has data in a particular cluster (for example, if its zone is unavailable), then there will be an entry for the cluster with `STATE_NOT_KNOWN` state. Views: `REPLICATION_VIEW`, `FULL`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="deletionProtection" /></td>
     <td><code>boolean</code></td>
-    <td>Set to true to make the MaterializedView protected against deletion.</td>
+    <td>Set to true to make the MaterializedView protected against deletion. Views: `SCHEMA_VIEW`, `REPLICATION_VIEW`, `FULL`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="etag" /></td>
     <td><code>string</code></td>
-    <td>Optional. The etag for this materialized view. This may be sent on update requests to ensure that the client has an up-to-date value before proceeding. The server returns an ABORTED error on a mismatched etag.</td>
+    <td>Optional. The etag for this materialized view. This may be sent on update requests to ensure that the client has an up-to-date value before proceeding. The server returns an ABORTED error on a mismatched etag. Views: `SCHEMA_VIEW`, `REPLICATION_VIEW`, `FULL`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="query" /></td>
     <td><code>string</code></td>
-    <td>Required. Immutable. The materialized view's select query.</td>
+    <td>Required. Immutable. The materialized view's select query. Views: `SCHEMA_VIEW`, `FULL`.</td>
 </tr>
 </tbody>
 </table>
@@ -86,22 +91,27 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Identifier. The unique name of the materialized view. Format: `projects/&#123;project&#125;/instances/&#123;instance&#125;/materializedViews/&#123;materialized_view&#125;`</td>
+    <td>Identifier. The unique name of the materialized view. Format: `projects/&#123;project&#125;/instances/&#123;instance&#125;/materializedViews/&#123;materialized_view&#125;` Views: `SCHEMA_VIEW`, `REPLICATION_VIEW`, `FULL`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="clusterStates" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Map from cluster ID to per-cluster materialized view state. If it could not be determined whether or not the materialized view has data in a particular cluster (for example, if its zone is unavailable), then there will be an entry for the cluster with `STATE_NOT_KNOWN` state. Views: `REPLICATION_VIEW`, `FULL`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="deletionProtection" /></td>
     <td><code>boolean</code></td>
-    <td>Set to true to make the MaterializedView protected against deletion.</td>
+    <td>Set to true to make the MaterializedView protected against deletion. Views: `SCHEMA_VIEW`, `REPLICATION_VIEW`, `FULL`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="etag" /></td>
     <td><code>string</code></td>
-    <td>Optional. The etag for this materialized view. This may be sent on update requests to ensure that the client has an up-to-date value before proceeding. The server returns an ABORTED error on a mismatched etag.</td>
+    <td>Optional. The etag for this materialized view. This may be sent on update requests to ensure that the client has an up-to-date value before proceeding. The server returns an ABORTED error on a mismatched etag. Views: `SCHEMA_VIEW`, `REPLICATION_VIEW`, `FULL`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="query" /></td>
     <td><code>string</code></td>
-    <td>Required. Immutable. The materialized view's select query.</td>
+    <td>Required. Immutable. The materialized view's select query. Views: `SCHEMA_VIEW`, `FULL`.</td>
 </tr>
 </tbody>
 </table>
@@ -127,14 +137,14 @@ The following methods are available for this resource:
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-materializedViewsId"><code>materializedViewsId</code></a></td>
-    <td></td>
+    <td><a href="#parameter-view"><code>view</code></a></td>
     <td>Gets information about a materialized view.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Lists information about materialized views in an instance.</td>
 </tr>
 <tr>
@@ -214,6 +224,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string (google-fieldmask)</code></td>
     <td></td>
 </tr>
+<tr id="parameter-view">
+    <td><CopyableCode code="view" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 
@@ -233,6 +248,7 @@ Gets information about a materialized view.
 ```sql
 SELECT
 name,
+clusterStates,
 deletionProtection,
 etag,
 query
@@ -240,6 +256,7 @@ FROM google.bigtableadmin.materialized_views
 WHERE projectsId = '{{ projectsId }}' -- required
 AND instancesId = '{{ instancesId }}' -- required
 AND materializedViewsId = '{{ materializedViewsId }}' -- required
+AND view = '{{ view }}'
 ;
 ```
 </TabItem>
@@ -250,14 +267,16 @@ Lists information about materialized views in an instance.
 ```sql
 SELECT
 name,
+clusterStates,
 deletionProtection,
 etag,
 query
 FROM google.bigtableadmin.materialized_views
 WHERE projectsId = '{{ projectsId }}' -- required
 AND instancesId = '{{ instancesId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND view = '{{ view }}'
 ;
 ```
 </TabItem>
@@ -279,18 +298,18 @@ Creates a materialized view within an instance.
 
 ```sql
 INSERT INTO google.bigtableadmin.materialized_views (
-data__name,
-data__query,
 data__etag,
+data__query,
+data__name,
 data__deletionProtection,
 projectsId,
 instancesId,
 materializedViewId
 )
 SELECT 
-'{{ name }}',
-'{{ query }}',
 '{{ etag }}',
+'{{ query }}',
+'{{ name }}',
 {{ deletionProtection }},
 '{{ projectsId }}',
 '{{ instancesId }}',
@@ -316,25 +335,25 @@ response
     - name: instancesId
       value: string
       description: Required parameter for the materialized_views resource.
-    - name: name
+    - name: etag
       value: string
       description: >
-        Identifier. The unique name of the materialized view. Format: `projects/{project}/instances/{instance}/materializedViews/{materialized_view}`
+        Optional. The etag for this materialized view. This may be sent on update requests to ensure that the client has an up-to-date value before proceeding. The server returns an ABORTED error on a mismatched etag. Views: `SCHEMA_VIEW`, `REPLICATION_VIEW`, `FULL`.
         
     - name: query
       value: string
       description: >
-        Required. Immutable. The materialized view's select query.
+        Required. Immutable. The materialized view's select query. Views: `SCHEMA_VIEW`, `FULL`.
         
-    - name: etag
+    - name: name
       value: string
       description: >
-        Optional. The etag for this materialized view. This may be sent on update requests to ensure that the client has an up-to-date value before proceeding. The server returns an ABORTED error on a mismatched etag.
+        Identifier. The unique name of the materialized view. Format: `projects/{project}/instances/{instance}/materializedViews/{materialized_view}` Views: `SCHEMA_VIEW`, `REPLICATION_VIEW`, `FULL`.
         
     - name: deletionProtection
       value: boolean
       description: >
-        Set to true to make the MaterializedView protected against deletion.
+        Set to true to make the MaterializedView protected against deletion. Views: `SCHEMA_VIEW`, `REPLICATION_VIEW`, `FULL`.
         
     - name: materializedViewId
       value: string
@@ -358,9 +377,9 @@ Updates a materialized view within an instance.
 ```sql
 UPDATE google.bigtableadmin.materialized_views
 SET 
-data__name = '{{ name }}',
-data__query = '{{ query }}',
 data__etag = '{{ etag }}',
+data__query = '{{ query }}',
+data__name = '{{ name }}',
 data__deletionProtection = {{ deletionProtection }}
 WHERE 
 projectsId = '{{ projectsId }}' --required

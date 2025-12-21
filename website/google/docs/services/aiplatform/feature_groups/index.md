@@ -184,7 +184,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists FeatureGroups in a given project and location.</td>
 </tr>
 <tr>
@@ -326,9 +326,9 @@ updateTime
 FROM google.aiplatform.feature_groups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -351,23 +351,23 @@ Creates a new FeatureGroup in a given project and location.
 
 ```sql
 INSERT INTO google.aiplatform.feature_groups (
-data__bigQuery,
-data__name,
 data__etag,
 data__labels,
-data__description,
 data__serviceAgentType,
+data__description,
+data__bigQuery,
+data__name,
 projectsId,
 locationsId,
 featureGroupId
 )
 SELECT 
-'{{ bigQuery }}',
-'{{ name }}',
 '{{ etag }}',
 '{{ labels }}',
-'{{ description }}',
 '{{ serviceAgentType }}',
+'{{ description }}',
+'{{ bigQuery }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ featureGroupId }}'
@@ -392,16 +392,6 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the feature_groups resource.
-    - name: bigQuery
-      value: object
-      description: >
-        Indicates that features for this group come from BigQuery Table/View. By default treats the source as a sparse time series source. The BigQuery source table or view must have at least one entity ID column and a column named `feature_timestamp`.
-        
-    - name: name
-      value: string
-      description: >
-        Identifier. Name of the FeatureGroup. Format: `projects/{project}/locations/{location}/featureGroups/{featureGroup}`
-        
     - name: etag
       value: string
       description: >
@@ -412,17 +402,27 @@ response
       description: >
         Optional. The labels with user-defined metadata to organize your FeatureGroup. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information on and examples of labels. No more than 64 user labels can be associated with one FeatureGroup(System labels are excluded)." System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
         
-    - name: description
-      value: string
-      description: >
-        Optional. Description of the FeatureGroup.
-        
     - name: serviceAgentType
       value: string
       description: >
         Optional. Service agent type used during jobs under a FeatureGroup. By default, the Vertex AI Service Agent is used. When using an IAM Policy to isolate this FeatureGroup within a project, a separate service account should be provisioned by setting this field to `SERVICE_AGENT_TYPE_FEATURE_GROUP`. This will generate a separate service account to access the BigQuery source table.
         
       valid_values: ['SERVICE_AGENT_TYPE_UNSPECIFIED', 'SERVICE_AGENT_TYPE_PROJECT', 'SERVICE_AGENT_TYPE_FEATURE_GROUP']
+    - name: description
+      value: string
+      description: >
+        Optional. Description of the FeatureGroup.
+        
+    - name: bigQuery
+      value: object
+      description: >
+        Indicates that features for this group come from BigQuery Table/View. By default treats the source as a sparse time series source. The BigQuery source table or view must have at least one entity ID column and a column named `feature_timestamp`.
+        
+    - name: name
+      value: string
+      description: >
+        Identifier. Name of the FeatureGroup. Format: `projects/{project}/locations/{location}/featureGroups/{featureGroup}`
+        
     - name: featureGroupId
       value: string
 ```
@@ -445,12 +445,12 @@ Updates the parameters of a single FeatureGroup.
 ```sql
 UPDATE google.aiplatform.feature_groups
 SET 
-data__bigQuery = '{{ bigQuery }}',
-data__name = '{{ name }}',
 data__etag = '{{ etag }}',
 data__labels = '{{ labels }}',
+data__serviceAgentType = '{{ serviceAgentType }}',
 data__description = '{{ description }}',
-data__serviceAgentType = '{{ serviceAgentType }}'
+data__bigQuery = '{{ bigQuery }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

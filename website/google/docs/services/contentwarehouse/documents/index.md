@@ -202,18 +202,18 @@ The following methods are available for this resource:
     <td>Deletes a document. Returns NOT_FOUND if the document does not exist.</td>
 </tr>
 <tr>
+    <td><a href="#linked_sources"><CopyableCode code="linked_sources" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-documentsId"><code>documentsId</code></a></td>
+    <td></td>
+    <td>Return all source document-links from the document.</td>
+</tr>
+<tr>
     <td><a href="#set_acl"><CopyableCode code="set_acl" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-documentsId"><code>documentsId</code></a></td>
     <td></td>
     <td>Sets the access control policy for a resource. Replaces any existing policy.</td>
-</tr>
-<tr>
-    <td><a href="#lock"><CopyableCode code="lock" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-documentsId"><code>documentsId</code></a></td>
-    <td></td>
-    <td>Lock the document so the document cannot be updated by other users.</td>
 </tr>
 <tr>
     <td><a href="#linked_targets"><CopyableCode code="linked_targets" /></a></td>
@@ -223,18 +223,18 @@ The following methods are available for this resource:
     <td>Return all target document-links from the document.</td>
 </tr>
 <tr>
+    <td><a href="#lock"><CopyableCode code="lock" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-documentsId"><code>documentsId</code></a></td>
+    <td></td>
+    <td>Lock the document so the document cannot be updated by other users.</td>
+</tr>
+<tr>
     <td><a href="#search"><CopyableCode code="search" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Searches for documents using provided SearchDocumentsRequest. This call only returns documents that the caller has permission to search against.</td>
-</tr>
-<tr>
-    <td><a href="#linked_sources"><CopyableCode code="linked_sources" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-documentsId"><code>documentsId</code></a></td>
-    <td></td>
-    <td>Return all source document-links from the document.</td>
 </tr>
 </tbody>
 </table>
@@ -330,20 +330,20 @@ Creates a document.
 
 ```sql
 INSERT INTO google.contentwarehouse.documents (
-data__cloudAiDocumentOption,
-data__createMask,
 data__policy,
 data__requestMetadata,
 data__document,
+data__cloudAiDocumentOption,
+data__createMask,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ cloudAiDocumentOption }}',
-'{{ createMask }}',
 '{{ policy }}',
 '{{ requestMetadata }}',
 '{{ document }}',
+'{{ cloudAiDocumentOption }}',
+'{{ createMask }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -366,16 +366,6 @@ ruleEngineOutput
     - name: locationsId
       value: string
       description: Required parameter for the documents resource.
-    - name: cloudAiDocumentOption
-      value: object
-      description: >
-        Request Option for processing Cloud AI Document in Document Warehouse. This field offers limited support for mapping entities from Cloud AI Document to Warehouse Document. Please consult with product team before using this field and other available options.
-        
-    - name: createMask
-      value: string
-      description: >
-        Field mask for creating Document fields. If mask path is empty, it means all fields are masked. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask.
-        
     - name: policy
       value: object
       description: >
@@ -390,6 +380,16 @@ ruleEngineOutput
       value: object
       description: >
         Required. The document to create.
+        
+    - name: cloudAiDocumentOption
+      value: object
+      description: >
+        Request Option for processing Cloud AI Document in Document Warehouse. This field offers limited support for mapping entities from Cloud AI Document to Warehouse Document. Please consult with product team before using this field and other available options.
+        
+    - name: createMask
+      value: string
+      description: >
+        Field mask for creating Document fields. If mask path is empty, it means all fields are masked. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask.
         
 ```
 </TabItem>
@@ -411,10 +411,10 @@ Updates a document. Returns INVALID_ARGUMENT if the name of the document is non-
 ```sql
 UPDATE google.contentwarehouse.documents
 SET 
-data__updateOptions = '{{ updateOptions }}',
+data__cloudAiDocumentOption = '{{ cloudAiDocumentOption }}',
 data__document = '{{ document }}',
 data__requestMetadata = '{{ requestMetadata }}',
-data__cloudAiDocumentOption = '{{ cloudAiDocumentOption }}'
+data__updateOptions = '{{ updateOptions }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -454,15 +454,33 @@ AND documentsId = '{{ documentsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="set_acl"
+    defaultValue="linked_sources"
     values={[
+        { label: 'linked_sources', value: 'linked_sources' },
         { label: 'set_acl', value: 'set_acl' },
-        { label: 'lock', value: 'lock' },
         { label: 'linked_targets', value: 'linked_targets' },
-        { label: 'search', value: 'search' },
-        { label: 'linked_sources', value: 'linked_sources' }
+        { label: 'lock', value: 'lock' },
+        { label: 'search', value: 'search' }
     ]}
 >
+<TabItem value="linked_sources">
+
+Return all source document-links from the document.
+
+```sql
+EXEC google.contentwarehouse.documents.linked_sources 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@documentsId='{{ documentsId }}' --required 
+@@json=
+'{
+"pageSize": {{ pageSize }}, 
+"pageToken": "{{ pageToken }}", 
+"requestMetadata": "{{ requestMetadata }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="set_acl">
 
 Sets the access control policy for a resource. Replaces any existing policy.
@@ -475,25 +493,8 @@ EXEC google.contentwarehouse.documents.set_acl
 @@json=
 '{
 "requestMetadata": "{{ requestMetadata }}", 
-"policy": "{{ policy }}", 
-"projectOwner": {{ projectOwner }}
-}'
-;
-```
-</TabItem>
-<TabItem value="lock">
-
-Lock the document so the document cannot be updated by other users.
-
-```sql
-EXEC google.contentwarehouse.documents.lock 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@documentsId='{{ documentsId }}' --required 
-@@json=
-'{
-"collectionId": "{{ collectionId }}", 
-"lockingUser": "{{ lockingUser }}"
+"projectOwner": {{ projectOwner }}, 
+"policy": "{{ policy }}"
 }'
 ;
 ```
@@ -514,6 +515,23 @@ EXEC google.contentwarehouse.documents.linked_targets
 ;
 ```
 </TabItem>
+<TabItem value="lock">
+
+Lock the document so the document cannot be updated by other users.
+
+```sql
+EXEC google.contentwarehouse.documents.lock 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@documentsId='{{ documentsId }}' --required 
+@@json=
+'{
+"lockingUser": "{{ lockingUser }}", 
+"collectionId": "{{ collectionId }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="search">
 
 Searches for documents using provided SearchDocumentsRequest. This call only returns documents that the caller has permission to search against.
@@ -524,34 +542,16 @@ EXEC google.contentwarehouse.documents.search
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"offset": {{ offset }}, 
+"pageSize": {{ pageSize }}, 
 "requestMetadata": "{{ requestMetadata }}", 
+"pageToken": "{{ pageToken }}", 
 "documentQuery": "{{ documentQuery }}", 
 "totalResultSize": "{{ totalResultSize }}", 
-"pageToken": "{{ pageToken }}", 
-"requireTotalSize": {{ requireTotalSize }}, 
-"orderBy": "{{ orderBy }}", 
-"pageSize": {{ pageSize }}, 
+"offset": {{ offset }}, 
 "histogramQueries": "{{ histogramQueries }}", 
-"qaSizeLimit": {{ qaSizeLimit }}
-}'
-;
-```
-</TabItem>
-<TabItem value="linked_sources">
-
-Return all source document-links from the document.
-
-```sql
-EXEC google.contentwarehouse.documents.linked_sources 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@documentsId='{{ documentsId }}' --required 
-@@json=
-'{
-"pageSize": {{ pageSize }}, 
-"requestMetadata": "{{ requestMetadata }}", 
-"pageToken": "{{ pageToken }}"
+"qaSizeLimit": {{ qaSizeLimit }}, 
+"requireTotalSize": {{ requireTotalSize }}, 
+"orderBy": "{{ orderBy }}"
 }'
 ;
 ```

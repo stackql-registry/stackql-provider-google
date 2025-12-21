@@ -194,21 +194,21 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_intercept_endpoint_groups_list"><CopyableCode code="projects_locations_intercept_endpoint_groups_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists endpoint groups in a given project and location. See https://google.aip.dev/132.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_intercept_endpoint_groups_create"><CopyableCode code="projects_locations_intercept_endpoint_groups_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-interceptEndpointGroupId"><code>interceptEndpointGroupId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-interceptEndpointGroupId"><code>interceptEndpointGroupId</code></a></td>
     <td>Creates an endpoint group in a given project and location. See https://google.aip.dev/133.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_intercept_endpoint_groups_patch"><CopyableCode code="projects_locations_intercept_endpoint_groups_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-interceptEndpointGroupsId"><code>interceptEndpointGroupsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates an endpoint group. See https://google.aip.dev/134.</td>
 </tr>
 <tr>
@@ -340,8 +340,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -363,24 +363,24 @@ Creates an endpoint group in a given project and location. See https://google.ai
 
 ```sql
 INSERT INTO google.networksecurity.intercept_endpoint_groups (
-data__name,
 data__labels,
-data__interceptDeploymentGroup,
+data__name,
 data__description,
+data__interceptDeploymentGroup,
 projectsId,
 locationsId,
-interceptEndpointGroupId,
-requestId
+requestId,
+interceptEndpointGroupId
 )
 SELECT 
-'{{ name }}',
 '{{ labels }}',
-'{{ interceptDeploymentGroup }}',
+'{{ name }}',
 '{{ description }}',
+'{{ interceptDeploymentGroup }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ interceptEndpointGroupId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ interceptEndpointGroupId }}'
 RETURNING
 name,
 done,
@@ -402,29 +402,29 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the intercept_endpoint_groups resource.
-    - name: name
-      value: string
-      description: >
-        Immutable. Identifier. The resource name of this endpoint group, for example: `projects/123456789/locations/global/interceptEndpointGroups/my-eg`. See https://google.aip.dev/122 for more details.
-        
     - name: labels
       value: object
       description: >
         Optional. Labels are key/value pairs that help to organize and filter resources.
         
-    - name: interceptDeploymentGroup
+    - name: name
       value: string
       description: >
-        Required. Immutable. The deployment group that this endpoint group is connected to, for example: `projects/123456789/locations/global/interceptDeploymentGroups/my-dg`. See https://google.aip.dev/124.
+        Immutable. Identifier. The resource name of this endpoint group, for example: `projects/123456789/locations/global/interceptEndpointGroups/my-eg`. See https://google.aip.dev/122 for more details.
         
     - name: description
       value: string
       description: >
         Optional. User-provided description of the endpoint group. Used as additional context for the endpoint group.
         
-    - name: interceptEndpointGroupId
+    - name: interceptDeploymentGroup
       value: string
+      description: >
+        Required. Immutable. The deployment group that this endpoint group is connected to, for example: `projects/123456789/locations/global/interceptDeploymentGroups/my-dg`. See https://google.aip.dev/124.
+        
     - name: requestId
+      value: string
+    - name: interceptEndpointGroupId
       value: string
 ```
 </TabItem>
@@ -446,16 +446,16 @@ Updates an endpoint group. See https://google.aip.dev/134.
 ```sql
 UPDATE google.networksecurity.intercept_endpoint_groups
 SET 
-data__name = '{{ name }}',
 data__labels = '{{ labels }}',
-data__interceptDeploymentGroup = '{{ interceptDeploymentGroup }}',
-data__description = '{{ description }}'
+data__name = '{{ name }}',
+data__description = '{{ description }}',
+data__interceptDeploymentGroup = '{{ interceptDeploymentGroup }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND interceptEndpointGroupsId = '{{ interceptEndpointGroupsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

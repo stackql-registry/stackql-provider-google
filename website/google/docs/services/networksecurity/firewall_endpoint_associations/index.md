@@ -194,7 +194,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_firewall_endpoint_associations_list"><CopyableCode code="projects_locations_firewall_endpoint_associations_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists Associations in a given project and location.</td>
 </tr>
 <tr>
@@ -208,7 +208,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_firewall_endpoint_associations_patch"><CopyableCode code="projects_locations_firewall_endpoint_associations_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-firewallEndpointAssociationsId"><code>firewallEndpointAssociationsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Update a single FirewallEndpointAssociation.</td>
 </tr>
 <tr>
@@ -338,10 +338,10 @@ updateTime
 FROM google.networksecurity.firewall_endpoint_associations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -363,24 +363,24 @@ Creates a new FirewallEndpointAssociation in a given project and location.
 
 ```sql
 INSERT INTO google.networksecurity.firewall_endpoint_associations (
-data__name,
-data__labels,
-data__network,
 data__firewallEndpoint,
-data__tlsInspectionPolicy,
 data__disabled,
+data__name,
+data__tlsInspectionPolicy,
+data__network,
+data__labels,
 projectsId,
 locationsId,
 firewallEndpointAssociationId,
 requestId
 )
 SELECT 
-'{{ name }}',
-'{{ labels }}',
-'{{ network }}',
 '{{ firewallEndpoint }}',
-'{{ tlsInspectionPolicy }}',
 {{ disabled }},
+'{{ name }}',
+'{{ tlsInspectionPolicy }}',
+'{{ network }}',
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ firewallEndpointAssociationId }}',
@@ -406,35 +406,35 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the firewall_endpoint_associations resource.
-    - name: name
-      value: string
-      description: >
-        Immutable. Identifier. name of resource
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Labels as key value pairs
-        
-    - name: network
-      value: string
-      description: >
-        Required. The URL of the network that is being associated.
-        
     - name: firewallEndpoint
       value: string
       description: >
         Required. The URL of the FirewallEndpoint that is being associated.
+        
+    - name: disabled
+      value: boolean
+      description: >
+        Optional. Whether the association is disabled. True indicates that traffic won't be intercepted
+        
+    - name: name
+      value: string
+      description: >
+        Immutable. Identifier. name of resource
         
     - name: tlsInspectionPolicy
       value: string
       description: >
         Optional. The URL of the TlsInspectionPolicy that is being associated.
         
-    - name: disabled
-      value: boolean
+    - name: network
+      value: string
       description: >
-        Optional. Whether the association is disabled. True indicates that traffic won't be intercepted
+        Required. The URL of the network that is being associated.
+        
+    - name: labels
+      value: object
+      description: >
+        Optional. Labels as key value pairs
         
     - name: firewallEndpointAssociationId
       value: string
@@ -460,18 +460,18 @@ Update a single FirewallEndpointAssociation.
 ```sql
 UPDATE google.networksecurity.firewall_endpoint_associations
 SET 
-data__name = '{{ name }}',
-data__labels = '{{ labels }}',
-data__network = '{{ network }}',
 data__firewallEndpoint = '{{ firewallEndpoint }}',
+data__disabled = {{ disabled }},
+data__name = '{{ name }}',
 data__tlsInspectionPolicy = '{{ tlsInspectionPolicy }}',
-data__disabled = {{ disabled }}
+data__network = '{{ network }}',
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND firewallEndpointAssociationsId = '{{ firewallEndpointAssociationsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

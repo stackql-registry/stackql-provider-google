@@ -180,8 +180,8 @@ IAM META APIs Callers must have apigee.spaces.setIamPolicy.
 ```sql
 REPLACE google.apigee.spaces_iam_policies
 SET 
-data__policy = '{{ policy }}',
-data__updateMask = '{{ updateMask }}'
+data__updateMask = '{{ updateMask }}',
+data__policy = '{{ policy }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND spacesId = '{{ spacesId }}' --required

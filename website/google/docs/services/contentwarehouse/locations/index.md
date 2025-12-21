@@ -111,11 +111,11 @@ EXEC google.contentwarehouse.locations.initialize
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"documentCreatorDefaultRole": "{{ documentCreatorDefaultRole }}", 
-"databaseType": "{{ databaseType }}", 
-"kmsKey": "{{ kmsKey }}", 
+"enableCalUserEmailLogging": {{ enableCalUserEmailLogging }}, 
 "accessControlMode": "{{ accessControlMode }}", 
-"enableCalUserEmailLogging": {{ enableCalUserEmailLogging }}
+"kmsKey": "{{ kmsKey }}", 
+"databaseType": "{{ databaseType }}", 
+"documentCreatorDefaultRole": "{{ documentCreatorDefaultRole }}"
 }'
 ;
 ```
@@ -130,11 +130,11 @@ EXEC google.contentwarehouse.locations.run_pipeline
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"gcsIngestWithDocAiProcessorsPipeline": "{{ gcsIngestWithDocAiProcessorsPipeline }}", 
 "gcsIngestPipeline": "{{ gcsIngestPipeline }}", 
-"processWithDocAiPipeline": "{{ processWithDocAiPipeline }}", 
 "exportCdwPipeline": "{{ exportCdwPipeline }}", 
-"requestMetadata": "{{ requestMetadata }}"
+"processWithDocAiPipeline": "{{ processWithDocAiPipeline }}", 
+"requestMetadata": "{{ requestMetadata }}", 
+"gcsIngestWithDocAiProcessorsPipeline": "{{ gcsIngestWithDocAiProcessorsPipeline }}"
 }'
 ;
 ```

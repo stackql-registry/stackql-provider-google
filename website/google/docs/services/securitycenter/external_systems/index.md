@@ -57,16 +57,16 @@ The following methods are available for this resource:
     <td>Updates external system. This is for a given finding.</td>
 </tr>
 <tr>
-    <td><a href="#projects_sources_findings_external_systems_patch"><CopyableCode code="projects_sources_findings_external_systems_patch" /></a></td>
+    <td><a href="#organizations_sources_findings_external_systems_patch"><CopyableCode code="organizations_sources_findings_external_systems_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-findingsId"><code>findingsId</code></a>, <a href="#parameter-externalSystemsId"><code>externalSystemsId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-findingsId"><code>findingsId</code></a>, <a href="#parameter-externalSystemsId"><code>externalSystemsId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates external system. This is for a given finding.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_sources_findings_external_systems_patch"><CopyableCode code="organizations_sources_findings_external_systems_patch" /></a></td>
+    <td><a href="#projects_sources_findings_external_systems_patch"><CopyableCode code="projects_sources_findings_external_systems_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-findingsId"><code>findingsId</code></a>, <a href="#parameter-externalSystemsId"><code>externalSystemsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-findingsId"><code>findingsId</code></a>, <a href="#parameter-externalSystemsId"><code>externalSystemsId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates external system. This is for a given finding.</td>
 </tr>
@@ -130,8 +130,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="folders_sources_findings_external_systems_patch"
     values={[
         { label: 'folders_sources_findings_external_systems_patch', value: 'folders_sources_findings_external_systems_patch' },
-        { label: 'projects_sources_findings_external_systems_patch', value: 'projects_sources_findings_external_systems_patch' },
-        { label: 'organizations_sources_findings_external_systems_patch', value: 'organizations_sources_findings_external_systems_patch' }
+        { label: 'organizations_sources_findings_external_systems_patch', value: 'organizations_sources_findings_external_systems_patch' },
+        { label: 'projects_sources_findings_external_systems_patch', value: 'projects_sources_findings_external_systems_patch' }
     ]}
 >
 <TabItem value="folders_sources_findings_external_systems_patch">
@@ -141,57 +141,19 @@ Updates external system. This is for a given finding.
 ```sql
 UPDATE google.securitycenter.external_systems
 SET 
-data__name = '{{ name }}',
-data__assignees = '{{ assignees }}',
-data__externalUid = '{{ externalUid }}',
-data__status = '{{ status }}',
 data__externalSystemUpdateTime = '{{ externalSystemUpdateTime }}',
 data__caseUri = '{{ caseUri }}',
-data__casePriority = '{{ casePriority }}',
 data__caseSla = '{{ caseSla }}',
-data__caseCreateTime = '{{ caseCreateTime }}',
+data__ticketInfo = '{{ ticketInfo }}',
+data__externalUid = '{{ externalUid }}',
+data__status = '{{ status }}',
+data__name = '{{ name }}',
+data__casePriority = '{{ casePriority }}',
 data__caseCloseTime = '{{ caseCloseTime }}',
-data__ticketInfo = '{{ ticketInfo }}'
+data__assignees = '{{ assignees }}',
+data__caseCreateTime = '{{ caseCreateTime }}'
 WHERE 
 foldersId = '{{ foldersId }}' --required
-AND sourcesId = '{{ sourcesId }}' --required
-AND findingsId = '{{ findingsId }}' --required
-AND externalSystemsId = '{{ externalSystemsId }}' --required
-AND updateMask = '{{ updateMask}}'
-RETURNING
-name,
-assignees,
-caseCloseTime,
-caseCreateTime,
-casePriority,
-caseSla,
-caseUri,
-externalSystemUpdateTime,
-externalUid,
-status,
-ticketInfo;
-```
-</TabItem>
-<TabItem value="projects_sources_findings_external_systems_patch">
-
-Updates external system. This is for a given finding.
-
-```sql
-UPDATE google.securitycenter.external_systems
-SET 
-data__name = '{{ name }}',
-data__assignees = '{{ assignees }}',
-data__externalUid = '{{ externalUid }}',
-data__status = '{{ status }}',
-data__externalSystemUpdateTime = '{{ externalSystemUpdateTime }}',
-data__caseUri = '{{ caseUri }}',
-data__casePriority = '{{ casePriority }}',
-data__caseSla = '{{ caseSla }}',
-data__caseCreateTime = '{{ caseCreateTime }}',
-data__caseCloseTime = '{{ caseCloseTime }}',
-data__ticketInfo = '{{ ticketInfo }}'
-WHERE 
-projectsId = '{{ projectsId }}' --required
 AND sourcesId = '{{ sourcesId }}' --required
 AND findingsId = '{{ findingsId }}' --required
 AND externalSystemsId = '{{ externalSystemsId }}' --required
@@ -217,19 +179,57 @@ Updates external system. This is for a given finding.
 ```sql
 UPDATE google.securitycenter.external_systems
 SET 
-data__name = '{{ name }}',
-data__assignees = '{{ assignees }}',
-data__externalUid = '{{ externalUid }}',
-data__status = '{{ status }}',
 data__externalSystemUpdateTime = '{{ externalSystemUpdateTime }}',
 data__caseUri = '{{ caseUri }}',
-data__casePriority = '{{ casePriority }}',
 data__caseSla = '{{ caseSla }}',
-data__caseCreateTime = '{{ caseCreateTime }}',
+data__ticketInfo = '{{ ticketInfo }}',
+data__externalUid = '{{ externalUid }}',
+data__status = '{{ status }}',
+data__name = '{{ name }}',
+data__casePriority = '{{ casePriority }}',
 data__caseCloseTime = '{{ caseCloseTime }}',
-data__ticketInfo = '{{ ticketInfo }}'
+data__assignees = '{{ assignees }}',
+data__caseCreateTime = '{{ caseCreateTime }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
+AND sourcesId = '{{ sourcesId }}' --required
+AND findingsId = '{{ findingsId }}' --required
+AND externalSystemsId = '{{ externalSystemsId }}' --required
+AND updateMask = '{{ updateMask}}'
+RETURNING
+name,
+assignees,
+caseCloseTime,
+caseCreateTime,
+casePriority,
+caseSla,
+caseUri,
+externalSystemUpdateTime,
+externalUid,
+status,
+ticketInfo;
+```
+</TabItem>
+<TabItem value="projects_sources_findings_external_systems_patch">
+
+Updates external system. This is for a given finding.
+
+```sql
+UPDATE google.securitycenter.external_systems
+SET 
+data__externalSystemUpdateTime = '{{ externalSystemUpdateTime }}',
+data__caseUri = '{{ caseUri }}',
+data__caseSla = '{{ caseSla }}',
+data__ticketInfo = '{{ ticketInfo }}',
+data__externalUid = '{{ externalUid }}',
+data__status = '{{ status }}',
+data__name = '{{ name }}',
+data__casePriority = '{{ casePriority }}',
+data__caseCloseTime = '{{ caseCloseTime }}',
+data__assignees = '{{ assignees }}',
+data__caseCreateTime = '{{ caseCreateTime }}'
+WHERE 
+projectsId = '{{ projectsId }}' --required
 AND sourcesId = '{{ sourcesId }}' --required
 AND findingsId = '{{ findingsId }}' --required
 AND externalSystemsId = '{{ externalSystemsId }}' --required

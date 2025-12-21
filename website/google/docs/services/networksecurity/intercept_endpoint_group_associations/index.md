@@ -201,14 +201,14 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_intercept_endpoint_group_associations_create"><CopyableCode code="projects_locations_intercept_endpoint_group_associations_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-interceptEndpointGroupAssociationId"><code>interceptEndpointGroupAssociationId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-interceptEndpointGroupAssociationId"><code>interceptEndpointGroupAssociationId</code></a></td>
     <td>Creates an association in a given project and location. See https://google.aip.dev/133.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_intercept_endpoint_group_associations_patch"><CopyableCode code="projects_locations_intercept_endpoint_group_associations_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-interceptEndpointGroupAssociationsId"><code>interceptEndpointGroupAssociationsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates an association. See https://google.aip.dev/134.</td>
 </tr>
 <tr>
@@ -363,24 +363,24 @@ Creates an association in a given project and location. See https://google.aip.d
 
 ```sql
 INSERT INTO google.networksecurity.intercept_endpoint_group_associations (
-data__name,
 data__labels,
 data__interceptEndpointGroup,
 data__network,
+data__name,
 projectsId,
 locationsId,
-interceptEndpointGroupAssociationId,
-requestId
+requestId,
+interceptEndpointGroupAssociationId
 )
 SELECT 
-'{{ name }}',
 '{{ labels }}',
 '{{ interceptEndpointGroup }}',
 '{{ network }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ interceptEndpointGroupAssociationId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ interceptEndpointGroupAssociationId }}'
 RETURNING
 name,
 done,
@@ -402,11 +402,6 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the intercept_endpoint_group_associations resource.
-    - name: name
-      value: string
-      description: >
-        Immutable. Identifier. The resource name of this endpoint group association, for example: `projects/123456789/locations/global/interceptEndpointGroupAssociations/my-eg-association`. See https://google.aip.dev/122 for more details.
-        
     - name: labels
       value: object
       description: >
@@ -422,9 +417,14 @@ response
       description: >
         Required. Immutable. The VPC network that is associated. for example: `projects/123456789/global/networks/my-network`. See https://google.aip.dev/124.
         
-    - name: interceptEndpointGroupAssociationId
+    - name: name
       value: string
+      description: >
+        Immutable. Identifier. The resource name of this endpoint group association, for example: `projects/123456789/locations/global/interceptEndpointGroupAssociations/my-eg-association`. See https://google.aip.dev/122 for more details.
+        
     - name: requestId
+      value: string
+    - name: interceptEndpointGroupAssociationId
       value: string
 ```
 </TabItem>
@@ -446,16 +446,16 @@ Updates an association. See https://google.aip.dev/134.
 ```sql
 UPDATE google.networksecurity.intercept_endpoint_group_associations
 SET 
-data__name = '{{ name }}',
 data__labels = '{{ labels }}',
 data__interceptEndpointGroup = '{{ interceptEndpointGroup }}',
-data__network = '{{ network }}'
+data__network = '{{ network }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND interceptEndpointGroupAssociationsId = '{{ interceptEndpointGroupAssociationsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

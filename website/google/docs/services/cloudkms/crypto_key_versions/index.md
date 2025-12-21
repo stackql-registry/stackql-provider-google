@@ -254,7 +254,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-keyRingsId"><code>keyRingsId</code></a>, <a href="#parameter-cryptoKeysId"><code>cryptoKeysId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists CryptoKeyVersions.</td>
 </tr>
 <tr>
@@ -279,25 +279,18 @@ The following methods are available for this resource:
     <td>Schedule a CryptoKeyVersion for destruction. Upon calling this method, CryptoKeyVersion.state will be set to DESTROY_SCHEDULED, and destroy_time will be set to the time destroy_scheduled_duration in the future. At that time, the state will automatically change to DESTROYED, and the key material will be irrevocably destroyed. Before the destroy_time is reached, RestoreCryptoKeyVersion may be called to reverse the process.</td>
 </tr>
 <tr>
-    <td><a href="#import"><CopyableCode code="import" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-keyRingsId"><code>keyRingsId</code></a>, <a href="#parameter-cryptoKeysId"><code>cryptoKeysId</code></a></td>
-    <td></td>
-    <td>Import wrapped key material into a CryptoKeyVersion. All requests must specify a CryptoKey. If a CryptoKeyVersion is additionally specified in the request, key material will be reimported into that version. Otherwise, a new version will be created, and will be assigned the next sequential id within the CryptoKey.</td>
-</tr>
-<tr>
-    <td><a href="#restore"><CopyableCode code="restore" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-keyRingsId"><code>keyRingsId</code></a>, <a href="#parameter-cryptoKeysId"><code>cryptoKeysId</code></a>, <a href="#parameter-cryptoKeyVersionsId"><code>cryptoKeyVersionsId</code></a></td>
-    <td></td>
-    <td>Restore a CryptoKeyVersion in the DESTROY_SCHEDULED state. Upon restoration of the CryptoKeyVersion, state will be set to DISABLED, and destroy_time will be cleared.</td>
-</tr>
-<tr>
     <td><a href="#raw_encrypt"><CopyableCode code="raw_encrypt" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-keyRingsId"><code>keyRingsId</code></a>, <a href="#parameter-cryptoKeysId"><code>cryptoKeysId</code></a>, <a href="#parameter-cryptoKeyVersionsId"><code>cryptoKeyVersionsId</code></a></td>
     <td></td>
     <td>Encrypts data using portable cryptographic primitives. Most users should choose Encrypt and Decrypt rather than their raw counterparts. The CryptoKey.purpose must be RAW_ENCRYPT_DECRYPT.</td>
+</tr>
+<tr>
+    <td><a href="#asymmetric_decrypt"><CopyableCode code="asymmetric_decrypt" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-keyRingsId"><code>keyRingsId</code></a>, <a href="#parameter-cryptoKeysId"><code>cryptoKeysId</code></a>, <a href="#parameter-cryptoKeyVersionsId"><code>cryptoKeyVersionsId</code></a></td>
+    <td></td>
+    <td>Decrypts data that was encrypted with a public key retrieved from GetPublicKey corresponding to a CryptoKeyVersion with CryptoKey.purpose ASYMMETRIC_DECRYPT.</td>
 </tr>
 <tr>
     <td><a href="#raw_decrypt"><CopyableCode code="raw_decrypt" /></a></td>
@@ -307,18 +300,18 @@ The following methods are available for this resource:
     <td>Decrypts data that was originally encrypted using a raw cryptographic mechanism. The CryptoKey.purpose must be RAW_ENCRYPT_DECRYPT.</td>
 </tr>
 <tr>
+    <td><a href="#restore"><CopyableCode code="restore" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-keyRingsId"><code>keyRingsId</code></a>, <a href="#parameter-cryptoKeysId"><code>cryptoKeysId</code></a>, <a href="#parameter-cryptoKeyVersionsId"><code>cryptoKeyVersionsId</code></a></td>
+    <td></td>
+    <td>Restore a CryptoKeyVersion in the DESTROY_SCHEDULED state. Upon restoration of the CryptoKeyVersion, state will be set to DISABLED, and destroy_time will be cleared.</td>
+</tr>
+<tr>
     <td><a href="#asymmetric_sign"><CopyableCode code="asymmetric_sign" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-keyRingsId"><code>keyRingsId</code></a>, <a href="#parameter-cryptoKeysId"><code>cryptoKeysId</code></a>, <a href="#parameter-cryptoKeyVersionsId"><code>cryptoKeyVersionsId</code></a></td>
     <td></td>
     <td>Signs data using a CryptoKeyVersion with CryptoKey.purpose ASYMMETRIC_SIGN, producing a signature that can be verified with the public key retrieved from GetPublicKey.</td>
-</tr>
-<tr>
-    <td><a href="#asymmetric_decrypt"><CopyableCode code="asymmetric_decrypt" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-keyRingsId"><code>keyRingsId</code></a>, <a href="#parameter-cryptoKeysId"><code>cryptoKeysId</code></a>, <a href="#parameter-cryptoKeyVersionsId"><code>cryptoKeyVersionsId</code></a></td>
-    <td></td>
-    <td>Decrypts data that was encrypted with a public key retrieved from GetPublicKey corresponding to a CryptoKeyVersion with CryptoKey.purpose ASYMMETRIC_DECRYPT.</td>
 </tr>
 <tr>
     <td><a href="#mac_sign"><CopyableCode code="mac_sign" /></a></td>
@@ -333,6 +326,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-keyRingsId"><code>keyRingsId</code></a>, <a href="#parameter-cryptoKeysId"><code>cryptoKeysId</code></a>, <a href="#parameter-cryptoKeyVersionsId"><code>cryptoKeyVersionsId</code></a></td>
     <td></td>
     <td>Verifies MAC tag using a CryptoKeyVersion with CryptoKey.purpose MAC, and returns a response that indicates whether or not the verification was successful.</td>
+</tr>
+<tr>
+    <td><a href="#import"><CopyableCode code="import" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-keyRingsId"><code>keyRingsId</code></a>, <a href="#parameter-cryptoKeysId"><code>cryptoKeysId</code></a></td>
+    <td></td>
+    <td>Import wrapped key material into a CryptoKeyVersion. All requests must specify a CryptoKey. If a CryptoKeyVersion is additionally specified in the request, key material will be reimported into that version. Otherwise, a new version will be created, and will be assigned the next sequential id within the CryptoKey.</td>
 </tr>
 <tr>
     <td><a href="#decapsulate"><CopyableCode code="decapsulate" /></a></td>
@@ -482,11 +482,11 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND keyRingsId = '{{ keyRingsId }}' -- required
 AND cryptoKeysId = '{{ cryptoKeysId }}' -- required
-AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND view = '{{ view }}'
 AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -508,16 +508,16 @@ Create a new CryptoKeyVersion in a CryptoKey. The server will assign the next se
 
 ```sql
 INSERT INTO google.cloudkms.crypto_key_versions (
-data__state,
 data__externalProtectionLevelOptions,
+data__state,
 projectsId,
 locationsId,
 keyRingsId,
 cryptoKeysId
 )
 SELECT 
-'{{ state }}',
 '{{ externalProtectionLevelOptions }}',
+'{{ state }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ keyRingsId }}',
@@ -560,17 +560,17 @@ state
     - name: cryptoKeysId
       value: string
       description: Required parameter for the crypto_key_versions resource.
+    - name: externalProtectionLevelOptions
+      value: object
+      description: >
+        ExternalProtectionLevelOptions stores a group of additional fields for configuring a CryptoKeyVersion that are specific to the EXTERNAL protection level and EXTERNAL_VPC protection levels.
+        
     - name: state
       value: string
       description: >
         The current state of the CryptoKeyVersion.
         
       valid_values: ['CRYPTO_KEY_VERSION_STATE_UNSPECIFIED', 'PENDING_GENERATION', 'ENABLED', 'DISABLED', 'DESTROYED', 'DESTROY_SCHEDULED', 'PENDING_IMPORT', 'IMPORT_FAILED', 'GENERATION_FAILED', 'PENDING_EXTERNAL_DESTRUCTION', 'EXTERNAL_DESTRUCTION_FAILED']
-    - name: externalProtectionLevelOptions
-      value: object
-      description: >
-        ExternalProtectionLevelOptions stores a group of additional fields for configuring a CryptoKeyVersion that are specific to the EXTERNAL protection level and EXTERNAL_VPC protection levels.
-        
 ```
 </TabItem>
 </Tabs>
@@ -591,8 +591,8 @@ Update a CryptoKeyVersion's metadata. state may be changed between ENABLED and D
 ```sql
 UPDATE google.cloudkms.crypto_key_versions
 SET 
-data__state = '{{ state }}',
-data__externalProtectionLevelOptions = '{{ externalProtectionLevelOptions }}'
+data__externalProtectionLevelOptions = '{{ externalProtectionLevelOptions }}',
+data__state = '{{ state }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -650,36 +650,81 @@ AND cryptoKeyVersionsId = '{{ cryptoKeyVersionsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="import"
+    defaultValue="raw_encrypt"
     values={[
-        { label: 'import', value: 'import' },
-        { label: 'restore', value: 'restore' },
         { label: 'raw_encrypt', value: 'raw_encrypt' },
-        { label: 'raw_decrypt', value: 'raw_decrypt' },
-        { label: 'asymmetric_sign', value: 'asymmetric_sign' },
         { label: 'asymmetric_decrypt', value: 'asymmetric_decrypt' },
+        { label: 'raw_decrypt', value: 'raw_decrypt' },
+        { label: 'restore', value: 'restore' },
+        { label: 'asymmetric_sign', value: 'asymmetric_sign' },
         { label: 'mac_sign', value: 'mac_sign' },
         { label: 'mac_verify', value: 'mac_verify' },
+        { label: 'import', value: 'import' },
         { label: 'decapsulate', value: 'decapsulate' }
     ]}
 >
-<TabItem value="import">
+<TabItem value="raw_encrypt">
 
-Import wrapped key material into a CryptoKeyVersion. All requests must specify a CryptoKey. If a CryptoKeyVersion is additionally specified in the request, key material will be reimported into that version. Otherwise, a new version will be created, and will be assigned the next sequential id within the CryptoKey.
+Encrypts data using portable cryptographic primitives. Most users should choose Encrypt and Decrypt rather than their raw counterparts. The CryptoKey.purpose must be RAW_ENCRYPT_DECRYPT.
 
 ```sql
-EXEC google.cloudkms.crypto_key_versions.import 
+EXEC google.cloudkms.crypto_key_versions.raw_encrypt 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @keyRingsId='{{ keyRingsId }}' --required, 
-@cryptoKeysId='{{ cryptoKeysId }}' --required 
+@cryptoKeysId='{{ cryptoKeysId }}' --required, 
+@cryptoKeyVersionsId='{{ cryptoKeyVersionsId }}' --required 
 @@json=
 '{
-"cryptoKeyVersion": "{{ cryptoKeyVersion }}", 
-"algorithm": "{{ algorithm }}", 
-"importJob": "{{ importJob }}", 
-"wrappedKey": "{{ wrappedKey }}", 
-"rsaAesWrappedKey": "{{ rsaAesWrappedKey }}"
+"additionalAuthenticatedData": "{{ additionalAuthenticatedData }}", 
+"initializationVector": "{{ initializationVector }}", 
+"plaintext": "{{ plaintext }}", 
+"plaintextCrc32c": "{{ plaintextCrc32c }}", 
+"initializationVectorCrc32c": "{{ initializationVectorCrc32c }}", 
+"additionalAuthenticatedDataCrc32c": "{{ additionalAuthenticatedDataCrc32c }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="asymmetric_decrypt">
+
+Decrypts data that was encrypted with a public key retrieved from GetPublicKey corresponding to a CryptoKeyVersion with CryptoKey.purpose ASYMMETRIC_DECRYPT.
+
+```sql
+EXEC google.cloudkms.crypto_key_versions.asymmetric_decrypt 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@keyRingsId='{{ keyRingsId }}' --required, 
+@cryptoKeysId='{{ cryptoKeysId }}' --required, 
+@cryptoKeyVersionsId='{{ cryptoKeyVersionsId }}' --required 
+@@json=
+'{
+"ciphertextCrc32c": "{{ ciphertextCrc32c }}", 
+"ciphertext": "{{ ciphertext }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="raw_decrypt">
+
+Decrypts data that was originally encrypted using a raw cryptographic mechanism. The CryptoKey.purpose must be RAW_ENCRYPT_DECRYPT.
+
+```sql
+EXEC google.cloudkms.crypto_key_versions.raw_decrypt 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@keyRingsId='{{ keyRingsId }}' --required, 
+@cryptoKeysId='{{ cryptoKeysId }}' --required, 
+@cryptoKeyVersionsId='{{ cryptoKeyVersionsId }}' --required 
+@@json=
+'{
+"additionalAuthenticatedDataCrc32c": "{{ additionalAuthenticatedDataCrc32c }}", 
+"initializationVector": "{{ initializationVector }}", 
+"ciphertext": "{{ ciphertext }}", 
+"ciphertextCrc32c": "{{ ciphertextCrc32c }}", 
+"additionalAuthenticatedData": "{{ additionalAuthenticatedData }}", 
+"tagLength": {{ tagLength }}, 
+"initializationVectorCrc32c": "{{ initializationVectorCrc32c }}"
 }'
 ;
 ```
@@ -698,53 +743,6 @@ EXEC google.cloudkms.crypto_key_versions.restore
 ;
 ```
 </TabItem>
-<TabItem value="raw_encrypt">
-
-Encrypts data using portable cryptographic primitives. Most users should choose Encrypt and Decrypt rather than their raw counterparts. The CryptoKey.purpose must be RAW_ENCRYPT_DECRYPT.
-
-```sql
-EXEC google.cloudkms.crypto_key_versions.raw_encrypt 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@keyRingsId='{{ keyRingsId }}' --required, 
-@cryptoKeysId='{{ cryptoKeysId }}' --required, 
-@cryptoKeyVersionsId='{{ cryptoKeyVersionsId }}' --required 
-@@json=
-'{
-"plaintext": "{{ plaintext }}", 
-"additionalAuthenticatedData": "{{ additionalAuthenticatedData }}", 
-"plaintextCrc32c": "{{ plaintextCrc32c }}", 
-"additionalAuthenticatedDataCrc32c": "{{ additionalAuthenticatedDataCrc32c }}", 
-"initializationVector": "{{ initializationVector }}", 
-"initializationVectorCrc32c": "{{ initializationVectorCrc32c }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="raw_decrypt">
-
-Decrypts data that was originally encrypted using a raw cryptographic mechanism. The CryptoKey.purpose must be RAW_ENCRYPT_DECRYPT.
-
-```sql
-EXEC google.cloudkms.crypto_key_versions.raw_decrypt 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@keyRingsId='{{ keyRingsId }}' --required, 
-@cryptoKeysId='{{ cryptoKeysId }}' --required, 
-@cryptoKeyVersionsId='{{ cryptoKeyVersionsId }}' --required 
-@@json=
-'{
-"ciphertext": "{{ ciphertext }}", 
-"additionalAuthenticatedData": "{{ additionalAuthenticatedData }}", 
-"initializationVector": "{{ initializationVector }}", 
-"tagLength": {{ tagLength }}, 
-"ciphertextCrc32c": "{{ ciphertextCrc32c }}", 
-"additionalAuthenticatedDataCrc32c": "{{ additionalAuthenticatedDataCrc32c }}", 
-"initializationVectorCrc32c": "{{ initializationVectorCrc32c }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="asymmetric_sign">
 
 Signs data using a CryptoKeyVersion with CryptoKey.purpose ASYMMETRIC_SIGN, producing a signature that can be verified with the public key retrieved from GetPublicKey.
@@ -758,29 +756,10 @@ EXEC google.cloudkms.crypto_key_versions.asymmetric_sign
 @cryptoKeyVersionsId='{{ cryptoKeyVersionsId }}' --required 
 @@json=
 '{
-"digest": "{{ digest }}", 
 "digestCrc32c": "{{ digestCrc32c }}", 
+"digest": "{{ digest }}", 
 "data": "{{ data }}", 
 "dataCrc32c": "{{ dataCrc32c }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="asymmetric_decrypt">
-
-Decrypts data that was encrypted with a public key retrieved from GetPublicKey corresponding to a CryptoKeyVersion with CryptoKey.purpose ASYMMETRIC_DECRYPT.
-
-```sql
-EXEC google.cloudkms.crypto_key_versions.asymmetric_decrypt 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@keyRingsId='{{ keyRingsId }}' --required, 
-@cryptoKeysId='{{ cryptoKeysId }}' --required, 
-@cryptoKeyVersionsId='{{ cryptoKeyVersionsId }}' --required 
-@@json=
-'{
-"ciphertext": "{{ ciphertext }}", 
-"ciphertextCrc32c": "{{ ciphertextCrc32c }}"
 }'
 ;
 ```
@@ -798,8 +777,8 @@ EXEC google.cloudkms.crypto_key_versions.mac_sign
 @cryptoKeyVersionsId='{{ cryptoKeyVersionsId }}' --required 
 @@json=
 '{
-"data": "{{ data }}", 
-"dataCrc32c": "{{ dataCrc32c }}"
+"dataCrc32c": "{{ dataCrc32c }}", 
+"data": "{{ data }}"
 }'
 ;
 ```
@@ -817,10 +796,31 @@ EXEC google.cloudkms.crypto_key_versions.mac_verify
 @cryptoKeyVersionsId='{{ cryptoKeyVersionsId }}' --required 
 @@json=
 '{
+"macCrc32c": "{{ macCrc32c }}", 
 "data": "{{ data }}", 
 "dataCrc32c": "{{ dataCrc32c }}", 
-"mac": "{{ mac }}", 
-"macCrc32c": "{{ macCrc32c }}"
+"mac": "{{ mac }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="import">
+
+Import wrapped key material into a CryptoKeyVersion. All requests must specify a CryptoKey. If a CryptoKeyVersion is additionally specified in the request, key material will be reimported into that version. Otherwise, a new version will be created, and will be assigned the next sequential id within the CryptoKey.
+
+```sql
+EXEC google.cloudkms.crypto_key_versions.import 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@keyRingsId='{{ keyRingsId }}' --required, 
+@cryptoKeysId='{{ cryptoKeysId }}' --required 
+@@json=
+'{
+"importJob": "{{ importJob }}", 
+"wrappedKey": "{{ wrappedKey }}", 
+"algorithm": "{{ algorithm }}", 
+"rsaAesWrappedKey": "{{ rsaAesWrappedKey }}", 
+"cryptoKeyVersion": "{{ cryptoKeyVersion }}"
 }'
 ;
 ```
@@ -838,8 +838,8 @@ EXEC google.cloudkms.crypto_key_versions.decapsulate
 @cryptoKeyVersionsId='{{ cryptoKeyVersionsId }}' --required 
 @@json=
 '{
-"ciphertext": "{{ ciphertext }}", 
-"ciphertextCrc32c": "{{ ciphertextCrc32c }}"
+"ciphertextCrc32c": "{{ ciphertextCrc32c }}", 
+"ciphertext": "{{ ciphertext }}"
 }'
 ;
 ```

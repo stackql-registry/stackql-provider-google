@@ -92,8 +92,8 @@ EXEC google.trafficdirector.discovery.client_status
 @@json=
 '{
 "nodeMatchers": "{{ nodeMatchers }}", 
-"node": "{{ node }}", 
-"excludeResourceContents": {{ excludeResourceContents }}
+"excludeResourceContents": {{ excludeResourceContents }}, 
+"node": "{{ node }}"
 }'
 ;
 ```

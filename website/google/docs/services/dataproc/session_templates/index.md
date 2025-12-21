@@ -204,7 +204,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_session_templates_list"><CopyableCode code="projects_locations_session_templates_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists session templates.</td>
 </tr>
 <tr>
@@ -331,8 +331,8 @@ FROM google.dataproc.session_templates
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -354,24 +354,24 @@ Create a session template synchronously.
 
 ```sql
 INSERT INTO google.dataproc.session_templates (
-data__name,
-data__description,
-data__jupyterSession,
-data__sparkConnectSession,
-data__labels,
-data__runtimeConfig,
 data__environmentConfig,
+data__description,
+data__labels,
+data__jupyterSession,
+data__name,
+data__runtimeConfig,
+data__sparkConnectSession,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ name }}',
-'{{ description }}',
-'{{ jupyterSession }}',
-'{{ sparkConnectSession }}',
-'{{ labels }}',
-'{{ runtimeConfig }}',
 '{{ environmentConfig }}',
+'{{ description }}',
+'{{ labels }}',
+'{{ jupyterSession }}',
+'{{ name }}',
+'{{ runtimeConfig }}',
+'{{ sparkConnectSession }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -401,40 +401,40 @@ uuid
     - name: locationsId
       value: string
       description: Required parameter for the session_templates resource.
-    - name: name
-      value: string
+    - name: environmentConfig
+      value: object
       description: >
-        Required. Identifier. The resource name of the session template.
+        Optional. Environment configuration for session execution.
         
     - name: description
       value: string
       description: >
         Optional. Brief description of the template.
         
+    - name: labels
+      value: object
+      description: >
+        Optional. Labels to associate with sessions created using this template. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values can be empty, but, if present, must contain 1 to 63 characters and conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with a session.
+        
     - name: jupyterSession
       value: object
       description: >
         Optional. Jupyter session config.
         
-    - name: sparkConnectSession
-      value: object
+    - name: name
+      value: string
       description: >
-        Optional. Spark connect session config.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Labels to associate with sessions created using this template. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values can be empty, but, if present, must contain 1 to 63 characters and conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with a session.
+        Required. Identifier. The resource name of the session template.
         
     - name: runtimeConfig
       value: object
       description: >
         Optional. Runtime configuration for session execution.
         
-    - name: environmentConfig
+    - name: sparkConnectSession
       value: object
       description: >
-        Optional. Environment configuration for session execution.
+        Optional. Spark connect session config.
         
 ```
 </TabItem>
@@ -456,13 +456,13 @@ Updates the session template synchronously.
 ```sql
 UPDATE google.dataproc.session_templates
 SET 
-data__name = '{{ name }}',
+data__environmentConfig = '{{ environmentConfig }}',
 data__description = '{{ description }}',
-data__jupyterSession = '{{ jupyterSession }}',
-data__sparkConnectSession = '{{ sparkConnectSession }}',
 data__labels = '{{ labels }}',
+data__jupyterSession = '{{ jupyterSession }}',
+data__name = '{{ name }}',
 data__runtimeConfig = '{{ runtimeConfig }}',
-data__environmentConfig = '{{ environmentConfig }}'
+data__sparkConnectSession = '{{ sparkConnectSession }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -180,8 +180,8 @@ Sets the access control policy on an instance resource. Replaces any existing po
 ```sql
 REPLACE google.bigtableadmin.materialized_views_iam_policies
 SET 
-data__policy = '{{ policy }}',
-data__updateMask = '{{ updateMask }}'
+data__updateMask = '{{ updateMask }}',
+data__policy = '{{ policy }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instancesId = '{{ instancesId }}' --required

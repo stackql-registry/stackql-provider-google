@@ -80,6 +80,11 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Description of the firewall endpoint. Max length 2048 characters.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="endpointSettings" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Settings for the endpoint. (id: FirewallEndpointEndpointSettings)</td>
+</tr>
+<tr>
     <td><CopyableCode code="labels" /></td>
     <td><code>object</code></td>
     <td>Optional. Labels as key value pairs</td>
@@ -154,6 +159,11 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Description of the firewall endpoint. Max length 2048 characters.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="endpointSettings" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Settings for the endpoint. (id: FirewallEndpointEndpointSettings)</td>
+</tr>
+<tr>
     <td><CopyableCode code="labels" /></td>
     <td><code>object</code></td>
     <td>Optional. Labels as key value pairs</td>
@@ -214,14 +224,14 @@ The following methods are available for this resource:
     <td><a href="#organizations_locations_firewall_endpoints_list"><CopyableCode code="organizations_locations_firewall_endpoints_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists FirewallEndpoints in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_firewall_endpoints_create"><CopyableCode code="organizations_locations_firewall_endpoints_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-firewallEndpointId"><code>firewallEndpointId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-firewallEndpointId"><code>firewallEndpointId</code></a></td>
     <td>Creates a new FirewallEndpoint in a given project and location.</td>
 </tr>
 <tr>
@@ -328,6 +338,7 @@ associations,
 billingProjectId,
 createTime,
 description,
+endpointSettings,
 labels,
 reconciling,
 satisfiesPzi,
@@ -353,6 +364,7 @@ associations,
 billingProjectId,
 createTime,
 description,
+endpointSettings,
 labels,
 reconciling,
 satisfiesPzi,
@@ -362,10 +374,10 @@ updateTime
 FROM google.networksecurity.firewall_endpoints
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -387,24 +399,26 @@ Creates a new FirewallEndpoint in a given project and location.
 
 ```sql
 INSERT INTO google.networksecurity.firewall_endpoints (
-data__name,
-data__description,
 data__labels,
 data__billingProjectId,
+data__endpointSettings,
+data__name,
+data__description,
 organizationsId,
 locationsId,
-firewallEndpointId,
-requestId
+requestId,
+firewallEndpointId
 )
 SELECT 
-'{{ name }}',
-'{{ description }}',
 '{{ labels }}',
 '{{ billingProjectId }}',
+'{{ endpointSettings }}',
+'{{ name }}',
+'{{ description }}',
 '{{ organizationsId }}',
 '{{ locationsId }}',
-'{{ firewallEndpointId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ firewallEndpointId }}'
 RETURNING
 name,
 done,
@@ -426,16 +440,6 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the firewall_endpoints resource.
-    - name: name
-      value: string
-      description: >
-        Immutable. Identifier. Name of resource.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. Description of the firewall endpoint. Max length 2048 characters.
-        
     - name: labels
       value: object
       description: >
@@ -446,9 +450,24 @@ response
       description: >
         Required. Project to bill on endpoint uptime usage.
         
-    - name: firewallEndpointId
+    - name: endpointSettings
+      value: object
+      description: >
+        Optional. Settings for the endpoint.
+        
+    - name: name
       value: string
+      description: >
+        Immutable. Identifier. Name of resource.
+        
+    - name: description
+      value: string
+      description: >
+        Optional. Description of the firewall endpoint. Max length 2048 characters.
+        
     - name: requestId
+      value: string
+    - name: firewallEndpointId
       value: string
 ```
 </TabItem>
@@ -470,10 +489,11 @@ Update a single Endpoint.
 ```sql
 UPDATE google.networksecurity.firewall_endpoints
 SET 
-data__name = '{{ name }}',
-data__description = '{{ description }}',
 data__labels = '{{ labels }}',
-data__billingProjectId = '{{ billingProjectId }}'
+data__billingProjectId = '{{ billingProjectId }}',
+data__endpointSettings = '{{ endpointSettings }}',
+data__name = '{{ name }}',
+data__description = '{{ description }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

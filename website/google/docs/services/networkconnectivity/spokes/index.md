@@ -379,28 +379,28 @@ The following methods are available for this resource:
     <td><a href="#list_spokes"><CopyableCode code="list_spokes" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-hubsId"><code>hubsId</code></a></td>
-    <td><a href="#parameter-spokeLocations"><code>spokeLocations</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-view"><code>view</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-spokeLocations"><code>spokeLocations</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the Network Connectivity Center spokes associated with a specified hub and location. The list includes both spokes that are attached to the hub and spokes that have been proposed but not yet accepted.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the Network Connectivity Center spokes in a specified project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-spokeId"><code>spokeId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-spokeId"><code>spokeId</code></a></td>
     <td>Creates a Network Connectivity Center spoke.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-spokesId"><code>spokesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a Network Connectivity Center spoke.</td>
 </tr>
 <tr>
@@ -562,12 +562,12 @@ updateTime
 FROM google.networkconnectivity.spokes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND hubsId = '{{ hubsId }}' -- required
+AND filter = '{{ filter }}'
 AND spokeLocations = '{{ spokeLocations }}'
+AND view = '{{ view }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
-AND view = '{{ view }}'
 ;
 ```
 </TabItem>
@@ -598,10 +598,10 @@ updateTime
 FROM google.networkconnectivity.spokes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -623,40 +623,40 @@ Creates a Network Connectivity Center spoke.
 
 ```sql
 INSERT INTO google.networkconnectivity.spokes (
-data__name,
-data__labels,
-data__description,
-data__hub,
-data__group,
-data__linkedVpnTunnels,
-data__linkedInterconnectAttachments,
-data__linkedRouterApplianceInstances,
-data__linkedVpcNetwork,
-data__linkedProducerVpcNetwork,
 data__etag,
+data__linkedVpcNetwork,
+data__description,
 data__fieldPathsPendingUpdate,
+data__linkedInterconnectAttachments,
+data__linkedProducerVpcNetwork,
+data__name,
+data__linkedVpnTunnels,
+data__hub,
+data__linkedRouterApplianceInstances,
+data__group,
+data__labels,
 projectsId,
 locationsId,
-spokeId,
-requestId
+requestId,
+spokeId
 )
 SELECT 
-'{{ name }}',
-'{{ labels }}',
-'{{ description }}',
-'{{ hub }}',
-'{{ group }}',
-'{{ linkedVpnTunnels }}',
-'{{ linkedInterconnectAttachments }}',
-'{{ linkedRouterApplianceInstances }}',
-'{{ linkedVpcNetwork }}',
-'{{ linkedProducerVpcNetwork }}',
 '{{ etag }}',
+'{{ linkedVpcNetwork }}',
+'{{ description }}',
 '{{ fieldPathsPendingUpdate }}',
+'{{ linkedInterconnectAttachments }}',
+'{{ linkedProducerVpcNetwork }}',
+'{{ name }}',
+'{{ linkedVpnTunnels }}',
+'{{ hub }}',
+'{{ linkedRouterApplianceInstances }}',
+'{{ group }}',
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ spokeId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ spokeId }}'
 RETURNING
 name,
 done,
@@ -678,69 +678,69 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the spokes resource.
-    - name: name
+    - name: etag
       value: string
       description: >
-        Immutable. The name of the spoke. Spoke names must be unique. They use the following form: `projects/{project_number}/locations/{region}/spokes/{spoke_id}`
-        
-    - name: labels
-      value: object
-      description: >
-        Optional labels in key-value pair format. For more information about labels, see [Requirements for labels](https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements).
-        
-    - name: description
-      value: string
-      description: >
-        Optional. An optional description of the spoke.
-        
-    - name: hub
-      value: string
-      description: >
-        Immutable. The name of the hub that this spoke is attached to.
-        
-    - name: group
-      value: string
-      description: >
-        Optional. The name of the group that this spoke is associated with.
-        
-    - name: linkedVpnTunnels
-      value: object
-      description: >
-        Optional. VPN tunnels that are associated with the spoke.
-        
-    - name: linkedInterconnectAttachments
-      value: object
-      description: >
-        Optional. VLAN attachments that are associated with the spoke.
-        
-    - name: linkedRouterApplianceInstances
-      value: object
-      description: >
-        Optional. Router appliance instances that are associated with the spoke.
+        Optional. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
         
     - name: linkedVpcNetwork
       value: object
       description: >
         Optional. VPC network that is associated with the spoke.
         
-    - name: linkedProducerVpcNetwork
-      value: object
-      description: >
-        Optional. The linked producer VPC that is associated with the spoke.
-        
-    - name: etag
+    - name: description
       value: string
       description: >
-        Optional. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
+        Optional. An optional description of the spoke.
         
     - name: fieldPathsPendingUpdate
       value: array
       description: >
         Optional. The list of fields waiting for hub administration's approval.
         
-    - name: spokeId
+    - name: linkedInterconnectAttachments
+      value: object
+      description: >
+        Optional. VLAN attachments that are associated with the spoke.
+        
+    - name: linkedProducerVpcNetwork
+      value: object
+      description: >
+        Optional. The linked producer VPC that is associated with the spoke.
+        
+    - name: name
       value: string
+      description: >
+        Immutable. The name of the spoke. Spoke names must be unique. They use the following form: `projects/{project_number}/locations/{region}/spokes/{spoke_id}`
+        
+    - name: linkedVpnTunnels
+      value: object
+      description: >
+        Optional. VPN tunnels that are associated with the spoke.
+        
+    - name: hub
+      value: string
+      description: >
+        Immutable. The name of the hub that this spoke is attached to.
+        
+    - name: linkedRouterApplianceInstances
+      value: object
+      description: >
+        Optional. Router appliance instances that are associated with the spoke.
+        
+    - name: group
+      value: string
+      description: >
+        Optional. The name of the group that this spoke is associated with.
+        
+    - name: labels
+      value: object
+      description: >
+        Optional labels in key-value pair format. For more information about labels, see [Requirements for labels](https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements).
+        
     - name: requestId
+      value: string
+    - name: spokeId
       value: string
 ```
 </TabItem>
@@ -762,24 +762,24 @@ Updates the parameters of a Network Connectivity Center spoke.
 ```sql
 UPDATE google.networkconnectivity.spokes
 SET 
-data__name = '{{ name }}',
-data__labels = '{{ labels }}',
-data__description = '{{ description }}',
-data__hub = '{{ hub }}',
-data__group = '{{ group }}',
-data__linkedVpnTunnels = '{{ linkedVpnTunnels }}',
-data__linkedInterconnectAttachments = '{{ linkedInterconnectAttachments }}',
-data__linkedRouterApplianceInstances = '{{ linkedRouterApplianceInstances }}',
-data__linkedVpcNetwork = '{{ linkedVpcNetwork }}',
-data__linkedProducerVpcNetwork = '{{ linkedProducerVpcNetwork }}',
 data__etag = '{{ etag }}',
-data__fieldPathsPendingUpdate = '{{ fieldPathsPendingUpdate }}'
+data__linkedVpcNetwork = '{{ linkedVpcNetwork }}',
+data__description = '{{ description }}',
+data__fieldPathsPendingUpdate = '{{ fieldPathsPendingUpdate }}',
+data__linkedInterconnectAttachments = '{{ linkedInterconnectAttachments }}',
+data__linkedProducerVpcNetwork = '{{ linkedProducerVpcNetwork }}',
+data__name = '{{ name }}',
+data__linkedVpnTunnels = '{{ linkedVpnTunnels }}',
+data__hub = '{{ hub }}',
+data__linkedRouterApplianceInstances = '{{ linkedRouterApplianceInstances }}',
+data__group = '{{ group }}',
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND spokesId = '{{ spokesId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

@@ -204,7 +204,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists all tables served from a specified instance.</td>
 </tr>
 <tr>
@@ -229,25 +229,18 @@ The following methods are available for this resource:
     <td>Permanently deletes a specified table and all of its data.</td>
 </tr>
 <tr>
+    <td><a href="#restore"><CopyableCode code="restore" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Create a new table by restoring from a completed backup. The returned table long-running operation can be used to track the progress of the operation, and to cancel it. The metadata field type is RestoreTableMetadata. The response type is Table, if successful.</td>
+</tr>
+<tr>
     <td><a href="#undelete"><CopyableCode code="undelete" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-tablesId"><code>tablesId</code></a></td>
     <td></td>
     <td>Restores a specified table which was accidentally deleted.</td>
-</tr>
-<tr>
-    <td><a href="#modify_column_families"><CopyableCode code="modify_column_families" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-tablesId"><code>tablesId</code></a></td>
-    <td></td>
-    <td>Performs a series of column family modifications on the specified table. Either all or none of the modifications will occur before this method returns, but data requests received prior to that point may see a table where only some modifications have taken effect.</td>
-</tr>
-<tr>
-    <td><a href="#drop_row_range"><CopyableCode code="drop_row_range" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-tablesId"><code>tablesId</code></a></td>
-    <td></td>
-    <td>Permanently drop/delete a row range from a specified table. The request can specify whether to delete all rows in a table, or only those that match a particular prefix. Note that row key prefixes used here are treated as service data. For more information about how service data is handled, see the [Google Cloud Privacy Notice](https://cloud.google.com/terms/cloud-privacy-notice).</td>
 </tr>
 <tr>
     <td><a href="#generate_consistency_token"><CopyableCode code="generate_consistency_token" /></a></td>
@@ -257,6 +250,13 @@ The following methods are available for this resource:
     <td>Generates a consistency token for a Table, which can be used in CheckConsistency to check whether mutations to the table that finished before this call started have been replicated. The tokens will be available for 90 days.</td>
 </tr>
 <tr>
+    <td><a href="#drop_row_range"><CopyableCode code="drop_row_range" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-tablesId"><code>tablesId</code></a></td>
+    <td></td>
+    <td>Permanently drop/delete a row range from a specified table. The request can specify whether to delete all rows in a table, or only those that match a particular prefix. Note that row key prefixes used here are treated as service data. For more information about how service data is handled, see the [Google Cloud Privacy Notice](https://cloud.google.com/terms/cloud-privacy-notice).</td>
+</tr>
+<tr>
     <td><a href="#check_consistency"><CopyableCode code="check_consistency" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-tablesId"><code>tablesId</code></a></td>
@@ -264,11 +264,11 @@ The following methods are available for this resource:
     <td>Checks replication consistency based on a consistency token, that is, if replication has caught up based on the conditions specified in the token and the check request.</td>
 </tr>
 <tr>
-    <td><a href="#restore"><CopyableCode code="restore" /></a></td>
+    <td><a href="#modify_column_families"><CopyableCode code="modify_column_families" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-tablesId"><code>tablesId</code></a></td>
     <td></td>
-    <td>Create a new table by restoring from a completed backup. The returned table long-running operation can be used to track the progress of the operation, and to cancel it. The metadata field type is RestoreTableMetadata. The response type is Table, if successful.</td>
+    <td>Performs a series of column family modifications on the specified table. Either all or none of the modifications will occur before this method returns, but data requests received prior to that point may see a table where only some modifications have taken effect.</td>
 </tr>
 </tbody>
 </table>
@@ -384,8 +384,8 @@ FROM google.bigtableadmin.tables
 WHERE projectsId = '{{ projectsId }}' -- required
 AND instancesId = '{{ instancesId }}' -- required
 AND view = '{{ view }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -454,7 +454,7 @@ tieredStorageConfig
     - name: table
       value: object
       description: >
-        Required. The Table to create.
+        A collection of user data indexed by row, column, and timestamp. Each table is served using the resources of its parent cluster.
         
     - name: initialSplits
       value: array
@@ -481,14 +481,14 @@ Updates a specified table.
 ```sql
 UPDATE google.bigtableadmin.tables
 SET 
-data__name = '{{ name }}',
-data__columnFamilies = '{{ columnFamilies }}',
-data__granularity = '{{ granularity }}',
 data__changeStreamConfig = '{{ changeStreamConfig }}',
-data__deletionProtection = {{ deletionProtection }},
+data__rowKeySchema = '{{ rowKeySchema }}',
+data__columnFamilies = '{{ columnFamilies }}',
 data__automatedBackupPolicy = '{{ automatedBackupPolicy }}',
-data__tieredStorageConfig = '{{ tieredStorageConfig }}',
-data__rowKeySchema = '{{ rowKeySchema }}'
+data__granularity = '{{ granularity }}',
+data__name = '{{ name }}',
+data__deletionProtection = {{ deletionProtection }},
+data__tieredStorageConfig = '{{ tieredStorageConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instancesId = '{{ instancesId }}' --required
@@ -532,16 +532,32 @@ AND tablesId = '{{ tablesId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="undelete"
+    defaultValue="restore"
     values={[
+        { label: 'restore', value: 'restore' },
         { label: 'undelete', value: 'undelete' },
-        { label: 'modify_column_families', value: 'modify_column_families' },
-        { label: 'drop_row_range', value: 'drop_row_range' },
         { label: 'generate_consistency_token', value: 'generate_consistency_token' },
+        { label: 'drop_row_range', value: 'drop_row_range' },
         { label: 'check_consistency', value: 'check_consistency' },
-        { label: 'restore', value: 'restore' }
+        { label: 'modify_column_families', value: 'modify_column_families' }
     ]}
 >
+<TabItem value="restore">
+
+Create a new table by restoring from a completed backup. The returned table long-running operation can be used to track the progress of the operation, and to cancel it. The metadata field type is RestoreTableMetadata. The response type is Table, if successful.
+
+```sql
+EXEC google.bigtableadmin.tables.restore 
+@projectsId='{{ projectsId }}' --required, 
+@instancesId='{{ instancesId }}' --required 
+@@json=
+'{
+"tableId": "{{ tableId }}", 
+"backup": "{{ backup }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="undelete">
 
 Restores a specified table which was accidentally deleted.
@@ -554,20 +570,15 @@ EXEC google.bigtableadmin.tables.undelete
 ;
 ```
 </TabItem>
-<TabItem value="modify_column_families">
+<TabItem value="generate_consistency_token">
 
-Performs a series of column family modifications on the specified table. Either all or none of the modifications will occur before this method returns, but data requests received prior to that point may see a table where only some modifications have taken effect.
+Generates a consistency token for a Table, which can be used in CheckConsistency to check whether mutations to the table that finished before this call started have been replicated. The tokens will be available for 90 days.
 
 ```sql
-EXEC google.bigtableadmin.tables.modify_column_families 
+EXEC google.bigtableadmin.tables.generate_consistency_token 
 @projectsId='{{ projectsId }}' --required, 
 @instancesId='{{ instancesId }}' --required, 
-@tablesId='{{ tablesId }}' --required 
-@@json=
-'{
-"modifications": "{{ modifications }}", 
-"ignoreWarnings": {{ ignoreWarnings }}
-}'
+@tablesId='{{ tablesId }}' --required
 ;
 ```
 </TabItem>
@@ -588,18 +599,6 @@ EXEC google.bigtableadmin.tables.drop_row_range
 ;
 ```
 </TabItem>
-<TabItem value="generate_consistency_token">
-
-Generates a consistency token for a Table, which can be used in CheckConsistency to check whether mutations to the table that finished before this call started have been replicated. The tokens will be available for 90 days.
-
-```sql
-EXEC google.bigtableadmin.tables.generate_consistency_token 
-@projectsId='{{ projectsId }}' --required, 
-@instancesId='{{ instancesId }}' --required, 
-@tablesId='{{ tablesId }}' --required
-;
-```
-</TabItem>
 <TabItem value="check_consistency">
 
 Checks replication consistency based on a consistency token, that is, if replication has caught up based on the conditions specified in the token and the check request.
@@ -611,25 +610,26 @@ EXEC google.bigtableadmin.tables.check_consistency
 @tablesId='{{ tablesId }}' --required 
 @@json=
 '{
+"dataBoostReadLocalWrites": "{{ dataBoostReadLocalWrites }}", 
 "consistencyToken": "{{ consistencyToken }}", 
-"standardReadRemoteWrites": "{{ standardReadRemoteWrites }}", 
-"dataBoostReadLocalWrites": "{{ dataBoostReadLocalWrites }}"
+"standardReadRemoteWrites": "{{ standardReadRemoteWrites }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="restore">
+<TabItem value="modify_column_families">
 
-Create a new table by restoring from a completed backup. The returned table long-running operation can be used to track the progress of the operation, and to cancel it. The metadata field type is RestoreTableMetadata. The response type is Table, if successful.
+Performs a series of column family modifications on the specified table. Either all or none of the modifications will occur before this method returns, but data requests received prior to that point may see a table where only some modifications have taken effect.
 
 ```sql
-EXEC google.bigtableadmin.tables.restore 
+EXEC google.bigtableadmin.tables.modify_column_families 
 @projectsId='{{ projectsId }}' --required, 
-@instancesId='{{ instancesId }}' --required 
+@instancesId='{{ instancesId }}' --required, 
+@tablesId='{{ tablesId }}' --required 
 @@json=
 '{
-"tableId": "{{ tableId }}", 
-"backup": "{{ backup }}"
+"modifications": "{{ modifications }}", 
+"ignoreWarnings": {{ ignoreWarnings }}
 }'
 ;
 ```

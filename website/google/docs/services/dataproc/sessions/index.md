@@ -254,14 +254,14 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_sessions_list"><CopyableCode code="projects_locations_sessions_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists interactive sessions.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_sessions_create"><CopyableCode code="projects_locations_sessions_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-sessionId"><code>sessionId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-sessionId"><code>sessionId</code></a></td>
     <td>Create an interactive session asynchronously.</td>
 </tr>
 <tr>
@@ -400,9 +400,9 @@ uuid
 FROM google.dataproc.sessions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -424,32 +424,32 @@ Create an interactive session asynchronously.
 
 ```sql
 INSERT INTO google.dataproc.sessions (
-data__name,
-data__jupyterSession,
 data__sparkConnectSession,
 data__labels,
-data__runtimeConfig,
-data__environmentConfig,
 data__user,
+data__runtimeConfig,
+data__jupyterSession,
 data__sessionTemplate,
+data__environmentConfig,
+data__name,
 projectsId,
 locationsId,
-sessionId,
-requestId
+requestId,
+sessionId
 )
 SELECT 
-'{{ name }}',
-'{{ jupyterSession }}',
 '{{ sparkConnectSession }}',
 '{{ labels }}',
-'{{ runtimeConfig }}',
-'{{ environmentConfig }}',
 '{{ user }}',
+'{{ runtimeConfig }}',
+'{{ jupyterSession }}',
 '{{ sessionTemplate }}',
+'{{ environmentConfig }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ sessionId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ sessionId }}'
 RETURNING
 name,
 done,
@@ -471,16 +471,6 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the sessions resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the session.
-        
-    - name: jupyterSession
-      value: object
-      description: >
-        Optional. Jupyter session config.
-        
     - name: sparkConnectSession
       value: object
       description: >
@@ -491,29 +481,39 @@ response
       description: >
         Optional. The labels to associate with the session. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty, but, if present, must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with a session.
         
+    - name: user
+      value: string
+      description: >
+        Optional. The email address of the user who owns the session.
+        
     - name: runtimeConfig
       value: object
       description: >
         Optional. Runtime configuration for the session execution.
         
-    - name: environmentConfig
+    - name: jupyterSession
       value: object
       description: >
-        Optional. Environment configuration for the session execution.
-        
-    - name: user
-      value: string
-      description: >
-        Optional. The email address of the user who owns the session.
+        Optional. Jupyter session config.
         
     - name: sessionTemplate
       value: string
       description: >
         Optional. The session template used by the session.Only resource names, including project ID and location, are valid.Example: * https://www.googleapis.com/compute/v1/projects/[project_id]/locations/[dataproc_region]/sessionTemplates/[template_id] * projects/[project_id]/locations/[dataproc_region]/sessionTemplates/[template_id]The template must be in the same project and Dataproc region as the session.
         
-    - name: sessionId
+    - name: environmentConfig
+      value: object
+      description: >
+        Optional. Environment configuration for the session execution.
+        
+    - name: name
       value: string
+      description: >
+        Identifier. The resource name of the session.
+        
     - name: requestId
+      value: string
+    - name: sessionId
       value: string
 ```
 </TabItem>

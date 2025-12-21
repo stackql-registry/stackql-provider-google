@@ -114,7 +114,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-packagesId"><code>packagesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists tags.</td>
 </tr>
 <tr>
@@ -246,9 +246,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND repositoriesId = '{{ repositoriesId }}' -- required
 AND packagesId = '{{ packagesId }}' -- required
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -270,8 +270,8 @@ Creates a tag.
 
 ```sql
 INSERT INTO google.artifactregistry.tags (
-data__name,
 data__version,
+data__name,
 projectsId,
 locationsId,
 repositoriesId,
@@ -279,8 +279,8 @@ packagesId,
 tagId
 )
 SELECT 
-'{{ name }}',
 '{{ version }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ repositoriesId }}',
@@ -310,15 +310,15 @@ version
     - name: packagesId
       value: string
       description: Required parameter for the tags resource.
-    - name: name
-      value: string
-      description: >
-        The name of the tag, for example: "projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/tags/tag1". If the package part contains slashes, the slashes are escaped. The tag part can only have characters in [a-zA-Z0-9\-._~:@], anything else must be URL encoded.
-        
     - name: version
       value: string
       description: >
         The name of the version the tag refers to, for example: `projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/versions/sha256:5243811` If the package or version ID parts contain slashes, the slashes are escaped.
+        
+    - name: name
+      value: string
+      description: >
+        The name of the tag, for example: "projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/tags/tag1". If the package part contains slashes, the slashes are escaped. The tag part can only have characters in [a-zA-Z0-9\-._~:@], anything else must be URL encoded.
         
     - name: tagId
       value: string
@@ -342,8 +342,8 @@ Updates a tag.
 ```sql
 UPDATE google.artifactregistry.tags
 SET 
-data__name = '{{ name }}',
-data__version = '{{ version }}'
+data__version = '{{ version }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -234,7 +234,7 @@ The following methods are available for this resource:
     <td><a href="#projects_instance_configs_list"><CopyableCode code="projects_instance_configs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists the supported instance configurations for a given project. Returns both Google-managed configurations and user-managed configurations.</td>
 </tr>
 <tr>
@@ -364,8 +364,8 @@ state,
 storageLimitPerProcessingUnit
 FROM google.spanner.instance_configs
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -423,7 +423,7 @@ response
     - name: instanceConfig
       value: object
       description: >
-        A possible configuration for a Cloud Spanner instance. Configurations define the geographic placement of nodes and their replication.
+        Required. The `InstanceConfig` proto of the configuration to create. `instance_config.name` must be `/instanceConfigs/`. `instance_config.base_config` must be a Google-managed configuration name, e.g. /instanceConfigs/us-east1, /instanceConfigs/nam3.
         
     - name: validateOnly
       value: boolean
@@ -450,9 +450,9 @@ Updates an instance configuration. The returned long-running operation can be us
 ```sql
 UPDATE google.spanner.instance_configs
 SET 
-data__instanceConfig = '{{ instanceConfig }}',
+data__validateOnly = {{ validateOnly }},
 data__updateMask = '{{ updateMask }}',
-data__validateOnly = {{ validateOnly }}
+data__instanceConfig = '{{ instanceConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instanceConfigsId = '{{ instanceConfigsId }}' --required

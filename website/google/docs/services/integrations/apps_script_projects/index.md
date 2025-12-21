@@ -107,14 +107,14 @@ Creates an Apps Script project.
 
 ```sql
 INSERT INTO google.integrations.apps_script_projects (
-data__appsScriptProject,
 data__authConfigId,
+data__appsScriptProject,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ appsScriptProject }}',
 '{{ authConfigId }}',
+'{{ appsScriptProject }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -134,15 +134,15 @@ projectId
     - name: locationsId
       value: string
       description: Required parameter for the apps_script_projects resource.
-    - name: appsScriptProject
-      value: string
-      description: >
-        The name of the Apps Script project to be created.
-        
     - name: authConfigId
       value: string
       description: >
         The auth config id necessary to fetch the necessary credentials to create the project for external clients
+        
+    - name: appsScriptProject
+      value: string
+      description: >
+        The name of the Apps Script project to be created.
         
 ```
 </TabItem>

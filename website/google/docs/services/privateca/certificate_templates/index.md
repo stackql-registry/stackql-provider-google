@@ -184,7 +184,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists CertificateTemplates.</td>
 </tr>
 <tr>
@@ -328,8 +328,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -351,26 +351,26 @@ Create a new CertificateTemplate in a given Project and Location.
 
 ```sql
 INSERT INTO google.privateca.certificate_templates (
-data__name,
-data__maximumLifetime,
 data__predefinedValues,
-data__identityConstraints,
-data__passthroughExtensions,
-data__description,
 data__labels,
+data__passthroughExtensions,
+data__identityConstraints,
+data__maximumLifetime,
+data__description,
+data__name,
 projectsId,
 locationsId,
 certificateTemplateId,
 requestId
 )
 SELECT 
-'{{ name }}',
-'{{ maximumLifetime }}',
 '{{ predefinedValues }}',
-'{{ identityConstraints }}',
-'{{ passthroughExtensions }}',
-'{{ description }}',
 '{{ labels }}',
+'{{ passthroughExtensions }}',
+'{{ identityConstraints }}',
+'{{ maximumLifetime }}',
+'{{ description }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ certificateTemplateId }}',
@@ -396,40 +396,40 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the certificate_templates resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name for this CertificateTemplate in the format `projects/*/locations/*/certificateTemplates/*`.
-        
-    - name: maximumLifetime
-      value: string
-      description: >
-        Optional. The maximum lifetime allowed for issued Certificates that use this template. If the issuing CaPool resource's IssuancePolicy specifies a maximum_lifetime the minimum of the two durations will be the maximum lifetime for issued Certificates. Note that if the issuing CertificateAuthority expires before a Certificate's requested maximum_lifetime, the effective lifetime will be explicitly truncated to match it.
-        
     - name: predefinedValues
       value: object
       description: >
         Optional. A set of X.509 values that will be applied to all issued certificates that use this template. If the certificate request includes conflicting values for the same properties, they will be overwritten by the values defined here. If the issuing CaPool's IssuancePolicy defines conflicting baseline_values for the same properties, the certificate issuance request will fail.
         
-    - name: identityConstraints
+    - name: labels
       value: object
       description: >
-        Optional. Describes constraints on identities that may be appear in Certificates issued using this template. If this is omitted, then this template will not add restrictions on a certificate's identity.
+        Optional. Labels with user-defined metadata.
         
     - name: passthroughExtensions
       value: object
       description: >
         Optional. Describes the set of X.509 extensions that may appear in a Certificate issued using this CertificateTemplate. If a certificate request sets extensions that don't appear in the passthrough_extensions, those extensions will be dropped. If the issuing CaPool's IssuancePolicy defines baseline_values that don't appear here, the certificate issuance request will fail. If this is omitted, then this template will not add restrictions on a certificate's X.509 extensions. These constraints do not apply to X.509 extensions set in this CertificateTemplate's predefined_values.
         
+    - name: identityConstraints
+      value: object
+      description: >
+        Optional. Describes constraints on identities that may be appear in Certificates issued using this template. If this is omitted, then this template will not add restrictions on a certificate's identity.
+        
+    - name: maximumLifetime
+      value: string
+      description: >
+        Optional. The maximum lifetime allowed for issued Certificates that use this template. If the issuing CaPool resource's IssuancePolicy specifies a maximum_lifetime the minimum of the two durations will be the maximum lifetime for issued Certificates. Note that if the issuing CertificateAuthority expires before a Certificate's requested maximum_lifetime, the effective lifetime will be explicitly truncated to match it.
+        
     - name: description
       value: string
       description: >
         Optional. A human-readable description of scenarios this template is intended for.
         
-    - name: labels
-      value: object
+    - name: name
+      value: string
       description: >
-        Optional. Labels with user-defined metadata.
+        Identifier. The resource name for this CertificateTemplate in the format `projects/*/locations/*/certificateTemplates/*`.
         
     - name: certificateTemplateId
       value: string
@@ -455,13 +455,13 @@ Update a CertificateTemplate.
 ```sql
 UPDATE google.privateca.certificate_templates
 SET 
-data__name = '{{ name }}',
-data__maximumLifetime = '{{ maximumLifetime }}',
 data__predefinedValues = '{{ predefinedValues }}',
-data__identityConstraints = '{{ identityConstraints }}',
+data__labels = '{{ labels }}',
 data__passthroughExtensions = '{{ passthroughExtensions }}',
+data__identityConstraints = '{{ identityConstraints }}',
+data__maximumLifetime = '{{ maximumLifetime }}',
 data__description = '{{ description }}',
-data__labels = '{{ labels }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

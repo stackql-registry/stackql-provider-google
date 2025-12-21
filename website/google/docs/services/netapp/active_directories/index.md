@@ -173,116 +173,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Identifier. The resource name of the active directory. Format: `projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/activeDirectories/&#123;active_directory_id&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="administrators" /></td>
-    <td><code>array</code></td>
-    <td>Optional. Users to be added to the Built-in Admininstrators group.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="aesEncryption" /></td>
-    <td><code>boolean</code></td>
-    <td>If enabled, AES encryption will be enabled for SMB communication.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="backupOperators" /></td>
-    <td><code>array</code></td>
-    <td>Optional. Users to be added to the Built-in Backup Operator active directory group.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Create time of the active directory.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Description of the active directory.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="dns" /></td>
-    <td><code>string</code></td>
-    <td>Required. Comma separated list of DNS server IP addresses for the Active Directory domain.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="domain" /></td>
-    <td><code>string</code></td>
-    <td>Required. Name of the Active Directory domain</td>
-</tr>
-<tr>
-    <td><CopyableCode code="encryptDcConnections" /></td>
-    <td><code>boolean</code></td>
-    <td>If enabled, traffic between the SMB server to Domain Controller (DC) will be encrypted.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="kdcHostname" /></td>
-    <td><code>string</code></td>
-    <td>Name of the active directory machine. This optional parameter is used only while creating kerberos volume</td>
-</tr>
-<tr>
-    <td><CopyableCode code="kdcIp" /></td>
-    <td><code>string</code></td>
-    <td>KDC server IP address for the active directory machine.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Labels for the active directory.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="ldapSigning" /></td>
-    <td><code>boolean</code></td>
-    <td>Specifies whether or not the LDAP traffic needs to be signed.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="netBiosPrefix" /></td>
-    <td><code>string</code></td>
-    <td>Required. NetBIOSPrefix is used as a prefix for SMB server name.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="nfsUsersWithLdap" /></td>
-    <td><code>boolean</code></td>
-    <td>If enabled, will allow access to local users and LDAP users. If access is needed for only LDAP users, it has to be disabled.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="organizationalUnit" /></td>
-    <td><code>string</code></td>
-    <td>The Organizational Unit (OU) within the Windows Active Directory the user belongs to.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="password" /></td>
-    <td><code>string</code></td>
-    <td>Required. Password of the Active Directory domain administrator.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="securityOperators" /></td>
-    <td><code>array</code></td>
-    <td>Optional. Domain users to be given the SeSecurityPrivilege.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="site" /></td>
-    <td><code>string</code></td>
-    <td>The Active Directory site the service will limit Domain Controller discovery too.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="state" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The state of the AD.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="stateDetails" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The state details of the Active Directory.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="username" /></td>
-    <td><code>string</code></td>
-    <td>Required. Username of the Active Directory domain administrator.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -314,7 +204,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists active directories.</td>
 </tr>
 <tr>
@@ -452,35 +342,14 @@ Lists active directories.
 
 ```sql
 SELECT
-name,
-administrators,
-aesEncryption,
-backupOperators,
-createTime,
-description,
-dns,
-domain,
-encryptDcConnections,
-kdcHostname,
-kdcIp,
-labels,
-ldapSigning,
-netBiosPrefix,
-nfsUsersWithLdap,
-organizationalUnit,
-password,
-securityOperators,
-site,
-state,
-stateDetails,
-username
+*
 FROM google.netapp.active_directories
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -502,49 +371,49 @@ CreateActiveDirectory Creates the active directory specified in the request.
 
 ```sql
 INSERT INTO google.netapp.active_directories (
-data__name,
-data__domain,
-data__site,
-data__dns,
-data__netBiosPrefix,
-data__organizationalUnit,
-data__aesEncryption,
-data__username,
-data__password,
-data__backupOperators,
-data__administrators,
-data__securityOperators,
-data__kdcHostname,
-data__kdcIp,
 data__nfsUsersWithLdap,
-data__description,
-data__ldapSigning,
+data__backupOperators,
+data__username,
 data__encryptDcConnections,
+data__aesEncryption,
+data__domain,
+data__password,
+data__kdcIp,
+data__organizationalUnit,
+data__administrators,
+data__description,
 data__labels,
+data__name,
+data__netBiosPrefix,
+data__dns,
+data__kdcHostname,
+data__site,
+data__securityOperators,
+data__ldapSigning,
 projectsId,
 locationsId,
 activeDirectoryId
 )
 SELECT 
-'{{ name }}',
-'{{ domain }}',
-'{{ site }}',
-'{{ dns }}',
-'{{ netBiosPrefix }}',
-'{{ organizationalUnit }}',
-{{ aesEncryption }},
-'{{ username }}',
-'{{ password }}',
-'{{ backupOperators }}',
-'{{ administrators }}',
-'{{ securityOperators }}',
-'{{ kdcHostname }}',
-'{{ kdcIp }}',
 {{ nfsUsersWithLdap }},
-'{{ description }}',
-{{ ldapSigning }},
+'{{ backupOperators }}',
+'{{ username }}',
 {{ encryptDcConnections }},
+{{ aesEncryption }},
+'{{ domain }}',
+'{{ password }}',
+'{{ kdcIp }}',
+'{{ organizationalUnit }}',
+'{{ administrators }}',
+'{{ description }}',
 '{{ labels }}',
+'{{ name }}',
+'{{ netBiosPrefix }}',
+'{{ dns }}',
+'{{ kdcHostname }}',
+'{{ site }}',
+'{{ securityOperators }}',
+{{ ldapSigning }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ activeDirectoryId }}'
@@ -569,100 +438,100 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the active_directories resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the active directory. Format: `projects/{project_number}/locations/{location_id}/activeDirectories/{active_directory_id}`.
-        
-    - name: domain
-      value: string
-      description: >
-        Required. Name of the Active Directory domain
-        
-    - name: site
-      value: string
-      description: >
-        The Active Directory site the service will limit Domain Controller discovery too.
-        
-    - name: dns
-      value: string
-      description: >
-        Required. Comma separated list of DNS server IP addresses for the Active Directory domain.
-        
-    - name: netBiosPrefix
-      value: string
-      description: >
-        Required. NetBIOSPrefix is used as a prefix for SMB server name.
-        
-    - name: organizationalUnit
-      value: string
-      description: >
-        The Organizational Unit (OU) within the Windows Active Directory the user belongs to.
-        
-    - name: aesEncryption
+    - name: nfsUsersWithLdap
       value: boolean
       description: >
-        If enabled, AES encryption will be enabled for SMB communication.
-        
-    - name: username
-      value: string
-      description: >
-        Required. Username of the Active Directory domain administrator.
-        
-    - name: password
-      value: string
-      description: >
-        Required. Password of the Active Directory domain administrator.
+        If enabled, will allow access to local users and LDAP users. If access is needed for only LDAP users, it has to be disabled.
         
     - name: backupOperators
       value: array
       description: >
         Optional. Users to be added to the Built-in Backup Operator active directory group.
         
-    - name: administrators
-      value: array
-      description: >
-        Optional. Users to be added to the Built-in Admininstrators group.
-        
-    - name: securityOperators
-      value: array
-      description: >
-        Optional. Domain users to be given the SeSecurityPrivilege.
-        
-    - name: kdcHostname
+    - name: username
       value: string
       description: >
-        Name of the active directory machine. This optional parameter is used only while creating kerberos volume
-        
-    - name: kdcIp
-      value: string
-      description: >
-        KDC server IP address for the active directory machine.
-        
-    - name: nfsUsersWithLdap
-      value: boolean
-      description: >
-        If enabled, will allow access to local users and LDAP users. If access is needed for only LDAP users, it has to be disabled.
-        
-    - name: description
-      value: string
-      description: >
-        Description of the active directory.
-        
-    - name: ldapSigning
-      value: boolean
-      description: >
-        Specifies whether or not the LDAP traffic needs to be signed.
+        Required. Username of the Active Directory domain administrator.
         
     - name: encryptDcConnections
       value: boolean
       description: >
         If enabled, traffic between the SMB server to Domain Controller (DC) will be encrypted.
         
+    - name: aesEncryption
+      value: boolean
+      description: >
+        If enabled, AES encryption will be enabled for SMB communication.
+        
+    - name: domain
+      value: string
+      description: >
+        Required. Name of the Active Directory domain
+        
+    - name: password
+      value: string
+      description: >
+        Required. Password of the Active Directory domain administrator.
+        
+    - name: kdcIp
+      value: string
+      description: >
+        KDC server IP address for the active directory machine.
+        
+    - name: organizationalUnit
+      value: string
+      description: >
+        The Organizational Unit (OU) within the Windows Active Directory the user belongs to.
+        
+    - name: administrators
+      value: array
+      description: >
+        Optional. Users to be added to the Built-in Admininstrators group.
+        
+    - name: description
+      value: string
+      description: >
+        Description of the active directory.
+        
     - name: labels
       value: object
       description: >
         Labels for the active directory.
+        
+    - name: name
+      value: string
+      description: >
+        Identifier. The resource name of the active directory. Format: `projects/{project_number}/locations/{location_id}/activeDirectories/{active_directory_id}`.
+        
+    - name: netBiosPrefix
+      value: string
+      description: >
+        Required. NetBIOSPrefix is used as a prefix for SMB server name.
+        
+    - name: dns
+      value: string
+      description: >
+        Required. Comma separated list of DNS server IP addresses for the Active Directory domain.
+        
+    - name: kdcHostname
+      value: string
+      description: >
+        Name of the active directory machine. This optional parameter is used only while creating kerberos volume
+        
+    - name: site
+      value: string
+      description: >
+        The Active Directory site the service will limit Domain Controller discovery too.
+        
+    - name: securityOperators
+      value: array
+      description: >
+        Optional. Domain users to be given the SeSecurityPrivilege.
+        
+    - name: ldapSigning
+      value: boolean
+      description: >
+        Specifies whether or not the LDAP traffic needs to be signed.
         
     - name: activeDirectoryId
       value: string
@@ -686,25 +555,25 @@ Update the parameters of an active directories.
 ```sql
 UPDATE google.netapp.active_directories
 SET 
-data__name = '{{ name }}',
-data__domain = '{{ domain }}',
-data__site = '{{ site }}',
-data__dns = '{{ dns }}',
-data__netBiosPrefix = '{{ netBiosPrefix }}',
-data__organizationalUnit = '{{ organizationalUnit }}',
-data__aesEncryption = {{ aesEncryption }},
-data__username = '{{ username }}',
-data__password = '{{ password }}',
-data__backupOperators = '{{ backupOperators }}',
-data__administrators = '{{ administrators }}',
-data__securityOperators = '{{ securityOperators }}',
-data__kdcHostname = '{{ kdcHostname }}',
-data__kdcIp = '{{ kdcIp }}',
 data__nfsUsersWithLdap = {{ nfsUsersWithLdap }},
-data__description = '{{ description }}',
-data__ldapSigning = {{ ldapSigning }},
+data__backupOperators = '{{ backupOperators }}',
+data__username = '{{ username }}',
 data__encryptDcConnections = {{ encryptDcConnections }},
-data__labels = '{{ labels }}'
+data__aesEncryption = {{ aesEncryption }},
+data__domain = '{{ domain }}',
+data__password = '{{ password }}',
+data__kdcIp = '{{ kdcIp }}',
+data__organizationalUnit = '{{ organizationalUnit }}',
+data__administrators = '{{ administrators }}',
+data__description = '{{ description }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__netBiosPrefix = '{{ netBiosPrefix }}',
+data__dns = '{{ dns }}',
+data__kdcHostname = '{{ kdcHostname }}',
+data__site = '{{ site }}',
+data__securityOperators = '{{ securityOperators }}',
+data__ldapSigning = {{ ldapSigning }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

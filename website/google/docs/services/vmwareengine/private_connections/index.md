@@ -128,71 +128,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The resource name of the private connection. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1/privateConnections/my-connection`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Creation time of this resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Optional. User-provided description for this private connection.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="peeringId" /></td>
-    <td><code>string</code></td>
-    <td>Output only. VPC network peering id between given network VPC and VMwareEngineNetwork.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="peeringState" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Peering state between service network and VMware Engine network.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="routingMode" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Routing Mode. Default value is set to GLOBAL. For type = PRIVATE_SERVICE_ACCESS, this field can be set to GLOBAL or REGIONAL, for other types only GLOBAL is supported.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="serviceNetwork" /></td>
-    <td><code>string</code></td>
-    <td>Required. Service network to create private connection. Specify the name in the following form: `projects/&#123;project&#125;/global/networks/&#123;network_id&#125;` For type = PRIVATE_SERVICE_ACCESS, this field represents servicenetworking VPC, e.g. projects/project-tp/global/networks/servicenetworking. For type = NETAPP_CLOUD_VOLUME, this field represents NetApp service VPC, e.g. projects/project-tp/global/networks/netapp-tenant-vpc. For type = DELL_POWERSCALE, this field represent Dell service VPC, e.g. projects/project-tp/global/networks/dell-tenant-vpc. For type= THIRD_PARTY_SERVICE, this field could represent a consumer VPC or any other producer VPC to which the VMware Engine Network needs to be connected, e.g. projects/project/global/networks/vpc.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="state" /></td>
-    <td><code>string</code></td>
-    <td>Output only. State of the private connection.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="type" /></td>
-    <td><code>string</code></td>
-    <td>Required. Private connection type.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="uid" /></td>
-    <td><code>string</code></td>
-    <td>Output only. System-generated unique identifier for the resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Last update time of this resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="vmwareEngineNetwork" /></td>
-    <td><code>string</code></td>
-    <td>Required. The relative resource name of Legacy VMware Engine network. Specify the name in the following form: `projects/&#123;project&#125;/locations/&#123;location&#125;/vmwareEngineNetworks/&#123;vmware_engine_network_id&#125;` where `&#123;project&#125;`, `&#123;location&#125;` will be same as specified in private connection resource name and `&#123;vmware_engine_network_id&#125;` will be in the form of `&#123;location&#125;`-default e.g. projects/project/locations/us-central1/vmwareEngineNetworks/us-central1-default.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="vmwareEngineNetworkCanonical" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The canonical name of the VMware Engine network in the form: `projects/&#123;project_number&#125;/locations/&#123;location&#125;/vmwareEngineNetworks/&#123;vmware_engine_network_id&#125;`</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -224,21 +159,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists `PrivateConnection` resources in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-privateConnectionId"><code>privateConnectionId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-privateConnectionId"><code>privateConnectionId</code></a></td>
     <td>Creates a new private connection that can be used for accessing private Clouds.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateConnectionsId"><code>privateConnectionsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Modifies a `PrivateConnection` resource. Only `description` and `routing_mode` fields can be updated. Only fields specified in `updateMask` are applied.</td>
 </tr>
 <tr>
@@ -358,26 +293,14 @@ Lists `PrivateConnection` resources in a given project and location.
 
 ```sql
 SELECT
-name,
-createTime,
-description,
-peeringId,
-peeringState,
-routingMode,
-serviceNetwork,
-state,
-type,
-uid,
-updateTime,
-vmwareEngineNetwork,
-vmwareEngineNetworkCanonical
+*
 FROM google.vmwareengine.private_connections
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -399,26 +322,26 @@ Creates a new private connection that can be used for accessing private Clouds.
 
 ```sql
 INSERT INTO google.vmwareengine.private_connections (
-data__description,
 data__vmwareEngineNetwork,
-data__type,
-data__routingMode,
 data__serviceNetwork,
+data__description,
+data__routingMode,
+data__type,
 projectsId,
 locationsId,
-privateConnectionId,
-requestId
+requestId,
+privateConnectionId
 )
 SELECT 
-'{{ description }}',
 '{{ vmwareEngineNetwork }}',
-'{{ type }}',
-'{{ routingMode }}',
 '{{ serviceNetwork }}',
+'{{ description }}',
+'{{ routingMode }}',
+'{{ type }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ privateConnectionId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ privateConnectionId }}'
 RETURNING
 name,
 done,
@@ -440,36 +363,36 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the private_connections resource.
-    - name: description
-      value: string
-      description: >
-        Optional. User-provided description for this private connection.
-        
     - name: vmwareEngineNetwork
       value: string
       description: >
         Required. The relative resource name of Legacy VMware Engine network. Specify the name in the following form: `projects/{project}/locations/{location}/vmwareEngineNetworks/{vmware_engine_network_id}` where `{project}`, `{location}` will be same as specified in private connection resource name and `{vmware_engine_network_id}` will be in the form of `{location}`-default e.g. projects/project/locations/us-central1/vmwareEngineNetworks/us-central1-default.
         
-    - name: type
+    - name: serviceNetwork
       value: string
       description: >
-        Required. Private connection type.
+        Required. Service network to create private connection. Specify the name in the following form: `projects/{project}/global/networks/{network_id}` For type = PRIVATE_SERVICE_ACCESS, this field represents servicenetworking VPC, e.g. projects/project-tp/global/networks/servicenetworking. For type = NETAPP_CLOUD_VOLUME, this field represents NetApp service VPC, e.g. projects/project-tp/global/networks/netapp-tenant-vpc. For type = DELL_POWERSCALE, this field represent Dell service VPC, e.g. projects/project-tp/global/networks/dell-tenant-vpc. For type= THIRD_PARTY_SERVICE, this field could represent a consumer VPC or any other producer VPC to which the VMware Engine Network needs to be connected, e.g. projects/project/global/networks/vpc.
         
-      valid_values: ['TYPE_UNSPECIFIED', 'PRIVATE_SERVICE_ACCESS', 'NETAPP_CLOUD_VOLUMES', 'DELL_POWERSCALE', 'THIRD_PARTY_SERVICE']
+    - name: description
+      value: string
+      description: >
+        Optional. User-provided description for this private connection.
+        
     - name: routingMode
       value: string
       description: >
         Optional. Routing Mode. Default value is set to GLOBAL. For type = PRIVATE_SERVICE_ACCESS, this field can be set to GLOBAL or REGIONAL, for other types only GLOBAL is supported.
         
       valid_values: ['ROUTING_MODE_UNSPECIFIED', 'GLOBAL', 'REGIONAL']
-    - name: serviceNetwork
+    - name: type
       value: string
       description: >
-        Required. Service network to create private connection. Specify the name in the following form: `projects/{project}/global/networks/{network_id}` For type = PRIVATE_SERVICE_ACCESS, this field represents servicenetworking VPC, e.g. projects/project-tp/global/networks/servicenetworking. For type = NETAPP_CLOUD_VOLUME, this field represents NetApp service VPC, e.g. projects/project-tp/global/networks/netapp-tenant-vpc. For type = DELL_POWERSCALE, this field represent Dell service VPC, e.g. projects/project-tp/global/networks/dell-tenant-vpc. For type= THIRD_PARTY_SERVICE, this field could represent a consumer VPC or any other producer VPC to which the VMware Engine Network needs to be connected, e.g. projects/project/global/networks/vpc.
+        Required. Private connection type.
         
-    - name: privateConnectionId
-      value: string
+      valid_values: ['TYPE_UNSPECIFIED', 'PRIVATE_SERVICE_ACCESS', 'NETAPP_CLOUD_VOLUMES', 'DELL_POWERSCALE', 'THIRD_PARTY_SERVICE']
     - name: requestId
+      value: string
+    - name: privateConnectionId
       value: string
 ```
 </TabItem>
@@ -491,17 +414,17 @@ Modifies a `PrivateConnection` resource. Only `description` and `routing_mode` f
 ```sql
 UPDATE google.vmwareengine.private_connections
 SET 
-data__description = '{{ description }}',
 data__vmwareEngineNetwork = '{{ vmwareEngineNetwork }}',
-data__type = '{{ type }}',
+data__serviceNetwork = '{{ serviceNetwork }}',
+data__description = '{{ description }}',
 data__routingMode = '{{ routingMode }}',
-data__serviceNetwork = '{{ serviceNetwork }}'
+data__type = '{{ type }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND privateConnectionsId = '{{ privateConnectionsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

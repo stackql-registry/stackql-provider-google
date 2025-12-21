@@ -154,7 +154,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-metadataStoresId"><code>metadataStoresId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists MetadataSchemas.</td>
 </tr>
 <tr>
@@ -268,9 +268,9 @@ FROM google.aiplatform.metadata_schemas
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND metadataStoresId = '{{ metadataStoresId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -292,20 +292,20 @@ Creates a MetadataSchema.
 
 ```sql
 INSERT INTO google.aiplatform.metadata_schemas (
-data__schemaVersion,
+data__description,
 data__schema,
 data__schemaType,
-data__description,
+data__schemaVersion,
 projectsId,
 locationsId,
 metadataStoresId,
 metadataSchemaId
 )
 SELECT 
-'{{ schemaVersion }}',
+'{{ description }}',
 '{{ schema }}',
 '{{ schemaType }}',
-'{{ description }}',
+'{{ schemaVersion }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ metadataStoresId }}',
@@ -335,10 +335,10 @@ schemaVersion
     - name: metadataStoresId
       value: string
       description: Required parameter for the metadata_schemas resource.
-    - name: schemaVersion
+    - name: description
       value: string
       description: >
-        The version of the MetadataSchema. The version's format must match the following regular expression: `^[0-9]+.+.+$`, which would allow to order/compare different versions. Example: 1.0.0, 1.0.1, etc.
+        Description of the Metadata Schema
         
     - name: schema
       value: string
@@ -351,10 +351,10 @@ schemaVersion
         The type of the MetadataSchema. This is a property that identifies which metadata types will use the MetadataSchema.
         
       valid_values: ['METADATA_SCHEMA_TYPE_UNSPECIFIED', 'ARTIFACT_TYPE', 'EXECUTION_TYPE', 'CONTEXT_TYPE']
-    - name: description
+    - name: schemaVersion
       value: string
       description: >
-        Description of the Metadata Schema
+        The version of the MetadataSchema. The version's format must match the following regular expression: `^[0-9]+.+.+$`, which would allow to order/compare different versions. Example: 1.0.0, 1.0.1, etc.
         
     - name: metadataSchemaId
       value: string

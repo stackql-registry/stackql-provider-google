@@ -144,7 +144,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists InboundSamlSsoProfiles for a customer.</td>
 </tr>
 <tr>
@@ -250,8 +250,8 @@ idpConfig,
 spConfig
 FROM google.cloudidentity.inbound_saml_sso_profiles
 WHERE filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -273,16 +273,16 @@ Creates an InboundSamlSsoProfile for a customer. When the target customer has en
 
 ```sql
 INSERT INTO google.cloudidentity.inbound_saml_sso_profiles (
+data__spConfig,
 data__customer,
-data__displayName,
 data__idpConfig,
-data__spConfig
+data__displayName
 )
 SELECT 
+'{{ spConfig }}',
 '{{ customer }}',
-'{{ displayName }}',
 '{{ idpConfig }}',
-'{{ spConfig }}'
+'{{ displayName }}'
 RETURNING
 name,
 done,
@@ -298,25 +298,25 @@ response
 # Description fields are for documentation purposes
 - name: inbound_saml_sso_profiles
   props:
+    - name: spConfig
+      value: object
+      description: >
+        SAML service provider configuration for this SAML SSO profile. These are the service provider details provided by Google that should be configured on the corresponding identity provider.
+        
     - name: customer
       value: string
       description: >
         Immutable. The customer. For example: `customers/C0123abc`.
-        
-    - name: displayName
-      value: string
-      description: >
-        Human-readable name of the SAML SSO profile.
         
     - name: idpConfig
       value: object
       description: >
         SAML identity provider configuration.
         
-    - name: spConfig
-      value: object
+    - name: displayName
+      value: string
       description: >
-        SAML service provider configuration for this SAML SSO profile. These are the service provider details provided by Google that should be configured on the corresponding identity provider.
+        Human-readable name of the SAML SSO profile.
         
 ```
 </TabItem>
@@ -338,10 +338,10 @@ Updates an InboundSamlSsoProfile. When the target customer has enabled [Multi-pa
 ```sql
 UPDATE google.cloudidentity.inbound_saml_sso_profiles
 SET 
+data__spConfig = '{{ spConfig }}',
 data__customer = '{{ customer }}',
-data__displayName = '{{ displayName }}',
 data__idpConfig = '{{ idpConfig }}',
-data__spConfig = '{{ spConfig }}'
+data__displayName = '{{ displayName }}'
 WHERE 
 inboundSamlSsoProfilesId = '{{ inboundSamlSsoProfilesId }}' --required
 AND updateMask = '{{ updateMask}}'

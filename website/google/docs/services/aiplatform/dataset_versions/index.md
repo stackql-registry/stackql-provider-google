@@ -194,7 +194,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
     <td>Lists DatasetVersions in a Dataset.</td>
 </tr>
 <tr>
@@ -348,11 +348,11 @@ FROM google.aiplatform.dataset_versions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND datasetsId = '{{ datasetsId }}' -- required
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
-AND readMask = '{{ readMask }}'
 AND orderBy = '{{ orderBy }}'
+AND readMask = '{{ readMask }}'
 ;
 ```
 </TabItem>
@@ -374,15 +374,15 @@ Create a version from a Dataset.
 
 ```sql
 INSERT INTO google.aiplatform.dataset_versions (
-data__etag,
 data__displayName,
+data__etag,
 projectsId,
 locationsId,
 datasetsId
 )
 SELECT 
-'{{ etag }}',
 '{{ displayName }}',
+'{{ etag }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ datasetsId }}'
@@ -410,15 +410,15 @@ response
     - name: datasetsId
       value: string
       description: Required parameter for the dataset_versions resource.
-    - name: etag
-      value: string
-      description: >
-        Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
-        
     - name: displayName
       value: string
       description: >
         The user-defined name of the DatasetVersion. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+        
+    - name: etag
+      value: string
+      description: >
+        Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
         
 ```
 </TabItem>
@@ -440,8 +440,8 @@ Updates a DatasetVersion.
 ```sql
 UPDATE google.aiplatform.dataset_versions
 SET 
-data__etag = '{{ etag }}',
-data__displayName = '{{ displayName }}'
+data__displayName = '{{ displayName }}',
+data__etag = '{{ etag }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

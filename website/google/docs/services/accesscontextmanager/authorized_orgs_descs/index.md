@@ -144,7 +144,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-accessPoliciesId"><code>accessPoliciesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists all authorized orgs descs for an access policy.</td>
 </tr>
 <tr>
@@ -251,8 +251,8 @@ authorizationType,
 orgs
 FROM google.accesscontextmanager.authorized_orgs_descs
 WHERE accessPoliciesId = '{{ accessPoliciesId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -275,18 +275,18 @@ Creates an authorized orgs desc. The long-running operation from this RPC has a 
 ```sql
 INSERT INTO google.accesscontextmanager.authorized_orgs_descs (
 data__name,
-data__authorizationType,
 data__assetType,
-data__authorizationDirection,
 data__orgs,
+data__authorizationDirection,
+data__authorizationType,
 accessPoliciesId
 )
 SELECT 
 '{{ name }}',
-'{{ authorizationType }}',
 '{{ assetType }}',
-'{{ authorizationDirection }}',
 '{{ orgs }}',
+'{{ authorizationDirection }}',
+'{{ authorizationType }}',
 '{{ accessPoliciesId }}'
 RETURNING
 name,
@@ -311,29 +311,29 @@ response
       description: >
         Identifier. Resource name for the `AuthorizedOrgsDesc`. Format: `accessPolicies/{access_policy}/authorizedOrgsDescs/{authorized_orgs_desc}`. The `authorized_orgs_desc` component must begin with a letter, followed by alphanumeric characters or `_`. After you create an `AuthorizedOrgsDesc`, you cannot change its `name`.
         
-    - name: authorizationType
-      value: string
-      description: >
-        A granular control type for authorization levels. Valid value is `AUTHORIZATION_TYPE_TRUST`.
-        
-      valid_values: ['AUTHORIZATION_TYPE_UNSPECIFIED', 'AUTHORIZATION_TYPE_TRUST']
     - name: assetType
       value: string
       description: >
         The asset type of this authorized orgs desc. Valid values are `ASSET_TYPE_DEVICE`, and `ASSET_TYPE_CREDENTIAL_STRENGTH`.
         
       valid_values: ['ASSET_TYPE_UNSPECIFIED', 'ASSET_TYPE_DEVICE', 'ASSET_TYPE_CREDENTIAL_STRENGTH']
+    - name: orgs
+      value: array
+      description: >
+        The list of organization ids in this AuthorizedOrgsDesc. Format: `organizations/` Example: `organizations/123456`
+        
     - name: authorizationDirection
       value: string
       description: >
         The direction of the authorization relationship between this organization and the organizations listed in the `orgs` field. The valid values for this field include the following: `AUTHORIZATION_DIRECTION_FROM`: Allows this organization to evaluate traffic in the organizations listed in the `orgs` field. `AUTHORIZATION_DIRECTION_TO`: Allows the organizations listed in the `orgs` field to evaluate the traffic in this organization. For the authorization relationship to take effect, all of the organizations must authorize and specify the appropriate relationship direction. For example, if organization A authorized organization B and C to evaluate its traffic, by specifying `AUTHORIZATION_DIRECTION_TO` as the authorization direction, organizations B and C must specify `AUTHORIZATION_DIRECTION_FROM` as the authorization direction in their `AuthorizedOrgsDesc` resource.
         
       valid_values: ['AUTHORIZATION_DIRECTION_UNSPECIFIED', 'AUTHORIZATION_DIRECTION_TO', 'AUTHORIZATION_DIRECTION_FROM']
-    - name: orgs
-      value: array
+    - name: authorizationType
+      value: string
       description: >
-        The list of organization ids in this AuthorizedOrgsDesc. Format: `organizations/` Example: `organizations/123456`
+        A granular control type for authorization levels. Valid value is `AUTHORIZATION_TYPE_TRUST`.
         
+      valid_values: ['AUTHORIZATION_TYPE_UNSPECIFIED', 'AUTHORIZATION_TYPE_TRUST']
 ```
 </TabItem>
 </Tabs>
@@ -355,10 +355,10 @@ Updates an authorized orgs desc. The long-running operation from this RPC has a 
 UPDATE google.accesscontextmanager.authorized_orgs_descs
 SET 
 data__name = '{{ name }}',
-data__authorizationType = '{{ authorizationType }}',
 data__assetType = '{{ assetType }}',
+data__orgs = '{{ orgs }}',
 data__authorizationDirection = '{{ authorizationDirection }}',
-data__orgs = '{{ orgs }}'
+data__authorizationType = '{{ authorizationType }}'
 WHERE 
 accessPoliciesId = '{{ accessPoliciesId }}' --required
 AND authorizedOrgsDescsId = '{{ authorizedOrgsDescsId }}' --required

@@ -110,9 +110,9 @@ Updates an existing API proxy revision by uploading the API proxy configuration 
 ```sql
 UPDATE google.apigee.revisions_api_proxy_revision
 SET 
-data__contentType = '{{ contentType }}',
 data__data = '{{ data }}',
-data__extensions = '{{ extensions }}'
+data__extensions = '{{ extensions }}',
+data__contentType = '{{ contentType }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND apisId = '{{ apisId }}' --required

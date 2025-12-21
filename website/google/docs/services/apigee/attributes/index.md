@@ -35,38 +35,14 @@ The following fields are returned by `SELECT` queries:
     defaultValue="organizations_developers_apps_attributes_get"
     values={[
         { label: 'organizations_developers_apps_attributes_get', value: 'organizations_developers_apps_attributes_get' },
-        { label: 'organizations_apiproducts_attributes_get', value: 'organizations_apiproducts_attributes_get' },
         { label: 'organizations_developers_apps_attributes_list', value: 'organizations_developers_apps_attributes_list' },
         { label: 'organizations_developers_attributes_get', value: 'organizations_developers_attributes_get' },
-        { label: 'organizations_apiproducts_attributes_list', value: 'organizations_apiproducts_attributes_list' },
-        { label: 'organizations_developers_attributes_list', value: 'organizations_developers_attributes_list' }
+        { label: 'organizations_apiproducts_attributes_get', value: 'organizations_apiproducts_attributes_get' },
+        { label: 'organizations_developers_attributes_list', value: 'organizations_developers_attributes_list' },
+        { label: 'organizations_apiproducts_attributes_list', value: 'organizations_apiproducts_attributes_list' }
     ]}
 >
 <TabItem value="organizations_developers_apps_attributes_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>API key of the attribute.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="value" /></td>
-    <td><code>string</code></td>
-    <td>Value of the attribute.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="organizations_apiproducts_attributes_get">
 
 <table>
 <thead>
@@ -133,7 +109,31 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="organizations_apiproducts_attributes_list">
+<TabItem value="organizations_apiproducts_attributes_get">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>API key of the attribute.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="value" /></td>
+    <td><code>string</code></td>
+    <td>Value of the attribute.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="organizations_developers_attributes_list">
 
 <table>
 <thead>
@@ -152,7 +152,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="organizations_developers_attributes_list">
+<TabItem value="organizations_apiproducts_attributes_list">
 
 <table>
 <thead>
@@ -196,13 +196,6 @@ The following methods are available for this resource:
     <td>Returns a developer app attribute.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_apiproducts_attributes_get"><CopyableCode code="organizations_apiproducts_attributes_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-apiproductsId"><code>apiproductsId</code></a>, <a href="#parameter-attributesId"><code>attributesId</code></a></td>
-    <td></td>
-    <td>Gets the value of an API product attribute.</td>
-</tr>
-<tr>
     <td><a href="#organizations_developers_apps_attributes_list"><CopyableCode code="organizations_developers_apps_attributes_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-developersId"><code>developersId</code></a>, <a href="#parameter-appsId"><code>appsId</code></a></td>
@@ -217,11 +210,11 @@ The following methods are available for this resource:
     <td>Returns the value of the specified developer attribute.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_apiproducts_attributes_list"><CopyableCode code="organizations_apiproducts_attributes_list" /></a></td>
+    <td><a href="#organizations_apiproducts_attributes_get"><CopyableCode code="organizations_apiproducts_attributes_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-apiproductsId"><code>apiproductsId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-apiproductsId"><code>apiproductsId</code></a>, <a href="#parameter-attributesId"><code>attributesId</code></a></td>
     <td></td>
-    <td>Lists all API product attributes.</td>
+    <td>Gets the value of an API product attribute.</td>
 </tr>
 <tr>
     <td><a href="#organizations_developers_attributes_list"><CopyableCode code="organizations_developers_attributes_list" /></a></td>
@@ -231,18 +224,18 @@ The following methods are available for this resource:
     <td>Returns a list of all developer attributes.</td>
 </tr>
 <tr>
+    <td><a href="#organizations_apiproducts_attributes_list"><CopyableCode code="organizations_apiproducts_attributes_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-apiproductsId"><code>apiproductsId</code></a></td>
+    <td></td>
+    <td>Lists all API product attributes.</td>
+</tr>
+<tr>
     <td><a href="#organizations_developers_apps_attributes_delete"><CopyableCode code="organizations_developers_apps_attributes_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-developersId"><code>developersId</code></a>, <a href="#parameter-appsId"><code>appsId</code></a>, <a href="#parameter-attributesId"><code>attributesId</code></a></td>
     <td></td>
     <td>Deletes a developer app attribute.</td>
-</tr>
-<tr>
-    <td><a href="#organizations_apiproducts_attributes_delete"><CopyableCode code="organizations_apiproducts_attributes_delete" /></a></td>
-    <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-apiproductsId"><code>apiproductsId</code></a>, <a href="#parameter-attributesId"><code>attributesId</code></a></td>
-    <td></td>
-    <td>Deletes an API product attribute.</td>
 </tr>
 <tr>
     <td><a href="#organizations_developers_attributes_delete"><CopyableCode code="organizations_developers_attributes_delete" /></a></td>
@@ -252,11 +245,11 @@ The following methods are available for this resource:
     <td>Deletes a developer attribute.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_apiproducts_attributes_update_api_product_attribute"><CopyableCode code="organizations_apiproducts_attributes_update_api_product_attribute" /></a></td>
-    <td><CopyableCode code="exec" /></td>
+    <td><a href="#organizations_apiproducts_attributes_delete"><CopyableCode code="organizations_apiproducts_attributes_delete" /></a></td>
+    <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-apiproductsId"><code>apiproductsId</code></a>, <a href="#parameter-attributesId"><code>attributesId</code></a></td>
     <td></td>
-    <td>Updates the value of an API product attribute. **Note**: OAuth access tokens and Key Management Service (KMS) entities (apps, developers, and API products) are cached for 180 seconds (current default). Any custom attributes associated with entities also get cached for at least 180 seconds after entity is accessed during runtime. In this case, the `ExpiresIn` element on the OAuthV2 policy won't be able to expire an access token in less than 180 seconds.</td>
+    <td>Deletes an API product attribute.</td>
 </tr>
 <tr>
     <td><a href="#organizations_developers_apps_attributes_update_developer_app_attribute"><CopyableCode code="organizations_developers_apps_attributes_update_developer_app_attribute" /></a></td>
@@ -271,6 +264,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-developersId"><code>developersId</code></a>, <a href="#parameter-attributesId"><code>attributesId</code></a></td>
     <td></td>
     <td>Updates a developer attribute. **Note**: OAuth access tokens and Key Management Service (KMS) entities (apps, developers, and API products) are cached for 180 seconds (default). Any custom attributes associated with these entities are cached for at least 180 seconds after the entity is accessed at runtime. Therefore, an `ExpiresIn` element on the OAuthV2 policy won't be able to expire an access token in less than 180 seconds.</td>
+</tr>
+<tr>
+    <td><a href="#organizations_apiproducts_attributes_update_api_product_attribute"><CopyableCode code="organizations_apiproducts_attributes_update_api_product_attribute" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-apiproductsId"><code>apiproductsId</code></a>, <a href="#parameter-attributesId"><code>attributesId</code></a></td>
+    <td></td>
+    <td>Updates the value of an API product attribute. **Note**: OAuth access tokens and Key Management Service (KMS) entities (apps, developers, and API products) are cached for 180 seconds (current default). Any custom attributes associated with entities also get cached for at least 180 seconds after entity is accessed during runtime. In this case, the `ExpiresIn` element on the OAuthV2 policy won't be able to expire an access token in less than 180 seconds.</td>
 </tr>
 </tbody>
 </table>
@@ -322,11 +322,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="organizations_developers_apps_attributes_get"
     values={[
         { label: 'organizations_developers_apps_attributes_get', value: 'organizations_developers_apps_attributes_get' },
-        { label: 'organizations_apiproducts_attributes_get', value: 'organizations_apiproducts_attributes_get' },
         { label: 'organizations_developers_apps_attributes_list', value: 'organizations_developers_apps_attributes_list' },
         { label: 'organizations_developers_attributes_get', value: 'organizations_developers_attributes_get' },
-        { label: 'organizations_apiproducts_attributes_list', value: 'organizations_apiproducts_attributes_list' },
-        { label: 'organizations_developers_attributes_list', value: 'organizations_developers_attributes_list' }
+        { label: 'organizations_apiproducts_attributes_get', value: 'organizations_apiproducts_attributes_get' },
+        { label: 'organizations_developers_attributes_list', value: 'organizations_developers_attributes_list' },
+        { label: 'organizations_apiproducts_attributes_list', value: 'organizations_apiproducts_attributes_list' }
     ]}
 >
 <TabItem value="organizations_developers_apps_attributes_get">
@@ -341,21 +341,6 @@ FROM google.apigee.attributes
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND developersId = '{{ developersId }}' -- required
 AND appsId = '{{ appsId }}' -- required
-AND attributesId = '{{ attributesId }}' -- required
-;
-```
-</TabItem>
-<TabItem value="organizations_apiproducts_attributes_get">
-
-Gets the value of an API product attribute.
-
-```sql
-SELECT
-name,
-value
-FROM google.apigee.attributes
-WHERE organizationsId = '{{ organizationsId }}' -- required
-AND apiproductsId = '{{ apiproductsId }}' -- required
 AND attributesId = '{{ attributesId }}' -- required
 ;
 ```
@@ -389,16 +374,18 @@ AND attributesId = '{{ attributesId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="organizations_apiproducts_attributes_list">
+<TabItem value="organizations_apiproducts_attributes_get">
 
-Lists all API product attributes.
+Gets the value of an API product attribute.
 
 ```sql
 SELECT
-attribute
+name,
+value
 FROM google.apigee.attributes
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND apiproductsId = '{{ apiproductsId }}' -- required
+AND attributesId = '{{ attributesId }}' -- required
 ;
 ```
 </TabItem>
@@ -415,6 +402,19 @@ AND developersId = '{{ developersId }}' -- required
 ;
 ```
 </TabItem>
+<TabItem value="organizations_apiproducts_attributes_list">
+
+Lists all API product attributes.
+
+```sql
+SELECT
+attribute
+FROM google.apigee.attributes
+WHERE organizationsId = '{{ organizationsId }}' -- required
+AND apiproductsId = '{{ apiproductsId }}' -- required
+;
+```
+</TabItem>
 </Tabs>
 
 
@@ -424,8 +424,8 @@ AND developersId = '{{ developersId }}' -- required
     defaultValue="organizations_developers_apps_attributes_delete"
     values={[
         { label: 'organizations_developers_apps_attributes_delete', value: 'organizations_developers_apps_attributes_delete' },
-        { label: 'organizations_apiproducts_attributes_delete', value: 'organizations_apiproducts_attributes_delete' },
-        { label: 'organizations_developers_attributes_delete', value: 'organizations_developers_attributes_delete' }
+        { label: 'organizations_developers_attributes_delete', value: 'organizations_developers_attributes_delete' },
+        { label: 'organizations_apiproducts_attributes_delete', value: 'organizations_apiproducts_attributes_delete' }
     ]}
 >
 <TabItem value="organizations_developers_apps_attributes_delete">
@@ -437,18 +437,6 @@ DELETE FROM google.apigee.attributes
 WHERE organizationsId = '{{ organizationsId }}' --required
 AND developersId = '{{ developersId }}' --required
 AND appsId = '{{ appsId }}' --required
-AND attributesId = '{{ attributesId }}' --required
-;
-```
-</TabItem>
-<TabItem value="organizations_apiproducts_attributes_delete">
-
-Deletes an API product attribute.
-
-```sql
-DELETE FROM google.apigee.attributes
-WHERE organizationsId = '{{ organizationsId }}' --required
-AND apiproductsId = '{{ apiproductsId }}' --required
 AND attributesId = '{{ attributesId }}' --required
 ;
 ```
@@ -465,36 +453,31 @@ AND attributesId = '{{ attributesId }}' --required
 ;
 ```
 </TabItem>
+<TabItem value="organizations_apiproducts_attributes_delete">
+
+Deletes an API product attribute.
+
+```sql
+DELETE FROM google.apigee.attributes
+WHERE organizationsId = '{{ organizationsId }}' --required
+AND apiproductsId = '{{ apiproductsId }}' --required
+AND attributesId = '{{ attributesId }}' --required
+;
+```
+</TabItem>
 </Tabs>
 
 
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="organizations_apiproducts_attributes_update_api_product_attribute"
+    defaultValue="organizations_developers_apps_attributes_update_developer_app_attribute"
     values={[
-        { label: 'organizations_apiproducts_attributes_update_api_product_attribute', value: 'organizations_apiproducts_attributes_update_api_product_attribute' },
         { label: 'organizations_developers_apps_attributes_update_developer_app_attribute', value: 'organizations_developers_apps_attributes_update_developer_app_attribute' },
-        { label: 'organizations_developers_attributes_update_developer_attribute', value: 'organizations_developers_attributes_update_developer_attribute' }
+        { label: 'organizations_developers_attributes_update_developer_attribute', value: 'organizations_developers_attributes_update_developer_attribute' },
+        { label: 'organizations_apiproducts_attributes_update_api_product_attribute', value: 'organizations_apiproducts_attributes_update_api_product_attribute' }
     ]}
 >
-<TabItem value="organizations_apiproducts_attributes_update_api_product_attribute">
-
-Updates the value of an API product attribute. **Note**: OAuth access tokens and Key Management Service (KMS) entities (apps, developers, and API products) are cached for 180 seconds (current default). Any custom attributes associated with entities also get cached for at least 180 seconds after entity is accessed during runtime. In this case, the `ExpiresIn` element on the OAuthV2 policy won't be able to expire an access token in less than 180 seconds.
-
-```sql
-EXEC google.apigee.attributes.organizations_apiproducts_attributes_update_api_product_attribute 
-@organizationsId='{{ organizationsId }}' --required, 
-@apiproductsId='{{ apiproductsId }}' --required, 
-@attributesId='{{ attributesId }}' --required 
-@@json=
-'{
-"name": "{{ name }}", 
-"value": "{{ value }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="organizations_developers_apps_attributes_update_developer_app_attribute">
 
 Updates a developer app attribute. **Note**: OAuth access tokens and Key Management Service (KMS) entities (apps, developers, and API products) are cached for 180 seconds (current default). Any custom attributes associated with these entities are cached for at least 180 seconds after the entity is accessed at runtime. Therefore, an `ExpiresIn` element on the OAuthV2 policy won't be able to expire an access token in less than 180 seconds.
@@ -521,6 +504,23 @@ Updates a developer attribute. **Note**: OAuth access tokens and Key Management 
 EXEC google.apigee.attributes.organizations_developers_attributes_update_developer_attribute 
 @organizationsId='{{ organizationsId }}' --required, 
 @developersId='{{ developersId }}' --required, 
+@attributesId='{{ attributesId }}' --required 
+@@json=
+'{
+"name": "{{ name }}", 
+"value": "{{ value }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="organizations_apiproducts_attributes_update_api_product_attribute">
+
+Updates the value of an API product attribute. **Note**: OAuth access tokens and Key Management Service (KMS) entities (apps, developers, and API products) are cached for 180 seconds (current default). Any custom attributes associated with entities also get cached for at least 180 seconds after entity is accessed during runtime. In this case, the `ExpiresIn` element on the OAuthV2 policy won't be able to expire an access token in less than 180 seconds.
+
+```sql
+EXEC google.apigee.attributes.organizations_apiproducts_attributes_update_api_product_attribute 
+@organizationsId='{{ organizationsId }}' --required, 
+@apiproductsId='{{ apiproductsId }}' --required, 
 @attributesId='{{ attributesId }}' --required 
 @@json=
 '{

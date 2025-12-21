@@ -52,7 +52,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Identifier. Name of the TlsRoute resource. It matches pattern `projects/*/locations/global/tlsRoutes/tls_route_name>`.</td>
+    <td>Identifier. Name of the TlsRoute resource. It matches pattern `projects/*/locations/*/tlsRoutes/tls_route_name>`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -67,7 +67,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="gateways" /></td>
     <td><code>array</code></td>
-    <td>Optional. Gateways defines a list of gateways this TlsRoute is attached to, as one of the routing rules to route the requests served by the gateway. Each gateway reference should match the pattern: `projects/*/locations/global/gateways/`</td>
+    <td>Optional. Gateways defines a list of gateways this TlsRoute is attached to, as one of the routing rules to route the requests served by the gateway. Each gateway reference should match the pattern: `projects/*/locations/*/gateways/`</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -77,7 +77,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="meshes" /></td>
     <td><code>array</code></td>
-    <td>Optional. Meshes defines a list of meshes this TlsRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: `projects/*/locations/global/meshes/` The attached Mesh should be of a type SIDECAR</td>
+    <td>Optional. Meshes defines a list of meshes this TlsRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: `projects/*/locations/*/meshes/` The attached Mesh should be of a type SIDECAR</td>
 </tr>
 <tr>
     <td><CopyableCode code="rules" /></td>
@@ -108,51 +108,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Identifier. Name of the TlsRoute resource. It matches pattern `projects/*/locations/global/tlsRoutes/tls_route_name>`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp when the resource was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Optional. A free-text description of the resource. Max length 1024 characters.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="gateways" /></td>
-    <td><code>array</code></td>
-    <td>Optional. Gateways defines a list of gateways this TlsRoute is attached to, as one of the routing rules to route the requests served by the gateway. Each gateway reference should match the pattern: `projects/*/locations/global/gateways/`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Set of label tags associated with the TlsRoute resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="meshes" /></td>
-    <td><code>array</code></td>
-    <td>Optional. Meshes defines a list of meshes this TlsRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: `projects/*/locations/global/meshes/` The attached Mesh should be of a type SIDECAR</td>
-</tr>
-<tr>
-    <td><CopyableCode code="rules" /></td>
-    <td><code>array</code></td>
-    <td>Required. Rules that define how traffic is routed and handled. At least one RouteRule must be supplied. If there are multiple rules then the action taken will be the first rule to match.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="selfLink" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Server-defined URL of this resource</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp when the resource was updated.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -184,7 +139,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists TlsRoute in a given project and location.</td>
 </tr>
 <tr>
@@ -304,21 +259,13 @@ Lists TlsRoute in a given project and location.
 
 ```sql
 SELECT
-name,
-createTime,
-description,
-gateways,
-labels,
-meshes,
-rules,
-selfLink,
-updateTime
+*
 FROM google.networkservices.tls_routes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -341,22 +288,22 @@ Creates a new TlsRoute in a given project and location.
 ```sql
 INSERT INTO google.networkservices.tls_routes (
 data__name,
-data__description,
-data__rules,
-data__meshes,
-data__gateways,
 data__labels,
+data__gateways,
+data__description,
+data__meshes,
+data__rules,
 projectsId,
 locationsId,
 tlsRouteId
 )
 SELECT 
 '{{ name }}',
-'{{ description }}',
-'{{ rules }}',
-'{{ meshes }}',
-'{{ gateways }}',
 '{{ labels }}',
+'{{ gateways }}',
+'{{ description }}',
+'{{ meshes }}',
+'{{ rules }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ tlsRouteId }}'
@@ -384,32 +331,32 @@ response
     - name: name
       value: string
       description: >
-        Identifier. Name of the TlsRoute resource. It matches pattern `projects/*/locations/global/tlsRoutes/tls_route_name>`.
+        Identifier. Name of the TlsRoute resource. It matches pattern `projects/*/locations/*/tlsRoutes/tls_route_name>`.
+        
+    - name: labels
+      value: object
+      description: >
+        Optional. Set of label tags associated with the TlsRoute resource.
+        
+    - name: gateways
+      value: array
+      description: >
+        Optional. Gateways defines a list of gateways this TlsRoute is attached to, as one of the routing rules to route the requests served by the gateway. Each gateway reference should match the pattern: `projects/*/locations/*/gateways/`
         
     - name: description
       value: string
       description: >
         Optional. A free-text description of the resource. Max length 1024 characters.
         
+    - name: meshes
+      value: array
+      description: >
+        Optional. Meshes defines a list of meshes this TlsRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: `projects/*/locations/*/meshes/` The attached Mesh should be of a type SIDECAR
+        
     - name: rules
       value: array
       description: >
         Required. Rules that define how traffic is routed and handled. At least one RouteRule must be supplied. If there are multiple rules then the action taken will be the first rule to match.
-        
-    - name: meshes
-      value: array
-      description: >
-        Optional. Meshes defines a list of meshes this TlsRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: `projects/*/locations/global/meshes/` The attached Mesh should be of a type SIDECAR
-        
-    - name: gateways
-      value: array
-      description: >
-        Optional. Gateways defines a list of gateways this TlsRoute is attached to, as one of the routing rules to route the requests served by the gateway. Each gateway reference should match the pattern: `projects/*/locations/global/gateways/`
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Set of label tags associated with the TlsRoute resource.
         
     - name: tlsRouteId
       value: string
@@ -434,11 +381,11 @@ Updates the parameters of a single TlsRoute.
 UPDATE google.networkservices.tls_routes
 SET 
 data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__rules = '{{ rules }}',
-data__meshes = '{{ meshes }}',
+data__labels = '{{ labels }}',
 data__gateways = '{{ gateways }}',
-data__labels = '{{ labels }}'
+data__description = '{{ description }}',
+data__meshes = '{{ meshes }}',
+data__rules = '{{ rules }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

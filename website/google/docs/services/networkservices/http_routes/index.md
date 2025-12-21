@@ -52,7 +52,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Identifier. Name of the HttpRoute resource. It matches pattern `projects/*/locations/global/httpRoutes/http_route_name>`.</td>
+    <td>Identifier. Name of the HttpRoute resource. It matches pattern `projects/*/locations/*/httpRoutes/http_route_name>`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -67,7 +67,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="gateways" /></td>
     <td><code>array</code></td>
-    <td>Optional. Gateways defines a list of gateways this HttpRoute is attached to, as one of the routing rules to route the requests served by the gateway. Each gateway reference should match the pattern: `projects/*/locations/global/gateways/`</td>
+    <td>Optional. Gateways defines a list of gateways this HttpRoute is attached to, as one of the routing rules to route the requests served by the gateway. Each gateway reference should match the pattern: `projects/*/locations/*/gateways/`</td>
 </tr>
 <tr>
     <td><CopyableCode code="hostnames" /></td>
@@ -82,7 +82,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="meshes" /></td>
     <td><code>array</code></td>
-    <td>Optional. Meshes defines a list of meshes this HttpRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: `projects/*/locations/global/meshes/` The attached Mesh should be of a type SIDECAR</td>
+    <td>Optional. Meshes defines a list of meshes this HttpRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: `projects/*/locations/*/meshes/` The attached Mesh should be of a type SIDECAR</td>
 </tr>
 <tr>
     <td><CopyableCode code="rules" /></td>
@@ -116,7 +116,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Identifier. Name of the HttpRoute resource. It matches pattern `projects/*/locations/global/httpRoutes/http_route_name>`.</td>
+    <td>Identifier. Name of the HttpRoute resource. It matches pattern `projects/*/locations/*/httpRoutes/http_route_name>`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -131,7 +131,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="gateways" /></td>
     <td><code>array</code></td>
-    <td>Optional. Gateways defines a list of gateways this HttpRoute is attached to, as one of the routing rules to route the requests served by the gateway. Each gateway reference should match the pattern: `projects/*/locations/global/gateways/`</td>
+    <td>Optional. Gateways defines a list of gateways this HttpRoute is attached to, as one of the routing rules to route the requests served by the gateway. Each gateway reference should match the pattern: `projects/*/locations/*/gateways/`</td>
 </tr>
 <tr>
     <td><CopyableCode code="hostnames" /></td>
@@ -146,7 +146,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="meshes" /></td>
     <td><code>array</code></td>
-    <td>Optional. Meshes defines a list of meshes this HttpRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: `projects/*/locations/global/meshes/` The attached Mesh should be of a type SIDECAR</td>
+    <td>Optional. Meshes defines a list of meshes this HttpRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: `projects/*/locations/*/meshes/` The attached Mesh should be of a type SIDECAR</td>
 </tr>
 <tr>
     <td><CopyableCode code="rules" /></td>
@@ -194,7 +194,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists HttpRoute in a given project and location.</td>
 </tr>
 <tr>
@@ -329,8 +329,8 @@ FROM google.networkservices.http_routes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -352,25 +352,25 @@ Creates a new HttpRoute in a given project and location.
 
 ```sql
 INSERT INTO google.networkservices.http_routes (
-data__name,
-data__description,
 data__hostnames,
+data__description,
+data__name,
 data__meshes,
 data__gateways,
-data__labels,
 data__rules,
+data__labels,
 projectsId,
 locationsId,
 httpRouteId
 )
 SELECT 
-'{{ name }}',
-'{{ description }}',
 '{{ hostnames }}',
+'{{ description }}',
+'{{ name }}',
 '{{ meshes }}',
 '{{ gateways }}',
-'{{ labels }}',
 '{{ rules }}',
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ httpRouteId }}'
@@ -395,40 +395,40 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the http_routes resource.
-    - name: name
-      value: string
+    - name: hostnames
+      value: array
       description: >
-        Identifier. Name of the HttpRoute resource. It matches pattern `projects/*/locations/global/httpRoutes/http_route_name>`.
+        Required. Hostnames define a set of hosts that should match against the HTTP host header to select a HttpRoute to process the request. Hostname is the fully qualified domain name of a network host, as defined by RFC 1123 with the exception that: - IPs are not allowed. - A hostname may be prefixed with a wildcard label (`*.`). The wildcard label must appear by itself as the first label. Hostname can be "precise" which is a domain name without the terminating dot of a network host (e.g. `foo.example.com`) or "wildcard", which is a domain name prefixed with a single wildcard label (e.g. `*.example.com`). Note that as per RFC1035 and RFC1123, a label must consist of lower case alphanumeric characters or '-', and must start and end with an alphanumeric character. No other punctuation is allowed. The routes associated with a Mesh or Gateways must have unique hostnames. If you attempt to attach multiple routes with conflicting hostnames, the configuration will be rejected. For example, while it is acceptable for routes for the hostnames `*.foo.bar.com` and `*.bar.com` to be associated with the same Mesh (or Gateways under the same scope), it is not possible to associate two routes both with `*.bar.com` or both with `bar.com`.
         
     - name: description
       value: string
       description: >
         Optional. A free-text description of the resource. Max length 1024 characters.
         
-    - name: hostnames
-      value: array
+    - name: name
+      value: string
       description: >
-        Required. Hostnames define a set of hosts that should match against the HTTP host header to select a HttpRoute to process the request. Hostname is the fully qualified domain name of a network host, as defined by RFC 1123 with the exception that: - IPs are not allowed. - A hostname may be prefixed with a wildcard label (`*.`). The wildcard label must appear by itself as the first label. Hostname can be "precise" which is a domain name without the terminating dot of a network host (e.g. `foo.example.com`) or "wildcard", which is a domain name prefixed with a single wildcard label (e.g. `*.example.com`). Note that as per RFC1035 and RFC1123, a label must consist of lower case alphanumeric characters or '-', and must start and end with an alphanumeric character. No other punctuation is allowed. The routes associated with a Mesh or Gateways must have unique hostnames. If you attempt to attach multiple routes with conflicting hostnames, the configuration will be rejected. For example, while it is acceptable for routes for the hostnames `*.foo.bar.com` and `*.bar.com` to be associated with the same Mesh (or Gateways under the same scope), it is not possible to associate two routes both with `*.bar.com` or both with `bar.com`.
+        Identifier. Name of the HttpRoute resource. It matches pattern `projects/*/locations/*/httpRoutes/http_route_name>`.
         
     - name: meshes
       value: array
       description: >
-        Optional. Meshes defines a list of meshes this HttpRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: `projects/*/locations/global/meshes/` The attached Mesh should be of a type SIDECAR
+        Optional. Meshes defines a list of meshes this HttpRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: `projects/*/locations/*/meshes/` The attached Mesh should be of a type SIDECAR
         
     - name: gateways
       value: array
       description: >
-        Optional. Gateways defines a list of gateways this HttpRoute is attached to, as one of the routing rules to route the requests served by the gateway. Each gateway reference should match the pattern: `projects/*/locations/global/gateways/`
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Set of label tags associated with the HttpRoute resource.
+        Optional. Gateways defines a list of gateways this HttpRoute is attached to, as one of the routing rules to route the requests served by the gateway. Each gateway reference should match the pattern: `projects/*/locations/*/gateways/`
         
     - name: rules
       value: array
       description: >
         Required. Rules that define how traffic is routed and handled. Rules will be matched sequentially based on the RouteMatch specified for the rule.
+        
+    - name: labels
+      value: object
+      description: >
+        Optional. Set of label tags associated with the HttpRoute resource.
         
     - name: httpRouteId
       value: string
@@ -452,13 +452,13 @@ Updates the parameters of a single HttpRoute.
 ```sql
 UPDATE google.networkservices.http_routes
 SET 
-data__name = '{{ name }}',
-data__description = '{{ description }}',
 data__hostnames = '{{ hostnames }}',
+data__description = '{{ description }}',
+data__name = '{{ name }}',
 data__meshes = '{{ meshes }}',
 data__gateways = '{{ gateways }}',
-data__labels = '{{ labels }}',
-data__rules = '{{ rules }}'
+data__rules = '{{ rules }}',
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

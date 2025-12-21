@@ -32,13 +32,37 @@ Creates, updates, deletes, gets or lists a <code>hubs</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="get"
+    defaultValue="query_status"
     values={[
-        { label: 'get', value: 'get' },
         { label: 'query_status', value: 'query_status' },
+        { label: 'get', value: 'get' },
         { label: 'list', value: 'list' }
     ]}
 >
+<TabItem value="query_status">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="hubStatusEntries" /></td>
+    <td><code>array</code></td>
+    <td>The list of hub status.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="nextPageToken" /></td>
+    <td><code>string</code></td>
+    <td>The token for the next page of the response. To see more results, use this value as the page_token for your next request. If this value is empty, there are no more results.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
 <TabItem value="get">
 
 <table>
@@ -114,30 +138,6 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="updateTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The time the hub was last updated.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="query_status">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="hubStatusEntries" /></td>
-    <td><code>array</code></td>
-    <td>The list of hub status.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="nextPageToken" /></td>
-    <td><code>string</code></td>
-    <td>The token for the next page of the response. To see more results, use this value as the page_token for your next request. If this value is empty, there are no more results.</td>
 </tr>
 </tbody>
 </table>
@@ -239,13 +239,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#get"><CopyableCode code="get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-hubsId"><code>hubsId</code></a></td>
-    <td></td>
-    <td>Gets details about a Network Connectivity Center hub.</td>
-</tr>
-<tr>
     <td><a href="#query_status"><CopyableCode code="query_status" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-hubsId"><code>hubsId</code></a></td>
@@ -253,24 +246,31 @@ The following methods are available for this resource:
     <td>Query the Private Service Connect propagation status of a Network Connectivity Center hub.</td>
 </tr>
 <tr>
+    <td><a href="#get"><CopyableCode code="get" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-hubsId"><code>hubsId</code></a></td>
+    <td></td>
+    <td>Gets details about a Network Connectivity Center hub.</td>
+</tr>
+<tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the Network Connectivity Center hubs associated with a given project.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-hubId"><code>hubId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-hubId"><code>hubId</code></a></td>
     <td>Creates a new Network Connectivity Center hub in the specified project.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-hubsId"><code>hubsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the description and/or labels of a Network Connectivity Center hub.</td>
 </tr>
 <tr>
@@ -279,20 +279,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-hubsId"><code>hubsId</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes a Network Connectivity Center hub.</td>
-</tr>
-<tr>
-    <td><a href="#reject_spoke"><CopyableCode code="reject_spoke" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-hubsId"><code>hubsId</code></a></td>
-    <td></td>
-    <td>Rejects a Network Connectivity Center spoke from being attached to a hub. If the spoke was previously in the `ACTIVE` state, it transitions to the `INACTIVE` state and is no longer able to connect to other spokes that are attached to the hub.</td>
-</tr>
-<tr>
-    <td><a href="#accept_spoke"><CopyableCode code="accept_spoke" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-hubsId"><code>hubsId</code></a></td>
-    <td></td>
-    <td>Accepts a proposal to attach a Network Connectivity Center spoke to a hub.</td>
 </tr>
 <tr>
     <td><a href="#accept_spoke_update"><CopyableCode code="accept_spoke_update" /></a></td>
@@ -307,6 +293,20 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-hubsId"><code>hubsId</code></a></td>
     <td></td>
     <td>Rejects a proposal to update a Network Connectivity Center spoke in a hub.</td>
+</tr>
+<tr>
+    <td><a href="#accept_spoke"><CopyableCode code="accept_spoke" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-hubsId"><code>hubsId</code></a></td>
+    <td></td>
+    <td>Accepts a proposal to attach a Network Connectivity Center spoke to a hub.</td>
+</tr>
+<tr>
+    <td><a href="#reject_spoke"><CopyableCode code="reject_spoke" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-hubsId"><code>hubsId</code></a></td>
+    <td></td>
+    <td>Rejects a Network Connectivity Center spoke from being attached to a hub. If the spoke was previously in the `ACTIVE` state, it transitions to the `INACTIVE` state and is no longer able to connect to other spokes that are attached to the hub.</td>
 </tr>
 </tbody>
 </table>
@@ -380,13 +380,32 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="get"
+    defaultValue="query_status"
     values={[
-        { label: 'get', value: 'get' },
         { label: 'query_status', value: 'query_status' },
+        { label: 'get', value: 'get' },
         { label: 'list', value: 'list' }
     ]}
 >
+<TabItem value="query_status">
+
+Query the Private Service Connect propagation status of a Network Connectivity Center hub.
+
+```sql
+SELECT
+hubStatusEntries,
+nextPageToken
+FROM google.networkconnectivity.hubs
+WHERE projectsId = '{{ projectsId }}' -- required
+AND hubsId = '{{ hubsId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND groupBy = '{{ groupBy }}'
+;
+```
+</TabItem>
 <TabItem value="get">
 
 Gets details about a Network Connectivity Center hub.
@@ -412,25 +431,6 @@ AND hubsId = '{{ hubsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="query_status">
-
-Query the Private Service Connect propagation status of a Network Connectivity Center hub.
-
-```sql
-SELECT
-hubStatusEntries,
-nextPageToken
-FROM google.networkconnectivity.hubs
-WHERE projectsId = '{{ projectsId }}' -- required
-AND hubsId = '{{ hubsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
-AND groupBy = '{{ groupBy }}'
-;
-```
-</TabItem>
 <TabItem value="list">
 
 Lists the Network Connectivity Center hubs associated with a given project.
@@ -452,10 +452,10 @@ uniqueId,
 updateTime
 FROM google.networkconnectivity.hubs
 WHERE projectsId = '{{ projectsId }}' -- required
+AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -477,26 +477,26 @@ Creates a new Network Connectivity Center hub in the specified project.
 
 ```sql
 INSERT INTO google.networkconnectivity.hubs (
-data__name,
-data__labels,
-data__description,
 data__policyMode,
 data__presetTopology,
+data__labels,
 data__exportPsc,
+data__name,
+data__description,
 projectsId,
-hubId,
-requestId
+requestId,
+hubId
 )
 SELECT 
-'{{ name }}',
-'{{ labels }}',
-'{{ description }}',
 '{{ policyMode }}',
 '{{ presetTopology }}',
+'{{ labels }}',
 {{ exportPsc }},
+'{{ name }}',
+'{{ description }}',
 '{{ projectsId }}',
-'{{ hubId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ hubId }}'
 RETURNING
 name,
 done,
@@ -515,21 +515,6 @@ response
     - name: projectsId
       value: string
       description: Required parameter for the hubs resource.
-    - name: name
-      value: string
-      description: >
-        Immutable. The name of the hub. Hub names must be unique. They use the following form: `projects/{project_number}/locations/global/hubs/{hub_id}`
-        
-    - name: labels
-      value: object
-      description: >
-        Optional labels in key-value pair format. For more information about labels, see [Requirements for labels](https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements).
-        
-    - name: description
-      value: string
-      description: >
-        Optional. An optional description of the hub.
-        
     - name: policyMode
       value: string
       description: >
@@ -542,14 +527,29 @@ response
         Optional. The topology implemented in this hub. Currently, this field is only used when policy_mode = PRESET. The available preset topologies are MESH and STAR. If preset_topology is unspecified and policy_mode = PRESET, the preset_topology defaults to MESH. When policy_mode = CUSTOM, the preset_topology is set to PRESET_TOPOLOGY_UNSPECIFIED.
         
       valid_values: ['PRESET_TOPOLOGY_UNSPECIFIED', 'MESH', 'STAR']
+    - name: labels
+      value: object
+      description: >
+        Optional labels in key-value pair format. For more information about labels, see [Requirements for labels](https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements).
+        
     - name: exportPsc
       value: boolean
       description: >
         Optional. Whether Private Service Connect connection propagation is enabled for the hub. If true, Private Service Connect endpoints in VPC spokes attached to the hub are made accessible to other VPC spokes attached to the hub. The default value is false.
         
-    - name: hubId
+    - name: name
       value: string
+      description: >
+        Immutable. The name of the hub. Hub names must be unique. They use the following form: `projects/{project_number}/locations/global/hubs/{hub_id}`
+        
+    - name: description
+      value: string
+      description: >
+        Optional. An optional description of the hub.
+        
     - name: requestId
+      value: string
+    - name: hubId
       value: string
 ```
 </TabItem>
@@ -571,17 +571,17 @@ Updates the description and/or labels of a Network Connectivity Center hub.
 ```sql
 UPDATE google.networkconnectivity.hubs
 SET 
-data__name = '{{ name }}',
-data__labels = '{{ labels }}',
-data__description = '{{ description }}',
 data__policyMode = '{{ policyMode }}',
 data__presetTopology = '{{ presetTopology }}',
-data__exportPsc = {{ exportPsc }}
+data__labels = '{{ labels }}',
+data__exportPsc = {{ exportPsc }},
+data__name = '{{ name }}',
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND hubsId = '{{ hubsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,
@@ -619,27 +619,45 @@ AND requestId = '{{ requestId }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="reject_spoke"
+    defaultValue="accept_spoke_update"
     values={[
-        { label: 'reject_spoke', value: 'reject_spoke' },
-        { label: 'accept_spoke', value: 'accept_spoke' },
         { label: 'accept_spoke_update', value: 'accept_spoke_update' },
-        { label: 'reject_spoke_update', value: 'reject_spoke_update' }
+        { label: 'reject_spoke_update', value: 'reject_spoke_update' },
+        { label: 'accept_spoke', value: 'accept_spoke' },
+        { label: 'reject_spoke', value: 'reject_spoke' }
     ]}
 >
-<TabItem value="reject_spoke">
+<TabItem value="accept_spoke_update">
 
-Rejects a Network Connectivity Center spoke from being attached to a hub. If the spoke was previously in the `ACTIVE` state, it transitions to the `INACTIVE` state and is no longer able to connect to other spokes that are attached to the hub.
+Accepts a proposal to update a Network Connectivity Center spoke in a hub.
 
 ```sql
-EXEC google.networkconnectivity.hubs.reject_spoke 
+EXEC google.networkconnectivity.hubs.accept_spoke_update 
 @projectsId='{{ projectsId }}' --required, 
 @hubsId='{{ hubsId }}' --required 
 @@json=
 '{
-"spokeUri": "{{ spokeUri }}", 
 "requestId": "{{ requestId }}", 
-"details": "{{ details }}"
+"spokeEtag": "{{ spokeEtag }}", 
+"spokeUri": "{{ spokeUri }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="reject_spoke_update">
+
+Rejects a proposal to update a Network Connectivity Center spoke in a hub.
+
+```sql
+EXEC google.networkconnectivity.hubs.reject_spoke_update 
+@projectsId='{{ projectsId }}' --required, 
+@hubsId='{{ hubsId }}' --required 
+@@json=
+'{
+"spokeEtag": "{{ spokeEtag }}", 
+"requestId": "{{ requestId }}", 
+"details": "{{ details }}", 
+"spokeUri": "{{ spokeUri }}"
 }'
 ;
 ```
@@ -660,35 +678,17 @@ EXEC google.networkconnectivity.hubs.accept_spoke
 ;
 ```
 </TabItem>
-<TabItem value="accept_spoke_update">
+<TabItem value="reject_spoke">
 
-Accepts a proposal to update a Network Connectivity Center spoke in a hub.
+Rejects a Network Connectivity Center spoke from being attached to a hub. If the spoke was previously in the `ACTIVE` state, it transitions to the `INACTIVE` state and is no longer able to connect to other spokes that are attached to the hub.
 
 ```sql
-EXEC google.networkconnectivity.hubs.accept_spoke_update 
+EXEC google.networkconnectivity.hubs.reject_spoke 
 @projectsId='{{ projectsId }}' --required, 
 @hubsId='{{ hubsId }}' --required 
 @@json=
 '{
 "spokeUri": "{{ spokeUri }}", 
-"spokeEtag": "{{ spokeEtag }}", 
-"requestId": "{{ requestId }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="reject_spoke_update">
-
-Rejects a proposal to update a Network Connectivity Center spoke in a hub.
-
-```sql
-EXEC google.networkconnectivity.hubs.reject_spoke_update 
-@projectsId='{{ projectsId }}' --required, 
-@hubsId='{{ hubsId }}' --required 
-@@json=
-'{
-"spokeUri": "{{ spokeUri }}", 
-"spokeEtag": "{{ spokeEtag }}", 
 "details": "{{ details }}", 
 "requestId": "{{ requestId }}"
 }'

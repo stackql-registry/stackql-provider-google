@@ -117,14 +117,14 @@ The following methods are available for this resource:
     <td><a href="#customers_nodes_nodes_list"><CopyableCode code="customers_nodes_nodes_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-customersId"><code>customersId</code></a>, <a href="#parameter-nodesId"><code>nodesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists nodes.</td>
 </tr>
 <tr>
     <td><a href="#customers_nodes_list"><CopyableCode code="customers_nodes_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-customersId"><code>customersId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists nodes.</td>
 </tr>
 <tr>
@@ -213,9 +213,9 @@ sasUserIds
 FROM google.prod_tt_sasportal.customer_nodes
 WHERE customersId = '{{ customersId }}' -- required
 AND nodesId = '{{ nodesId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -230,8 +230,8 @@ displayName,
 sasUserIds
 FROM google.prod_tt_sasportal.customer_nodes
 WHERE customersId = '{{ customersId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
 ;
 ```
@@ -255,16 +255,16 @@ Creates a new node.
 
 ```sql
 INSERT INTO google.prod_tt_sasportal.customer_nodes (
+data__sasUserIds,
 data__name,
 data__displayName,
-data__sasUserIds,
 customersId,
 nodesId
 )
 SELECT 
+'{{ sasUserIds }}',
 '{{ name }}',
 '{{ displayName }}',
-'{{ sasUserIds }}',
 '{{ customersId }}',
 '{{ nodesId }}'
 RETURNING
@@ -280,15 +280,15 @@ Creates a new node.
 
 ```sql
 INSERT INTO google.prod_tt_sasportal.customer_nodes (
+data__sasUserIds,
 data__name,
 data__displayName,
-data__sasUserIds,
 customersId
 )
 SELECT 
+'{{ sasUserIds }}',
 '{{ name }}',
 '{{ displayName }}',
-'{{ sasUserIds }}',
 '{{ customersId }}'
 RETURNING
 name,
@@ -309,6 +309,11 @@ sasUserIds
     - name: nodesId
       value: string
       description: Required parameter for the customer_nodes resource.
+    - name: sasUserIds
+      value: array
+      description: >
+        User ids used by the devices belonging to this node.
+        
     - name: name
       value: string
       description: >
@@ -318,11 +323,6 @@ sasUserIds
       value: string
       description: >
         The node's display name.
-        
-    - name: sasUserIds
-      value: array
-      description: >
-        User ids used by the devices belonging to this node.
         
 ```
 </TabItem>

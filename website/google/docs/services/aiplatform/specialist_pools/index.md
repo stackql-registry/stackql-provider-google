@@ -304,18 +304,18 @@ Creates a SpecialistPool.
 
 ```sql
 INSERT INTO google.aiplatform.specialist_pools (
+data__specialistWorkerEmails,
 data__name,
 data__displayName,
 data__specialistManagerEmails,
-data__specialistWorkerEmails,
 projectsId,
 locationsId
 )
 SELECT 
+'{{ specialistWorkerEmails }}',
 '{{ name }}',
 '{{ displayName }}',
 '{{ specialistManagerEmails }}',
-'{{ specialistWorkerEmails }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -339,6 +339,11 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the specialist_pools resource.
+    - name: specialistWorkerEmails
+      value: array
+      description: >
+        The email addresses of workers in the SpecialistPool.
+        
     - name: name
       value: string
       description: >
@@ -353,11 +358,6 @@ response
       value: array
       description: >
         The email addresses of the managers in the SpecialistPool.
-        
-    - name: specialistWorkerEmails
-      value: array
-      description: >
-        The email addresses of workers in the SpecialistPool.
         
 ```
 </TabItem>
@@ -379,10 +379,10 @@ Updates a SpecialistPool.
 ```sql
 UPDATE google.aiplatform.specialist_pools
 SET 
+data__specialistWorkerEmails = '{{ specialistWorkerEmails }}',
 data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
-data__specialistManagerEmails = '{{ specialistManagerEmails }}',
-data__specialistWorkerEmails = '{{ specialistWorkerEmails }}'
+data__specialistManagerEmails = '{{ specialistManagerEmails }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

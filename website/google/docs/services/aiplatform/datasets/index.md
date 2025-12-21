@@ -254,7 +254,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists Datasets in a Location.</td>
 </tr>
 <tr>
@@ -279,11 +279,11 @@ The following methods are available for this resource:
     <td>Deletes a Dataset.</td>
 </tr>
 <tr>
-    <td><a href="#import"><CopyableCode code="import" /></a></td>
+    <td><a href="#search_data_items"><CopyableCode code="search_data_items" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a></td>
-    <td></td>
-    <td>Imports data into a Dataset.</td>
+    <td><a href="#parameter-savedQuery"><code>savedQuery</code></a>, <a href="#parameter-dataLabelingJob"><code>dataLabelingJob</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-annotationFilters"><code>annotationFilters</code></a>, <a href="#parameter-orderByDataItem"><code>orderByDataItem</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-dataItemFilter"><code>dataItemFilter</code></a>, <a href="#parameter-annotationsFilter"><code>annotationsFilter</code></a>, <a href="#parameter-annotationsLimit"><code>annotationsLimit</code></a>, <a href="#parameter-fieldMask"><code>fieldMask</code></a>, <a href="#parameter-orderByAnnotation.savedQuery"><code>orderByAnnotation.savedQuery</code></a>, <a href="#parameter-orderByAnnotation.orderBy"><code>orderByAnnotation.orderBy</code></a></td>
+    <td>Searches DataItems in a Dataset.</td>
 </tr>
 <tr>
     <td><a href="#export"><CopyableCode code="export" /></a></td>
@@ -293,11 +293,11 @@ The following methods are available for this resource:
     <td>Exports data from a Dataset.</td>
 </tr>
 <tr>
-    <td><a href="#search_data_items"><CopyableCode code="search_data_items" /></a></td>
+    <td><a href="#import"><CopyableCode code="import" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a></td>
-    <td><a href="#parameter-orderByDataItem"><code>orderByDataItem</code></a>, <a href="#parameter-orderByAnnotation.savedQuery"><code>orderByAnnotation.savedQuery</code></a>, <a href="#parameter-orderByAnnotation.orderBy"><code>orderByAnnotation.orderBy</code></a>, <a href="#parameter-savedQuery"><code>savedQuery</code></a>, <a href="#parameter-dataLabelingJob"><code>dataLabelingJob</code></a>, <a href="#parameter-dataItemFilter"><code>dataItemFilter</code></a>, <a href="#parameter-annotationsFilter"><code>annotationsFilter</code></a>, <a href="#parameter-annotationFilters"><code>annotationFilters</code></a>, <a href="#parameter-fieldMask"><code>fieldMask</code></a>, <a href="#parameter-annotationsLimit"><code>annotationsLimit</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Searches DataItems in a Dataset.</td>
+    <td></td>
+    <td>Imports data into a Dataset.</td>
 </tr>
 </tbody>
 </table>
@@ -477,10 +477,10 @@ updateTime
 FROM google.aiplatform.datasets
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND readMask = '{{ readMask }}'
+AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -503,28 +503,28 @@ Creates a Dataset.
 
 ```sql
 INSERT INTO google.aiplatform.datasets (
-data__displayName,
-data__description,
 data__metadataSchemaUri,
-data__metadata,
-data__etag,
 data__labels,
-data__savedQueries,
-data__encryptionSpec,
+data__displayName,
 data__modelReference,
+data__etag,
+data__metadata,
+data__savedQueries,
+data__description,
+data__encryptionSpec,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ displayName }}',
-'{{ description }}',
 '{{ metadataSchemaUri }}',
-'{{ metadata }}',
-'{{ etag }}',
 '{{ labels }}',
-'{{ savedQueries }}',
-'{{ encryptionSpec }}',
+'{{ displayName }}',
 '{{ modelReference }}',
+'{{ etag }}',
+'{{ metadata }}',
+'{{ savedQueries }}',
+'{{ description }}',
+'{{ encryptionSpec }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -548,50 +548,50 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the datasets resource.
-    - name: displayName
-      value: string
-      description: >
-        Required. The user-defined name of the Dataset. The name can be up to 128 characters long and can consist of any UTF-8 characters.
-        
-    - name: description
-      value: string
-      description: >
-        The description of the Dataset.
-        
     - name: metadataSchemaUri
       value: string
       description: >
         Required. Points to a YAML file stored on Google Cloud Storage describing additional information about the Dataset. The schema is defined as an OpenAPI 3.0.2 Schema Object. The schema files that can be used here are found in gs://google-cloud-aiplatform/schema/dataset/metadata/.
-        
-    - name: metadata
-      value: any
-      description: >
-        Required. Additional information about the Dataset.
-        
-    - name: etag
-      value: string
-      description: >
-        Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
         
     - name: labels
       value: object
       description: >
         The labels with user-defined metadata to organize your Datasets. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one Dataset (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable. Following system labels exist for each Dataset: * "aiplatform.googleapis.com/dataset_metadata_schema": output only, its value is the metadata_schema's title.
         
-    - name: savedQueries
-      value: array
+    - name: displayName
+      value: string
       description: >
-        All SavedQueries belong to the Dataset will be returned in List/Get Dataset response. The annotation_specs field will not be populated except for UI cases which will only use annotation_spec_count. In CreateDataset request, a SavedQuery is created together if this field is set, up to one SavedQuery can be set in CreateDatasetRequest. The SavedQuery should not contain any AnnotationSpec.
-        
-    - name: encryptionSpec
-      value: object
-      description: >
-        Customer-managed encryption key spec for a Dataset. If set, this Dataset and all sub-resources of this Dataset will be secured by this key.
+        Required. The user-defined name of the Dataset. The name can be up to 128 characters long and can consist of any UTF-8 characters.
         
     - name: modelReference
       value: string
       description: >
         Optional. Reference to the public base model last used by the dataset. Only set for prompt datasets.
+        
+    - name: etag
+      value: string
+      description: >
+        Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+        
+    - name: metadata
+      value: any
+      description: >
+        Required. Additional information about the Dataset.
+        
+    - name: savedQueries
+      value: array
+      description: >
+        All SavedQueries belong to the Dataset will be returned in List/Get Dataset response. The annotation_specs field will not be populated except for UI cases which will only use annotation_spec_count. In CreateDataset request, a SavedQuery is created together if this field is set, up to one SavedQuery can be set in CreateDatasetRequest. The SavedQuery should not contain any AnnotationSpec.
+        
+    - name: description
+      value: string
+      description: >
+        The description of the Dataset.
+        
+    - name: encryptionSpec
+      value: object
+      description: >
+        Customer-managed encryption key spec for a Dataset. If set, this Dataset and all sub-resources of this Dataset will be secured by this key.
         
 ```
 </TabItem>
@@ -613,15 +613,15 @@ Updates a Dataset.
 ```sql
 UPDATE google.aiplatform.datasets
 SET 
-data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
 data__metadataSchemaUri = '{{ metadataSchemaUri }}',
-data__metadata = '{{ metadata }}',
-data__etag = '{{ etag }}',
 data__labels = '{{ labels }}',
+data__displayName = '{{ displayName }}',
+data__modelReference = '{{ modelReference }}',
+data__etag = '{{ etag }}',
+data__metadata = '{{ metadata }}',
 data__savedQueries = '{{ savedQueries }}',
-data__encryptionSpec = '{{ encryptionSpec }}',
-data__modelReference = '{{ modelReference }}'
+data__description = '{{ description }}',
+data__encryptionSpec = '{{ encryptionSpec }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -675,26 +675,35 @@ AND datasetsId = '{{ datasetsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="import"
+    defaultValue="search_data_items"
     values={[
-        { label: 'import', value: 'import' },
+        { label: 'search_data_items', value: 'search_data_items' },
         { label: 'export', value: 'export' },
-        { label: 'search_data_items', value: 'search_data_items' }
+        { label: 'import', value: 'import' }
     ]}
 >
-<TabItem value="import">
+<TabItem value="search_data_items">
 
-Imports data into a Dataset.
+Searches DataItems in a Dataset.
 
 ```sql
-EXEC google.aiplatform.datasets.import 
+EXEC google.aiplatform.datasets.search_data_items 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@datasetsId='{{ datasetsId }}' --required 
-@@json=
-'{
-"importConfigs": "{{ importConfigs }}"
-}'
+@datasetsId='{{ datasetsId }}' --required, 
+@savedQuery='{{ savedQuery }}', 
+@dataLabelingJob='{{ dataLabelingJob }}', 
+@orderBy='{{ orderBy }}', 
+@annotationFilters='{{ annotationFilters }}', 
+@orderByDataItem='{{ orderByDataItem }}', 
+@pageToken='{{ pageToken }}', 
+@pageSize='{{ pageSize }}', 
+@dataItemFilter='{{ dataItemFilter }}', 
+@annotationsFilter='{{ annotationsFilter }}', 
+@annotationsLimit='{{ annotationsLimit }}', 
+@fieldMask='{{ fieldMask }}', 
+@orderByAnnotation.savedQuery='{{ orderByAnnotation.savedQuery }}', 
+@orderByAnnotation.orderBy='{{ orderByAnnotation.orderBy }}'
 ;
 ```
 </TabItem>
@@ -714,28 +723,19 @@ EXEC google.aiplatform.datasets.export
 ;
 ```
 </TabItem>
-<TabItem value="search_data_items">
+<TabItem value="import">
 
-Searches DataItems in a Dataset.
+Imports data into a Dataset.
 
 ```sql
-EXEC google.aiplatform.datasets.search_data_items 
+EXEC google.aiplatform.datasets.import 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@datasetsId='{{ datasetsId }}' --required, 
-@orderByDataItem='{{ orderByDataItem }}', 
-@orderByAnnotation.savedQuery='{{ orderByAnnotation.savedQuery }}', 
-@orderByAnnotation.orderBy='{{ orderByAnnotation.orderBy }}', 
-@savedQuery='{{ savedQuery }}', 
-@dataLabelingJob='{{ dataLabelingJob }}', 
-@dataItemFilter='{{ dataItemFilter }}', 
-@annotationsFilter='{{ annotationsFilter }}', 
-@annotationFilters='{{ annotationFilters }}', 
-@fieldMask='{{ fieldMask }}', 
-@annotationsLimit='{{ annotationsLimit }}', 
-@pageSize='{{ pageSize }}', 
-@orderBy='{{ orderBy }}', 
-@pageToken='{{ pageToken }}'
+@datasetsId='{{ datasetsId }}' --required 
+@@json=
+'{
+"importConfigs": "{{ importConfigs }}"
+}'
 ;
 ```
 </TabItem>

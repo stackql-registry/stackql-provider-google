@@ -190,9 +190,9 @@ Patches a single ldaps settings.
 ```sql
 UPDATE google.managedidentities.domains_ldapssettings
 SET 
-data__name = '{{ name }}',
 data__certificatePfx = '{{ certificatePfx }}',
-data__certificatePassword = '{{ certificatePassword }}'
+data__certificatePassword = '{{ certificatePassword }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND domainsId = '{{ domainsId }}' --required

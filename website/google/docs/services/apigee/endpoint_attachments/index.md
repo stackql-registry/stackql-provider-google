@@ -279,15 +279,15 @@ Creates an endpoint attachment. **Note:** Not supported for Apigee hybrid.
 
 ```sql
 INSERT INTO google.apigee.endpoint_attachments (
-data__name,
 data__serviceAttachment,
+data__name,
 data__location,
 organizationsId,
 endpointAttachmentId
 )
 SELECT 
-'{{ name }}',
 '{{ serviceAttachment }}',
+'{{ name }}',
 '{{ location }}',
 '{{ organizationsId }}',
 '{{ endpointAttachmentId }}'
@@ -309,15 +309,15 @@ response
     - name: organizationsId
       value: string
       description: Required parameter for the endpoint_attachments resource.
-    - name: name
-      value: string
-      description: >
-        Name of the endpoint attachment. Use the following structure in your request: `organizations/{org}/endpointAttachments/{endpoint_attachment}`
-        
     - name: serviceAttachment
       value: string
       description: >
         Format: projects/*/regions/*/serviceAttachments/*
+        
+    - name: name
+      value: string
+      description: >
+        Name of the endpoint attachment. Use the following structure in your request: `organizations/{org}/endpointAttachments/{endpoint_attachment}`
         
     - name: location
       value: string

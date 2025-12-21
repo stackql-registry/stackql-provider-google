@@ -50,34 +50,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_content_inspect"><CopyableCode code="projects_content_inspect" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td></td>
-    <td>Finds potentially sensitive info in content. This method has limits on input size, processing time, and output size. When no InfoTypes or CustomInfoTypes are specified in this request, the system will automatically choose what detectors to run. By default this may be all types, but may change over time as detectors are updated. For how to guides, see https://cloud.google.com/sensitive-data-protection/docs/inspecting-images and https://cloud.google.com/sensitive-data-protection/docs/inspecting-text,</td>
-</tr>
-<tr>
-    <td><a href="#projects_content_deidentify"><CopyableCode code="projects_content_deidentify" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td></td>
-    <td>De-identifies potentially sensitive info from a ContentItem. This method has limits on input size and output size. See https://cloud.google.com/sensitive-data-protection/docs/deidentify-sensitive-data to learn more. When no InfoTypes or CustomInfoTypes are specified in this request, the system will automatically choose what detectors to run. By default this may be all types, but may change over time as detectors are updated.</td>
-</tr>
-<tr>
-    <td><a href="#projects_content_reidentify"><CopyableCode code="projects_content_reidentify" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td></td>
-    <td>Re-identifies content that has been de-identified. See https://cloud.google.com/sensitive-data-protection/docs/pseudonymization#re-identification_in_free_text_code_example to learn more.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_content_inspect"><CopyableCode code="projects_locations_content_inspect" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Finds potentially sensitive info in content. This method has limits on input size, processing time, and output size. When no InfoTypes or CustomInfoTypes are specified in this request, the system will automatically choose what detectors to run. By default this may be all types, but may change over time as detectors are updated. For how to guides, see https://cloud.google.com/sensitive-data-protection/docs/inspecting-images and https://cloud.google.com/sensitive-data-protection/docs/inspecting-text,</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_content_deidentify"><CopyableCode code="projects_locations_content_deidentify" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
@@ -90,6 +62,34 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Re-identifies content that has been de-identified. See https://cloud.google.com/sensitive-data-protection/docs/pseudonymization#re-identification_in_free_text_code_example to learn more.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_content_inspect"><CopyableCode code="projects_locations_content_inspect" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Finds potentially sensitive info in content. This method has limits on input size, processing time, and output size. When no InfoTypes or CustomInfoTypes are specified in this request, the system will automatically choose what detectors to run. By default this may be all types, but may change over time as detectors are updated. For how to guides, see https://cloud.google.com/sensitive-data-protection/docs/inspecting-images and https://cloud.google.com/sensitive-data-protection/docs/inspecting-text,</td>
+</tr>
+<tr>
+    <td><a href="#projects_content_inspect"><CopyableCode code="projects_content_inspect" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td></td>
+    <td>Finds potentially sensitive info in content. This method has limits on input size, processing time, and output size. When no InfoTypes or CustomInfoTypes are specified in this request, the system will automatically choose what detectors to run. By default this may be all types, but may change over time as detectors are updated. For how to guides, see https://cloud.google.com/sensitive-data-protection/docs/inspecting-images and https://cloud.google.com/sensitive-data-protection/docs/inspecting-text,</td>
+</tr>
+<tr>
+    <td><a href="#projects_content_reidentify"><CopyableCode code="projects_content_reidentify" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td></td>
+    <td>Re-identifies content that has been de-identified. See https://cloud.google.com/sensitive-data-protection/docs/pseudonymization#re-identification_in_free_text_code_example to learn more.</td>
+</tr>
+<tr>
+    <td><a href="#projects_content_deidentify"><CopyableCode code="projects_content_deidentify" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td></td>
+    <td>De-identifies potentially sensitive info from a ContentItem. This method has limits on input size and output size. See https://cloud.google.com/sensitive-data-protection/docs/deidentify-sensitive-data to learn more. When no InfoTypes or CustomInfoTypes are specified in this request, the system will automatically choose what detectors to run. By default this may be all types, but may change over time as detectors are updated.</td>
 </tr>
 </tbody>
 </table>
@@ -123,67 +123,52 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_content_inspect"
+    defaultValue="projects_locations_content_deidentify"
     values={[
-        { label: 'projects_content_inspect', value: 'projects_content_inspect' },
-        { label: 'projects_content_deidentify', value: 'projects_content_deidentify' },
-        { label: 'projects_content_reidentify', value: 'projects_content_reidentify' },
-        { label: 'projects_locations_content_inspect', value: 'projects_locations_content_inspect' },
         { label: 'projects_locations_content_deidentify', value: 'projects_locations_content_deidentify' },
-        { label: 'projects_locations_content_reidentify', value: 'projects_locations_content_reidentify' }
+        { label: 'projects_locations_content_reidentify', value: 'projects_locations_content_reidentify' },
+        { label: 'projects_locations_content_inspect', value: 'projects_locations_content_inspect' },
+        { label: 'projects_content_inspect', value: 'projects_content_inspect' },
+        { label: 'projects_content_reidentify', value: 'projects_content_reidentify' },
+        { label: 'projects_content_deidentify', value: 'projects_content_deidentify' }
     ]}
 >
-<TabItem value="projects_content_inspect">
-
-Finds potentially sensitive info in content. This method has limits on input size, processing time, and output size. When no InfoTypes or CustomInfoTypes are specified in this request, the system will automatically choose what detectors to run. By default this may be all types, but may change over time as detectors are updated. For how to guides, see https://cloud.google.com/sensitive-data-protection/docs/inspecting-images and https://cloud.google.com/sensitive-data-protection/docs/inspecting-text,
-
-```sql
-EXEC google.dlp.content.projects_content_inspect 
-@projectsId='{{ projectsId }}' --required 
-@@json=
-'{
-"inspectConfig": "{{ inspectConfig }}", 
-"item": "{{ item }}", 
-"inspectTemplateName": "{{ inspectTemplateName }}", 
-"locationId": "{{ locationId }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_content_deidentify">
+<TabItem value="projects_locations_content_deidentify">
 
 De-identifies potentially sensitive info from a ContentItem. This method has limits on input size and output size. See https://cloud.google.com/sensitive-data-protection/docs/deidentify-sensitive-data to learn more. When no InfoTypes or CustomInfoTypes are specified in this request, the system will automatically choose what detectors to run. By default this may be all types, but may change over time as detectors are updated.
 
 ```sql
-EXEC google.dlp.content.projects_content_deidentify 
-@projectsId='{{ projectsId }}' --required 
+EXEC google.dlp.content.projects_locations_content_deidentify 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"deidentifyConfig": "{{ deidentifyConfig }}", 
-"inspectConfig": "{{ inspectConfig }}", 
-"item": "{{ item }}", 
+"locationId": "{{ locationId }}", 
 "inspectTemplateName": "{{ inspectTemplateName }}", 
+"inspectConfig": "{{ inspectConfig }}", 
 "deidentifyTemplateName": "{{ deidentifyTemplateName }}", 
-"locationId": "{{ locationId }}"
+"item": "{{ item }}", 
+"deidentifyConfig": "{{ deidentifyConfig }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="projects_content_reidentify">
+<TabItem value="projects_locations_content_reidentify">
 
 Re-identifies content that has been de-identified. See https://cloud.google.com/sensitive-data-protection/docs/pseudonymization#re-identification_in_free_text_code_example to learn more.
 
 ```sql
-EXEC google.dlp.content.projects_content_reidentify 
-@projectsId='{{ projectsId }}' --required 
+EXEC google.dlp.content.projects_locations_content_reidentify 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"reidentifyConfig": "{{ reidentifyConfig }}", 
-"inspectConfig": "{{ inspectConfig }}", 
-"item": "{{ item }}", 
-"inspectTemplateName": "{{ inspectTemplateName }}", 
 "reidentifyTemplateName": "{{ reidentifyTemplateName }}", 
-"locationId": "{{ locationId }}"
+"inspectConfig": "{{ inspectConfig }}", 
+"locationId": "{{ locationId }}", 
+"item": "{{ item }}", 
+"reidentifyConfig": "{{ reidentifyConfig }}", 
+"inspectTemplateName": "{{ inspectTemplateName }}"
 }'
 ;
 ```
@@ -199,49 +184,64 @@ EXEC google.dlp.content.projects_locations_content_inspect
 @@json=
 '{
 "inspectConfig": "{{ inspectConfig }}", 
-"item": "{{ item }}", 
+"locationId": "{{ locationId }}", 
 "inspectTemplateName": "{{ inspectTemplateName }}", 
-"locationId": "{{ locationId }}"
+"item": "{{ item }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_content_deidentify">
+<TabItem value="projects_content_inspect">
 
-De-identifies potentially sensitive info from a ContentItem. This method has limits on input size and output size. See https://cloud.google.com/sensitive-data-protection/docs/deidentify-sensitive-data to learn more. When no InfoTypes or CustomInfoTypes are specified in this request, the system will automatically choose what detectors to run. By default this may be all types, but may change over time as detectors are updated.
+Finds potentially sensitive info in content. This method has limits on input size, processing time, and output size. When no InfoTypes or CustomInfoTypes are specified in this request, the system will automatically choose what detectors to run. By default this may be all types, but may change over time as detectors are updated. For how to guides, see https://cloud.google.com/sensitive-data-protection/docs/inspecting-images and https://cloud.google.com/sensitive-data-protection/docs/inspecting-text,
 
 ```sql
-EXEC google.dlp.content.projects_locations_content_deidentify 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
+EXEC google.dlp.content.projects_content_inspect 
+@projectsId='{{ projectsId }}' --required 
 @@json=
 '{
-"deidentifyConfig": "{{ deidentifyConfig }}", 
 "inspectConfig": "{{ inspectConfig }}", 
-"item": "{{ item }}", 
+"locationId": "{{ locationId }}", 
 "inspectTemplateName": "{{ inspectTemplateName }}", 
-"deidentifyTemplateName": "{{ deidentifyTemplateName }}", 
-"locationId": "{{ locationId }}"
+"item": "{{ item }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_content_reidentify">
+<TabItem value="projects_content_reidentify">
 
 Re-identifies content that has been de-identified. See https://cloud.google.com/sensitive-data-protection/docs/pseudonymization#re-identification_in_free_text_code_example to learn more.
 
 ```sql
-EXEC google.dlp.content.projects_locations_content_reidentify 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
+EXEC google.dlp.content.projects_content_reidentify 
+@projectsId='{{ projectsId }}' --required 
 @@json=
 '{
-"reidentifyConfig": "{{ reidentifyConfig }}", 
-"inspectConfig": "{{ inspectConfig }}", 
-"item": "{{ item }}", 
-"inspectTemplateName": "{{ inspectTemplateName }}", 
 "reidentifyTemplateName": "{{ reidentifyTemplateName }}", 
-"locationId": "{{ locationId }}"
+"inspectConfig": "{{ inspectConfig }}", 
+"locationId": "{{ locationId }}", 
+"item": "{{ item }}", 
+"reidentifyConfig": "{{ reidentifyConfig }}", 
+"inspectTemplateName": "{{ inspectTemplateName }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_content_deidentify">
+
+De-identifies potentially sensitive info from a ContentItem. This method has limits on input size and output size. See https://cloud.google.com/sensitive-data-protection/docs/deidentify-sensitive-data to learn more. When no InfoTypes or CustomInfoTypes are specified in this request, the system will automatically choose what detectors to run. By default this may be all types, but may change over time as detectors are updated.
+
+```sql
+EXEC google.dlp.content.projects_content_deidentify 
+@projectsId='{{ projectsId }}' --required 
+@@json=
+'{
+"locationId": "{{ locationId }}", 
+"inspectTemplateName": "{{ inspectTemplateName }}", 
+"inspectConfig": "{{ inspectConfig }}", 
+"deidentifyTemplateName": "{{ deidentifyTemplateName }}", 
+"item": "{{ item }}", 
+"deidentifyConfig": "{{ deidentifyConfig }}"
 }'
 ;
 ```

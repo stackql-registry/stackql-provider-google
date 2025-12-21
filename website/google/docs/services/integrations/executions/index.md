@@ -35,8 +35,8 @@ The following fields are returned by `SELECT` queries:
     defaultValue="projects_locations_products_integrations_executions_get"
     values={[
         { label: 'projects_locations_products_integrations_executions_get', value: 'projects_locations_products_integrations_executions_get' },
-        { label: 'projects_locations_products_integrations_executions_list', value: 'projects_locations_products_integrations_executions_list' },
         { label: 'projects_locations_integrations_executions_get', value: 'projects_locations_integrations_executions_get' },
+        { label: 'projects_locations_products_integrations_executions_list', value: 'projects_locations_products_integrations_executions_list' },
         { label: 'projects_locations_integrations_executions_list', value: 'projects_locations_integrations_executions_list' }
     ]}
 >
@@ -139,7 +139,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_products_integrations_executions_list">
+<TabItem value="projects_locations_integrations_executions_get">
 
 <table>
 <thead>
@@ -238,7 +238,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_integrations_executions_get">
+<TabItem value="projects_locations_products_integrations_executions_list">
 
 <table>
 <thead>
@@ -461,13 +461,6 @@ The following methods are available for this resource:
     <td>Get an execution in the specified project.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_products_integrations_executions_list"><CopyableCode code="projects_locations_products_integrations_executions_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-productsId"><code>productsId</code></a>, <a href="#parameter-integrationsId"><code>integrationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-filterParams.workflowName"><code>filterParams.workflowName</code></a>, <a href="#parameter-filterParams.startTime"><code>filterParams.startTime</code></a>, <a href="#parameter-filterParams.endTime"><code>filterParams.endTime</code></a>, <a href="#parameter-filterParams.eventStatuses"><code>filterParams.eventStatuses</code></a>, <a href="#parameter-filterParams.taskStatuses"><code>filterParams.taskStatuses</code></a>, <a href="#parameter-filterParams.customFilter"><code>filterParams.customFilter</code></a>, <a href="#parameter-filterParams.executionId"><code>filterParams.executionId</code></a>, <a href="#parameter-filterParams.parameterValue"><code>filterParams.parameterValue</code></a>, <a href="#parameter-filterParams.parameterType"><code>filterParams.parameterType</code></a>, <a href="#parameter-filterParams.parameterKey"><code>filterParams.parameterKey</code></a>, <a href="#parameter-filterParams.parameterPairKey"><code>filterParams.parameterPairKey</code></a>, <a href="#parameter-filterParams.parameterPairValue"><code>filterParams.parameterPairValue</code></a>, <a href="#parameter-refreshAcl"><code>refreshAcl</code></a>, <a href="#parameter-truncateParams"><code>truncateParams</code></a>, <a href="#parameter-snapshotMetadataWithoutParams"><code>snapshotMetadataWithoutParams</code></a></td>
-    <td>Lists the results of all the integration executions. The response includes the same information as the [execution log](https://cloud.google.com/application-integration/docs/viewing-logs) in the Integration UI.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_integrations_executions_get"><CopyableCode code="projects_locations_integrations_executions_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-integrationsId"><code>integrationsId</code></a>, <a href="#parameter-executionsId"><code>executionsId</code></a></td>
@@ -475,18 +468,18 @@ The following methods are available for this resource:
     <td>Get an execution in the specified project.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_integrations_executions_list"><CopyableCode code="projects_locations_integrations_executions_list" /></a></td>
+    <td><a href="#projects_locations_products_integrations_executions_list"><CopyableCode code="projects_locations_products_integrations_executions_list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-integrationsId"><code>integrationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-filterParams.workflowName"><code>filterParams.workflowName</code></a>, <a href="#parameter-filterParams.startTime"><code>filterParams.startTime</code></a>, <a href="#parameter-filterParams.endTime"><code>filterParams.endTime</code></a>, <a href="#parameter-filterParams.eventStatuses"><code>filterParams.eventStatuses</code></a>, <a href="#parameter-filterParams.taskStatuses"><code>filterParams.taskStatuses</code></a>, <a href="#parameter-filterParams.customFilter"><code>filterParams.customFilter</code></a>, <a href="#parameter-filterParams.executionId"><code>filterParams.executionId</code></a>, <a href="#parameter-filterParams.parameterValue"><code>filterParams.parameterValue</code></a>, <a href="#parameter-filterParams.parameterType"><code>filterParams.parameterType</code></a>, <a href="#parameter-filterParams.parameterKey"><code>filterParams.parameterKey</code></a>, <a href="#parameter-filterParams.parameterPairKey"><code>filterParams.parameterPairKey</code></a>, <a href="#parameter-filterParams.parameterPairValue"><code>filterParams.parameterPairValue</code></a>, <a href="#parameter-refreshAcl"><code>refreshAcl</code></a>, <a href="#parameter-truncateParams"><code>truncateParams</code></a>, <a href="#parameter-snapshotMetadataWithoutParams"><code>snapshotMetadataWithoutParams</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-productsId"><code>productsId</code></a>, <a href="#parameter-integrationsId"><code>integrationsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filterParams.parameterPairValue"><code>filterParams.parameterPairValue</code></a>, <a href="#parameter-filterParams.startTime"><code>filterParams.startTime</code></a>, <a href="#parameter-filterParams.eventStatuses"><code>filterParams.eventStatuses</code></a>, <a href="#parameter-refreshAcl"><code>refreshAcl</code></a>, <a href="#parameter-filterParams.workflowName"><code>filterParams.workflowName</code></a>, <a href="#parameter-filterParams.parameterValue"><code>filterParams.parameterValue</code></a>, <a href="#parameter-filterParams.endTime"><code>filterParams.endTime</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-filterParams.customFilter"><code>filterParams.customFilter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filterParams.parameterPairKey"><code>filterParams.parameterPairKey</code></a>, <a href="#parameter-filterParams.executionId"><code>filterParams.executionId</code></a>, <a href="#parameter-filterParams.taskStatuses"><code>filterParams.taskStatuses</code></a>, <a href="#parameter-snapshotMetadataWithoutParams"><code>snapshotMetadataWithoutParams</code></a>, <a href="#parameter-filterParams.parameterType"><code>filterParams.parameterType</code></a>, <a href="#parameter-truncateParams"><code>truncateParams</code></a>, <a href="#parameter-filterParams.parameterKey"><code>filterParams.parameterKey</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
     <td>Lists the results of all the integration executions. The response includes the same information as the [execution log](https://cloud.google.com/application-integration/docs/viewing-logs) in the Integration UI.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_products_integrations_executions_download"><CopyableCode code="projects_locations_products_integrations_executions_download" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-productsId"><code>productsId</code></a>, <a href="#parameter-integrationsId"><code>integrationsId</code></a>, <a href="#parameter-executionsId"><code>executionsId</code></a></td>
-    <td></td>
-    <td>Download the execution.</td>
+    <td><a href="#projects_locations_integrations_executions_list"><CopyableCode code="projects_locations_integrations_executions_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-integrationsId"><code>integrationsId</code></a></td>
+    <td><a href="#parameter-filterParams.eventStatuses"><code>filterParams.eventStatuses</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filterParams.taskStatuses"><code>filterParams.taskStatuses</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filterParams.parameterValue"><code>filterParams.parameterValue</code></a>, <a href="#parameter-refreshAcl"><code>refreshAcl</code></a>, <a href="#parameter-filterParams.customFilter"><code>filterParams.customFilter</code></a>, <a href="#parameter-filterParams.parameterType"><code>filterParams.parameterType</code></a>, <a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-filterParams.endTime"><code>filterParams.endTime</code></a>, <a href="#parameter-filterParams.parameterPairKey"><code>filterParams.parameterPairKey</code></a>, <a href="#parameter-filterParams.executionId"><code>filterParams.executionId</code></a>, <a href="#parameter-truncateParams"><code>truncateParams</code></a>, <a href="#parameter-filterParams.parameterKey"><code>filterParams.parameterKey</code></a>, <a href="#parameter-filterParams.parameterPairValue"><code>filterParams.parameterPairValue</code></a>, <a href="#parameter-filterParams.workflowName"><code>filterParams.workflowName</code></a>, <a href="#parameter-snapshotMetadataWithoutParams"><code>snapshotMetadataWithoutParams</code></a>, <a href="#parameter-filterParams.startTime"><code>filterParams.startTime</code></a></td>
+    <td>Lists the results of all the integration executions. The response includes the same information as the [execution log](https://cloud.google.com/application-integration/docs/viewing-logs) in the Integration UI.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_integrations_executions_cancel"><CopyableCode code="projects_locations_integrations_executions_cancel" /></a></td>
@@ -508,6 +501,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-integrationsId"><code>integrationsId</code></a>, <a href="#parameter-executionsId"><code>executionsId</code></a></td>
     <td></td>
     <td>Re-execute an existing execution, with same request parameters and execution strategy.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_products_integrations_executions_download"><CopyableCode code="projects_locations_products_integrations_executions_download" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-productsId"><code>productsId</code></a>, <a href="#parameter-integrationsId"><code>integrationsId</code></a>, <a href="#parameter-executionsId"><code>executionsId</code></a></td>
+    <td></td>
+    <td>Download the execution.</td>
 </tr>
 </tbody>
 </table>
@@ -659,8 +659,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="projects_locations_products_integrations_executions_get"
     values={[
         { label: 'projects_locations_products_integrations_executions_get', value: 'projects_locations_products_integrations_executions_get' },
-        { label: 'projects_locations_products_integrations_executions_list', value: 'projects_locations_products_integrations_executions_list' },
         { label: 'projects_locations_integrations_executions_get', value: 'projects_locations_integrations_executions_get' },
+        { label: 'projects_locations_products_integrations_executions_list', value: 'projects_locations_products_integrations_executions_list' },
         { label: 'projects_locations_integrations_executions_list', value: 'projects_locations_integrations_executions_list' }
     ]}
 >
@@ -696,57 +696,6 @@ AND executionsId = '{{ executionsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_products_integrations_executions_list">
-
-Lists the results of all the integration executions. The response includes the same information as the [execution log](https://cloud.google.com/application-integration/docs/viewing-logs) in the Integration UI.
-
-```sql
-SELECT
-name,
-cloudKmsKey,
-cloudLoggingDetails,
-createTime,
-directSubExecutions,
-eventExecutionDetails,
-executionDetails,
-executionMethod,
-integrationVersionState,
-replayInfo,
-requestParameters,
-requestParams,
-responseParameters,
-responseParams,
-snapshotNumber,
-triggerId,
-updateTime
-FROM google.integrations.executions
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND productsId = '{{ productsId }}' -- required
-AND integrationsId = '{{ integrationsId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
-AND readMask = '{{ readMask }}'
-AND filterParams.workflowName = '{{ filterParams.workflowName }}'
-AND filterParams.startTime = '{{ filterParams.startTime }}'
-AND filterParams.endTime = '{{ filterParams.endTime }}'
-AND filterParams.eventStatuses = '{{ filterParams.eventStatuses }}'
-AND filterParams.taskStatuses = '{{ filterParams.taskStatuses }}'
-AND filterParams.customFilter = '{{ filterParams.customFilter }}'
-AND filterParams.executionId = '{{ filterParams.executionId }}'
-AND filterParams.parameterValue = '{{ filterParams.parameterValue }}'
-AND filterParams.parameterType = '{{ filterParams.parameterType }}'
-AND filterParams.parameterKey = '{{ filterParams.parameterKey }}'
-AND filterParams.parameterPairKey = '{{ filterParams.parameterPairKey }}'
-AND filterParams.parameterPairValue = '{{ filterParams.parameterPairValue }}'
-AND refreshAcl = '{{ refreshAcl }}'
-AND truncateParams = '{{ truncateParams }}'
-AND snapshotMetadataWithoutParams = '{{ snapshotMetadataWithoutParams }}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_integrations_executions_get">
 
 Get an execution in the specified project.
@@ -778,6 +727,57 @@ AND executionsId = '{{ executionsId }}' -- required
 ;
 ```
 </TabItem>
+<TabItem value="projects_locations_products_integrations_executions_list">
+
+Lists the results of all the integration executions. The response includes the same information as the [execution log](https://cloud.google.com/application-integration/docs/viewing-logs) in the Integration UI.
+
+```sql
+SELECT
+name,
+cloudKmsKey,
+cloudLoggingDetails,
+createTime,
+directSubExecutions,
+eventExecutionDetails,
+executionDetails,
+executionMethod,
+integrationVersionState,
+replayInfo,
+requestParameters,
+requestParams,
+responseParameters,
+responseParams,
+snapshotNumber,
+triggerId,
+updateTime
+FROM google.integrations.executions
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND productsId = '{{ productsId }}' -- required
+AND integrationsId = '{{ integrationsId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND filterParams.parameterPairValue = '{{ filterParams.parameterPairValue }}'
+AND filterParams.startTime = '{{ filterParams.startTime }}'
+AND filterParams.eventStatuses = '{{ filterParams.eventStatuses }}'
+AND refreshAcl = '{{ refreshAcl }}'
+AND filterParams.workflowName = '{{ filterParams.workflowName }}'
+AND filterParams.parameterValue = '{{ filterParams.parameterValue }}'
+AND filterParams.endTime = '{{ filterParams.endTime }}'
+AND filter = '{{ filter }}'
+AND filterParams.customFilter = '{{ filterParams.customFilter }}'
+AND pageToken = '{{ pageToken }}'
+AND filterParams.parameterPairKey = '{{ filterParams.parameterPairKey }}'
+AND filterParams.executionId = '{{ filterParams.executionId }}'
+AND filterParams.taskStatuses = '{{ filterParams.taskStatuses }}'
+AND snapshotMetadataWithoutParams = '{{ snapshotMetadataWithoutParams }}'
+AND filterParams.parameterType = '{{ filterParams.parameterType }}'
+AND truncateParams = '{{ truncateParams }}'
+AND filterParams.parameterKey = '{{ filterParams.parameterKey }}'
+AND orderBy = '{{ orderBy }}'
+AND readMask = '{{ readMask }}'
+;
+```
+</TabItem>
 <TabItem value="projects_locations_integrations_executions_list">
 
 Lists the results of all the integration executions. The response includes the same information as the [execution log](https://cloud.google.com/application-integration/docs/viewing-logs) in the Integration UI.
@@ -805,26 +805,26 @@ FROM google.integrations.executions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND integrationsId = '{{ integrationsId }}' -- required
+AND filterParams.eventStatuses = '{{ filterParams.eventStatuses }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND filterParams.taskStatuses = '{{ filterParams.taskStatuses }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
-AND readMask = '{{ readMask }}'
-AND filterParams.workflowName = '{{ filterParams.workflowName }}'
-AND filterParams.startTime = '{{ filterParams.startTime }}'
-AND filterParams.endTime = '{{ filterParams.endTime }}'
-AND filterParams.eventStatuses = '{{ filterParams.eventStatuses }}'
-AND filterParams.taskStatuses = '{{ filterParams.taskStatuses }}'
-AND filterParams.customFilter = '{{ filterParams.customFilter }}'
-AND filterParams.executionId = '{{ filterParams.executionId }}'
 AND filterParams.parameterValue = '{{ filterParams.parameterValue }}'
-AND filterParams.parameterType = '{{ filterParams.parameterType }}'
-AND filterParams.parameterKey = '{{ filterParams.parameterKey }}'
-AND filterParams.parameterPairKey = '{{ filterParams.parameterPairKey }}'
-AND filterParams.parameterPairValue = '{{ filterParams.parameterPairValue }}'
 AND refreshAcl = '{{ refreshAcl }}'
+AND filterParams.customFilter = '{{ filterParams.customFilter }}'
+AND filterParams.parameterType = '{{ filterParams.parameterType }}'
+AND readMask = '{{ readMask }}'
+AND filterParams.endTime = '{{ filterParams.endTime }}'
+AND filterParams.parameterPairKey = '{{ filterParams.parameterPairKey }}'
+AND filterParams.executionId = '{{ filterParams.executionId }}'
 AND truncateParams = '{{ truncateParams }}'
+AND filterParams.parameterKey = '{{ filterParams.parameterKey }}'
+AND filterParams.parameterPairValue = '{{ filterParams.parameterPairValue }}'
+AND filterParams.workflowName = '{{ filterParams.workflowName }}'
 AND snapshotMetadataWithoutParams = '{{ snapshotMetadataWithoutParams }}'
+AND filterParams.startTime = '{{ filterParams.startTime }}'
 ;
 ```
 </TabItem>
@@ -834,28 +834,14 @@ AND snapshotMetadataWithoutParams = '{{ snapshotMetadataWithoutParams }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_products_integrations_executions_download"
+    defaultValue="projects_locations_integrations_executions_cancel"
     values={[
-        { label: 'projects_locations_products_integrations_executions_download', value: 'projects_locations_products_integrations_executions_download' },
         { label: 'projects_locations_integrations_executions_cancel', value: 'projects_locations_integrations_executions_cancel' },
         { label: 'projects_locations_integrations_executions_download', value: 'projects_locations_integrations_executions_download' },
-        { label: 'projects_locations_integrations_executions_replay', value: 'projects_locations_integrations_executions_replay' }
+        { label: 'projects_locations_integrations_executions_replay', value: 'projects_locations_integrations_executions_replay' },
+        { label: 'projects_locations_products_integrations_executions_download', value: 'projects_locations_products_integrations_executions_download' }
     ]}
 >
-<TabItem value="projects_locations_products_integrations_executions_download">
-
-Download the execution.
-
-```sql
-EXEC google.integrations.executions.projects_locations_products_integrations_executions_download 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@productsId='{{ productsId }}' --required, 
-@integrationsId='{{ integrationsId }}' --required, 
-@executionsId='{{ executionsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="projects_locations_integrations_executions_cancel">
 
 Cancellation of an execution and associated sub-executions. This will not cancel an IN_PROCESS or completed(SUCCESSFUL, FAILED or CANCELLED) executions.
@@ -898,11 +884,25 @@ EXEC google.integrations.executions.projects_locations_integrations_executions_r
 @executionsId='{{ executionsId }}' --required 
 @@json=
 '{
-"replayReason": "{{ replayReason }}", 
 "updateMask": "{{ updateMask }}", 
+"replayMode": "{{ replayMode }}", 
 "modifiedParameters": "{{ modifiedParameters }}", 
-"replayMode": "{{ replayMode }}"
+"replayReason": "{{ replayReason }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_products_integrations_executions_download">
+
+Download the execution.
+
+```sql
+EXEC google.integrations.executions.projects_locations_products_integrations_executions_download 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@productsId='{{ productsId }}' --required, 
+@integrationsId='{{ integrationsId }}' --required, 
+@executionsId='{{ executionsId }}' --required
 ;
 ```
 </TabItem>

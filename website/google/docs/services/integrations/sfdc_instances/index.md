@@ -304,7 +304,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_products_sfdc_instances_list"><CopyableCode code="projects_locations_products_sfdc_instances_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-productsId"><code>productsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td><a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all sfdc instances that match the filter. Restrict to sfdc instances belonging to the current client only.</td>
 </tr>
 <tr>
@@ -318,7 +318,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_sfdc_instances_list"><CopyableCode code="projects_locations_sfdc_instances_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all sfdc instances that match the filter. Restrict to sfdc instances belonging to the current client only.</td>
 </tr>
 <tr>
@@ -480,10 +480,10 @@ FROM google.integrations.sfdc_instances
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND productsId = '{{ productsId }}' -- required
+AND readMask = '{{ readMask }}'
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND readMask = '{{ readMask }}'
 ;
 ```
 </TabItem>
@@ -528,9 +528,9 @@ FROM google.integrations.sfdc_instances
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND readMask = '{{ readMask }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -553,23 +553,23 @@ Creates an sfdc instance record. Store the sfdc instance in Spanner. Returns the
 
 ```sql
 INSERT INTO google.integrations.sfdc_instances (
-data__name,
-data__displayName,
-data__description,
+data__serviceAuthority,
 data__sfdcOrgId,
 data__authConfigId,
-data__serviceAuthority,
+data__displayName,
+data__description,
+data__name,
 projectsId,
 locationsId,
 productsId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
-'{{ description }}',
+'{{ serviceAuthority }}',
 '{{ sfdcOrgId }}',
 '{{ authConfigId }}',
-'{{ serviceAuthority }}',
+'{{ displayName }}',
+'{{ description }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ productsId }}'
@@ -592,22 +592,22 @@ Creates an sfdc instance record. Store the sfdc instance in Spanner. Returns the
 
 ```sql
 INSERT INTO google.integrations.sfdc_instances (
-data__name,
-data__displayName,
-data__description,
+data__serviceAuthority,
 data__sfdcOrgId,
 data__authConfigId,
-data__serviceAuthority,
+data__displayName,
+data__description,
+data__name,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
-'{{ description }}',
+'{{ serviceAuthority }}',
 '{{ sfdcOrgId }}',
 '{{ authConfigId }}',
-'{{ serviceAuthority }}',
+'{{ displayName }}',
+'{{ description }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -638,20 +638,10 @@ updateTime
     - name: productsId
       value: string
       description: Required parameter for the sfdc_instances resource.
-    - name: name
+    - name: serviceAuthority
       value: string
       description: >
-        Resource name of the SFDC instance projects/{project}/locations/{location}/sfdcInstances/{sfdcInstance}.
-        
-    - name: displayName
-      value: string
-      description: >
-        Optional. User selected unique name/alias to easily reference an instance.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. A description of the sfdc instance.
+        Optional. URL used for API calls after authentication (the login authority is configured within the referenced AuthConfig).
         
     - name: sfdcOrgId
       value: string
@@ -663,10 +653,20 @@ updateTime
       description: >
         A list of AuthConfigs that can be tried to open the channel to SFDC
         
-    - name: serviceAuthority
+    - name: displayName
       value: string
       description: >
-        Optional. URL used for API calls after authentication (the login authority is configured within the referenced AuthConfig).
+        Optional. User selected unique name/alias to easily reference an instance.
+        
+    - name: description
+      value: string
+      description: >
+        Optional. A description of the sfdc instance.
+        
+    - name: name
+      value: string
+      description: >
+        Resource name of the SFDC instance projects/{project}/locations/{location}/sfdcInstances/{sfdcInstance}.
         
 ```
 </TabItem>
@@ -689,12 +689,12 @@ Updates an sfdc instance. Updates the sfdc instance in spanner. Returns the sfdc
 ```sql
 UPDATE google.integrations.sfdc_instances
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
+data__serviceAuthority = '{{ serviceAuthority }}',
 data__sfdcOrgId = '{{ sfdcOrgId }}',
 data__authConfigId = '{{ authConfigId }}',
-data__serviceAuthority = '{{ serviceAuthority }}'
+data__displayName = '{{ displayName }}',
+data__description = '{{ description }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -720,12 +720,12 @@ Updates an sfdc instance. Updates the sfdc instance in spanner. Returns the sfdc
 ```sql
 UPDATE google.integrations.sfdc_instances
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
+data__serviceAuthority = '{{ serviceAuthority }}',
 data__sfdcOrgId = '{{ sfdcOrgId }}',
 data__authConfigId = '{{ authConfigId }}',
-data__serviceAuthority = '{{ serviceAuthority }}'
+data__displayName = '{{ displayName }}',
+data__description = '{{ description }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

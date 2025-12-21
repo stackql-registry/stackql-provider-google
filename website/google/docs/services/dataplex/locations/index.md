@@ -152,7 +152,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-aspectTypes"><code>aspectTypes</code></a>, <a href="#parameter-paths"><code>paths</code></a>, <a href="#parameter-entry"><code>entry</code></a></td>
-    <td>Looks up an entry by name using the permission on the source system.</td>
+    <td>Looks up an entry by name using the permission on the source system. Caution: The Vertex AI, Bigtable, Spanner, Pub/Sub, Dataform, and Dataproc Metastore metadata that is stored in Dataplex Universal Catalog is changing. For more information, see Changes to metadata stored in Dataplex Universal Catalog (https://cloud.google.com/dataplex/docs/metadata-changes).</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_search_entries"><CopyableCode code="projects_locations_search_entries" /></a></td>
@@ -310,7 +310,7 @@ AND extraLocationTypes = '{{ extraLocationTypes }}'
 >
 <TabItem value="projects_locations_lookup_entry">
 
-Looks up an entry by name using the permission on the source system.
+Looks up an entry by name using the permission on the source system. Caution: The Vertex AI, Bigtable, Spanner, Pub/Sub, Dataform, and Dataproc Metastore metadata that is stored in Dataplex Universal Catalog is changing. For more information, see Changes to metadata stored in Dataplex Universal Catalog (https://cloud.google.com/dataplex/docs/metadata-changes).
 
 ```sql
 EXEC google.dataplex.locations.projects_locations_lookup_entry 

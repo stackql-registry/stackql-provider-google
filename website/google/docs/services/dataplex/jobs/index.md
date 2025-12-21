@@ -220,6 +220,16 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Settings for a data discovery scan. (id: GoogleCloudDataplexV1DataDiscoverySpec)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="dataDocumentationResult" /></td>
+    <td><code>object</code></td>
+    <td>Output only. The result of a data documentation scan. (id: GoogleCloudDataplexV1DataDocumentationResult)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="dataDocumentationSpec" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Settings for a data documentation scan. (id: GoogleCloudDataplexV1DataDocumentationSpec)</td>
+</tr>
+<tr>
     <td><CopyableCode code="dataProfileResult" /></td>
     <td><code>object</code></td>
     <td>Output only. The result of a data profile scan. (id: GoogleCloudDataplexV1DataProfileResult)</td>
@@ -302,6 +312,16 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="dataDiscoverySpec" /></td>
     <td><code>object</code></td>
     <td>Output only. Settings for a data discovery scan. (id: GoogleCloudDataplexV1DataDiscoverySpec)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="dataDocumentationResult" /></td>
+    <td><code>object</code></td>
+    <td>Output only. The result of a data documentation scan. (id: GoogleCloudDataplexV1DataDocumentationResult)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="dataDocumentationSpec" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Settings for a data documentation scan. (id: GoogleCloudDataplexV1DataDocumentationSpec)</td>
 </tr>
 <tr>
     <td><CopyableCode code="dataProfileResult" /></td>
@@ -560,6 +580,8 @@ name,
 createTime,
 dataDiscoveryResult,
 dataDiscoverySpec,
+dataDocumentationResult,
+dataDocumentationSpec,
 dataProfileResult,
 dataProfileSpec,
 dataQualityResult,
@@ -589,6 +611,8 @@ name,
 createTime,
 dataDiscoveryResult,
 dataDiscoverySpec,
+dataDocumentationResult,
+dataDocumentationSpec,
 dataProfileResult,
 dataProfileSpec,
 dataQualityResult,

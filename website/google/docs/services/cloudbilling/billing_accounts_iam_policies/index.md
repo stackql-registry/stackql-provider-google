@@ -174,8 +174,8 @@ Sets the access control policy for a billing account. Replaces any existing poli
 ```sql
 REPLACE google.cloudbilling.billing_accounts_iam_policies
 SET 
-data__policy = '{{ policy }}',
-data__updateMask = '{{ updateMask }}'
+data__updateMask = '{{ updateMask }}',
+data__policy = '{{ policy }}'
 WHERE 
 billingAccountsId = '{{ billingAccountsId }}' --required
 RETURNING

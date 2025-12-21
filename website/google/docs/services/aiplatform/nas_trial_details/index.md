@@ -62,12 +62,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="searchTrial" /></td>
     <td><code>object</code></td>
-    <td>Represents a uCAIP NasJob trial. (id: GoogleCloudAiplatformV1NasTrial)</td>
+    <td>The requested search NasTrial. (id: GoogleCloudAiplatformV1NasTrial)</td>
 </tr>
 <tr>
     <td><CopyableCode code="trainTrial" /></td>
     <td><code>object</code></td>
-    <td>Represents a uCAIP NasJob trial. (id: GoogleCloudAiplatformV1NasTrial)</td>
+    <td>The train NasTrial corresponding to search_trial. Only populated if search_trial is used for training. (id: GoogleCloudAiplatformV1NasTrial)</td>
 </tr>
 </tbody>
 </table>
@@ -96,12 +96,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="searchTrial" /></td>
     <td><code>object</code></td>
-    <td>Represents a uCAIP NasJob trial. (id: GoogleCloudAiplatformV1NasTrial)</td>
+    <td>The requested search NasTrial. (id: GoogleCloudAiplatformV1NasTrial)</td>
 </tr>
 <tr>
     <td><CopyableCode code="trainTrial" /></td>
     <td><code>object</code></td>
-    <td>Represents a uCAIP NasJob trial. (id: GoogleCloudAiplatformV1NasTrial)</td>
+    <td>The train NasTrial corresponding to search_trial. Only populated if search_trial is used for training. (id: GoogleCloudAiplatformV1NasTrial)</td>
 </tr>
 </tbody>
 </table>

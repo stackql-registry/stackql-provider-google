@@ -110,9 +110,9 @@ Updates a shared flow revision. This operation is only allowed on revisions whic
 ```sql
 UPDATE google.apigee.revisions_shared_flow_revision
 SET 
-data__contentType = '{{ contentType }}',
 data__data = '{{ data }}',
-data__extensions = '{{ extensions }}'
+data__extensions = '{{ extensions }}',
+data__contentType = '{{ contentType }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND sharedflowsId = '{{ sharedflowsId }}' --required

@@ -179,56 +179,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Required. Name of the AddressGroup resource. It matches pattern `projects/*/locations/&#123;location&#125;/addressGroups/`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="capacity" /></td>
-    <td><code>integer (int32)</code></td>
-    <td>Required. Capacity of the Address Group</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp when the resource was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Free-text description of the resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="items" /></td>
-    <td><code>array</code></td>
-    <td>Optional. List of items.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Set of label tags associated with the AddressGroup resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="purpose" /></td>
-    <td><code>array</code></td>
-    <td>Optional. List of supported purposes of the Address Group.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="selfLink" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Server-defined fully-qualified URL for this resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="type" /></td>
-    <td><code>string</code></td>
-    <td>Required. The type of the Address Group. Possible values are "IPv4" or "IPV6".</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp when the resource was updated.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -243,56 +193,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Required. Name of the AddressGroup resource. It matches pattern `projects/*/locations/&#123;location&#125;/addressGroups/`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="capacity" /></td>
-    <td><code>integer (int32)</code></td>
-    <td>Required. Capacity of the Address Group</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp when the resource was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Free-text description of the resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="items" /></td>
-    <td><code>array</code></td>
-    <td>Optional. List of items.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Set of label tags associated with the AddressGroup resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="purpose" /></td>
-    <td><code>array</code></td>
-    <td>Optional. List of supported purposes of the Address Group.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="selfLink" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Server-defined fully-qualified URL for this resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="type" /></td>
-    <td><code>string</code></td>
-    <td>Required. The type of the Address Group. Possible values are "IPv4" or "IPV6".</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp when the resource was updated.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -331,14 +231,14 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_address_groups_list"><CopyableCode code="projects_locations_address_groups_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists address groups in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_address_groups_list"><CopyableCode code="organizations_locations_address_groups_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists address groups in a given project and location.</td>
 </tr>
 <tr>
@@ -359,7 +259,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_address_groups_patch"><CopyableCode code="projects_locations_address_groups_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-addressGroupsId"><code>addressGroupsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a single address group.</td>
 </tr>
 <tr>
@@ -529,22 +429,13 @@ Lists address groups in a given project and location.
 
 ```sql
 SELECT
-name,
-capacity,
-createTime,
-description,
-items,
-labels,
-purpose,
-selfLink,
-type,
-updateTime
+*
 FROM google.networksecurity.address_groups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -554,22 +445,13 @@ Lists address groups in a given project and location.
 
 ```sql
 SELECT
-name,
-capacity,
-createTime,
-description,
-items,
-labels,
-purpose,
-selfLink,
-type,
-updateTime
+*
 FROM google.networksecurity.address_groups
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -592,26 +474,26 @@ Creates a new address group in a given project and location.
 
 ```sql
 INSERT INTO google.networksecurity.address_groups (
-data__name,
-data__description,
-data__labels,
-data__type,
-data__items,
-data__capacity,
 data__purpose,
+data__items,
+data__type,
+data__name,
+data__capacity,
+data__labels,
+data__description,
 projectsId,
 locationsId,
 addressGroupId,
 requestId
 )
 SELECT 
-'{{ name }}',
-'{{ description }}',
-'{{ labels }}',
-'{{ type }}',
-'{{ items }}',
-{{ capacity }},
 '{{ purpose }}',
+'{{ items }}',
+'{{ type }}',
+'{{ name }}',
+{{ capacity }},
+'{{ labels }}',
+'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ addressGroupId }}',
@@ -631,26 +513,26 @@ Creates a new address group in a given project and location.
 
 ```sql
 INSERT INTO google.networksecurity.address_groups (
-data__name,
-data__description,
-data__labels,
-data__type,
-data__items,
-data__capacity,
 data__purpose,
+data__items,
+data__type,
+data__name,
+data__capacity,
+data__labels,
+data__description,
 organizationsId,
 locationsId,
 addressGroupId,
 requestId
 )
 SELECT 
-'{{ name }}',
-'{{ description }}',
-'{{ labels }}',
-'{{ type }}',
-'{{ items }}',
-{{ capacity }},
 '{{ purpose }}',
+'{{ items }}',
+'{{ type }}',
+'{{ name }}',
+{{ capacity }},
+'{{ labels }}',
+'{{ description }}',
 '{{ organizationsId }}',
 '{{ locationsId }}',
 '{{ addressGroupId }}',
@@ -679,20 +561,15 @@ response
     - name: organizationsId
       value: string
       description: Required parameter for the address_groups resource.
-    - name: name
-      value: string
+    - name: purpose
+      value: array
       description: >
-        Required. Name of the AddressGroup resource. It matches pattern `projects/*/locations/{location}/addressGroups/`.
+        Optional. List of supported purposes of the Address Group.
         
-    - name: description
-      value: string
+    - name: items
+      value: array
       description: >
-        Optional. Free-text description of the resource.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Set of label tags associated with the AddressGroup resource.
+        Optional. List of items.
         
     - name: type
       value: string
@@ -700,20 +577,25 @@ response
         Required. The type of the Address Group. Possible values are "IPv4" or "IPV6".
         
       valid_values: ['TYPE_UNSPECIFIED', 'IPV4', 'IPV6']
-    - name: items
-      value: array
+    - name: name
+      value: string
       description: >
-        Optional. List of items.
+        Required. Name of the AddressGroup resource. It matches pattern `projects/*/locations/{location}/addressGroups/`.
         
     - name: capacity
       value: integer
       description: >
         Required. Capacity of the Address Group
         
-    - name: purpose
-      value: array
+    - name: labels
+      value: object
       description: >
-        Optional. List of supported purposes of the Address Group.
+        Optional. Set of label tags associated with the AddressGroup resource.
+        
+    - name: description
+      value: string
+      description: >
+        Optional. Free-text description of the resource.
         
     - name: addressGroupId
       value: string
@@ -740,19 +622,19 @@ Updates the parameters of a single address group.
 ```sql
 UPDATE google.networksecurity.address_groups
 SET 
-data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__labels = '{{ labels }}',
-data__type = '{{ type }}',
+data__purpose = '{{ purpose }}',
 data__items = '{{ items }}',
+data__type = '{{ type }}',
+data__name = '{{ name }}',
 data__capacity = {{ capacity }},
-data__purpose = '{{ purpose }}'
+data__labels = '{{ labels }}',
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND addressGroupsId = '{{ addressGroupsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,
@@ -768,13 +650,13 @@ Updates parameters of an address group.
 ```sql
 UPDATE google.networksecurity.address_groups
 SET 
-data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__labels = '{{ labels }}',
-data__type = '{{ type }}',
+data__purpose = '{{ purpose }}',
 data__items = '{{ items }}',
+data__type = '{{ type }}',
+data__name = '{{ name }}',
 data__capacity = {{ capacity }},
-data__purpose = '{{ purpose }}'
+data__labels = '{{ labels }}',
+data__description = '{{ description }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

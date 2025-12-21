@@ -32,13 +32,13 @@ Creates, updates, deletes, gets or lists a <code>services</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="batch_get"
+    defaultValue="list"
     values={[
-        { label: 'batch_get', value: 'batch_get' },
+        { label: 'list', value: 'list' },
         { label: 'get', value: 'get' }
     ]}
 >
-<TabItem value="batch_get">
+<TabItem value="list">
 
 <table>
 <thead>
@@ -50,9 +50,24 @@ The following fields are returned by `SELECT` queries:
 </thead>
 <tbody>
 <tr>
-    <td><CopyableCode code="services" /></td>
-    <td><code>array</code></td>
-    <td>The requested Service states.</td>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>The resource name of the consumer and service. A valid name would be: - projects/123/services/serviceusage.googleapis.com</td>
+</tr>
+<tr>
+    <td><CopyableCode code="config" /></td>
+    <td><code>object</code></td>
+    <td>The service configuration of the available service. Some fields may be filtered out of the configuration in responses to the `ListServices` method. These fields are present only in responses to the `GetService` method. (id: GoogleApiServiceusageV1ServiceConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="parent" /></td>
+    <td><code>string</code></td>
+    <td>The resource name of the consumer. A valid name would be: - projects/123</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Whether or not the service has been enabled for use by the consumer.</td>
 </tr>
 </tbody>
 </table>
@@ -109,11 +124,11 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#batch_get"><CopyableCode code="batch_get" /></a></td>
+    <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-parentType"><code>parentType</code></a>, <a href="#parameter-parent"><code>parent</code></a></td>
-    <td><a href="#parameter-names"><code>names</code></a></td>
-    <td>Returns the service configurations and enabled states for a given list of services.</td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td>List all services available to the specified project, and the current state of those services with respect to the project. The list includes all public services, all services for which the calling user has the `servicemanagement.services.bind` permission, and all services that have already been enabled on the project. The list can be filtered to only include services in a specific state, for example to only include services enabled on the project. WARNING: If you need to query enabled services frequently or across an organization, you should use [Cloud Asset Inventory API](https://cloud.google.com/asset-inventory/docs/apis), which provides higher throughput and richer filtering capability.</td>
 </tr>
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
@@ -167,8 +182,18 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
-<tr id="parameter-names">
-    <td><CopyableCode code="names" /></td>
+<tr id="parameter-filter">
+    <td><CopyableCode code="filter" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-pageSize">
+    <td><CopyableCode code="pageSize" /></td>
+    <td><code>integer (int32)</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-pageToken">
+    <td><CopyableCode code="pageToken" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -178,23 +203,28 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="batch_get"
+    defaultValue="list"
     values={[
-        { label: 'batch_get', value: 'batch_get' },
+        { label: 'list', value: 'list' },
         { label: 'get', value: 'get' }
     ]}
 >
-<TabItem value="batch_get">
+<TabItem value="list">
 
-Returns the service configurations and enabled states for a given list of services.
+List all services available to the specified project, and the current state of those services with respect to the project. The list includes all public services, all services for which the calling user has the `servicemanagement.services.bind` permission, and all services that have already been enabled on the project. The list can be filtered to only include services in a specific state, for example to only include services enabled on the project. WARNING: If you need to query enabled services frequently or across an organization, you should use [Cloud Asset Inventory API](https://cloud.google.com/asset-inventory/docs/apis), which provides higher throughput and richer filtering capability.
 
 ```sql
 SELECT
-services
+name,
+config,
+parent,
+state
 FROM google.serviceusage.services
 WHERE parentType = '{{ parentType }}' -- required
 AND parent = '{{ parent }}' -- required
-AND names = '{{ names }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>

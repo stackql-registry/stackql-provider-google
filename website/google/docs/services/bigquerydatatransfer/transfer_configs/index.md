@@ -102,6 +102,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Error code with detailed information about reason of the latest config failure. (id: Status)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="managedTableType" /></td>
+    <td><code>string</code></td>
+    <td>The classification of the destination table.</td>
+</tr>
+<tr>
     <td><CopyableCode code="nextRunTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. Next time when data transfer will run.</td>
@@ -214,6 +219,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
     <td>Output only. Error code with detailed information about reason of the latest config failure. (id: Status)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="managedTableType" /></td>
+    <td><code>string</code></td>
+    <td>The classification of the destination table.</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextRunTime" /></td>
@@ -330,6 +340,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Error code with detailed information about reason of the latest config failure. (id: Status)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="managedTableType" /></td>
+    <td><code>string</code></td>
+    <td>The classification of the destination table.</td>
+</tr>
+<tr>
     <td><CopyableCode code="nextRunTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. Next time when data transfer will run.</td>
@@ -442,6 +457,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
     <td>Output only. Error code with detailed information about reason of the latest config failure. (id: Status)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="managedTableType" /></td>
+    <td><code>string</code></td>
+    <td>The classification of the destination table.</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextRunTime" /></td>
@@ -707,6 +727,7 @@ displayName,
 emailPreferences,
 encryptionConfiguration,
 error,
+managedTableType,
 nextRunTime,
 notificationPubsubTopic,
 ownerInfo,
@@ -740,6 +761,7 @@ displayName,
 emailPreferences,
 encryptionConfiguration,
 error,
+managedTableType,
 nextRunTime,
 notificationPubsubTopic,
 ownerInfo,
@@ -772,6 +794,7 @@ displayName,
 emailPreferences,
 encryptionConfiguration,
 error,
+managedTableType,
 nextRunTime,
 notificationPubsubTopic,
 ownerInfo,
@@ -807,6 +830,7 @@ displayName,
 emailPreferences,
 encryptionConfiguration,
 error,
+managedTableType,
 nextRunTime,
 notificationPubsubTopic,
 ownerInfo,
@@ -858,6 +882,7 @@ data__userId,
 data__notificationPubsubTopic,
 data__emailPreferences,
 data__encryptionConfiguration,
+data__managedTableType,
 projectsId,
 locationsId,
 authorizationCode,
@@ -879,6 +904,7 @@ SELECT
 '{{ notificationPubsubTopic }}',
 '{{ emailPreferences }}',
 '{{ encryptionConfiguration }}',
+'{{ managedTableType }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ authorizationCode }}',
@@ -895,6 +921,7 @@ displayName,
 emailPreferences,
 encryptionConfiguration,
 error,
+managedTableType,
 nextRunTime,
 notificationPubsubTopic,
 ownerInfo,
@@ -928,6 +955,7 @@ data__userId,
 data__notificationPubsubTopic,
 data__emailPreferences,
 data__encryptionConfiguration,
+data__managedTableType,
 projectsId,
 authorizationCode,
 versionInfo,
@@ -948,6 +976,7 @@ SELECT
 '{{ notificationPubsubTopic }}',
 '{{ emailPreferences }}',
 '{{ encryptionConfiguration }}',
+'{{ managedTableType }}',
 '{{ projectsId }}',
 '{{ authorizationCode }}',
 '{{ versionInfo }}',
@@ -963,6 +992,7 @@ displayName,
 emailPreferences,
 encryptionConfiguration,
 error,
+managedTableType,
 nextRunTime,
 notificationPubsubTopic,
 ownerInfo,
@@ -1058,6 +1088,12 @@ userId
       description: >
         The encryption configuration part. Currently, it is only used for the optional KMS key name. The BigQuery service account of your project must be granted permissions to use the key. Read methods will return the key name applied in effect. Write methods will apply the key if it is present, or otherwise try to apply project default keys if it is absent.
         
+    - name: managedTableType
+      value: string
+      description: >
+        The classification of the destination table.
+        
+      valid_values: ['MANAGED_TABLE_TYPE_UNSPECIFIED', 'NATIVE', 'BIGLAKE']
     - name: authorizationCode
       value: string
     - name: versionInfo
@@ -1098,7 +1134,8 @@ data__disabled = {{ disabled }},
 data__userId = '{{ userId }}',
 data__notificationPubsubTopic = '{{ notificationPubsubTopic }}',
 data__emailPreferences = '{{ emailPreferences }}',
-data__encryptionConfiguration = '{{ encryptionConfiguration }}'
+data__encryptionConfiguration = '{{ encryptionConfiguration }}',
+data__managedTableType = '{{ managedTableType }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -1118,6 +1155,7 @@ displayName,
 emailPreferences,
 encryptionConfiguration,
 error,
+managedTableType,
 nextRunTime,
 notificationPubsubTopic,
 ownerInfo,
@@ -1150,7 +1188,8 @@ data__disabled = {{ disabled }},
 data__userId = '{{ userId }}',
 data__notificationPubsubTopic = '{{ notificationPubsubTopic }}',
 data__emailPreferences = '{{ emailPreferences }}',
-data__encryptionConfiguration = '{{ encryptionConfiguration }}'
+data__encryptionConfiguration = '{{ encryptionConfiguration }}',
+data__managedTableType = '{{ managedTableType }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND transferConfigsId = '{{ transferConfigsId }}' --required
@@ -1169,6 +1208,7 @@ displayName,
 emailPreferences,
 encryptionConfiguration,
 error,
+managedTableType,
 nextRunTime,
 notificationPubsubTopic,
 ownerInfo,

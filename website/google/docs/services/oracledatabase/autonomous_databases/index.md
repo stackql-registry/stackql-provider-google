@@ -255,6 +255,13 @@ The following methods are available for this resource:
     <td>Creates a new Autonomous Database in a given project and location.</td>
 </tr>
 <tr>
+    <td><a href="#patch"><CopyableCode code="patch" /></a></td>
+    <td><CopyableCode code="update" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-autonomousDatabasesId"><code>autonomousDatabasesId</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Updates the parameters of a single Autonomous Database.</td>
+</tr>
+<tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-autonomousDatabasesId"><code>autonomousDatabasesId</code></a></td>
@@ -302,6 +309,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-autonomousDatabasesId"><code>autonomousDatabasesId</code></a></td>
     <td></td>
     <td>Initiates a switchover of specified autonomous database to the associated peer database.</td>
+</tr>
+<tr>
+    <td><a href="#failover"><CopyableCode code="failover" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-autonomousDatabasesId"><code>autonomousDatabasesId</code></a></td>
+    <td></td>
+    <td>Initiates a failover to target autonomous database from the associated primary database.</td>
 </tr>
 </tbody>
 </table>
@@ -362,6 +376,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-requestId">
     <td><CopyableCode code="requestId" /></td>
     <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-updateMask">
+    <td><CopyableCode code="updateMask" /></td>
+    <td><code>string (google-fieldmask)</code></td>
     <td></td>
 </tr>
 </tbody>
@@ -570,6 +589,49 @@ response
 </Tabs>
 
 
+## `UPDATE` examples
+
+<Tabs
+    defaultValue="patch"
+    values={[
+        { label: 'patch', value: 'patch' }
+    ]}
+>
+<TabItem value="patch">
+
+Updates the parameters of a single Autonomous Database.
+
+```sql
+UPDATE google.oracledatabase.autonomous_databases
+SET 
+data__name = '{{ name }}',
+data__database = '{{ database }}',
+data__displayName = '{{ displayName }}',
+data__adminPassword = '{{ adminPassword }}',
+data__properties = '{{ properties }}',
+data__labels = '{{ labels }}',
+data__network = '{{ network }}',
+data__cidr = '{{ cidr }}',
+data__odbNetwork = '{{ odbNetwork }}',
+data__odbSubnet = '{{ odbSubnet }}',
+data__sourceConfig = '{{ sourceConfig }}'
+WHERE 
+projectsId = '{{ projectsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND autonomousDatabasesId = '{{ autonomousDatabasesId }}' --required
+AND updateMask = '{{ updateMask}}'
+AND requestId = '{{ requestId}}'
+RETURNING
+name,
+done,
+error,
+metadata,
+response;
+```
+</TabItem>
+</Tabs>
+
+
 ## `DELETE` examples
 
 <Tabs
@@ -604,7 +666,8 @@ AND requestId = '{{ requestId }}'
         { label: 'stop', value: 'stop' },
         { label: 'start', value: 'start' },
         { label: 'restart', value: 'restart' },
-        { label: 'switchover', value: 'switchover' }
+        { label: 'switchover', value: 'switchover' },
+        { label: 'failover', value: 'failover' }
     ]}
 >
 <TabItem value="restore">
@@ -683,6 +746,22 @@ Initiates a switchover of specified autonomous database to the associated peer d
 
 ```sql
 EXEC google.oracledatabase.autonomous_databases.switchover 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@autonomousDatabasesId='{{ autonomousDatabasesId }}' --required 
+@@json=
+'{
+"peerAutonomousDatabase": "{{ peerAutonomousDatabase }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="failover">
+
+Initiates a failover to target autonomous database from the associated primary database.
+
+```sql
+EXEC google.oracledatabase.autonomous_databases.failover 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @autonomousDatabasesId='{{ autonomousDatabasesId }}' --required 

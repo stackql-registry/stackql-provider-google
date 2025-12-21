@@ -154,7 +154,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-consentStoresId"><code>consentStoresId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists the Attribute definitions in the specified consent store.</td>
 </tr>
 <tr>
@@ -294,8 +294,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND datasetsId = '{{ datasetsId }}' -- required
 AND consentStoresId = '{{ consentStoresId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
 ;
 ```
@@ -319,11 +319,11 @@ Creates a new Attribute definition in the parent consent store.
 ```sql
 INSERT INTO google.healthcare.attribute_definitions (
 data__name,
-data__description,
-data__category,
+data__dataMappingDefaultValue,
 data__allowedValues,
 data__consentDefaultValues,
-data__dataMappingDefaultValue,
+data__description,
+data__category,
 projectsId,
 locationsId,
 datasetsId,
@@ -332,11 +332,11 @@ attributeDefinitionId
 )
 SELECT 
 '{{ name }}',
-'{{ description }}',
-'{{ category }}',
+'{{ dataMappingDefaultValue }}',
 '{{ allowedValues }}',
 '{{ consentDefaultValues }}',
-'{{ dataMappingDefaultValue }}',
+'{{ description }}',
+'{{ category }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ datasetsId }}',
@@ -375,6 +375,21 @@ description
       description: >
         Identifier. Resource name of the Attribute definition, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/attributeDefinitions/{attribute_definition_id}`. Cannot be changed after creation.
         
+    - name: dataMappingDefaultValue
+      value: string
+      description: >
+        Optional. Default value of the attribute in User data mappings. If no default value is specified, it defaults to an empty value. This field is only applicable to attributes of the category `RESOURCE`.
+        
+    - name: allowedValues
+      value: array
+      description: >
+        Required. Possible values for the attribute. The number of allowed values must not exceed 500. An empty list is invalid. The list can only be expanded after creation.
+        
+    - name: consentDefaultValues
+      value: array
+      description: >
+        Optional. Default values of the attribute in Consents. If no default values are specified, it defaults to an empty value.
+        
     - name: description
       value: string
       description: >
@@ -386,21 +401,6 @@ description
         Required. The category of the attribute. The value of this field cannot be changed after creation.
         
       valid_values: ['CATEGORY_UNSPECIFIED', 'RESOURCE', 'REQUEST']
-    - name: allowedValues
-      value: array
-      description: >
-        Required. Possible values for the attribute. The number of allowed values must not exceed 500. An empty list is invalid. The list can only be expanded after creation.
-        
-    - name: consentDefaultValues
-      value: array
-      description: >
-        Optional. Default values of the attribute in Consents. If no default values are specified, it defaults to an empty value.
-        
-    - name: dataMappingDefaultValue
-      value: string
-      description: >
-        Optional. Default value of the attribute in User data mappings. If no default value is specified, it defaults to an empty value. This field is only applicable to attributes of the category `RESOURCE`.
-        
     - name: attributeDefinitionId
       value: string
 ```
@@ -424,11 +424,11 @@ Updates the specified Attribute definition.
 UPDATE google.healthcare.attribute_definitions
 SET 
 data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__category = '{{ category }}',
+data__dataMappingDefaultValue = '{{ dataMappingDefaultValue }}',
 data__allowedValues = '{{ allowedValues }}',
 data__consentDefaultValues = '{{ consentDefaultValues }}',
-data__dataMappingDefaultValue = '{{ dataMappingDefaultValue }}'
+data__description = '{{ description }}',
+data__category = '{{ category }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

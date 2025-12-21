@@ -284,7 +284,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a></td>
     <td>Lists all backup runs associated with the project or a given instance and configuration in the reverse chronological order of the backup initiation time.</td>
 </tr>
 <tr>
@@ -414,8 +414,8 @@ windowStartTime
 FROM google.sqladmin.backup_runs
 WHERE project = '{{ project }}' -- required
 AND instance = '{{ instance }}' -- required
-AND maxResults = '{{ maxResults }}'
 AND pageToken = '{{ pageToken }}'
+AND maxResults = '{{ maxResults }}'
 ;
 ```
 </TabItem>
@@ -437,44 +437,44 @@ Creates a new backup run on demand.
 
 ```sql
 INSERT INTO google.sqladmin.backup_runs (
+data__id,
+data__description,
+data__diskEncryptionConfiguration,
+data__windowStartTime,
+data__error,
+data__timeZone,
+data__selfLink,
 data__kind,
 data__status,
-data__enqueuedTime,
-data__id,
-data__startTime,
-data__endTime,
-data__error,
-data__type,
-data__description,
-data__windowStartTime,
-data__instance,
-data__selfLink,
-data__location,
-data__diskEncryptionConfiguration,
-data__diskEncryptionStatus,
 data__backupKind,
-data__timeZone,
+data__location,
+data__enqueuedTime,
+data__endTime,
+data__diskEncryptionStatus,
+data__startTime,
+data__type,
+data__instance,
 project,
 instance
 )
 SELECT 
+'{{ id }}',
+'{{ description }}',
+'{{ diskEncryptionConfiguration }}',
+'{{ windowStartTime }}',
+'{{ error }}',
+'{{ timeZone }}',
+'{{ selfLink }}',
 '{{ kind }}',
 '{{ status }}',
-'{{ enqueuedTime }}',
-'{{ id }}',
-'{{ startTime }}',
-'{{ endTime }}',
-'{{ error }}',
-'{{ type }}',
-'{{ description }}',
-'{{ windowStartTime }}',
-'{{ instance }}',
-'{{ selfLink }}',
-'{{ location }}',
-'{{ diskEncryptionConfiguration }}',
-'{{ diskEncryptionStatus }}',
 '{{ backupKind }}',
-'{{ timeZone }}',
+'{{ location }}',
+'{{ enqueuedTime }}',
+'{{ endTime }}',
+'{{ diskEncryptionStatus }}',
+'{{ startTime }}',
+'{{ type }}',
+'{{ instance }}',
 '{{ project }}',
 '{{ instance }}'
 RETURNING
@@ -489,6 +489,7 @@ importContext,
 insertTime,
 kind,
 operationType,
+preCheckMajorVersionUpgradeContext,
 selfLink,
 startTime,
 status,
@@ -512,6 +513,41 @@ user
     - name: instance
       value: string
       description: Required parameter for the backup_runs resource.
+    - name: id
+      value: string
+      description: >
+        The identifier for this backup run. Unique only for a specific Cloud SQL instance.
+        
+    - name: description
+      value: string
+      description: >
+        The description of this run, only applicable to on-demand backups.
+        
+    - name: diskEncryptionConfiguration
+      value: object
+      description: >
+        Encryption configuration specific to a backup.
+        
+    - name: windowStartTime
+      value: string
+      description: >
+        The start time of the backup window during which this the backup was attempted in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`.
+        
+    - name: error
+      value: object
+      description: >
+        Database instance operation error.
+        
+    - name: timeZone
+      value: string
+      description: >
+        Backup time zone to prevent restores to an instance with a different time zone. Now relevant only for SQL Server.
+        
+    - name: selfLink
+      value: string
+      description: >
+        The URI of this resource.
+        
     - name: kind
       value: string
       description: >
@@ -523,30 +559,36 @@ user
         The status of this run.
         
       valid_values: ['SQL_BACKUP_RUN_STATUS_UNSPECIFIED', 'ENQUEUED', 'OVERDUE', 'RUNNING', 'FAILED', 'SUCCESSFUL', 'SKIPPED', 'DELETION_PENDING', 'DELETION_FAILED', 'DELETED']
+    - name: backupKind
+      value: string
+      description: >
+        Specifies the kind of backup, PHYSICAL or DEFAULT_SNAPSHOT.
+        
+      valid_values: ['SQL_BACKUP_KIND_UNSPECIFIED', 'SNAPSHOT', 'PHYSICAL']
+    - name: location
+      value: string
+      description: >
+        Location of the backups.
+        
     - name: enqueuedTime
       value: string
       description: >
         The time the run was enqueued in UTC timezone in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`.
-        
-    - name: id
-      value: string
-      description: >
-        The identifier for this backup run. Unique only for a specific Cloud SQL instance.
-        
-    - name: startTime
-      value: string
-      description: >
-        The time the backup operation actually started in UTC timezone in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`.
         
     - name: endTime
       value: string
       description: >
         The time the backup operation completed in UTC timezone in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`.
         
-    - name: error
+    - name: diskEncryptionStatus
       value: object
       description: >
-        Database instance operation error.
+        Encryption status specific to a backup.
+        
+    - name: startTime
+      value: string
+      description: >
+        The time the backup operation actually started in UTC timezone in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`.
         
     - name: type
       value: string
@@ -554,51 +596,10 @@ user
         The type of this run; can be either "AUTOMATED" or "ON_DEMAND" or "FINAL". This field defaults to "ON_DEMAND" and is ignored, when specified for insert requests.
         
       valid_values: ['SQL_BACKUP_RUN_TYPE_UNSPECIFIED', 'AUTOMATED', 'ON_DEMAND']
-    - name: description
-      value: string
-      description: >
-        The description of this run, only applicable to on-demand backups.
-        
-    - name: windowStartTime
-      value: string
-      description: >
-        The start time of the backup window during which this the backup was attempted in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`.
-        
     - name: instance
       value: string
       description: >
         Name of the database instance.
-        
-    - name: selfLink
-      value: string
-      description: >
-        The URI of this resource.
-        
-    - name: location
-      value: string
-      description: >
-        Location of the backups.
-        
-    - name: diskEncryptionConfiguration
-      value: object
-      description: >
-        Encryption configuration specific to a backup.
-        
-    - name: diskEncryptionStatus
-      value: object
-      description: >
-        Encryption status specific to a backup.
-        
-    - name: backupKind
-      value: string
-      description: >
-        Specifies the kind of backup, PHYSICAL or DEFAULT_SNAPSHOT.
-        
-      valid_values: ['SQL_BACKUP_KIND_UNSPECIFIED', 'SNAPSHOT', 'PHYSICAL']
-    - name: timeZone
-      value: string
-      description: >
-        Backup time zone to prevent restores to an instance with a different time zone. Now relevant only for SQL Server.
         
 ```
 </TabItem>

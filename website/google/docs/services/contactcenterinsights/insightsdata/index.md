@@ -103,12 +103,12 @@ EXEC google.contactcenterinsights.insightsdata.export
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"bigQueryDestination": "{{ bigQueryDestination }}", 
-"parent": "{{ parent }}", 
 "filter": "{{ filter }}", 
 "kmsKey": "{{ kmsKey }}", 
+"exportSchemaVersion": "{{ exportSchemaVersion }}", 
+"bigQueryDestination": "{{ bigQueryDestination }}", 
 "writeDisposition": "{{ writeDisposition }}", 
-"exportSchemaVersion": "{{ exportSchemaVersion }}"
+"parent": "{{ parent }}"
 }'
 ;
 ```

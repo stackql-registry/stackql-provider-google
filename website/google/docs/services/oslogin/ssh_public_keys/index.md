@@ -192,13 +192,13 @@ Create an SSH public key
 
 ```sql
 INSERT INTO google.oslogin.ssh_public_keys (
-data__key,
 data__expirationTimeUsec,
+data__key,
 usersId
 )
 SELECT 
-'{{ key }}',
 '{{ expirationTimeUsec }}',
+'{{ key }}',
 '{{ usersId }}'
 RETURNING
 name,
@@ -217,15 +217,15 @@ key
     - name: usersId
       value: string
       description: Required parameter for the ssh_public_keys resource.
-    - name: key
-      value: string
-      description: >
-        Required. Public key text in SSH format, defined by [RFC4253](https://www.ietf.org/rfc/rfc4253.txt) section 6.6.
-        
     - name: expirationTimeUsec
       value: string
       description: >
         An expiration time in microseconds since epoch.
+        
+    - name: key
+      value: string
+      description: >
+        Required. Public key text in SSH format, defined by [RFC4253](https://www.ietf.org/rfc/rfc4253.txt) section 6.6.
         
 ```
 </TabItem>
@@ -247,8 +247,8 @@ Updates an SSH public key and returns the profile information. This method suppo
 ```sql
 UPDATE google.oslogin.ssh_public_keys
 SET 
-data__key = '{{ key }}',
-data__expirationTimeUsec = '{{ expirationTimeUsec }}'
+data__expirationTimeUsec = '{{ expirationTimeUsec }}',
+data__key = '{{ key }}'
 WHERE 
 usersId = '{{ usersId }}' --required
 AND sshPublicKeysId = '{{ sshPublicKeysId }}' --required

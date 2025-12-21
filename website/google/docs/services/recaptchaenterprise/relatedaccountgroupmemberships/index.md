@@ -97,10 +97,10 @@ EXEC google.recaptchaenterprise.relatedaccountgroupmemberships.search
 @projectsId='{{ projectsId }}' --required 
 @@json=
 '{
-"accountId": "{{ accountId }}", 
 "hashedAccountId": "{{ hashedAccountId }}", 
 "pageSize": {{ pageSize }}, 
-"pageToken": "{{ pageToken }}"
+"pageToken": "{{ pageToken }}", 
+"accountId": "{{ accountId }}"
 }'
 ;
 ```

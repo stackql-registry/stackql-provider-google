@@ -18,7 +18,7 @@ networkservices service documentation.
 
 :::info[Service Summary]
 
-total resources: __20__  
+total resources: __21__  
 
 :::
 
@@ -33,6 +33,7 @@ total resources: __20__
 <a href="/services/networkservices/gateways/">gateways</a><br />
 <a href="/services/networkservices/grpc_routes/">grpc_routes</a><br />
 <a href="/services/networkservices/http_routes/">http_routes</a><br />
+<a href="/services/networkservices/lb_edge_extensions/">lb_edge_extensions</a><br />
 <a href="/services/networkservices/lb_route_extensions/">lb_route_extensions</a><br />
 <a href="/services/networkservices/lb_traffic_extensions/">lb_traffic_extensions</a>
 </div>

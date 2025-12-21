@@ -52,7 +52,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="data" /></td>
     <td><code>object</code></td>
-    <td>The API category resource. (id: GoogleCloudApigeeV1ApiCategory)</td>
+    <td>`ApiCategory` represents an API category. [Catalog items](/apigee/docs/reference/apis/apigee/rest/v1/organizations.sites.apidocs) can be tagged with API categories; users viewing the API catalog in the portal will have the option to browse the catalog by category. (id: GoogleCloudApigeeV1ApiCategory)</td>
 </tr>
 <tr>
     <td><CopyableCode code="errorCode" /></td>
@@ -266,16 +266,16 @@ Creates a new API category.
 INSERT INTO google.apigee.apicategories (
 data__siteId,
 data__name,
-data__id,
 data__updateTime,
+data__id,
 organizationsId,
 sitesId
 )
 SELECT 
 '{{ siteId }}',
 '{{ name }}',
-'{{ id }}',
 '{{ updateTime }}',
+'{{ id }}',
 '{{ organizationsId }}',
 '{{ sitesId }}'
 RETURNING
@@ -309,15 +309,15 @@ status
       description: >
         Name of the category.
         
-    - name: id
-      value: string
-      description: >
-        ID of the category (a UUID).
-        
     - name: updateTime
       value: string
       description: >
         Time the category was last modified in milliseconds since epoch.
+        
+    - name: id
+      value: string
+      description: >
+        ID of the category (a UUID).
         
 ```
 </TabItem>
@@ -341,8 +341,8 @@ UPDATE google.apigee.apicategories
 SET 
 data__siteId = '{{ siteId }}',
 data__name = '{{ name }}',
-data__id = '{{ id }}',
-data__updateTime = '{{ updateTime }}'
+data__updateTime = '{{ updateTime }}',
+data__id = '{{ id }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND sitesId = '{{ sitesId }}' --required

@@ -184,36 +184,29 @@ The following methods are available for this resource:
     <td><a href="#projects_regions_clusters_list"><CopyableCode code="projects_regions_clusters_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists all regions/&#123;region&#125;/clusters in a project alphabetically.</td>
 </tr>
 <tr>
     <td><a href="#projects_regions_clusters_create"><CopyableCode code="projects_regions_clusters_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-actionOnFailedPrimaryWorkers"><code>actionOnFailedPrimaryWorkers</code></a></td>
+    <td><a href="#parameter-actionOnFailedPrimaryWorkers"><code>actionOnFailedPrimaryWorkers</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a cluster in a project. The returned Operation.metadata will be ClusterOperationMetadata (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata).</td>
 </tr>
 <tr>
     <td><a href="#projects_regions_clusters_patch"><CopyableCode code="projects_regions_clusters_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-clusterName"><code>clusterName</code></a></td>
-    <td><a href="#parameter-gracefulDecommissionTimeout"><code>gracefulDecommissionTimeout</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-gracefulDecommissionTimeout"><code>gracefulDecommissionTimeout</code></a></td>
     <td>Updates a cluster in a project. The returned Operation.metadata will be ClusterOperationMetadata (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata). The cluster must be in a RUNNING state or an error is returned.</td>
 </tr>
 <tr>
     <td><a href="#projects_regions_clusters_delete"><CopyableCode code="projects_regions_clusters_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-clusterName"><code>clusterName</code></a></td>
-    <td><a href="#parameter-clusterUuid"><code>clusterUuid</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-gracefulTerminationTimeout"><code>gracefulTerminationTimeout</code></a></td>
+    <td><a href="#parameter-clusterUuid"><code>clusterUuid</code></a>, <a href="#parameter-gracefulTerminationTimeout"><code>gracefulTerminationTimeout</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes a cluster in a project. The returned Operation.metadata will be ClusterOperationMetadata (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata).</td>
-</tr>
-<tr>
-    <td><a href="#projects_regions_clusters_stop"><CopyableCode code="projects_regions_clusters_stop" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-clusterName"><code>clusterName</code></a></td>
-    <td></td>
-    <td>Stops a cluster in a project.</td>
 </tr>
 <tr>
     <td><a href="#projects_regions_clusters_start"><CopyableCode code="projects_regions_clusters_start" /></a></td>
@@ -223,6 +216,13 @@ The following methods are available for this resource:
     <td>Starts a cluster in a project.</td>
 </tr>
 <tr>
+    <td><a href="#projects_regions_clusters_stop"><CopyableCode code="projects_regions_clusters_stop" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-clusterName"><code>clusterName</code></a></td>
+    <td></td>
+    <td>Stops a cluster in a project.</td>
+</tr>
+<tr>
     <td><a href="#projects_regions_clusters_repair"><CopyableCode code="projects_regions_clusters_repair" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-clusterName"><code>clusterName</code></a></td>
@@ -230,18 +230,18 @@ The following methods are available for this resource:
     <td>Repairs a cluster.</td>
 </tr>
 <tr>
-    <td><a href="#projects_regions_clusters_diagnose"><CopyableCode code="projects_regions_clusters_diagnose" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-clusterName"><code>clusterName</code></a></td>
-    <td></td>
-    <td>Gets cluster diagnostic information. The returned Operation.metadata will be ClusterOperationMetadata (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata). After the operation completes, Operation.response contains DiagnoseClusterResults (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#diagnoseclusterresults).</td>
-</tr>
-<tr>
     <td><a href="#projects_regions_clusters_inject_credentials"><CopyableCode code="projects_regions_clusters_inject_credentials" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-regionsId"><code>regionsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
     <td></td>
     <td>Inject encrypted credentials into all of the VMs in a cluster.The target cluster must be a personal auth cluster assigned to the user who is issuing the RPC.</td>
+</tr>
+<tr>
+    <td><a href="#projects_regions_clusters_diagnose"><CopyableCode code="projects_regions_clusters_diagnose" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-clusterName"><code>clusterName</code></a></td>
+    <td></td>
+    <td>Gets cluster diagnostic information. The returned Operation.metadata will be ClusterOperationMetadata (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata). After the operation completes, Operation.response contains DiagnoseClusterResults (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#diagnoseclusterresults).</td>
 </tr>
 </tbody>
 </table>
@@ -386,9 +386,9 @@ virtualClusterConfig
 FROM google.dataproc.clusters
 WHERE projectId = '{{ projectId }}' -- required
 AND region = '{{ region }}' -- required
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -411,25 +411,25 @@ Creates a cluster in a project. The returned Operation.metadata will be ClusterO
 ```sql
 INSERT INTO google.dataproc.clusters (
 data__projectId,
-data__clusterName,
 data__config,
-data__virtualClusterConfig,
+data__clusterName,
 data__labels,
+data__virtualClusterConfig,
 projectId,
 region,
-requestId,
-actionOnFailedPrimaryWorkers
+actionOnFailedPrimaryWorkers,
+requestId
 )
 SELECT 
 '{{ projectId }}',
-'{{ clusterName }}',
 '{{ config }}',
-'{{ virtualClusterConfig }}',
+'{{ clusterName }}',
 '{{ labels }}',
+'{{ virtualClusterConfig }}',
 '{{ projectId }}',
 '{{ region }}',
-'{{ requestId }}',
-'{{ actionOnFailedPrimaryWorkers }}'
+'{{ actionOnFailedPrimaryWorkers }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -456,29 +456,29 @@ response
       description: >
         Required. The Google Cloud Platform project ID that the cluster belongs to.
         
-    - name: clusterName
-      value: string
-      description: >
-        Required. The cluster name, which must be unique within a project. The name must start with a lowercase letter, and can contain up to 51 lowercase letters, numbers, and hyphens. It cannot end with a hyphen. The name of a deleted cluster can be reused.
-        
     - name: config
       value: object
       description: >
         Optional. The cluster config for a cluster of Compute Engine Instances. Note that Dataproc may set default values, and values may change when clusters are updated.Exactly one of ClusterConfig or VirtualClusterConfig must be specified.
         
-    - name: virtualClusterConfig
-      value: object
+    - name: clusterName
+      value: string
       description: >
-        Optional. The virtual cluster config is used when creating a Dataproc cluster that does not directly control the underlying compute resources, for example, when creating a Dataproc-on-GKE cluster (https://cloud.google.com/dataproc/docs/guides/dpgke/dataproc-gke-overview). Dataproc may set default values, and values may change when clusters are updated. Exactly one of config or virtual_cluster_config must be specified.
+        Required. The cluster name, which must be unique within a project. The name must start with a lowercase letter, and can contain up to 51 lowercase letters, numbers, and hyphens. It cannot end with a hyphen. The name of a deleted cluster can be reused.
         
     - name: labels
       value: object
       description: >
         Optional. The labels to associate with this cluster. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty, but, if present, must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with a cluster.
         
-    - name: requestId
-      value: string
+    - name: virtualClusterConfig
+      value: object
+      description: >
+        Optional. The virtual cluster config is used when creating a Dataproc cluster that does not directly control the underlying compute resources, for example, when creating a Dataproc-on-GKE cluster (https://cloud.google.com/dataproc/docs/guides/dpgke/dataproc-gke-overview). Dataproc may set default values, and values may change when clusters are updated. Exactly one of config or virtual_cluster_config must be specified.
+        
     - name: actionOnFailedPrimaryWorkers
+      value: string
+    - name: requestId
       value: string
 ```
 </TabItem>
@@ -501,17 +501,17 @@ Updates a cluster in a project. The returned Operation.metadata will be ClusterO
 UPDATE google.dataproc.clusters
 SET 
 data__projectId = '{{ projectId }}',
-data__clusterName = '{{ clusterName }}',
 data__config = '{{ config }}',
-data__virtualClusterConfig = '{{ virtualClusterConfig }}',
-data__labels = '{{ labels }}'
+data__clusterName = '{{ clusterName }}',
+data__labels = '{{ labels }}',
+data__virtualClusterConfig = '{{ virtualClusterConfig }}'
 WHERE 
 projectId = '{{ projectId }}' --required
 AND region = '{{ region }}' --required
 AND clusterName = '{{ clusterName }}' --required
-AND gracefulDecommissionTimeout = '{{ gracefulDecommissionTimeout}}'
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
+AND gracefulDecommissionTimeout = '{{ gracefulDecommissionTimeout}}'
 RETURNING
 name,
 done,
@@ -541,8 +541,8 @@ WHERE projectId = '{{ projectId }}' --required
 AND region = '{{ region }}' --required
 AND clusterName = '{{ clusterName }}' --required
 AND clusterUuid = '{{ clusterUuid }}'
-AND requestId = '{{ requestId }}'
 AND gracefulTerminationTimeout = '{{ gracefulTerminationTimeout }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>
@@ -552,38 +552,38 @@ AND gracefulTerminationTimeout = '{{ gracefulTerminationTimeout }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_regions_clusters_stop"
+    defaultValue="projects_regions_clusters_start"
     values={[
-        { label: 'projects_regions_clusters_stop', value: 'projects_regions_clusters_stop' },
         { label: 'projects_regions_clusters_start', value: 'projects_regions_clusters_start' },
+        { label: 'projects_regions_clusters_stop', value: 'projects_regions_clusters_stop' },
         { label: 'projects_regions_clusters_repair', value: 'projects_regions_clusters_repair' },
-        { label: 'projects_regions_clusters_diagnose', value: 'projects_regions_clusters_diagnose' },
-        { label: 'projects_regions_clusters_inject_credentials', value: 'projects_regions_clusters_inject_credentials' }
+        { label: 'projects_regions_clusters_inject_credentials', value: 'projects_regions_clusters_inject_credentials' },
+        { label: 'projects_regions_clusters_diagnose', value: 'projects_regions_clusters_diagnose' }
     ]}
 >
-<TabItem value="projects_regions_clusters_stop">
-
-Stops a cluster in a project.
-
-```sql
-EXEC google.dataproc.clusters.projects_regions_clusters_stop 
-@projectId='{{ projectId }}' --required, 
-@region='{{ region }}' --required, 
-@clusterName='{{ clusterName }}' --required 
-@@json=
-'{
-"clusterUuid": "{{ clusterUuid }}", 
-"requestId": "{{ requestId }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_regions_clusters_start">
 
 Starts a cluster in a project.
 
 ```sql
 EXEC google.dataproc.clusters.projects_regions_clusters_start 
+@projectId='{{ projectId }}' --required, 
+@region='{{ region }}' --required, 
+@clusterName='{{ clusterName }}' --required 
+@@json=
+'{
+"requestId": "{{ requestId }}", 
+"clusterUuid": "{{ clusterUuid }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_regions_clusters_stop">
+
+Stops a cluster in a project.
+
+```sql
+EXEC google.dataproc.clusters.projects_regions_clusters_stop 
 @projectId='{{ projectId }}' --required, 
 @region='{{ region }}' --required, 
 @clusterName='{{ clusterName }}' --required 
@@ -606,34 +606,13 @@ EXEC google.dataproc.clusters.projects_regions_clusters_repair
 @clusterName='{{ clusterName }}' --required 
 @@json=
 '{
-"clusterUuid": "{{ clusterUuid }}", 
-"requestId": "{{ requestId }}", 
-"nodePools": "{{ nodePools }}", 
 "gracefulDecommissionTimeout": "{{ gracefulDecommissionTimeout }}", 
+"clusterUuid": "{{ clusterUuid }}", 
+"nodePools": "{{ nodePools }}", 
 "parentOperationId": "{{ parentOperationId }}", 
-"cluster": "{{ cluster }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_regions_clusters_diagnose">
-
-Gets cluster diagnostic information. The returned Operation.metadata will be ClusterOperationMetadata (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata). After the operation completes, Operation.response contains DiagnoseClusterResults (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#diagnoseclusterresults).
-
-```sql
-EXEC google.dataproc.clusters.projects_regions_clusters_diagnose 
-@projectId='{{ projectId }}' --required, 
-@region='{{ region }}' --required, 
-@clusterName='{{ clusterName }}' --required 
-@@json=
-'{
-"tarballGcsDir": "{{ tarballGcsDir }}", 
-"tarballAccess": "{{ tarballAccess }}", 
-"diagnosisInterval": "{{ diagnosisInterval }}", 
-"job": "{{ job }}", 
-"yarnApplicationId": "{{ yarnApplicationId }}", 
-"jobs": "{{ jobs }}", 
-"yarnApplicationIds": "{{ yarnApplicationIds }}"
+"dataprocSuperUser": {{ dataprocSuperUser }}, 
+"cluster": "{{ cluster }}", 
+"requestId": "{{ requestId }}"
 }'
 ;
 ```
@@ -651,6 +630,28 @@ EXEC google.dataproc.clusters.projects_regions_clusters_inject_credentials
 '{
 "clusterUuid": "{{ clusterUuid }}", 
 "credentialsCiphertext": "{{ credentialsCiphertext }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_regions_clusters_diagnose">
+
+Gets cluster diagnostic information. The returned Operation.metadata will be ClusterOperationMetadata (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata). After the operation completes, Operation.response contains DiagnoseClusterResults (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#diagnoseclusterresults).
+
+```sql
+EXEC google.dataproc.clusters.projects_regions_clusters_diagnose 
+@projectId='{{ projectId }}' --required, 
+@region='{{ region }}' --required, 
+@clusterName='{{ clusterName }}' --required 
+@@json=
+'{
+"yarnApplicationIds": "{{ yarnApplicationIds }}", 
+"diagnosisInterval": "{{ diagnosisInterval }}", 
+"yarnApplicationId": "{{ yarnApplicationId }}", 
+"job": "{{ job }}", 
+"tarballAccess": "{{ tarballAccess }}", 
+"tarballGcsDir": "{{ tarballGcsDir }}", 
+"jobs": "{{ jobs }}"
 }'
 ;
 ```

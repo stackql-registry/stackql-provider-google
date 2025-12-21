@@ -97,7 +97,7 @@ The following methods are available for this resource:
     <td><a href="#projects_schemas_list_revisions"><CopyableCode code="projects_schemas_list_revisions" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-schemasId"><code>schemasId</code></a></td>
-    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists all schema revisions for the named schema.</td>
 </tr>
 </tbody>
@@ -167,8 +167,8 @@ FROM google.pubsub.schemas_revisions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND schemasId = '{{ schemasId }}' -- required
 AND view = '{{ view }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>

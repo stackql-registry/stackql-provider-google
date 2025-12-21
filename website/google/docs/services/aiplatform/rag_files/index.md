@@ -430,8 +430,8 @@ EXEC google.aiplatform.rag_files.upload
 @ragCorporaId='{{ ragCorporaId }}' --required 
 @@json=
 '{
-"ragFile": "{{ ragFile }}", 
-"uploadRagFileConfig": "{{ uploadRagFileConfig }}"
+"uploadRagFileConfig": "{{ uploadRagFileConfig }}", 
+"ragFile": "{{ ragFile }}"
 }'
 ;
 ```

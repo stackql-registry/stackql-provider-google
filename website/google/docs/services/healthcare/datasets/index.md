@@ -294,16 +294,16 @@ Creates a new health dataset. Results are returned through the Operation interfa
 ```sql
 INSERT INTO google.healthcare.datasets (
 data__name,
-data__timeZone,
 data__encryptionSpec,
+data__timeZone,
 projectsId,
 locationsId,
 datasetId
 )
 SELECT 
 '{{ name }}',
-'{{ timeZone }}',
 '{{ encryptionSpec }}',
+'{{ timeZone }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ datasetId }}'
@@ -333,15 +333,15 @@ response
       description: >
         Identifier. Resource name of the dataset, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`.
         
-    - name: timeZone
-      value: string
-      description: >
-        Optional. The default timezone used by this dataset. Must be a either a valid IANA time zone name such as "America/New_York" or empty, which defaults to UTC. This is used for parsing times in resources, such as HL7 messages, where no explicit timezone is specified.
-        
     - name: encryptionSpec
       value: object
       description: >
         Optional. Customer-managed encryption key spec for a Dataset. If set, this Dataset and all of its sub-resources will be secured by this key. If empty, the Dataset is secured by the default Google encryption key.
+        
+    - name: timeZone
+      value: string
+      description: >
+        Optional. The default timezone used by this dataset. Must be a either a valid IANA time zone name such as "America/New_York" or empty, which defaults to UTC. This is used for parsing times in resources, such as HL7 messages, where no explicit timezone is specified.
         
     - name: datasetId
       value: string
@@ -366,8 +366,8 @@ Updates dataset metadata.
 UPDATE google.healthcare.datasets
 SET 
 data__name = '{{ name }}',
-data__timeZone = '{{ timeZone }}',
-data__encryptionSpec = '{{ encryptionSpec }}'
+data__encryptionSpec = '{{ encryptionSpec }}',
+data__timeZone = '{{ timeZone }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -426,8 +426,8 @@ EXEC google.healthcare.datasets.deidentify
 @datasetsId='{{ datasetsId }}' --required 
 @@json=
 '{
-"destinationDataset": "{{ destinationDataset }}", 
 "config": "{{ config }}", 
+"destinationDataset": "{{ destinationDataset }}", 
 "gcsConfigUri": "{{ gcsConfigUri }}"
 }'
 ;

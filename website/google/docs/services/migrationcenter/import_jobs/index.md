@@ -194,21 +194,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-view"><code>view</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists all import jobs.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-importJobId"><code>importJobId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-importJobId"><code>importJobId</code></a></td>
     <td>Creates an import job.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-importJobsId"><code>importJobsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates an import job.</td>
 </tr>
 <tr>
@@ -219,18 +219,18 @@ The following methods are available for this resource:
     <td>Deletes an import job.</td>
 </tr>
 <tr>
-    <td><a href="#validate"><CopyableCode code="validate" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-importJobsId"><code>importJobsId</code></a></td>
-    <td></td>
-    <td>Validates an import job.</td>
-</tr>
-<tr>
     <td><a href="#run"><CopyableCode code="run" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-importJobsId"><code>importJobsId</code></a></td>
     <td></td>
     <td>Runs an import job.</td>
+</tr>
+<tr>
+    <td><a href="#validate"><CopyableCode code="validate" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-importJobsId"><code>importJobsId</code></a></td>
+    <td></td>
+    <td>Validates an import job.</td>
 </tr>
 </tbody>
 </table>
@@ -363,11 +363,11 @@ validationReport
 FROM google.migrationcenter.import_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 AND view = '{{ view }}'
+AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -389,22 +389,22 @@ Creates an import job.
 
 ```sql
 INSERT INTO google.migrationcenter.import_jobs (
+data__assetSource,
 data__displayName,
 data__labels,
-data__assetSource,
 projectsId,
 locationsId,
-importJobId,
-requestId
+requestId,
+importJobId
 )
 SELECT 
+'{{ assetSource }}',
 '{{ displayName }}',
 '{{ labels }}',
-'{{ assetSource }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ importJobId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ importJobId }}'
 RETURNING
 name,
 done,
@@ -426,6 +426,11 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the import_jobs resource.
+    - name: assetSource
+      value: string
+      description: >
+        Required. Reference to a source.
+        
     - name: displayName
       value: string
       description: >
@@ -436,14 +441,9 @@ response
       description: >
         Labels as key value pairs.
         
-    - name: assetSource
-      value: string
-      description: >
-        Required. Reference to a source.
-        
-    - name: importJobId
-      value: string
     - name: requestId
+      value: string
+    - name: importJobId
       value: string
 ```
 </TabItem>
@@ -465,15 +465,15 @@ Updates an import job.
 ```sql
 UPDATE google.migrationcenter.import_jobs
 SET 
+data__assetSource = '{{ assetSource }}',
 data__displayName = '{{ displayName }}',
-data__labels = '{{ labels }}',
-data__assetSource = '{{ assetSource }}'
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND importJobsId = '{{ importJobsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,
@@ -513,18 +513,18 @@ AND force = '{{ force }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="validate"
+    defaultValue="run"
     values={[
-        { label: 'validate', value: 'validate' },
-        { label: 'run', value: 'run' }
+        { label: 'run', value: 'run' },
+        { label: 'validate', value: 'validate' }
     ]}
 >
-<TabItem value="validate">
+<TabItem value="run">
 
-Validates an import job.
+Runs an import job.
 
 ```sql
-EXEC google.migrationcenter.import_jobs.validate 
+EXEC google.migrationcenter.import_jobs.run 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @importJobsId='{{ importJobsId }}' --required 
@@ -535,12 +535,12 @@ EXEC google.migrationcenter.import_jobs.validate
 ;
 ```
 </TabItem>
-<TabItem value="run">
+<TabItem value="validate">
 
-Runs an import job.
+Validates an import job.
 
 ```sql
-EXEC google.migrationcenter.import_jobs.run 
+EXEC google.migrationcenter.import_jobs.validate 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @importJobsId='{{ importJobsId }}' --required 

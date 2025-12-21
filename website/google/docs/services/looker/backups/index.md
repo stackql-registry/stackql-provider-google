@@ -88,31 +88,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Immutable. The relative resource name of the backup, in the following form: `projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/instances/&#123;instance_id&#125;/backups/&#123;backup&#125;`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time when the backup was started.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="encryptionConfig" /></td>
-    <td><code>object</code></td>
-    <td>Output only. Current status of the CMEK encryption (id: EncryptionConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="expireTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time when the backup will be deleted.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="state" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The current state of the backup.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -144,7 +119,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>List backups of Looker instance.</td>
 </tr>
 <tr>
@@ -249,18 +224,14 @@ List backups of Looker instance.
 
 ```sql
 SELECT
-name,
-createTime,
-encryptionConfig,
-expireTime,
-state
+*
 FROM google.looker.backups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND instancesId = '{{ instancesId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>

@@ -184,7 +184,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_intercept_deployments_list"><CopyableCode code="projects_locations_intercept_deployments_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists deployments in a given project and location. See https://google.aip.dev/132.</td>
 </tr>
 <tr>
@@ -327,9 +327,9 @@ FROM google.networksecurity.intercept_deployments
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -351,22 +351,22 @@ Creates a deployment in a given project and location. See https://google.aip.dev
 
 ```sql
 INSERT INTO google.networksecurity.intercept_deployments (
+data__description,
+data__interceptDeploymentGroup,
 data__name,
 data__labels,
 data__forwardingRule,
-data__interceptDeploymentGroup,
-data__description,
 projectsId,
 locationsId,
 interceptDeploymentId,
 requestId
 )
 SELECT 
+'{{ description }}',
+'{{ interceptDeploymentGroup }}',
 '{{ name }}',
 '{{ labels }}',
 '{{ forwardingRule }}',
-'{{ interceptDeploymentGroup }}',
-'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ interceptDeploymentId }}',
@@ -392,6 +392,16 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the intercept_deployments resource.
+    - name: description
+      value: string
+      description: >
+        Optional. User-provided description of the deployment. Used as additional context for the deployment.
+        
+    - name: interceptDeploymentGroup
+      value: string
+      description: >
+        Required. Immutable. The deployment group that this deployment is a part of, for example: `projects/123456789/locations/global/interceptDeploymentGroups/my-dg`. See https://google.aip.dev/124.
+        
     - name: name
       value: string
       description: >
@@ -406,16 +416,6 @@ response
       value: string
       description: >
         Required. Immutable. The regional forwarding rule that fronts the interceptors, for example: `projects/123456789/regions/us-central1/forwardingRules/my-rule`. See https://google.aip.dev/124.
-        
-    - name: interceptDeploymentGroup
-      value: string
-      description: >
-        Required. Immutable. The deployment group that this deployment is a part of, for example: `projects/123456789/locations/global/interceptDeploymentGroups/my-dg`. See https://google.aip.dev/124.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. User-provided description of the deployment. Used as additional context for the deployment.
         
     - name: interceptDeploymentId
       value: string
@@ -441,11 +441,11 @@ Updates a deployment. See https://google.aip.dev/134.
 ```sql
 UPDATE google.networksecurity.intercept_deployments
 SET 
+data__description = '{{ description }}',
+data__interceptDeploymentGroup = '{{ interceptDeploymentGroup }}',
 data__name = '{{ name }}',
 data__labels = '{{ labels }}',
-data__forwardingRule = '{{ forwardingRule }}',
-data__interceptDeploymentGroup = '{{ interceptDeploymentGroup }}',
-data__description = '{{ description }}'
+data__forwardingRule = '{{ forwardingRule }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

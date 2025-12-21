@@ -18,7 +18,7 @@ contactcenterinsights service documentation.
 
 :::info[Service Summary]
 
-total resources: __24__  
+total resources: __25__  
 
 :::
 
@@ -36,10 +36,10 @@ total resources: __24__
 <a href="/services/contactcenterinsights/datasets/">datasets</a><br />
 <a href="/services/contactcenterinsights/encryption_spec/">encryption_spec</a><br />
 <a href="/services/contactcenterinsights/feedback_labels/">feedback_labels</a><br />
-<a href="/services/contactcenterinsights/insightsdata/">insightsdata</a>
+<a href="/services/contactcenterinsights/insightsdata/">insightsdata</a><br />
+<a href="/services/contactcenterinsights/issue_models/">issue_models</a>
 </div>
 <div class="providerDocColumn">
-<a href="/services/contactcenterinsights/issue_models/">issue_models</a><br />
 <a href="/services/contactcenterinsights/issues/">issues</a><br />
 <a href="/services/contactcenterinsights/locations/">locations</a><br />
 <a href="/services/contactcenterinsights/notes/">notes</a><br />
@@ -49,6 +49,7 @@ total resources: __24__
 <a href="/services/contactcenterinsights/qa_questions/">qa_questions</a><br />
 <a href="/services/contactcenterinsights/qa_scorecards/">qa_scorecards</a><br />
 <a href="/services/contactcenterinsights/revisions/">revisions</a><br />
+<a href="/services/contactcenterinsights/segments/">segments</a><br />
 <a href="/services/contactcenterinsights/settings/">settings</a><br />
 <a href="/services/contactcenterinsights/views/">views</a>
 </div>

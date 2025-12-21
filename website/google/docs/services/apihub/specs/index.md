@@ -55,6 +55,11 @@ The following fields are returned by `SELECT` queries:
     <td>Identifier. The name of the spec. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/apis/&#123;api&#125;/versions/&#123;version&#125;/specs/&#123;spec&#125;`</td>
 </tr>
 <tr>
+    <td><CopyableCode code="additionalSpecContents" /></td>
+    <td><code>array</code></td>
+    <td>Output only. The additional spec contents for the spec.</td>
+</tr>
+<tr>
     <td><CopyableCode code="attributes" /></td>
     <td><code>object</code></td>
     <td>Optional. The list of user defined attributes associated with the spec. The key is the attribute name. It will be of the format: `projects/&#123;project&#125;/locations/&#123;location&#125;/attributes/&#123;attribute&#125;`. The value is the attribute values associated with the resource.</td>
@@ -132,6 +137,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
     <td>Identifier. The name of the spec. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/apis/&#123;api&#125;/versions/&#123;version&#125;/specs/&#123;spec&#125;`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="additionalSpecContents" /></td>
+    <td><code>array</code></td>
+    <td>Output only. The additional spec contents for the spec.</td>
 </tr>
 <tr>
     <td><CopyableCode code="attributes" /></td>
@@ -340,6 +350,7 @@ Get details about the information parsed from a spec. Note that this method does
 ```sql
 SELECT
 name,
+additionalSpecContents,
 attributes,
 contents,
 createTime,
@@ -368,6 +379,7 @@ List specs corresponding to a particular API resource.
 ```sql
 SELECT
 name,
+additionalSpecContents,
 attributes,
 contents,
 createTime,
@@ -441,6 +453,7 @@ SELECT
 '{{ specId }}'
 RETURNING
 name,
+additionalSpecContents,
 attributes,
 contents,
 createTime,
@@ -560,6 +573,7 @@ AND specsId = '{{ specsId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
+additionalSpecContents,
 attributes,
 contents,
 createTime,

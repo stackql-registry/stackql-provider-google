@@ -174,7 +174,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists files.</td>
 </tr>
 <tr>
@@ -192,18 +192,18 @@ The following methods are available for this resource:
     <td>Deletes a file and all of its content. It is only allowed on generic repositories. The returned operation will complete once the file has been deleted.</td>
 </tr>
 <tr>
-    <td><a href="#download"><CopyableCode code="download" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-filesId"><code>filesId</code></a></td>
-    <td></td>
-    <td>Download a file.</td>
-</tr>
-<tr>
     <td><a href="#upload"><CopyableCode code="upload" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
     <td></td>
     <td>Directly uploads a file to a repository. The returned Operation will complete once the resources are uploaded.</td>
+</tr>
+<tr>
+    <td><a href="#download"><CopyableCode code="download" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-filesId"><code>filesId</code></a></td>
+    <td></td>
+    <td>Download a file.</td>
 </tr>
 </tbody>
 </table>
@@ -318,10 +318,10 @@ FROM google.artifactregistry.files
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND repositoriesId = '{{ repositoriesId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -343,11 +343,11 @@ Updates a file.
 ```sql
 UPDATE google.artifactregistry.files
 SET 
-data__name = '{{ name }}',
-data__sizeBytes = '{{ sizeBytes }}',
-data__hashes = '{{ hashes }}',
+data__annotations = '{{ annotations }}',
 data__owner = '{{ owner }}',
-data__annotations = '{{ annotations }}'
+data__hashes = '{{ hashes }}',
+data__name = '{{ name }}',
+data__sizeBytes = '{{ sizeBytes }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -395,25 +395,12 @@ AND filesId = '{{ filesId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="download"
+    defaultValue="upload"
     values={[
-        { label: 'download', value: 'download' },
-        { label: 'upload', value: 'upload' }
+        { label: 'upload', value: 'upload' },
+        { label: 'download', value: 'download' }
     ]}
 >
-<TabItem value="download">
-
-Download a file.
-
-```sql
-EXEC google.artifactregistry.files.download 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@repositoriesId='{{ repositoriesId }}' --required, 
-@filesId='{{ filesId }}' --required
-;
-```
-</TabItem>
 <TabItem value="upload">
 
 Directly uploads a file to a repository. The returned Operation will complete once the resources are uploaded.
@@ -427,6 +414,19 @@ EXEC google.artifactregistry.files.upload
 '{
 "fileId": "{{ fileId }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="download">
+
+Download a file.
+
+```sql
+EXEC google.artifactregistry.files.download 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@repositoriesId='{{ repositoriesId }}' --required, 
+@filesId='{{ filesId }}' --required
 ;
 ```
 </TabItem>

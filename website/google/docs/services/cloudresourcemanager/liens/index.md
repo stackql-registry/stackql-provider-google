@@ -154,7 +154,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-parent"><code>parent</code></a></td>
     <td>List all Liens applied to the `parent` resource. Callers of this method will require permission on the `parent` resource. For example, a Lien with a `parent` of `projects/1234` requires permission `resourcemanager.projects.get`.</td>
 </tr>
 <tr>
@@ -249,9 +249,9 @@ parent,
 reason,
 restrictions
 FROM google.cloudresourcemanager.liens
-WHERE parent = '{{ parent }}'
-AND pageSize = '{{ pageSize }}'
+WHERE pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND parent = '{{ parent }}'
 ;
 ```
 </TabItem>
@@ -273,20 +273,20 @@ Create a Lien which applies to the resource denoted by the `parent` field. Calle
 
 ```sql
 INSERT INTO google.cloudresourcemanager.liens (
-data__name,
-data__parent,
+data__createTime,
 data__restrictions,
+data__parent,
+data__name,
 data__reason,
-data__origin,
-data__createTime
+data__origin
 )
 SELECT 
-'{{ name }}',
-'{{ parent }}',
+'{{ createTime }}',
 '{{ restrictions }}',
+'{{ parent }}',
+'{{ name }}',
 '{{ reason }}',
-'{{ origin }}',
-'{{ createTime }}'
+'{{ origin }}'
 RETURNING
 name,
 createTime,
@@ -303,20 +303,25 @@ restrictions
 # Description fields are for documentation purposes
 - name: liens
   props:
-    - name: name
+    - name: createTime
       value: string
       description: >
-        A system-generated unique identifier for this Lien. Example: `liens/1234abcd`
+        The creation time of this Lien.
+        
+    - name: restrictions
+      value: array
+      description: >
+        The types of operations which should be blocked as a result of this Lien. Each value should correspond to an IAM permission. The server will validate the permissions against those for which Liens are supported. An empty list is meaningless and will be rejected. Example: ['resourcemanager.projects.delete']
         
     - name: parent
       value: string
       description: >
         A reference to the resource this Lien is attached to. The server will validate the parent against those for which Liens are supported. Example: `projects/1234`
         
-    - name: restrictions
-      value: array
+    - name: name
+      value: string
       description: >
-        The types of operations which should be blocked as a result of this Lien. Each value should correspond to an IAM permission. The server will validate the permissions against those for which Liens are supported. An empty list is meaningless and will be rejected. Example: ['resourcemanager.projects.delete']
+        A system-generated unique identifier for this Lien. Example: `liens/1234abcd`
         
     - name: reason
       value: string
@@ -327,11 +332,6 @@ restrictions
       value: string
       description: >
         A stable, user-visible/meaningful string identifying the origin of the Lien, intended to be inspected programmatically. Maximum length of 200 characters. Example: 'compute.googleapis.com'
-        
-    - name: createTime
-      value: string
-      description: >
-        The creation time of this Lien.
         
 ```
 </TabItem>

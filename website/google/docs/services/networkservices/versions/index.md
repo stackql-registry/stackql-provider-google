@@ -341,24 +341,24 @@ Creates a new `WasmPluginVersion` resource in a given project and location.
 
 ```sql
 INSERT INTO google.networkservices.versions (
-data__pluginConfigData,
 data__pluginConfigUri,
-data__name,
-data__description,
 data__labels,
+data__name,
+data__pluginConfigData,
 data__imageUri,
+data__description,
 projectsId,
 locationsId,
 wasmPluginsId,
 wasmPluginVersionId
 )
 SELECT 
-'{{ pluginConfigData }}',
 '{{ pluginConfigUri }}',
-'{{ name }}',
-'{{ description }}',
 '{{ labels }}',
+'{{ name }}',
+'{{ pluginConfigData }}',
 '{{ imageUri }}',
+'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ wasmPluginsId }}',
@@ -387,35 +387,35 @@ response
     - name: wasmPluginsId
       value: string
       description: Required parameter for the versions resource.
-    - name: pluginConfigData
-      value: string
-      description: >
-        Configuration for the plugin. The configuration is provided to the plugin at runtime through the `ON_CONFIGURE` callback. When a new `WasmPluginVersion` resource is created, the digest of the contents is saved in the `plugin_config_digest` field.
-        
     - name: pluginConfigUri
       value: string
       description: >
         URI of the plugin configuration stored in the Artifact Registry. The configuration is provided to the plugin at runtime through the `ON_CONFIGURE` callback. The URI can refer to one of the following repository formats: * Container images: the `plugin_config_uri` must point to a container that contains a single file with the name `plugin.config`. When a new `WasmPluginVersion` resource is created, the digest of the image is saved in the `plugin_config_digest` field. When pulling a container image from Artifact Registry, the digest value is used instead of an image tag. * Generic artifacts: the `plugin_config_uri` must be in this format: `projects/{project}/locations/{location}/repositories/{repository}/ genericArtifacts/{package}:{version}`. The specified package and version must contain a file with the name `plugin.config`. When a new `WasmPluginVersion` resource is created, the checksum of the contents of the file is saved in the `plugin_config_digest` field.
-        
-    - name: name
-      value: string
-      description: >
-        Identifier. Name of the `WasmPluginVersion` resource in the following format: `projects/{project}/locations/{location}/wasmPlugins/{wasm_plugin}/ versions/{wasm_plugin_version}`.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. A human-readable description of the resource.
         
     - name: labels
       value: object
       description: >
         Optional. Set of labels associated with the `WasmPluginVersion` resource.
         
+    - name: name
+      value: string
+      description: >
+        Identifier. Name of the `WasmPluginVersion` resource in the following format: `projects/{project}/locations/{location}/wasmPlugins/{wasm_plugin}/ versions/{wasm_plugin_version}`.
+        
+    - name: pluginConfigData
+      value: string
+      description: >
+        Configuration for the plugin. The configuration is provided to the plugin at runtime through the `ON_CONFIGURE` callback. When a new `WasmPluginVersion` resource is created, the digest of the contents is saved in the `plugin_config_digest` field.
+        
     - name: imageUri
       value: string
       description: >
         Optional. URI of the image containing the Wasm module, stored in Artifact Registry. The URI can refer to one of the following repository formats: * Container images: the `image_uri` must point to a container that contains a single file with the name `plugin.wasm`. When a new `WasmPluginVersion` resource is created, the digest of the image is saved in the `image_digest` field. When pulling a container image from Artifact Registry, the digest value is used instead of an image tag. * Generic artifacts: the `image_uri` must be in this format: `projects/{project}/locations/{location}/repositories/{repository}/ genericArtifacts/{package}:{version}`. The specified package and version must contain a file with the name `plugin.wasm`. When a new `WasmPluginVersion` resource is created, the checksum of the contents of the file is saved in the `image_digest` field.
+        
+    - name: description
+      value: string
+      description: >
+        Optional. A human-readable description of the resource.
         
     - name: wasmPluginVersionId
       value: string

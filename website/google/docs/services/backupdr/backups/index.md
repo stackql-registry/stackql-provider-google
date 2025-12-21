@@ -55,6 +55,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Identifier. Name of the backup to create. It must have the format`"projects//locations//backupVaults//dataSources/&#123;datasource&#125;/backups/&#123;backup&#125;"`. `&#123;backup&#125;` cannot be changed after creation. It must be between 3-63 characters long and must be unique within the datasource.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="alloyDbBackupProperties" /></td>
+    <td><code>object</code></td>
+    <td>Output only. AlloyDB specific backup properties. (id: AlloyDbClusterBackupProperties)</td>
+</tr>
+<tr>
     <td><CopyableCode code="backupApplianceBackupProperties" /></td>
     <td><code>object</code></td>
     <td>Output only. Backup Appliance specific backup properties. (id: BackupApplianceBackupProperties)</td>
@@ -63,6 +68,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="backupApplianceLocks" /></td>
     <td><code>array</code></td>
     <td>Optional. The list of BackupLocks taken by the accessor Backup Appliance.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="backupRetentionInheritance" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Setting for how the enforced retention end time is inherited. This value is copied from this backup's BackupVault.</td>
 </tr>
 <tr>
     <td><CopyableCode code="backupType" /></td>
@@ -118,6 +128,16 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="gcpBackupPlanInfo" /></td>
     <td><code>object</code></td>
     <td>Output only. Configuration for a Google Cloud resource. (id: GCPBackupPlanInfo)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="gcpResource" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Unique identifier of the GCP resource that is being backed up. (id: BackupGcpResource)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="kmsKeyVersions" /></td>
+    <td><code>array</code></td>
+    <td>Optional. Output only. The list of KMS key versions used to encrypt the backup.</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -174,6 +194,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Identifier. Name of the backup to create. It must have the format`"projects//locations//backupVaults//dataSources/&#123;datasource&#125;/backups/&#123;backup&#125;"`. `&#123;backup&#125;` cannot be changed after creation. It must be between 3-63 characters long and must be unique within the datasource.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="alloyDbBackupProperties" /></td>
+    <td><code>object</code></td>
+    <td>Output only. AlloyDB specific backup properties. (id: AlloyDbClusterBackupProperties)</td>
+</tr>
+<tr>
     <td><CopyableCode code="backupApplianceBackupProperties" /></td>
     <td><code>object</code></td>
     <td>Output only. Backup Appliance specific backup properties. (id: BackupApplianceBackupProperties)</td>
@@ -182,6 +207,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="backupApplianceLocks" /></td>
     <td><code>array</code></td>
     <td>Optional. The list of BackupLocks taken by the accessor Backup Appliance.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="backupRetentionInheritance" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Setting for how the enforced retention end time is inherited. This value is copied from this backup's BackupVault.</td>
 </tr>
 <tr>
     <td><CopyableCode code="backupType" /></td>
@@ -237,6 +267,16 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="gcpBackupPlanInfo" /></td>
     <td><code>object</code></td>
     <td>Output only. Configuration for a Google Cloud resource. (id: GCPBackupPlanInfo)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="gcpResource" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Unique identifier of the GCP resource that is being backed up. (id: BackupGcpResource)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="kmsKeyVersions" /></td>
+    <td><code>array</code></td>
+    <td>Optional. Output only. The list of KMS key versions used to encrypt the backup.</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -423,8 +463,10 @@ Gets details of a Backup.
 ```sql
 SELECT
 name,
+alloyDbBackupProperties,
 backupApplianceBackupProperties,
 backupApplianceLocks,
+backupRetentionInheritance,
 backupType,
 cloudSqlInstanceBackupProperties,
 computeInstanceBackupProperties,
@@ -436,6 +478,8 @@ enforcedRetentionEndTime,
 etag,
 expireTime,
 gcpBackupPlanInfo,
+gcpResource,
+kmsKeyVersions,
 labels,
 resourceSizeBytes,
 satisfiesPzi,
@@ -460,8 +504,10 @@ Lists Backups in a given project and location.
 ```sql
 SELECT
 name,
+alloyDbBackupProperties,
 backupApplianceBackupProperties,
 backupApplianceLocks,
+backupRetentionInheritance,
 backupType,
 cloudSqlInstanceBackupProperties,
 computeInstanceBackupProperties,
@@ -473,6 +519,8 @@ enforcedRetentionEndTime,
 etag,
 expireTime,
 gcpBackupPlanInfo,
+gcpResource,
+kmsKeyVersions,
 labels,
 resourceSizeBytes,
 satisfiesPzi,
@@ -587,7 +635,8 @@ EXEC google.backupdr.backups.restore
 "diskTargetEnvironment": "{{ diskTargetEnvironment }}", 
 "regionDiskTargetEnvironment": "{{ regionDiskTargetEnvironment }}", 
 "computeInstanceRestoreProperties": "{{ computeInstanceRestoreProperties }}", 
-"diskRestoreProperties": "{{ diskRestoreProperties }}"
+"diskRestoreProperties": "{{ diskRestoreProperties }}", 
+"clearOverridesFieldMask": "{{ clearOverridesFieldMask }}"
 }'
 ;
 ```

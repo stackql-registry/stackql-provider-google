@@ -52,32 +52,32 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Identifier. The name of the Destination resource. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/multicloudDataTransferConfigs/&#123;multicloud_data_transfer_config&#125;/destinations/&#123;destination&#125;`.</td>
+    <td>Identifier. The name of the `Destination` resource. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/multicloudDataTransferConfigs/&#123;multicloud_data_transfer_config&#125;/destinations/&#123;destination&#125;`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. Time when the Destination was created.</td>
+    <td>Output only. Time when the `Destination` resource was created.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
-    <td>Optional. An optional field to provide a description of this resource.</td>
+    <td>Optional. A description of this resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="endpoints" /></td>
     <td><code>array</code></td>
-    <td>Required. Unordered list. The list of Endpoints configured for the IP Prefix.</td>
+    <td>Required. Unordered list. The list of `DestinationEndpoint` resources configured for the IP prefix.</td>
 </tr>
 <tr>
     <td><CopyableCode code="etag" /></td>
     <td><code>string</code></td>
-    <td>The etag is computed by the server, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.</td>
+    <td>The etag is computed by the server, and might be sent with update and delete requests so that the client has an up-to-date value before proceeding.</td>
 </tr>
 <tr>
     <td><CopyableCode code="ipPrefix" /></td>
     <td><code>string</code></td>
-    <td>Required. Immutable. Remote IP Prefix in the remote CSP, where the customer's workload is located</td>
+    <td>Required. Immutable. The IP prefix that represents your workload on another CSP.</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -87,17 +87,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="stateTimeline" /></td>
     <td><code>object</code></td>
-    <td>The timeline of pending states for a resource. (id: StateTimeline)</td>
+    <td>The timeline of the pending states for a resource. (id: StateTimeline)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
     <td><code>string</code></td>
-    <td>Output only. The Google-generated UUID for the destination. This value is unique across all destination resources. If a destination is deleted and another with the same name is created, the new destination is assigned a different uid.</td>
+    <td>Output only. The Google-generated unique ID for the `Destination` resource. This value is unique across all `Destination` resources. If a resource is deleted and another with the same name is created, the new resource is assigned a different and unique ID.</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. Time when the Destination was updated.</td>
+    <td>Output only. Time when the `Destination` resource was updated.</td>
 </tr>
 </tbody>
 </table>
@@ -113,56 +113,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Identifier. The name of the Destination resource. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/multicloudDataTransferConfigs/&#123;multicloud_data_transfer_config&#125;/destinations/&#123;destination&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Time when the Destination was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Optional. An optional field to provide a description of this resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="endpoints" /></td>
-    <td><code>array</code></td>
-    <td>Required. Unordered list. The list of Endpoints configured for the IP Prefix.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="etag" /></td>
-    <td><code>string</code></td>
-    <td>The etag is computed by the server, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="ipPrefix" /></td>
-    <td><code>string</code></td>
-    <td>Required. Immutable. Remote IP Prefix in the remote CSP, where the customer's workload is located</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Optional. User-defined labels.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="stateTimeline" /></td>
-    <td><code>object</code></td>
-    <td>The timeline of pending states for a resource. (id: StateTimeline)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="uid" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The Google-generated UUID for the destination. This value is unique across all destination resources. If a destination is deleted and another with the same name is created, the new destination is assigned a different uid.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Time when the Destination was updated.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -188,35 +138,35 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-multicloudDataTransferConfigsId"><code>multicloudDataTransferConfigsId</code></a>, <a href="#parameter-destinationsId"><code>destinationsId</code></a></td>
     <td></td>
-    <td>Gets details of a single Destination.</td>
+    <td>Gets the details of a `Destination` resource.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-multicloudDataTransferConfigsId"><code>multicloudDataTransferConfigsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
-    <td>Lists Destinations in a given project and location.</td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Lists the `Destination` resources in a specified project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-multicloudDataTransferConfigsId"><code>multicloudDataTransferConfigsId</code></a></td>
-    <td><a href="#parameter-destinationId"><code>destinationId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Creates a Destination in a given project and location.</td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-destinationId"><code>destinationId</code></a></td>
+    <td>Creates a `Destination` resource in a specified project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-multicloudDataTransferConfigsId"><code>multicloudDataTransferConfigsId</code></a>, <a href="#parameter-destinationsId"><code>destinationsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Updates a Destination in a given project and location.</td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td>Updates a `Destination` resource in a specified project and location.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-multicloudDataTransferConfigsId"><code>multicloudDataTransferConfigsId</code></a>, <a href="#parameter-destinationsId"><code>destinationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
-    <td>Deletes a single Destination.</td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Deletes a `Destination` resource.</td>
 </tr>
 </tbody>
 </table>
@@ -313,7 +263,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get">
 
-Gets details of a single Destination.
+Gets the details of a `Destination` resource.
 
 ```sql
 SELECT
@@ -337,28 +287,19 @@ AND destinationsId = '{{ destinationsId }}' -- required
 </TabItem>
 <TabItem value="list">
 
-Lists Destinations in a given project and location.
+Lists the `Destination` resources in a specified project and location.
 
 ```sql
 SELECT
-name,
-createTime,
-description,
-endpoints,
-etag,
-ipPrefix,
-labels,
-stateTimeline,
-uid,
-updateTime
+*
 FROM google.networkconnectivity.destinations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND multicloudDataTransferConfigsId = '{{ multicloudDataTransferConfigsId }}' -- required
+AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
@@ -377,34 +318,34 @@ AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 >
 <TabItem value="create">
 
-Creates a Destination in a given project and location.
+Creates a `Destination` resource in a specified project and location.
 
 ```sql
 INSERT INTO google.networkconnectivity.destinations (
+data__endpoints,
+data__description,
+data__ipPrefix,
 data__name,
 data__labels,
 data__etag,
-data__description,
-data__ipPrefix,
-data__endpoints,
 projectsId,
 locationsId,
 multicloudDataTransferConfigsId,
-destinationId,
-requestId
+requestId,
+destinationId
 )
 SELECT 
+'{{ endpoints }}',
+'{{ description }}',
+'{{ ipPrefix }}',
 '{{ name }}',
 '{{ labels }}',
 '{{ etag }}',
-'{{ description }}',
-'{{ ipPrefix }}',
-'{{ endpoints }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ multicloudDataTransferConfigsId }}',
-'{{ destinationId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ destinationId }}'
 RETURNING
 name,
 done,
@@ -429,10 +370,25 @@ response
     - name: multicloudDataTransferConfigsId
       value: string
       description: Required parameter for the destinations resource.
+    - name: endpoints
+      value: array
+      description: >
+        Required. Unordered list. The list of `DestinationEndpoint` resources configured for the IP prefix.
+        
+    - name: description
+      value: string
+      description: >
+        Optional. A description of this resource.
+        
+    - name: ipPrefix
+      value: string
+      description: >
+        Required. Immutable. The IP prefix that represents your workload on another CSP.
+        
     - name: name
       value: string
       description: >
-        Identifier. The name of the Destination resource. Format: `projects/{project}/locations/{location}/multicloudDataTransferConfigs/{multicloud_data_transfer_config}/destinations/{destination}`.
+        Identifier. The name of the `Destination` resource. Format: `projects/{project}/locations/{location}/multicloudDataTransferConfigs/{multicloud_data_transfer_config}/destinations/{destination}`.
         
     - name: labels
       value: object
@@ -442,26 +398,11 @@ response
     - name: etag
       value: string
       description: >
-        The etag is computed by the server, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
+        The etag is computed by the server, and might be sent with update and delete requests so that the client has an up-to-date value before proceeding.
         
-    - name: description
-      value: string
-      description: >
-        Optional. An optional field to provide a description of this resource.
-        
-    - name: ipPrefix
-      value: string
-      description: >
-        Required. Immutable. Remote IP Prefix in the remote CSP, where the customer's workload is located
-        
-    - name: endpoints
-      value: array
-      description: >
-        Required. Unordered list. The list of Endpoints configured for the IP Prefix.
-        
-    - name: destinationId
-      value: string
     - name: requestId
+      value: string
+    - name: destinationId
       value: string
 ```
 </TabItem>
@@ -478,24 +419,24 @@ response
 >
 <TabItem value="patch">
 
-Updates a Destination in a given project and location.
+Updates a `Destination` resource in a specified project and location.
 
 ```sql
 UPDATE google.networkconnectivity.destinations
 SET 
-data__name = '{{ name }}',
-data__labels = '{{ labels }}',
-data__etag = '{{ etag }}',
+data__endpoints = '{{ endpoints }}',
 data__description = '{{ description }}',
 data__ipPrefix = '{{ ipPrefix }}',
-data__endpoints = '{{ endpoints }}'
+data__name = '{{ name }}',
+data__labels = '{{ labels }}',
+data__etag = '{{ etag }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND multicloudDataTransferConfigsId = '{{ multicloudDataTransferConfigsId }}' --required
 AND destinationsId = '{{ destinationsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,
@@ -517,7 +458,7 @@ response;
 >
 <TabItem value="delete">
 
-Deletes a single Destination.
+Deletes a `Destination` resource.
 
 ```sql
 DELETE FROM google.networkconnectivity.destinations
@@ -525,8 +466,8 @@ WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND multicloudDataTransferConfigsId = '{{ multicloudDataTransferConfigsId }}' --required
 AND destinationsId = '{{ destinationsId }}' --required
-AND requestId = '{{ requestId }}'
 AND etag = '{{ etag }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>

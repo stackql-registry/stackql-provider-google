@@ -82,7 +82,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>Output only. Only populated when job's state is `JOB_STATE_FAILED` or `JOB_STATE_CANCELLED`. (id: GoogleRpcStatus)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: GoogleRpcStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="experiment" /></td>
@@ -93,6 +93,16 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="labels" /></td>
     <td><code>object</code></td>
     <td>Optional. The labels with user-defined metadata to organize TuningJob and generated resources such as Model and Endpoint. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="preTunedModel" /></td>
+    <td><code>object</code></td>
+    <td>The pre-tuned model for continuous tuning. (id: GoogleCloudAiplatformV1PreTunedModel)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="preferenceOptimizationSpec" /></td>
+    <td><code>object</code></td>
+    <td>Tuning Spec for Preference Optimization. (id: GoogleCloudAiplatformV1PreferenceOptimizationSpec)</td>
 </tr>
 <tr>
     <td><CopyableCode code="serviceAccount" /></td>
@@ -122,7 +132,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="tunedModelDisplayName" /></td>
     <td><code>string</code></td>
-    <td>Optional. The display name of the TunedModel. The name can be up to 128 characters long and can consist of any UTF-8 characters.</td>
+    <td>Optional. The display name of the TunedModel. The name can be up to 128 characters long and can consist of any UTF-8 characters. For continuous tuning, tuned_model_display_name will by default use the same display name as the pre-tuned model. If a new display name is provided, the tuning job will create a new model instead of a new version.</td>
 </tr>
 <tr>
     <td><CopyableCode code="tuningDataStats" /></td>
@@ -181,7 +191,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>Output only. Only populated when job's state is `JOB_STATE_FAILED` or `JOB_STATE_CANCELLED`. (id: GoogleRpcStatus)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: GoogleRpcStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="experiment" /></td>
@@ -192,6 +202,16 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="labels" /></td>
     <td><code>object</code></td>
     <td>Optional. The labels with user-defined metadata to organize TuningJob and generated resources such as Model and Endpoint. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="preTunedModel" /></td>
+    <td><code>object</code></td>
+    <td>The pre-tuned model for continuous tuning. (id: GoogleCloudAiplatformV1PreTunedModel)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="preferenceOptimizationSpec" /></td>
+    <td><code>object</code></td>
+    <td>Tuning Spec for Preference Optimization. (id: GoogleCloudAiplatformV1PreferenceOptimizationSpec)</td>
 </tr>
 <tr>
     <td><CopyableCode code="serviceAccount" /></td>
@@ -221,7 +241,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="tunedModelDisplayName" /></td>
     <td><code>string</code></td>
-    <td>Optional. The display name of the TunedModel. The name can be up to 128 characters long and can consist of any UTF-8 characters.</td>
+    <td>Optional. The display name of the TunedModel. The name can be up to 128 characters long and can consist of any UTF-8 characters. For continuous tuning, tuned_model_display_name will by default use the same display name as the pre-tuned model. If a new display name is provided, the tuning job will create a new model instead of a new version.</td>
 </tr>
 <tr>
     <td><CopyableCode code="tuningDataStats" /></td>
@@ -264,7 +284,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists TuningJobs in a Location.</td>
 </tr>
 <tr>
@@ -361,6 +381,8 @@ endTime,
 error,
 experiment,
 labels,
+preTunedModel,
+preferenceOptimizationSpec,
 serviceAccount,
 startTime,
 state,
@@ -391,6 +413,8 @@ endTime,
 error,
 experiment,
 labels,
+preTunedModel,
+preferenceOptimizationSpec,
 serviceAccount,
 startTime,
 state,
@@ -402,9 +426,9 @@ updateTime
 FROM google.aiplatform.tuning_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -426,24 +450,28 @@ Creates a TuningJob. A created TuningJob right away will be attempted to be run.
 
 ```sql
 INSERT INTO google.aiplatform.tuning_jobs (
-data__baseModel,
+data__encryptionSpec,
 data__supervisedTuningSpec,
 data__tunedModelDisplayName,
-data__description,
+data__preTunedModel,
 data__labels,
-data__encryptionSpec,
+data__description,
+data__preferenceOptimizationSpec,
 data__serviceAccount,
+data__baseModel,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ baseModel }}',
+'{{ encryptionSpec }}',
 '{{ supervisedTuningSpec }}',
 '{{ tunedModelDisplayName }}',
-'{{ description }}',
+'{{ preTunedModel }}',
 '{{ labels }}',
-'{{ encryptionSpec }}',
+'{{ description }}',
+'{{ preferenceOptimizationSpec }}',
 '{{ serviceAccount }}',
+'{{ baseModel }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -456,6 +484,8 @@ endTime,
 error,
 experiment,
 labels,
+preTunedModel,
+preferenceOptimizationSpec,
 serviceAccount,
 startTime,
 state,
@@ -479,10 +509,10 @@ updateTime
     - name: locationsId
       value: string
       description: Required parameter for the tuning_jobs resource.
-    - name: baseModel
-      value: string
+    - name: encryptionSpec
+      value: object
       description: >
-        The base model that is being tuned. See [Supported models](https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/tuning#supported_models).
+        Customer-managed encryption key options for a TuningJob. If this is set, then all resources created by the TuningJob will be encrypted with the provided encryption key.
         
     - name: supervisedTuningSpec
       value: object
@@ -492,27 +522,37 @@ updateTime
     - name: tunedModelDisplayName
       value: string
       description: >
-        Optional. The display name of the TunedModel. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+        Optional. The display name of the TunedModel. The name can be up to 128 characters long and can consist of any UTF-8 characters. For continuous tuning, tuned_model_display_name will by default use the same display name as the pre-tuned model. If a new display name is provided, the tuning job will create a new model instead of a new version.
         
-    - name: description
-      value: string
+    - name: preTunedModel
+      value: object
       description: >
-        Optional. The description of the TuningJob.
+        The pre-tuned model for continuous tuning.
         
     - name: labels
       value: object
       description: >
         Optional. The labels with user-defined metadata to organize TuningJob and generated resources such as Model and Endpoint. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
         
-    - name: encryptionSpec
+    - name: description
+      value: string
+      description: >
+        Optional. The description of the TuningJob.
+        
+    - name: preferenceOptimizationSpec
       value: object
       description: >
-        Customer-managed encryption key options for a TuningJob. If this is set, then all resources created by the TuningJob will be encrypted with the provided encryption key.
+        Tuning Spec for Preference Optimization.
         
     - name: serviceAccount
       value: string
       description: >
         The service account that the tuningJob workload runs as. If not specified, the Vertex AI Secure Fine-Tuned Service Agent in the project will be used. See https://cloud.google.com/iam/docs/service-agents#vertex-ai-secure-fine-tuning-service-agent Users starting the pipeline must have the `iam.serviceAccounts.actAs` permission on this service account.
+        
+    - name: baseModel
+      value: string
+      description: >
+        The base model that is being tuned. See [Supported models](https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/tuning#supported_models).
         
 ```
 </TabItem>
@@ -550,10 +590,10 @@ EXEC google.aiplatform.tuning_jobs.rebase_tuned_model
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
+"deployToSameEndpoint": {{ deployToSameEndpoint }}, 
 "tunedModelRef": "{{ tunedModelRef }}", 
-"tuningJob": "{{ tuningJob }}", 
 "artifactDestination": "{{ artifactDestination }}", 
-"deployToSameEndpoint": {{ deployToSameEndpoint }}
+"tuningJob": "{{ tuningJob }}"
 }'
 ;
 ```

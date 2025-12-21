@@ -92,22 +92,22 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="newOfferEndTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. The end time of the new offer. If the offer was created with a term instead of a specified end date, this field is empty. This field is populated even if the entitlement isn't active yet. If there's no upcoming offer, the field is be empty.</td>
+    <td>Output only. The end time of the new offer, determined from the offer's specified end date. If the offer des not have a specified end date then this field is not set. This field is populated even if the entitlement isn't active yet. If there's no upcoming offer, the field is empty. * If the entitlement is in the state ENTITLEMENT_ACTIVATION_REQUESTED, ENTITLEMENT_ACTIVE, or ENTITLEMENT_PENDING_CANCELLATION, then this field is empty. * If the entitlement is in the state ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL or ENTITLEMENT_PENDING_PLAN_CHANGE, and the upcoming offer has a specified end date, then this field is populated with the expected end time of the upcoming offer, in the future. Otherwise, this field is empty. * If the entitlement is in the state ENTITLEMENT_CANCELLED, then this field is empty.</td>
 </tr>
 <tr>
     <td><CopyableCode code="newOfferStartTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp when the new offer becomes effective. This field is populated even if the entitlement isn't active yet. If there's no upcoming offer, the field is empty.</td>
+    <td>Output only. The timestamp when the new offer becomes effective. This field is populated even if the entitlement isn't active yet. If there's no upcoming offer, the field is empty. * If the entitlement is in the state ENTITLEMENT_ACTIVATION_REQUESTED, this field isn't populated when the entitlement isn't yet approved. After the entitlement is approved, this field is populated with the effective time of the upcoming offer. * If the entitlement is in the state ENTITLEMENT_ACTIVE or ENTITLEMENT_PENDING_CANCELLATION, this field isn't populated. * If the entitlement is in the state ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL, this field isn't populated, because the entitlement change is waiting on approval. * If the entitlement is in the state ENTITLEMENT_PENDING_PLAN_CHANGE, this field is populated with the expected effective time of the upcoming offer, which is in the future. * If the entitlement is in the state ENTITLEMENT_CANCELLED, then this field is empty.</td>
 </tr>
 <tr>
     <td><CopyableCode code="newPendingOffer" /></td>
     <td><code>string</code></td>
-    <td>Output only. The name of the offer the entitlement is switching to upon a pending plan change. Only exists if the pending plan change is moving to an offer. This field isn't populated for entitlements which aren't active yet. Format: 'projects/&#123;project&#125;/services/&#123;service&#125;/privateOffers/&#123;offer-id&#125;' OR 'projects/&#123;project&#125;/services/&#123;service&#125;/standardOffers/&#123;offer-id&#125;', depending on whether the offer is private or public. The &#123;service&#125; in the name is the listing service of the offer. It could be either the product service that the offer is referencing, or a generic private offer parent service. We recommend that you don't build your integration to rely on the meaning of this &#123;service&#125; part.</td>
+    <td>Output only. Upon a pending plan change, the name of the offer that the entitlement is switching to. Only exists if the pending plan change is moving to an offer. This field isn't populated for entitlements which aren't active yet. Format: 'projects/&#123;project&#125;/services/&#123;service&#125;/privateOffers/&#123;offer&#125;' OR 'projects/&#123;project&#125;/services/&#123;service&#125;/standardOffers/&#123;offer&#125;', depending on whether the offer is private or public. The &#123;service&#125; in the name is the listing service of the offer. It could be either the product service that the offer is referencing, or a generic private offer parent service. We recommend that you don't build your integration to rely on the meaning of this &#123;service&#125; part. * If the entitlement is in the state ENTITLEMENT_ACTIVATION_REQUESTED, ENTITLEMENT_ACTIVE or ENTITLEMENT_PENDING_CANCELLATION, then this field is empty. * If the entitlement is in the state ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL or ENTITLEMENT_PENDING_PLAN_CHANGE, then this field is populated with the upcoming offer. * If the entitlement is in the state ENTITLEMENT_CANCELLED, then this is empty.</td>
 </tr>
 <tr>
     <td><CopyableCode code="newPendingOfferDuration" /></td>
     <td><code>string</code></td>
-    <td>Output only. The duration of the new offer, in ISO 8601 duration format. This field isn't populated for entitlements which aren't active yet, only for pending offer changes. If the offer was created with a specified end date instead of a duration, this field is empty.</td>
+    <td>Output only. The duration of the new offer, in ISO 8601 duration format. This field is populated for pending offer changes. It isn't populated for entitlements which aren't active yet. If the offer has a specified end date instead of a duration, this field is empty. * If the entitlement is in the state ENTITLEMENT_ACTIVATION_REQUESTED, ENTITLEMENT_ACTIVE, or ENTITLEMENT_PENDING_CANCELLATION, this field is empty. * If the entitlement is in the state ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL or ENTITLEMENT_PENDING_PLAN_CHANGE, and the upcoming offer doesn't have a specified end date, then this field is populated with the duration of the upcoming offer. Otherwise, this field is empty. * If the entitlement is in the state ENTITLEMENT_CANCELLED, then this field is empty.</td>
 </tr>
 <tr>
     <td><CopyableCode code="newPendingPlan" /></td>
@@ -117,17 +117,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="offer" /></td>
     <td><code>string</code></td>
-    <td>Output only. The name of the offer that was procured. Field is empty if order was not made using an offer. Format: 'projects/&#123;project&#125;/services/&#123;service&#125;/privateOffers/&#123;offer-id&#125;' OR 'projects/&#123;project&#125;/services/&#123;service&#125;/standardOffers/&#123;offer-id&#125;', depending on whether the offer is private or public. The &#123;service&#125; in the name is the listing service of the offer. It could be either the product service that the offer is referencing, or a generic private offer parent service. We recommend that you don't build your integration to rely on the meaning of this &#123;service&#125; part.</td>
+    <td>Output only. The name of the offer that was procured. Field is empty if order wasn't made using an offer. Format: 'projects/&#123;project&#125;/services/&#123;service&#125;/privateOffers/&#123;offer&#125;' OR 'projects/&#123;project&#125;/services/&#123;service&#125;/standardOffers/&#123;offer&#125;', depending on whether the offer is private or public. The &#123;service&#125; in the name is the listing service of the offer. It could be either the product service that the offer is referencing, or a generic private offer parent service. We recommend that you don't build your integration to rely on the meaning of this &#123;service&#125; part. * If the entitlement is in the state ENTITLEMENT_ACTIVATION_REQUESTED, this field is populated with the upcoming offer. * If the entitlement is in the state ENTITLEMENT_ACTIVE, ENTITLEMENT_PENDING_CANCELLATION, ENTITLEMENT_PENDING_PLAN_CHANGE, or ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL, this field is populated with the current offer. * If the entitlement is in the state ENTITLEMENT_CANCELLED, then this field is populated with the latest offer that the order was associated with.</td>
 </tr>
 <tr>
     <td><CopyableCode code="offerDuration" /></td>
     <td><code>string</code></td>
-    <td>Output only. The offer duration of the current offer in ISO 8601 duration format. Field is empty if entitlement was not made using an offer. If the offer was created with a specified end date instead of a duration, this field is empty.</td>
+    <td>Output only. The offer duration of the current offer, in ISO 8601 duration format. This is empty if the entitlement wasn't made using an offer, or if the offer has a specified end date instead of a duration. * If the entitlement is in the state ENTITLEMENT_ACTIVATION_REQUESTED, and the upcoming offer doesn't have a specified end date, then this field is populated with the duration of the upcoming offer. Otherwise, this field is empty. * If the entitlement is in the state ENTITLEMENT_ACTIVE, ENTITLEMENT_PENDING_CANCELLATION, ENTITLEMENT_PENDING_PLAN_CHANGE, or ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL, and the current offer doesn't have a specified end date, then this field contains the duration of the current offer. Otherwise, this field is empty. * If the entitlement is in the state ENTITLEMENT_CANCELLED, and the offer doesn't have a specified end date, then this field is populated with the duration of the latest offer that the order was associated with. Otherwise, this field is empty.</td>
 </tr>
 <tr>
     <td><CopyableCode code="offerEndTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. End time for the Offer association corresponding to this entitlement. The field is only populated if the entitlement is currently associated with an Offer.</td>
+    <td>Output only. End time for the current term of the Offer associated with this entitlement. The value of this field can change naturally over time due to auto-renewal, even if the offer isn't changed. * If the entitlement is in the state ENTITLEMENT_ACTIVATION_REQUESTED, then: * If the entitlement isn't approved yet approved, and the offer has a specified end date, then this field is populated with the expected end time of the upcoming offer, in the future. Otherwise, this field is empty. * If the entitlement is approved, then this field is populated with the expected end time of the upcoming offer, in the future. This means that this field and the field offer_duration can both exist. * If the entitlement is in the state ENTITLEMENT_ACTIVE or ENTITLEMENT_PENDING_CANCELLATION, then this field is populated with the expected end time of the current offer, in the future. This field's value is set regardless of whether the offer has a specific end date or a duration. This means that this field and the field offer_duration can both exist. * If the entitlement is in the state ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL or ENTITLEMENT_PENDING_PLAN_CHANGE: * If the entitlement's pricing model is usage based and the associated offer is a private offer whose term has ended, then this field reflects the ACTUAL end time of the entitlement's associated offer (in the past), even though the entitlement associated with this private offer does not terminate at the end of that private offer's term. * Otherwise, this is the expected end date of the current offer, in the future. * If the entitlement is in the state ENTITLEMENT_CANCELLED, then this field is populated with the end time, in the past, of the latest offer that the order was associated with. If the entitlement was cancelled before any offer started, then this field is empty.</td>
 </tr>
 <tr>
     <td><CopyableCode code="orderId" /></td>
@@ -236,22 +236,22 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="newOfferEndTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. The end time of the new offer. If the offer was created with a term instead of a specified end date, this field is empty. This field is populated even if the entitlement isn't active yet. If there's no upcoming offer, the field is be empty.</td>
+    <td>Output only. The end time of the new offer, determined from the offer's specified end date. If the offer des not have a specified end date then this field is not set. This field is populated even if the entitlement isn't active yet. If there's no upcoming offer, the field is empty. * If the entitlement is in the state ENTITLEMENT_ACTIVATION_REQUESTED, ENTITLEMENT_ACTIVE, or ENTITLEMENT_PENDING_CANCELLATION, then this field is empty. * If the entitlement is in the state ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL or ENTITLEMENT_PENDING_PLAN_CHANGE, and the upcoming offer has a specified end date, then this field is populated with the expected end time of the upcoming offer, in the future. Otherwise, this field is empty. * If the entitlement is in the state ENTITLEMENT_CANCELLED, then this field is empty.</td>
 </tr>
 <tr>
     <td><CopyableCode code="newOfferStartTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp when the new offer becomes effective. This field is populated even if the entitlement isn't active yet. If there's no upcoming offer, the field is empty.</td>
+    <td>Output only. The timestamp when the new offer becomes effective. This field is populated even if the entitlement isn't active yet. If there's no upcoming offer, the field is empty. * If the entitlement is in the state ENTITLEMENT_ACTIVATION_REQUESTED, this field isn't populated when the entitlement isn't yet approved. After the entitlement is approved, this field is populated with the effective time of the upcoming offer. * If the entitlement is in the state ENTITLEMENT_ACTIVE or ENTITLEMENT_PENDING_CANCELLATION, this field isn't populated. * If the entitlement is in the state ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL, this field isn't populated, because the entitlement change is waiting on approval. * If the entitlement is in the state ENTITLEMENT_PENDING_PLAN_CHANGE, this field is populated with the expected effective time of the upcoming offer, which is in the future. * If the entitlement is in the state ENTITLEMENT_CANCELLED, then this field is empty.</td>
 </tr>
 <tr>
     <td><CopyableCode code="newPendingOffer" /></td>
     <td><code>string</code></td>
-    <td>Output only. The name of the offer the entitlement is switching to upon a pending plan change. Only exists if the pending plan change is moving to an offer. This field isn't populated for entitlements which aren't active yet. Format: 'projects/&#123;project&#125;/services/&#123;service&#125;/privateOffers/&#123;offer-id&#125;' OR 'projects/&#123;project&#125;/services/&#123;service&#125;/standardOffers/&#123;offer-id&#125;', depending on whether the offer is private or public. The &#123;service&#125; in the name is the listing service of the offer. It could be either the product service that the offer is referencing, or a generic private offer parent service. We recommend that you don't build your integration to rely on the meaning of this &#123;service&#125; part.</td>
+    <td>Output only. Upon a pending plan change, the name of the offer that the entitlement is switching to. Only exists if the pending plan change is moving to an offer. This field isn't populated for entitlements which aren't active yet. Format: 'projects/&#123;project&#125;/services/&#123;service&#125;/privateOffers/&#123;offer&#125;' OR 'projects/&#123;project&#125;/services/&#123;service&#125;/standardOffers/&#123;offer&#125;', depending on whether the offer is private or public. The &#123;service&#125; in the name is the listing service of the offer. It could be either the product service that the offer is referencing, or a generic private offer parent service. We recommend that you don't build your integration to rely on the meaning of this &#123;service&#125; part. * If the entitlement is in the state ENTITLEMENT_ACTIVATION_REQUESTED, ENTITLEMENT_ACTIVE or ENTITLEMENT_PENDING_CANCELLATION, then this field is empty. * If the entitlement is in the state ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL or ENTITLEMENT_PENDING_PLAN_CHANGE, then this field is populated with the upcoming offer. * If the entitlement is in the state ENTITLEMENT_CANCELLED, then this is empty.</td>
 </tr>
 <tr>
     <td><CopyableCode code="newPendingOfferDuration" /></td>
     <td><code>string</code></td>
-    <td>Output only. The duration of the new offer, in ISO 8601 duration format. This field isn't populated for entitlements which aren't active yet, only for pending offer changes. If the offer was created with a specified end date instead of a duration, this field is empty.</td>
+    <td>Output only. The duration of the new offer, in ISO 8601 duration format. This field is populated for pending offer changes. It isn't populated for entitlements which aren't active yet. If the offer has a specified end date instead of a duration, this field is empty. * If the entitlement is in the state ENTITLEMENT_ACTIVATION_REQUESTED, ENTITLEMENT_ACTIVE, or ENTITLEMENT_PENDING_CANCELLATION, this field is empty. * If the entitlement is in the state ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL or ENTITLEMENT_PENDING_PLAN_CHANGE, and the upcoming offer doesn't have a specified end date, then this field is populated with the duration of the upcoming offer. Otherwise, this field is empty. * If the entitlement is in the state ENTITLEMENT_CANCELLED, then this field is empty.</td>
 </tr>
 <tr>
     <td><CopyableCode code="newPendingPlan" /></td>
@@ -261,17 +261,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="offer" /></td>
     <td><code>string</code></td>
-    <td>Output only. The name of the offer that was procured. Field is empty if order was not made using an offer. Format: 'projects/&#123;project&#125;/services/&#123;service&#125;/privateOffers/&#123;offer-id&#125;' OR 'projects/&#123;project&#125;/services/&#123;service&#125;/standardOffers/&#123;offer-id&#125;', depending on whether the offer is private or public. The &#123;service&#125; in the name is the listing service of the offer. It could be either the product service that the offer is referencing, or a generic private offer parent service. We recommend that you don't build your integration to rely on the meaning of this &#123;service&#125; part.</td>
+    <td>Output only. The name of the offer that was procured. Field is empty if order wasn't made using an offer. Format: 'projects/&#123;project&#125;/services/&#123;service&#125;/privateOffers/&#123;offer&#125;' OR 'projects/&#123;project&#125;/services/&#123;service&#125;/standardOffers/&#123;offer&#125;', depending on whether the offer is private or public. The &#123;service&#125; in the name is the listing service of the offer. It could be either the product service that the offer is referencing, or a generic private offer parent service. We recommend that you don't build your integration to rely on the meaning of this &#123;service&#125; part. * If the entitlement is in the state ENTITLEMENT_ACTIVATION_REQUESTED, this field is populated with the upcoming offer. * If the entitlement is in the state ENTITLEMENT_ACTIVE, ENTITLEMENT_PENDING_CANCELLATION, ENTITLEMENT_PENDING_PLAN_CHANGE, or ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL, this field is populated with the current offer. * If the entitlement is in the state ENTITLEMENT_CANCELLED, then this field is populated with the latest offer that the order was associated with.</td>
 </tr>
 <tr>
     <td><CopyableCode code="offerDuration" /></td>
     <td><code>string</code></td>
-    <td>Output only. The offer duration of the current offer in ISO 8601 duration format. Field is empty if entitlement was not made using an offer. If the offer was created with a specified end date instead of a duration, this field is empty.</td>
+    <td>Output only. The offer duration of the current offer, in ISO 8601 duration format. This is empty if the entitlement wasn't made using an offer, or if the offer has a specified end date instead of a duration. * If the entitlement is in the state ENTITLEMENT_ACTIVATION_REQUESTED, and the upcoming offer doesn't have a specified end date, then this field is populated with the duration of the upcoming offer. Otherwise, this field is empty. * If the entitlement is in the state ENTITLEMENT_ACTIVE, ENTITLEMENT_PENDING_CANCELLATION, ENTITLEMENT_PENDING_PLAN_CHANGE, or ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL, and the current offer doesn't have a specified end date, then this field contains the duration of the current offer. Otherwise, this field is empty. * If the entitlement is in the state ENTITLEMENT_CANCELLED, and the offer doesn't have a specified end date, then this field is populated with the duration of the latest offer that the order was associated with. Otherwise, this field is empty.</td>
 </tr>
 <tr>
     <td><CopyableCode code="offerEndTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. End time for the Offer association corresponding to this entitlement. The field is only populated if the entitlement is currently associated with an Offer.</td>
+    <td>Output only. End time for the current term of the Offer associated with this entitlement. The value of this field can change naturally over time due to auto-renewal, even if the offer isn't changed. * If the entitlement is in the state ENTITLEMENT_ACTIVATION_REQUESTED, then: * If the entitlement isn't approved yet approved, and the offer has a specified end date, then this field is populated with the expected end time of the upcoming offer, in the future. Otherwise, this field is empty. * If the entitlement is approved, then this field is populated with the expected end time of the upcoming offer, in the future. This means that this field and the field offer_duration can both exist. * If the entitlement is in the state ENTITLEMENT_ACTIVE or ENTITLEMENT_PENDING_CANCELLATION, then this field is populated with the expected end time of the current offer, in the future. This field's value is set regardless of whether the offer has a specific end date or a duration. This means that this field and the field offer_duration can both exist. * If the entitlement is in the state ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL or ENTITLEMENT_PENDING_PLAN_CHANGE: * If the entitlement's pricing model is usage based and the associated offer is a private offer whose term has ended, then this field reflects the ACTUAL end time of the entitlement's associated offer (in the past), even though the entitlement associated with this private offer does not terminate at the end of that private offer's term. * Otherwise, this is the expected end date of the current offer, in the future. * If the entitlement is in the state ENTITLEMENT_CANCELLED, then this field is populated with the end time, in the past, of the latest offer that the order was associated with. If the entitlement was cancelled before any offer started, then this field is empty.</td>
 </tr>
 <tr>
     <td><CopyableCode code="orderId" /></td>
@@ -354,7 +354,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-providersId"><code>providersId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists Entitlements for which the provider has read access.</td>
 </tr>
 <tr>
@@ -365,13 +365,6 @@ The following methods are available for this resource:
     <td>Updates an existing Entitlement.</td>
 </tr>
 <tr>
-    <td><a href="#approve"><CopyableCode code="approve" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-entitlementsId"><code>entitlementsId</code></a></td>
-    <td></td>
-    <td>Approves an entitlement that is in the EntitlementState.ENTITLEMENT_ACTIVATION_REQUESTED state. This method is invoked by the provider to approve the creation of the entitlement resource.</td>
-</tr>
-<tr>
     <td><a href="#reject"><CopyableCode code="reject" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-entitlementsId"><code>entitlementsId</code></a></td>
@@ -379,11 +372,11 @@ The following methods are available for this resource:
     <td>Rejects an entitlement that is in the EntitlementState.ENTITLEMENT_ACTIVATION_REQUESTED state. This method is invoked by the provider to reject the creation of the entitlement resource.</td>
 </tr>
 <tr>
-    <td><a href="#approve_plan_change"><CopyableCode code="approve_plan_change" /></a></td>
+    <td><a href="#approve"><CopyableCode code="approve" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-entitlementsId"><code>entitlementsId</code></a></td>
     <td></td>
-    <td>Approves an entitlement plan change that is in the EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL state. This method is invoked by the provider to approve the plan change on the entitlement resource.</td>
+    <td>Approves an entitlement that is in the EntitlementState.ENTITLEMENT_ACTIVATION_REQUESTED state. This method is invoked by the provider to approve the creation of the entitlement resource.</td>
 </tr>
 <tr>
     <td><a href="#reject_plan_change"><CopyableCode code="reject_plan_change" /></a></td>
@@ -391,6 +384,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-entitlementsId"><code>entitlementsId</code></a></td>
     <td></td>
     <td>Rejects an entitlement plan change that is in the EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL state. This method is invoked by the provider to reject the plan change on the entitlement resource.</td>
+</tr>
+<tr>
+    <td><a href="#approve_plan_change"><CopyableCode code="approve_plan_change" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-entitlementsId"><code>entitlementsId</code></a></td>
+    <td></td>
+    <td>Approves an entitlement plan change that is in the EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL state. This method is invoked by the provider to approve the plan change on the entitlement resource.</td>
 </tr>
 <tr>
     <td><a href="#suspend"><CopyableCode code="suspend" /></a></td>
@@ -529,9 +529,9 @@ updateTime,
 usageReportingId
 FROM google.cloudcommerceprocurement.entitlements
 WHERE providersId = '{{ providersId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -554,18 +554,18 @@ Updates an existing Entitlement.
 UPDATE google.cloudcommerceprocurement.entitlements
 SET 
 data__name = '{{ name }}',
+data__updateTime = '{{ updateTime }}',
 data__account = '{{ account }}',
+data__usageReportingId = '{{ usageReportingId }}',
+data__createTime = '{{ createTime }}',
 data__provider = '{{ provider }}',
 data__product = '{{ product }}',
-data__plan = '{{ plan }}',
-data__newPendingPlan = '{{ newPendingPlan }}',
 data__state = '{{ state }}',
-data__inputProperties = '{{ inputProperties }}',
-data__updateTime = '{{ updateTime }}',
-data__createTime = '{{ createTime }}',
-data__usageReportingId = '{{ usageReportingId }}',
+data__newPendingPlan = '{{ newPendingPlan }}',
+data__consumers = '{{ consumers }}',
+data__plan = '{{ plan }}',
 data__messageToUser = '{{ messageToUser }}',
-data__consumers = '{{ consumers }}'
+data__inputProperties = '{{ inputProperties }}'
 WHERE 
 providersId = '{{ providersId }}' --required
 AND entitlementsId = '{{ entitlementsId }}' --required
@@ -605,15 +605,30 @@ usageReportingId;
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="approve"
+    defaultValue="reject"
     values={[
-        { label: 'approve', value: 'approve' },
         { label: 'reject', value: 'reject' },
-        { label: 'approve_plan_change', value: 'approve_plan_change' },
+        { label: 'approve', value: 'approve' },
         { label: 'reject_plan_change', value: 'reject_plan_change' },
+        { label: 'approve_plan_change', value: 'approve_plan_change' },
         { label: 'suspend', value: 'suspend' }
     ]}
 >
+<TabItem value="reject">
+
+Rejects an entitlement that is in the EntitlementState.ENTITLEMENT_ACTIVATION_REQUESTED state. This method is invoked by the provider to reject the creation of the entitlement resource.
+
+```sql
+EXEC google.cloudcommerceprocurement.entitlements.reject 
+@providersId='{{ providersId }}' --required, 
+@entitlementsId='{{ entitlementsId }}' --required 
+@@json=
+'{
+"reason": "{{ reason }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="approve">
 
 Approves an entitlement that is in the EntitlementState.ENTITLEMENT_ACTIVATION_REQUESTED state. This method is invoked by the provider to approve the creation of the entitlement resource.
@@ -630,16 +645,17 @@ EXEC google.cloudcommerceprocurement.entitlements.approve
 ;
 ```
 </TabItem>
-<TabItem value="reject">
+<TabItem value="reject_plan_change">
 
-Rejects an entitlement that is in the EntitlementState.ENTITLEMENT_ACTIVATION_REQUESTED state. This method is invoked by the provider to reject the creation of the entitlement resource.
+Rejects an entitlement plan change that is in the EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL state. This method is invoked by the provider to reject the plan change on the entitlement resource.
 
 ```sql
-EXEC google.cloudcommerceprocurement.entitlements.reject 
+EXEC google.cloudcommerceprocurement.entitlements.reject_plan_change 
 @providersId='{{ providersId }}' --required, 
 @entitlementsId='{{ entitlementsId }}' --required 
 @@json=
 '{
+"pendingPlanName": "{{ pendingPlanName }}", 
 "reason": "{{ reason }}"
 }'
 ;
@@ -655,22 +671,6 @@ EXEC google.cloudcommerceprocurement.entitlements.approve_plan_change
 @entitlementsId='{{ entitlementsId }}' --required 
 @@json=
 '{
-"pendingPlanName": "{{ pendingPlanName }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="reject_plan_change">
-
-Rejects an entitlement plan change that is in the EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL state. This method is invoked by the provider to reject the plan change on the entitlement resource.
-
-```sql
-EXEC google.cloudcommerceprocurement.entitlements.reject_plan_change 
-@providersId='{{ providersId }}' --required, 
-@entitlementsId='{{ entitlementsId }}' --required 
-@@json=
-'{
-"reason": "{{ reason }}", 
 "pendingPlanName": "{{ pendingPlanName }}"
 }'
 ;

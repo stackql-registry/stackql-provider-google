@@ -62,7 +62,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="cryptoKeyName" /></td>
     <td><code>string</code></td>
-    <td>Required. Customer managed crypto key resource full name. Format: projects/&#123;project&#125;/locations/&#123;location&#125;/keyRings/&#123;key_ring&#125;/cryptoKeys/&#123;key&#125;.</td>
+    <td>Required. Customer managed crypto key resource full name. Format: projects/&#123;project&#125;/locations/&#123;location&#125;/keyRings/&#123;key_ring&#125;/cryptoKeys/&#123;crypto_key&#125;.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -108,51 +108,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Identifier. Name of the KmsConfig.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Create time of the KmsConfig.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="cryptoKeyName" /></td>
-    <td><code>string</code></td>
-    <td>Required. Customer managed crypto key resource full name. Format: projects/&#123;project&#125;/locations/&#123;location&#125;/keyRings/&#123;key_ring&#125;/cryptoKeys/&#123;key&#125;.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Description of the KmsConfig.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="instructions" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Instructions to provide the access to the customer provided encryption key.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Labels as key value pairs</td>
-</tr>
-<tr>
-    <td><CopyableCode code="serviceAccount" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The Service account which will have access to the customer provided encryption key.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="state" /></td>
-    <td><code>string</code></td>
-    <td>Output only. State of the KmsConfig.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="stateDetails" /></td>
-    <td><code>string</code></td>
-    <td>Output only. State details of the KmsConfig.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -184,7 +139,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Returns descriptions of all KMS configs owned by the caller.</td>
 </tr>
 <tr>
@@ -323,22 +278,14 @@ Returns descriptions of all KMS configs owned by the caller.
 
 ```sql
 SELECT
-name,
-createTime,
-cryptoKeyName,
-description,
-instructions,
-labels,
-serviceAccount,
-state,
-stateDetails
+*
 FROM google.netapp.kms_configs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -360,19 +307,19 @@ Creates a new KMS config.
 
 ```sql
 INSERT INTO google.netapp.kms_configs (
-data__name,
-data__cryptoKeyName,
 data__description,
 data__labels,
+data__name,
+data__cryptoKeyName,
 projectsId,
 locationsId,
 kmsConfigId
 )
 SELECT 
-'{{ name }}',
-'{{ cryptoKeyName }}',
 '{{ description }}',
 '{{ labels }}',
+'{{ name }}',
+'{{ cryptoKeyName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ kmsConfigId }}'
@@ -397,16 +344,6 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the kms_configs resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. Name of the KmsConfig.
-        
-    - name: cryptoKeyName
-      value: string
-      description: >
-        Required. Customer managed crypto key resource full name. Format: projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{key}.
-        
     - name: description
       value: string
       description: >
@@ -416,6 +353,16 @@ response
       value: object
       description: >
         Labels as key value pairs
+        
+    - name: name
+      value: string
+      description: >
+        Identifier. Name of the KmsConfig.
+        
+    - name: cryptoKeyName
+      value: string
+      description: >
+        Required. Customer managed crypto key resource full name. Format: projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{crypto_key}.
         
     - name: kmsConfigId
       value: string
@@ -439,10 +386,10 @@ Updates the Kms config properties with the full spec
 ```sql
 UPDATE google.netapp.kms_configs
 SET 
-data__name = '{{ name }}',
-data__cryptoKeyName = '{{ cryptoKeyName }}',
 data__description = '{{ description }}',
-data__labels = '{{ labels }}'
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
+data__cryptoKeyName = '{{ cryptoKeyName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

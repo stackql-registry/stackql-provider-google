@@ -58,6 +58,11 @@ The following fields are returned by `SELECT` queries:
     <td><code>string</code></td>
     <td>Optional. The default KMS key that is used if no encryption key is provided when a repository is created.</td>
 </tr>
+<tr>
+    <td><CopyableCode code="internalMetadata" /></td>
+    <td><code>string</code></td>
+    <td>Output only. All the metadata information that is used internally to serve the resource. For example: timestamps, flags, status fields, etc. The format of this field is a JSON string.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -141,7 +146,8 @@ Get default config for a given project and location.
 ```sql
 SELECT
 name,
-defaultKmsKeyName
+defaultKmsKeyName,
+internalMetadata
 FROM google.dataform.config
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
@@ -174,7 +180,8 @@ AND locationsId = '{{ locationsId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
-defaultKmsKeyName;
+defaultKmsKeyName,
+internalMetadata;
 ```
 </TabItem>
 </Tabs>

@@ -258,17 +258,17 @@ Creates an issue.
 
 ```sql
 INSERT INTO google.contactcenterinsights.issues (
-data__name,
 data__displayName,
 data__displayDescription,
+data__name,
 projectsId,
 locationsId,
 issueModelsId
 )
 SELECT 
-'{{ name }}',
 '{{ displayName }}',
 '{{ displayDescription }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ issueModelsId }}'
@@ -296,11 +296,6 @@ response
     - name: issueModelsId
       value: string
       description: Required parameter for the issues resource.
-    - name: name
-      value: string
-      description: >
-        Immutable. The resource name of the issue. Format: projects/{project}/locations/{location}/issueModels/{issue_model}/issues/{issue}
-        
     - name: displayName
       value: string
       description: >
@@ -310,6 +305,11 @@ response
       value: string
       description: >
         Representative description of the issue.
+        
+    - name: name
+      value: string
+      description: >
+        Immutable. The resource name of the issue. Format: projects/{project}/locations/{location}/issueModels/{issue_model}/issues/{issue}
         
 ```
 </TabItem>
@@ -331,9 +331,9 @@ Updates an issue.
 ```sql
 UPDATE google.contactcenterinsights.issues
 SET 
-data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
-data__displayDescription = '{{ displayDescription }}'
+data__displayDescription = '{{ displayDescription }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

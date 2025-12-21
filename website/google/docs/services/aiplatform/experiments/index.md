@@ -174,7 +174,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-tensorboardsId"><code>tensorboardsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td><a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists TensorboardExperiments in a Location.</td>
 </tr>
 <tr>
@@ -335,11 +335,11 @@ FROM google.aiplatform.experiments
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND tensorboardsId = '{{ tensorboardsId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
+AND readMask = '{{ readMask }}'
 AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
-AND readMask = '{{ readMask }}'
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -386,10 +386,10 @@ Creates a TensorboardExperiment.
 ```sql
 INSERT INTO google.aiplatform.experiments (
 data__displayName,
-data__description,
-data__labels,
 data__etag,
 data__source,
+data__labels,
+data__description,
 projectsId,
 locationsId,
 tensorboardsId,
@@ -397,10 +397,10 @@ tensorboardExperimentId
 )
 SELECT 
 '{{ displayName }}',
-'{{ description }}',
-'{{ labels }}',
 '{{ etag }}',
 '{{ source }}',
+'{{ labels }}',
+'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ tensorboardsId }}',
@@ -445,16 +445,6 @@ updateTime
       description: >
         User provided name of this TensorboardExperiment.
         
-    - name: description
-      value: string
-      description: >
-        Description of this TensorboardExperiment.
-        
-    - name: labels
-      value: object
-      description: >
-        The labels with user-defined metadata to organize your TensorboardExperiment. Label keys and values cannot be longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one Dataset (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with `aiplatform.googleapis.com/` and are immutable. The following system labels exist for each Dataset: * `aiplatform.googleapis.com/dataset_metadata_schema`: output only. Its value is the metadata_schema's title.
-        
     - name: etag
       value: string
       description: >
@@ -464,6 +454,16 @@ updateTime
       value: string
       description: >
         Immutable. Source of the TensorboardExperiment. Example: a custom training job.
+        
+    - name: labels
+      value: object
+      description: >
+        The labels with user-defined metadata to organize your TensorboardExperiment. Label keys and values cannot be longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one Dataset (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with `aiplatform.googleapis.com/` and are immutable. The following system labels exist for each Dataset: * `aiplatform.googleapis.com/dataset_metadata_schema`: output only. Its value is the metadata_schema's title.
+        
+    - name: description
+      value: string
+      description: >
+        Description of this TensorboardExperiment.
         
     - name: tensorboardExperimentId
       value: string
@@ -488,10 +488,10 @@ Updates a TensorboardExperiment.
 UPDATE google.aiplatform.experiments
 SET 
 data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
-data__labels = '{{ labels }}',
 data__etag = '{{ etag }}',
-data__source = '{{ source }}'
+data__source = '{{ source }}',
+data__labels = '{{ labels }}',
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

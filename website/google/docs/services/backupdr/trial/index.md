@@ -54,6 +54,11 @@ The following fields are returned by `SELECT` queries:
     <td>Identifier. The resource name of the trial. Format: projects/&#123;project&#125;/locations/&#123;location&#125;/trial</td>
 </tr>
 <tr>
+    <td><CopyableCode code="endReason" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The reason for ending the trial.</td>
+</tr>
+<tr>
     <td><CopyableCode code="endTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The time when the trial will expire.</td>
@@ -102,6 +107,13 @@ The following methods are available for this resource:
     <td></td>
     <td>Subscribes to a trial for a project</td>
 </tr>
+<tr>
+    <td><a href="#end"><CopyableCode code="end" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Ends the trial for a project</td>
+</tr>
 </tbody>
 </table>
 
@@ -146,6 +158,7 @@ Gets the Trial state for a given project
 ```sql
 SELECT
 name,
+endReason,
 endTime,
 startTime,
 state
@@ -163,7 +176,8 @@ AND locationsId = '{{ locationsId }}' -- required
 <Tabs
     defaultValue="subscribe"
     values={[
-        { label: 'subscribe', value: 'subscribe' }
+        { label: 'subscribe', value: 'subscribe' },
+        { label: 'end', value: 'end' }
     ]}
 >
 <TabItem value="subscribe">
@@ -174,6 +188,21 @@ Subscribes to a trial for a project
 EXEC google.backupdr.trial.subscribe 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="end">
+
+Ends the trial for a project
+
+```sql
+EXEC google.backupdr.trial.end 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"endReason": "{{ endReason }}"
+}'
 ;
 ```
 </TabItem>

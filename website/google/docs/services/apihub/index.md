@@ -18,14 +18,16 @@ apihub service documentation.
 
 :::info[Service Summary]
 
-total resources: __21__  
+total resources: __24__  
 
 :::
 
 ## Resources
 <div class="row">
 <div class="providerDocColumn">
+<a href="/services/apihub/addons/">addons</a><br />
 <a href="/services/apihub/api_hub_instances/">api_hub_instances</a><br />
+<a href="/services/apihub/api_views/">api_views</a><br />
 <a href="/services/apihub/apis/">apis</a><br />
 <a href="/services/apihub/attributes/">attributes</a><br />
 <a href="/services/apihub/curations/">curations</a><br />
@@ -34,10 +36,10 @@ total resources: __21__
 <a href="/services/apihub/deployments/">deployments</a><br />
 <a href="/services/apihub/discovered_api_observations/">discovered_api_observations</a><br />
 <a href="/services/apihub/discovered_api_operations/">discovered_api_operations</a><br />
-<a href="/services/apihub/external_apis/">external_apis</a><br />
-<a href="/services/apihub/host_project_registrations/">host_project_registrations</a>
+<a href="/services/apihub/external_apis/">external_apis</a>
 </div>
 <div class="providerDocColumn">
+<a href="/services/apihub/host_project_registrations/">host_project_registrations</a><br />
 <a href="/services/apihub/instances/">instances</a><br />
 <a href="/services/apihub/locations/">locations</a><br />
 <a href="/services/apihub/operations/">operations</a><br />
@@ -45,6 +47,7 @@ total resources: __21__
 <a href="/services/apihub/plugins_style_guide/">plugins_style_guide</a><br />
 <a href="/services/apihub/runtime_project_attachments/">runtime_project_attachments</a><br />
 <a href="/services/apihub/specs/">specs</a><br />
+<a href="/services/apihub/specs_additional_spec_content/">specs_additional_spec_content</a><br />
 <a href="/services/apihub/specs_contents/">specs_contents</a><br />
 <a href="/services/apihub/style_guide_contents/">style_guide_contents</a><br />
 <a href="/services/apihub/versions/">versions</a>

@@ -344,7 +344,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_collections_data_stores_branches_documents_list"><CopyableCode code="projects_locations_collections_data_stores_branches_documents_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-branchesId"><code>branchesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Gets a list of Documents.</td>
 </tr>
 <tr>
@@ -358,7 +358,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_data_stores_branches_documents_list"><CopyableCode code="projects_locations_data_stores_branches_documents_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-branchesId"><code>branchesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Gets a list of Documents.</td>
 </tr>
 <tr>
@@ -379,7 +379,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_collections_data_stores_branches_documents_patch"><CopyableCode code="projects_locations_collections_data_stores_branches_documents_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a>, <a href="#parameter-branchesId"><code>branchesId</code></a>, <a href="#parameter-documentsId"><code>documentsId</code></a></td>
-    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
     <td>Updates a Document.</td>
 </tr>
 <tr>
@@ -566,8 +566,8 @@ AND locationsId = '{{ locationsId }}' -- required
 AND collectionsId = '{{ collectionsId }}' -- required
 AND dataStoresId = '{{ dataStoresId }}' -- required
 AND branchesId = '{{ branchesId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -619,8 +619,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND dataStoresId = '{{ dataStoresId }}' -- required
 AND branchesId = '{{ branchesId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -643,14 +643,14 @@ Creates a Document.
 
 ```sql
 INSERT INTO google.discoveryengine.documents (
-data__structData,
+data__parentDocumentId,
 data__jsonData,
-data__name,
+data__content,
+data__structData,
+data__aclInfo,
 data__id,
 data__schemaId,
-data__content,
-data__parentDocumentId,
-data__aclInfo,
+data__name,
 projectsId,
 locationsId,
 collectionsId,
@@ -659,14 +659,14 @@ branchesId,
 documentId
 )
 SELECT 
-'{{ structData }}',
+'{{ parentDocumentId }}',
 '{{ jsonData }}',
-'{{ name }}',
+'{{ content }}',
+'{{ structData }}',
+'{{ aclInfo }}',
 '{{ id }}',
 '{{ schemaId }}',
-'{{ content }}',
-'{{ parentDocumentId }}',
-'{{ aclInfo }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ collectionsId }}',
@@ -694,14 +694,14 @@ Creates a Document.
 
 ```sql
 INSERT INTO google.discoveryengine.documents (
-data__structData,
+data__parentDocumentId,
 data__jsonData,
-data__name,
+data__content,
+data__structData,
+data__aclInfo,
 data__id,
 data__schemaId,
-data__content,
-data__parentDocumentId,
-data__aclInfo,
+data__name,
 projectsId,
 locationsId,
 dataStoresId,
@@ -709,14 +709,14 @@ branchesId,
 documentId
 )
 SELECT 
-'{{ structData }}',
+'{{ parentDocumentId }}',
 '{{ jsonData }}',
-'{{ name }}',
+'{{ content }}',
+'{{ structData }}',
+'{{ aclInfo }}',
 '{{ id }}',
 '{{ schemaId }}',
-'{{ content }}',
-'{{ parentDocumentId }}',
-'{{ aclInfo }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ dataStoresId }}',
@@ -758,20 +758,30 @@ structData
     - name: branchesId
       value: string
       description: Required parameter for the documents resource.
-    - name: structData
-      value: object
+    - name: parentDocumentId
+      value: string
       description: >
-        The structured JSON data for the document. It should conform to the registered Schema or an `INVALID_ARGUMENT` error is thrown.
+        The identifier of the parent document. Currently supports at most two level document hierarchy. Id should conform to [RFC-1034](https://tools.ietf.org/html/rfc1034) standard with a length limit of 63 characters.
         
     - name: jsonData
       value: string
       description: >
         The JSON string representation of the document. It should conform to the registered Schema or an `INVALID_ARGUMENT` error is thrown.
         
-    - name: name
-      value: string
+    - name: content
+      value: object
       description: >
-        Immutable. The full resource name of the document. Format: `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}/documents/{document_id}`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.
+        The unstructured data linked to this document. Content can only be set and must be set if this document is under a `CONTENT_REQUIRED` data store.
+        
+    - name: structData
+      value: object
+      description: >
+        The structured JSON data for the document. It should conform to the registered Schema or an `INVALID_ARGUMENT` error is thrown.
+        
+    - name: aclInfo
+      value: object
+      description: >
+        Access control information for the document.
         
     - name: id
       value: string
@@ -783,20 +793,10 @@ structData
       description: >
         The identifier of the schema located in the same data store.
         
-    - name: content
-      value: object
-      description: >
-        The unstructured data linked to this document. Content can only be set and must be set if this document is under a `CONTENT_REQUIRED` data store.
-        
-    - name: parentDocumentId
+    - name: name
       value: string
       description: >
-        The identifier of the parent document. Currently supports at most two level document hierarchy. Id should conform to [RFC-1034](https://tools.ietf.org/html/rfc1034) standard with a length limit of 63 characters.
-        
-    - name: aclInfo
-      value: object
-      description: >
-        Access control information for the document.
+        Immutable. The full resource name of the document. Format: `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}/documents/{document_id}`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.
         
     - name: documentId
       value: string
@@ -821,14 +821,14 @@ Updates a Document.
 ```sql
 UPDATE google.discoveryengine.documents
 SET 
-data__structData = '{{ structData }}',
+data__parentDocumentId = '{{ parentDocumentId }}',
 data__jsonData = '{{ jsonData }}',
-data__name = '{{ name }}',
+data__content = '{{ content }}',
+data__structData = '{{ structData }}',
+data__aclInfo = '{{ aclInfo }}',
 data__id = '{{ id }}',
 data__schemaId = '{{ schemaId }}',
-data__content = '{{ content }}',
-data__parentDocumentId = '{{ parentDocumentId }}',
-data__aclInfo = '{{ aclInfo }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -836,8 +836,8 @@ AND collectionsId = '{{ collectionsId }}' --required
 AND dataStoresId = '{{ dataStoresId }}' --required
 AND branchesId = '{{ branchesId }}' --required
 AND documentsId = '{{ documentsId }}' --required
-AND allowMissing = {{ allowMissing}}
 AND updateMask = '{{ updateMask}}'
+AND allowMissing = {{ allowMissing}}
 RETURNING
 id,
 name,
@@ -859,14 +859,14 @@ Updates a Document.
 ```sql
 UPDATE google.discoveryengine.documents
 SET 
-data__structData = '{{ structData }}',
+data__parentDocumentId = '{{ parentDocumentId }}',
 data__jsonData = '{{ jsonData }}',
-data__name = '{{ name }}',
+data__content = '{{ content }}',
+data__structData = '{{ structData }}',
+data__aclInfo = '{{ aclInfo }}',
 data__id = '{{ id }}',
 data__schemaId = '{{ schemaId }}',
-data__content = '{{ content }}',
-data__parentDocumentId = '{{ parentDocumentId }}',
-data__aclInfo = '{{ aclInfo }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -957,21 +957,21 @@ EXEC google.discoveryengine.documents.projects_locations_collections_data_stores
 @branchesId='{{ branchesId }}' --required 
 @@json=
 '{
-"inlineSource": "{{ inlineSource }}", 
-"gcsSource": "{{ gcsSource }}", 
-"bigquerySource": "{{ bigquerySource }}", 
-"fhirStoreSource": "{{ fhirStoreSource }}", 
-"spannerSource": "{{ spannerSource }}", 
 "cloudSqlSource": "{{ cloudSqlSource }}", 
 "firestoreSource": "{{ firestoreSource }}", 
-"alloyDbSource": "{{ alloyDbSource }}", 
-"bigtableSource": "{{ bigtableSource }}", 
-"errorConfig": "{{ errorConfig }}", 
+"inlineSource": "{{ inlineSource }}", 
 "reconciliationMode": "{{ reconciliationMode }}", 
-"updateMask": "{{ updateMask }}", 
 "autoGenerateIds": {{ autoGenerateIds }}, 
+"spannerSource": "{{ spannerSource }}", 
 "idField": "{{ idField }}", 
-"forceRefreshContent": {{ forceRefreshContent }}
+"fhirStoreSource": "{{ fhirStoreSource }}", 
+"errorConfig": "{{ errorConfig }}", 
+"forceRefreshContent": {{ forceRefreshContent }}, 
+"bigquerySource": "{{ bigquerySource }}", 
+"updateMask": "{{ updateMask }}", 
+"bigtableSource": "{{ bigtableSource }}", 
+"alloyDbSource": "{{ alloyDbSource }}", 
+"gcsSource": "{{ gcsSource }}"
 }'
 ;
 ```
@@ -989,11 +989,11 @@ EXEC google.discoveryengine.documents.projects_locations_collections_data_stores
 @branchesId='{{ branchesId }}' --required 
 @@json=
 '{
-"gcsSource": "{{ gcsSource }}", 
+"force": {{ force }}, 
 "inlineSource": "{{ inlineSource }}", 
-"filter": "{{ filter }}", 
 "errorConfig": "{{ errorConfig }}", 
-"force": {{ force }}
+"gcsSource": "{{ gcsSource }}", 
+"filter": "{{ filter }}"
 }'
 ;
 ```
@@ -1010,21 +1010,21 @@ EXEC google.discoveryengine.documents.projects_locations_data_stores_branches_do
 @branchesId='{{ branchesId }}' --required 
 @@json=
 '{
-"inlineSource": "{{ inlineSource }}", 
-"gcsSource": "{{ gcsSource }}", 
-"bigquerySource": "{{ bigquerySource }}", 
-"fhirStoreSource": "{{ fhirStoreSource }}", 
-"spannerSource": "{{ spannerSource }}", 
 "cloudSqlSource": "{{ cloudSqlSource }}", 
 "firestoreSource": "{{ firestoreSource }}", 
-"alloyDbSource": "{{ alloyDbSource }}", 
-"bigtableSource": "{{ bigtableSource }}", 
-"errorConfig": "{{ errorConfig }}", 
+"inlineSource": "{{ inlineSource }}", 
 "reconciliationMode": "{{ reconciliationMode }}", 
-"updateMask": "{{ updateMask }}", 
 "autoGenerateIds": {{ autoGenerateIds }}, 
+"spannerSource": "{{ spannerSource }}", 
 "idField": "{{ idField }}", 
-"forceRefreshContent": {{ forceRefreshContent }}
+"fhirStoreSource": "{{ fhirStoreSource }}", 
+"errorConfig": "{{ errorConfig }}", 
+"forceRefreshContent": {{ forceRefreshContent }}, 
+"bigquerySource": "{{ bigquerySource }}", 
+"updateMask": "{{ updateMask }}", 
+"bigtableSource": "{{ bigtableSource }}", 
+"alloyDbSource": "{{ alloyDbSource }}", 
+"gcsSource": "{{ gcsSource }}"
 }'
 ;
 ```
@@ -1041,11 +1041,11 @@ EXEC google.discoveryengine.documents.projects_locations_data_stores_branches_do
 @branchesId='{{ branchesId }}' --required 
 @@json=
 '{
-"gcsSource": "{{ gcsSource }}", 
+"force": {{ force }}, 
 "inlineSource": "{{ inlineSource }}", 
-"filter": "{{ filter }}", 
 "errorConfig": "{{ errorConfig }}", 
-"force": {{ force }}
+"gcsSource": "{{ gcsSource }}", 
+"filter": "{{ filter }}"
 }'
 ;
 ```

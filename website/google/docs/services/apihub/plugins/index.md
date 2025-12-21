@@ -57,7 +57,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="actionsConfig" /></td>
     <td><code>array</code></td>
-    <td>Required. The configuration of actions supported by the plugin.</td>
+    <td>Optional. The configuration of actions supported by the plugin. **REQUIRED**: This field must be provided when creating or updating a Plugin. The server will reject requests if this field is missing.</td>
 </tr>
 <tr>
     <td><CopyableCode code="configTemplate" /></td>
@@ -141,7 +141,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="actionsConfig" /></td>
     <td><code>array</code></td>
-    <td>Required. The configuration of actions supported by the plugin.</td>
+    <td>Optional. The configuration of actions supported by the plugin. **REQUIRED**: This field must be provided when creating or updating a Plugin. The server will reject requests if this field is missing.</td>
 </tr>
 <tr>
     <td><CopyableCode code="configTemplate" /></td>
@@ -488,7 +488,7 @@ updateTime
     - name: actionsConfig
       value: array
       description: >
-        Required. The configuration of actions supported by the plugin.
+        Optional. The configuration of actions supported by the plugin. **REQUIRED**: This field must be provided when creating or updating a Plugin. The server will reject requests if this field is missing.
         
     - name: documentation
       value: object

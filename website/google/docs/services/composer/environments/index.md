@@ -219,25 +219,11 @@ The following methods are available for this resource:
     <td>Delete an environment.</td>
 </tr>
 <tr>
-    <td><a href="#restart_web_server"><CopyableCode code="restart_web_server" /></a></td>
+    <td><a href="#load_snapshot"><CopyableCode code="load_snapshot" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
     <td></td>
-    <td>Restart Airflow web server.</td>
-</tr>
-<tr>
-    <td><a href="#execute_airflow_command"><CopyableCode code="execute_airflow_command" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
-    <td></td>
-    <td>Executes Airflow CLI command.</td>
-</tr>
-<tr>
-    <td><a href="#stop_airflow_command"><CopyableCode code="stop_airflow_command" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
-    <td></td>
-    <td>Stops Airflow CLI command execution.</td>
+    <td>Loads a snapshot of a Cloud Composer environment. As a result of this operation, a snapshot of environment's specified in LoadSnapshotRequest is loaded into the environment.</td>
 </tr>
 <tr>
     <td><a href="#poll_airflow_command"><CopyableCode code="poll_airflow_command" /></a></td>
@@ -245,6 +231,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
     <td></td>
     <td>Polls Airflow CLI command execution and fetches logs.</td>
+</tr>
+<tr>
+    <td><a href="#restart_web_server"><CopyableCode code="restart_web_server" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
+    <td></td>
+    <td>Restart Airflow web server.</td>
 </tr>
 <tr>
     <td><a href="#check_upgrade"><CopyableCode code="check_upgrade" /></a></td>
@@ -261,18 +254,25 @@ The following methods are available for this resource:
     <td>Creates a snapshots of a Cloud Composer environment. As a result of this operation, snapshot of environment's state is stored in a location specified in the SaveSnapshotRequest.</td>
 </tr>
 <tr>
-    <td><a href="#load_snapshot"><CopyableCode code="load_snapshot" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
-    <td></td>
-    <td>Loads a snapshot of a Cloud Composer environment. As a result of this operation, a snapshot of environment's specified in LoadSnapshotRequest is loaded into the environment.</td>
-</tr>
-<tr>
     <td><a href="#database_failover"><CopyableCode code="database_failover" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
     <td></td>
     <td>Triggers database failover (only for highly resilient environments).</td>
+</tr>
+<tr>
+    <td><a href="#execute_airflow_command"><CopyableCode code="execute_airflow_command" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
+    <td></td>
+    <td>Executes Airflow CLI command.</td>
+</tr>
+<tr>
+    <td><a href="#stop_airflow_command"><CopyableCode code="stop_airflow_command" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
+    <td></td>
+    <td>Stops Airflow CLI command execution.</td>
 </tr>
 </tbody>
 </table>
@@ -397,26 +397,26 @@ Create a new environment.
 
 ```sql
 INSERT INTO google.composer.environments (
-data__name,
-data__config,
-data__uuid,
-data__state,
-data__createTime,
-data__updateTime,
 data__labels,
+data__uuid,
+data__config,
+data__name,
+data__state,
+data__updateTime,
 data__storageConfig,
+data__createTime,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ name }}',
-'{{ config }}',
-'{{ uuid }}',
-'{{ state }}',
-'{{ createTime }}',
-'{{ updateTime }}',
 '{{ labels }}',
+'{{ uuid }}',
+'{{ config }}',
+'{{ name }}',
+'{{ state }}',
+'{{ updateTime }}',
 '{{ storageConfig }}',
+'{{ createTime }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -440,20 +440,25 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the environments resource.
-    - name: name
+    - name: labels
+      value: object
+      description: >
+        Optional. User-defined labels for this environment. The labels map can contain no more than 64 entries. Entries of the labels map are UTF8 strings that comply with the following restrictions: * Keys must conform to regexp: \p{Ll}\p{Lo}{0,62} * Values must conform to regexp: [\p{Ll}\p{Lo}\p{N}_-]{0,63} * Both keys and values are additionally constrained to be <= 128 bytes in size.
+        
+    - name: uuid
       value: string
       description: >
-        Identifier. The resource name of the environment, in the form: "projects/{projectId}/locations/{locationId}/environments/{environmentId}" EnvironmentId must start with a lowercase letter followed by up to 63 lowercase letters, numbers, or hyphens, and cannot end with a hyphen.
+        Output only. The UUID (Universally Unique IDentifier) associated with this environment. This value is generated when the environment is created.
         
     - name: config
       value: object
       description: >
         Optional. Configuration parameters for this environment.
         
-    - name: uuid
+    - name: name
       value: string
       description: >
-        Output only. The UUID (Universally Unique IDentifier) associated with this environment. This value is generated when the environment is created.
+        Identifier. The resource name of the environment, in the form: "projects/{projectId}/locations/{locationId}/environments/{environmentId}" EnvironmentId must start with a lowercase letter followed by up to 63 lowercase letters, numbers, or hyphens, and cannot end with a hyphen.
         
     - name: state
       value: string
@@ -461,25 +466,20 @@ response
         The current state of the environment.
         
       valid_values: ['STATE_UNSPECIFIED', 'CREATING', 'RUNNING', 'UPDATING', 'DELETING', 'ERROR']
-    - name: createTime
-      value: string
-      description: >
-        Output only. The time at which this environment was created.
-        
     - name: updateTime
       value: string
       description: >
         Output only. The time at which this environment was last modified.
         
-    - name: labels
-      value: object
-      description: >
-        Optional. User-defined labels for this environment. The labels map can contain no more than 64 entries. Entries of the labels map are UTF8 strings that comply with the following restrictions: * Keys must conform to regexp: \p{Ll}\p{Lo}{0,62} * Values must conform to regexp: [\p{Ll}\p{Lo}\p{N}_-]{0,63} * Both keys and values are additionally constrained to be <= 128 bytes in size.
-        
     - name: storageConfig
       value: object
       description: >
         Optional. Storage configuration for this environment.
+        
+    - name: createTime
+      value: string
+      description: >
+        Output only. The time at which this environment was created.
         
 ```
 </TabItem>
@@ -501,14 +501,14 @@ Update an environment.
 ```sql
 UPDATE google.composer.environments
 SET 
-data__name = '{{ name }}',
-data__config = '{{ config }}',
-data__uuid = '{{ uuid }}',
-data__state = '{{ state }}',
-data__createTime = '{{ createTime }}',
-data__updateTime = '{{ updateTime }}',
 data__labels = '{{ labels }}',
-data__storageConfig = '{{ storageConfig }}'
+data__uuid = '{{ uuid }}',
+data__config = '{{ config }}',
+data__name = '{{ name }}',
+data__state = '{{ state }}',
+data__updateTime = '{{ updateTime }}',
+data__storageConfig = '{{ storageConfig }}',
+data__createTime = '{{ createTime }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -551,63 +551,34 @@ AND environmentsId = '{{ environmentsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="restart_web_server"
+    defaultValue="load_snapshot"
     values={[
-        { label: 'restart_web_server', value: 'restart_web_server' },
-        { label: 'execute_airflow_command', value: 'execute_airflow_command' },
-        { label: 'stop_airflow_command', value: 'stop_airflow_command' },
+        { label: 'load_snapshot', value: 'load_snapshot' },
         { label: 'poll_airflow_command', value: 'poll_airflow_command' },
+        { label: 'restart_web_server', value: 'restart_web_server' },
         { label: 'check_upgrade', value: 'check_upgrade' },
         { label: 'save_snapshot', value: 'save_snapshot' },
-        { label: 'load_snapshot', value: 'load_snapshot' },
-        { label: 'database_failover', value: 'database_failover' }
+        { label: 'database_failover', value: 'database_failover' },
+        { label: 'execute_airflow_command', value: 'execute_airflow_command' },
+        { label: 'stop_airflow_command', value: 'stop_airflow_command' }
     ]}
 >
-<TabItem value="restart_web_server">
+<TabItem value="load_snapshot">
 
-Restart Airflow web server.
-
-```sql
-EXEC google.composer.environments.restart_web_server 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@environmentsId='{{ environmentsId }}' --required
-;
-```
-</TabItem>
-<TabItem value="execute_airflow_command">
-
-Executes Airflow CLI command.
+Loads a snapshot of a Cloud Composer environment. As a result of this operation, a snapshot of environment's specified in LoadSnapshotRequest is loaded into the environment.
 
 ```sql
-EXEC google.composer.environments.execute_airflow_command 
+EXEC google.composer.environments.load_snapshot 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @environmentsId='{{ environmentsId }}' --required 
 @@json=
 '{
-"command": "{{ command }}", 
-"subcommand": "{{ subcommand }}", 
-"parameters": "{{ parameters }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="stop_airflow_command">
-
-Stops Airflow CLI command execution.
-
-```sql
-EXEC google.composer.environments.stop_airflow_command 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@environmentsId='{{ environmentsId }}' --required 
-@@json=
-'{
-"executionId": "{{ executionId }}", 
-"pod": "{{ pod }}", 
-"podNamespace": "{{ podNamespace }}", 
-"force": {{ force }}
+"skipPypiPackagesInstallation": {{ skipPypiPackagesInstallation }}, 
+"skipGcsDataCopying": {{ skipGcsDataCopying }}, 
+"skipAirflowOverridesSetting": {{ skipAirflowOverridesSetting }}, 
+"skipEnvironmentVariablesSetting": {{ skipEnvironmentVariablesSetting }}, 
+"snapshotPath": "{{ snapshotPath }}"
 }'
 ;
 ```
@@ -623,11 +594,23 @@ EXEC google.composer.environments.poll_airflow_command
 @environmentsId='{{ environmentsId }}' --required 
 @@json=
 '{
-"executionId": "{{ executionId }}", 
-"pod": "{{ pod }}", 
 "podNamespace": "{{ podNamespace }}", 
-"nextLineNumber": {{ nextLineNumber }}
+"pod": "{{ pod }}", 
+"nextLineNumber": {{ nextLineNumber }}, 
+"executionId": "{{ executionId }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="restart_web_server">
+
+Restart Airflow web server.
+
+```sql
+EXEC google.composer.environments.restart_web_server 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@environmentsId='{{ environmentsId }}' --required
 ;
 ```
 </TabItem>
@@ -663,26 +646,6 @@ EXEC google.composer.environments.save_snapshot
 ;
 ```
 </TabItem>
-<TabItem value="load_snapshot">
-
-Loads a snapshot of a Cloud Composer environment. As a result of this operation, a snapshot of environment's specified in LoadSnapshotRequest is loaded into the environment.
-
-```sql
-EXEC google.composer.environments.load_snapshot 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@environmentsId='{{ environmentsId }}' --required 
-@@json=
-'{
-"snapshotPath": "{{ snapshotPath }}", 
-"skipPypiPackagesInstallation": {{ skipPypiPackagesInstallation }}, 
-"skipEnvironmentVariablesSetting": {{ skipEnvironmentVariablesSetting }}, 
-"skipAirflowOverridesSetting": {{ skipAirflowOverridesSetting }}, 
-"skipGcsDataCopying": {{ skipGcsDataCopying }}
-}'
-;
-```
-</TabItem>
 <TabItem value="database_failover">
 
 Triggers database failover (only for highly resilient environments).
@@ -692,6 +655,43 @@ EXEC google.composer.environments.database_failover
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @environmentsId='{{ environmentsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="execute_airflow_command">
+
+Executes Airflow CLI command.
+
+```sql
+EXEC google.composer.environments.execute_airflow_command 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@environmentsId='{{ environmentsId }}' --required 
+@@json=
+'{
+"parameters": "{{ parameters }}", 
+"subcommand": "{{ subcommand }}", 
+"command": "{{ command }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="stop_airflow_command">
+
+Stops Airflow CLI command execution.
+
+```sql
+EXEC google.composer.environments.stop_airflow_command 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@environmentsId='{{ environmentsId }}' --required 
+@@json=
+'{
+"podNamespace": "{{ podNamespace }}", 
+"executionId": "{{ executionId }}", 
+"force": {{ force }}, 
+"pod": "{{ pod }}"
+}'
 ;
 ```
 </TabItem>

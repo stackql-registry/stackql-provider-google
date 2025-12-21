@@ -87,7 +87,7 @@ The following methods are available for this resource:
     <td><a href="#get_login_profile"><CopyableCode code="get_login_profile" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-usersId"><code>usersId</code></a></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-systemId"><code>systemId</code></a></td>
+    <td><a href="#parameter-systemId"><code>systemId</code></a>, <a href="#parameter-projectId"><code>projectId</code></a></td>
     <td>Retrieves the profile information used for logging in to a virtual machine on Google Compute Engine.</td>
 </tr>
 </tbody>
@@ -143,8 +143,8 @@ posixAccounts,
 sshPublicKeys
 FROM google.oslogin.users_login_profile
 WHERE usersId = '{{ usersId }}' -- required
-AND projectId = '{{ projectId }}'
 AND systemId = '{{ systemId }}'
+AND projectId = '{{ projectId }}'
 ;
 ```
 </TabItem>

@@ -184,7 +184,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists attachments.</td>
 </tr>
 <tr>
@@ -311,9 +311,9 @@ FROM google.artifactregistry.attachments
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND repositoriesId = '{{ repositoriesId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -335,24 +335,24 @@ Creates an attachment. The returned Operation will finish once the attachment ha
 
 ```sql
 INSERT INTO google.artifactregistry.attachments (
-data__name,
 data__target,
+data__name,
+data__files,
 data__type,
 data__attachmentNamespace,
 data__annotations,
-data__files,
 projectsId,
 locationsId,
 repositoriesId,
 attachmentId
 )
 SELECT 
-'{{ name }}',
 '{{ target }}',
+'{{ name }}',
+'{{ files }}',
 '{{ type }}',
 '{{ attachmentNamespace }}',
 '{{ annotations }}',
-'{{ files }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ repositoriesId }}',
@@ -381,15 +381,20 @@ response
     - name: repositoriesId
       value: string
       description: Required parameter for the attachments resource.
+    - name: target
+      value: string
+      description: >
+        Required. The target the attachment is for, can be a Version, Package or Repository. E.g. `projects/p1/locations/us-central1/repositories/repo1/packages/p1/versions/v1`.
+        
     - name: name
       value: string
       description: >
         The name of the attachment. E.g. `projects/p1/locations/us/repositories/repo/attachments/sbom`.
         
-    - name: target
-      value: string
+    - name: files
+      value: array
       description: >
-        Required. The target the attachment is for, can be a Version, Package or Repository. E.g. `projects/p1/locations/us-central1/repositories/repo1/packages/p1/versions/v1`.
+        Required. The files that belong to this attachment. If the file ID part contains slashes, they are escaped. E.g. `projects/p1/locations/us-central1/repositories/repo1/files/sha:`.
         
     - name: type
       value: string
@@ -405,11 +410,6 @@ response
       value: object
       description: >
         Optional. User annotations. These attributes can only be set and used by the user, and not by Artifact Registry. See https://google.aip.dev/128#annotations for more details such as format and size limitations.
-        
-    - name: files
-      value: array
-      description: >
-        Required. The files that belong to this attachment. If the file ID part contains slashes, they are escaped. E.g. `projects/p1/locations/us-central1/repositories/repo1/files/sha:`.
         
     - name: attachmentId
       value: string

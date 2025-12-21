@@ -107,17 +107,17 @@ Creates an Assessment of the likelihood an event is legitimate.
 
 ```sql
 INSERT INTO google.recaptchaenterprise.assessments (
-data__event,
-data__accountVerification,
-data__privatePasswordLeakVerification,
 data__assessmentEnvironment,
+data__accountVerification,
+data__event,
+data__privatePasswordLeakVerification,
 projectsId
 )
 SELECT 
-'{{ event }}',
-'{{ accountVerification }}',
-'{{ privatePasswordLeakVerification }}',
 '{{ assessmentEnvironment }}',
+'{{ accountVerification }}',
+'{{ event }}',
+'{{ privatePasswordLeakVerification }}',
 '{{ projectsId }}'
 RETURNING
 name,
@@ -144,25 +144,25 @@ tokenProperties
     - name: projectsId
       value: string
       description: Required parameter for the assessments resource.
-    - name: event
+    - name: assessmentEnvironment
       value: object
       description: >
-        Optional. The event being assessed.
+        Optional. The environment creating the assessment. This describes your environment (the system invoking CreateAssessment), NOT the environment of your user.
         
     - name: accountVerification
       value: object
       description: >
         Optional. Account verification information for identity verification. The assessment event must include a token and site key to use this feature.
         
+    - name: event
+      value: object
+      description: >
+        Optional. The event being assessed.
+        
     - name: privatePasswordLeakVerification
       value: object
       description: >
         Optional. The private password leak verification field contains the parameters that are used to to check for leaks privately without sharing user credentials.
-        
-    - name: assessmentEnvironment
-      value: object
-      description: >
-        Optional. The environment creating the assessment. This describes your environment (the system invoking CreateAssessment), NOT the environment of your user.
         
 ```
 </TabItem>
@@ -187,11 +187,12 @@ EXEC google.recaptchaenterprise.assessments.annotate
 @assessmentsId='{{ assessmentsId }}' --required 
 @@json=
 '{
-"annotation": "{{ annotation }}", 
-"reasons": "{{ reasons }}", 
 "accountId": "{{ accountId }}", 
+"annotation": "{{ annotation }}", 
+"transactionEvent": "{{ transactionEvent }}", 
+"reasons": "{{ reasons }}", 
 "hashedAccountId": "{{ hashedAccountId }}", 
-"transactionEvent": "{{ transactionEvent }}"
+"phoneAuthenticationEvent": "{{ phoneAuthenticationEvent }}"
 }'
 ;
 ```

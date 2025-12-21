@@ -214,14 +214,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-devicesId"><code>devicesId</code></a>, <a href="#parameter-deviceUsersId"><code>deviceUsersId</code></a></td>
-    <td><a href="#parameter-customer"><code>customer</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-customer"><code>customer</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists the client states for the given search query.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-devicesId"><code>devicesId</code></a>, <a href="#parameter-deviceUsersId"><code>deviceUsersId</code></a>, <a href="#parameter-clientStatesId"><code>clientStatesId</code></a></td>
-    <td><a href="#parameter-customer"><code>customer</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-customer"><code>customer</code></a></td>
     <td>Updates the client state for the device user **Note**: This method is available only to customers who have one of the following SKUs: Enterprise Standard, Enterprise Plus, Enterprise for Education, and Cloud Identity Premium</td>
 </tr>
 </tbody>
@@ -339,8 +339,8 @@ scoreReason
 FROM google.cloudidentity.client_states
 WHERE devicesId = '{{ devicesId }}' -- required
 AND deviceUsersId = '{{ deviceUsersId }}' -- required
-AND customer = '{{ customer }}'
 AND filter = '{{ filter }}'
+AND customer = '{{ customer }}'
 AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 ;
@@ -364,20 +364,20 @@ Updates the client state for the device user **Note**: This method is available 
 ```sql
 UPDATE google.cloudidentity.client_states
 SET 
-data__etag = '{{ etag }}',
-data__customId = '{{ customId }}',
-data__assetTags = '{{ assetTags }}',
-data__healthScore = '{{ healthScore }}',
 data__scoreReason = '{{ scoreReason }}',
+data__etag = '{{ etag }}',
 data__managed = '{{ managed }}',
+data__assetTags = '{{ assetTags }}',
+data__customId = '{{ customId }}',
 data__complianceState = '{{ complianceState }}',
-data__keyValuePairs = '{{ keyValuePairs }}'
+data__keyValuePairs = '{{ keyValuePairs }}',
+data__healthScore = '{{ healthScore }}'
 WHERE 
 devicesId = '{{ devicesId }}' --required
 AND deviceUsersId = '{{ deviceUsersId }}' --required
 AND clientStatesId = '{{ clientStatesId }}' --required
-AND customer = '{{ customer}}'
 AND updateMask = '{{ updateMask}}'
+AND customer = '{{ customer}}'
 RETURNING
 name,
 done,

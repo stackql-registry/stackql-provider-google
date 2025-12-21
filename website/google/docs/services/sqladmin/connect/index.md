@@ -242,9 +242,9 @@ EXEC google.sqladmin.connect.generate_ephemeral
 @instance='{{ instance }}' --required 
 @@json=
 '{
-"public_key": "{{ public_key }}", 
-"access_token": "{{ access_token }}", 
 "readTime": "{{ readTime }}", 
+"access_token": "{{ access_token }}", 
+"public_key": "{{ public_key }}", 
 "validDuration": "{{ validDuration }}"
 }'
 ;

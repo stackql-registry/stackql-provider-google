@@ -50,18 +50,18 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#process_open_lineage_run_event"><CopyableCode code="process_open_lineage_run_event" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Creates new lineage events together with their parents: process and run. Updates the process and run if they already exist. Mapped from Open Lineage specification: https://github.com/OpenLineage/OpenLineage/blob/main/spec/OpenLineage.json.</td>
-</tr>
-<tr>
     <td><a href="#search_links"><CopyableCode code="search_links" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Retrieve a list of links connected to a specific asset. Links represent the data flow between **source** (upstream) and **target** (downstream) assets in transformation pipelines. Links are stored in the same project as the Lineage Events that create them. You can retrieve links in every project where you have the `datalineage.events.get` permission. The project provided in the URL is used for Billing and Quota.</td>
+</tr>
+<tr>
+    <td><a href="#process_open_lineage_run_event"><CopyableCode code="process_open_lineage_run_event" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Creates new lineage events together with their parents: process and run. Updates the process and run if they already exist. Mapped from Open Lineage specification: https://github.com/OpenLineage/OpenLineage/blob/main/spec/OpenLineage.json.</td>
 </tr>
 <tr>
     <td><a href="#batch_search_link_processes"><CopyableCode code="batch_search_link_processes" /></a></td>
@@ -107,25 +107,13 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="process_open_lineage_run_event"
+    defaultValue="search_links"
     values={[
-        { label: 'process_open_lineage_run_event', value: 'process_open_lineage_run_event' },
         { label: 'search_links', value: 'search_links' },
+        { label: 'process_open_lineage_run_event', value: 'process_open_lineage_run_event' },
         { label: 'batch_search_link_processes', value: 'batch_search_link_processes' }
     ]}
 >
-<TabItem value="process_open_lineage_run_event">
-
-Creates new lineage events together with their parents: process and run. Updates the process and run if they already exist. Mapped from Open Lineage specification: https://github.com/OpenLineage/OpenLineage/blob/main/spec/OpenLineage.json.
-
-```sql
-EXEC google.datalineage.locations.process_open_lineage_run_event 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@requestId='{{ requestId }}'
-;
-```
-</TabItem>
 <TabItem value="search_links">
 
 Retrieve a list of links connected to a specific asset. Links represent the data flow between **source** (upstream) and **target** (downstream) assets in transformation pipelines. Links are stored in the same project as the Lineage Events that create them. You can retrieve links in every project where you have the `datalineage.events.get` permission. The project provided in the URL is used for Billing and Quota.
@@ -136,11 +124,23 @@ EXEC google.datalineage.locations.search_links
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"source": "{{ source }}", 
-"target": "{{ target }}", 
 "pageSize": {{ pageSize }}, 
-"pageToken": "{{ pageToken }}"
+"target": "{{ target }}", 
+"pageToken": "{{ pageToken }}", 
+"source": "{{ source }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="process_open_lineage_run_event">
+
+Creates new lineage events together with their parents: process and run. Updates the process and run if they already exist. Mapped from Open Lineage specification: https://github.com/OpenLineage/OpenLineage/blob/main/spec/OpenLineage.json.
+
+```sql
+EXEC google.datalineage.locations.process_open_lineage_run_event 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@requestId='{{ requestId }}'
 ;
 ```
 </TabItem>
@@ -154,9 +154,9 @@ EXEC google.datalineage.locations.batch_search_link_processes
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
+"pageToken": "{{ pageToken }}", 
 "links": "{{ links }}", 
-"pageSize": {{ pageSize }}, 
-"pageToken": "{{ pageToken }}"
+"pageSize": {{ pageSize }}
 }'
 ;
 ```

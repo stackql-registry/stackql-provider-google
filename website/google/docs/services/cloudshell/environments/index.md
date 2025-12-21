@@ -134,6 +134,13 @@ The following methods are available for this resource:
     <td></td>
     <td>Sends OAuth credentials to a running environment on behalf of a user. When this completes, the environment will be authorized to run various Google Cloud command line tools without requiring the user to manually authenticate.</td>
 </tr>
+<tr>
+    <td><a href="#generate_access_token"><CopyableCode code="generate_access_token" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-usersId"><code>usersId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
+    <td><a href="#parameter-ttl"><code>ttl</code></a>, <a href="#parameter-expireTime"><code>expireTime</code></a></td>
+    <td>Generates an access token for the user's environment.</td>
+</tr>
 </tbody>
 </table>
 
@@ -158,6 +165,16 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-usersId">
     <td><CopyableCode code="usersId" /></td>
     <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-expireTime">
+    <td><CopyableCode code="expireTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-ttl">
+    <td><CopyableCode code="ttl" /></td>
+    <td><code>string (google-duration)</code></td>
     <td></td>
 </tr>
 </tbody>
@@ -201,7 +218,8 @@ AND environmentsId = '{{ environmentsId }}' -- required
     defaultValue="start"
     values={[
         { label: 'start', value: 'start' },
-        { label: 'authorize', value: 'authorize' }
+        { label: 'authorize', value: 'authorize' },
+        { label: 'generate_access_token', value: 'generate_access_token' }
     ]}
 >
 <TabItem value="start">
@@ -230,10 +248,23 @@ EXEC google.cloudshell.environments.authorize
 @environmentsId='{{ environmentsId }}' --required 
 @@json=
 '{
+"expireTime": "{{ expireTime }}", 
 "accessToken": "{{ accessToken }}", 
-"idToken": "{{ idToken }}", 
-"expireTime": "{{ expireTime }}"
+"idToken": "{{ idToken }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="generate_access_token">
+
+Generates an access token for the user's environment.
+
+```sql
+EXEC google.cloudshell.environments.generate_access_token 
+@usersId='{{ usersId }}' --required, 
+@environmentsId='{{ environmentsId }}' --required, 
+@ttl='{{ ttl }}', 
+@expireTime='{{ expireTime }}'
 ;
 ```
 </TabItem>

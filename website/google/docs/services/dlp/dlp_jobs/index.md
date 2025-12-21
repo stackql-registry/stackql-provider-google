@@ -439,7 +439,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_dlp_jobs_list"><CopyableCode code="projects_locations_dlp_jobs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-type"><code>type</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-locationId"><code>locationId</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-type"><code>type</code></a>, <a href="#parameter-locationId"><code>locationId</code></a></td>
     <td>Lists DlpJobs that match the specified filter in the request. See https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.</td>
 </tr>
 <tr>
@@ -453,14 +453,14 @@ The following methods are available for this resource:
     <td><a href="#organizations_locations_dlp_jobs_list"><CopyableCode code="organizations_locations_dlp_jobs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-type"><code>type</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-locationId"><code>locationId</code></a></td>
+    <td><a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-type"><code>type</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists DlpJobs that match the specified filter in the request. See https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_dlp_jobs_list"><CopyableCode code="projects_dlp_jobs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-type"><code>type</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-locationId"><code>locationId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-type"><code>type</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-locationId"><code>locationId</code></a></td>
     <td>Lists DlpJobs that match the specified filter in the request. See https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.</td>
 </tr>
 <tr>
@@ -492,18 +492,18 @@ The following methods are available for this resource:
     <td>Deletes a long-running DlpJob. This method indicates that the client is no longer interested in the DlpJob result. The job will be canceled if possible. See https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_dlp_jobs_cancel"><CopyableCode code="projects_locations_dlp_jobs_cancel" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dlpJobsId"><code>dlpJobsId</code></a></td>
-    <td></td>
-    <td>Starts asynchronous cancellation on a long-running DlpJob. The server makes a best effort to cancel the DlpJob, but success is not guaranteed. See https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_dlp_jobs_hybrid_inspect"><CopyableCode code="projects_locations_dlp_jobs_hybrid_inspect" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dlpJobsId"><code>dlpJobsId</code></a></td>
     <td></td>
     <td>Inspect hybrid content and store findings to a job. To review the findings, inspect the job. Inspection will occur asynchronously.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_dlp_jobs_cancel"><CopyableCode code="projects_locations_dlp_jobs_cancel" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dlpJobsId"><code>dlpJobsId</code></a></td>
+    <td></td>
+    <td>Starts asynchronous cancellation on a long-running DlpJob. The server makes a best effort to cancel the DlpJob, but success is not guaranteed. See https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_dlp_jobs_finish"><CopyableCode code="projects_locations_dlp_jobs_finish" /></a></td>
@@ -646,11 +646,11 @@ type
 FROM google.dlp.dlp_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 AND type = '{{ type }}'
-AND orderBy = '{{ orderBy }}'
 AND locationId = '{{ locationId }}'
 ;
 ```
@@ -700,12 +700,12 @@ type
 FROM google.dlp.dlp_jobs
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND type = '{{ type }}'
-AND orderBy = '{{ orderBy }}'
 AND locationId = '{{ locationId }}'
+AND pageSize = '{{ pageSize }}'
+AND type = '{{ type }}'
+AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -729,8 +729,8 @@ state,
 type
 FROM google.dlp.dlp_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
 AND type = '{{ type }}'
 AND orderBy = '{{ orderBy }}'
@@ -758,17 +758,17 @@ Creates a new job to inspect storage or calculate risk metrics. See https://clou
 ```sql
 INSERT INTO google.dlp.dlp_jobs (
 data__inspectJob,
-data__riskJob,
-data__jobId,
 data__locationId,
+data__jobId,
+data__riskJob,
 projectsId,
 locationsId
 )
 SELECT 
 '{{ inspectJob }}',
-'{{ riskJob }}',
-'{{ jobId }}',
 '{{ locationId }}',
+'{{ jobId }}',
+'{{ riskJob }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -794,16 +794,16 @@ Creates a new job to inspect storage or calculate risk metrics. See https://clou
 ```sql
 INSERT INTO google.dlp.dlp_jobs (
 data__inspectJob,
-data__riskJob,
-data__jobId,
 data__locationId,
+data__jobId,
+data__riskJob,
 projectsId
 )
 SELECT 
 '{{ inspectJob }}',
-'{{ riskJob }}',
-'{{ jobId }}',
 '{{ locationId }}',
+'{{ jobId }}',
+'{{ riskJob }}',
 '{{ projectsId }}'
 RETURNING
 name,
@@ -838,20 +838,20 @@ type
       description: >
         An inspection job scans a storage repository for InfoTypes.
         
-    - name: riskJob
-      value: object
+    - name: locationId
+      value: string
       description: >
-        A risk analysis job calculates re-identification risk metrics for a BigQuery table.
+        Deprecated. This field has no effect.
         
     - name: jobId
       value: string
       description: >
         The job id can contain uppercase and lowercase letters, numbers, and hyphens; that is, it must match the regular expression: `[a-zA-Z\d-_]+`. The maximum length is 100 characters. Can be empty to allow the system to generate one.
         
-    - name: locationId
-      value: string
+    - name: riskJob
+      value: object
       description: >
-        Deprecated. This field has no effect.
+        A risk analysis job calculates re-identification risk metrics for a BigQuery table.
         
 ```
 </TabItem>
@@ -896,26 +896,14 @@ AND dlpJobsId = '{{ dlpJobsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_dlp_jobs_cancel"
+    defaultValue="projects_locations_dlp_jobs_hybrid_inspect"
     values={[
-        { label: 'projects_locations_dlp_jobs_cancel', value: 'projects_locations_dlp_jobs_cancel' },
         { label: 'projects_locations_dlp_jobs_hybrid_inspect', value: 'projects_locations_dlp_jobs_hybrid_inspect' },
+        { label: 'projects_locations_dlp_jobs_cancel', value: 'projects_locations_dlp_jobs_cancel' },
         { label: 'projects_locations_dlp_jobs_finish', value: 'projects_locations_dlp_jobs_finish' },
         { label: 'projects_dlp_jobs_cancel', value: 'projects_dlp_jobs_cancel' }
     ]}
 >
-<TabItem value="projects_locations_dlp_jobs_cancel">
-
-Starts asynchronous cancellation on a long-running DlpJob. The server makes a best effort to cancel the DlpJob, but success is not guaranteed. See https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.
-
-```sql
-EXEC google.dlp.dlp_jobs.projects_locations_dlp_jobs_cancel 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@dlpJobsId='{{ dlpJobsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="projects_locations_dlp_jobs_hybrid_inspect">
 
 Inspect hybrid content and store findings to a job. To review the findings, inspect the job. Inspection will occur asynchronously.
@@ -929,6 +917,18 @@ EXEC google.dlp.dlp_jobs.projects_locations_dlp_jobs_hybrid_inspect
 '{
 "hybridItem": "{{ hybridItem }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_dlp_jobs_cancel">
+
+Starts asynchronous cancellation on a long-running DlpJob. The server makes a best effort to cancel the DlpJob, but success is not guaranteed. See https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.
+
+```sql
+EXEC google.dlp.dlp_jobs.projects_locations_dlp_jobs_cancel 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@dlpJobsId='{{ dlpJobsId }}' --required
 ;
 ```
 </TabItem>

@@ -278,7 +278,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_autoscaling_policies_list"><CopyableCode code="projects_locations_autoscaling_policies_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists autoscaling policies in the project.</td>
 </tr>
 <tr>
@@ -460,8 +460,8 @@ workerConfig
 FROM google.dataproc.autoscaling_policies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -486,20 +486,20 @@ Creates new autoscaling policy.
 INSERT INTO google.dataproc.autoscaling_policies (
 data__id,
 data__basicAlgorithm,
-data__workerConfig,
-data__secondaryWorkerConfig,
 data__labels,
+data__workerConfig,
 data__clusterType,
+data__secondaryWorkerConfig,
 projectsId,
 regionsId
 )
 SELECT 
 '{{ id }}',
 '{{ basicAlgorithm }}',
-'{{ workerConfig }}',
-'{{ secondaryWorkerConfig }}',
 '{{ labels }}',
+'{{ workerConfig }}',
 '{{ clusterType }}',
+'{{ secondaryWorkerConfig }}',
 '{{ projectsId }}',
 '{{ regionsId }}'
 RETURNING
@@ -521,20 +521,20 @@ Creates new autoscaling policy.
 INSERT INTO google.dataproc.autoscaling_policies (
 data__id,
 data__basicAlgorithm,
-data__workerConfig,
-data__secondaryWorkerConfig,
 data__labels,
+data__workerConfig,
 data__clusterType,
+data__secondaryWorkerConfig,
 projectsId,
 locationsId
 )
 SELECT 
 '{{ id }}',
 '{{ basicAlgorithm }}',
-'{{ workerConfig }}',
-'{{ secondaryWorkerConfig }}',
 '{{ labels }}',
+'{{ workerConfig }}',
 '{{ clusterType }}',
+'{{ secondaryWorkerConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -573,20 +573,15 @@ workerConfig
       description: >
         Basic algorithm for autoscaling.
         
-    - name: workerConfig
-      value: object
-      description: >
-        Required. Describes how the autoscaler will operate for primary workers.
-        
-    - name: secondaryWorkerConfig
-      value: object
-      description: >
-        Optional. Describes how the autoscaler will operate for secondary workers.
-        
     - name: labels
       value: object
       description: >
         Optional. The labels to associate with this autoscaling policy. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty, but, if present, must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with an autoscaling policy.
+        
+    - name: workerConfig
+      value: object
+      description: >
+        Required. Describes how the autoscaler will operate for primary workers.
         
     - name: clusterType
       value: string
@@ -594,6 +589,11 @@ workerConfig
         Optional. The type of the clusters for which this autoscaling policy is to be configured.
         
       valid_values: ['CLUSTER_TYPE_UNSPECIFIED', 'STANDARD', 'ZERO_SCALE']
+    - name: secondaryWorkerConfig
+      value: object
+      description: >
+        Optional. Describes how the autoscaler will operate for secondary workers.
+        
 ```
 </TabItem>
 </Tabs>
@@ -617,10 +617,10 @@ REPLACE google.dataproc.autoscaling_policies
 SET 
 data__id = '{{ id }}',
 data__basicAlgorithm = '{{ basicAlgorithm }}',
-data__workerConfig = '{{ workerConfig }}',
-data__secondaryWorkerConfig = '{{ secondaryWorkerConfig }}',
 data__labels = '{{ labels }}',
-data__clusterType = '{{ clusterType }}'
+data__workerConfig = '{{ workerConfig }}',
+data__clusterType = '{{ clusterType }}',
+data__secondaryWorkerConfig = '{{ secondaryWorkerConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND regionsId = '{{ regionsId }}' --required
@@ -644,10 +644,10 @@ REPLACE google.dataproc.autoscaling_policies
 SET 
 data__id = '{{ id }}',
 data__basicAlgorithm = '{{ basicAlgorithm }}',
-data__workerConfig = '{{ workerConfig }}',
-data__secondaryWorkerConfig = '{{ secondaryWorkerConfig }}',
 data__labels = '{{ labels }}',
-data__clusterType = '{{ clusterType }}'
+data__workerConfig = '{{ workerConfig }}',
+data__clusterType = '{{ clusterType }}',
+data__secondaryWorkerConfig = '{{ secondaryWorkerConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

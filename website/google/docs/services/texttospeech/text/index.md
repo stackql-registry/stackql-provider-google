@@ -91,10 +91,10 @@ Synthesizes speech synchronously: receive results after all text input has been 
 EXEC google.texttospeech.text.synthesize 
 @@json=
 '{
-"input": "{{ input }}", 
 "voice": "{{ voice }}", 
+"advancedVoiceOptions": "{{ advancedVoiceOptions }}", 
 "audioConfig": "{{ audioConfig }}", 
-"advancedVoiceOptions": "{{ advancedVoiceOptions }}"
+"input": "{{ input }}"
 }'
 ;
 ```

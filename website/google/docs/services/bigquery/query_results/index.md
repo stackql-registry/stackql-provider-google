@@ -132,7 +132,7 @@ The following methods are available for this resource:
     <td><a href="#get_query_results"><CopyableCode code="get_query_results" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+jobId"><code>+jobId</code></a></td>
-    <td><a href="#parameter-formatOptions.timestampOutputFormat"><code>formatOptions.timestampOutputFormat</code></a>, <a href="#parameter-formatOptions.useInt64Timestamp"><code>formatOptions.useInt64Timestamp</code></a>, <a href="#parameter-location"><code>location</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-startIndex"><code>startIndex</code></a>, <a href="#parameter-timeoutMs"><code>timeoutMs</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-location"><code>location</code></a>, <a href="#parameter-formatOptions.useInt64Timestamp"><code>formatOptions.useInt64Timestamp</code></a>, <a href="#parameter-startIndex"><code>startIndex</code></a>, <a href="#parameter-formatOptions.timestampOutputFormat"><code>formatOptions.timestampOutputFormat</code></a>, <a href="#parameter-timeoutMs"><code>timeoutMs</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a></td>
     <td>RPC to get the results of a query job.</td>
 </tr>
 </tbody>
@@ -228,13 +228,13 @@ totalRows
 FROM google.bigquery.query_results
 WHERE projectId = '{{ projectId }}' -- required
 AND +jobId = '{{ +jobId }}' -- required
-AND formatOptions.timestampOutputFormat = '{{ formatOptions.timestampOutputFormat }}'
-AND formatOptions.useInt64Timestamp = '{{ formatOptions.useInt64Timestamp }}'
-AND location = '{{ location }}'
-AND maxResults = '{{ maxResults }}'
 AND pageToken = '{{ pageToken }}'
+AND location = '{{ location }}'
+AND formatOptions.useInt64Timestamp = '{{ formatOptions.useInt64Timestamp }}'
 AND startIndex = '{{ startIndex }}'
+AND formatOptions.timestampOutputFormat = '{{ formatOptions.timestampOutputFormat }}'
 AND timeoutMs = '{{ timeoutMs }}'
+AND maxResults = '{{ maxResults }}'
 ;
 ```
 </TabItem>

@@ -213,13 +213,13 @@ Constructs a new OAuth brand for the project if one does not exist. The created 
 
 ```sql
 INSERT INTO google.iap.brands (
-data__supportEmail,
 data__applicationTitle,
+data__supportEmail,
 projectsId
 )
 SELECT 
-'{{ supportEmail }}',
 '{{ applicationTitle }}',
+'{{ supportEmail }}',
 '{{ projectsId }}'
 RETURNING
 name,
@@ -238,15 +238,15 @@ supportEmail
     - name: projectsId
       value: string
       description: Required parameter for the brands resource.
-    - name: supportEmail
-      value: string
-      description: >
-        Support email displayed on the OAuth consent screen.
-        
     - name: applicationTitle
       value: string
       description: >
         Application name displayed on OAuth consent screen.
+        
+    - name: supportEmail
+      value: string
+      description: >
+        Support email displayed on the OAuth consent screen.
         
 ```
 </TabItem>

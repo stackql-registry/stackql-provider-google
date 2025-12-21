@@ -274,7 +274,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Returns descriptions of all replications for a volume.</td>
 </tr>
 <tr>
@@ -299,20 +299,6 @@ The following methods are available for this resource:
     <td>Deletes a replication.</td>
 </tr>
 <tr>
-    <td><a href="#stop"><CopyableCode code="stop" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a>, <a href="#parameter-replicationsId"><code>replicationsId</code></a></td>
-    <td></td>
-    <td>Stop Cross Region Replication.</td>
-</tr>
-<tr>
-    <td><a href="#resume"><CopyableCode code="resume" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a>, <a href="#parameter-replicationsId"><code>replicationsId</code></a></td>
-    <td></td>
-    <td>Resume Cross Region Replication.</td>
-</tr>
-<tr>
     <td><a href="#reverse_direction"><CopyableCode code="reverse_direction" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a>, <a href="#parameter-replicationsId"><code>replicationsId</code></a></td>
@@ -325,6 +311,20 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a>, <a href="#parameter-replicationsId"><code>replicationsId</code></a></td>
     <td></td>
     <td>Establish replication peering.</td>
+</tr>
+<tr>
+    <td><a href="#stop"><CopyableCode code="stop" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a>, <a href="#parameter-replicationsId"><code>replicationsId</code></a></td>
+    <td></td>
+    <td>Stop Cross Region Replication.</td>
+</tr>
+<tr>
+    <td><a href="#resume"><CopyableCode code="resume" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a>, <a href="#parameter-replicationsId"><code>replicationsId</code></a></td>
+    <td></td>
+    <td>Resume Cross Region Replication.</td>
 </tr>
 <tr>
     <td><a href="#sync"><CopyableCode code="sync" /></a></td>
@@ -471,10 +471,10 @@ FROM google.netapp.replications
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND volumesId = '{{ volumesId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -497,11 +497,11 @@ Create a new replication for a volume.
 ```sql
 INSERT INTO google.netapp.replications (
 data__name,
-data__replicationSchedule,
 data__labels,
-data__description,
+data__replicationSchedule,
 data__destinationVolumeParameters,
 data__clusterLocation,
+data__description,
 projectsId,
 locationsId,
 volumesId,
@@ -509,11 +509,11 @@ replicationId
 )
 SELECT 
 '{{ name }}',
-'{{ replicationSchedule }}',
 '{{ labels }}',
-'{{ description }}',
+'{{ replicationSchedule }}',
 '{{ destinationVolumeParameters }}',
 '{{ clusterLocation }}',
+'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ volumesId }}',
@@ -547,22 +547,17 @@ response
       description: >
         Identifier. The resource name of the Replication. Format: `projects/{project_id}/locations/{location}/volumes/{volume_id}/replications/{replication_id}`.
         
+    - name: labels
+      value: object
+      description: >
+        Resource labels to represent user provided metadata.
+        
     - name: replicationSchedule
       value: string
       description: >
         Required. Indicates the schedule for replication.
         
       valid_values: ['REPLICATION_SCHEDULE_UNSPECIFIED', 'EVERY_10_MINUTES', 'HOURLY', 'DAILY']
-    - name: labels
-      value: object
-      description: >
-        Resource labels to represent user provided metadata.
-        
-    - name: description
-      value: string
-      description: >
-        A description about this replication relationship.
-        
     - name: destinationVolumeParameters
       value: object
       description: >
@@ -572,6 +567,11 @@ response
       value: string
       description: >
         Optional. Location of the user cluster.
+        
+    - name: description
+      value: string
+      description: >
+        A description about this replication relationship.
         
     - name: replicationId
       value: string
@@ -596,11 +596,11 @@ Updates the settings of a specific replication.
 UPDATE google.netapp.replications
 SET 
 data__name = '{{ name }}',
-data__replicationSchedule = '{{ replicationSchedule }}',
 data__labels = '{{ labels }}',
-data__description = '{{ description }}',
+data__replicationSchedule = '{{ replicationSchedule }}',
 data__destinationVolumeParameters = '{{ destinationVolumeParameters }}',
-data__clusterLocation = '{{ clusterLocation }}'
+data__clusterLocation = '{{ clusterLocation }}',
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -645,15 +645,48 @@ AND replicationsId = '{{ replicationsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="stop"
+    defaultValue="reverse_direction"
     values={[
-        { label: 'stop', value: 'stop' },
-        { label: 'resume', value: 'resume' },
         { label: 'reverse_direction', value: 'reverse_direction' },
         { label: 'establish_peering', value: 'establish_peering' },
+        { label: 'stop', value: 'stop' },
+        { label: 'resume', value: 'resume' },
         { label: 'sync', value: 'sync' }
     ]}
 >
+<TabItem value="reverse_direction">
+
+Reverses direction of replication. Source becomes destination and destination becomes source.
+
+```sql
+EXEC google.netapp.replications.reverse_direction 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@volumesId='{{ volumesId }}' --required, 
+@replicationsId='{{ replicationsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="establish_peering">
+
+Establish replication peering.
+
+```sql
+EXEC google.netapp.replications.establish_peering 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@volumesId='{{ volumesId }}' --required, 
+@replicationsId='{{ replicationsId }}' --required 
+@@json=
+'{
+"peerVolumeName": "{{ peerVolumeName }}", 
+"peerIpAddresses": "{{ peerIpAddresses }}", 
+"peerSvmName": "{{ peerSvmName }}", 
+"peerClusterName": "{{ peerClusterName }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="stop">
 
 Stop Cross Region Replication.
@@ -681,39 +714,6 @@ EXEC google.netapp.replications.resume
 @locationsId='{{ locationsId }}' --required, 
 @volumesId='{{ volumesId }}' --required, 
 @replicationsId='{{ replicationsId }}' --required
-;
-```
-</TabItem>
-<TabItem value="reverse_direction">
-
-Reverses direction of replication. Source becomes destination and destination becomes source.
-
-```sql
-EXEC google.netapp.replications.reverse_direction 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@volumesId='{{ volumesId }}' --required, 
-@replicationsId='{{ replicationsId }}' --required
-;
-```
-</TabItem>
-<TabItem value="establish_peering">
-
-Establish replication peering.
-
-```sql
-EXEC google.netapp.replications.establish_peering 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@volumesId='{{ volumesId }}' --required, 
-@replicationsId='{{ replicationsId }}' --required 
-@@json=
-'{
-"peerClusterName": "{{ peerClusterName }}", 
-"peerSvmName": "{{ peerSvmName }}", 
-"peerIpAddresses": "{{ peerIpAddresses }}", 
-"peerVolumeName": "{{ peerVolumeName }}"
-}'
 ;
 ```
 </TabItem>

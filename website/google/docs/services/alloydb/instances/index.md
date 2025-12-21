@@ -75,6 +75,11 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Client connection specific configurations (id: ClientConnectionConfig)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="connectionPoolConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. The configuration for Managed Connection Pool (MCP). (id: ConnectionPoolConfig)</td>
+</tr>
+<tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. Create time stamp</td>
@@ -123,6 +128,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="machineConfig" /></td>
     <td><code>object</code></td>
     <td>Configurations for the machines that host the underlying database engine. (id: MachineConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="maintenanceVersionName" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Maintenance version of the instance, for example: POSTGRES_15.2025_07_15.04_00. Output only. Update this field via the parent cluster's maintenance_version field(s).</td>
 </tr>
 <tr>
     <td><CopyableCode code="networkConfig" /></td>
@@ -234,6 +244,11 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Client connection specific configurations (id: ClientConnectionConfig)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="connectionPoolConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. The configuration for Managed Connection Pool (MCP). (id: ConnectionPoolConfig)</td>
+</tr>
+<tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. Create time stamp</td>
@@ -282,6 +297,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="machineConfig" /></td>
     <td><code>object</code></td>
     <td>Configurations for the machines that host the underlying database engine. (id: MachineConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="maintenanceVersionName" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Maintenance version of the instance, for example: POSTGRES_15.2025_07_15.04_00. Output only. Update this field via the parent cluster's maintenance_version field(s).</td>
 </tr>
 <tr>
     <td><CopyableCode code="networkConfig" /></td>
@@ -543,6 +563,7 @@ activationPolicy,
 annotations,
 availabilityType,
 clientConnectionConfig,
+connectionPoolConfig,
 createTime,
 databaseFlags,
 deleteTime,
@@ -553,6 +574,7 @@ instanceType,
 ipAddress,
 labels,
 machineConfig,
+maintenanceVersionName,
 networkConfig,
 nodes,
 observabilityConfig,
@@ -587,6 +609,7 @@ activationPolicy,
 annotations,
 availabilityType,
 clientConnectionConfig,
+connectionPoolConfig,
 createTime,
 databaseFlags,
 deleteTime,
@@ -597,6 +620,7 @@ instanceType,
 ipAddress,
 labels,
 machineConfig,
+maintenanceVersionName,
 networkConfig,
 nodes,
 observabilityConfig,
@@ -656,6 +680,7 @@ data__clientConnectionConfig,
 data__pscInstanceConfig,
 data__networkConfig,
 data__activationPolicy,
+data__connectionPoolConfig,
 projectsId,
 locationsId,
 clustersId,
@@ -680,6 +705,7 @@ SELECT
 '{{ pscInstanceConfig }}',
 '{{ networkConfig }}',
 '{{ activationPolicy }}',
+'{{ connectionPoolConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ clustersId }}',
@@ -793,6 +819,11 @@ response
         Optional. Specifies whether an instance needs to spin up. Once the instance is active, the activation policy can be updated to the `NEVER` to stop the instance. Likewise, the activation policy can be updated to `ALWAYS` to start the instance. There are restrictions around when an instance can/cannot be activated (for example, a read pool instance should be stopped before stopping primary etc.). Please refer to the API documentation for more details.
         
       valid_values: ['ACTIVATION_POLICY_UNSPECIFIED', 'ALWAYS', 'NEVER']
+    - name: connectionPoolConfig
+      value: object
+      description: >
+        Optional. The configuration for Managed Connection Pool (MCP).
+        
     - name: instanceId
       value: string
     - name: requestId
@@ -834,7 +865,8 @@ data__annotations = '{{ annotations }}',
 data__clientConnectionConfig = '{{ clientConnectionConfig }}',
 data__pscInstanceConfig = '{{ pscInstanceConfig }}',
 data__networkConfig = '{{ networkConfig }}',
-data__activationPolicy = '{{ activationPolicy }}'
+data__activationPolicy = '{{ activationPolicy }}',
+data__connectionPoolConfig = '{{ connectionPoolConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

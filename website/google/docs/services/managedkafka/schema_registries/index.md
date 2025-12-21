@@ -221,14 +221,14 @@ Create a schema registry instance.
 
 ```sql
 INSERT INTO google.managedkafka.schema_registries (
-data__schemaRegistryId,
 data__schemaRegistry,
+data__schemaRegistryId,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ schemaRegistryId }}',
 '{{ schemaRegistry }}',
+'{{ schemaRegistryId }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -249,15 +249,15 @@ contexts
     - name: locationsId
       value: string
       description: Required parameter for the schema_registries resource.
+    - name: schemaRegistry
+      value: object
+      description: >
+        Required. The schema registry instance to create. The name field is ignored.
+        
     - name: schemaRegistryId
       value: string
       description: >
         Required. The schema registry instance ID to use for this schema registry. The ID must contain only letters (a-z, A-Z), numbers (0-9), and underscores (-). The maximum length is 63 characters. The ID must not start with a number.
-        
-    - name: schemaRegistry
-      value: object
-      description: >
-        SchemaRegistry is a schema registry instance.
         
 ```
 </TabItem>

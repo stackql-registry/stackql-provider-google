@@ -110,10 +110,10 @@ Allows management of individual questions.
 ```sql
 UPDATE google.retail.catalogs_generative_question
 SET 
-data__catalog = '{{ catalog }}',
-data__facet = '{{ facet }}',
 data__finalQuestion = '{{ finalQuestion }}',
-data__allowedInConversation = {{ allowedInConversation }}
+data__facet = '{{ facet }}',
+data__allowedInConversation = {{ allowedInConversation }},
+data__catalog = '{{ catalog }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

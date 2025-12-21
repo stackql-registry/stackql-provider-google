@@ -476,29 +476,29 @@ Creates a Schedule.
 ```sql
 INSERT INTO google.aiplatform.schedules (
 data__cron,
-data__createPipelineJobRequest,
-data__createNotebookExecutionJobRequest,
-data__name,
-data__displayName,
-data__startTime,
-data__endTime,
 data__maxRunCount,
+data__createNotebookExecutionJobRequest,
+data__endTime,
+data__name,
+data__startTime,
 data__maxConcurrentRunCount,
 data__allowQueueing,
+data__displayName,
+data__createPipelineJobRequest,
 projectsId,
 locationsId
 )
 SELECT 
 '{{ cron }}',
-'{{ createPipelineJobRequest }}',
-'{{ createNotebookExecutionJobRequest }}',
-'{{ name }}',
-'{{ displayName }}',
-'{{ startTime }}',
-'{{ endTime }}',
 '{{ maxRunCount }}',
+'{{ createNotebookExecutionJobRequest }}',
+'{{ endTime }}',
+'{{ name }}',
+'{{ startTime }}',
 '{{ maxConcurrentRunCount }}',
 {{ allowQueueing }},
+'{{ displayName }}',
+'{{ createPipelineJobRequest }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -541,40 +541,30 @@ updateTime
       description: >
         Cron schedule (https://en.wikipedia.org/wiki/Cron) to launch scheduled runs. To explicitly set a timezone to the cron tab, apply a prefix in the cron tab: "CRON_TZ=${IANA_TIME_ZONE}" or "TZ=${IANA_TIME_ZONE}". The ${IANA_TIME_ZONE} may only be a valid string from IANA time zone database. For example, "CRON_TZ=America/New_York 1 * * * *", or "TZ=America/New_York 1 * * * *".
         
-    - name: createPipelineJobRequest
-      value: object
+    - name: maxRunCount
+      value: string
       description: >
-        Request for PipelineService.CreatePipelineJob. CreatePipelineJobRequest.parent field is required (format: projects/{project}/locations/{location}).
+        Optional. Maximum run count of the schedule. If specified, The schedule will be completed when either started_run_count >= max_run_count or when end_time is reached. If not specified, new runs will keep getting scheduled until this Schedule is paused or deleted. Already scheduled runs will be allowed to complete. Unset if not specified.
         
     - name: createNotebookExecutionJobRequest
       value: object
       description: >
         Request for NotebookService.CreateNotebookExecutionJob.
         
-    - name: name
-      value: string
-      description: >
-        Immutable. The resource name of the Schedule.
-        
-    - name: displayName
-      value: string
-      description: >
-        Required. User provided name of the Schedule. The name can be up to 128 characters long and can consist of any UTF-8 characters.
-        
-    - name: startTime
-      value: string
-      description: >
-        Optional. Timestamp after which the first run can be scheduled. Default to Schedule create time if not specified.
-        
     - name: endTime
       value: string
       description: >
         Optional. Timestamp after which no new runs can be scheduled. If specified, The schedule will be completed when either end_time is reached or when scheduled_run_count >= max_run_count. If not specified, new runs will keep getting scheduled until this Schedule is paused or deleted. Already scheduled runs will be allowed to complete. Unset if not specified.
         
-    - name: maxRunCount
+    - name: name
       value: string
       description: >
-        Optional. Maximum run count of the schedule. If specified, The schedule will be completed when either started_run_count >= max_run_count or when end_time is reached. If not specified, new runs will keep getting scheduled until this Schedule is paused or deleted. Already scheduled runs will be allowed to complete. Unset if not specified.
+        Immutable. The resource name of the Schedule.
+        
+    - name: startTime
+      value: string
+      description: >
+        Optional. Timestamp after which the first run can be scheduled. Default to Schedule create time if not specified.
         
     - name: maxConcurrentRunCount
       value: string
@@ -585,6 +575,16 @@ updateTime
       value: boolean
       description: >
         Optional. Whether new scheduled runs can be queued when max_concurrent_runs limit is reached. If set to true, new runs will be queued instead of skipped. Default to false.
+        
+    - name: displayName
+      value: string
+      description: >
+        Required. User provided name of the Schedule. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+        
+    - name: createPipelineJobRequest
+      value: object
+      description: >
+        Request for PipelineService.CreatePipelineJob. CreatePipelineJobRequest.parent field is required (format: projects/{project}/locations/{location}).
         
 ```
 </TabItem>
@@ -607,15 +607,15 @@ Updates an active or paused Schedule. When the Schedule is updated, new runs wil
 UPDATE google.aiplatform.schedules
 SET 
 data__cron = '{{ cron }}',
-data__createPipelineJobRequest = '{{ createPipelineJobRequest }}',
-data__createNotebookExecutionJobRequest = '{{ createNotebookExecutionJobRequest }}',
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__startTime = '{{ startTime }}',
-data__endTime = '{{ endTime }}',
 data__maxRunCount = '{{ maxRunCount }}',
+data__createNotebookExecutionJobRequest = '{{ createNotebookExecutionJobRequest }}',
+data__endTime = '{{ endTime }}',
+data__name = '{{ name }}',
+data__startTime = '{{ startTime }}',
 data__maxConcurrentRunCount = '{{ maxConcurrentRunCount }}',
-data__allowQueueing = {{ allowQueueing }}
+data__allowQueueing = {{ allowQueueing }},
+data__displayName = '{{ displayName }}',
+data__createPipelineJobRequest = '{{ createPipelineJobRequest }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

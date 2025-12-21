@@ -144,7 +144,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists InboundOidcSsoProfile objects for a Google enterprise customer.</td>
 </tr>
 <tr>
@@ -249,8 +249,8 @@ displayName,
 idpConfig,
 rpConfig
 FROM google.cloudidentity.inbound_oidc_sso_profiles
-WHERE filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
+WHERE pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -273,16 +273,16 @@ Creates an InboundOidcSsoProfile for a customer. When the target customer has en
 
 ```sql
 INSERT INTO google.cloudidentity.inbound_oidc_sso_profiles (
+data__rpConfig,
 data__customer,
 data__displayName,
-data__idpConfig,
-data__rpConfig
+data__idpConfig
 )
 SELECT 
+'{{ rpConfig }}',
 '{{ customer }}',
 '{{ displayName }}',
-'{{ idpConfig }}',
-'{{ rpConfig }}'
+'{{ idpConfig }}'
 RETURNING
 name,
 done,
@@ -298,6 +298,11 @@ response
 # Description fields are for documentation purposes
 - name: inbound_oidc_sso_profiles
   props:
+    - name: rpConfig
+      value: object
+      description: >
+        OIDC relying party (RP) configuration for this OIDC SSO profile. These are the RP details provided by Google that should be configured on the corresponding identity provider.
+        
     - name: customer
       value: string
       description: >
@@ -312,11 +317,6 @@ response
       value: object
       description: >
         OIDC identity provider configuration.
-        
-    - name: rpConfig
-      value: object
-      description: >
-        OIDC relying party (RP) configuration for this OIDC SSO profile. These are the RP details provided by Google that should be configured on the corresponding identity provider.
         
 ```
 </TabItem>
@@ -338,10 +338,10 @@ Updates an InboundOidcSsoProfile. When the target customer has enabled [Multi-pa
 ```sql
 UPDATE google.cloudidentity.inbound_oidc_sso_profiles
 SET 
+data__rpConfig = '{{ rpConfig }}',
 data__customer = '{{ customer }}',
 data__displayName = '{{ displayName }}',
-data__idpConfig = '{{ idpConfig }}',
-data__rpConfig = '{{ rpConfig }}'
+data__idpConfig = '{{ idpConfig }}'
 WHERE 
 inboundOidcSsoProfilesId = '{{ inboundOidcSsoProfilesId }}' --required
 AND updateMask = '{{ updateMask}}'

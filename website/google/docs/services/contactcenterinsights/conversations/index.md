@@ -306,15 +306,15 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a>, <a href="#parameter-authorizedViewsId"><code>authorizedViewsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a></td>
     <td><a href="#parameter-view"><code>view</code></a></td>
     <td>Gets a conversation.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a>, <a href="#parameter-authorizedViewsId"><code>authorizedViewsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-view"><code>view</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists conversations.</td>
 </tr>
 <tr>
@@ -328,13 +328,13 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a conversation.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a>, <a href="#parameter-authorizedViewsId"><code>authorizedViewsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a></td>
     <td><a href="#parameter-force"><code>force</code></a></td>
     <td>Deletes a conversation.</td>
 </tr>
@@ -344,6 +344,27 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a></td>
     <td></td>
     <td>Deletes multiple conversations in a single request.</td>
+</tr>
+<tr>
+    <td><a href="#calculate_stats"><CopyableCode code="calculate_stats" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a></td>
+    <td></td>
+    <td>Gets conversation statistics.</td>
+</tr>
+<tr>
+    <td><a href="#bulk_analyze"><CopyableCode code="bulk_analyze" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Analyzes multiple conversations in a single request.</td>
+</tr>
+<tr>
+    <td><a href="#ingest"><CopyableCode code="ingest" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a></td>
+    <td></td>
+    <td>Imports conversations and processes them according to the user's configuration.</td>
 </tr>
 <tr>
     <td><a href="#upload"><CopyableCode code="upload" /></a></td>
@@ -358,27 +379,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a></td>
     <td></td>
     <td>Samples conversations based on user configuration and handles the sampled conversations for different use cases.</td>
-</tr>
-<tr>
-    <td><a href="#bulk_analyze"><CopyableCode code="bulk_analyze" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a>, <a href="#parameter-authorizedViewsId"><code>authorizedViewsId</code></a></td>
-    <td></td>
-    <td>Analyzes multiple conversations in a single request.</td>
-</tr>
-<tr>
-    <td><a href="#ingest"><CopyableCode code="ingest" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a></td>
-    <td></td>
-    <td>Imports conversations and processes them according to the user's configuration.</td>
-</tr>
-<tr>
-    <td><a href="#calculate_stats"><CopyableCode code="calculate_stats" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-authorizedViewSetsId"><code>authorizedViewSetsId</code></a>, <a href="#parameter-authorizedViewsId"><code>authorizedViewsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a></td>
-    <td>Gets conversation statistics.</td>
 </tr>
 </tbody>
 </table>
@@ -396,16 +396,6 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-authorizedViewSetsId">
-    <td><CopyableCode code="authorizedViewSetsId" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr id="parameter-authorizedViewsId">
-    <td><CopyableCode code="authorizedViewsId" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
 <tr id="parameter-conversationsId">
     <td><CopyableCode code="conversationsId" /></td>
     <td><code>string</code></td>
@@ -514,8 +504,7 @@ updateTime
 FROM google.contactcenterinsights.conversations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND authorizedViewSetsId = '{{ authorizedViewSetsId }}' -- required
-AND authorizedViewsId = '{{ authorizedViewsId }}' -- required
+AND datasetsId = '{{ datasetsId }}' -- required
 AND conversationsId = '{{ conversationsId }}' -- required
 AND view = '{{ view }}'
 ;
@@ -552,13 +541,12 @@ updateTime
 FROM google.contactcenterinsights.conversations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND authorizedViewSetsId = '{{ authorizedViewSetsId }}' -- required
-AND authorizedViewsId = '{{ authorizedViewsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
+AND datasetsId = '{{ datasetsId }}' -- required
 AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND view = '{{ view }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -580,37 +568,37 @@ Creates a conversation. Note that this method does not support audio transcripti
 
 ```sql
 INSERT INTO google.contactcenterinsights.conversations (
-data__callMetadata,
-data__expireTime,
-data__ttl,
+data__qualityMetadata,
+data__obfuscatedUserId,
+data__labels,
 data__name,
-data__dataSource,
-data__startTime,
+data__medium,
 data__languageCode,
 data__agentId,
-data__labels,
-data__qualityMetadata,
+data__expireTime,
+data__dataSource,
+data__callMetadata,
+data__startTime,
 data__metadataJson,
-data__medium,
-data__obfuscatedUserId,
+data__ttl,
 projectsId,
 locationsId,
 conversationId
 )
 SELECT 
-'{{ callMetadata }}',
-'{{ expireTime }}',
-'{{ ttl }}',
+'{{ qualityMetadata }}',
+'{{ obfuscatedUserId }}',
+'{{ labels }}',
 '{{ name }}',
-'{{ dataSource }}',
-'{{ startTime }}',
+'{{ medium }}',
 '{{ languageCode }}',
 '{{ agentId }}',
-'{{ labels }}',
-'{{ qualityMetadata }}',
+'{{ expireTime }}',
+'{{ dataSource }}',
+'{{ callMetadata }}',
+'{{ startTime }}',
 '{{ metadataJson }}',
-'{{ medium }}',
-'{{ obfuscatedUserId }}',
+'{{ ttl }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ conversationId }}'
@@ -652,36 +640,32 @@ updateTime
     - name: locationsId
       value: string
       description: Required parameter for the conversations resource.
-    - name: callMetadata
+    - name: qualityMetadata
       value: object
       description: >
-        Call-specific metadata.
+        Conversation metadata related to quality management.
         
-    - name: expireTime
+    - name: obfuscatedUserId
       value: string
       description: >
-        The time at which this conversation should expire. After this time, the conversation data and any associated analyses will be deleted.
+        Obfuscated user ID which the customer sent to us.
         
-    - name: ttl
-      value: string
+    - name: labels
+      value: object
       description: >
-        Input only. The TTL for this resource. If specified, then this TTL will be used to calculate the expire time.
+        A map for the user to specify any custom fields. A maximum of 100 labels per conversation is allowed, with a maximum of 256 characters per entry.
         
     - name: name
       value: string
       description: >
         Immutable. The resource name of the conversation. Format: projects/{project}/locations/{location}/conversations/{conversation}
         
-    - name: dataSource
-      value: object
-      description: >
-        The source of the audio and transcription for the conversation.
-        
-    - name: startTime
+    - name: medium
       value: string
       description: >
-        The time at which the conversation started.
+        Immutable. The conversation medium, if unspecified will default to PHONE_CALL.
         
+      valid_values: ['MEDIUM_UNSPECIFIED', 'PHONE_CALL', 'CHAT']
     - name: languageCode
       value: string
       description: >
@@ -692,31 +676,35 @@ updateTime
       description: >
         An opaque, user-specified string representing the human agent who handled the conversation.
         
-    - name: labels
-      value: object
+    - name: expireTime
+      value: string
       description: >
-        A map for the user to specify any custom fields. A maximum of 100 labels per conversation is allowed, with a maximum of 256 characters per entry.
+        The time at which this conversation should expire. After this time, the conversation data and any associated analyses will be deleted.
         
-    - name: qualityMetadata
+    - name: dataSource
       value: object
       description: >
-        Conversation metadata related to quality management.
+        The source of the audio and transcription for the conversation.
+        
+    - name: callMetadata
+      value: object
+      description: >
+        Call-specific metadata.
+        
+    - name: startTime
+      value: string
+      description: >
+        The time at which the conversation started.
         
     - name: metadataJson
       value: string
       description: >
         Input only. JSON metadata encoded as a string. This field is primarily used by Insights integrations with various telephony systems and must be in one of Insight's supported formats.
         
-    - name: medium
+    - name: ttl
       value: string
       description: >
-        Immutable. The conversation medium, if unspecified will default to PHONE_CALL.
-        
-      valid_values: ['MEDIUM_UNSPECIFIED', 'PHONE_CALL', 'CHAT']
-    - name: obfuscatedUserId
-      value: string
-      description: >
-        Obfuscated user ID which the customer sent to us.
+        Input only. The TTL for this resource. If specified, then this TTL will be used to calculate the expire time.
         
     - name: conversationId
       value: string
@@ -740,25 +728,25 @@ Updates a conversation.
 ```sql
 UPDATE google.contactcenterinsights.conversations
 SET 
-data__callMetadata = '{{ callMetadata }}',
-data__expireTime = '{{ expireTime }}',
-data__ttl = '{{ ttl }}',
+data__qualityMetadata = '{{ qualityMetadata }}',
+data__obfuscatedUserId = '{{ obfuscatedUserId }}',
+data__labels = '{{ labels }}',
 data__name = '{{ name }}',
-data__dataSource = '{{ dataSource }}',
-data__startTime = '{{ startTime }}',
+data__medium = '{{ medium }}',
 data__languageCode = '{{ languageCode }}',
 data__agentId = '{{ agentId }}',
-data__labels = '{{ labels }}',
-data__qualityMetadata = '{{ qualityMetadata }}',
+data__expireTime = '{{ expireTime }}',
+data__dataSource = '{{ dataSource }}',
+data__callMetadata = '{{ callMetadata }}',
+data__startTime = '{{ startTime }}',
 data__metadataJson = '{{ metadataJson }}',
-data__medium = '{{ medium }}',
-data__obfuscatedUserId = '{{ obfuscatedUserId }}'
+data__ttl = '{{ ttl }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND conversationsId = '{{ conversationsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND allowMissing = {{ allowMissing}}
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 agentId,
@@ -804,8 +792,7 @@ Deletes a conversation.
 DELETE FROM google.contactcenterinsights.conversations
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
-AND authorizedViewSetsId = '{{ authorizedViewSetsId }}' --required
-AND authorizedViewsId = '{{ authorizedViewsId }}' --required
+AND datasetsId = '{{ datasetsId }}' --required
 AND conversationsId = '{{ conversationsId }}' --required
 AND force = '{{ force }}'
 ;
@@ -829,48 +816,27 @@ AND datasetsId = '{{ datasetsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="upload"
+    defaultValue="calculate_stats"
     values={[
-        { label: 'upload', value: 'upload' },
-        { label: 'sample', value: 'sample' },
+        { label: 'calculate_stats', value: 'calculate_stats' },
         { label: 'bulk_analyze', value: 'bulk_analyze' },
         { label: 'ingest', value: 'ingest' },
-        { label: 'calculate_stats', value: 'calculate_stats' }
+        { label: 'upload', value: 'upload' },
+        { label: 'sample', value: 'sample' }
     ]}
 >
-<TabItem value="upload">
+<TabItem value="calculate_stats">
 
-Create a long-running conversation upload operation. This method differs from `CreateConversation` by allowing audio transcription and optional DLP redaction.
-
-```sql
-EXEC google.contactcenterinsights.conversations.upload 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
-@@json=
-'{
-"parent": "{{ parent }}", 
-"conversation": "{{ conversation }}", 
-"conversationId": "{{ conversationId }}", 
-"redactionConfig": "{{ redactionConfig }}", 
-"speechConfig": "{{ speechConfig }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="sample">
-
-Samples conversations based on user configuration and handles the sampled conversations for different use cases.
+Gets conversation statistics.
 
 ```sql
-EXEC google.contactcenterinsights.conversations.sample 
+EXEC google.contactcenterinsights.conversations.calculate_stats 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @datasetsId='{{ datasetsId }}' --required 
 @@json=
 '{
-"destinationDataset": "{{ destinationDataset }}", 
-"parent": "{{ parent }}", 
-"sampleRule": "{{ sampleRule }}"
+"filter": "{{ filter }}"
 }'
 ;
 ```
@@ -882,14 +848,12 @@ Analyzes multiple conversations in a single request.
 ```sql
 EXEC google.contactcenterinsights.conversations.bulk_analyze 
 @projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@authorizedViewSetsId='{{ authorizedViewSetsId }}' --required, 
-@authorizedViewsId='{{ authorizedViewsId }}' --required 
+@locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"parent": "{{ parent }}", 
 "filter": "{{ filter }}", 
 "analysisPercentage": {{ analysisPercentage }}, 
+"parent": "{{ parent }}", 
 "annotatorSelector": "{{ annotatorSelector }}"
 }'
 ;
@@ -906,28 +870,51 @@ EXEC google.contactcenterinsights.conversations.ingest
 @datasetsId='{{ datasetsId }}' --required 
 @@json=
 '{
-"gcsSource": "{{ gcsSource }}", 
-"transcriptObjectConfig": "{{ transcriptObjectConfig }}", 
 "parent": "{{ parent }}", 
-"conversationConfig": "{{ conversationConfig }}", 
-"redactionConfig": "{{ redactionConfig }}", 
+"sampleSize": {{ sampleSize }}, 
 "speechConfig": "{{ speechConfig }}", 
-"sampleSize": {{ sampleSize }}
+"conversationConfig": "{{ conversationConfig }}", 
+"transcriptObjectConfig": "{{ transcriptObjectConfig }}", 
+"gcsSource": "{{ gcsSource }}", 
+"redactionConfig": "{{ redactionConfig }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="calculate_stats">
+<TabItem value="upload">
 
-Gets conversation statistics.
+Create a long-running conversation upload operation. This method differs from `CreateConversation` by allowing audio transcription and optional DLP redaction.
 
 ```sql
-EXEC google.contactcenterinsights.conversations.calculate_stats 
+EXEC google.contactcenterinsights.conversations.upload 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"conversation": "{{ conversation }}", 
+"conversationId": "{{ conversationId }}", 
+"speechConfig": "{{ speechConfig }}", 
+"parent": "{{ parent }}", 
+"redactionConfig": "{{ redactionConfig }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="sample">
+
+Samples conversations based on user configuration and handles the sampled conversations for different use cases.
+
+```sql
+EXEC google.contactcenterinsights.conversations.sample 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@authorizedViewSetsId='{{ authorizedViewSetsId }}' --required, 
-@authorizedViewsId='{{ authorizedViewsId }}' --required, 
-@filter='{{ filter }}'
+@datasetsId='{{ datasetsId }}' --required 
+@@json=
+'{
+"sampleRule": "{{ sampleRule }}", 
+"destinationDataset": "{{ destinationDataset }}", 
+"parent": "{{ parent }}"
+}'
 ;
 ```
 </TabItem>

@@ -324,7 +324,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_collections_data_stores_site_search_engine_target_sites_list"><CopyableCode code="projects_locations_collections_data_stores_site_search_engine_target_sites_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Gets a list of TargetSites.</td>
 </tr>
 <tr>
@@ -508,8 +508,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND collectionsId = '{{ collectionsId }}' -- required
 AND dataStoresId = '{{ dataStoresId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -583,18 +583,18 @@ Creates a TargetSite.
 
 ```sql
 INSERT INTO google.discoveryengine.target_sites (
+data__exactMatch,
 data__providedUriPattern,
 data__type,
-data__exactMatch,
 projectsId,
 locationsId,
 collectionsId,
 dataStoresId
 )
 SELECT 
+{{ exactMatch }},
 '{{ providedUriPattern }}',
 '{{ type }}',
-{{ exactMatch }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ collectionsId }}',
@@ -641,17 +641,17 @@ Creates a TargetSite.
 
 ```sql
 INSERT INTO google.discoveryengine.target_sites (
+data__exactMatch,
 data__providedUriPattern,
 data__type,
-data__exactMatch,
 projectsId,
 locationsId,
 dataStoresId
 )
 SELECT 
+{{ exactMatch }},
 '{{ providedUriPattern }}',
 '{{ type }}',
-{{ exactMatch }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ dataStoresId }}'
@@ -707,6 +707,11 @@ response
     - name: dataStoresId
       value: string
       description: Required parameter for the target_sites resource.
+    - name: exactMatch
+      value: boolean
+      description: >
+        Immutable. If set to false, a uri_pattern is generated to include all pages whose address contains the provided_uri_pattern. If set to true, an uri_pattern is generated to try to be an exact match of the provided_uri_pattern or just the specific page if the provided_uri_pattern is a specific one. provided_uri_pattern is always normalized to generate the URI pattern to be used by the search engine.
+        
     - name: providedUriPattern
       value: string
       description: >
@@ -718,11 +723,6 @@ response
         The type of the target site, e.g., whether the site is to be included or excluded.
         
       valid_values: ['TYPE_UNSPECIFIED', 'INCLUDE', 'EXCLUDE']
-    - name: exactMatch
-      value: boolean
-      description: >
-        Immutable. If set to false, a uri_pattern is generated to include all pages whose address contains the provided_uri_pattern. If set to true, an uri_pattern is generated to try to be an exact match of the provided_uri_pattern or just the specific page if the provided_uri_pattern is a specific one. provided_uri_pattern is always normalized to generate the URI pattern to be used by the search engine.
-        
     - name: requests
       value: array
       description: >
@@ -749,9 +749,9 @@ Updates a TargetSite.
 ```sql
 UPDATE google.discoveryengine.target_sites
 SET 
+data__exactMatch = {{ exactMatch }},
 data__providedUriPattern = '{{ providedUriPattern }}',
-data__type = '{{ type }}',
-data__exactMatch = {{ exactMatch }}
+data__type = '{{ type }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -773,9 +773,9 @@ Updates a TargetSite.
 ```sql
 UPDATE google.discoveryengine.target_sites
 SET 
+data__exactMatch = {{ exactMatch }},
 data__providedUriPattern = '{{ providedUriPattern }}',
-data__type = '{{ type }}',
-data__exactMatch = {{ exactMatch }}
+data__type = '{{ type }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

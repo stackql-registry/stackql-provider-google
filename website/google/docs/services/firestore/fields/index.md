@@ -256,9 +256,9 @@ Updates a field configuration. Currently, field updates apply only to single fie
 ```sql
 UPDATE google.firestore.fields
 SET 
-data__name = '{{ name }}',
 data__indexConfig = '{{ indexConfig }}',
-data__ttlConfig = '{{ ttlConfig }}'
+data__ttlConfig = '{{ ttlConfig }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND databasesId = '{{ databasesId }}' --required

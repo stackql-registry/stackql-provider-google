@@ -134,7 +134,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectClustersId"><code>connectClustersId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists the connectors in a given Connect cluster.</td>
 </tr>
 <tr>
@@ -166,13 +166,6 @@ The following methods are available for this resource:
     <td>Pauses the connector and its tasks.</td>
 </tr>
 <tr>
-    <td><a href="#resume"><CopyableCode code="resume" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectClustersId"><code>connectClustersId</code></a>, <a href="#parameter-connectorsId"><code>connectorsId</code></a></td>
-    <td></td>
-    <td>Resumes the connector and its tasks.</td>
-</tr>
-<tr>
     <td><a href="#restart"><CopyableCode code="restart" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectClustersId"><code>connectClustersId</code></a>, <a href="#parameter-connectorsId"><code>connectorsId</code></a></td>
@@ -185,6 +178,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectClustersId"><code>connectClustersId</code></a>, <a href="#parameter-connectorsId"><code>connectorsId</code></a></td>
     <td></td>
     <td>Stops the connector.</td>
+</tr>
+<tr>
+    <td><a href="#resume"><CopyableCode code="resume" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectClustersId"><code>connectClustersId</code></a>, <a href="#parameter-connectorsId"><code>connectorsId</code></a></td>
+    <td></td>
+    <td>Resumes the connector and its tasks.</td>
 </tr>
 </tbody>
 </table>
@@ -286,8 +286,8 @@ FROM google.managedkafka.connectors
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND connectClustersId = '{{ connectClustersId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -309,8 +309,8 @@ Creates a new connector in a given Connect cluster.
 
 ```sql
 INSERT INTO google.managedkafka.connectors (
-data__taskRestartPolicy,
 data__name,
+data__taskRestartPolicy,
 data__configs,
 projectsId,
 locationsId,
@@ -318,8 +318,8 @@ connectClustersId,
 connectorId
 )
 SELECT 
-'{{ taskRestartPolicy }}',
 '{{ name }}',
+'{{ taskRestartPolicy }}',
 '{{ configs }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -348,15 +348,15 @@ taskRestartPolicy
     - name: connectClustersId
       value: string
       description: Required parameter for the connectors resource.
-    - name: taskRestartPolicy
-      value: object
-      description: >
-        Optional. Restarts the individual tasks of a Connector.
-        
     - name: name
       value: string
       description: >
         Identifier. The name of the connector. Structured like: projects/{project}/locations/{location}/connectClusters/{connect_cluster}/connectors/{connector}
+        
+    - name: taskRestartPolicy
+      value: object
+      description: >
+        Optional. Restarts the individual tasks of a Connector.
         
     - name: configs
       value: object
@@ -385,8 +385,8 @@ Updates the properties of a connector.
 ```sql
 UPDATE google.managedkafka.connectors
 SET 
-data__taskRestartPolicy = '{{ taskRestartPolicy }}',
 data__name = '{{ name }}',
+data__taskRestartPolicy = '{{ taskRestartPolicy }}',
 data__configs = '{{ configs }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
@@ -434,9 +434,9 @@ AND connectorsId = '{{ connectorsId }}' --required
     defaultValue="pause"
     values={[
         { label: 'pause', value: 'pause' },
-        { label: 'resume', value: 'resume' },
         { label: 'restart', value: 'restart' },
-        { label: 'stop', value: 'stop' }
+        { label: 'stop', value: 'stop' },
+        { label: 'resume', value: 'resume' }
     ]}
 >
 <TabItem value="pause">
@@ -445,19 +445,6 @@ Pauses the connector and its tasks.
 
 ```sql
 EXEC google.managedkafka.connectors.pause 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@connectClustersId='{{ connectClustersId }}' --required, 
-@connectorsId='{{ connectorsId }}' --required
-;
-```
-</TabItem>
-<TabItem value="resume">
-
-Resumes the connector and its tasks.
-
-```sql
-EXEC google.managedkafka.connectors.resume 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @connectClustersId='{{ connectClustersId }}' --required, 
@@ -484,6 +471,19 @@ Stops the connector.
 
 ```sql
 EXEC google.managedkafka.connectors.stop 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@connectClustersId='{{ connectClustersId }}' --required, 
+@connectorsId='{{ connectorsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="resume">
+
+Resumes the connector and its tasks.
+
+```sql
+EXEC google.managedkafka.connectors.resume 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @connectClustersId='{{ connectClustersId }}' --required, 

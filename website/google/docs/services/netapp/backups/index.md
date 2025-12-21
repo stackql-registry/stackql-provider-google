@@ -138,81 +138,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Identifier. The resource name of the backup. Format: `projects/&#123;project_id&#125;/locations/&#123;location&#125;/backupVaults/&#123;backup_vault_id&#125;/backups/&#123;backup_id&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="backupRegion" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Region in which backup is stored. Format: `projects/&#123;project_id&#125;/locations/&#123;location&#125;`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="backupType" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Type of backup, manually created or created by a backup policy.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="chainStorageBytes" /></td>
-    <td><code>string (int64)</code></td>
-    <td>Output only. Total size of all backups in a chain in bytes = baseline backup size + sum(incremental backup size)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time when the backup was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>A description of the backup with 2048 characters or less. Requests with longer descriptions will be rejected.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="enforcedRetentionEndTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time until which the backup is not deletable.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Resource labels to represent user provided metadata.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="satisfiesPzi" /></td>
-    <td><code>boolean</code></td>
-    <td>Output only. Reserved for future use</td>
-</tr>
-<tr>
-    <td><CopyableCode code="satisfiesPzs" /></td>
-    <td><code>boolean</code></td>
-    <td>Output only. Reserved for future use</td>
-</tr>
-<tr>
-    <td><CopyableCode code="sourceSnapshot" /></td>
-    <td><code>string</code></td>
-    <td>If specified, backup will be created from the given snapshot. If not specified, there will be a new snapshot taken to initiate the backup creation. Format: `projects/&#123;project_id&#125;/locations/&#123;location&#125;/volumes/&#123;volume_id&#125;/snapshots/&#123;snapshot_id&#125;`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="sourceVolume" /></td>
-    <td><code>string</code></td>
-    <td>Volume full name of this backup belongs to. Format: `projects/&#123;projects_id&#125;/locations/&#123;location&#125;/volumes/&#123;volume_id&#125;`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="state" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The backup state.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="volumeRegion" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Region of the volume from which the backup was created. Format: `projects/&#123;project_id&#125;/locations/&#123;location&#125;`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="volumeUsageBytes" /></td>
-    <td><code>string (int64)</code></td>
-    <td>Output only. Size of the file system when the backup was created. When creating a new volume from the backup, the volume capacity will have to be at least as big.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -244,7 +169,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backupVaultsId"><code>backupVaultsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Returns descriptions of all backups for a backupVault.</td>
 </tr>
 <tr>
@@ -381,29 +306,15 @@ Returns descriptions of all backups for a backupVault.
 
 ```sql
 SELECT
-name,
-backupRegion,
-backupType,
-chainStorageBytes,
-createTime,
-description,
-enforcedRetentionEndTime,
-labels,
-satisfiesPzi,
-satisfiesPzs,
-sourceSnapshot,
-sourceVolume,
-state,
-volumeRegion,
-volumeUsageBytes
+*
 FROM google.netapp.backups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND backupVaultsId = '{{ backupVaultsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -428,8 +339,8 @@ INSERT INTO google.netapp.backups (
 data__name,
 data__description,
 data__sourceVolume,
-data__sourceSnapshot,
 data__labels,
+data__sourceSnapshot,
 projectsId,
 locationsId,
 backupVaultsId,
@@ -439,8 +350,8 @@ SELECT
 '{{ name }}',
 '{{ description }}',
 '{{ sourceVolume }}',
-'{{ sourceSnapshot }}',
 '{{ labels }}',
+'{{ sourceSnapshot }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ backupVaultsId }}',
@@ -484,15 +395,15 @@ response
       description: >
         Volume full name of this backup belongs to. Format: `projects/{projects_id}/locations/{location}/volumes/{volume_id}`
         
-    - name: sourceSnapshot
-      value: string
-      description: >
-        If specified, backup will be created from the given snapshot. If not specified, there will be a new snapshot taken to initiate the backup creation. Format: `projects/{project_id}/locations/{location}/volumes/{volume_id}/snapshots/{snapshot_id}`
-        
     - name: labels
       value: object
       description: >
         Resource labels to represent user provided metadata.
+        
+    - name: sourceSnapshot
+      value: string
+      description: >
+        If specified, backup will be created from the given snapshot. If not specified, there will be a new snapshot taken to initiate the backup creation. Format: `projects/{project_id}/locations/{location}/volumes/{volume_id}/snapshots/{snapshot_id}`
         
     - name: backupId
       value: string
@@ -519,8 +430,8 @@ SET
 data__name = '{{ name }}',
 data__description = '{{ description }}',
 data__sourceVolume = '{{ sourceVolume }}',
-data__sourceSnapshot = '{{ sourceSnapshot }}',
-data__labels = '{{ labels }}'
+data__labels = '{{ labels }}',
+data__sourceSnapshot = '{{ sourceSnapshot }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

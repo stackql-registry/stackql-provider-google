@@ -54,6 +54,11 @@ The following fields are returned by `SELECT` queries:
     <td>Required. Identity outside the customer identity provider. The length limit of external identity will be of 100 characters.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="externalIdentityName" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The name of the external identity.</td>
+</tr>
+<tr>
     <td><CopyableCode code="groupId" /></td>
     <td><code>string</code></td>
     <td>Group identifier. For Google Workspace user account, group_id should be the google workspace group email. For non-google identity provider, group_id is the mapped group identifier configured during the workforcepool config.</td>
@@ -87,7 +92,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_identity_mapping_stores_list_identity_mappings"><CopyableCode code="projects_locations_identity_mapping_stores_list_identity_mappings" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-identityMappingStoresId"><code>identityMappingStoresId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists Identity Mappings in an Identity Mapping Store.</td>
 </tr>
 </tbody>
@@ -149,14 +154,15 @@ Lists Identity Mappings in an Identity Mapping Store.
 ```sql
 SELECT
 externalIdentity,
+externalIdentityName,
 groupId,
 userId
 FROM google.discoveryengine.identity_mapping_stores_identity_mappings
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND identityMappingStoresId = '{{ identityMappingStoresId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>

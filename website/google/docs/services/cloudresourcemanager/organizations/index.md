@@ -119,7 +119,7 @@ The following methods are available for this resource:
     <td><a href="#search"><CopyableCode code="search" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-query"><code>query</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-query"><code>query</code></a></td>
     <td>Searches organization resources that are visible to the user and satisfy the specified filter. This method returns organizations in an unspecified order. New organizations do not necessarily appear at the end of the results, and may take a small amount of time to appear. Search will only return organizations on which the user has the permission `resourcemanager.organizations.get` or has super admin privileges.</td>
 </tr>
 </tbody>
@@ -205,8 +205,8 @@ Searches organization resources that are visible to the user and satisfy the spe
 
 ```sql
 EXEC google.cloudresourcemanager.organizations.search 
-@pageSize='{{ pageSize }}', 
 @pageToken='{{ pageToken }}', 
+@pageSize='{{ pageSize }}', 
 @query='{{ query }}'
 ;
 ```

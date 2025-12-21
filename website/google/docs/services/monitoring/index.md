@@ -18,7 +18,7 @@ monitoring service documentation.
 
 :::info[Service Summary]
 
-total resources: __16__  
+total resources: __17__  
 
 :::
 
@@ -26,6 +26,7 @@ total resources: __16__
 <div class="row">
 <div class="providerDocColumn">
 <a href="/services/monitoring/alert_policies/">alert_policies</a><br />
+<a href="/services/monitoring/alerts/">alerts</a><br />
 <a href="/services/monitoring/collectd_time_series/">collectd_time_series</a><br />
 <a href="/services/monitoring/groups/">groups</a><br />
 <a href="/services/monitoring/members/">members</a><br />

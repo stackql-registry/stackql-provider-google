@@ -165,17 +165,17 @@ The following methods are available for this resource:
     <td>Update a case. Only some fields can be updated. EXAMPLES: cURL: ```shell case="projects/some-project/cases/43595344" curl \ --request PATCH \ --header "Authorization: Bearer $(gcloud auth print-access-token)" \ --header "Content-Type: application/json" \ --data '&#123; "priority": "P1" &#125;' \ "https://cloudsupport.googleapis.com/v2/$case?updateMask=priority" ``` Python: ```python import googleapiclient.discovery api_version = "v2" supportApiService = googleapiclient.discovery.build( serviceName="cloudsupport", version=api_version, discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version=&#123;api_version&#125;", ) request = supportApiService.cases().patch( name="projects/some-project/cases/43112854", body=&#123; "displayName": "This is Now a New Title", "priority": "P2", &#125;, ) print(request.execute()) ```</td>
 </tr>
 <tr>
-    <td><a href="#close"><CopyableCode code="close" /></a></td>
+    <td><a href="#escalate"><CopyableCode code="escalate" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-name"><code>name</code></a></td>
     <td></td>
-    <td>Close a case. EXAMPLES: cURL: ```shell case="projects/some-project/cases/43595344" curl \ --request POST \ --header "Authorization: Bearer $(gcloud auth print-access-token)" \ "https://cloudsupport.googleapis.com/v2/$case:close" ``` Python: ```python import googleapiclient.discovery api_version = "v2" supportApiService = googleapiclient.discovery.build( serviceName="cloudsupport", version=api_version, discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version=&#123;api_version&#125;", ) request = supportApiService.cases().close( name="projects/some-project/cases/43595344" ) print(request.execute()) ```</td>
+    <td>Escalate a case, starting the Google Cloud Support escalation management process. This operation is only available for some support services. Go to https://cloud.google.com/support and look for 'Technical support escalations' in the feature list to find out which ones let you do that. EXAMPLES: cURL: ```shell case="projects/some-project/cases/43595344" curl \ --request POST \ --header "Authorization: Bearer $(gcloud auth print-access-token)" \ --header "Content-Type: application/json" \ --data '&#123; "escalation": &#123; "reason": "BUSINESS_IMPACT", "justification": "This is a test escalation." &#125; &#125;' \ "https://cloudsupport.googleapis.com/v2/$case:escalate" ``` Python: ```python import googleapiclient.discovery api_version = "v2" supportApiService = googleapiclient.discovery.build( serviceName="cloudsupport", version=api_version, discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version=&#123;api_version&#125;", ) request = supportApiService.cases().escalate( name="projects/some-project/cases/43595344", body=&#123; "escalation": &#123; "reason": "BUSINESS_IMPACT", "justification": "This is a test escalation.", &#125;, &#125;, ) print(request.execute()) ```</td>
 </tr>
 <tr>
     <td><a href="#search"><CopyableCode code="search" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
-    <td><a href="#parameter-query"><code>query</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-query"><code>query</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Retrieve valid classifications to use when creating a support case. Classifications are hierarchical. Each classification is a string containing all levels of the hierarchy separated by `" > "`. For example, `"Technical Issue > Compute > Compute Engine"`. Classification IDs returned by this endpoint are valid for at least six months. When a classification is deactivated, this endpoint immediately stops returning it. After six months, `case.create` requests using the classification will fail. EXAMPLES: cURL: ```shell curl \ --header "Authorization: Bearer $(gcloud auth print-access-token)" \ 'https://cloudsupport.googleapis.com/v2/caseClassifications:search?query=display_name:"*Compute%20Engine*"' ``` Python: ```python import googleapiclient.discovery supportApiService = googleapiclient.discovery.build( serviceName="cloudsupport", version="v2", discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version=v2", ) request = supportApiService.caseClassifications().search( query='display_name:"*Compute Engine*"' ) print(request.execute()) ```</td>
 </tr>
 </tbody>
@@ -284,34 +284,34 @@ Create a new case and associate it with a parent. It must have the following fie
 
 ```sql
 INSERT INTO google.cloudsupport.cases (
-data__name,
 data__displayName,
-data__description,
-data__classification,
-data__timeZone,
 data__subscriberEmailAddresses,
-data__creator,
 data__contactEmail,
-data__escalated,
+data__creator,
 data__testCase,
-data__languageCode,
+data__description,
+data__timeZone,
 data__priority,
+data__languageCode,
+data__name,
+data__escalated,
+data__classification,
 parentType,
 parent
 )
 SELECT 
-'{{ name }}',
 '{{ displayName }}',
-'{{ description }}',
-'{{ classification }}',
-'{{ timeZone }}',
 '{{ subscriberEmailAddresses }}',
-'{{ creator }}',
 '{{ contactEmail }}',
-{{ escalated }},
+'{{ creator }}',
 {{ testCase }},
-'{{ languageCode }}',
+'{{ description }}',
+'{{ timeZone }}',
 '{{ priority }}',
+'{{ languageCode }}',
+'{{ name }}',
+{{ escalated }},
+'{{ classification }}',
 '{{ parentType }}',
 '{{ parent }}'
 RETURNING
@@ -345,60 +345,40 @@ updateTime
     - name: parent
       value: string
       description: Required parameter for the cases resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name for the case.
-        
     - name: displayName
       value: string
       description: >
         The short summary of the issue reported in this case.
-        
-    - name: description
-      value: string
-      description: >
-        A broad description of the issue.
-        
-    - name: classification
-      value: object
-      description: >
-        The issue classification applicable to this case.
-        
-    - name: timeZone
-      value: string
-      description: >
-        The timezone of the user who created the support case. It should be in a format IANA recognizes: https://www.iana.org/time-zones. There is no additional validation done by the API.
         
     - name: subscriberEmailAddresses
       value: array
       description: >
         The email addresses to receive updates on this case.
         
-    - name: creator
-      value: object
-      description: >
-        The user who created the case. Note: The name and email will be obfuscated if the case was created by Google Support.
-        
     - name: contactEmail
       value: string
       description: >
         A user-supplied email address to send case update notifications for. This should only be used in BYOID flows, where we cannot infer the user's email address directly from their EUCs.
         
-    - name: escalated
-      value: boolean
+    - name: creator
+      value: object
       description: >
-        Whether the case is currently escalated.
+        The user who created the case. Note: The name and email will be obfuscated if the case was created by Google Support.
         
     - name: testCase
       value: boolean
       description: >
         Whether this case was created for internal API testing and should not be acted on by the support team.
         
-    - name: languageCode
+    - name: description
       value: string
       description: >
-        The language the user has requested to receive support in. This should be a BCP 47 language code (e.g., `"en"`, `"zh-CN"`, `"zh-TW"`, `"ja"`, `"ko"`). If no language or an unsupported language is specified, this field defaults to English (en). Language selection during case creation may affect your available support options. For a list of supported languages and their support working hours, see: https://cloud.google.com/support/docs/language-working-hours
+        A broad description of the issue.
+        
+    - name: timeZone
+      value: string
+      description: >
+        The timezone of the user who created the support case. It should be in a format IANA recognizes: https://www.iana.org/time-zones. There is no additional validation done by the API.
         
     - name: priority
       value: string
@@ -406,6 +386,26 @@ updateTime
         The priority of this case.
         
       valid_values: ['PRIORITY_UNSPECIFIED', 'P0', 'P1', 'P2', 'P3', 'P4']
+    - name: languageCode
+      value: string
+      description: >
+        The language the user has requested to receive support in. This should be a BCP 47 language code (e.g., `"en"`, `"zh-CN"`, `"zh-TW"`, `"ja"`, `"ko"`). If no language or an unsupported language is specified, this field defaults to English (en). Language selection during case creation may affect your available support options. For a list of supported languages and their support working hours, see: https://cloud.google.com/support/docs/language-working-hours
+        
+    - name: name
+      value: string
+      description: >
+        Identifier. The resource name for the case.
+        
+    - name: escalated
+      value: boolean
+      description: >
+        Whether the case is currently escalated.
+        
+    - name: classification
+      value: object
+      description: >
+        The issue classification applicable to this case.
+        
 ```
 </TabItem>
 </Tabs>
@@ -426,18 +426,18 @@ Update a case. Only some fields can be updated. EXAMPLES: cURL: ```shell case="p
 ```sql
 UPDATE google.cloudsupport.cases
 SET 
-data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
-data__classification = '{{ classification }}',
-data__timeZone = '{{ timeZone }}',
 data__subscriberEmailAddresses = '{{ subscriberEmailAddresses }}',
-data__creator = '{{ creator }}',
 data__contactEmail = '{{ contactEmail }}',
-data__escalated = {{ escalated }},
+data__creator = '{{ creator }}',
 data__testCase = {{ testCase }},
+data__description = '{{ description }}',
+data__timeZone = '{{ timeZone }}',
+data__priority = '{{ priority }}',
 data__languageCode = '{{ languageCode }}',
-data__priority = '{{ priority }}'
+data__name = '{{ name }}',
+data__escalated = {{ escalated }},
+data__classification = '{{ classification }}'
 WHERE 
 name = '{{ name }}' --required
 AND updateMask = '{{ updateMask}}'
@@ -465,19 +465,23 @@ updateTime;
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="close"
+    defaultValue="escalate"
     values={[
-        { label: 'close', value: 'close' },
+        { label: 'escalate', value: 'escalate' },
         { label: 'search', value: 'search' }
     ]}
 >
-<TabItem value="close">
+<TabItem value="escalate">
 
-Close a case. EXAMPLES: cURL: ```shell case="projects/some-project/cases/43595344" curl \ --request POST \ --header "Authorization: Bearer $(gcloud auth print-access-token)" \ "https://cloudsupport.googleapis.com/v2/$case:close" ``` Python: ```python import googleapiclient.discovery api_version = "v2" supportApiService = googleapiclient.discovery.build( serviceName="cloudsupport", version=api_version, discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version=&#123;api_version&#125;", ) request = supportApiService.cases().close( name="projects/some-project/cases/43595344" ) print(request.execute()) ```
+Escalate a case, starting the Google Cloud Support escalation management process. This operation is only available for some support services. Go to https://cloud.google.com/support and look for 'Technical support escalations' in the feature list to find out which ones let you do that. EXAMPLES: cURL: ```shell case="projects/some-project/cases/43595344" curl \ --request POST \ --header "Authorization: Bearer $(gcloud auth print-access-token)" \ --header "Content-Type: application/json" \ --data '&#123; "escalation": &#123; "reason": "BUSINESS_IMPACT", "justification": "This is a test escalation." &#125; &#125;' \ "https://cloudsupport.googleapis.com/v2/$case:escalate" ``` Python: ```python import googleapiclient.discovery api_version = "v2" supportApiService = googleapiclient.discovery.build( serviceName="cloudsupport", version=api_version, discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version=&#123;api_version&#125;", ) request = supportApiService.cases().escalate( name="projects/some-project/cases/43595344", body=&#123; "escalation": &#123; "reason": "BUSINESS_IMPACT", "justification": "This is a test escalation.", &#125;, &#125;, ) print(request.execute()) ```
 
 ```sql
-EXEC google.cloudsupport.cases.close 
-@name='{{ name }}' --required
+EXEC google.cloudsupport.cases.escalate 
+@name='{{ name }}' --required 
+@@json=
+'{
+"escalation": "{{ escalation }}"
+}'
 ;
 ```
 </TabItem>
@@ -487,8 +491,8 @@ Retrieve valid classifications to use when creating a support case. Classificati
 
 ```sql
 EXEC google.cloudsupport.cases.search 
-@query='{{ query }}', 
 @pageSize='{{ pageSize }}', 
+@query='{{ query }}', 
 @pageToken='{{ pageToken }}'
 ;
 ```

@@ -269,33 +269,33 @@ Create new ProvisioningConfig.
 
 ```sql
 INSERT INTO google.baremetalsolution.provisioning_configs (
-data__instances,
-data__networks,
-data__volumes,
-data__ticketId,
-data__handoverServiceAccount,
-data__email,
-data__location,
-data__vpcScEnabled,
 data__statusMessage,
+data__networks,
+data__location,
+data__handoverServiceAccount,
+data__instances,
+data__volumes,
 data__customId,
 data__pod,
+data__email,
+data__ticketId,
+data__vpcScEnabled,
 projectsId,
 locationsId,
 email
 )
 SELECT 
-'{{ instances }}',
-'{{ networks }}',
-'{{ volumes }}',
-'{{ ticketId }}',
-'{{ handoverServiceAccount }}',
-'{{ email }}',
-'{{ location }}',
-{{ vpcScEnabled }},
 '{{ statusMessage }}',
+'{{ networks }}',
+'{{ location }}',
+'{{ handoverServiceAccount }}',
+'{{ instances }}',
+'{{ volumes }}',
 '{{ customId }}',
 '{{ pod }}',
+'{{ email }}',
+'{{ ticketId }}',
+{{ vpcScEnabled }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ email }}'
@@ -330,50 +330,35 @@ vpcScEnabled
     - name: locationsId
       value: string
       description: Required parameter for the provisioning_configs resource.
-    - name: instances
-      value: array
+    - name: statusMessage
+      value: string
       description: >
-        Instances to be created.
+        Optional status messages associated with the FAILED state.
         
     - name: networks
       value: array
       description: >
         Networks to be created.
         
-    - name: volumes
-      value: array
-      description: >
-        Volumes to be created.
-        
-    - name: ticketId
+    - name: location
       value: string
       description: >
-        A generated ticket id to track provisioning request.
+        Optional. Location name of this ProvisioningConfig. It is optional only for Intake UI transition period.
         
     - name: handoverServiceAccount
       value: string
       description: >
         A service account to enable customers to access instance credentials upon handover.
         
-    - name: email
-      value: string
+    - name: instances
+      value: array
       description: >
-        Email provided to send a confirmation with provisioning config to. Deprecated in favour of email field in request messages.
+        Instances to be created.
         
-    - name: location
-      value: string
+    - name: volumes
+      value: array
       description: >
-        Optional. Location name of this ProvisioningConfig. It is optional only for Intake UI transition period.
-        
-    - name: vpcScEnabled
-      value: boolean
-      description: >
-        If true, VPC SC is enabled for the cluster.
-        
-    - name: statusMessage
-      value: string
-      description: >
-        Optional status messages associated with the FAILED state.
+        Volumes to be created.
         
     - name: customId
       value: string
@@ -384,6 +369,21 @@ vpcScEnabled
       value: string
       description: >
         Optional. Pod name. Pod is an independent part of infrastructure. Instance can be connected to the assets (networks, volumes, nfsshares) allocated in the same pod only.
+        
+    - name: email
+      value: string
+      description: >
+        Email provided to send a confirmation with provisioning config to. Deprecated in favour of email field in request messages.
+        
+    - name: ticketId
+      value: string
+      description: >
+        A generated ticket id to track provisioning request.
+        
+    - name: vpcScEnabled
+      value: boolean
+      description: >
+        If true, VPC SC is enabled for the cluster.
         
     - name: email
       value: string
@@ -407,17 +407,17 @@ Update existing ProvisioningConfig.
 ```sql
 UPDATE google.baremetalsolution.provisioning_configs
 SET 
-data__instances = '{{ instances }}',
-data__networks = '{{ networks }}',
-data__volumes = '{{ volumes }}',
-data__ticketId = '{{ ticketId }}',
-data__handoverServiceAccount = '{{ handoverServiceAccount }}',
-data__email = '{{ email }}',
-data__location = '{{ location }}',
-data__vpcScEnabled = {{ vpcScEnabled }},
 data__statusMessage = '{{ statusMessage }}',
+data__networks = '{{ networks }}',
+data__location = '{{ location }}',
+data__handoverServiceAccount = '{{ handoverServiceAccount }}',
+data__instances = '{{ instances }}',
+data__volumes = '{{ volumes }}',
 data__customId = '{{ customId }}',
-data__pod = '{{ pod }}'
+data__pod = '{{ pod }}',
+data__email = '{{ email }}',
+data__ticketId = '{{ ticketId }}',
+data__vpcScEnabled = {{ vpcScEnabled }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

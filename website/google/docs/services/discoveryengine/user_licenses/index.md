@@ -107,7 +107,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_user_stores_user_licenses_list"><CopyableCode code="projects_locations_user_stores_user_licenses_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-userStoresId"><code>userStoresId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the User Licenses.</td>
 </tr>
 </tbody>
@@ -141,8 +141,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
-<tr id="parameter-filter">
-    <td><CopyableCode code="filter" /></td>
+<tr id="parameter-orderBy">
+    <td><CopyableCode code="orderBy" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -184,9 +184,9 @@ FROM google.discoveryengine.user_licenses
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND userStoresId = '{{ userStoresId }}' -- required
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>

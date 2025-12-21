@@ -264,16 +264,16 @@ Creates a ruleset.
 
 ```sql
 INSERT INTO google.contentwarehouse.rule_sets (
-data__name,
 data__description,
+data__name,
 data__source,
 data__rules,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ name }}',
 '{{ description }}',
+'{{ name }}',
 '{{ source }}',
 '{{ rules }}',
 '{{ projectsId }}',
@@ -298,15 +298,15 @@ source
     - name: locationsId
       value: string
       description: Required parameter for the rule_sets resource.
-    - name: name
-      value: string
-      description: >
-        The resource name of the rule set. Managed internally. Format: projects/{project_number}/locations/{location}/ruleSet/{rule_set_id}. The name is ignored when creating a rule set.
-        
     - name: description
       value: string
       description: >
         Short description of the rule-set.
+        
+    - name: name
+      value: string
+      description: >
+        The resource name of the rule set. Managed internally. Format: projects/{project_number}/locations/{location}/ruleSet/{rule_set_id}. The name is ignored when creating a rule set.
         
     - name: source
       value: string

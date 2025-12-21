@@ -319,19 +319,259 @@ The following fields are returned by `SELECT` queries:
 </thead>
 <tbody>
 <tr>
-    <td><CopyableCode code="code" /></td>
+    <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Code to uniquely identify the warning type.</td>
+    <td>Name of the Cloud SQL instance. This does not include the project ID.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="message" /></td>
+    <td><CopyableCode code="availableMaintenanceVersions" /></td>
+    <td><code>array</code></td>
+    <td>Output only. List all maintenance versions applicable on the instance</td>
+</tr>
+<tr>
+    <td><CopyableCode code="backendType" /></td>
     <td><code>string</code></td>
-    <td>The warning message.</td>
+    <td>The backend type. `SECOND_GEN`: Cloud SQL database instance. `EXTERNAL`: A database server that is not managed by Google. This property is read-only; use the `tier` property in the `settings` object to determine the database type.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="connectionName" /></td>
+    <td><code>string</code></td>
+    <td>Connection name of the Cloud SQL instance used in connection strings.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time when the instance was created in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="currentDiskSize" /></td>
+    <td><code>string (int64)</code></td>
+    <td>The current disk usage of the instance in bytes. This property has been deprecated. Use the "cloudsql.googleapis.com/database/disk/bytes_used" metric in Cloud Monitoring API instead. Please see [this announcement](https://groups.google.com/d/msg/google-cloud-sql-announce/I_7-F9EBhT0/BtvFtdFeAgAJ) for details.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="databaseInstalledVersion" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Stores the current database version running on the instance including minor version such as `MYSQL_8_0_18`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="databaseVersion" /></td>
+    <td><code>string</code></td>
+    <td>The database engine type and version. The `databaseVersion` field cannot be changed after instance creation.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="diskEncryptionConfiguration" /></td>
+    <td><code>object</code></td>
+    <td>Disk encryption configuration specific to an instance. (id: DiskEncryptionConfiguration)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="diskEncryptionStatus" /></td>
+    <td><code>object</code></td>
+    <td>Disk encryption status specific to an instance. (id: DiskEncryptionStatus)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="dnsName" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The dns name of the instance.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="dnsNames" /></td>
+    <td><code>array</code></td>
+    <td>Output only. The list of DNS names used by this instance.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="etag" /></td>
+    <td><code>string</code></td>
+    <td>This field is deprecated and will be removed from a future version of the API. Use the `settings.settingsVersion` field instead.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="failoverReplica" /></td>
+    <td><code>object</code></td>
+    <td>The name and status of the failover replica.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="gceZone" /></td>
+    <td><code>string</code></td>
+    <td>The Compute Engine zone that the instance is currently serving from. This value could be different from the zone that was specified when the instance was created if the instance has failed over to its secondary zone. WARNING: Changing this might restart the instance.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="geminiConfig" /></td>
+    <td><code>object</code></td>
+    <td>Gemini instance configuration. (id: GeminiInstanceConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="includeReplicasForMajorVersionUpgrade" /></td>
+    <td><code>boolean</code></td>
+    <td>Input only. Determines whether an in-place major version upgrade of replicas happens when an in-place major version upgrade of a primary instance is initiated.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="instanceType" /></td>
+    <td><code>string</code></td>
+    <td>The instance type.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="ipAddresses" /></td>
+    <td><code>array</code></td>
+    <td>The assigned IP addresses for the instance.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="ipv6Address" /></td>
+    <td><code>string</code></td>
+    <td>The IPv6 address assigned to the instance. (Deprecated) This property was applicable only to First Generation instances.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="kind" /></td>
+    <td><code>string</code></td>
+    <td>This is always `sql#instance`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="maintenanceVersion" /></td>
+    <td><code>string</code></td>
+    <td>The current software version on the instance.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="masterInstanceName" /></td>
+    <td><code>string</code></td>
+    <td>The name of the instance which will act as primary in the replication setup.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="maxDiskSize" /></td>
+    <td><code>string (int64)</code></td>
+    <td>The maximum disk size of the instance in bytes.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="nodeCount" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>The number of read pool nodes in a read pool.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="nodes" /></td>
+    <td><code>array</code></td>
+    <td>Output only. Entries containing information about each read pool node of the read pool.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="onPremisesConfiguration" /></td>
+    <td><code>object</code></td>
+    <td>Configuration specific to on-premises instances. (id: OnPremisesConfiguration)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="outOfDiskReport" /></td>
+    <td><code>object</code></td>
+    <td>This field represents the report generated by the proactive database wellness job for OutOfDisk issues. * Writers: * the proactive database wellness job for OOD. * Readers: * the proactive database wellness job (id: SqlOutOfDiskReport)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="primaryDnsName" /></td>
+    <td><code>string</code></td>
+    <td>Output only. DEPRECATED: please use write_endpoint instead.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="project" /></td>
+    <td><code>string</code></td>
+    <td>The project ID of the project containing the Cloud SQL instance. The Google apps domain is prefixed if applicable.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="pscServiceAttachmentLink" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The link to service attachment of PSC instance.</td>
 </tr>
 <tr>
     <td><CopyableCode code="region" /></td>
     <td><code>string</code></td>
-    <td>The region name for REGION_UNREACHABLE warning.</td>
+    <td>The geographical region of the Cloud SQL instance. It can be one of the [regions](https://cloud.google.com/sql/docs/mysql/locations#location-r) where Cloud SQL operates: For example, `asia-east1`, `europe-west1`, and `us-central1`. The default value is `us-central1`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="replicaConfiguration" /></td>
+    <td><code>object</code></td>
+    <td>Configuration specific to failover replicas and read replicas. (id: ReplicaConfiguration)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="replicaNames" /></td>
+    <td><code>array</code></td>
+    <td>The replicas of the instance.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="replicationCluster" /></td>
+    <td><code>object</code></td>
+    <td>Optional. A primary instance and disaster recovery (DR) replica pair. A DR replica is a cross-region replica that you designate for failover in the event that the primary instance experiences regional failure. Applicable to MySQL and PostgreSQL. (id: ReplicationCluster)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="rootPassword" /></td>
+    <td><code>string</code></td>
+    <td>Initial root password. Use only on creation. You must set root passwords before you can connect to PostgreSQL instances.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="satisfiesPzi" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. This status indicates whether the instance satisfies PZI. The status is reserved for future use.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="satisfiesPzs" /></td>
+    <td><code>boolean</code></td>
+    <td>This status indicates whether the instance satisfies PZS. The status is reserved for future use.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="scheduledMaintenance" /></td>
+    <td><code>object</code></td>
+    <td>The start time of any upcoming scheduled maintenance for this instance. (id: SqlScheduledMaintenance)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="secondaryGceZone" /></td>
+    <td><code>string</code></td>
+    <td>The Compute Engine zone that the failover instance is currently serving from for a regional instance. This value could be different from the zone that was specified when the instance was created if the instance has failed over to its secondary/failover zone.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="selfLink" /></td>
+    <td><code>string</code></td>
+    <td>The URI of this resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="serverCaCert" /></td>
+    <td><code>object</code></td>
+    <td>SSL configuration. (id: SslCert)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="serviceAccountEmailAddress" /></td>
+    <td><code>string</code></td>
+    <td>The service account email address assigned to the instance.\This property is read-only.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="settings" /></td>
+    <td><code>object</code></td>
+    <td>The user settings. (id: Settings)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="sqlNetworkArchitecture" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>The current serving state of the Cloud SQL instance.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="suspensionReason" /></td>
+    <td><code>array</code></td>
+    <td>If the instance state is SUSPENDED, the reason for the suspension.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="switchTransactionLogsToCloudStorageEnabled" /></td>
+    <td><code>boolean</code></td>
+    <td>Input only. Whether Cloud SQL is enabled to switch storing point-in-time recovery log files from a data disk to Cloud Storage.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="tags" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Input only. Immutable. Tag keys and tag values that are bound to this instance. You must represent each item in the map as: `"" : ""`. For example, a single resource can have the following tags: ``` "123/environment": "production", "123/costCenter": "marketing", ``` For more information on tag creation and management, see https://cloud.google.com/resource-manager/docs/tags/tags-overview.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="upgradableDatabaseVersions" /></td>
+    <td><code>array</code></td>
+    <td>Output only. All database versions that are available for upgrade.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="writeEndpoint" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The dns name of the primary instance in a replication group.</td>
 </tr>
 </tbody>
 </table>
@@ -392,134 +632,15 @@ The following methods are available for this resource:
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td><a href="#parameter-enableFinalBackup"><code>enableFinalBackup</code></a>, <a href="#parameter-finalBackupTtlDays"><code>finalBackupTtlDays</code></a>, <a href="#parameter-finalBackupExpiryTime"><code>finalBackupExpiryTime</code></a>, <a href="#parameter-finalBackupDescription"><code>finalBackupDescription</code></a></td>
+    <td><a href="#parameter-enableFinalBackup"><code>enableFinalBackup</code></a>, <a href="#parameter-finalBackupDescription"><code>finalBackupDescription</code></a>, <a href="#parameter-finalBackupTtlDays"><code>finalBackupTtlDays</code></a>, <a href="#parameter-finalBackupExpiryTime"><code>finalBackupExpiryTime</code></a></td>
     <td>Deletes a Cloud SQL instance.</td>
 </tr>
 <tr>
-    <td><a href="#clone"><CopyableCode code="clone" /></a></td>
+    <td><a href="#pre_check_major_version_upgrade"><CopyableCode code="pre_check_major_version_upgrade" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
     <td></td>
-    <td>Creates a Cloud SQL instance as a clone of the source instance. Using this operation might cause your instance to restart.</td>
-</tr>
-<tr>
-    <td><a href="#demote_master"><CopyableCode code="demote_master" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td></td>
-    <td>Demotes the stand-alone instance to be a Cloud SQL read replica for an external database server.</td>
-</tr>
-<tr>
-    <td><a href="#demote"><CopyableCode code="demote" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td></td>
-    <td>Demotes an existing standalone instance to be a Cloud SQL read replica for an external database server.</td>
-</tr>
-<tr>
-    <td><a href="#export"><CopyableCode code="export" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td></td>
-    <td>Exports data from a Cloud SQL instance to a Cloud Storage bucket as a SQL dump or CSV file.</td>
-</tr>
-<tr>
-    <td><a href="#failover"><CopyableCode code="failover" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td></td>
-    <td>Initiates a manual failover of a high availability (HA) primary instance to a standby instance, which becomes the primary instance. Users are then rerouted to the new primary. For more information, see the [Overview of high availability](https://cloud.google.com/sql/docs/mysql/high-availability) page in the Cloud SQL documentation. If using Legacy HA (MySQL only), this causes the instance to failover to its failover replica instance.</td>
-</tr>
-<tr>
-    <td><a href="#reencrypt"><CopyableCode code="reencrypt" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td></td>
-    <td>Reencrypt CMEK instance with latest key version.</td>
-</tr>
-<tr>
-    <td><a href="#import"><CopyableCode code="import" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td></td>
-    <td>Imports data into a Cloud SQL instance from a SQL dump or CSV file in Cloud Storage.</td>
-</tr>
-<tr>
-    <td><a href="#list_server_certificates"><CopyableCode code="list_server_certificates" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td></td>
-    <td>Lists all versions of server certificates and certificate authorities (CAs) for the specified instance. There can be up to three sets of certs listed: the certificate that is currently in use, a future that has been added but not yet used to sign a certificate, and a certificate that has been rotated out. For instances not using Certificate Authority Service (CAS) server CA, use ListServerCas instead.</td>
-</tr>
-<tr>
-    <td><a href="#promote_replica"><CopyableCode code="promote_replica" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td><a href="#parameter-failover"><code>failover</code></a></td>
-    <td>Promotes the read replica instance to be an independent Cloud SQL primary instance. Using this operation might cause your instance to restart.</td>
-</tr>
-<tr>
-    <td><a href="#switchover"><CopyableCode code="switchover" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td><a href="#parameter-dbTimeout"><code>dbTimeout</code></a></td>
-    <td>Switches over from the primary instance to the DR replica instance.</td>
-</tr>
-<tr>
-    <td><a href="#reset_ssl_config"><CopyableCode code="reset_ssl_config" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td></td>
-    <td>Deletes all client certificates and generates a new server SSL certificate for the instance.</td>
-</tr>
-<tr>
-    <td><a href="#restart"><CopyableCode code="restart" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td></td>
-    <td>Restarts a Cloud SQL instance.</td>
-</tr>
-<tr>
-    <td><a href="#restore_backup"><CopyableCode code="restore_backup" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td></td>
-    <td>Restores a backup of a Cloud SQL instance. Using this operation might cause your instance to restart.</td>
-</tr>
-<tr>
-    <td><a href="#rotate_server_ca"><CopyableCode code="rotate_server_ca" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td></td>
-    <td>Rotates the server certificate to one signed by the Certificate Authority (CA) version previously added with the addServerCA method. For instances that have enabled Certificate Authority Service (CAS) based server CA, use RotateServerCertificate to rotate the server certificate.</td>
-</tr>
-<tr>
-    <td><a href="#rotate_server_certificate"><CopyableCode code="rotate_server_certificate" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td></td>
-    <td>Rotates the server certificate version to one previously added with the addServerCertificate method. For instances not using Certificate Authority Service (CAS) server CA, use RotateServerCa instead.</td>
-</tr>
-<tr>
-    <td><a href="#start_replica"><CopyableCode code="start_replica" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td></td>
-    <td>Starts the replication in the read replica instance.</td>
-</tr>
-<tr>
-    <td><a href="#stop_replica"><CopyableCode code="stop_replica" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td></td>
-    <td>Stops the replication in the read replica instance.</td>
-</tr>
-<tr>
-    <td><a href="#truncate_log"><CopyableCode code="truncate_log" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td></td>
-    <td>Truncate MySQL general and slow query log tables MySQL only.</td>
+    <td>Execute MVU Pre-checks</td>
 </tr>
 <tr>
     <td><a href="#execute_sql"><CopyableCode code="execute_sql" /></a></td>
@@ -529,11 +650,151 @@ The following methods are available for this resource:
     <td>Execute SQL statements.</td>
 </tr>
 <tr>
+    <td><a href="#list_entra_id_certificates"><CopyableCode code="list_entra_id_certificates" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td></td>
+    <td>Lists all versions of EntraID certificates for the specified instance. There can be up to three sets of certificates listed: the certificate that is currently in use, a future that has been added but not yet used to sign a certificate, and a certificate that has been rotated out.</td>
+</tr>
+<tr>
+    <td><a href="#rotate_server_ca"><CopyableCode code="rotate_server_ca" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td></td>
+    <td>Rotates the server certificate to one signed by the Certificate Authority (CA) version previously added with the addServerCA method. For instances that have enabled Certificate Authority Service (CAS) based server CA, use RotateServerCertificate to rotate the server certificate.</td>
+</tr>
+<tr>
+    <td><a href="#reencrypt"><CopyableCode code="reencrypt" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td></td>
+    <td>Reencrypt CMEK instance with latest key version.</td>
+</tr>
+<tr>
+    <td><a href="#clone"><CopyableCode code="clone" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td></td>
+    <td>Creates a Cloud SQL instance as a clone of the source instance. Using this operation might cause your instance to restart.</td>
+</tr>
+<tr>
+    <td><a href="#export"><CopyableCode code="export" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td></td>
+    <td>Exports data from a Cloud SQL instance to a Cloud Storage bucket as a SQL dump or CSV file.</td>
+</tr>
+<tr>
+    <td><a href="#list_server_certificates"><CopyableCode code="list_server_certificates" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td></td>
+    <td>Lists all versions of server certificates and certificate authorities (CAs) for the specified instance. There can be up to three sets of certs listed: the certificate that is currently in use, a future that has been added but not yet used to sign a certificate, and a certificate that has been rotated out. For instances not using Certificate Authority Service (CAS) server CA, use ListServerCas instead.</td>
+</tr>
+<tr>
+    <td><a href="#point_in_time_restore"><CopyableCode code="point_in_time_restore" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td></td>
+    <td>Point in time restore for an instance managed by Google Cloud Backup and Disaster Recovery.</td>
+</tr>
+<tr>
     <td><a href="#acquire_ssrs_lease"><CopyableCode code="acquire_ssrs_lease" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
     <td></td>
     <td>Acquire a lease for the setup of SQL Server Reporting Services (SSRS).</td>
+</tr>
+<tr>
+    <td><a href="#failover"><CopyableCode code="failover" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td></td>
+    <td>Initiates a manual failover of a high availability (HA) primary instance to a standby instance, which becomes the primary instance. Users are then rerouted to the new primary. For more information, see the [Overview of high availability](https://cloud.google.com/sql/docs/mysql/high-availability) page in the Cloud SQL documentation. If using Legacy HA (MySQL only), this causes the instance to failover to its failover replica instance.</td>
+</tr>
+<tr>
+    <td><a href="#reset_ssl_config"><CopyableCode code="reset_ssl_config" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td><a href="#parameter-mode"><code>mode</code></a></td>
+    <td>Deletes all client certificates and generates a new server SSL certificate for the instance.</td>
+</tr>
+<tr>
+    <td><a href="#promote_replica"><CopyableCode code="promote_replica" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td><a href="#parameter-failover"><code>failover</code></a></td>
+    <td>Promotes the read replica instance to be an independent Cloud SQL primary instance. Using this operation might cause your instance to restart.</td>
+</tr>
+<tr>
+    <td><a href="#restart"><CopyableCode code="restart" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td></td>
+    <td>Restarts a Cloud SQL instance.</td>
+</tr>
+<tr>
+    <td><a href="#stop_replica"><CopyableCode code="stop_replica" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td></td>
+    <td>Stops the replication in the read replica instance.</td>
+</tr>
+<tr>
+    <td><a href="#demote_master"><CopyableCode code="demote_master" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td></td>
+    <td>Demotes the stand-alone instance to be a Cloud SQL read replica for an external database server.</td>
+</tr>
+<tr>
+    <td><a href="#switchover"><CopyableCode code="switchover" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td><a href="#parameter-dbTimeout"><code>dbTimeout</code></a></td>
+    <td>Switches over from the primary instance to the DR replica instance.</td>
+</tr>
+<tr>
+    <td><a href="#truncate_log"><CopyableCode code="truncate_log" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td></td>
+    <td>Truncate MySQL general and slow query log tables MySQL only.</td>
+</tr>
+<tr>
+    <td><a href="#demote"><CopyableCode code="demote" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td></td>
+    <td>Demotes an existing standalone instance to be a Cloud SQL read replica for an external database server.</td>
+</tr>
+<tr>
+    <td><a href="#restore_backup"><CopyableCode code="restore_backup" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td></td>
+    <td>Restores a backup of a Cloud SQL instance. Using this operation might cause your instance to restart.</td>
+</tr>
+<tr>
+    <td><a href="#start_replica"><CopyableCode code="start_replica" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td></td>
+    <td>Starts the replication in the read replica instance.</td>
+</tr>
+<tr>
+    <td><a href="#rotate_server_certificate"><CopyableCode code="rotate_server_certificate" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td></td>
+    <td>Rotates the server certificate version to one previously added with the addServerCertificate method. For instances not using Certificate Authority Service (CAS) server CA, use RotateServerCa instead.</td>
+</tr>
+<tr>
+    <td><a href="#rotate_entra_id_certificate"><CopyableCode code="rotate_entra_id_certificate" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td></td>
+    <td>Rotates the server certificate version to one previously added with the addEntraIdCertificate method.</td>
 </tr>
 <tr>
     <td><a href="#release_ssrs_lease"><CopyableCode code="release_ssrs_lease" /></a></td>
@@ -543,11 +804,25 @@ The following methods are available for this resource:
     <td>Release a lease for the setup of SQL Server Reporting Services (SSRS).</td>
 </tr>
 <tr>
-    <td><a href="#point_in_time_restore"><CopyableCode code="point_in_time_restore" /></a></td>
+    <td><a href="#import"><CopyableCode code="import" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
     <td></td>
-    <td>Point in time restore for an instance managed by Google Cloud Backup and Disaster Recovery.</td>
+    <td>Imports data into a Cloud SQL instance from a SQL dump or CSV file in Cloud Storage.</td>
+</tr>
+<tr>
+    <td><a href="#start_external_sync"><CopyableCode code="start_external_sync" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td></td>
+    <td>Start External primary instance migration.</td>
+</tr>
+<tr>
+    <td><a href="#reset_replica_size"><CopyableCode code="reset_replica_size" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
+    <td></td>
+    <td>Reset Replica Size to primary instance disk size.</td>
 </tr>
 <tr>
     <td><a href="#reschedule_maintenance"><CopyableCode code="reschedule_maintenance" /></a></td>
@@ -564,25 +839,11 @@ The following methods are available for this resource:
     <td>Verify External primary instance external sync settings.</td>
 </tr>
 <tr>
-    <td><a href="#start_external_sync"><CopyableCode code="start_external_sync" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td></td>
-    <td>Start External primary instance migration.</td>
-</tr>
-<tr>
     <td><a href="#perform_disk_shrink"><CopyableCode code="perform_disk_shrink" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
     <td></td>
     <td>Perform Disk Shrink on primary instance.</td>
-</tr>
-<tr>
-    <td><a href="#reset_replica_size"><CopyableCode code="reset_replica_size" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td></td>
-    <td>Reset Replica Size to primary instance disk size.</td>
 </tr>
 </tbody>
 </table>
@@ -653,6 +914,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-maxResults">
     <td><CopyableCode code="maxResults" /></td>
     <td><code>integer (uint32)</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-mode">
+    <td><CopyableCode code="mode" /></td>
+    <td><code>string</code></td>
     <td></td>
 </tr>
 <tr id="parameter-pageToken">
@@ -741,9 +1007,57 @@ Lists instances under a given project.
 
 ```sql
 SELECT
-code,
-message,
-region
+name,
+availableMaintenanceVersions,
+backendType,
+connectionName,
+createTime,
+currentDiskSize,
+databaseInstalledVersion,
+databaseVersion,
+diskEncryptionConfiguration,
+diskEncryptionStatus,
+dnsName,
+dnsNames,
+etag,
+failoverReplica,
+gceZone,
+geminiConfig,
+includeReplicasForMajorVersionUpgrade,
+instanceType,
+ipAddresses,
+ipv6Address,
+kind,
+maintenanceVersion,
+masterInstanceName,
+maxDiskSize,
+nodeCount,
+nodes,
+onPremisesConfiguration,
+outOfDiskReport,
+primaryDnsName,
+project,
+pscServiceAttachmentLink,
+region,
+replicaConfiguration,
+replicaNames,
+replicationCluster,
+rootPassword,
+satisfiesPzi,
+satisfiesPzs,
+scheduledMaintenance,
+secondaryGceZone,
+selfLink,
+serverCaCert,
+serviceAccountEmailAddress,
+settings,
+sqlNetworkArchitecture,
+state,
+suspensionReason,
+switchTransactionLogsToCloudStorageEnabled,
+tags,
+upgradableDatabaseVersions,
+writeEndpoint
 FROM google.sqladmin.instances
 WHERE project = '{{ project }}' -- required
 AND filter = '{{ filter }}'
@@ -770,89 +1084,89 @@ Creates a new Cloud SQL instance.
 
 ```sql
 INSERT INTO google.sqladmin.instances (
-data__kind,
-data__state,
-data__databaseVersion,
 data__settings,
-data__etag,
-data__failoverReplica,
 data__masterInstanceName,
-data__replicaNames,
-data__maxDiskSize,
-data__currentDiskSize,
-data__ipAddresses,
-data__serverCaCert,
-data__instanceType,
-data__project,
-data__ipv6Address,
-data__serviceAccountEmailAddress,
-data__onPremisesConfiguration,
 data__replicaConfiguration,
-data__backendType,
-data__selfLink,
-data__suspensionReason,
-data__connectionName,
-data__name,
 data__region,
-data__gceZone,
-data__secondaryGceZone,
-data__diskEncryptionConfiguration,
-data__diskEncryptionStatus,
-data__rootPassword,
-data__scheduledMaintenance,
 data__satisfiesPzs,
-data__outOfDiskReport,
-data__maintenanceVersion,
-data__sqlNetworkArchitecture,
-data__replicationCluster,
-data__geminiConfig,
-data__switchTransactionLogsToCloudStorageEnabled,
 data__includeReplicasForMajorVersionUpgrade,
-data__tags,
+data__replicationCluster,
+data__connectionName,
+data__etag,
+data__instanceType,
+data__ipv6Address,
+data__selfLink,
+data__rootPassword,
+data__databaseVersion,
+data__maintenanceVersion,
 data__nodeCount,
+data__project,
+data__maxDiskSize,
+data__state,
+data__currentDiskSize,
+data__tags,
+data__geminiConfig,
+data__diskEncryptionStatus,
+data__switchTransactionLogsToCloudStorageEnabled,
+data__kind,
+data__suspensionReason,
+data__replicaNames,
+data__sqlNetworkArchitecture,
+data__serverCaCert,
+data__outOfDiskReport,
+data__diskEncryptionConfiguration,
+data__ipAddresses,
+data__gceZone,
+data__scheduledMaintenance,
+data__failoverReplica,
+data__onPremisesConfiguration,
+data__backendType,
+data__serviceAccountEmailAddress,
+data__name,
+data__secondaryGceZone,
 project
 )
 SELECT 
-'{{ kind }}',
-'{{ state }}',
-'{{ databaseVersion }}',
 '{{ settings }}',
-'{{ etag }}',
-'{{ failoverReplica }}',
 '{{ masterInstanceName }}',
-'{{ replicaNames }}',
-'{{ maxDiskSize }}',
-'{{ currentDiskSize }}',
-'{{ ipAddresses }}',
-'{{ serverCaCert }}',
-'{{ instanceType }}',
-'{{ project }}',
-'{{ ipv6Address }}',
-'{{ serviceAccountEmailAddress }}',
-'{{ onPremisesConfiguration }}',
 '{{ replicaConfiguration }}',
-'{{ backendType }}',
-'{{ selfLink }}',
-'{{ suspensionReason }}',
-'{{ connectionName }}',
-'{{ name }}',
 '{{ region }}',
-'{{ gceZone }}',
-'{{ secondaryGceZone }}',
-'{{ diskEncryptionConfiguration }}',
-'{{ diskEncryptionStatus }}',
-'{{ rootPassword }}',
-'{{ scheduledMaintenance }}',
 {{ satisfiesPzs }},
-'{{ outOfDiskReport }}',
-'{{ maintenanceVersion }}',
-'{{ sqlNetworkArchitecture }}',
-'{{ replicationCluster }}',
-'{{ geminiConfig }}',
-{{ switchTransactionLogsToCloudStorageEnabled }},
 {{ includeReplicasForMajorVersionUpgrade }},
-'{{ tags }}',
+'{{ replicationCluster }}',
+'{{ connectionName }}',
+'{{ etag }}',
+'{{ instanceType }}',
+'{{ ipv6Address }}',
+'{{ selfLink }}',
+'{{ rootPassword }}',
+'{{ databaseVersion }}',
+'{{ maintenanceVersion }}',
 {{ nodeCount }},
+'{{ project }}',
+'{{ maxDiskSize }}',
+'{{ state }}',
+'{{ currentDiskSize }}',
+'{{ tags }}',
+'{{ geminiConfig }}',
+'{{ diskEncryptionStatus }}',
+{{ switchTransactionLogsToCloudStorageEnabled }},
+'{{ kind }}',
+'{{ suspensionReason }}',
+'{{ replicaNames }}',
+'{{ sqlNetworkArchitecture }}',
+'{{ serverCaCert }}',
+'{{ outOfDiskReport }}',
+'{{ diskEncryptionConfiguration }}',
+'{{ ipAddresses }}',
+'{{ gceZone }}',
+'{{ scheduledMaintenance }}',
+'{{ failoverReplica }}',
+'{{ onPremisesConfiguration }}',
+'{{ backendType }}',
+'{{ serviceAccountEmailAddress }}',
+'{{ name }}',
+'{{ secondaryGceZone }}',
 '{{ project }}'
 RETURNING
 name,
@@ -866,6 +1180,7 @@ importContext,
 insertTime,
 kind,
 operationType,
+preCheckMajorVersionUpgradeContext,
 selfLink,
 startTime,
 status,
@@ -886,67 +1201,50 @@ user
     - name: project
       value: string
       description: Required parameter for the instances resource.
-    - name: kind
-      value: string
-      description: >
-        This is always `sql#instance`.
-        
-    - name: state
-      value: string
-      description: >
-        The current serving state of the Cloud SQL instance.
-        
-      valid_values: ['SQL_INSTANCE_STATE_UNSPECIFIED', 'RUNNABLE', 'SUSPENDED', 'PENDING_DELETE', 'PENDING_CREATE', 'MAINTENANCE', 'FAILED', 'ONLINE_MAINTENANCE', 'REPAIRING']
-    - name: databaseVersion
-      value: string
-      description: >
-        The database engine type and version. The `databaseVersion` field cannot be changed after instance creation.
-        
-      valid_values: ['SQL_DATABASE_VERSION_UNSPECIFIED', 'MYSQL_5_1', 'MYSQL_5_5', 'MYSQL_5_6', 'MYSQL_5_7', 'MYSQL_8_0', 'MYSQL_8_0_18', 'MYSQL_8_0_26', 'MYSQL_8_0_27', 'MYSQL_8_0_28', 'MYSQL_8_0_29', 'MYSQL_8_0_30', 'MYSQL_8_0_31', 'MYSQL_8_0_32', 'MYSQL_8_0_33', 'MYSQL_8_0_34', 'MYSQL_8_0_35', 'MYSQL_8_0_36', 'MYSQL_8_0_37', 'MYSQL_8_0_39', 'MYSQL_8_0_40', 'MYSQL_8_0_41', 'MYSQL_8_0_42', 'MYSQL_8_0_43', 'MYSQL_8_0_44', 'MYSQL_8_0_45', 'MYSQL_8_0_46', 'MYSQL_8_4', 'SQLSERVER_2017_STANDARD', 'SQLSERVER_2017_ENTERPRISE', 'SQLSERVER_2017_EXPRESS', 'SQLSERVER_2017_WEB', 'POSTGRES_9_6', 'POSTGRES_10', 'POSTGRES_11', 'POSTGRES_12', 'POSTGRES_13', 'POSTGRES_14', 'POSTGRES_15', 'POSTGRES_16', 'POSTGRES_17', 'SQLSERVER_2019_STANDARD', 'SQLSERVER_2019_ENTERPRISE', 'SQLSERVER_2019_EXPRESS', 'SQLSERVER_2019_WEB', 'SQLSERVER_2022_STANDARD', 'SQLSERVER_2022_ENTERPRISE', 'SQLSERVER_2022_EXPRESS', 'SQLSERVER_2022_WEB']
     - name: settings
       value: object
       description: >
         The user settings.
-        
-    - name: etag
-      value: string
-      description: >
-        This field is deprecated and will be removed from a future version of the API. Use the `settings.settingsVersion` field instead.
-        
-    - name: failoverReplica
-      value: object
-      description: >
-        The name and status of the failover replica.
         
     - name: masterInstanceName
       value: string
       description: >
         The name of the instance which will act as primary in the replication setup.
         
-    - name: replicaNames
-      value: array
-      description: >
-        The replicas of the instance.
-        
-    - name: maxDiskSize
-      value: string
-      description: >
-        The maximum disk size of the instance in bytes.
-        
-    - name: currentDiskSize
-      value: string
-      description: >
-        The current disk usage of the instance in bytes. This property has been deprecated. Use the "cloudsql.googleapis.com/database/disk/bytes_used" metric in Cloud Monitoring API instead. Please see [this announcement](https://groups.google.com/d/msg/google-cloud-sql-announce/I_7-F9EBhT0/BtvFtdFeAgAJ) for details.
-        
-    - name: ipAddresses
-      value: array
-      description: >
-        The assigned IP addresses for the instance.
-        
-    - name: serverCaCert
+    - name: replicaConfiguration
       value: object
       description: >
-        SSL configuration.
+        Configuration specific to failover replicas and read replicas.
+        
+    - name: region
+      value: string
+      description: >
+        The geographical region of the Cloud SQL instance. It can be one of the [regions](https://cloud.google.com/sql/docs/mysql/locations#location-r) where Cloud SQL operates: For example, `asia-east1`, `europe-west1`, and `us-central1`. The default value is `us-central1`.
+        
+    - name: satisfiesPzs
+      value: boolean
+      description: >
+        This status indicates whether the instance satisfies PZS. The status is reserved for future use.
+        
+    - name: includeReplicasForMajorVersionUpgrade
+      value: boolean
+      description: >
+        Input only. Determines whether an in-place major version upgrade of replicas happens when an in-place major version upgrade of a primary instance is initiated.
+        
+    - name: replicationCluster
+      value: object
+      description: >
+        Optional. A primary instance and disaster recovery (DR) replica pair. A DR replica is a cross-region replica that you designate for failover in the event that the primary instance experiences regional failure. Applicable to MySQL and PostgreSQL.
+        
+    - name: connectionName
+      value: string
+      description: >
+        Connection name of the Cloud SQL instance used in connection strings.
+        
+    - name: etag
+      value: string
+      description: >
+        This field is deprecated and will be removed from a future version of the API. Use the `settings.settingsVersion` field instead.
         
     - name: instanceType
       value: string
@@ -954,30 +1252,135 @@ user
         The instance type.
         
       valid_values: ['SQL_INSTANCE_TYPE_UNSPECIFIED', 'CLOUD_SQL_INSTANCE', 'ON_PREMISES_INSTANCE', 'READ_REPLICA_INSTANCE', 'READ_POOL_INSTANCE']
-    - name: project
-      value: string
-      description: >
-        The project ID of the project containing the Cloud SQL instance. The Google apps domain is prefixed if applicable.
-        
     - name: ipv6Address
       value: string
       description: >
         The IPv6 address assigned to the instance. (Deprecated) This property was applicable only to First Generation instances.
         
-    - name: serviceAccountEmailAddress
+    - name: selfLink
       value: string
       description: >
-        The service account email address assigned to the instance.\This property is read-only.
+        The URI of this resource.
+        
+    - name: rootPassword
+      value: string
+      description: >
+        Initial root password. Use only on creation. You must set root passwords before you can connect to PostgreSQL instances.
+        
+    - name: databaseVersion
+      value: string
+      description: >
+        The database engine type and version. The `databaseVersion` field cannot be changed after instance creation.
+        
+      valid_values: ['SQL_DATABASE_VERSION_UNSPECIFIED', 'MYSQL_5_1', 'MYSQL_5_5', 'MYSQL_5_6', 'MYSQL_5_7', 'MYSQL_8_0', 'MYSQL_8_0_18', 'MYSQL_8_0_26', 'MYSQL_8_0_27', 'MYSQL_8_0_28', 'MYSQL_8_0_29', 'MYSQL_8_0_30', 'MYSQL_8_0_31', 'MYSQL_8_0_32', 'MYSQL_8_0_33', 'MYSQL_8_0_34', 'MYSQL_8_0_35', 'MYSQL_8_0_36', 'MYSQL_8_0_37', 'MYSQL_8_0_39', 'MYSQL_8_0_40', 'MYSQL_8_0_41', 'MYSQL_8_0_42', 'MYSQL_8_0_43', 'MYSQL_8_0_44', 'MYSQL_8_0_45', 'MYSQL_8_0_46', 'MYSQL_8_4', 'SQLSERVER_2017_STANDARD', 'SQLSERVER_2017_ENTERPRISE', 'SQLSERVER_2017_EXPRESS', 'SQLSERVER_2017_WEB', 'POSTGRES_9_6', 'POSTGRES_10', 'POSTGRES_11', 'POSTGRES_12', 'POSTGRES_13', 'POSTGRES_14', 'POSTGRES_15', 'POSTGRES_16', 'POSTGRES_17', 'POSTGRES_18', 'SQLSERVER_2019_STANDARD', 'SQLSERVER_2019_ENTERPRISE', 'SQLSERVER_2019_EXPRESS', 'SQLSERVER_2019_WEB', 'SQLSERVER_2022_STANDARD', 'SQLSERVER_2022_ENTERPRISE', 'SQLSERVER_2022_EXPRESS', 'SQLSERVER_2022_WEB']
+    - name: maintenanceVersion
+      value: string
+      description: >
+        The current software version on the instance.
+        
+    - name: nodeCount
+      value: integer
+      description: >
+        The number of read pool nodes in a read pool.
+        
+    - name: project
+      value: string
+      description: >
+        The project ID of the project containing the Cloud SQL instance. The Google apps domain is prefixed if applicable.
+        
+    - name: maxDiskSize
+      value: string
+      description: >
+        The maximum disk size of the instance in bytes.
+        
+    - name: state
+      value: string
+      description: >
+        The current serving state of the Cloud SQL instance.
+        
+      valid_values: ['SQL_INSTANCE_STATE_UNSPECIFIED', 'RUNNABLE', 'SUSPENDED', 'PENDING_DELETE', 'PENDING_CREATE', 'MAINTENANCE', 'FAILED', 'ONLINE_MAINTENANCE', 'REPAIRING']
+    - name: currentDiskSize
+      value: string
+      description: >
+        The current disk usage of the instance in bytes. This property has been deprecated. Use the "cloudsql.googleapis.com/database/disk/bytes_used" metric in Cloud Monitoring API instead. Please see [this announcement](https://groups.google.com/d/msg/google-cloud-sql-announce/I_7-F9EBhT0/BtvFtdFeAgAJ) for details.
+        
+    - name: tags
+      value: object
+      description: >
+        Optional. Input only. Immutable. Tag keys and tag values that are bound to this instance. You must represent each item in the map as: `"" : ""`. For example, a single resource can have the following tags: ``` "123/environment": "production", "123/costCenter": "marketing", ``` For more information on tag creation and management, see https://cloud.google.com/resource-manager/docs/tags/tags-overview.
+        
+    - name: geminiConfig
+      value: object
+      description: >
+        Gemini instance configuration.
+        
+    - name: diskEncryptionStatus
+      value: object
+      description: >
+        Disk encryption status specific to an instance.
+        
+    - name: switchTransactionLogsToCloudStorageEnabled
+      value: boolean
+      description: >
+        Input only. Whether Cloud SQL is enabled to switch storing point-in-time recovery log files from a data disk to Cloud Storage.
+        
+    - name: kind
+      value: string
+      description: >
+        This is always `sql#instance`.
+        
+    - name: suspensionReason
+      value: array
+      description: >
+        If the instance state is SUSPENDED, the reason for the suspension.
+        
+    - name: replicaNames
+      value: array
+      description: >
+        The replicas of the instance.
+        
+    - name: sqlNetworkArchitecture
+      value: string
+      valid_values: ['SQL_NETWORK_ARCHITECTURE_UNSPECIFIED', 'NEW_NETWORK_ARCHITECTURE', 'OLD_NETWORK_ARCHITECTURE']
+    - name: serverCaCert
+      value: object
+      description: >
+        SSL configuration.
+        
+    - name: outOfDiskReport
+      value: object
+      description: >
+        This field represents the report generated by the proactive database wellness job for OutOfDisk issues. * Writers: * the proactive database wellness job for OOD. * Readers: * the proactive database wellness job
+        
+    - name: diskEncryptionConfiguration
+      value: object
+      description: >
+        Disk encryption configuration specific to an instance.
+        
+    - name: ipAddresses
+      value: array
+      description: >
+        The assigned IP addresses for the instance.
+        
+    - name: gceZone
+      value: string
+      description: >
+        The Compute Engine zone that the instance is currently serving from. This value could be different from the zone that was specified when the instance was created if the instance has failed over to its secondary zone. WARNING: Changing this might restart the instance.
+        
+    - name: scheduledMaintenance
+      value: object
+      description: >
+        The start time of any upcoming scheduled maintenance for this instance.
+        
+    - name: failoverReplica
+      value: object
+      description: >
+        The name and status of the failover replica.
         
     - name: onPremisesConfiguration
       value: object
       description: >
         Configuration specific to on-premises instances.
-        
-    - name: replicaConfiguration
-      value: object
-      description: >
-        Configuration specific to failover replicas and read replicas.
         
     - name: backendType
       value: string
@@ -985,108 +1388,20 @@ user
         The backend type. `SECOND_GEN`: Cloud SQL database instance. `EXTERNAL`: A database server that is not managed by Google. This property is read-only; use the `tier` property in the `settings` object to determine the database type.
         
       valid_values: ['SQL_BACKEND_TYPE_UNSPECIFIED', 'FIRST_GEN', 'SECOND_GEN', 'EXTERNAL']
-    - name: selfLink
+    - name: serviceAccountEmailAddress
       value: string
       description: >
-        The URI of this resource.
-        
-    - name: suspensionReason
-      value: array
-      description: >
-        If the instance state is SUSPENDED, the reason for the suspension.
-        
-    - name: connectionName
-      value: string
-      description: >
-        Connection name of the Cloud SQL instance used in connection strings.
+        The service account email address assigned to the instance.\This property is read-only.
         
     - name: name
       value: string
       description: >
         Name of the Cloud SQL instance. This does not include the project ID.
         
-    - name: region
-      value: string
-      description: >
-        The geographical region of the Cloud SQL instance. It can be one of the [regions](https://cloud.google.com/sql/docs/mysql/locations#location-r) where Cloud SQL operates: For example, `asia-east1`, `europe-west1`, and `us-central1`. The default value is `us-central1`.
-        
-    - name: gceZone
-      value: string
-      description: >
-        The Compute Engine zone that the instance is currently serving from. This value could be different from the zone that was specified when the instance was created if the instance has failed over to its secondary zone. WARNING: Changing this might restart the instance.
-        
     - name: secondaryGceZone
       value: string
       description: >
         The Compute Engine zone that the failover instance is currently serving from for a regional instance. This value could be different from the zone that was specified when the instance was created if the instance has failed over to its secondary/failover zone.
-        
-    - name: diskEncryptionConfiguration
-      value: object
-      description: >
-        Disk encryption configuration specific to an instance.
-        
-    - name: diskEncryptionStatus
-      value: object
-      description: >
-        Disk encryption status specific to an instance.
-        
-    - name: rootPassword
-      value: string
-      description: >
-        Initial root password. Use only on creation. You must set root passwords before you can connect to PostgreSQL instances.
-        
-    - name: scheduledMaintenance
-      value: object
-      description: >
-        The start time of any upcoming scheduled maintenance for this instance.
-        
-    - name: satisfiesPzs
-      value: boolean
-      description: >
-        This status indicates whether the instance satisfies PZS. The status is reserved for future use.
-        
-    - name: outOfDiskReport
-      value: object
-      description: >
-        This field represents the report generated by the proactive database wellness job for OutOfDisk issues. * Writers: * the proactive database wellness job for OOD. * Readers: * the proactive database wellness job
-        
-    - name: maintenanceVersion
-      value: string
-      description: >
-        The current software version on the instance.
-        
-    - name: sqlNetworkArchitecture
-      value: string
-      valid_values: ['SQL_NETWORK_ARCHITECTURE_UNSPECIFIED', 'NEW_NETWORK_ARCHITECTURE', 'OLD_NETWORK_ARCHITECTURE']
-    - name: replicationCluster
-      value: object
-      description: >
-        Optional. A primary instance and disaster recovery (DR) replica pair. A DR replica is a cross-region replica that you designate for failover in the event that the primary instance experiences regional failure. Applicable to MySQL and PostgreSQL.
-        
-    - name: geminiConfig
-      value: object
-      description: >
-        Gemini instance configuration.
-        
-    - name: switchTransactionLogsToCloudStorageEnabled
-      value: boolean
-      description: >
-        Input only. Whether Cloud SQL is enabled to switch storing point-in-time recovery log files from a data disk to Cloud Storage.
-        
-    - name: includeReplicasForMajorVersionUpgrade
-      value: boolean
-      description: >
-        Input only. Determines whether an in-place major version upgrade of replicas happens when an in-place major version upgrade of a primary instance is initiated.
-        
-    - name: tags
-      value: object
-      description: >
-        Optional. Input only. Immutable. Tag keys and tag values that are bound to this instance. You must represent each item in the map as: `"" : ""`. For example, a single resource can have the following tags: ``` "123/environment": "production", "123/costCenter": "marketing", ``` For more information on tag creation and management, see https://cloud.google.com/resource-manager/docs/tags/tags-overview.
-        
-    - name: nodeCount
-      value: integer
-      description: >
-        The number of read pool nodes in a read pool.
         
 ```
 </TabItem>
@@ -1108,46 +1423,46 @@ Partially updates settings of a Cloud SQL instance by merging the request with t
 ```sql
 UPDATE google.sqladmin.instances
 SET 
-data__kind = '{{ kind }}',
-data__state = '{{ state }}',
-data__databaseVersion = '{{ databaseVersion }}',
 data__settings = '{{ settings }}',
-data__etag = '{{ etag }}',
-data__failoverReplica = '{{ failoverReplica }}',
 data__masterInstanceName = '{{ masterInstanceName }}',
-data__replicaNames = '{{ replicaNames }}',
-data__maxDiskSize = '{{ maxDiskSize }}',
-data__currentDiskSize = '{{ currentDiskSize }}',
-data__ipAddresses = '{{ ipAddresses }}',
-data__serverCaCert = '{{ serverCaCert }}',
-data__instanceType = '{{ instanceType }}',
-data__project = '{{ project }}',
-data__ipv6Address = '{{ ipv6Address }}',
-data__serviceAccountEmailAddress = '{{ serviceAccountEmailAddress }}',
-data__onPremisesConfiguration = '{{ onPremisesConfiguration }}',
 data__replicaConfiguration = '{{ replicaConfiguration }}',
-data__backendType = '{{ backendType }}',
-data__selfLink = '{{ selfLink }}',
-data__suspensionReason = '{{ suspensionReason }}',
-data__connectionName = '{{ connectionName }}',
-data__name = '{{ name }}',
 data__region = '{{ region }}',
-data__gceZone = '{{ gceZone }}',
-data__secondaryGceZone = '{{ secondaryGceZone }}',
-data__diskEncryptionConfiguration = '{{ diskEncryptionConfiguration }}',
-data__diskEncryptionStatus = '{{ diskEncryptionStatus }}',
-data__rootPassword = '{{ rootPassword }}',
-data__scheduledMaintenance = '{{ scheduledMaintenance }}',
 data__satisfiesPzs = {{ satisfiesPzs }},
-data__outOfDiskReport = '{{ outOfDiskReport }}',
-data__maintenanceVersion = '{{ maintenanceVersion }}',
-data__sqlNetworkArchitecture = '{{ sqlNetworkArchitecture }}',
-data__replicationCluster = '{{ replicationCluster }}',
-data__geminiConfig = '{{ geminiConfig }}',
-data__switchTransactionLogsToCloudStorageEnabled = {{ switchTransactionLogsToCloudStorageEnabled }},
 data__includeReplicasForMajorVersionUpgrade = {{ includeReplicasForMajorVersionUpgrade }},
+data__replicationCluster = '{{ replicationCluster }}',
+data__connectionName = '{{ connectionName }}',
+data__etag = '{{ etag }}',
+data__instanceType = '{{ instanceType }}',
+data__ipv6Address = '{{ ipv6Address }}',
+data__selfLink = '{{ selfLink }}',
+data__rootPassword = '{{ rootPassword }}',
+data__databaseVersion = '{{ databaseVersion }}',
+data__maintenanceVersion = '{{ maintenanceVersion }}',
+data__nodeCount = {{ nodeCount }},
+data__project = '{{ project }}',
+data__maxDiskSize = '{{ maxDiskSize }}',
+data__state = '{{ state }}',
+data__currentDiskSize = '{{ currentDiskSize }}',
 data__tags = '{{ tags }}',
-data__nodeCount = {{ nodeCount }}
+data__geminiConfig = '{{ geminiConfig }}',
+data__diskEncryptionStatus = '{{ diskEncryptionStatus }}',
+data__switchTransactionLogsToCloudStorageEnabled = {{ switchTransactionLogsToCloudStorageEnabled }},
+data__kind = '{{ kind }}',
+data__suspensionReason = '{{ suspensionReason }}',
+data__replicaNames = '{{ replicaNames }}',
+data__sqlNetworkArchitecture = '{{ sqlNetworkArchitecture }}',
+data__serverCaCert = '{{ serverCaCert }}',
+data__outOfDiskReport = '{{ outOfDiskReport }}',
+data__diskEncryptionConfiguration = '{{ diskEncryptionConfiguration }}',
+data__ipAddresses = '{{ ipAddresses }}',
+data__gceZone = '{{ gceZone }}',
+data__scheduledMaintenance = '{{ scheduledMaintenance }}',
+data__failoverReplica = '{{ failoverReplica }}',
+data__onPremisesConfiguration = '{{ onPremisesConfiguration }}',
+data__backendType = '{{ backendType }}',
+data__serviceAccountEmailAddress = '{{ serviceAccountEmailAddress }}',
+data__name = '{{ name }}',
+data__secondaryGceZone = '{{ secondaryGceZone }}'
 WHERE 
 project = '{{ project }}' --required
 AND instance = '{{ instance }}' --required
@@ -1163,6 +1478,7 @@ importContext,
 insertTime,
 kind,
 operationType,
+preCheckMajorVersionUpgradeContext,
 selfLink,
 startTime,
 status,
@@ -1191,46 +1507,46 @@ Updates settings of a Cloud SQL instance. Using this operation might cause your 
 ```sql
 REPLACE google.sqladmin.instances
 SET 
-data__kind = '{{ kind }}',
-data__state = '{{ state }}',
-data__databaseVersion = '{{ databaseVersion }}',
 data__settings = '{{ settings }}',
-data__etag = '{{ etag }}',
-data__failoverReplica = '{{ failoverReplica }}',
 data__masterInstanceName = '{{ masterInstanceName }}',
-data__replicaNames = '{{ replicaNames }}',
-data__maxDiskSize = '{{ maxDiskSize }}',
-data__currentDiskSize = '{{ currentDiskSize }}',
-data__ipAddresses = '{{ ipAddresses }}',
-data__serverCaCert = '{{ serverCaCert }}',
-data__instanceType = '{{ instanceType }}',
-data__project = '{{ project }}',
-data__ipv6Address = '{{ ipv6Address }}',
-data__serviceAccountEmailAddress = '{{ serviceAccountEmailAddress }}',
-data__onPremisesConfiguration = '{{ onPremisesConfiguration }}',
 data__replicaConfiguration = '{{ replicaConfiguration }}',
-data__backendType = '{{ backendType }}',
-data__selfLink = '{{ selfLink }}',
-data__suspensionReason = '{{ suspensionReason }}',
-data__connectionName = '{{ connectionName }}',
-data__name = '{{ name }}',
 data__region = '{{ region }}',
-data__gceZone = '{{ gceZone }}',
-data__secondaryGceZone = '{{ secondaryGceZone }}',
-data__diskEncryptionConfiguration = '{{ diskEncryptionConfiguration }}',
-data__diskEncryptionStatus = '{{ diskEncryptionStatus }}',
-data__rootPassword = '{{ rootPassword }}',
-data__scheduledMaintenance = '{{ scheduledMaintenance }}',
 data__satisfiesPzs = {{ satisfiesPzs }},
-data__outOfDiskReport = '{{ outOfDiskReport }}',
-data__maintenanceVersion = '{{ maintenanceVersion }}',
-data__sqlNetworkArchitecture = '{{ sqlNetworkArchitecture }}',
-data__replicationCluster = '{{ replicationCluster }}',
-data__geminiConfig = '{{ geminiConfig }}',
-data__switchTransactionLogsToCloudStorageEnabled = {{ switchTransactionLogsToCloudStorageEnabled }},
 data__includeReplicasForMajorVersionUpgrade = {{ includeReplicasForMajorVersionUpgrade }},
+data__replicationCluster = '{{ replicationCluster }}',
+data__connectionName = '{{ connectionName }}',
+data__etag = '{{ etag }}',
+data__instanceType = '{{ instanceType }}',
+data__ipv6Address = '{{ ipv6Address }}',
+data__selfLink = '{{ selfLink }}',
+data__rootPassword = '{{ rootPassword }}',
+data__databaseVersion = '{{ databaseVersion }}',
+data__maintenanceVersion = '{{ maintenanceVersion }}',
+data__nodeCount = {{ nodeCount }},
+data__project = '{{ project }}',
+data__maxDiskSize = '{{ maxDiskSize }}',
+data__state = '{{ state }}',
+data__currentDiskSize = '{{ currentDiskSize }}',
 data__tags = '{{ tags }}',
-data__nodeCount = {{ nodeCount }}
+data__geminiConfig = '{{ geminiConfig }}',
+data__diskEncryptionStatus = '{{ diskEncryptionStatus }}',
+data__switchTransactionLogsToCloudStorageEnabled = {{ switchTransactionLogsToCloudStorageEnabled }},
+data__kind = '{{ kind }}',
+data__suspensionReason = '{{ suspensionReason }}',
+data__replicaNames = '{{ replicaNames }}',
+data__sqlNetworkArchitecture = '{{ sqlNetworkArchitecture }}',
+data__serverCaCert = '{{ serverCaCert }}',
+data__outOfDiskReport = '{{ outOfDiskReport }}',
+data__diskEncryptionConfiguration = '{{ diskEncryptionConfiguration }}',
+data__ipAddresses = '{{ ipAddresses }}',
+data__gceZone = '{{ gceZone }}',
+data__scheduledMaintenance = '{{ scheduledMaintenance }}',
+data__failoverReplica = '{{ failoverReplica }}',
+data__onPremisesConfiguration = '{{ onPremisesConfiguration }}',
+data__backendType = '{{ backendType }}',
+data__serviceAccountEmailAddress = '{{ serviceAccountEmailAddress }}',
+data__name = '{{ name }}',
+data__secondaryGceZone = '{{ secondaryGceZone }}'
 WHERE 
 project = '{{ project }}' --required
 AND instance = '{{ instance }}' --required
@@ -1246,6 +1562,7 @@ importContext,
 insertTime,
 kind,
 operationType,
+preCheckMajorVersionUpgradeContext,
 selfLink,
 startTime,
 status,
@@ -1276,9 +1593,9 @@ DELETE FROM google.sqladmin.instances
 WHERE project = '{{ project }}' --required
 AND instance = '{{ instance }}' --required
 AND enableFinalBackup = '{{ enableFinalBackup }}'
+AND finalBackupDescription = '{{ finalBackupDescription }}'
 AND finalBackupTtlDays = '{{ finalBackupTtlDays }}'
 AND finalBackupExpiryTime = '{{ finalBackupExpiryTime }}'
-AND finalBackupDescription = '{{ finalBackupDescription }}'
 ;
 ```
 </TabItem>
@@ -1288,108 +1605,97 @@ AND finalBackupDescription = '{{ finalBackupDescription }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="clone"
+    defaultValue="pre_check_major_version_upgrade"
     values={[
-        { label: 'clone', value: 'clone' },
-        { label: 'demote_master', value: 'demote_master' },
-        { label: 'demote', value: 'demote' },
-        { label: 'export', value: 'export' },
-        { label: 'failover', value: 'failover' },
-        { label: 'reencrypt', value: 'reencrypt' },
-        { label: 'import', value: 'import' },
-        { label: 'list_server_certificates', value: 'list_server_certificates' },
-        { label: 'promote_replica', value: 'promote_replica' },
-        { label: 'switchover', value: 'switchover' },
-        { label: 'reset_ssl_config', value: 'reset_ssl_config' },
-        { label: 'restart', value: 'restart' },
-        { label: 'restore_backup', value: 'restore_backup' },
-        { label: 'rotate_server_ca', value: 'rotate_server_ca' },
-        { label: 'rotate_server_certificate', value: 'rotate_server_certificate' },
-        { label: 'start_replica', value: 'start_replica' },
-        { label: 'stop_replica', value: 'stop_replica' },
-        { label: 'truncate_log', value: 'truncate_log' },
+        { label: 'pre_check_major_version_upgrade', value: 'pre_check_major_version_upgrade' },
         { label: 'execute_sql', value: 'execute_sql' },
-        { label: 'acquire_ssrs_lease', value: 'acquire_ssrs_lease' },
-        { label: 'release_ssrs_lease', value: 'release_ssrs_lease' },
+        { label: 'list_entra_id_certificates', value: 'list_entra_id_certificates' },
+        { label: 'rotate_server_ca', value: 'rotate_server_ca' },
+        { label: 'reencrypt', value: 'reencrypt' },
+        { label: 'clone', value: 'clone' },
+        { label: 'export', value: 'export' },
+        { label: 'list_server_certificates', value: 'list_server_certificates' },
         { label: 'point_in_time_restore', value: 'point_in_time_restore' },
+        { label: 'acquire_ssrs_lease', value: 'acquire_ssrs_lease' },
+        { label: 'failover', value: 'failover' },
+        { label: 'reset_ssl_config', value: 'reset_ssl_config' },
+        { label: 'promote_replica', value: 'promote_replica' },
+        { label: 'restart', value: 'restart' },
+        { label: 'stop_replica', value: 'stop_replica' },
+        { label: 'demote_master', value: 'demote_master' },
+        { label: 'switchover', value: 'switchover' },
+        { label: 'truncate_log', value: 'truncate_log' },
+        { label: 'demote', value: 'demote' },
+        { label: 'restore_backup', value: 'restore_backup' },
+        { label: 'start_replica', value: 'start_replica' },
+        { label: 'rotate_server_certificate', value: 'rotate_server_certificate' },
+        { label: 'rotate_entra_id_certificate', value: 'rotate_entra_id_certificate' },
+        { label: 'release_ssrs_lease', value: 'release_ssrs_lease' },
+        { label: 'import', value: 'import' },
+        { label: 'start_external_sync', value: 'start_external_sync' },
+        { label: 'reset_replica_size', value: 'reset_replica_size' },
         { label: 'reschedule_maintenance', value: 'reschedule_maintenance' },
         { label: 'verify_external_sync_settings', value: 'verify_external_sync_settings' },
-        { label: 'start_external_sync', value: 'start_external_sync' },
-        { label: 'perform_disk_shrink', value: 'perform_disk_shrink' },
-        { label: 'reset_replica_size', value: 'reset_replica_size' }
+        { label: 'perform_disk_shrink', value: 'perform_disk_shrink' }
     ]}
 >
-<TabItem value="clone">
+<TabItem value="pre_check_major_version_upgrade">
 
-Creates a Cloud SQL instance as a clone of the source instance. Using this operation might cause your instance to restart.
+Execute MVU Pre-checks
 
 ```sql
-EXEC google.sqladmin.instances.clone 
+EXEC google.sqladmin.instances.pre_check_major_version_upgrade 
 @project='{{ project }}' --required, 
 @instance='{{ instance }}' --required 
 @@json=
 '{
-"cloneContext": "{{ cloneContext }}"
+"preCheckMajorVersionUpgradeContext": "{{ preCheckMajorVersionUpgradeContext }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="demote_master">
+<TabItem value="execute_sql">
 
-Demotes the stand-alone instance to be a Cloud SQL read replica for an external database server.
+Execute SQL statements.
 
 ```sql
-EXEC google.sqladmin.instances.demote_master 
+EXEC google.sqladmin.instances.execute_sql 
 @project='{{ project }}' --required, 
 @instance='{{ instance }}' --required 
 @@json=
 '{
-"demoteMasterContext": "{{ demoteMasterContext }}"
+"partialResultMode": "{{ partialResultMode }}", 
+"rowLimit": "{{ rowLimit }}", 
+"user": "{{ user }}", 
+"database": "{{ database }}", 
+"sqlStatement": "{{ sqlStatement }}", 
+"autoIamAuthn": {{ autoIamAuthn }}
 }'
 ;
 ```
 </TabItem>
-<TabItem value="demote">
+<TabItem value="list_entra_id_certificates">
 
-Demotes an existing standalone instance to be a Cloud SQL read replica for an external database server.
+Lists all versions of EntraID certificates for the specified instance. There can be up to three sets of certificates listed: the certificate that is currently in use, a future that has been added but not yet used to sign a certificate, and a certificate that has been rotated out.
 
 ```sql
-EXEC google.sqladmin.instances.demote 
+EXEC google.sqladmin.instances.list_entra_id_certificates 
 @project='{{ project }}' --required, 
-@instance='{{ instance }}' --required 
-@@json=
-'{
-"demoteContext": "{{ demoteContext }}"
-}'
+@instance='{{ instance }}' --required
 ;
 ```
 </TabItem>
-<TabItem value="export">
+<TabItem value="rotate_server_ca">
 
-Exports data from a Cloud SQL instance to a Cloud Storage bucket as a SQL dump or CSV file.
+Rotates the server certificate to one signed by the Certificate Authority (CA) version previously added with the addServerCA method. For instances that have enabled Certificate Authority Service (CAS) based server CA, use RotateServerCertificate to rotate the server certificate.
 
 ```sql
-EXEC google.sqladmin.instances.export 
+EXEC google.sqladmin.instances.rotate_server_ca 
 @project='{{ project }}' --required, 
 @instance='{{ instance }}' --required 
 @@json=
 '{
-"exportContext": "{{ exportContext }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="failover">
-
-Initiates a manual failover of a high availability (HA) primary instance to a standby instance, which becomes the primary instance. Users are then rerouted to the new primary. For more information, see the [Overview of high availability](https://cloud.google.com/sql/docs/mysql/high-availability) page in the Cloud SQL documentation. If using Legacy HA (MySQL only), this causes the instance to failover to its failover replica instance.
-
-```sql
-EXEC google.sqladmin.instances.failover 
-@project='{{ project }}' --required, 
-@instance='{{ instance }}' --required 
-@@json=
-'{
-"failoverContext": "{{ failoverContext }}"
+"rotateServerCaContext": "{{ rotateServerCaContext }}"
 }'
 ;
 ```
@@ -1409,17 +1715,32 @@ EXEC google.sqladmin.instances.reencrypt
 ;
 ```
 </TabItem>
-<TabItem value="import">
+<TabItem value="clone">
 
-Imports data into a Cloud SQL instance from a SQL dump or CSV file in Cloud Storage.
+Creates a Cloud SQL instance as a clone of the source instance. Using this operation might cause your instance to restart.
 
 ```sql
-EXEC google.sqladmin.instances.import 
+EXEC google.sqladmin.instances.clone 
 @project='{{ project }}' --required, 
 @instance='{{ instance }}' --required 
 @@json=
 '{
-"importContext": "{{ importContext }}"
+"cloneContext": "{{ cloneContext }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="export">
+
+Exports data from a Cloud SQL instance to a Cloud Storage bucket as a SQL dump or CSV file.
+
+```sql
+EXEC google.sqladmin.instances.export 
+@project='{{ project }}' --required, 
+@instance='{{ instance }}' --required 
+@@json=
+'{
+"exportContext": "{{ exportContext }}"
 }'
 ;
 ```
@@ -1435,152 +1756,22 @@ EXEC google.sqladmin.instances.list_server_certificates
 ;
 ```
 </TabItem>
-<TabItem value="promote_replica">
+<TabItem value="point_in_time_restore">
 
-Promotes the read replica instance to be an independent Cloud SQL primary instance. Using this operation might cause your instance to restart.
-
-```sql
-EXEC google.sqladmin.instances.promote_replica 
-@project='{{ project }}' --required, 
-@instance='{{ instance }}' --required, 
-@failover={{ failover }}
-;
-```
-</TabItem>
-<TabItem value="switchover">
-
-Switches over from the primary instance to the DR replica instance.
+Point in time restore for an instance managed by Google Cloud Backup and Disaster Recovery.
 
 ```sql
-EXEC google.sqladmin.instances.switchover 
-@project='{{ project }}' --required, 
-@instance='{{ instance }}' --required, 
-@dbTimeout='{{ dbTimeout }}'
-;
-```
-</TabItem>
-<TabItem value="reset_ssl_config">
-
-Deletes all client certificates and generates a new server SSL certificate for the instance.
-
-```sql
-EXEC google.sqladmin.instances.reset_ssl_config 
-@project='{{ project }}' --required, 
-@instance='{{ instance }}' --required
-;
-```
-</TabItem>
-<TabItem value="restart">
-
-Restarts a Cloud SQL instance.
-
-```sql
-EXEC google.sqladmin.instances.restart 
-@project='{{ project }}' --required, 
-@instance='{{ instance }}' --required
-;
-```
-</TabItem>
-<TabItem value="restore_backup">
-
-Restores a backup of a Cloud SQL instance. Using this operation might cause your instance to restart.
-
-```sql
-EXEC google.sqladmin.instances.restore_backup 
-@project='{{ project }}' --required, 
-@instance='{{ instance }}' --required 
+EXEC google.sqladmin.instances.point_in_time_restore 
+@projectsId='{{ projectsId }}' --required 
 @@json=
 '{
-"restoreBackupContext": "{{ restoreBackupContext }}", 
-"backup": "{{ backup }}", 
-"backupdrBackup": "{{ backupdrBackup }}", 
-"restoreInstanceSettings": "{{ restoreInstanceSettings }}", 
-"restoreInstanceClearOverridesFieldNames": "{{ restoreInstanceClearOverridesFieldNames }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="rotate_server_ca">
-
-Rotates the server certificate to one signed by the Certificate Authority (CA) version previously added with the addServerCA method. For instances that have enabled Certificate Authority Service (CAS) based server CA, use RotateServerCertificate to rotate the server certificate.
-
-```sql
-EXEC google.sqladmin.instances.rotate_server_ca 
-@project='{{ project }}' --required, 
-@instance='{{ instance }}' --required 
-@@json=
-'{
-"rotateServerCaContext": "{{ rotateServerCaContext }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="rotate_server_certificate">
-
-Rotates the server certificate version to one previously added with the addServerCertificate method. For instances not using Certificate Authority Service (CAS) server CA, use RotateServerCa instead.
-
-```sql
-EXEC google.sqladmin.instances.rotate_server_certificate 
-@project='{{ project }}' --required, 
-@instance='{{ instance }}' --required 
-@@json=
-'{
-"rotateServerCertificateContext": "{{ rotateServerCertificateContext }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="start_replica">
-
-Starts the replication in the read replica instance.
-
-```sql
-EXEC google.sqladmin.instances.start_replica 
-@project='{{ project }}' --required, 
-@instance='{{ instance }}' --required
-;
-```
-</TabItem>
-<TabItem value="stop_replica">
-
-Stops the replication in the read replica instance.
-
-```sql
-EXEC google.sqladmin.instances.stop_replica 
-@project='{{ project }}' --required, 
-@instance='{{ instance }}' --required
-;
-```
-</TabItem>
-<TabItem value="truncate_log">
-
-Truncate MySQL general and slow query log tables MySQL only.
-
-```sql
-EXEC google.sqladmin.instances.truncate_log 
-@project='{{ project }}' --required, 
-@instance='{{ instance }}' --required 
-@@json=
-'{
-"truncateLogContext": "{{ truncateLogContext }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="execute_sql">
-
-Execute SQL statements.
-
-```sql
-EXEC google.sqladmin.instances.execute_sql 
-@project='{{ project }}' --required, 
-@instance='{{ instance }}' --required 
-@@json=
-'{
-"sqlStatement": "{{ sqlStatement }}", 
-"database": "{{ database }}", 
-"autoIamAuthn": {{ autoIamAuthn }}, 
-"rowLimit": "{{ rowLimit }}"
+"targetInstance": "{{ targetInstance }}", 
+"preferredSecondaryZone": "{{ preferredSecondaryZone }}", 
+"privateNetwork": "{{ privateNetwork }}", 
+"pointInTime": "{{ pointInTime }}", 
+"datasource": "{{ datasource }}", 
+"preferredZone": "{{ preferredZone }}", 
+"allocatedIpRange": "{{ allocatedIpRange }}"
 }'
 ;
 ```
@@ -1600,6 +1791,184 @@ EXEC google.sqladmin.instances.acquire_ssrs_lease
 ;
 ```
 </TabItem>
+<TabItem value="failover">
+
+Initiates a manual failover of a high availability (HA) primary instance to a standby instance, which becomes the primary instance. Users are then rerouted to the new primary. For more information, see the [Overview of high availability](https://cloud.google.com/sql/docs/mysql/high-availability) page in the Cloud SQL documentation. If using Legacy HA (MySQL only), this causes the instance to failover to its failover replica instance.
+
+```sql
+EXEC google.sqladmin.instances.failover 
+@project='{{ project }}' --required, 
+@instance='{{ instance }}' --required 
+@@json=
+'{
+"failoverContext": "{{ failoverContext }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="reset_ssl_config">
+
+Deletes all client certificates and generates a new server SSL certificate for the instance.
+
+```sql
+EXEC google.sqladmin.instances.reset_ssl_config 
+@project='{{ project }}' --required, 
+@instance='{{ instance }}' --required, 
+@mode='{{ mode }}'
+;
+```
+</TabItem>
+<TabItem value="promote_replica">
+
+Promotes the read replica instance to be an independent Cloud SQL primary instance. Using this operation might cause your instance to restart.
+
+```sql
+EXEC google.sqladmin.instances.promote_replica 
+@project='{{ project }}' --required, 
+@instance='{{ instance }}' --required, 
+@failover={{ failover }}
+;
+```
+</TabItem>
+<TabItem value="restart">
+
+Restarts a Cloud SQL instance.
+
+```sql
+EXEC google.sqladmin.instances.restart 
+@project='{{ project }}' --required, 
+@instance='{{ instance }}' --required
+;
+```
+</TabItem>
+<TabItem value="stop_replica">
+
+Stops the replication in the read replica instance.
+
+```sql
+EXEC google.sqladmin.instances.stop_replica 
+@project='{{ project }}' --required, 
+@instance='{{ instance }}' --required
+;
+```
+</TabItem>
+<TabItem value="demote_master">
+
+Demotes the stand-alone instance to be a Cloud SQL read replica for an external database server.
+
+```sql
+EXEC google.sqladmin.instances.demote_master 
+@project='{{ project }}' --required, 
+@instance='{{ instance }}' --required 
+@@json=
+'{
+"demoteMasterContext": "{{ demoteMasterContext }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="switchover">
+
+Switches over from the primary instance to the DR replica instance.
+
+```sql
+EXEC google.sqladmin.instances.switchover 
+@project='{{ project }}' --required, 
+@instance='{{ instance }}' --required, 
+@dbTimeout='{{ dbTimeout }}'
+;
+```
+</TabItem>
+<TabItem value="truncate_log">
+
+Truncate MySQL general and slow query log tables MySQL only.
+
+```sql
+EXEC google.sqladmin.instances.truncate_log 
+@project='{{ project }}' --required, 
+@instance='{{ instance }}' --required 
+@@json=
+'{
+"truncateLogContext": "{{ truncateLogContext }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="demote">
+
+Demotes an existing standalone instance to be a Cloud SQL read replica for an external database server.
+
+```sql
+EXEC google.sqladmin.instances.demote 
+@project='{{ project }}' --required, 
+@instance='{{ instance }}' --required 
+@@json=
+'{
+"demoteContext": "{{ demoteContext }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="restore_backup">
+
+Restores a backup of a Cloud SQL instance. Using this operation might cause your instance to restart.
+
+```sql
+EXEC google.sqladmin.instances.restore_backup 
+@project='{{ project }}' --required, 
+@instance='{{ instance }}' --required 
+@@json=
+'{
+"restoreInstanceClearOverridesFieldNames": "{{ restoreInstanceClearOverridesFieldNames }}", 
+"backup": "{{ backup }}", 
+"backupdrBackup": "{{ backupdrBackup }}", 
+"restoreBackupContext": "{{ restoreBackupContext }}", 
+"restoreInstanceSettings": "{{ restoreInstanceSettings }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="start_replica">
+
+Starts the replication in the read replica instance.
+
+```sql
+EXEC google.sqladmin.instances.start_replica 
+@project='{{ project }}' --required, 
+@instance='{{ instance }}' --required
+;
+```
+</TabItem>
+<TabItem value="rotate_server_certificate">
+
+Rotates the server certificate version to one previously added with the addServerCertificate method. For instances not using Certificate Authority Service (CAS) server CA, use RotateServerCa instead.
+
+```sql
+EXEC google.sqladmin.instances.rotate_server_certificate 
+@project='{{ project }}' --required, 
+@instance='{{ instance }}' --required 
+@@json=
+'{
+"rotateServerCertificateContext": "{{ rotateServerCertificateContext }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="rotate_entra_id_certificate">
+
+Rotates the server certificate version to one previously added with the addEntraIdCertificate method.
+
+```sql
+EXEC google.sqladmin.instances.rotate_entra_id_certificate 
+@project='{{ project }}' --required, 
+@instance='{{ instance }}' --required 
+@@json=
+'{
+"rotateEntraIdCertificateContext": "{{ rotateEntraIdCertificateContext }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="release_ssrs_lease">
 
 Release a lease for the setup of SQL Server Reporting Services (SSRS).
@@ -1611,23 +1980,49 @@ EXEC google.sqladmin.instances.release_ssrs_lease
 ;
 ```
 </TabItem>
-<TabItem value="point_in_time_restore">
+<TabItem value="import">
 
-Point in time restore for an instance managed by Google Cloud Backup and Disaster Recovery.
+Imports data into a Cloud SQL instance from a SQL dump or CSV file in Cloud Storage.
 
 ```sql
-EXEC google.sqladmin.instances.point_in_time_restore 
-@projectsId='{{ projectsId }}' --required 
+EXEC google.sqladmin.instances.import 
+@project='{{ project }}' --required, 
+@instance='{{ instance }}' --required 
 @@json=
 '{
-"datasource": "{{ datasource }}", 
-"pointInTime": "{{ pointInTime }}", 
-"targetInstance": "{{ targetInstance }}", 
-"privateNetwork": "{{ privateNetwork }}", 
-"allocatedIpRange": "{{ allocatedIpRange }}", 
-"preferredZone": "{{ preferredZone }}", 
-"preferredSecondaryZone": "{{ preferredSecondaryZone }}"
+"importContext": "{{ importContext }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="start_external_sync">
+
+Start External primary instance migration.
+
+```sql
+EXEC google.sqladmin.instances.start_external_sync 
+@project='{{ project }}' --required, 
+@instance='{{ instance }}' --required 
+@@json=
+'{
+"skipVerification": {{ skipVerification }}, 
+"migrationType": "{{ migrationType }}", 
+"replicaOverwriteEnabled": {{ replicaOverwriteEnabled }}, 
+"syncMode": "{{ syncMode }}", 
+"syncParallelLevel": "{{ syncParallelLevel }}", 
+"mysqlSyncConfig": "{{ mysqlSyncConfig }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="reset_replica_size">
+
+Reset Replica Size to primary instance disk size.
+
+```sql
+EXEC google.sqladmin.instances.reset_replica_size 
+@project='{{ project }}' --required, 
+@instance='{{ instance }}' --required
 ;
 ```
 </TabItem>
@@ -1657,32 +2052,12 @@ EXEC google.sqladmin.instances.verify_external_sync_settings
 @@json=
 '{
 "verifyConnectionOnly": {{ verifyConnectionOnly }}, 
-"syncMode": "{{ syncMode }}", 
-"verifyReplicationOnly": {{ verifyReplicationOnly }}, 
 "mysqlSyncConfig": "{{ mysqlSyncConfig }}", 
-"migrationType": "{{ migrationType }}", 
+"selectedObjects": "{{ selectedObjects }}", 
 "syncParallelLevel": "{{ syncParallelLevel }}", 
-"selectedObjects": "{{ selectedObjects }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="start_external_sync">
-
-Start External primary instance migration.
-
-```sql
-EXEC google.sqladmin.instances.start_external_sync 
-@project='{{ project }}' --required, 
-@instance='{{ instance }}' --required 
-@@json=
-'{
 "syncMode": "{{ syncMode }}", 
-"skipVerification": {{ skipVerification }}, 
-"mysqlSyncConfig": "{{ mysqlSyncConfig }}", 
-"syncParallelLevel": "{{ syncParallelLevel }}", 
 "migrationType": "{{ migrationType }}", 
-"replicaOverwriteEnabled": {{ replicaOverwriteEnabled }}
+"verifyReplicationOnly": {{ verifyReplicationOnly }}
 }'
 ;
 ```
@@ -1699,17 +2074,6 @@ EXEC google.sqladmin.instances.perform_disk_shrink
 '{
 "targetSizeGb": "{{ targetSizeGb }}"
 }'
-;
-```
-</TabItem>
-<TabItem value="reset_replica_size">
-
-Reset Replica Size to primary instance disk size.
-
-```sql
-EXEC google.sqladmin.instances.reset_replica_size 
-@project='{{ project }}' --required, 
-@instance='{{ instance }}' --required
 ;
 ```
 </TabItem>

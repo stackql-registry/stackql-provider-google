@@ -202,6 +202,13 @@ The following methods are available for this resource:
     <td>Updates a pull request.</td>
 </tr>
 <tr>
+    <td><a href="#close"><CopyableCode code="close" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-pullRequestsId"><code>pullRequestsId</code></a></td>
+    <td></td>
+    <td>Closes a pull request without merging.</td>
+</tr>
+<tr>
     <td><a href="#merge"><CopyableCode code="merge" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-pullRequestsId"><code>pullRequestsId</code></a></td>
@@ -214,13 +221,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-pullRequestsId"><code>pullRequestsId</code></a></td>
     <td></td>
     <td>Opens a pull request.</td>
-</tr>
-<tr>
-    <td><a href="#close"><CopyableCode code="close" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-pullRequestsId"><code>pullRequestsId</code></a></td>
-    <td></td>
-    <td>Closes a pull request without merging.</td>
 </tr>
 </tbody>
 </table>
@@ -351,8 +351,8 @@ Creates a pull request.
 ```sql
 INSERT INTO google.securesourcemanager.pull_requests (
 data__title,
-data__body,
 data__base,
+data__body,
 data__head,
 projectsId,
 locationsId,
@@ -360,8 +360,8 @@ repositoriesId
 )
 SELECT 
 '{{ title }}',
-'{{ body }}',
 '{{ base }}',
+'{{ body }}',
 '{{ head }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -395,15 +395,15 @@ response
       description: >
         Required. The pull request title.
         
-    - name: body
-      value: string
-      description: >
-        Optional. The pull request body. Provides a detailed description of the changes.
-        
     - name: base
       value: object
       description: >
         Required. The branch to merge changes in.
+        
+    - name: body
+      value: string
+      description: >
+        Optional. The pull request body. Provides a detailed description of the changes.
         
     - name: head
       value: object
@@ -431,8 +431,8 @@ Updates a pull request.
 UPDATE google.securesourcemanager.pull_requests
 SET 
 data__title = '{{ title }}',
-data__body = '{{ body }}',
 data__base = '{{ base }}',
+data__body = '{{ body }}',
 data__head = '{{ head }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
@@ -454,13 +454,26 @@ response;
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="merge"
+    defaultValue="close"
     values={[
+        { label: 'close', value: 'close' },
         { label: 'merge', value: 'merge' },
-        { label: 'open', value: 'open' },
-        { label: 'close', value: 'close' }
+        { label: 'open', value: 'open' }
     ]}
 >
+<TabItem value="close">
+
+Closes a pull request without merging.
+
+```sql
+EXEC google.securesourcemanager.pull_requests.close 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@repositoriesId='{{ repositoriesId }}' --required, 
+@pullRequestsId='{{ pullRequestsId }}' --required
+;
+```
+</TabItem>
 <TabItem value="merge">
 
 Merges a pull request.
@@ -480,19 +493,6 @@ Opens a pull request.
 
 ```sql
 EXEC google.securesourcemanager.pull_requests.open 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@repositoriesId='{{ repositoriesId }}' --required, 
-@pullRequestsId='{{ pullRequestsId }}' --required
-;
-```
-</TabItem>
-<TabItem value="close">
-
-Closes a pull request without merging.
-
-```sql
-EXEC google.securesourcemanager.pull_requests.close 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @repositoriesId='{{ repositoriesId }}' --required, 

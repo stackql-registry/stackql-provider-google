@@ -134,7 +134,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists the topics in a given cluster.</td>
 </tr>
 <tr>
@@ -258,8 +258,8 @@ FROM google.managedkafka.topics
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND clustersId = '{{ clustersId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -283,8 +283,8 @@ Creates a new topic in a given project and location.
 INSERT INTO google.managedkafka.topics (
 data__name,
 data__partitionCount,
-data__replicationFactor,
 data__configs,
+data__replicationFactor,
 projectsId,
 locationsId,
 clustersId,
@@ -293,8 +293,8 @@ topicId
 SELECT 
 '{{ name }}',
 {{ partitionCount }},
-{{ replicationFactor }},
 '{{ configs }}',
+{{ replicationFactor }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ clustersId }}',
@@ -332,15 +332,15 @@ replicationFactor
       description: >
         Required. The number of partitions this topic has. The partition count can only be increased, not decreased. Please note that if partitions are increased for a topic that has a key, the partitioning logic or the ordering of the messages will be affected.
         
-    - name: replicationFactor
-      value: integer
-      description: >
-        Required. Immutable. The number of replicas of each partition. A replication factor of 3 is recommended for high availability.
-        
     - name: configs
       value: object
       description: >
         Optional. Configurations for the topic that are overridden from the cluster defaults. The key of the map is a Kafka topic property name, for example: `cleanup.policy`, `compression.type`.
+        
+    - name: replicationFactor
+      value: integer
+      description: >
+        Required. Immutable. The number of replicas of each partition. A replication factor of 3 is recommended for high availability.
         
     - name: topicId
       value: string
@@ -366,8 +366,8 @@ UPDATE google.managedkafka.topics
 SET 
 data__name = '{{ name }}',
 data__partitionCount = {{ partitionCount }},
-data__replicationFactor = {{ replicationFactor }},
-data__configs = '{{ configs }}'
+data__configs = '{{ configs }}',
+data__replicationFactor = {{ replicationFactor }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -55,6 +55,11 @@ The following fields are returned by `SELECT` queries:
     <td>The name of the user in the Cloud SQL instance. Can be omitted for `update` because it is already specified in the URL.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="databaseRoles" /></td>
+    <td><code>array</code></td>
+    <td>Optional. Role memberships of the user</td>
+</tr>
+<tr>
     <td><CopyableCode code="dualPasswordType" /></td>
     <td><code>string</code></td>
     <td>Dual password status for the user.</td>
@@ -68,6 +73,16 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="host" /></td>
     <td><code>string</code></td>
     <td>Optional. The host from which the user can connect. For `insert` operations, host defaults to an empty string. For `update` operations, host is specified as part of the request URL. The host name cannot be updated after insertion. For a MySQL instance, it's required; for a PostgreSQL or SQL Server instance, it's optional.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="iamEmail" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The full email for an IAM user. For normal database users, this will not be filled. Only applicable to MySQL database users.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="iamStatus" /></td>
+    <td><code>string</code></td>
+    <td>Indicates if a group is active or inactive for IAM database authentication.</td>
 </tr>
 <tr>
     <td><CopyableCode code="instance" /></td>
@@ -124,6 +139,11 @@ The following fields are returned by `SELECT` queries:
     <td>The name of the user in the Cloud SQL instance. Can be omitted for `update` because it is already specified in the URL.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="databaseRoles" /></td>
+    <td><code>array</code></td>
+    <td>Optional. Role memberships of the user</td>
+</tr>
+<tr>
     <td><CopyableCode code="dualPasswordType" /></td>
     <td><code>string</code></td>
     <td>Dual password status for the user.</td>
@@ -137,6 +157,16 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="host" /></td>
     <td><code>string</code></td>
     <td>Optional. The host from which the user can connect. For `insert` operations, host defaults to an empty string. For `update` operations, host is specified as part of the request URL. The host name cannot be updated after insertion. For a MySQL instance, it's required; for a PostgreSQL or SQL Server instance, it's optional.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="iamEmail" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The full email for an IAM user. For normal database users, this will not be filled. Only applicable to MySQL database users.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="iamStatus" /></td>
+    <td><code>string</code></td>
+    <td>Indicates if a group is active or inactive for IAM database authentication.</td>
 </tr>
 <tr>
     <td><CopyableCode code="instance" /></td>
@@ -218,14 +248,14 @@ The following methods are available for this resource:
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="replace" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td><a href="#parameter-host"><code>host</code></a>, <a href="#parameter-name"><code>name</code></a></td>
+    <td><a href="#parameter-databaseRoles"><code>databaseRoles</code></a>, <a href="#parameter-host"><code>host</code></a>, <a href="#parameter-name"><code>name</code></a></td>
     <td>Updates an existing user in a Cloud SQL instance.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-instance"><code>instance</code></a></td>
-    <td><a href="#parameter-host"><code>host</code></a>, <a href="#parameter-name"><code>name</code></a></td>
+    <td><a href="#parameter-name"><code>name</code></a>, <a href="#parameter-host"><code>host</code></a></td>
     <td>Deletes a user from a Cloud SQL instance.</td>
 </tr>
 </tbody>
@@ -259,6 +289,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
+<tr id="parameter-databaseRoles">
+    <td><CopyableCode code="databaseRoles" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-host">
     <td><CopyableCode code="host" /></td>
     <td><code>string</code></td>
@@ -288,9 +323,12 @@ Retrieves a resource containing information about a user.
 ```sql
 SELECT
 name,
+databaseRoles,
 dualPasswordType,
 etag,
 host,
+iamEmail,
+iamStatus,
 instance,
 kind,
 password,
@@ -313,9 +351,12 @@ Lists users in the specified Cloud SQL instance.
 ```sql
 SELECT
 name,
+databaseRoles,
 dualPasswordType,
 etag,
 host,
+iamEmail,
+iamStatus,
 instance,
 kind,
 password,
@@ -347,32 +388,38 @@ Creates a new user in a Cloud SQL instance.
 
 ```sql
 INSERT INTO google.sqladmin.users (
-data__kind,
+data__dualPasswordType,
 data__password,
-data__etag,
-data__name,
+data__passwordPolicy,
+data__project,
 data__host,
 data__instance,
-data__project,
-data__type,
+data__kind,
+data__iamStatus,
+data__iamEmail,
+data__databaseRoles,
 data__sqlserverUserDetails,
-data__passwordPolicy,
-data__dualPasswordType,
+data__etag,
+data__name,
+data__type,
 project,
 instance
 )
 SELECT 
-'{{ kind }}',
+'{{ dualPasswordType }}',
 '{{ password }}',
-'{{ etag }}',
-'{{ name }}',
+'{{ passwordPolicy }}',
+'{{ project }}',
 '{{ host }}',
 '{{ instance }}',
-'{{ project }}',
-'{{ type }}',
+'{{ kind }}',
+'{{ iamStatus }}',
+'{{ iamEmail }}',
+'{{ databaseRoles }}',
 '{{ sqlserverUserDetails }}',
-'{{ passwordPolicy }}',
-'{{ dualPasswordType }}',
+'{{ etag }}',
+'{{ name }}',
+'{{ type }}',
 '{{ project }}',
 '{{ instance }}'
 RETURNING
@@ -387,6 +434,7 @@ importContext,
 insertTime,
 kind,
 operationType,
+preCheckMajorVersionUpgradeContext,
 selfLink,
 startTime,
 status,
@@ -410,25 +458,26 @@ user
     - name: instance
       value: string
       description: Required parameter for the users resource.
-    - name: kind
+    - name: dualPasswordType
       value: string
       description: >
-        This is always `sql#user`.
+        Dual password status for the user.
         
+      valid_values: ['DUAL_PASSWORD_TYPE_UNSPECIFIED', 'NO_MODIFY_DUAL_PASSWORD', 'NO_DUAL_PASSWORD', 'DUAL_PASSWORD']
     - name: password
       value: string
       description: >
         The password for the user.
         
-    - name: etag
-      value: string
+    - name: passwordPolicy
+      value: object
       description: >
-        This field is deprecated and will be removed from a future version of the API.
+        User level password validation policy.
         
-    - name: name
+    - name: project
       value: string
       description: >
-        The name of the user in the Cloud SQL instance. Can be omitted for `update` because it is already specified in the URL.
+        The project ID of the project containing the Cloud SQL database. The Google apps domain is prefixed if applicable. Can be omitted for `update` because it is already specified on the URL.
         
     - name: host
       value: string
@@ -440,33 +489,48 @@ user
       description: >
         The name of the Cloud SQL instance. This does not include the project ID. Can be omitted for `update` because it is already specified on the URL.
         
-    - name: project
+    - name: kind
       value: string
       description: >
-        The project ID of the project containing the Cloud SQL database. The Google apps domain is prefixed if applicable. Can be omitted for `update` because it is already specified on the URL.
+        This is always `sql#user`.
+        
+    - name: iamStatus
+      value: string
+      description: >
+        Indicates if a group is active or inactive for IAM database authentication.
+        
+      valid_values: ['IAM_STATUS_UNSPECIFIED', 'INACTIVE', 'ACTIVE']
+    - name: iamEmail
+      value: string
+      description: >
+        Optional. The full email for an IAM user. For normal database users, this will not be filled. Only applicable to MySQL database users.
+        
+    - name: databaseRoles
+      value: array
+      description: >
+        Optional. Role memberships of the user
+        
+    - name: sqlserverUserDetails
+      value: object
+      description: >
+        Represents a Sql Server user on the Cloud SQL instance.
+        
+    - name: etag
+      value: string
+      description: >
+        This field is deprecated and will be removed from a future version of the API.
+        
+    - name: name
+      value: string
+      description: >
+        The name of the user in the Cloud SQL instance. Can be omitted for `update` because it is already specified in the URL.
         
     - name: type
       value: string
       description: >
         The user type. It determines the method to authenticate the user during login. The default is the database's built-in user type.
         
-      valid_values: ['BUILT_IN', 'CLOUD_IAM_USER', 'CLOUD_IAM_SERVICE_ACCOUNT', 'CLOUD_IAM_GROUP', 'CLOUD_IAM_GROUP_USER', 'CLOUD_IAM_GROUP_SERVICE_ACCOUNT']
-    - name: sqlserverUserDetails
-      value: object
-      description: >
-        Represents a Sql Server user on the Cloud SQL instance.
-        
-    - name: passwordPolicy
-      value: object
-      description: >
-        User level password validation policy.
-        
-    - name: dualPasswordType
-      value: string
-      description: >
-        Dual password status for the user.
-        
-      valid_values: ['DUAL_PASSWORD_TYPE_UNSPECIFIED', 'NO_MODIFY_DUAL_PASSWORD', 'NO_DUAL_PASSWORD', 'DUAL_PASSWORD']
+      valid_values: ['BUILT_IN', 'CLOUD_IAM_USER', 'CLOUD_IAM_SERVICE_ACCOUNT', 'CLOUD_IAM_GROUP', 'CLOUD_IAM_GROUP_USER', 'CLOUD_IAM_GROUP_SERVICE_ACCOUNT', 'ENTRAID_USER']
 ```
 </TabItem>
 </Tabs>
@@ -487,20 +551,24 @@ Updates an existing user in a Cloud SQL instance.
 ```sql
 REPLACE google.sqladmin.users
 SET 
-data__kind = '{{ kind }}',
+data__dualPasswordType = '{{ dualPasswordType }}',
 data__password = '{{ password }}',
-data__etag = '{{ etag }}',
-data__name = '{{ name }}',
+data__passwordPolicy = '{{ passwordPolicy }}',
+data__project = '{{ project }}',
 data__host = '{{ host }}',
 data__instance = '{{ instance }}',
-data__project = '{{ project }}',
-data__type = '{{ type }}',
+data__kind = '{{ kind }}',
+data__iamStatus = '{{ iamStatus }}',
+data__iamEmail = '{{ iamEmail }}',
+data__databaseRoles = '{{ databaseRoles }}',
 data__sqlserverUserDetails = '{{ sqlserverUserDetails }}',
-data__passwordPolicy = '{{ passwordPolicy }}',
-data__dualPasswordType = '{{ dualPasswordType }}'
+data__etag = '{{ etag }}',
+data__name = '{{ name }}',
+data__type = '{{ type }}'
 WHERE 
 project = '{{ project }}' --required
 AND instance = '{{ instance }}' --required
+AND databaseRoles = '{{ databaseRoles}}'
 AND host = '{{ host}}'
 AND name = '{{ name}}'
 RETURNING
@@ -515,6 +583,7 @@ importContext,
 insertTime,
 kind,
 operationType,
+preCheckMajorVersionUpgradeContext,
 selfLink,
 startTime,
 status,
@@ -544,8 +613,8 @@ Deletes a user from a Cloud SQL instance.
 DELETE FROM google.sqladmin.users
 WHERE project = '{{ project }}' --required
 AND instance = '{{ instance }}' --required
-AND host = '{{ host }}'
 AND name = '{{ name }}'
+AND host = '{{ host }}'
 ;
 ```
 </TabItem>

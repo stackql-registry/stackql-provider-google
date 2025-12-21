@@ -134,7 +134,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-tablesId"><code>tablesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all AuthorizedViews from a specific table.</td>
 </tr>
 <tr>
@@ -275,8 +275,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND instancesId = '{{ instancesId }}' -- required
 AND tablesId = '{{ tablesId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND view = '{{ view }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -300,8 +300,8 @@ Creates a new AuthorizedView in a table.
 INSERT INTO google.bigtableadmin.authorized_views (
 data__name,
 data__subsetView,
-data__etag,
 data__deletionProtection,
+data__etag,
 projectsId,
 instancesId,
 tablesId,
@@ -310,8 +310,8 @@ authorizedViewId
 SELECT 
 '{{ name }}',
 '{{ subsetView }}',
-'{{ etag }}',
 {{ deletionProtection }},
+'{{ etag }}',
 '{{ projectsId }}',
 '{{ instancesId }}',
 '{{ tablesId }}',
@@ -350,15 +350,15 @@ response
       description: >
         An AuthorizedView permitting access to an explicit subset of a Table.
         
-    - name: etag
-      value: string
-      description: >
-        The etag for this AuthorizedView. If this is provided on update, it must match the server's etag. The server returns ABORTED error on a mismatched etag.
-        
     - name: deletionProtection
       value: boolean
       description: >
         Set to true to make the AuthorizedView protected against deletion. The parent Table and containing Instance cannot be deleted if an AuthorizedView has this bit set.
+        
+    - name: etag
+      value: string
+      description: >
+        The etag for this AuthorizedView. If this is provided on update, it must match the server's etag. The server returns ABORTED error on a mismatched etag.
         
     - name: authorizedViewId
       value: string
@@ -384,8 +384,8 @@ UPDATE google.bigtableadmin.authorized_views
 SET 
 data__name = '{{ name }}',
 data__subsetView = '{{ subsetView }}',
-data__etag = '{{ etag }}',
-data__deletionProtection = {{ deletionProtection }}
+data__deletionProtection = {{ deletionProtection }},
+data__etag = '{{ etag }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instancesId = '{{ instancesId }}' --required

@@ -185,8 +185,8 @@ Updates the documentation for the specified catalog item. Note that the document
 ```sql
 UPDATE google.apigee.apidocs_documentation
 SET 
-data__oasDocumentation = '{{ oasDocumentation }}',
-data__graphqlDocumentation = '{{ graphqlDocumentation }}'
+data__graphqlDocumentation = '{{ graphqlDocumentation }}',
+data__oasDocumentation = '{{ oasDocumentation }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND sitesId = '{{ sitesId }}' --required

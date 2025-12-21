@@ -204,7 +204,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-metadataStoresId"><code>metadataStoresId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists Executions in the MetadataStore.</td>
 </tr>
 <tr>
@@ -229,18 +229,18 @@ The following methods are available for this resource:
     <td>Deletes an Execution.</td>
 </tr>
 <tr>
-    <td><a href="#purge"><CopyableCode code="purge" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-metadataStoresId"><code>metadataStoresId</code></a></td>
-    <td></td>
-    <td>Purges Executions.</td>
-</tr>
-<tr>
     <td><a href="#add_execution_events"><CopyableCode code="add_execution_events" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-metadataStoresId"><code>metadataStoresId</code></a>, <a href="#parameter-executionsId"><code>executionsId</code></a></td>
     <td></td>
     <td>Adds Events to the specified Execution. An Event indicates whether an Artifact was used as an input or output for an Execution. If an Event already exists between the Execution and the Artifact, the Event is skipped.</td>
+</tr>
+<tr>
+    <td><a href="#purge"><CopyableCode code="purge" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-metadataStoresId"><code>metadataStoresId</code></a></td>
+    <td></td>
+    <td>Purges Executions.</td>
 </tr>
 </tbody>
 </table>
@@ -376,10 +376,10 @@ FROM google.aiplatform.executions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND metadataStoresId = '{{ metadataStoresId }}' -- required
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -401,28 +401,28 @@ Creates an Execution associated with a MetadataStore.
 
 ```sql
 INSERT INTO google.aiplatform.executions (
-data__displayName,
-data__state,
-data__etag,
-data__labels,
-data__schemaTitle,
-data__schemaVersion,
-data__metadata,
 data__description,
+data__schemaVersion,
+data__etag,
+data__metadata,
+data__schemaTitle,
+data__state,
+data__labels,
+data__displayName,
 projectsId,
 locationsId,
 metadataStoresId,
 executionId
 )
 SELECT 
-'{{ displayName }}',
-'{{ state }}',
-'{{ etag }}',
-'{{ labels }}',
-'{{ schemaTitle }}',
-'{{ schemaVersion }}',
-'{{ metadata }}',
 '{{ description }}',
+'{{ schemaVersion }}',
+'{{ etag }}',
+'{{ metadata }}',
+'{{ schemaTitle }}',
+'{{ state }}',
+'{{ labels }}',
+'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ metadataStoresId }}',
@@ -457,10 +457,30 @@ updateTime
     - name: metadataStoresId
       value: string
       description: Required parameter for the executions resource.
-    - name: displayName
+    - name: description
       value: string
       description: >
-        User provided display name of the Execution. May be up to 128 Unicode characters.
+        Description of the Execution
+        
+    - name: schemaVersion
+      value: string
+      description: >
+        The version of the schema in `schema_title` to use. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
+        
+    - name: etag
+      value: string
+      description: >
+        An eTag used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+        
+    - name: metadata
+      value: object
+      description: >
+        Properties of the Execution. Top level metadata keys' heading and trailing spaces will be trimmed. The size of this field should not exceed 200KB.
+        
+    - name: schemaTitle
+      value: string
+      description: >
+        The title of the schema describing the metadata. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
         
     - name: state
       value: string
@@ -468,35 +488,15 @@ updateTime
         The state of this Execution. This is a property of the Execution, and does not imply or capture any ongoing process. This property is managed by clients (such as Vertex AI Pipelines) and the system does not prescribe or check the validity of state transitions.
         
       valid_values: ['STATE_UNSPECIFIED', 'NEW', 'RUNNING', 'COMPLETE', 'FAILED', 'CACHED', 'CANCELLED']
-    - name: etag
-      value: string
-      description: >
-        An eTag used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
-        
     - name: labels
       value: object
       description: >
         The labels with user-defined metadata to organize your Executions. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one Execution (System labels are excluded).
         
-    - name: schemaTitle
+    - name: displayName
       value: string
       description: >
-        The title of the schema describing the metadata. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
-        
-    - name: schemaVersion
-      value: string
-      description: >
-        The version of the schema in `schema_title` to use. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
-        
-    - name: metadata
-      value: object
-      description: >
-        Properties of the Execution. Top level metadata keys' heading and trailing spaces will be trimmed. The size of this field should not exceed 200KB.
-        
-    - name: description
-      value: string
-      description: >
-        Description of the Execution
+        User provided display name of the Execution. May be up to 128 Unicode characters.
         
     - name: executionId
       value: string
@@ -520,14 +520,14 @@ Updates a stored Execution.
 ```sql
 UPDATE google.aiplatform.executions
 SET 
-data__displayName = '{{ displayName }}',
-data__state = '{{ state }}',
-data__etag = '{{ etag }}',
-data__labels = '{{ labels }}',
-data__schemaTitle = '{{ schemaTitle }}',
+data__description = '{{ description }}',
 data__schemaVersion = '{{ schemaVersion }}',
+data__etag = '{{ etag }}',
 data__metadata = '{{ metadata }}',
-data__description = '{{ description }}'
+data__schemaTitle = '{{ schemaTitle }}',
+data__state = '{{ state }}',
+data__labels = '{{ labels }}',
+data__displayName = '{{ displayName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -580,29 +580,12 @@ AND etag = '{{ etag }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="purge"
+    defaultValue="add_execution_events"
     values={[
-        { label: 'purge', value: 'purge' },
-        { label: 'add_execution_events', value: 'add_execution_events' }
+        { label: 'add_execution_events', value: 'add_execution_events' },
+        { label: 'purge', value: 'purge' }
     ]}
 >
-<TabItem value="purge">
-
-Purges Executions.
-
-```sql
-EXEC google.aiplatform.executions.purge 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@metadataStoresId='{{ metadataStoresId }}' --required 
-@@json=
-'{
-"filter": "{{ filter }}", 
-"force": {{ force }}
-}'
-;
-```
-</TabItem>
 <TabItem value="add_execution_events">
 
 Adds Events to the specified Execution. An Event indicates whether an Artifact was used as an input or output for an Execution. If an Event already exists between the Execution and the Artifact, the Event is skipped.
@@ -616,6 +599,23 @@ EXEC google.aiplatform.executions.add_execution_events
 @@json=
 '{
 "events": "{{ events }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="purge">
+
+Purges Executions.
+
+```sql
+EXEC google.aiplatform.executions.purge 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@metadataStoresId='{{ metadataStoresId }}' --required 
+@@json=
+'{
+"force": {{ force }}, 
+"filter": "{{ filter }}"
 }'
 ;
 ```

@@ -194,7 +194,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists `NetworkPolicy` resources in a specified project and location.</td>
 </tr>
 <tr>
@@ -208,7 +208,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-networkPoliciesId"><code>networkPoliciesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Modifies a `NetworkPolicy` resource. Only the following fields can be updated: `internet_access`, `external_ip`, `edge_services_cidr`. Only fields specified in `updateMask` are applied. When updating a network policy, the external IP network service can only be disabled if there are no external IP addresses present in the scope of the policy. Also, a `NetworkService` cannot be updated when `NetworkService.state` is set to `RECONCILING`. During operation processing, the resource is temporarily in the `ACTIVE` state before the operation fully completes. For that period of time, you can't update the resource. Use the operation status to determine when the processing fully completes.</td>
 </tr>
 <tr>
@@ -338,10 +338,10 @@ vmwareEngineNetworkCanonical
 FROM google.vmwareengine.network_policies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -363,22 +363,22 @@ Creates a new network policy in a given VMware Engine network of a project and l
 
 ```sql
 INSERT INTO google.vmwareengine.network_policies (
-data__internetAccess,
+data__description,
+data__vmwareEngineNetwork,
 data__externalIp,
 data__edgeServicesCidr,
-data__vmwareEngineNetwork,
-data__description,
+data__internetAccess,
 projectsId,
 locationsId,
 networkPolicyId,
 requestId
 )
 SELECT 
-'{{ internetAccess }}',
+'{{ description }}',
+'{{ vmwareEngineNetwork }}',
 '{{ externalIp }}',
 '{{ edgeServicesCidr }}',
-'{{ vmwareEngineNetwork }}',
-'{{ description }}',
+'{{ internetAccess }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ networkPolicyId }}',
@@ -404,10 +404,15 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the network_policies resource.
-    - name: internetAccess
-      value: object
+    - name: description
+      value: string
       description: >
-        Network service that allows VMware workloads to access the internet.
+        Optional. User-provided description for this network policy.
+        
+    - name: vmwareEngineNetwork
+      value: string
+      description: >
+        Optional. The relative resource name of the VMware Engine network. Specify the name in the following form: `projects/{project}/locations/{location}/vmwareEngineNetworks/{vmware_engine_network_id}` where `{project}` can either be a project number or a project ID.
         
     - name: externalIp
       value: object
@@ -419,15 +424,10 @@ response
       description: >
         Required. IP address range in CIDR notation used to create internet access and external IP access. An RFC 1918 CIDR block, with a "/26" prefix, is required. The range cannot overlap with any prefixes either in the consumer VPC network or in use by the private clouds attached to that VPC network.
         
-    - name: vmwareEngineNetwork
-      value: string
+    - name: internetAccess
+      value: object
       description: >
-        Optional. The relative resource name of the VMware Engine network. Specify the name in the following form: `projects/{project}/locations/{location}/vmwareEngineNetworks/{vmware_engine_network_id}` where `{project}` can either be a project number or a project ID.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. User-provided description for this network policy.
+        Network service that allows VMware workloads to access the internet.
         
     - name: networkPolicyId
       value: string
@@ -453,17 +453,17 @@ Modifies a `NetworkPolicy` resource. Only the following fields can be updated: `
 ```sql
 UPDATE google.vmwareengine.network_policies
 SET 
-data__internetAccess = '{{ internetAccess }}',
+data__description = '{{ description }}',
+data__vmwareEngineNetwork = '{{ vmwareEngineNetwork }}',
 data__externalIp = '{{ externalIp }}',
 data__edgeServicesCidr = '{{ edgeServicesCidr }}',
-data__vmwareEngineNetwork = '{{ vmwareEngineNetwork }}',
-data__description = '{{ description }}'
+data__internetAccess = '{{ internetAccess }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND networkPoliciesId = '{{ networkPoliciesId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

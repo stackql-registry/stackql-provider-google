@@ -186,8 +186,8 @@ Sets an access control policy for a resource. Replaces any existing policy. Supp
 ```sql
 REPLACE google.bigqueryreservation.reservations_iam_policies
 SET 
-data__policy = '{{ policy }}',
-data__updateMask = '{{ updateMask }}'
+data__updateMask = '{{ updateMask }}',
+data__policy = '{{ policy }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

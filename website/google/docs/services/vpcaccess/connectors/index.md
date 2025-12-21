@@ -358,29 +358,29 @@ Creates a Serverless VPC Access connector, returns an operation.
 
 ```sql
 INSERT INTO google.vpcaccess.connectors (
-data__name,
-data__network,
-data__ipCidrRange,
 data__minThroughput,
+data__ipCidrRange,
+data__maxInstances,
+data__name,
+data__minInstances,
+data__network,
+data__machineType,
 data__maxThroughput,
 data__subnet,
-data__machineType,
-data__minInstances,
-data__maxInstances,
 projectsId,
 locationsId,
 connectorId
 )
 SELECT 
-'{{ name }}',
-'{{ network }}',
-'{{ ipCidrRange }}',
 {{ minThroughput }},
+'{{ ipCidrRange }}',
+{{ maxInstances }},
+'{{ name }}',
+{{ minInstances }},
+'{{ network }}',
+'{{ machineType }}',
 {{ maxThroughput }},
 '{{ subnet }}',
-'{{ machineType }}',
-{{ minInstances }},
-{{ maxInstances }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ connectorId }}'
@@ -405,25 +405,40 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the connectors resource.
-    - name: name
-      value: string
+    - name: minThroughput
+      value: integer
       description: >
-        The resource name in the format `projects/*/locations/*/connectors/*`.
-        
-    - name: network
-      value: string
-      description: >
-        Optional. Name of a VPC network.
+        Minimum throughput of the connector in Mbps. Refers to the expected throughput when using an `e2-micro` machine type. Value must be a multiple of 100 from 200 through 900. Must be lower than the value specified by --max-throughput. If both min-throughput and min-instances are provided, min-instances takes precedence over min-throughput. The use of `min-throughput` is discouraged in favor of `min-instances`.
         
     - name: ipCidrRange
       value: string
       description: >
         Optional. The range of internal addresses that follows RFC 4632 notation. Example: `10.132.0.0/28`.
         
-    - name: minThroughput
+    - name: maxInstances
       value: integer
       description: >
-        Minimum throughput of the connector in Mbps. Refers to the expected throughput when using an `e2-micro` machine type. Value must be a multiple of 100 from 200 through 900. Must be lower than the value specified by --max-throughput. If both min-throughput and min-instances are provided, min-instances takes precedence over min-throughput. The use of `min-throughput` is discouraged in favor of `min-instances`.
+        Maximum value of instances in autoscaling group underlying the connector.
+        
+    - name: name
+      value: string
+      description: >
+        The resource name in the format `projects/*/locations/*/connectors/*`.
+        
+    - name: minInstances
+      value: integer
+      description: >
+        Minimum value of instances in autoscaling group underlying the connector.
+        
+    - name: network
+      value: string
+      description: >
+        Optional. Name of a VPC network.
+        
+    - name: machineType
+      value: string
+      description: >
+        Machine type of VM Instance underlying connector. Default is e2-micro
         
     - name: maxThroughput
       value: integer
@@ -434,21 +449,6 @@ response
       value: object
       description: >
         Optional. The subnet in which to house the VPC Access Connector.
-        
-    - name: machineType
-      value: string
-      description: >
-        Machine type of VM Instance underlying connector. Default is e2-micro
-        
-    - name: minInstances
-      value: integer
-      description: >
-        Minimum value of instances in autoscaling group underlying the connector.
-        
-    - name: maxInstances
-      value: integer
-      description: >
-        Maximum value of instances in autoscaling group underlying the connector.
         
     - name: connectorId
       value: string
@@ -472,15 +472,15 @@ Updates a Serverless VPC Access connector, returns an operation.
 ```sql
 UPDATE google.vpcaccess.connectors
 SET 
-data__name = '{{ name }}',
-data__network = '{{ network }}',
-data__ipCidrRange = '{{ ipCidrRange }}',
 data__minThroughput = {{ minThroughput }},
-data__maxThroughput = {{ maxThroughput }},
-data__subnet = '{{ subnet }}',
-data__machineType = '{{ machineType }}',
+data__ipCidrRange = '{{ ipCidrRange }}',
+data__maxInstances = {{ maxInstances }},
+data__name = '{{ name }}',
 data__minInstances = {{ minInstances }},
-data__maxInstances = {{ maxInstances }}
+data__network = '{{ network }}',
+data__machineType = '{{ machineType }}',
+data__maxThroughput = {{ maxThroughput }},
+data__subnet = '{{ subnet }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -18,7 +18,7 @@ vmmigration service documentation.
 
 :::info[Service Summary]
 
-total resources: __15__  
+total resources: __17__  
 
 :::
 
@@ -28,6 +28,7 @@ total resources: __15__
 <a href="/services/vmmigration/clone_jobs/">clone_jobs</a><br />
 <a href="/services/vmmigration/cutover_jobs/">cutover_jobs</a><br />
 <a href="/services/vmmigration/datacenter_connectors/">datacenter_connectors</a><br />
+<a href="/services/vmmigration/disk_migration_jobs/">disk_migration_jobs</a><br />
 <a href="/services/vmmigration/groups/">groups</a><br />
 <a href="/services/vmmigration/groups_group_migration/">groups_group_migration</a><br />
 <a href="/services/vmmigration/image_import_jobs/">image_import_jobs</a><br />
@@ -40,6 +41,7 @@ total resources: __15__
 <a href="/services/vmmigration/replication_cycles/">replication_cycles</a><br />
 <a href="/services/vmmigration/sources/">sources</a><br />
 <a href="/services/vmmigration/sources_inventory/">sources_inventory</a><br />
+<a href="/services/vmmigration/sources_storage_inventory/">sources_storage_inventory</a><br />
 <a href="/services/vmmigration/target_projects/">target_projects</a><br />
 <a href="/services/vmmigration/utilization_reports/">utilization_reports</a>
 </div>

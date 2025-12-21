@@ -244,7 +244,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists all the discovery clients in a given project and location.</td>
 </tr>
 <tr>
@@ -258,7 +258,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-discoveryClientsId"><code>discoveryClientsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a discovery client.</td>
 </tr>
 <tr>
@@ -406,8 +406,8 @@ FROM google.migrationcenter.discovery_clients
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -430,26 +430,26 @@ Creates a new discovery client.
 
 ```sql
 INSERT INTO google.migrationcenter.discovery_clients (
+data__description,
 data__source,
 data__serviceAccount,
-data__displayName,
-data__description,
 data__labels,
-data__expireTime,
+data__displayName,
 data__ttl,
+data__expireTime,
 projectsId,
 locationsId,
 discoveryClientId,
 requestId
 )
 SELECT 
+'{{ description }}',
 '{{ source }}',
 '{{ serviceAccount }}',
-'{{ displayName }}',
-'{{ description }}',
 '{{ labels }}',
-'{{ expireTime }}',
+'{{ displayName }}',
 '{{ ttl }}',
+'{{ expireTime }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ discoveryClientId }}',
@@ -475,6 +475,11 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the discovery_clients resource.
+    - name: description
+      value: string
+      description: >
+        Optional. Free text description. Maximum length is 1000 characters.
+        
     - name: source
       value: string
       description: >
@@ -485,30 +490,25 @@ response
       description: >
         Required. Service account used by the discovery client for various operation.
         
-    - name: displayName
-      value: string
-      description: >
-        Optional. Free text display name. Maximum length is 63 characters.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. Free text description. Maximum length is 1000 characters.
-        
     - name: labels
       value: object
       description: >
         Optional. Labels as key value pairs.
         
-    - name: expireTime
+    - name: displayName
       value: string
       description: >
-        Optional. Client expiration time in UTC. If specified, the backend will not accept new frames after this time.
+        Optional. Free text display name. Maximum length is 63 characters.
         
     - name: ttl
       value: string
       description: >
         Optional. Input only. Client time-to-live. If specified, the backend will not accept new frames after this time. This field is input only. The derived expiration time is provided as output through the `expire_time` field.
+        
+    - name: expireTime
+      value: string
+      description: >
+        Optional. Client expiration time in UTC. If specified, the backend will not accept new frames after this time.
         
     - name: discoveryClientId
       value: string
@@ -534,19 +534,19 @@ Updates a discovery client.
 ```sql
 UPDATE google.migrationcenter.discovery_clients
 SET 
+data__description = '{{ description }}',
 data__source = '{{ source }}',
 data__serviceAccount = '{{ serviceAccount }}',
-data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
 data__labels = '{{ labels }}',
-data__expireTime = '{{ expireTime }}',
-data__ttl = '{{ ttl }}'
+data__displayName = '{{ displayName }}',
+data__ttl = '{{ ttl }}',
+data__expireTime = '{{ expireTime }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND discoveryClientsId = '{{ discoveryClientsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,
@@ -601,8 +601,8 @@ EXEC google.migrationcenter.discovery_clients.send_heartbeat
 @discoveryClientsId='{{ discoveryClientsId }}' --required 
 @@json=
 '{
-"version": "{{ version }}", 
-"errors": "{{ errors }}"
+"errors": "{{ errors }}", 
+"version": "{{ version }}"
 }'
 ;
 ```

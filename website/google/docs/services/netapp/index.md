@@ -18,7 +18,7 @@ netapp service documentation.
 
 :::info[Service Summary]
 
-total resources: __12__  
+total resources: __13__  
 
 :::
 
@@ -29,6 +29,7 @@ total resources: __12__
 <a href="/services/netapp/backup_policies/">backup_policies</a><br />
 <a href="/services/netapp/backup_vaults/">backup_vaults</a><br />
 <a href="/services/netapp/backups/">backups</a><br />
+<a href="/services/netapp/host_groups/">host_groups</a><br />
 <a href="/services/netapp/kms_configs/">kms_configs</a><br />
 <a href="/services/netapp/locations/">locations</a>
 </div>

@@ -244,7 +244,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists all Connectivity Tests owned by a project.</td>
 </tr>
 <tr>
@@ -395,8 +395,8 @@ FROM google.networkmanagement.connectivity_tests
 WHERE projectsId = '{{ projectsId }}' -- required
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -418,28 +418,28 @@ Creates a new Connectivity Test. After you create a test, the reachability analy
 
 ```sql
 INSERT INTO google.networkmanagement.connectivity_tests (
-data__name,
 data__description,
 data__source,
-data__destination,
-data__protocol,
-data__relatedProjects,
-data__labels,
-data__roundTrip,
 data__bypassFirewallChecks,
+data__roundTrip,
+data__protocol,
+data__labels,
+data__relatedProjects,
+data__destination,
+data__name,
 projectsId,
 testId
 )
 SELECT 
-'{{ name }}',
 '{{ description }}',
 '{{ source }}',
-'{{ destination }}',
-'{{ protocol }}',
-'{{ relatedProjects }}',
-'{{ labels }}',
-{{ roundTrip }},
 {{ bypassFirewallChecks }},
+{{ roundTrip }},
+'{{ protocol }}',
+'{{ labels }}',
+'{{ relatedProjects }}',
+'{{ destination }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ testId }}'
 RETURNING
@@ -460,11 +460,6 @@ response
     - name: projectsId
       value: string
       description: Required parameter for the connectivity_tests resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. Unique name of the resource using the form: `projects/{project_id}/locations/global/connectivityTests/{test_id}`
-        
     - name: description
       value: string
       description: >
@@ -475,35 +470,40 @@ response
       description: >
         Required. Source specification of the Connectivity Test. You can use a combination of source IP address, URI of a supported endpoint, project ID, or VPC network to identify the source location. Reachability analysis might proceed even if the source location is ambiguous. However, the test result might include endpoints or use a source that you don't intend to test.
         
-    - name: destination
-      value: object
+    - name: bypassFirewallChecks
+      value: boolean
       description: >
-        Required. Destination specification of the Connectivity Test. You can use a combination of destination IP address, URI of a supported endpoint, project ID, or VPC network to identify the destination location. Reachability analysis proceeds even if the destination location is ambiguous. However, the test result might include endpoints or use a destination that you don't intend to test.
-        
-    - name: protocol
-      value: string
-      description: >
-        IP Protocol of the test. When not provided, "TCP" is assumed.
-        
-    - name: relatedProjects
-      value: array
-      description: >
-        Other projects that may be relevant for reachability analysis. This is applicable to scenarios where a test can cross project boundaries.
-        
-    - name: labels
-      value: object
-      description: >
-        Resource labels to represent user-provided metadata.
+        Whether the analysis should skip firewall checking. Default value is false.
         
     - name: roundTrip
       value: boolean
       description: >
         Whether run analysis for the return path from destination to source. Default value is false.
         
-    - name: bypassFirewallChecks
-      value: boolean
+    - name: protocol
+      value: string
       description: >
-        Whether the analysis should skip firewall checking. Default value is false.
+        IP Protocol of the test. When not provided, "TCP" is assumed.
+        
+    - name: labels
+      value: object
+      description: >
+        Resource labels to represent user-provided metadata.
+        
+    - name: relatedProjects
+      value: array
+      description: >
+        Other projects that may be relevant for reachability analysis. This is applicable to scenarios where a test can cross project boundaries.
+        
+    - name: destination
+      value: object
+      description: >
+        Required. Destination specification of the Connectivity Test. You can use a combination of destination IP address, URI of a supported endpoint, project ID, or VPC network to identify the destination location. Reachability analysis proceeds even if the destination location is ambiguous. However, the test result might include endpoints or use a destination that you don't intend to test.
+        
+    - name: name
+      value: string
+      description: >
+        Identifier. Unique name of the resource using the form: `projects/{project_id}/locations/global/connectivityTests/{test_id}`
         
     - name: testId
       value: string
@@ -527,15 +527,15 @@ Updates the configuration of an existing `ConnectivityTest`. After you update a 
 ```sql
 UPDATE google.networkmanagement.connectivity_tests
 SET 
-data__name = '{{ name }}',
 data__description = '{{ description }}',
 data__source = '{{ source }}',
-data__destination = '{{ destination }}',
-data__protocol = '{{ protocol }}',
-data__relatedProjects = '{{ relatedProjects }}',
-data__labels = '{{ labels }}',
+data__bypassFirewallChecks = {{ bypassFirewallChecks }},
 data__roundTrip = {{ roundTrip }},
-data__bypassFirewallChecks = {{ bypassFirewallChecks }}
+data__protocol = '{{ protocol }}',
+data__labels = '{{ labels }}',
+data__relatedProjects = '{{ relatedProjects }}',
+data__destination = '{{ destination }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND connectivityTestsId = '{{ connectivityTestsId }}' --required

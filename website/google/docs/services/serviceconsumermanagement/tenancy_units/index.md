@@ -97,7 +97,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-servicesId"><code>servicesId</code></a>, <a href="#parameter-servicesId1"><code>servicesId1</code></a>, <a href="#parameter-servicesId2"><code>servicesId2</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Find the tenancy unit for a managed service and service consumer. This method shouldn't be used in a service producer's runtime path, for example to find the tenant project number when creating VMs. Service producers must persist the tenant project's information after the project is created.</td>
 </tr>
 <tr>
@@ -212,8 +212,8 @@ FROM google.serviceconsumermanagement.tenancy_units
 WHERE servicesId = '{{ servicesId }}' -- required
 AND servicesId1 = '{{ servicesId1 }}' -- required
 AND servicesId2 = '{{ servicesId2 }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
 ;
 ```
@@ -326,8 +326,8 @@ EXEC google.serviceconsumermanagement.tenancy_units.apply_project_config
 @tenancyUnitsId='{{ tenancyUnitsId }}' --required 
 @@json=
 '{
-"projectConfig": "{{ projectConfig }}", 
-"tag": "{{ tag }}"
+"tag": "{{ tag }}", 
+"projectConfig": "{{ projectConfig }}"
 }'
 ;
 ```
@@ -344,9 +344,9 @@ EXEC google.serviceconsumermanagement.tenancy_units.attach_project
 @tenancyUnitsId='{{ tenancyUnitsId }}' --required 
 @@json=
 '{
-"reservedResource": "{{ reservedResource }}", 
+"tag": "{{ tag }}", 
 "externalResource": "{{ externalResource }}", 
-"tag": "{{ tag }}"
+"reservedResource": "{{ reservedResource }}"
 }'
 ;
 ```

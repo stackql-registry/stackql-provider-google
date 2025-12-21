@@ -216,25 +216,25 @@ Creates a TargetServer in the specified environment.
 
 ```sql
 INSERT INTO google.apigee.targetservers (
-data__name,
-data__description,
-data__host,
-data__port,
-data__isEnabled,
 data__sSLInfo,
+data__description,
+data__name,
+data__isEnabled,
+data__port,
 data__protocol,
+data__host,
 organizationsId,
 environmentsId,
 name
 )
 SELECT 
-'{{ name }}',
-'{{ description }}',
-'{{ host }}',
-{{ port }},
-{{ isEnabled }},
 '{{ sSLInfo }}',
+'{{ description }}',
+'{{ name }}',
+{{ isEnabled }},
+{{ port }},
 '{{ protocol }}',
+'{{ host }}',
 '{{ organizationsId }}',
 '{{ environmentsId }}',
 '{{ name }}'
@@ -261,35 +261,30 @@ sSLInfo
     - name: environmentsId
       value: string
       description: Required parameter for the targetservers resource.
-    - name: name
-      value: string
+    - name: sSLInfo
+      value: object
       description: >
-        Required. The resource id of this target server. Values must match the regular expression 
+        Optional. Specifies TLS configuration info for this TargetServer. The JSON name is `sSLInfo` for legacy/backwards compatibility reasons -- Edge originally supported SSL, and the name is still used for TLS configuration.
         
     - name: description
       value: string
       description: >
         Optional. A human-readable description of this TargetServer.
         
-    - name: host
+    - name: name
       value: string
       description: >
-        Required. The host name this target connects to. Value must be a valid hostname as described by RFC-1123.
-        
-    - name: port
-      value: integer
-      description: >
-        Required. The port number this target connects to on the given host. Value must be between 1 and 65535, inclusive.
+        Required. The resource id of this target server. Values must match the regular expression 
         
     - name: isEnabled
       value: boolean
       description: >
         Optional. Enabling/disabling a TargetServer is useful when TargetServers are used in load balancing configurations, and one or more TargetServers need to taken out of rotation periodically. Defaults to true.
         
-    - name: sSLInfo
-      value: object
+    - name: port
+      value: integer
       description: >
-        Optional. Specifies TLS configuration info for this TargetServer. The JSON name is `sSLInfo` for legacy/backwards compatibility reasons -- Edge originally supported SSL, and the name is still used for TLS configuration.
+        Required. The port number this target connects to on the given host. Value must be between 1 and 65535, inclusive.
         
     - name: protocol
       value: string
@@ -297,6 +292,11 @@ sSLInfo
         Immutable. The protocol used by this TargetServer.
         
       valid_values: ['PROTOCOL_UNSPECIFIED', 'HTTP', 'HTTP2', 'GRPC_TARGET', 'GRPC', 'EXTERNAL_CALLOUT']
+    - name: host
+      value: string
+      description: >
+        Required. The host name this target connects to. Value must be a valid hostname as described by RFC-1123.
+        
     - name: name
       value: string
 ```
@@ -319,13 +319,13 @@ Updates an existing TargetServer. Note that this operation has PUT semantics; it
 ```sql
 REPLACE google.apigee.targetservers
 SET 
-data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__host = '{{ host }}',
-data__port = {{ port }},
-data__isEnabled = {{ isEnabled }},
 data__sSLInfo = '{{ sSLInfo }}',
-data__protocol = '{{ protocol }}'
+data__description = '{{ description }}',
+data__name = '{{ name }}',
+data__isEnabled = {{ isEnabled }},
+data__port = {{ port }},
+data__protocol = '{{ protocol }}',
+data__host = '{{ host }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND environmentsId = '{{ environmentsId }}' --required

@@ -77,7 +77,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="encryptionInfo" /></td>
     <td><code>object</code></td>
-    <td>Encryption information for a Cloud Spanner database or backup. (id: EncryptionInfo)</td>
+    <td>Output only. The encryption information for the backup. (id: EncryptionInfo)</td>
 </tr>
 <tr>
     <td><CopyableCode code="encryptionInformation" /></td>
@@ -107,7 +107,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="instancePartitions" /></td>
     <td><code>array</code></td>
-    <td>Output only. The instance partition(s) storing the backup. This is the same as the list of the instance partition(s) that the database had footprint in at the backup's `version_time`.</td>
+    <td>Output only. The instance partition storing the backup. This is the same as the list of the instance partitions that the database recorded at the backup's `version_time`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="maxExpireTime" /></td>
@@ -186,7 +186,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="encryptionInfo" /></td>
     <td><code>object</code></td>
-    <td>Encryption information for a Cloud Spanner database or backup. (id: EncryptionInfo)</td>
+    <td>Output only. The encryption information for the backup. (id: EncryptionInfo)</td>
 </tr>
 <tr>
     <td><CopyableCode code="encryptionInformation" /></td>
@@ -216,7 +216,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="instancePartitions" /></td>
     <td><code>array</code></td>
-    <td>Output only. The instance partition(s) storing the backup. This is the same as the list of the instance partition(s) that the database had footprint in at the backup's `version_time`.</td>
+    <td>Output only. The instance partition storing the backup. This is the same as the list of the instance partitions that the database recorded at the backup's `version_time`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="maxExpireTime" /></td>
@@ -284,14 +284,14 @@ The following methods are available for this resource:
     <td><a href="#projects_instances_backups_list"><CopyableCode code="projects_instances_backups_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists completed and pending backups. Backups returned are ordered by `create_time` in descending order, starting from the most recent `create_time`.</td>
 </tr>
 <tr>
     <td><a href="#projects_instances_backups_create"><CopyableCode code="projects_instances_backups_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td><a href="#parameter-backupId"><code>backupId</code></a>, <a href="#parameter-encryptionConfig.encryptionType"><code>encryptionConfig.encryptionType</code></a>, <a href="#parameter-encryptionConfig.kmsKeyName"><code>encryptionConfig.kmsKeyName</code></a>, <a href="#parameter-encryptionConfig.kmsKeyNames"><code>encryptionConfig.kmsKeyNames</code></a></td>
+    <td><a href="#parameter-backupId"><code>backupId</code></a>, <a href="#parameter-encryptionConfig.kmsKeyName"><code>encryptionConfig.kmsKeyName</code></a>, <a href="#parameter-encryptionConfig.kmsKeyNames"><code>encryptionConfig.kmsKeyNames</code></a>, <a href="#parameter-encryptionConfig.encryptionType"><code>encryptionConfig.encryptionType</code></a></td>
     <td>Starts creating a new Cloud Spanner Backup. The returned backup long-running operation will have a name of the format `projects//instances//backups//operations/` and can be used to track creation of the backup. The metadata field type is CreateBackupMetadata. The response field type is Backup, if successful. Cancelling the returned operation will stop the creation and delete the backup. There can be only one pending backup creation per database. Backup creation of different databases can run concurrently.</td>
 </tr>
 <tr>
@@ -459,8 +459,8 @@ FROM google.spanner.backups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND instancesId = '{{ instancesId }}' -- required
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -489,9 +489,9 @@ data__name,
 projectsId,
 instancesId,
 backupId,
-encryptionConfig.encryptionType,
 encryptionConfig.kmsKeyName,
-encryptionConfig.kmsKeyNames
+encryptionConfig.kmsKeyNames,
+encryptionConfig.encryptionType
 )
 SELECT 
 '{{ database }}',
@@ -501,9 +501,9 @@ SELECT
 '{{ projectsId }}',
 '{{ instancesId }}',
 '{{ backupId }}',
-'{{ encryptionConfig.encryptionType }}',
 '{{ encryptionConfig.kmsKeyName }}',
-'{{ encryptionConfig.kmsKeyNames }}'
+'{{ encryptionConfig.kmsKeyNames }}',
+'{{ encryptionConfig.encryptionType }}'
 RETURNING
 name,
 done,
@@ -547,11 +547,11 @@ response
         
     - name: backupId
       value: string
-    - name: encryptionConfig.encryptionType
-      value: string
     - name: encryptionConfig.kmsKeyName
       value: string
     - name: encryptionConfig.kmsKeyNames
+      value: string
+    - name: encryptionConfig.encryptionType
       value: string
 ```
 </TabItem>
@@ -650,8 +650,8 @@ EXEC google.spanner.backups.projects_instances_backups_copy
 '{
 "backupId": "{{ backupId }}", 
 "sourceBackup": "{{ sourceBackup }}", 
-"expireTime": "{{ expireTime }}", 
-"encryptionConfig": "{{ encryptionConfig }}"
+"encryptionConfig": "{{ encryptionConfig }}", 
+"expireTime": "{{ expireTime }}"
 }'
 ;
 ```

@@ -92,7 +92,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists the TagBindings for the given Google Cloud resource, as specified with `parent`. NOTE: The `parent` field is expected to be a full resource name: https://cloud.google.com/apis/design/resource_names#full_resource_name</td>
 </tr>
 <tr>
@@ -172,9 +172,9 @@ parent,
 tagValue,
 tagValueNamespacedName
 FROM google.cloudresourcemanager.tag_bindings
-WHERE parent = '{{ parent }}'
+WHERE pageToken = '{{ pageToken }}'
+AND parent = '{{ parent }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -196,15 +196,15 @@ Creates a TagBinding between a TagValue and a Google Cloud resource.
 
 ```sql
 INSERT INTO google.cloudresourcemanager.tag_bindings (
-data__parent,
 data__tagValue,
 data__tagValueNamespacedName,
+data__parent,
 validateOnly
 )
 SELECT 
-'{{ parent }}',
 '{{ tagValue }}',
 '{{ tagValueNamespacedName }}',
+'{{ parent }}',
 '{{ validateOnly }}'
 RETURNING
 name,
@@ -221,11 +221,6 @@ response
 # Description fields are for documentation purposes
 - name: tag_bindings
   props:
-    - name: parent
-      value: string
-      description: >
-        The full resource name of the resource the TagValue is bound to. E.g. `//cloudresourcemanager.googleapis.com/projects/123`
-        
     - name: tagValue
       value: string
       description: >
@@ -235,6 +230,11 @@ response
       value: string
       description: >
         The namespaced name for the TagValue of the TagBinding. Must be in the format `{parent_id}/{tag_key_short_name}/{short_name}`. For methods that support TagValue namespaced name, only one of tag_value_namespaced_name or tag_value may be filled. Requests with both fields will be rejected.
+        
+    - name: parent
+      value: string
+      description: >
+        The full resource name of the resource the TagValue is bound to. E.g. `//cloudresourcemanager.googleapis.com/projects/123`
         
     - name: validateOnly
       value: boolean

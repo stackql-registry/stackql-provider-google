@@ -50,18 +50,18 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#export_project_metadata"><CopyableCode code="export_project_metadata" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Export generated customer metadata for a given project.</td>
-</tr>
-<tr>
     <td><a href="#export_metadata"><CopyableCode code="export_metadata" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-locationsId1"><code>locationsId1</code></a></td>
     <td></td>
     <td>Export generated customer metadata for a given resource.</td>
+</tr>
+<tr>
+    <td><a href="#export_image"><CopyableCode code="export_image" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-locationsId1"><code>locationsId1</code></a></td>
+    <td></td>
+    <td>Export image for a given resource.</td>
 </tr>
 <tr>
     <td><a href="#export_image_metadata"><CopyableCode code="export_image_metadata" /></a></td>
@@ -71,11 +71,11 @@ The following methods are available for this resource:
     <td>Export image metadata for a given resource.</td>
 </tr>
 <tr>
-    <td><a href="#export_image"><CopyableCode code="export_image" /></a></td>
+    <td><a href="#export_project_metadata"><CopyableCode code="export_project_metadata" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-locationsId1"><code>locationsId1</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
-    <td>Export image for a given resource.</td>
+    <td>Export generated customer metadata for a given project.</td>
 </tr>
 </tbody>
 </table>
@@ -114,43 +114,20 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="export_project_metadata"
+    defaultValue="export_metadata"
     values={[
-        { label: 'export_project_metadata', value: 'export_project_metadata' },
         { label: 'export_metadata', value: 'export_metadata' },
+        { label: 'export_image', value: 'export_image' },
         { label: 'export_image_metadata', value: 'export_image_metadata' },
-        { label: 'export_image', value: 'export_image' }
+        { label: 'export_project_metadata', value: 'export_project_metadata' }
     ]}
 >
-<TabItem value="export_project_metadata">
-
-Export generated customer metadata for a given project.
-
-```sql
-EXEC google.run.locations.export_project_metadata 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="export_metadata">
 
 Export generated customer metadata for a given resource.
 
 ```sql
 EXEC google.run.locations.export_metadata 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@locationsId1='{{ locationsId1 }}' --required
-;
-```
-</TabItem>
-<TabItem value="export_image_metadata">
-
-Export image metadata for a given resource.
-
-```sql
-EXEC google.run.locations.export_image_metadata 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @locationsId1='{{ locationsId1 }}' --required
@@ -170,6 +147,29 @@ EXEC google.run.locations.export_image
 '{
 "destinationRepo": "{{ destinationRepo }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="export_image_metadata">
+
+Export image metadata for a given resource.
+
+```sql
+EXEC google.run.locations.export_image_metadata 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@locationsId1='{{ locationsId1 }}' --required
+;
+```
+</TabItem>
+<TabItem value="export_project_metadata">
+
+Export generated customer metadata for a given project.
+
+```sql
+EXEC google.run.locations.export_project_metadata 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required
 ;
 ```
 </TabItem>

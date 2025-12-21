@@ -97,7 +97,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the cluster.</td>
+    <td>Output only. The current state of the Kafka Connect cluster.</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -118,61 +118,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Identifier. The name of the Kafka Connect cluster. Structured like: projects/&#123;project_number&#125;/locations/&#123;location&#125;/connectClusters/&#123;connect_cluster_id&#125;</td>
-</tr>
-<tr>
-    <td><CopyableCode code="capacityConfig" /></td>
-    <td><code>object</code></td>
-    <td>Required. Capacity configuration for the Kafka Connect cluster. (id: CapacityConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="config" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Configurations for the worker that are overridden from the defaults. The key of the map is a Kafka Connect worker property name, for example: `exactly.once.source.support`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time when the cluster was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="gcpConfig" /></td>
-    <td><code>object</code></td>
-    <td>Required. Configuration properties for a Kafka Connect cluster deployed to Google Cloud Platform. (id: ConnectGcpConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="kafkaCluster" /></td>
-    <td><code>string</code></td>
-    <td>Required. Immutable. The name of the Kafka cluster this Kafka Connect cluster is attached to. Structured like: projects/&#123;project&#125;/locations/&#123;location&#125;/clusters/&#123;cluster&#125;</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Labels as key value pairs.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="satisfiesPzi" /></td>
-    <td><code>boolean</code></td>
-    <td>Output only. Reserved for future use.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="satisfiesPzs" /></td>
-    <td><code>boolean</code></td>
-    <td>Output only. Reserved for future use.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="state" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The current state of the cluster.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time when the cluster was last updated.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -204,7 +149,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists the Kafka Connect clusters in a given project and location.</td>
 </tr>
 <tr>
@@ -218,7 +163,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectClustersId"><code>connectClustersId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the properties of a single Kafka Connect cluster.</td>
 </tr>
 <tr>
@@ -336,24 +281,14 @@ Lists the Kafka Connect clusters in a given project and location.
 
 ```sql
 SELECT
-name,
-capacityConfig,
-config,
-createTime,
-gcpConfig,
-kafkaCluster,
-labels,
-satisfiesPzi,
-satisfiesPzs,
-state,
-updateTime
+*
 FROM google.managedkafka.connect_clusters
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -375,24 +310,24 @@ Creates a new Kafka Connect cluster in a given project and location.
 
 ```sql
 INSERT INTO google.managedkafka.connect_clusters (
+data__config,
+data__labels,
 data__gcpConfig,
+data__capacityConfig,
 data__name,
 data__kafkaCluster,
-data__labels,
-data__capacityConfig,
-data__config,
 projectsId,
 locationsId,
 connectClusterId,
 requestId
 )
 SELECT 
+'{{ config }}',
+'{{ labels }}',
 '{{ gcpConfig }}',
+'{{ capacityConfig }}',
 '{{ name }}',
 '{{ kafkaCluster }}',
-'{{ labels }}',
-'{{ capacityConfig }}',
-'{{ config }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ connectClusterId }}',
@@ -418,10 +353,25 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the connect_clusters resource.
+    - name: config
+      value: object
+      description: >
+        Optional. Configurations for the worker that are overridden from the defaults. The key of the map is a Kafka Connect worker property name, for example: `exactly.once.source.support`.
+        
+    - name: labels
+      value: object
+      description: >
+        Optional. Labels as key value pairs.
+        
     - name: gcpConfig
       value: object
       description: >
         Required. Configuration properties for a Kafka Connect cluster deployed to Google Cloud Platform.
+        
+    - name: capacityConfig
+      value: object
+      description: >
+        Required. Capacity configuration for the Kafka Connect cluster.
         
     - name: name
       value: string
@@ -432,21 +382,6 @@ response
       value: string
       description: >
         Required. Immutable. The name of the Kafka cluster this Kafka Connect cluster is attached to. Structured like: projects/{project}/locations/{location}/clusters/{cluster}
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Labels as key value pairs.
-        
-    - name: capacityConfig
-      value: object
-      description: >
-        Required. Capacity configuration for the Kafka Connect cluster.
-        
-    - name: config
-      value: object
-      description: >
-        Optional. Configurations for the worker that are overridden from the defaults. The key of the map is a Kafka Connect worker property name, for example: `exactly.once.source.support`.
         
     - name: connectClusterId
       value: string
@@ -472,18 +407,18 @@ Updates the properties of a single Kafka Connect cluster.
 ```sql
 UPDATE google.managedkafka.connect_clusters
 SET 
-data__gcpConfig = '{{ gcpConfig }}',
-data__name = '{{ name }}',
-data__kafkaCluster = '{{ kafkaCluster }}',
+data__config = '{{ config }}',
 data__labels = '{{ labels }}',
+data__gcpConfig = '{{ gcpConfig }}',
 data__capacityConfig = '{{ capacityConfig }}',
-data__config = '{{ config }}'
+data__name = '{{ name }}',
+data__kafkaCluster = '{{ kafkaCluster }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND connectClustersId = '{{ connectClustersId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

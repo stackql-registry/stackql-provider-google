@@ -104,8 +104,8 @@ EXEC google.batch.agent_state_report.report
 @@json=
 '{
 "metadata": "{{ metadata }}", 
-"agentInfo": "{{ agentInfo }}", 
-"agentTimingInfo": "{{ agentTimingInfo }}"
+"agentTimingInfo": "{{ agentTimingInfo }}", 
+"agentInfo": "{{ agentInfo }}"
 }'
 ;
 ```

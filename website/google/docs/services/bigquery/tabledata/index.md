@@ -97,7 +97,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+datasetId"><code>+datasetId</code></a>, <a href="#parameter-+tableId"><code>+tableId</code></a></td>
-    <td><a href="#parameter-formatOptions.timestampOutputFormat"><code>formatOptions.timestampOutputFormat</code></a>, <a href="#parameter-formatOptions.useInt64Timestamp"><code>formatOptions.useInt64Timestamp</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-selectedFields"><code>selectedFields</code></a>, <a href="#parameter-startIndex"><code>startIndex</code></a></td>
+    <td><a href="#parameter-formatOptions.useInt64Timestamp"><code>formatOptions.useInt64Timestamp</code></a>, <a href="#parameter-startIndex"><code>startIndex</code></a>, <a href="#parameter-formatOptions.timestampOutputFormat"><code>formatOptions.timestampOutputFormat</code></a>, <a href="#parameter-selectedFields"><code>selectedFields</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a></td>
     <td>List the content of a table in rows.</td>
 </tr>
 <tr>
@@ -194,12 +194,12 @@ FROM google.bigquery.tabledata
 WHERE projectId = '{{ projectId }}' -- required
 AND +datasetId = '{{ +datasetId }}' -- required
 AND +tableId = '{{ +tableId }}' -- required
-AND formatOptions.timestampOutputFormat = '{{ formatOptions.timestampOutputFormat }}'
 AND formatOptions.useInt64Timestamp = '{{ formatOptions.useInt64Timestamp }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
-AND selectedFields = '{{ selectedFields }}'
 AND startIndex = '{{ startIndex }}'
+AND formatOptions.timestampOutputFormat = '{{ formatOptions.timestampOutputFormat }}'
+AND selectedFields = '{{ selectedFields }}'
+AND pageToken = '{{ pageToken }}'
+AND maxResults = '{{ maxResults }}'
 ;
 ```
 </TabItem>
@@ -221,23 +221,23 @@ Streams data into BigQuery one record at a time without needing to run a load jo
 
 ```sql
 INSERT INTO google.bigquery.tabledata (
-data__ignoreUnknownValues,
-data__kind,
-data__rows,
-data__skipInvalidRows,
 data__templateSuffix,
 data__traceId,
+data__rows,
+data__ignoreUnknownValues,
+data__kind,
+data__skipInvalidRows,
 projectId,
 +datasetId,
 +tableId
 )
 SELECT 
-{{ ignoreUnknownValues }},
-'{{ kind }}',
-'{{ rows }}',
-{{ skipInvalidRows }},
 '{{ templateSuffix }}',
 '{{ traceId }}',
+'{{ rows }}',
+{{ ignoreUnknownValues }},
+'{{ kind }}',
+{{ skipInvalidRows }},
 '{{ projectId }}',
 '{{ +datasetId }}',
 '{{ +tableId }}'
@@ -262,6 +262,18 @@ kind
     - name: +tableId
       value: string
       description: Required parameter for the tabledata resource.
+    - name: templateSuffix
+      value: string
+      description: >
+        Optional. If specified, treats the destination table as a base template, and inserts the rows into an instance table named "{destination}{templateSuffix}". BigQuery will manage creation of the instance table, using the schema of the base template table. See https://cloud.google.com/bigquery/streaming-data-into-bigquery#template-tables for considerations when working with templates tables.
+        
+    - name: traceId
+      value: string
+      description: >
+        Optional. Unique request trace id. Used for debugging purposes only. It is case-sensitive, limited to up to 36 ASCII characters. A UUID is recommended.
+        
+    - name: rows
+      value: array
     - name: ignoreUnknownValues
       value: boolean
       description: >
@@ -273,22 +285,10 @@ kind
         Optional. The resource type of the response. The value is not checked at the backend. Historically, it has been set to "bigquery#tableDataInsertAllRequest" but you are not required to set it.
         
       default: bigquery#tableDataInsertAllRequest
-    - name: rows
-      value: array
     - name: skipInvalidRows
       value: boolean
       description: >
         Optional. Insert all valid rows of a request, even if invalid rows exist. The default value is false, which causes the entire request to fail if any invalid rows exist.
-        
-    - name: templateSuffix
-      value: string
-      description: >
-        Optional. If specified, treats the destination table as a base template, and inserts the rows into an instance table named "{destination}{templateSuffix}". BigQuery will manage creation of the instance table, using the schema of the base template table. See https://cloud.google.com/bigquery/streaming-data-into-bigquery#template-tables for considerations when working with templates tables.
-        
-    - name: traceId
-      value: string
-      description: >
-        Optional. Unique request trace id. Used for debugging purposes only. It is case-sensitive, limited to up to 36 ASCII characters. A UUID is recommended.
         
 ```
 </TabItem>

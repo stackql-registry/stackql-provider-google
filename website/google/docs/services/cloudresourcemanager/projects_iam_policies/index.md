@@ -168,8 +168,8 @@ Sets the IAM access control policy for the specified project, in the format `pro
 ```sql
 REPLACE google.cloudresourcemanager.projects_iam_policies
 SET 
-data__policy = '{{ policy }}',
-data__updateMask = '{{ updateMask }}'
+data__updateMask = '{{ updateMask }}',
+data__policy = '{{ policy }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 RETURNING

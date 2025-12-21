@@ -221,7 +221,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>List DeploymentResourcePools in a location.</td>
 </tr>
 <tr>
@@ -362,8 +362,8 @@ serviceAccount
 FROM google.aiplatform.deployment_resource_pools
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -419,7 +419,7 @@ response
     - name: deploymentResourcePool
       value: object
       description: >
-        Required. The DeploymentResourcePool to create.
+        A description of resources that can be shared by multiple DeployedModels, whose underlying specification consists of a DedicatedResources.
         
     - name: deploymentResourcePoolId
       value: string
@@ -446,11 +446,11 @@ Update a DeploymentResourcePool.
 ```sql
 UPDATE google.aiplatform.deployment_resource_pools
 SET 
-data__name = '{{ name }}',
 data__dedicatedResources = '{{ dedicatedResources }}',
+data__disableContainerLogging = {{ disableContainerLogging }},
+data__name = '{{ name }}',
 data__encryptionSpec = '{{ encryptionSpec }}',
-data__serviceAccount = '{{ serviceAccount }}',
-data__disableContainerLogging = {{ disableContainerLogging }}
+data__serviceAccount = '{{ serviceAccount }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

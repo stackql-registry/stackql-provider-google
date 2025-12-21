@@ -234,7 +234,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_apis_deployments_list"><CopyableCode code="projects_locations_apis_deployments_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Returns matching deployments.</td>
 </tr>
 <tr>
@@ -259,18 +259,18 @@ The following methods are available for this resource:
     <td>Removes a specified deployment, all revisions, and all child resources (e.g., artifacts).</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_apis_deployments_tag_revision"><CopyableCode code="projects_locations_apis_deployments_tag_revision" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-deploymentsId"><code>deploymentsId</code></a></td>
-    <td></td>
-    <td>Adds a tag to a specified revision of a deployment.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_apis_deployments_rollback"><CopyableCode code="projects_locations_apis_deployments_rollback" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-deploymentsId"><code>deploymentsId</code></a></td>
     <td></td>
     <td>Sets the current revision to a specified prior revision. Note that this creates a new revision with a new revision ID.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_apis_deployments_tag_revision"><CopyableCode code="projects_locations_apis_deployments_tag_revision" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-deploymentsId"><code>deploymentsId</code></a></td>
+    <td></td>
+    <td>Adds a tag to a specified revision of a deployment.</td>
 </tr>
 </tbody>
 </table>
@@ -412,10 +412,10 @@ FROM google.apigeeregistry.deployments
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND apisId = '{{ apisId }}' -- required
-AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -438,15 +438,15 @@ Creates a specified deployment.
 ```sql
 INSERT INTO google.apigeeregistry.deployments (
 data__name,
-data__displayName,
-data__description,
-data__apiSpecRevision,
 data__endpointUri,
+data__labels,
+data__accessGuidance,
+data__annotations,
+data__description,
 data__externalChannelUri,
 data__intendedAudience,
-data__accessGuidance,
-data__labels,
-data__annotations,
+data__apiSpecRevision,
+data__displayName,
 projectsId,
 locationsId,
 apisId,
@@ -454,15 +454,15 @@ apiDeploymentId
 )
 SELECT 
 '{{ name }}',
-'{{ displayName }}',
-'{{ description }}',
-'{{ apiSpecRevision }}',
 '{{ endpointUri }}',
+'{{ labels }}',
+'{{ accessGuidance }}',
+'{{ annotations }}',
+'{{ description }}',
 '{{ externalChannelUri }}',
 '{{ intendedAudience }}',
-'{{ accessGuidance }}',
-'{{ labels }}',
-'{{ annotations }}',
+'{{ apiSpecRevision }}',
+'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ apisId }}',
@@ -505,25 +505,30 @@ revisionUpdateTime
       description: >
         Resource name.
         
-    - name: displayName
+    - name: endpointUri
       value: string
       description: >
-        Human-meaningful name.
+        The address where the deployment is serving. Changes to this value will update the revision.
+        
+    - name: labels
+      value: object
+      description: >
+        Labels attach identifying metadata to resources. Identifying metadata can be used to filter list operations. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one resource (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with `apigeeregistry.googleapis.com/` and cannot be changed.
+        
+    - name: accessGuidance
+      value: string
+      description: >
+        Text briefly describing how to access the endpoint. Changes to this value will not affect the revision.
+        
+    - name: annotations
+      value: object
+      description: >
+        Annotations attach non-identifying metadata to resources. Annotation keys and values are less restricted than those of labels, but should be generally used for small values of broad interest. Larger, topic- specific metadata should be stored in Artifacts.
         
     - name: description
       value: string
       description: >
         A detailed description.
-        
-    - name: apiSpecRevision
-      value: string
-      description: >
-        The full resource name (including revision ID) of the spec of the API being served by the deployment. Changes to this value will update the revision. Format: `projects/{project}/locations/{location}/apis/{api}/versions/{version}/specs/{spec@revision}`
-        
-    - name: endpointUri
-      value: string
-      description: >
-        The address where the deployment is serving. Changes to this value will update the revision.
         
     - name: externalChannelUri
       value: string
@@ -535,20 +540,15 @@ revisionUpdateTime
       description: >
         Text briefly identifying the intended audience of the API. Changes to this value will not affect the revision.
         
-    - name: accessGuidance
+    - name: apiSpecRevision
       value: string
       description: >
-        Text briefly describing how to access the endpoint. Changes to this value will not affect the revision.
+        The full resource name (including revision ID) of the spec of the API being served by the deployment. Changes to this value will update the revision. Format: `projects/{project}/locations/{location}/apis/{api}/versions/{version}/specs/{spec@revision}`
         
-    - name: labels
-      value: object
+    - name: displayName
+      value: string
       description: >
-        Labels attach identifying metadata to resources. Identifying metadata can be used to filter list operations. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one resource (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with `apigeeregistry.googleapis.com/` and cannot be changed.
-        
-    - name: annotations
-      value: object
-      description: >
-        Annotations attach non-identifying metadata to resources. Annotation keys and values are less restricted than those of labels, but should be generally used for small values of broad interest. Larger, topic- specific metadata should be stored in Artifacts.
+        Human-meaningful name.
         
     - name: apiDeploymentId
       value: string
@@ -573,15 +573,15 @@ Used to modify a specified deployment.
 UPDATE google.apigeeregistry.deployments
 SET 
 data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
-data__apiSpecRevision = '{{ apiSpecRevision }}',
 data__endpointUri = '{{ endpointUri }}',
+data__labels = '{{ labels }}',
+data__accessGuidance = '{{ accessGuidance }}',
+data__annotations = '{{ annotations }}',
+data__description = '{{ description }}',
 data__externalChannelUri = '{{ externalChannelUri }}',
 data__intendedAudience = '{{ intendedAudience }}',
-data__accessGuidance = '{{ accessGuidance }}',
-data__labels = '{{ labels }}',
-data__annotations = '{{ annotations }}'
+data__apiSpecRevision = '{{ apiSpecRevision }}',
+data__displayName = '{{ displayName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -637,29 +637,12 @@ AND force = '{{ force }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_apis_deployments_tag_revision"
+    defaultValue="projects_locations_apis_deployments_rollback"
     values={[
-        { label: 'projects_locations_apis_deployments_tag_revision', value: 'projects_locations_apis_deployments_tag_revision' },
-        { label: 'projects_locations_apis_deployments_rollback', value: 'projects_locations_apis_deployments_rollback' }
+        { label: 'projects_locations_apis_deployments_rollback', value: 'projects_locations_apis_deployments_rollback' },
+        { label: 'projects_locations_apis_deployments_tag_revision', value: 'projects_locations_apis_deployments_tag_revision' }
     ]}
 >
-<TabItem value="projects_locations_apis_deployments_tag_revision">
-
-Adds a tag to a specified revision of a deployment.
-
-```sql
-EXEC google.apigeeregistry.deployments.projects_locations_apis_deployments_tag_revision 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@apisId='{{ apisId }}' --required, 
-@deploymentsId='{{ deploymentsId }}' --required 
-@@json=
-'{
-"tag": "{{ tag }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_apis_deployments_rollback">
 
 Sets the current revision to a specified prior revision. Note that this creates a new revision with a new revision ID.
@@ -673,6 +656,23 @@ EXEC google.apigeeregistry.deployments.projects_locations_apis_deployments_rollb
 @@json=
 '{
 "revisionId": "{{ revisionId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_apis_deployments_tag_revision">
+
+Adds a tag to a specified revision of a deployment.
+
+```sql
+EXEC google.apigeeregistry.deployments.projects_locations_apis_deployments_tag_revision 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@apisId='{{ apisId }}' --required, 
+@deploymentsId='{{ deploymentsId }}' --required 
+@@json=
+'{
+"tag": "{{ tag }}"
 }'
 ;
 ```

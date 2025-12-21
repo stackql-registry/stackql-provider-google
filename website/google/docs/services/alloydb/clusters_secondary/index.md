@@ -115,6 +115,7 @@ Creates a cluster of type SECONDARY in the given location using the primary clus
 
 ```sql
 INSERT INTO google.alloydb.clusters_secondary (
+data__maintenanceVersionSelectionPolicy,
 data__displayName,
 data__labels,
 data__databaseVersion,
@@ -132,6 +133,7 @@ data__pscConfig,
 data__maintenanceUpdatePolicy,
 data__subscriptionType,
 data__tags,
+data__dataplexConfig,
 projectsId,
 locationsId,
 clusterId,
@@ -139,6 +141,7 @@ requestId,
 validateOnly
 )
 SELECT 
+'{{ maintenanceVersionSelectionPolicy }}',
 '{{ displayName }}',
 '{{ labels }}',
 '{{ databaseVersion }}',
@@ -156,6 +159,7 @@ SELECT
 '{{ maintenanceUpdatePolicy }}',
 '{{ subscriptionType }}',
 '{{ tags }}',
+'{{ dataplexConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ clusterId }}',
@@ -182,6 +186,12 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the clusters_secondary resource.
+    - name: maintenanceVersionSelectionPolicy
+      value: string
+      description: >
+        Input only. Policy to use to automatically select the maintenance version to which to update the cluster's instances.
+        
+      valid_values: ['MAINTENANCE_VERSION_SELECTION_POLICY_UNSPECIFIED', 'MAINTENANCE_VERSION_SELECTION_POLICY_LATEST', 'MAINTENANCE_VERSION_SELECTION_POLICY_DEFAULT']
     - name: displayName
       value: string
       description: >
@@ -197,7 +207,7 @@ response
       description: >
         Optional. The database engine major version. This is an optional field and it is populated at the Cluster creation time. If a database version is not supplied at cluster creation time, then a default database version will be used.
         
-      valid_values: ['DATABASE_VERSION_UNSPECIFIED', 'POSTGRES_13', 'POSTGRES_14', 'POSTGRES_15', 'POSTGRES_16']
+      valid_values: ['DATABASE_VERSION_UNSPECIFIED', 'POSTGRES_13', 'POSTGRES_14', 'POSTGRES_15', 'POSTGRES_16', 'POSTGRES_17']
     - name: networkConfig
       value: object
       description: >
@@ -268,6 +278,11 @@ response
       value: object
       description: >
         Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: ``` "123/environment": "production", "123/costCenter": "marketing" ```
+        
+    - name: dataplexConfig
+      value: object
+      description: >
+        Optional. Configuration for Dataplex integration.
         
     - name: clusterId
       value: string

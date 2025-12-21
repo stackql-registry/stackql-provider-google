@@ -184,7 +184,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a>, <a href="#parameter-collectionGroupsId"><code>collectionGroupsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists composite indexes.</td>
 </tr>
 <tr>
@@ -306,8 +306,8 @@ FROM google.firestore.indexes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND databasesId = '{{ databasesId }}' -- required
 AND collectionGroupsId = '{{ collectionGroupsId }}' -- required
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -330,29 +330,29 @@ Creates a composite index. This returns a google.longrunning.Operation which may
 
 ```sql
 INSERT INTO google.firestore.indexes (
-data__name,
-data__queryScope,
-data__apiScope,
-data__fields,
 data__state,
-data__density,
+data__fields,
 data__multikey,
-data__shardCount,
+data__apiScope,
+data__queryScope,
 data__unique,
+data__name,
+data__shardCount,
+data__density,
 projectsId,
 databasesId,
 collectionGroupsId
 )
 SELECT 
-'{{ name }}',
-'{{ queryScope }}',
-'{{ apiScope }}',
-'{{ fields }}',
 '{{ state }}',
-'{{ density }}',
+'{{ fields }}',
 {{ multikey }},
-{{ shardCount }},
+'{{ apiScope }}',
+'{{ queryScope }}',
 {{ unique }},
+'{{ name }}',
+{{ shardCount }},
+'{{ density }}',
 '{{ projectsId }}',
 '{{ databasesId }}',
 '{{ collectionGroupsId }}'
@@ -380,55 +380,55 @@ response
     - name: collectionGroupsId
       value: string
       description: Required parameter for the indexes resource.
-    - name: name
-      value: string
-      description: >
-        Output only. A server defined name for this index. The form of this name for composite indexes will be: `projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}/indexes/{composite_index_id}` For single field indexes, this field will be empty.
-        
-    - name: queryScope
-      value: string
-      description: >
-        Indexes with a collection query scope specified allow queries against a collection that is the child of a specific document, specified at query time, and that has the same collection ID. Indexes with a collection group query scope specified allow queries against all collections descended from a specific document, specified at query time, and that have the same collection ID as this index.
-        
-      valid_values: ['QUERY_SCOPE_UNSPECIFIED', 'COLLECTION', 'COLLECTION_GROUP', 'COLLECTION_RECURSIVE']
-    - name: apiScope
-      value: string
-      description: >
-        The API scope supported by this index.
-        
-      valid_values: ['ANY_API', 'DATASTORE_MODE_API', 'MONGODB_COMPATIBLE_API']
-    - name: fields
-      value: array
-      description: >
-        The fields supported by this index. For composite indexes, this requires a minimum of 2 and a maximum of 100 fields. The last field entry is always for the field path `__name__`. If, on creation, `__name__` was not specified as the last field, it will be added automatically with the same direction as that of the last field defined. If the final field in a composite index is not directional, the `__name__` will be ordered ASCENDING (unless explicitly specified). For single field indexes, this will always be exactly one entry with a field path equal to the field path of the associated field.
-        
     - name: state
       value: string
       description: >
         Output only. The serving state of the index.
         
       valid_values: ['STATE_UNSPECIFIED', 'CREATING', 'READY', 'NEEDS_REPAIR']
-    - name: density
-      value: string
+    - name: fields
+      value: array
       description: >
-        Immutable. The density configuration of the index.
+        The fields supported by this index. For composite indexes, this requires a minimum of 2 and a maximum of 100 fields. The last field entry is always for the field path `__name__`. If, on creation, `__name__` was not specified as the last field, it will be added automatically with the same direction as that of the last field defined. If the final field in a composite index is not directional, the `__name__` will be ordered ASCENDING (unless explicitly specified). For single field indexes, this will always be exactly one entry with a field path equal to the field path of the associated field.
         
-      valid_values: ['DENSITY_UNSPECIFIED', 'SPARSE_ALL', 'SPARSE_ANY', 'DENSE']
     - name: multikey
       value: boolean
       description: >
         Optional. Whether the index is multikey. By default, the index is not multikey. For non-multikey indexes, none of the paths in the index definition reach or traverse an array, except via an explicit array index. For multikey indexes, at most one of the paths in the index definition reach or traverse an array, except via an explicit array index. Violations will result in errors. Note this field only applies to index with MONGODB_COMPATIBLE_API ApiScope.
+        
+    - name: apiScope
+      value: string
+      description: >
+        The API scope supported by this index.
+        
+      valid_values: ['ANY_API', 'DATASTORE_MODE_API', 'MONGODB_COMPATIBLE_API']
+    - name: queryScope
+      value: string
+      description: >
+        Indexes with a collection query scope specified allow queries against a collection that is the child of a specific document, specified at query time, and that has the same collection ID. Indexes with a collection group query scope specified allow queries against all collections descended from a specific document, specified at query time, and that have the same collection ID as this index.
+        
+      valid_values: ['QUERY_SCOPE_UNSPECIFIED', 'COLLECTION', 'COLLECTION_GROUP', 'COLLECTION_RECURSIVE']
+    - name: unique
+      value: boolean
+      description: >
+        Optional. Whether it is an unique index. Unique index ensures all values for the indexed field(s) are unique across documents.
+        
+    - name: name
+      value: string
+      description: >
+        Output only. A server defined name for this index. The form of this name for composite indexes will be: `projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}/indexes/{composite_index_id}` For single field indexes, this field will be empty.
         
     - name: shardCount
       value: integer
       description: >
         Optional. The number of shards for the index.
         
-    - name: unique
-      value: boolean
+    - name: density
+      value: string
       description: >
-        Optional. Whether it is an unique index. Unique index ensures all values for the indexed field(s) are unique across documents.
+        Immutable. The density configuration of the index.
         
+      valid_values: ['DENSITY_UNSPECIFIED', 'SPARSE_ALL', 'SPARSE_ANY', 'DENSE']
 ```
 </TabItem>
 </Tabs>

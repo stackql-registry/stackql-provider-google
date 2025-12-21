@@ -303,17 +303,17 @@ Initializes a MetadataStore, including allocation of resources.
 
 ```sql
 INSERT INTO google.aiplatform.metadata_stores (
-data__encryptionSpec,
 data__description,
 data__dataplexConfig,
+data__encryptionSpec,
 projectsId,
 locationsId,
 metadataStoreId
 )
 SELECT 
-'{{ encryptionSpec }}',
 '{{ description }}',
 '{{ dataplexConfig }}',
+'{{ encryptionSpec }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ metadataStoreId }}'
@@ -338,11 +338,6 @@ response
     - name: locationsId
       value: string
       description: Required parameter for the metadata_stores resource.
-    - name: encryptionSpec
-      value: object
-      description: >
-        Customer-managed encryption key spec for a Metadata Store. If set, this Metadata Store and all sub-resources of this Metadata Store are secured using this key.
-        
     - name: description
       value: string
       description: >
@@ -352,6 +347,11 @@ response
       value: object
       description: >
         Optional. Dataplex integration settings.
+        
+    - name: encryptionSpec
+      value: object
+      description: >
+        Customer-managed encryption key spec for a Metadata Store. If set, this Metadata Store and all sub-resources of this Metadata Store are secured using this key.
         
     - name: metadataStoreId
       value: string

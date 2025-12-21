@@ -112,10 +112,12 @@ EXEC google.dlp.image.projects_locations_image_redact
 @@json=
 '{
 "locationId": "{{ locationId }}", 
+"deidentifyTemplate": "{{ deidentifyTemplate }}", 
+"includeFindings": {{ includeFindings }}, 
 "inspectConfig": "{{ inspectConfig }}", 
 "imageRedactionConfigs": "{{ imageRedactionConfigs }}", 
-"includeFindings": {{ includeFindings }}, 
-"byteItem": "{{ byteItem }}"
+"byteItem": "{{ byteItem }}", 
+"inspectTemplate": "{{ inspectTemplate }}"
 }'
 ;
 ```
@@ -130,10 +132,12 @@ EXEC google.dlp.image.projects_image_redact
 @@json=
 '{
 "locationId": "{{ locationId }}", 
+"deidentifyTemplate": "{{ deidentifyTemplate }}", 
+"includeFindings": {{ includeFindings }}, 
 "inspectConfig": "{{ inspectConfig }}", 
 "imageRedactionConfigs": "{{ imageRedactionConfigs }}", 
-"includeFindings": {{ includeFindings }}, 
-"byteItem": "{{ byteItem }}"
+"byteItem": "{{ byteItem }}", 
+"inspectTemplate": "{{ inspectTemplate }}"
 }'
 ;
 ```

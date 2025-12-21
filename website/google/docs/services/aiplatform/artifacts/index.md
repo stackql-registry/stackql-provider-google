@@ -251,7 +251,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-metadataStoresId"><code>metadataStoresId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists Artifacts in the MetadataStore.</td>
 </tr>
 <tr>
@@ -443,10 +443,10 @@ FROM google.aiplatform.artifacts
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND metadataStoresId = '{{ metadataStoresId }}' -- required
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -468,30 +468,30 @@ Creates an Artifact associated with a MetadataStore.
 
 ```sql
 INSERT INTO google.aiplatform.artifacts (
-data__displayName,
 data__uri,
 data__etag,
-data__labels,
-data__state,
-data__schemaTitle,
 data__schemaVersion,
-data__metadata,
+data__labels,
 data__description,
+data__metadata,
+data__displayName,
+data__schemaTitle,
+data__state,
 projectsId,
 locationsId,
 metadataStoresId,
 artifactId
 )
 SELECT 
-'{{ displayName }}',
 '{{ uri }}',
 '{{ etag }}',
-'{{ labels }}',
-'{{ state }}',
-'{{ schemaTitle }}',
 '{{ schemaVersion }}',
-'{{ metadata }}',
+'{{ labels }}',
 '{{ description }}',
+'{{ metadata }}',
+'{{ displayName }}',
+'{{ schemaTitle }}',
+'{{ state }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ metadataStoresId }}',
@@ -527,11 +527,6 @@ uri
     - name: metadataStoresId
       value: string
       description: Required parameter for the artifacts resource.
-    - name: displayName
-      value: string
-      description: >
-        User provided display name of the Artifact. May be up to 128 Unicode characters.
-        
     - name: uri
       value: string
       description: >
@@ -542,10 +537,35 @@ uri
       description: >
         An eTag used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
         
+    - name: schemaVersion
+      value: string
+      description: >
+        The version of the schema in schema_name to use. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
+        
     - name: labels
       value: object
       description: >
         The labels with user-defined metadata to organize your Artifacts. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one Artifact (System labels are excluded).
+        
+    - name: description
+      value: string
+      description: >
+        Description of the Artifact
+        
+    - name: metadata
+      value: object
+      description: >
+        Properties of the Artifact. Top level metadata keys' heading and trailing spaces will be trimmed. The size of this field should not exceed 200KB.
+        
+    - name: displayName
+      value: string
+      description: >
+        User provided display name of the Artifact. May be up to 128 Unicode characters.
+        
+    - name: schemaTitle
+      value: string
+      description: >
+        The title of the schema describing the metadata. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
         
     - name: state
       value: string
@@ -553,26 +573,6 @@ uri
         The state of this Artifact. This is a property of the Artifact, and does not imply or capture any ongoing process. This property is managed by clients (such as Vertex AI Pipelines), and the system does not prescribe or check the validity of state transitions.
         
       valid_values: ['STATE_UNSPECIFIED', 'PENDING', 'LIVE']
-    - name: schemaTitle
-      value: string
-      description: >
-        The title of the schema describing the metadata. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
-        
-    - name: schemaVersion
-      value: string
-      description: >
-        The version of the schema in schema_name to use. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
-        
-    - name: metadata
-      value: object
-      description: >
-        Properties of the Artifact. Top level metadata keys' heading and trailing spaces will be trimmed. The size of this field should not exceed 200KB.
-        
-    - name: description
-      value: string
-      description: >
-        Description of the Artifact
-        
     - name: artifactId
       value: string
 ```
@@ -595,15 +595,15 @@ Updates a stored Artifact.
 ```sql
 UPDATE google.aiplatform.artifacts
 SET 
-data__displayName = '{{ displayName }}',
 data__uri = '{{ uri }}',
 data__etag = '{{ etag }}',
-data__labels = '{{ labels }}',
-data__state = '{{ state }}',
-data__schemaTitle = '{{ schemaTitle }}',
 data__schemaVersion = '{{ schemaVersion }}',
+data__labels = '{{ labels }}',
+data__description = '{{ description }}',
 data__metadata = '{{ metadata }}',
-data__description = '{{ description }}'
+data__displayName = '{{ displayName }}',
+data__schemaTitle = '{{ schemaTitle }}',
+data__state = '{{ state }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

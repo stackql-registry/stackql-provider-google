@@ -142,11 +142,18 @@ The following methods are available for this resource:
     <td>Deletes a shared flow and all associated policies, resources, and revisions. You must undeploy the shared flow before deleting it.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_environments_apis_revisions_deploy"><CopyableCode code="organizations_environments_apis_revisions_deploy" /></a></td>
+    <td><a href="#organizations_environments_sharedflows_revisions_undeploy"><CopyableCode code="organizations_environments_sharedflows_revisions_undeploy" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
-    <td><a href="#parameter-override"><code>override</code></a>, <a href="#parameter-sequencedRollout"><code>sequencedRollout</code></a>, <a href="#parameter-serviceAccount"><code>serviceAccount</code></a></td>
-    <td>Deploys a revision of an API proxy. If another revision of the same API proxy revision is currently deployed, set the `override` parameter to `true` to have this revision replace the currently deployed revision. You cannot invoke an API proxy until it has been deployed to an environment. After you deploy an API proxy revision, you cannot edit it. To edit the API proxy, you must create and deploy a new revision. For a request path `organizations/&#123;org&#125;/environments/&#123;env&#125;/apis/&#123;api&#125;/revisions/&#123;rev&#125;/deployments`, two permissions are required: * `apigee.deployments.create` on the resource `organizations/&#123;org&#125;/environments/&#123;env&#125;` * `apigee.proxyrevisions.deploy` on the resource `organizations/&#123;org&#125;/apis/&#123;api&#125;/revisions/&#123;rev&#125;` All successful API proxy deployments to Apigee are [zero-downtime deployments](https://cloud.google.com/apigee/docs/api-platform/deploy/ui-deploy-overview#zero-downtime-deployment). Apigee hybrid validates the dependencies between shared flows and API proxies at deployment time. For example, if the Flow Callout policy in an API proxy references a shared flow that either doesn't exist or isn't deployed, the API proxy deployment fails.</td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-sharedflowsId"><code>sharedflowsId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
+    <td></td>
+    <td>Undeploys a shared flow revision from an environment. For a request path `organizations/&#123;org&#125;/environments/&#123;env&#125;/sharedflows/&#123;sf&#125;/revisions/&#123;rev&#125;/deployments`, two permissions are required: * `apigee.deployments.delete` on the resource `organizations/&#123;org&#125;/environments/&#123;env&#125;` * `apigee.sharedflowrevisions.undeploy` on the resource `organizations/&#123;org&#125;/sharedflows/&#123;sf&#125;/revisions/&#123;rev&#125;`</td>
+</tr>
+<tr>
+    <td><a href="#organizations_environments_sharedflows_revisions_deploy"><CopyableCode code="organizations_environments_sharedflows_revisions_deploy" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-sharedflowsId"><code>sharedflowsId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
+    <td><a href="#parameter-serviceAccount"><code>serviceAccount</code></a>, <a href="#parameter-override"><code>override</code></a></td>
+    <td>Deploys a revision of a shared flow. If another revision of the same shared flow is currently deployed, set the `override` parameter to `true` to have this revision replace the currently deployed revision. You cannot use a shared flow until it has been deployed to an environment. For a request path `organizations/&#123;org&#125;/environments/&#123;env&#125;/sharedflows/&#123;sf&#125;/revisions/&#123;rev&#125;/deployments`, two permissions are required: * `apigee.deployments.create` on the resource `organizations/&#123;org&#125;/environments/&#123;env&#125;` * `apigee.sharedflowrevisions.deploy` on the resource `organizations/&#123;org&#125;/sharedflows/&#123;sf&#125;/revisions/&#123;rev&#125;`</td>
 </tr>
 <tr>
     <td><a href="#organizations_environments_apis_revisions_undeploy"><CopyableCode code="organizations_environments_apis_revisions_undeploy" /></a></td>
@@ -156,18 +163,11 @@ The following methods are available for this resource:
     <td>Undeploys an API proxy revision from an environment. For a request path `organizations/&#123;org&#125;/environments/&#123;env&#125;/apis/&#123;api&#125;/revisions/&#123;rev&#125;/deployments`, two permissions are required: * `apigee.deployments.delete` on the resource `organizations/&#123;org&#125;/environments/&#123;env&#125;` * `apigee.proxyrevisions.undeploy` on the resource `organizations/&#123;org&#125;/apis/&#123;api&#125;/revisions/&#123;rev&#125;`</td>
 </tr>
 <tr>
-    <td><a href="#organizations_environments_sharedflows_revisions_deploy"><CopyableCode code="organizations_environments_sharedflows_revisions_deploy" /></a></td>
+    <td><a href="#organizations_environments_apis_revisions_deploy"><CopyableCode code="organizations_environments_apis_revisions_deploy" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-sharedflowsId"><code>sharedflowsId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
-    <td><a href="#parameter-override"><code>override</code></a>, <a href="#parameter-serviceAccount"><code>serviceAccount</code></a></td>
-    <td>Deploys a revision of a shared flow. If another revision of the same shared flow is currently deployed, set the `override` parameter to `true` to have this revision replace the currently deployed revision. You cannot use a shared flow until it has been deployed to an environment. For a request path `organizations/&#123;org&#125;/environments/&#123;env&#125;/sharedflows/&#123;sf&#125;/revisions/&#123;rev&#125;/deployments`, two permissions are required: * `apigee.deployments.create` on the resource `organizations/&#123;org&#125;/environments/&#123;env&#125;` * `apigee.sharedflowrevisions.deploy` on the resource `organizations/&#123;org&#125;/sharedflows/&#123;sf&#125;/revisions/&#123;rev&#125;`</td>
-</tr>
-<tr>
-    <td><a href="#organizations_environments_sharedflows_revisions_undeploy"><CopyableCode code="organizations_environments_sharedflows_revisions_undeploy" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-sharedflowsId"><code>sharedflowsId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
-    <td></td>
-    <td>Undeploys a shared flow revision from an environment. For a request path `organizations/&#123;org&#125;/environments/&#123;env&#125;/sharedflows/&#123;sf&#125;/revisions/&#123;rev&#125;/deployments`, two permissions are required: * `apigee.deployments.delete` on the resource `organizations/&#123;org&#125;/environments/&#123;env&#125;` * `apigee.sharedflowrevisions.undeploy` on the resource `organizations/&#123;org&#125;/sharedflows/&#123;sf&#125;/revisions/&#123;rev&#125;`</td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
+    <td><a href="#parameter-override"><code>override</code></a>, <a href="#parameter-sequencedRollout"><code>sequencedRollout</code></a>, <a href="#parameter-serviceAccount"><code>serviceAccount</code></a></td>
+    <td>Deploys a revision of an API proxy. If another revision of the same API proxy revision is currently deployed, set the `override` parameter to `true` to have this revision replace the currently deployed revision. You cannot invoke an API proxy until it has been deployed to an environment. After you deploy an API proxy revision, you cannot edit it. To edit the API proxy, you must create and deploy a new revision. For a request path `organizations/&#123;org&#125;/environments/&#123;env&#125;/apis/&#123;api&#125;/revisions/&#123;rev&#125;/deployments`, two permissions are required: * `apigee.deployments.create` on the resource `organizations/&#123;org&#125;/environments/&#123;env&#125;` * `apigee.proxyrevisions.deploy` on the resource `organizations/&#123;org&#125;/apis/&#123;api&#125;/revisions/&#123;rev&#125;` All successful API proxy deployments to Apigee are [zero-downtime deployments](https://cloud.google.com/apigee/docs/api-platform/deploy/ui-deploy-overview#zero-downtime-deployment). Apigee hybrid validates the dependencies between shared flows and API proxies at deployment time. For example, if the Flow Callout policy in an API proxy references a shared flow that either doesn't exist or isn't deployed, the API proxy deployment fails.</td>
 </tr>
 </tbody>
 </table>
@@ -318,27 +318,39 @@ AND revisionsId = '{{ revisionsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="organizations_environments_apis_revisions_deploy"
+    defaultValue="organizations_environments_sharedflows_revisions_undeploy"
     values={[
-        { label: 'organizations_environments_apis_revisions_deploy', value: 'organizations_environments_apis_revisions_deploy' },
-        { label: 'organizations_environments_apis_revisions_undeploy', value: 'organizations_environments_apis_revisions_undeploy' },
+        { label: 'organizations_environments_sharedflows_revisions_undeploy', value: 'organizations_environments_sharedflows_revisions_undeploy' },
         { label: 'organizations_environments_sharedflows_revisions_deploy', value: 'organizations_environments_sharedflows_revisions_deploy' },
-        { label: 'organizations_environments_sharedflows_revisions_undeploy', value: 'organizations_environments_sharedflows_revisions_undeploy' }
+        { label: 'organizations_environments_apis_revisions_undeploy', value: 'organizations_environments_apis_revisions_undeploy' },
+        { label: 'organizations_environments_apis_revisions_deploy', value: 'organizations_environments_apis_revisions_deploy' }
     ]}
 >
-<TabItem value="organizations_environments_apis_revisions_deploy">
+<TabItem value="organizations_environments_sharedflows_revisions_undeploy">
 
-Deploys a revision of an API proxy. If another revision of the same API proxy revision is currently deployed, set the `override` parameter to `true` to have this revision replace the currently deployed revision. You cannot invoke an API proxy until it has been deployed to an environment. After you deploy an API proxy revision, you cannot edit it. To edit the API proxy, you must create and deploy a new revision. For a request path `organizations/&#123;org&#125;/environments/&#123;env&#125;/apis/&#123;api&#125;/revisions/&#123;rev&#125;/deployments`, two permissions are required: * `apigee.deployments.create` on the resource `organizations/&#123;org&#125;/environments/&#123;env&#125;` * `apigee.proxyrevisions.deploy` on the resource `organizations/&#123;org&#125;/apis/&#123;api&#125;/revisions/&#123;rev&#125;` All successful API proxy deployments to Apigee are [zero-downtime deployments](https://cloud.google.com/apigee/docs/api-platform/deploy/ui-deploy-overview#zero-downtime-deployment). Apigee hybrid validates the dependencies between shared flows and API proxies at deployment time. For example, if the Flow Callout policy in an API proxy references a shared flow that either doesn't exist or isn't deployed, the API proxy deployment fails.
+Undeploys a shared flow revision from an environment. For a request path `organizations/&#123;org&#125;/environments/&#123;env&#125;/sharedflows/&#123;sf&#125;/revisions/&#123;rev&#125;/deployments`, two permissions are required: * `apigee.deployments.delete` on the resource `organizations/&#123;org&#125;/environments/&#123;env&#125;` * `apigee.sharedflowrevisions.undeploy` on the resource `organizations/&#123;org&#125;/sharedflows/&#123;sf&#125;/revisions/&#123;rev&#125;`
 
 ```sql
-EXEC google.apigee.revisions.organizations_environments_apis_revisions_deploy 
+EXEC google.apigee.revisions.organizations_environments_sharedflows_revisions_undeploy 
 @organizationsId='{{ organizationsId }}' --required, 
 @environmentsId='{{ environmentsId }}' --required, 
-@apisId='{{ apisId }}' --required, 
+@sharedflowsId='{{ sharedflowsId }}' --required, 
+@revisionsId='{{ revisionsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="organizations_environments_sharedflows_revisions_deploy">
+
+Deploys a revision of a shared flow. If another revision of the same shared flow is currently deployed, set the `override` parameter to `true` to have this revision replace the currently deployed revision. You cannot use a shared flow until it has been deployed to an environment. For a request path `organizations/&#123;org&#125;/environments/&#123;env&#125;/sharedflows/&#123;sf&#125;/revisions/&#123;rev&#125;/deployments`, two permissions are required: * `apigee.deployments.create` on the resource `organizations/&#123;org&#125;/environments/&#123;env&#125;` * `apigee.sharedflowrevisions.deploy` on the resource `organizations/&#123;org&#125;/sharedflows/&#123;sf&#125;/revisions/&#123;rev&#125;`
+
+```sql
+EXEC google.apigee.revisions.organizations_environments_sharedflows_revisions_deploy 
+@organizationsId='{{ organizationsId }}' --required, 
+@environmentsId='{{ environmentsId }}' --required, 
+@sharedflowsId='{{ sharedflowsId }}' --required, 
 @revisionsId='{{ revisionsId }}' --required, 
-@override={{ override }}, 
-@sequencedRollout={{ sequencedRollout }}, 
-@serviceAccount='{{ serviceAccount }}'
+@serviceAccount='{{ serviceAccount }}', 
+@override={{ override }}
 ;
 ```
 </TabItem>
@@ -356,31 +368,19 @@ EXEC google.apigee.revisions.organizations_environments_apis_revisions_undeploy
 ;
 ```
 </TabItem>
-<TabItem value="organizations_environments_sharedflows_revisions_deploy">
+<TabItem value="organizations_environments_apis_revisions_deploy">
 
-Deploys a revision of a shared flow. If another revision of the same shared flow is currently deployed, set the `override` parameter to `true` to have this revision replace the currently deployed revision. You cannot use a shared flow until it has been deployed to an environment. For a request path `organizations/&#123;org&#125;/environments/&#123;env&#125;/sharedflows/&#123;sf&#125;/revisions/&#123;rev&#125;/deployments`, two permissions are required: * `apigee.deployments.create` on the resource `organizations/&#123;org&#125;/environments/&#123;env&#125;` * `apigee.sharedflowrevisions.deploy` on the resource `organizations/&#123;org&#125;/sharedflows/&#123;sf&#125;/revisions/&#123;rev&#125;`
+Deploys a revision of an API proxy. If another revision of the same API proxy revision is currently deployed, set the `override` parameter to `true` to have this revision replace the currently deployed revision. You cannot invoke an API proxy until it has been deployed to an environment. After you deploy an API proxy revision, you cannot edit it. To edit the API proxy, you must create and deploy a new revision. For a request path `organizations/&#123;org&#125;/environments/&#123;env&#125;/apis/&#123;api&#125;/revisions/&#123;rev&#125;/deployments`, two permissions are required: * `apigee.deployments.create` on the resource `organizations/&#123;org&#125;/environments/&#123;env&#125;` * `apigee.proxyrevisions.deploy` on the resource `organizations/&#123;org&#125;/apis/&#123;api&#125;/revisions/&#123;rev&#125;` All successful API proxy deployments to Apigee are [zero-downtime deployments](https://cloud.google.com/apigee/docs/api-platform/deploy/ui-deploy-overview#zero-downtime-deployment). Apigee hybrid validates the dependencies between shared flows and API proxies at deployment time. For example, if the Flow Callout policy in an API proxy references a shared flow that either doesn't exist or isn't deployed, the API proxy deployment fails.
 
 ```sql
-EXEC google.apigee.revisions.organizations_environments_sharedflows_revisions_deploy 
+EXEC google.apigee.revisions.organizations_environments_apis_revisions_deploy 
 @organizationsId='{{ organizationsId }}' --required, 
 @environmentsId='{{ environmentsId }}' --required, 
-@sharedflowsId='{{ sharedflowsId }}' --required, 
+@apisId='{{ apisId }}' --required, 
 @revisionsId='{{ revisionsId }}' --required, 
 @override={{ override }}, 
+@sequencedRollout={{ sequencedRollout }}, 
 @serviceAccount='{{ serviceAccount }}'
-;
-```
-</TabItem>
-<TabItem value="organizations_environments_sharedflows_revisions_undeploy">
-
-Undeploys a shared flow revision from an environment. For a request path `organizations/&#123;org&#125;/environments/&#123;env&#125;/sharedflows/&#123;sf&#125;/revisions/&#123;rev&#125;/deployments`, two permissions are required: * `apigee.deployments.delete` on the resource `organizations/&#123;org&#125;/environments/&#123;env&#125;` * `apigee.sharedflowrevisions.undeploy` on the resource `organizations/&#123;org&#125;/sharedflows/&#123;sf&#125;/revisions/&#123;rev&#125;`
-
-```sql
-EXEC google.apigee.revisions.organizations_environments_sharedflows_revisions_undeploy 
-@organizationsId='{{ organizationsId }}' --required, 
-@environmentsId='{{ environmentsId }}' --required, 
-@sharedflowsId='{{ sharedflowsId }}' --required, 
-@revisionsId='{{ revisionsId }}' --required
 ;
 ```
 </TabItem>

@@ -57,16 +57,16 @@ The following methods are available for this resource:
     <td>Validates the given Event Threat Detection custom module.</td>
 </tr>
 <tr>
-    <td><a href="#projects_event_threat_detection_settings_validate_custom_module"><CopyableCode code="projects_event_threat_detection_settings_validate_custom_module" /></a></td>
+    <td><a href="#organizations_event_threat_detection_settings_validate_custom_module"><CopyableCode code="organizations_event_threat_detection_settings_validate_custom_module" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
     <td></td>
     <td>Validates the given Event Threat Detection custom module.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_event_threat_detection_settings_validate_custom_module"><CopyableCode code="organizations_event_threat_detection_settings_validate_custom_module" /></a></td>
+    <td><a href="#projects_event_threat_detection_settings_validate_custom_module"><CopyableCode code="projects_event_threat_detection_settings_validate_custom_module" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
     <td>Validates the given Event Threat Detection custom module.</td>
 </tr>
@@ -110,8 +110,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="folders_event_threat_detection_settings_validate_custom_module"
     values={[
         { label: 'folders_event_threat_detection_settings_validate_custom_module', value: 'folders_event_threat_detection_settings_validate_custom_module' },
-        { label: 'projects_event_threat_detection_settings_validate_custom_module', value: 'projects_event_threat_detection_settings_validate_custom_module' },
-        { label: 'organizations_event_threat_detection_settings_validate_custom_module', value: 'organizations_event_threat_detection_settings_validate_custom_module' }
+        { label: 'organizations_event_threat_detection_settings_validate_custom_module', value: 'organizations_event_threat_detection_settings_validate_custom_module' },
+        { label: 'projects_event_threat_detection_settings_validate_custom_module', value: 'projects_event_threat_detection_settings_validate_custom_module' }
     ]}
 >
 <TabItem value="folders_event_threat_detection_settings_validate_custom_module">
@@ -123,23 +123,8 @@ EXEC google.securitycenter.event_threat_detection_settings.folders_event_threat_
 @foldersId='{{ foldersId }}' --required 
 @@json=
 '{
-"rawText": "{{ rawText }}", 
-"type": "{{ type }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_event_threat_detection_settings_validate_custom_module">
-
-Validates the given Event Threat Detection custom module.
-
-```sql
-EXEC google.securitycenter.event_threat_detection_settings.projects_event_threat_detection_settings_validate_custom_module 
-@projectsId='{{ projectsId }}' --required 
-@@json=
-'{
-"rawText": "{{ rawText }}", 
-"type": "{{ type }}"
+"type": "{{ type }}", 
+"rawText": "{{ rawText }}"
 }'
 ;
 ```
@@ -153,8 +138,23 @@ EXEC google.securitycenter.event_threat_detection_settings.organizations_event_t
 @organizationsId='{{ organizationsId }}' --required 
 @@json=
 '{
-"rawText": "{{ rawText }}", 
-"type": "{{ type }}"
+"type": "{{ type }}", 
+"rawText": "{{ rawText }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_event_threat_detection_settings_validate_custom_module">
+
+Validates the given Event Threat Detection custom module.
+
+```sql
+EXEC google.securitycenter.event_threat_detection_settings.projects_event_threat_detection_settings_validate_custom_module 
+@projectsId='{{ projectsId }}' --required 
+@@json=
+'{
+"type": "{{ type }}", 
+"rawText": "{{ rawText }}"
 }'
 ;
 ```
