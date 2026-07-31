@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>snapshots</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>snapshots</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="snapshots" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.netapp.snapshots" /></td></tr>
 </tbody></table>
@@ -72,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The snapshot state.</td>
+    <td>Output only. The snapshot state. (STATE_UNSPECIFIED, READY, CREATING, DELETING, UPDATING, DISABLED, ERROR)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateDetails" /></td>
@@ -121,7 +122,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The snapshot state.</td>
+    <td>Output only. The snapshot state. (STATE_UNSPECIFIED, READY, CREATING, DELETING, UPDATING, DISABLED, ERROR)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateDetails" /></td>
@@ -164,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Returns descriptions of all snapshots for a volume.</td>
 </tr>
 <tr>
@@ -304,10 +305,10 @@ FROM google.netapp.snapshots
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND volumesId = '{{ volumesId }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -329,18 +330,18 @@ Create a new snapshot for a volume.
 
 ```sql
 INSERT INTO google.netapp.snapshots (
+data__labels,
 data__name,
 data__description,
-data__labels,
 projectsId,
 locationsId,
 volumesId,
 snapshotId
 )
 SELECT 
+'{{ labels }}',
 '{{ name }}',
 '{{ description }}',
-'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ volumesId }}',
@@ -356,37 +357,34 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: snapshots
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the snapshots resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the snapshots resource.
     - name: volumesId
-      value: string
+      value: "{{ volumesId }}"
       description: Required parameter for the snapshots resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the snapshot. Format: `projects/{project_id}/locations/{location}/volumes/{volume_id}/snapshots/{snapshot_id}`.
-        
-    - name: description
-      value: string
-      description: >
-        A description of the snapshot with 2048 characters or less. Requests with longer descriptions will be rejected.
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Resource labels to represent user provided metadata.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the snapshot. Format: \`projects/{project_id}/locations/{location}/volumes/{volume_id}/snapshots/{snapshot_id}\`.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        A description of the snapshot with 2048 characters or less. Requests with longer descriptions will be rejected.
     - name: snapshotId
-      value: string
-```
+      value: "{{ snapshotId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -406,9 +404,9 @@ Updates the settings of a specific snapshot.
 ```sql
 UPDATE google.netapp.snapshots
 SET 
+data__labels = '{{ labels }}',
 data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__labels = '{{ labels }}'
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>discovery_clients</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>discovery_clients</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="discovery_clients" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.migrationcenter.discovery_clients" /></td></tr>
 </tbody></table>
@@ -107,7 +108,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the discovery client.</td>
+    <td>Output only. Current state of the discovery client. (STATE_UNSPECIFIED, ACTIVE, OFFLINE, DEGRADED, EXPIRED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="ttl" /></td>
@@ -196,7 +197,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the discovery client.</td>
+    <td>Output only. Current state of the discovery client. (STATE_UNSPECIFIED, ACTIVE, OFFLINE, DEGRADED, EXPIRED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="ttl" /></td>
@@ -244,7 +245,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all the discovery clients in a given project and location.</td>
 </tr>
 <tr>
@@ -258,7 +259,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-discoveryClientsId"><code>discoveryClientsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Updates a discovery client.</td>
 </tr>
 <tr>
@@ -406,9 +407,9 @@ FROM google.migrationcenter.discovery_clients
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -430,12 +431,12 @@ Creates a new discovery client.
 
 ```sql
 INSERT INTO google.migrationcenter.discovery_clients (
-data__description,
-data__source,
-data__serviceAccount,
-data__labels,
 data__displayName,
+data__source,
+data__description,
 data__ttl,
+data__labels,
+data__serviceAccount,
 data__expireTime,
 projectsId,
 locationsId,
@@ -443,12 +444,12 @@ discoveryClientId,
 requestId
 )
 SELECT 
-'{{ description }}',
-'{{ source }}',
-'{{ serviceAccount }}',
-'{{ labels }}',
 '{{ displayName }}',
+'{{ source }}',
+'{{ description }}',
 '{{ ttl }}',
+'{{ labels }}',
+'{{ serviceAccount }}',
 '{{ expireTime }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -465,56 +466,49 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: discovery_clients
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the discovery_clients resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the discovery_clients resource.
-    - name: description
-      value: string
-      description: >
-        Optional. Free text description. Maximum length is 1000 characters.
-        
-    - name: source
-      value: string
-      description: >
-        Required. Immutable. Full name of the source object associated with this discovery client.
-        
-    - name: serviceAccount
-      value: string
-      description: >
-        Required. Service account used by the discovery client for various operation.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Labels as key value pairs.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Optional. Free text display name. Maximum length is 63 characters.
-        
+    - name: source
+      value: "{{ source }}"
+      description: |
+        Required. Immutable. Full name of the source object associated with this discovery client.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Free text description. Maximum length is 1000 characters.
     - name: ttl
-      value: string
-      description: >
-        Optional. Input only. Client time-to-live. If specified, the backend will not accept new frames after this time. This field is input only. The derived expiration time is provided as output through the `expire_time` field.
-        
+      value: "{{ ttl }}"
+      description: |
+        Optional. Input only. Client time-to-live. If specified, the backend will not accept new frames after this time. This field is input only. The derived expiration time is provided as output through the \`expire_time\` field.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Labels as key value pairs.
+    - name: serviceAccount
+      value: "{{ serviceAccount }}"
+      description: |
+        Required. Service account used by the discovery client for various operation.
     - name: expireTime
-      value: string
-      description: >
+      value: "{{ expireTime }}"
+      description: |
         Optional. Client expiration time in UTC. If specified, the backend will not accept new frames after this time.
-        
     - name: discoveryClientId
-      value: string
+      value: "{{ discoveryClientId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -534,19 +528,19 @@ Updates a discovery client.
 ```sql
 UPDATE google.migrationcenter.discovery_clients
 SET 
-data__description = '{{ description }}',
-data__source = '{{ source }}',
-data__serviceAccount = '{{ serviceAccount }}',
-data__labels = '{{ labels }}',
 data__displayName = '{{ displayName }}',
+data__source = '{{ source }}',
+data__description = '{{ description }}',
 data__ttl = '{{ ttl }}',
+data__labels = '{{ labels }}',
+data__serviceAccount = '{{ serviceAccount }}',
 data__expireTime = '{{ expireTime }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND discoveryClientsId = '{{ discoveryClientsId }}' --required
-AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
+AND requestId = '{{ requestId}}'
 RETURNING
 name,
 done,

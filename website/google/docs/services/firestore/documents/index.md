@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>documents</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>documents</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="documents" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.firestore.documents" /></td></tr>
 </tbody></table>
@@ -202,21 +203,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a>, <a href="#parameter-documentsId"><code>documentsId</code></a>, <a href="#parameter-documentsId1"><code>documentsId1</code></a>, <a href="#parameter-collectionId"><code>collectionId</code></a></td>
-    <td><a href="#parameter-transaction"><code>transaction</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-showMissing"><code>showMissing</code></a>, <a href="#parameter-mask.fieldPaths"><code>mask.fieldPaths</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-readTime"><code>readTime</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-transaction"><code>transaction</code></a>, <a href="#parameter-recursive"><code>recursive</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-showMissing"><code>showMissing</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-mask.fieldPaths"><code>mask.fieldPaths</code></a>, <a href="#parameter-readTime"><code>readTime</code></a></td>
     <td>Lists documents.</td>
 </tr>
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a>, <a href="#parameter-documentsId"><code>documentsId</code></a>, <a href="#parameter-documentsId1"><code>documentsId1</code></a></td>
-    <td><a href="#parameter-mask.fieldPaths"><code>mask.fieldPaths</code></a>, <a href="#parameter-readTime"><code>readTime</code></a>, <a href="#parameter-transaction"><code>transaction</code></a></td>
+    <td><a href="#parameter-mask.fieldPaths"><code>mask.fieldPaths</code></a>, <a href="#parameter-transaction"><code>transaction</code></a>, <a href="#parameter-readTime"><code>readTime</code></a></td>
     <td>Gets a single document.</td>
 </tr>
 <tr>
     <td><a href="#list_documents"><CopyableCode code="list_documents" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a>, <a href="#parameter-collectionId"><code>collectionId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showMissing"><code>showMissing</code></a>, <a href="#parameter-mask.fieldPaths"><code>mask.fieldPaths</code></a>, <a href="#parameter-readTime"><code>readTime</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-transaction"><code>transaction</code></a></td>
+    <td><a href="#parameter-showMissing"><code>showMissing</code></a>, <a href="#parameter-recursive"><code>recursive</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-transaction"><code>transaction</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-mask.fieldPaths"><code>mask.fieldPaths</code></a>, <a href="#parameter-readTime"><code>readTime</code></a></td>
     <td>Lists documents.</td>
 </tr>
 <tr>
@@ -237,14 +238,14 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a>, <a href="#parameter-documentsId"><code>documentsId</code></a>, <a href="#parameter-documentsId1"><code>documentsId1</code></a></td>
-    <td><a href="#parameter-currentDocument.exists"><code>currentDocument.exists</code></a>, <a href="#parameter-updateMask.fieldPaths"><code>updateMask.fieldPaths</code></a>, <a href="#parameter-currentDocument.updateTime"><code>currentDocument.updateTime</code></a>, <a href="#parameter-mask.fieldPaths"><code>mask.fieldPaths</code></a></td>
+    <td><a href="#parameter-currentDocument.updateTime"><code>currentDocument.updateTime</code></a>, <a href="#parameter-mask.fieldPaths"><code>mask.fieldPaths</code></a>, <a href="#parameter-updateMask.fieldPaths"><code>updateMask.fieldPaths</code></a>, <a href="#parameter-currentDocument.exists"><code>currentDocument.exists</code></a></td>
     <td>Updates or inserts a document.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a>, <a href="#parameter-documentsId"><code>documentsId</code></a>, <a href="#parameter-documentsId1"><code>documentsId1</code></a></td>
-    <td><a href="#parameter-currentDocument.exists"><code>currentDocument.exists</code></a>, <a href="#parameter-currentDocument.updateTime"><code>currentDocument.updateTime</code></a></td>
+    <td><a href="#parameter-currentDocument.updateTime"><code>currentDocument.updateTime</code></a>, <a href="#parameter-currentDocument.exists"><code>currentDocument.exists</code></a></td>
     <td>Deletes a document.</td>
 </tr>
 <tr>
@@ -255,34 +256,6 @@ The following methods are available for this resource:
     <td>Starts a new transaction.</td>
 </tr>
 <tr>
-    <td><a href="#run_aggregation_query"><CopyableCode code="run_aggregation_query" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a>, <a href="#parameter-documentsId"><code>documentsId</code></a>, <a href="#parameter-documentsId1"><code>documentsId1</code></a></td>
-    <td></td>
-    <td>Runs an aggregation query. Rather than producing Document results like Firestore.RunQuery, this API allows running an aggregation to produce a series of AggregationResult server-side. High-Level Example: ``` -- Return the number of documents in table given a filter. SELECT COUNT(*) FROM ( SELECT * FROM k where a = true ); ```</td>
-</tr>
-<tr>
-    <td><a href="#commit"><CopyableCode code="commit" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a></td>
-    <td></td>
-    <td>Commits a transaction, while optionally updating documents.</td>
-</tr>
-<tr>
-    <td><a href="#run_query"><CopyableCode code="run_query" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a>, <a href="#parameter-documentsId"><code>documentsId</code></a>, <a href="#parameter-documentsId1"><code>documentsId1</code></a></td>
-    <td></td>
-    <td>Runs a query.</td>
-</tr>
-<tr>
-    <td><a href="#batch_get"><CopyableCode code="batch_get" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a></td>
-    <td></td>
-    <td>Gets multiple documents. Documents returned by this method are not guaranteed to be returned in the same order that they were requested.</td>
-</tr>
-<tr>
     <td><a href="#write"><CopyableCode code="write" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a></td>
@@ -290,11 +263,11 @@ The following methods are available for this resource:
     <td>Streams batches of document updates and deletes, in order. This method is only available via gRPC or WebChannel (not REST).</td>
 </tr>
 <tr>
-    <td><a href="#batch_write"><CopyableCode code="batch_write" /></a></td>
+    <td><a href="#run_aggregation_query"><CopyableCode code="run_aggregation_query" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a>, <a href="#parameter-documentsId"><code>documentsId</code></a>, <a href="#parameter-documentsId1"><code>documentsId1</code></a></td>
     <td></td>
-    <td>Applies a batch of write operations. The BatchWrite method does not apply the write operations atomically and can apply them out of order. Method does not allow more than one write per document. Each write succeeds or fails independently. See the BatchWriteResponse for the success status of each write. If you require an atomically applied set of writes, use Commit instead.</td>
+    <td>Runs an aggregation query. Rather than producing Document results like Firestore.RunQuery, this API allows running an aggregation to produce a series of AggregationResult server-side. High-Level Example: ``` -- Return the number of documents in table given a filter. SELECT COUNT(*) FROM ( SELECT * FROM k where a = true ); ```</td>
 </tr>
 <tr>
     <td><a href="#partition_query"><CopyableCode code="partition_query" /></a></td>
@@ -304,11 +277,46 @@ The following methods are available for this resource:
     <td>Partitions a query by returning partition cursors that can be used to run the query in parallel. The returned partition cursors are split points that can be used by RunQuery as starting/end points for the query results.</td>
 </tr>
 <tr>
+    <td><a href="#execute_pipeline"><CopyableCode code="execute_pipeline" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a></td>
+    <td></td>
+    <td>Executes a pipeline query.</td>
+</tr>
+<tr>
+    <td><a href="#batch_get"><CopyableCode code="batch_get" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a></td>
+    <td></td>
+    <td>Gets multiple documents. Documents returned by this method are not guaranteed to be returned in the same order that they were requested.</td>
+</tr>
+<tr>
+    <td><a href="#run_query"><CopyableCode code="run_query" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a>, <a href="#parameter-documentsId"><code>documentsId</code></a>, <a href="#parameter-documentsId1"><code>documentsId1</code></a></td>
+    <td></td>
+    <td>Runs a query.</td>
+</tr>
+<tr>
     <td><a href="#rollback"><CopyableCode code="rollback" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a></td>
     <td></td>
     <td>Rolls back a transaction.</td>
+</tr>
+<tr>
+    <td><a href="#batch_write"><CopyableCode code="batch_write" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a></td>
+    <td></td>
+    <td>Applies a batch of write operations. The BatchWrite method does not apply the write operations atomically and can apply them out of order. Method does not allow more than one write per document. Each write succeeds or fails independently. See the BatchWriteResponse for the success status of each write. If you require an atomically applied set of writes, use Commit instead.</td>
+</tr>
+<tr>
+    <td><a href="#commit"><CopyableCode code="commit" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a></td>
+    <td></td>
+    <td>Commits a transaction, while optionally updating documents.</td>
 </tr>
 </tbody>
 </table>
@@ -391,6 +399,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string (google-datetime)</code></td>
     <td></td>
 </tr>
+<tr id="parameter-recursive">
+    <td><CopyableCode code="recursive" /></td>
+    <td><code>boolean</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-showMissing">
     <td><CopyableCode code="showMissing" /></td>
     <td><code>boolean</code></td>
@@ -436,12 +449,13 @@ AND databasesId = '{{ databasesId }}' -- required
 AND documentsId = '{{ documentsId }}' -- required
 AND documentsId1 = '{{ documentsId1 }}' -- required
 AND collectionId = '{{ collectionId }}' -- required
-AND transaction = '{{ transaction }}'
-AND pageSize = '{{ pageSize }}'
-AND showMissing = '{{ showMissing }}'
-AND mask.fieldPaths = '{{ mask.fieldPaths }}'
 AND pageToken = '{{ pageToken }}'
+AND transaction = '{{ transaction }}'
+AND recursive = '{{ recursive }}'
 AND orderBy = '{{ orderBy }}'
+AND showMissing = '{{ showMissing }}'
+AND pageSize = '{{ pageSize }}'
+AND mask.fieldPaths = '{{ mask.fieldPaths }}'
 AND readTime = '{{ readTime }}'
 ;
 ```
@@ -462,8 +476,8 @@ AND databasesId = '{{ databasesId }}' -- required
 AND documentsId = '{{ documentsId }}' -- required
 AND documentsId1 = '{{ documentsId1 }}' -- required
 AND mask.fieldPaths = '{{ mask.fieldPaths }}'
-AND readTime = '{{ readTime }}'
 AND transaction = '{{ transaction }}'
+AND readTime = '{{ readTime }}'
 ;
 ```
 </TabItem>
@@ -481,13 +495,14 @@ FROM google.firestore.documents
 WHERE projectsId = '{{ projectsId }}' -- required
 AND databasesId = '{{ databasesId }}' -- required
 AND collectionId = '{{ collectionId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND showMissing = '{{ showMissing }}'
-AND mask.fieldPaths = '{{ mask.fieldPaths }}'
-AND readTime = '{{ readTime }}'
+AND recursive = '{{ recursive }}'
 AND orderBy = '{{ orderBy }}'
 AND transaction = '{{ transaction }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND mask.fieldPaths = '{{ mask.fieldPaths }}'
+AND readTime = '{{ readTime }}'
 ;
 ```
 </TabItem>
@@ -526,9 +541,9 @@ Creates a new document.
 
 ```sql
 INSERT INTO google.firestore.documents (
-data__updateTime,
-data__name,
 data__createTime,
+data__name,
+data__updateTime,
 data__fields,
 projectsId,
 databasesId,
@@ -538,9 +553,9 @@ documentId,
 mask.fieldPaths
 )
 SELECT 
-'{{ updateTime }}',
-'{{ name }}',
 '{{ createTime }}',
+'{{ name }}',
+'{{ updateTime }}',
 '{{ fields }}',
 '{{ projectsId }}',
 '{{ databasesId }}',
@@ -558,47 +573,43 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: documents
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the documents resource.
     - name: databasesId
-      value: string
+      value: "{{ databasesId }}"
       description: Required parameter for the documents resource.
     - name: documentsId
-      value: string
+      value: "{{ documentsId }}"
       description: Required parameter for the documents resource.
     - name: collectionId
-      value: string
+      value: "{{ collectionId }}"
       description: Required parameter for the documents resource.
-    - name: updateTime
-      value: string
-      description: >
-        Output only. The time at which the document was last changed. This value is initially set to the `create_time` then increases monotonically with each change to the document. It can also be compared to values from other documents and the `read_time` of a query.
-        
-    - name: name
-      value: string
-      description: >
-        The resource name of the document, for example `projects/{project_id}/databases/{database_id}/documents/{document_path}`.
-        
     - name: createTime
-      value: string
-      description: >
-        Output only. The time at which the document was created. This value increases monotonically when a document is deleted then recreated. It can also be compared to values from other documents and the `read_time` of a query.
-        
+      value: "{{ createTime }}"
+      description: |
+        Output only. The time at which the document was created. This value increases monotonically when a document is deleted then recreated. It can also be compared to values from other documents and the \`read_time\` of a query.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The resource name of the document, for example \`projects/{project_id}/databases/{database_id}/documents/{document_path}\`.
+    - name: updateTime
+      value: "{{ updateTime }}"
+      description: |
+        Output only. The time at which the document was last changed. This value is initially set to the \`create_time\` then increases monotonically with each change to the document. It can also be compared to values from other documents and the \`read_time\` of a query.
     - name: fields
-      value: object
-      description: >
-        The document's fields. The map keys represent field names. Field names matching the regular expression `__.*__` are reserved. Reserved field names are forbidden except in certain documented contexts. The field names, represented as UTF-8, must not exceed 1,500 bytes and cannot be empty. Field paths may be used in other contexts to refer to structured fields defined here. For `map_value`, the field path is represented by a dot-delimited (`.`) string of segments. Each segment is either a simple field name (defined below) or a quoted field name. For example, the structured field `"foo" : { map_value: { "x&y" : { string_value: "hello" }}}` would be represented by the field path `` foo.`x&y` ``. A simple field name contains only characters `a` to `z`, `A` to `Z`, `0` to `9`, or `_`, and must not start with `0` to `9`. For example, `foo_bar_17`. A quoted field name starts and ends with `` ` `` and may contain any character. Some characters, including `` ` ``, must be escaped using a `\`. For example, `` `x&y` `` represents `x&y` and `` `bak\`tik` `` represents `` bak`tik ``.
-        
+      value: "{{ fields }}"
+      description: |
+        The document's fields. The map keys represent field names. Field names matching the regular expression \`__.*__\` are reserved. Reserved field names are forbidden except in certain documented contexts. The field names, represented as UTF-8, must not exceed 1,500 bytes and cannot be empty. Field paths may be used in other contexts to refer to structured fields defined here. For \`map_value\`, the field path is represented by a dot-delimited (\`.\`) string of segments. Each segment is either a simple field name (defined below) or a quoted field name. For example, the structured field \`"foo" : { map_value: { "x&y" : { string_value: "hello" }}}\` would be represented by the field path \`\` foo.\`x&y\` \`\`. A simple field name contains only characters \`a\` to \`z\`, \`A\` to \`Z\`, \`0\` to \`9\`, or \`_\`, and must not start with \`0\` to \`9\`. For example, \`foo_bar_17\`. A quoted field name starts and ends with \`\` \` \`\` and may contain any character. Some characters, including \`\` \` \`\`, must be escaped using a \`\\\`. For example, \`\` \`x&y\` \`\` represents \`x&y\` and \`\` \`bak\\\`tik\` \`\` represents \`\` bak\`tik \`\`.
     - name: documentId
-      value: string
+      value: "{{ documentId }}"
     - name: mask.fieldPaths
-      value: string
-```
+      value: "{{ mask.fieldPaths }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -618,19 +629,19 @@ Updates or inserts a document.
 ```sql
 UPDATE google.firestore.documents
 SET 
-data__updateTime = '{{ updateTime }}',
-data__name = '{{ name }}',
 data__createTime = '{{ createTime }}',
+data__name = '{{ name }}',
+data__updateTime = '{{ updateTime }}',
 data__fields = '{{ fields }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND databasesId = '{{ databasesId }}' --required
 AND documentsId = '{{ documentsId }}' --required
 AND documentsId1 = '{{ documentsId1 }}' --required
-AND currentDocument.exists = {{ currentDocument.exists}}
-AND updateMask.fieldPaths = '{{ updateMask.fieldPaths}}'
 AND currentDocument.updateTime = '{{ currentDocument.updateTime}}'
 AND mask.fieldPaths = '{{ mask.fieldPaths}}'
+AND updateMask.fieldPaths = '{{ updateMask.fieldPaths}}'
+AND currentDocument.exists = {{ currentDocument.exists}}
 RETURNING
 name,
 createTime,
@@ -659,8 +670,8 @@ WHERE projectsId = '{{ projectsId }}' --required
 AND databasesId = '{{ databasesId }}' --required
 AND documentsId = '{{ documentsId }}' --required
 AND documentsId1 = '{{ documentsId1 }}' --required
-AND currentDocument.exists = '{{ currentDocument.exists }}'
 AND currentDocument.updateTime = '{{ currentDocument.updateTime }}'
+AND currentDocument.exists = '{{ currentDocument.exists }}'
 ;
 ```
 </TabItem>
@@ -673,14 +684,15 @@ AND currentDocument.updateTime = '{{ currentDocument.updateTime }}'
     defaultValue="begin_transaction"
     values={[
         { label: 'begin_transaction', value: 'begin_transaction' },
-        { label: 'run_aggregation_query', value: 'run_aggregation_query' },
-        { label: 'commit', value: 'commit' },
-        { label: 'run_query', value: 'run_query' },
-        { label: 'batch_get', value: 'batch_get' },
         { label: 'write', value: 'write' },
-        { label: 'batch_write', value: 'batch_write' },
+        { label: 'run_aggregation_query', value: 'run_aggregation_query' },
         { label: 'partition_query', value: 'partition_query' },
-        { label: 'rollback', value: 'rollback' }
+        { label: 'execute_pipeline', value: 'execute_pipeline' },
+        { label: 'batch_get', value: 'batch_get' },
+        { label: 'run_query', value: 'run_query' },
+        { label: 'rollback', value: 'rollback' },
+        { label: 'batch_write', value: 'batch_write' },
+        { label: 'commit', value: 'commit' }
     ]}
 >
 <TabItem value="begin_transaction">
@@ -698,83 +710,6 @@ EXEC google.firestore.documents.begin_transaction
 ;
 ```
 </TabItem>
-<TabItem value="run_aggregation_query">
-
-Runs an aggregation query. Rather than producing Document results like Firestore.RunQuery, this API allows running an aggregation to produce a series of AggregationResult server-side. High-Level Example: ``` -- Return the number of documents in table given a filter. SELECT COUNT(*) FROM ( SELECT * FROM k where a = true ); ```
-
-```sql
-EXEC google.firestore.documents.run_aggregation_query 
-@projectsId='{{ projectsId }}' --required, 
-@databasesId='{{ databasesId }}' --required, 
-@documentsId='{{ documentsId }}' --required, 
-@documentsId1='{{ documentsId1 }}' --required 
-@@json=
-'{
-"transaction": "{{ transaction }}", 
-"readTime": "{{ readTime }}", 
-"explainOptions": "{{ explainOptions }}", 
-"structuredAggregationQuery": "{{ structuredAggregationQuery }}", 
-"newTransaction": "{{ newTransaction }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="commit">
-
-Commits a transaction, while optionally updating documents.
-
-```sql
-EXEC google.firestore.documents.commit 
-@projectsId='{{ projectsId }}' --required, 
-@databasesId='{{ databasesId }}' --required 
-@@json=
-'{
-"transaction": "{{ transaction }}", 
-"writes": "{{ writes }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="run_query">
-
-Runs a query.
-
-```sql
-EXEC google.firestore.documents.run_query 
-@projectsId='{{ projectsId }}' --required, 
-@databasesId='{{ databasesId }}' --required, 
-@documentsId='{{ documentsId }}' --required, 
-@documentsId1='{{ documentsId1 }}' --required 
-@@json=
-'{
-"explainOptions": "{{ explainOptions }}", 
-"structuredQuery": "{{ structuredQuery }}", 
-"readTime": "{{ readTime }}", 
-"transaction": "{{ transaction }}", 
-"newTransaction": "{{ newTransaction }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="batch_get">
-
-Gets multiple documents. Documents returned by this method are not guaranteed to be returned in the same order that they were requested.
-
-```sql
-EXEC google.firestore.documents.batch_get 
-@projectsId='{{ projectsId }}' --required, 
-@databasesId='{{ databasesId }}' --required 
-@@json=
-'{
-"readTime": "{{ readTime }}", 
-"newTransaction": "{{ newTransaction }}", 
-"mask": "{{ mask }}", 
-"documents": "{{ documents }}", 
-"transaction": "{{ transaction }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="write">
 
 Streams batches of document updates and deletes, in order. This method is only available via gRPC or WebChannel (not REST).
@@ -787,24 +722,29 @@ EXEC google.firestore.documents.write
 '{
 "labels": "{{ labels }}", 
 "streamId": "{{ streamId }}", 
-"writes": "{{ writes }}", 
-"streamToken": "{{ streamToken }}"
+"streamToken": "{{ streamToken }}", 
+"writes": "{{ writes }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="batch_write">
+<TabItem value="run_aggregation_query">
 
-Applies a batch of write operations. The BatchWrite method does not apply the write operations atomically and can apply them out of order. Method does not allow more than one write per document. Each write succeeds or fails independently. See the BatchWriteResponse for the success status of each write. If you require an atomically applied set of writes, use Commit instead.
+Runs an aggregation query. Rather than producing Document results like Firestore.RunQuery, this API allows running an aggregation to produce a series of AggregationResult server-side. High-Level Example: ``` -- Return the number of documents in table given a filter. SELECT COUNT(*) FROM ( SELECT * FROM k where a = true ); ```
 
 ```sql
-EXEC google.firestore.documents.batch_write 
+EXEC google.firestore.documents.run_aggregation_query 
 @projectsId='{{ projectsId }}' --required, 
-@databasesId='{{ databasesId }}' --required 
+@databasesId='{{ databasesId }}' --required, 
+@documentsId='{{ documentsId }}' --required, 
+@documentsId1='{{ documentsId1 }}' --required 
 @@json=
 '{
-"labels": "{{ labels }}", 
-"writes": "{{ writes }}"
+"newTransaction": "{{ newTransaction }}", 
+"transaction": "{{ transaction }}", 
+"readTime": "{{ readTime }}", 
+"explainOptions": "{{ explainOptions }}", 
+"structuredAggregationQuery": "{{ structuredAggregationQuery }}"
 }'
 ;
 ```
@@ -821,11 +761,70 @@ EXEC google.firestore.documents.partition_query
 @documentsId1='{{ documentsId1 }}' --required 
 @@json=
 '{
-"readTime": "{{ readTime }}", 
-"pageSize": {{ pageSize }}, 
+"partitionCount": "{{ partitionCount }}", 
 "pageToken": "{{ pageToken }}", 
 "structuredQuery": "{{ structuredQuery }}", 
-"partitionCount": "{{ partitionCount }}"
+"pageSize": {{ pageSize }}, 
+"readTime": "{{ readTime }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="execute_pipeline">
+
+Executes a pipeline query.
+
+```sql
+EXEC google.firestore.documents.execute_pipeline 
+@projectsId='{{ projectsId }}' --required, 
+@databasesId='{{ databasesId }}' --required 
+@@json=
+'{
+"transaction": "{{ transaction }}", 
+"readTime": "{{ readTime }}", 
+"structuredPipeline": "{{ structuredPipeline }}", 
+"newTransaction": "{{ newTransaction }}", 
+"autoCommitTransaction": {{ autoCommitTransaction }}
+}'
+;
+```
+</TabItem>
+<TabItem value="batch_get">
+
+Gets multiple documents. Documents returned by this method are not guaranteed to be returned in the same order that they were requested.
+
+```sql
+EXEC google.firestore.documents.batch_get 
+@projectsId='{{ projectsId }}' --required, 
+@databasesId='{{ databasesId }}' --required 
+@@json=
+'{
+"newTransaction": "{{ newTransaction }}", 
+"documents": "{{ documents }}", 
+"transaction": "{{ transaction }}", 
+"readTime": "{{ readTime }}", 
+"mask": "{{ mask }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="run_query">
+
+Runs a query.
+
+```sql
+EXEC google.firestore.documents.run_query 
+@projectsId='{{ projectsId }}' --required, 
+@databasesId='{{ databasesId }}' --required, 
+@documentsId='{{ documentsId }}' --required, 
+@documentsId1='{{ documentsId1 }}' --required 
+@@json=
+'{
+"structuredQuery": "{{ structuredQuery }}", 
+"transaction": "{{ transaction }}", 
+"readTime": "{{ readTime }}", 
+"explainOptions": "{{ explainOptions }}", 
+"newTransaction": "{{ newTransaction }}"
 }'
 ;
 ```
@@ -840,6 +839,38 @@ EXEC google.firestore.documents.rollback
 @databasesId='{{ databasesId }}' --required 
 @@json=
 '{
+"transaction": "{{ transaction }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="batch_write">
+
+Applies a batch of write operations. The BatchWrite method does not apply the write operations atomically and can apply them out of order. Method does not allow more than one write per document. Each write succeeds or fails independently. See the BatchWriteResponse for the success status of each write. If you require an atomically applied set of writes, use Commit instead.
+
+```sql
+EXEC google.firestore.documents.batch_write 
+@projectsId='{{ projectsId }}' --required, 
+@databasesId='{{ databasesId }}' --required 
+@@json=
+'{
+"writes": "{{ writes }}", 
+"labels": "{{ labels }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="commit">
+
+Commits a transaction, while optionally updating documents.
+
+```sql
+EXEC google.firestore.documents.commit 
+@projectsId='{{ projectsId }}' --required, 
+@databasesId='{{ databasesId }}' --required 
+@@json=
+'{
+"writes": "{{ writes }}", 
 "transaction": "{{ transaction }}"
 }'
 ;

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>reports</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>reports</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="reports" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.migrationcenter.reports" /></td></tr>
 </tbody></table>
@@ -72,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Report creation state.</td>
+    <td>Report creation state. (STATE_UNSPECIFIED, PENDING, SUCCEEDED, FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="summary" /></td>
@@ -82,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Report type.</td>
+    <td>Report type. (TYPE_UNSPECIFIED, TOTAL_COST_OF_OWNERSHIP)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -126,7 +127,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Report creation state.</td>
+    <td>Report creation state. (STATE_UNSPECIFIED, PENDING, SUCCEEDED, FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="summary" /></td>
@@ -136,7 +137,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Report type.</td>
+    <td>Report type. (TYPE_UNSPECIFIED, TOTAL_COST_OF_OWNERSHIP)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -174,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reportConfigsId"><code>reportConfigsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Lists Reports in a given ReportConfig.</td>
 </tr>
 <tr>
@@ -190,13 +191,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reportConfigsId"><code>reportConfigsId</code></a>, <a href="#parameter-reportsId"><code>reportsId</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes a Report.</td>
-</tr>
-<tr>
-    <td><a href="#artifact_link"><CopyableCode code="artifact_link" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-reportConfigsId"><code>reportConfigsId</code></a>, <a href="#parameter-reportsId"><code>reportsId</code></a></td>
-    <td></td>
-    <td>Gets the link to the generated artifact of a given type for a Report.</td>
 </tr>
 </tbody>
 </table>
@@ -322,11 +316,11 @@ FROM google.migrationcenter.reports
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND reportConfigsId = '{{ reportConfigsId }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND view = '{{ view }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND view = '{{ view }}'
 ;
 ```
 </TabItem>
@@ -348,10 +342,10 @@ Creates a report.
 
 ```sql
 INSERT INTO google.migrationcenter.reports (
+data__description,
+data__displayName,
 data__state,
 data__type,
-data__displayName,
-data__description,
 projectsId,
 locationsId,
 reportConfigsId,
@@ -359,10 +353,10 @@ reportId,
 requestId
 )
 SELECT 
+'{{ description }}',
+'{{ displayName }}',
 '{{ state }}',
 '{{ type }}',
-'{{ displayName }}',
-'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ reportConfigsId }}',
@@ -379,46 +373,42 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: reports
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the reports resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the reports resource.
     - name: reportConfigsId
-      value: string
+      value: "{{ reportConfigsId }}"
       description: Required parameter for the reports resource.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Free-text description.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        User-friendly display name. Maximum length is 63 characters.
     - name: state
-      value: string
-      description: >
+      value: "{{ state }}"
+      description: |
         Report creation state.
-        
       valid_values: ['STATE_UNSPECIFIED', 'PENDING', 'SUCCEEDED', 'FAILED']
     - name: type
-      value: string
-      description: >
+      value: "{{ type }}"
+      description: |
         Report type.
-        
       valid_values: ['TYPE_UNSPECIFIED', 'TOTAL_COST_OF_OWNERSHIP']
-    - name: displayName
-      value: string
-      description: >
-        User-friendly display name. Maximum length is 63 characters.
-        
-    - name: description
-      value: string
-      description: >
-        Free-text description.
-        
     - name: reportId
-      value: string
+      value: "{{ reportId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -442,34 +432,6 @@ AND locationsId = '{{ locationsId }}' --required
 AND reportConfigsId = '{{ reportConfigsId }}' --required
 AND reportsId = '{{ reportsId }}' --required
 AND requestId = '{{ requestId }}'
-;
-```
-</TabItem>
-</Tabs>
-
-
-## Lifecycle Methods
-
-<Tabs
-    defaultValue="artifact_link"
-    values={[
-        { label: 'artifact_link', value: 'artifact_link' }
-    ]}
->
-<TabItem value="artifact_link">
-
-Gets the link to the generated artifact of a given type for a Report.
-
-```sql
-EXEC google.migrationcenter.reports.artifact_link 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@reportConfigsId='{{ reportConfigsId }}' --required, 
-@reportsId='{{ reportsId }}' --required 
-@@json=
-'{
-"artifactType": "{{ artifactType }}"
-}'
 ;
 ```
 </TabItem>

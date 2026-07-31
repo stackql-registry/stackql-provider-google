@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>saas</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>saas</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="saas" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.saasservicemgmt.saas" /></td></tr>
 </tbody></table>
@@ -60,9 +61,19 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Annotations is an unstructured key-value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/user-guide/annotations</td>
 </tr>
 <tr>
+    <td><CopyableCode code="conditions" /></td>
+    <td><code>array</code></td>
+    <td>Output only. A set of conditions which indicate the various conditions this resource can have.</td>
+</tr>
+<tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The timestamp when the resource was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="error" /></td>
+    <td><code>object</code></td>
+    <td>Output only. If the state is FAILED, the corresponding error code and message. Defaults to code=OK for all other states. (id: Status)</td>
 </tr>
 <tr>
     <td><CopyableCode code="etag" /></td>
@@ -78,6 +89,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="locations" /></td>
     <td><code>array</code></td>
     <td>Optional. List of locations that the service is available in. Rollout refers to the list to generate a rollout plan.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Output only. State of the Saas. It is always in STATE_ACTIVE state if the application_template is empty. (STATE_TYPE_UNSPECIFIED, STATE_ACTIVE, STATE_RUNNING, STATE_FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -114,9 +130,19 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Annotations is an unstructured key-value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/user-guide/annotations</td>
 </tr>
 <tr>
+    <td><CopyableCode code="conditions" /></td>
+    <td><code>array</code></td>
+    <td>Output only. A set of conditions which indicate the various conditions this resource can have.</td>
+</tr>
+<tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The timestamp when the resource was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="error" /></td>
+    <td><code>object</code></td>
+    <td>Output only. If the state is FAILED, the corresponding error code and message. Defaults to code=OK for all other states. (id: Status)</td>
 </tr>
 <tr>
     <td><CopyableCode code="etag" /></td>
@@ -132,6 +158,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="locations" /></td>
     <td><code>array</code></td>
     <td>Optional. List of locations that the service is available in. Rollout refers to the list to generate a rollout plan.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Output only. State of the Saas. It is always in STATE_ACTIVE state if the application_template is empty. (STATE_TYPE_UNSPECIFIED, STATE_ACTIVE, STATE_RUNNING, STATE_FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -174,28 +205,28 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Retrieve a collection of saas.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-saasId"><code>saasId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-saasId"><code>saasId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Create a new saas.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-saasId"><code>saasId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Update a single saas.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-saasId"><code>saasId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Delete a single saas.</td>
 </tr>
 </tbody>
@@ -294,10 +325,13 @@ Retrieve a single saas.
 SELECT
 name,
 annotations,
+conditions,
 createTime,
+error,
 etag,
 labels,
 locations,
+state,
 uid,
 updateTime
 FROM google.saasservicemgmt.saas
@@ -315,19 +349,22 @@ Retrieve a collection of saas.
 SELECT
 name,
 annotations,
+conditions,
 createTime,
+error,
 etag,
 labels,
 locations,
+state,
 uid,
 updateTime
 FROM google.saasservicemgmt.saas
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -350,32 +387,35 @@ Create a new saas.
 ```sql
 INSERT INTO google.saasservicemgmt.saas (
 data__annotations,
+data__locations,
 data__labels,
 data__name,
-data__locations,
 projectsId,
 locationsId,
-requestId,
 saasId,
-validateOnly
+validateOnly,
+requestId
 )
 SELECT 
 '{{ annotations }}',
+'{{ locations }}',
 '{{ labels }}',
 '{{ name }}',
-'{{ locations }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
 '{{ saasId }}',
-'{{ validateOnly }}'
+'{{ validateOnly }}',
+'{{ requestId }}'
 RETURNING
 name,
 annotations,
+conditions,
 createTime,
+error,
 etag,
 labels,
 locations,
+state,
 uid,
 updateTime
 ;
@@ -383,43 +423,40 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: saas
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the saas resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the saas resource.
     - name: annotations
-      value: object
-      description: >
+      value: "{{ annotations }}"
+      description: |
         Optional. Annotations is an unstructured key-value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/user-guide/annotations
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. The labels on the resource, which can be used for categorization. similar to Kubernetes resource labels.
-        
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name (full URI of the resource) following the standard naming scheme: "projects/{project}/locations/{location}/saas/{saas}"
-        
     - name: locations
-      value: array
-      description: >
+      description: |
         Optional. List of locations that the service is available in. Rollout refers to the list to generate a rollout plan.
-        
-    - name: requestId
-      value: string
+      value:
+        - name: "{{ name }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. The labels on the resource, which can be used for categorization. similar to Kubernetes resource labels.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name (full URI of the resource) following the standard naming scheme: "projects/{project}/locations/{location}/saas/{saas}"
     - name: saasId
-      value: string
+      value: "{{ saasId }}"
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+    - name: requestId
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -440,23 +477,26 @@ Update a single saas.
 UPDATE google.saasservicemgmt.saas
 SET 
 data__annotations = '{{ annotations }}',
+data__locations = '{{ locations }}',
 data__labels = '{{ labels }}',
-data__name = '{{ name }}',
-data__locations = '{{ locations }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND saasId = '{{ saasId }}' --required
-AND requestId = '{{ requestId}}'
 AND validateOnly = {{ validateOnly}}
+AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 annotations,
+conditions,
 createTime,
+error,
 etag,
 labels,
 locations,
+state,
 uid,
 updateTime;
 ```
@@ -481,8 +521,8 @@ DELETE FROM google.saasservicemgmt.saas
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND saasId = '{{ saasId }}' --required
-AND validateOnly = '{{ validateOnly }}'
 AND etag = '{{ etag }}'
+AND validateOnly = '{{ validateOnly }}'
 AND requestId = '{{ requestId }}'
 ;
 ```

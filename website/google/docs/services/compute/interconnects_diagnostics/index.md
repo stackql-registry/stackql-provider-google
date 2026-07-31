@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>interconnects_diagnostics</cod
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>interconnects_diagnostics</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="interconnects_diagnostics" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.interconnects_diagnostics" /></td></tr>
 </tbody></table>
@@ -78,7 +79,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-interconnect"><code>interconnect</code></a></td>
     <td></td>
-    <td>Returns the interconnectDiagnostics for the specified Interconnect. In the event of a global outage, do not use this API to make decisions about where to redirect your network traffic. Unlike a VLAN attachment, which is regional, a Cloud Interconnect connection is a global resource. A global outage can prevent this API from functioning properly.</td>
+    <td>Returns the interconnectDiagnostics for the specified<br />Interconnect.<br /><br />In the event of a<br />global outage, do not use this API to make decisions about where to<br />redirect your network traffic.<br /><br />Unlike a VLAN attachment, which is regional, a Cloud Interconnect<br />connection is a global resource. A global outage can prevent this<br />API from functioning properly.</td>
 </tr>
 </tbody>
 </table>
@@ -119,7 +120,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get_diagnostics">
 
-Returns the interconnectDiagnostics for the specified Interconnect. In the event of a global outage, do not use this API to make decisions about where to redirect your network traffic. Unlike a VLAN attachment, which is regional, a Cloud Interconnect connection is a global resource. A global outage can prevent this API from functioning properly.
+Returns the interconnectDiagnostics for the specified<br />Interconnect.<br /><br />In the event of a<br />global outage, do not use this API to make decisions about where to<br />redirect your network traffic.<br /><br />Unlike a VLAN attachment, which is regional, a Cloud Interconnect<br />connection is a global resource. A global outage can prevent this<br />API from functioning properly.
 
 ```sql
 SELECT

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>boundary</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>boundary</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="boundary" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apphub.boundary" /></td></tr>
 </tbody></table>
@@ -66,7 +67,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Output only. Boundary type.</td>
+    <td>Output only. Boundary type. (TYPE_UNSPECIFIED, AUTOMATIC, MANUAL, MANAGED_AUTOMATIC)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -104,7 +105,7 @@ The following methods are available for this resource:
     <td><a href="#update_boundary"><CopyableCode code="update_boundary" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Updates a Boundary.</td>
 </tr>
 </tbody>
@@ -189,13 +190,13 @@ Updates a Boundary.
 ```sql
 UPDATE google.apphub.boundary
 SET 
-data__name = '{{ name }}',
-data__crmNode = '{{ crmNode }}'
+data__crmNode = '{{ crmNode }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
-AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
+AND requestId = '{{ requestId}}'
 RETURNING
 name,
 done,

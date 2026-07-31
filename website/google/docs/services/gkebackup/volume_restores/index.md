@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>volume_restores</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>volume_restores</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="volume_restores" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.gkebackup.volume_restores" /></td></tr>
 </tbody></table>
@@ -72,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of this VolumeRestore.</td>
+    <td>Output only. The current state of this VolumeRestore. (STATE_UNSPECIFIED, CREATING, RESTORING, SUCCEEDED, FAILED, DELETING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateMessage" /></td>
@@ -107,7 +108,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="volumeType" /></td>
     <td><code>string</code></td>
-    <td>Output only. The type of volume provisioned</td>
+    <td>Output only. The type of volume provisioned (VOLUME_TYPE_UNSPECIFIED, GCE_PERSISTENT_DISK)</td>
 </tr>
 </tbody>
 </table>
@@ -146,7 +147,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of this VolumeRestore.</td>
+    <td>Output only. The current state of this VolumeRestore. (STATE_UNSPECIFIED, CREATING, RESTORING, SUCCEEDED, FAILED, DELETING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateMessage" /></td>
@@ -181,7 +182,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="volumeType" /></td>
     <td><code>string</code></td>
-    <td>Output only. The type of volume provisioned</td>
+    <td>Output only. The type of volume provisioned (VOLUME_TYPE_UNSPECIFIED, GCE_PERSISTENT_DISK)</td>
 </tr>
 </tbody>
 </table>
@@ -214,7 +215,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-restorePlansId"><code>restorePlansId</code></a>, <a href="#parameter-restoresId"><code>restoresId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists the VolumeRestores for a given Restore.</td>
 </tr>
 </tbody>
@@ -340,10 +341,10 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND restorePlansId = '{{ restorePlansId }}' -- required
 AND restoresId = '{{ restoresId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>

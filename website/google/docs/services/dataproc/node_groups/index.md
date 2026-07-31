@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>node_groups</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>node_groups</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="node_groups" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataproc.node_groups" /></td></tr>
 </tbody></table>
@@ -214,10 +215,10 @@ Creates a node group in a cluster. The returned Operation.metadata is NodeGroupO
 
 ```sql
 INSERT INTO google.dataproc.node_groups (
-data__roles,
-data__labels,
-data__name,
 data__nodeGroupConfig,
+data__labels,
+data__roles,
+data__name,
 projectsId,
 regionsId,
 clustersId,
@@ -226,10 +227,10 @@ nodeGroupId,
 parentOperationId
 )
 SELECT 
-'{{ roles }}',
-'{{ labels }}',
-'{{ name }}',
 '{{ nodeGroupConfig }}',
+'{{ labels }}',
+'{{ roles }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ regionsId }}',
 '{{ clustersId }}',
@@ -247,46 +248,101 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: node_groups
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the node_groups resource.
     - name: regionsId
-      value: string
+      value: "{{ regionsId }}"
       description: Required parameter for the node_groups resource.
     - name: clustersId
-      value: string
+      value: "{{ clustersId }}"
       description: Required parameter for the node_groups resource.
-    - name: roles
-      value: array
-      description: >
-        Required. Node group roles.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Node group labels. Label keys must consist of from 1 to 63 characters and conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values can be empty. If specified, they must consist of from 1 to 63 characters and conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). The node group must have no more than 32 labels.
-        
-    - name: name
-      value: string
-      description: >
-        The Node group resource name (https://aip.dev/122).
-        
     - name: nodeGroupConfig
-      value: object
-      description: >
+      description: |
         Optional. The node group instance group configuration.
-        
+      value:
+        numInstances: {{ numInstances }}
+        minCpuPlatform: "{{ minCpuPlatform }}"
+        instanceNames:
+          - "{{ instanceNames }}"
+        diskConfig:
+          numLocalSsds: {{ numLocalSsds }}
+          bootDiskProvisionedIops: "{{ bootDiskProvisionedIops }}"
+          bootDiskType: "{{ bootDiskType }}"
+          bootDiskProvisionedThroughput: "{{ bootDiskProvisionedThroughput }}"
+          bootDiskSizeGb: {{ bootDiskSizeGb }}
+          localSsdInterface: "{{ localSsdInterface }}"
+          attachedDiskConfigs:
+            - provisionedIops: "{{ provisionedIops }}"
+              diskType: "{{ diskType }}"
+              diskSizeGb: {{ diskSizeGb }}
+              provisionedThroughput: "{{ provisionedThroughput }}"
+        managedGroupConfig:
+          instanceGroupManagerUri: "{{ instanceGroupManagerUri }}"
+          instanceTemplateName: "{{ instanceTemplateName }}"
+          instanceGroupManagerName: "{{ instanceGroupManagerName }}"
+        instanceReferences:
+          - publicKey: "{{ publicKey }}"
+            instanceName: "{{ instanceName }}"
+            instanceId: "{{ instanceId }}"
+            publicEciesKey: "{{ publicEciesKey }}"
+        imageUri: "{{ imageUri }}"
+        preemptibility: "{{ preemptibility }}"
+        isPreemptible: {{ isPreemptible }}
+        startupConfig:
+          requiredRegistrationFraction: {{ requiredRegistrationFraction }}
+        machineTypeUri: "{{ machineTypeUri }}"
+        minNumInstances: {{ minNumInstances }}
+        accelerators:
+          - acceleratorTypeUri: "{{ acceleratorTypeUri }}"
+            acceleratorCount: {{ acceleratorCount }}
+        instanceFlexibilityPolicy:
+          provisioningModelMix:
+            standardCapacityBase: {{ standardCapacityBase }}
+            standardCapacityPercentAboveBase: {{ standardCapacityPercentAboveBase }}
+          instanceMachineTypes: "{{ instanceMachineTypes }}"
+          instanceSelectionList:
+            - diskConfig:
+                numLocalSsds: {{ numLocalSsds }}
+                bootDiskProvisionedIops: "{{ bootDiskProvisionedIops }}"
+                bootDiskType: "{{ bootDiskType }}"
+                bootDiskProvisionedThroughput: "{{ bootDiskProvisionedThroughput }}"
+                bootDiskSizeGb: {{ bootDiskSizeGb }}
+                localSsdInterface: "{{ localSsdInterface }}"
+                attachedDiskConfigs:
+                  - provisionedIops: "{{ provisionedIops }}"
+                    diskType: "{{ diskType }}"
+                    diskSizeGb: {{ diskSizeGb }}
+                    provisionedThroughput: "{{ provisionedThroughput }}"
+              machineTypes: "{{ machineTypes }}"
+              rank: {{ rank }}
+          instanceSelectionResults:
+            - machineType: "{{ machineType }}"
+              vmCount: {{ vmCount }}
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Node group labels. Label keys must consist of from 1 to 63 characters and conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values can be empty. If specified, they must consist of from 1 to 63 characters and conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). The node group must have no more than 32 labels.
+    - name: roles
+      value:
+        - "{{ roles }}"
+      description: |
+        Required. Node group roles.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The Node group resource name (https://aip.dev/122).
     - name: requestId
-      value: string
+      value: "{{ requestId }}"
     - name: nodeGroupId
-      value: string
+      value: "{{ nodeGroupId }}"
     - name: parentOperationId
-      value: string
-```
+      value: "{{ parentOperationId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -332,9 +388,9 @@ EXEC google.dataproc.node_groups.projects_regions_clusters_node_groups_repair
 @nodeGroupsId='{{ nodeGroupsId }}' --required 
 @@json=
 '{
-"instanceNames": "{{ instanceNames }}", 
+"repairAction": "{{ repairAction }}", 
 "requestId": "{{ requestId }}", 
-"repairAction": "{{ repairAction }}"
+"instanceNames": "{{ instanceNames }}"
 }'
 ;
 ```

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>datasets</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>datasets</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="datasets" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.translate.datasets" /></td></tr>
 </tbody></table>
@@ -344,17 +345,17 @@ Creates a Dataset.
 ```sql
 INSERT INTO google.translate.datasets (
 data__name,
-data__displayName,
 data__sourceLanguageCode,
 data__targetLanguageCode,
+data__displayName,
 projectsId,
 locationsId
 )
 SELECT 
 '{{ name }}',
-'{{ displayName }}',
 '{{ sourceLanguageCode }}',
 '{{ targetLanguageCode }}',
+'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -368,37 +369,33 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: datasets
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the datasets resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the datasets resource.
     - name: name
-      value: string
-      description: >
-        The resource name of the dataset, in form of `projects/{project-number-or-id}/locations/{location_id}/datasets/{dataset_id}`
-        
-    - name: displayName
-      value: string
-      description: >
-        The name of the dataset to show in the interface. The name can be up to 32 characters long and can consist only of ASCII Latin letters A-Z and a-z, underscores (_), and ASCII digits 0-9.
-        
+      value: "{{ name }}"
+      description: |
+        The resource name of the dataset, in form of \`projects/{project-number-or-id}/locations/{location_id}/datasets/{dataset_id}\`
     - name: sourceLanguageCode
-      value: string
-      description: >
+      value: "{{ sourceLanguageCode }}"
+      description: |
         The BCP-47 language code of the source language.
-        
     - name: targetLanguageCode
-      value: string
-      description: >
+      value: "{{ targetLanguageCode }}"
+      description: |
         The BCP-47 language code of the target language.
-        
-```
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        The name of the dataset to show in the interface. The name can be up to 32 characters long and can consist only of ASCII Latin letters A-Z and a-z, underscores (_), and ASCII digits 0-9.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

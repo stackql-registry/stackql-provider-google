@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>managed_folders</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>managed_folders</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="managed_folders" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.storage.managed_folders" /></td></tr>
 </tbody></table>
@@ -355,55 +356,47 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: managed_folders
   props:
     - name: bucket
-      value: string
+      value: "{{ bucket }}"
       description: Required parameter for the managed_folders resource.
     - name: bucket
-      value: string
-      description: >
+      value: "{{ bucket }}"
+      description: |
         The name of the bucket containing this managed folder.
-        
     - name: id
-      value: string
-      description: >
+      value: "{{ id }}"
+      description: |
         The ID of the managed folder, including the bucket name and managed folder name.
-        
     - name: kind
-      value: string
-      description: >
+      value: "{{ kind }}"
+      description: |
         The kind of item this is. For managed folders, this is always storage#managedFolder.
-        
       default: storage#managedFolder
     - name: metageneration
-      value: string
-      description: >
+      value: "{{ metageneration }}"
+      description: |
         The version of the metadata for this managed folder. Used for preconditions and for detecting changes in metadata.
-        
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         The name of the managed folder. Required if not specified by URL parameter.
-        
     - name: selfLink
-      value: string
-      description: >
+      value: "{{ selfLink }}"
+      description: |
         The link to this managed folder.
-        
     - name: createTime
-      value: string
-      description: >
+      value: "{{ createTime }}"
+      description: |
         The creation time of the managed folder in RFC 3339 format.
-        
     - name: updateTime
-      value: string
-      description: >
+      value: "{{ updateTime }}"
+      description: |
         The last update time of the managed folder metadata in RFC 3339 format.
-        
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

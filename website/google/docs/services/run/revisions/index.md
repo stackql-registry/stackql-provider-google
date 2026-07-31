@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>revisions</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>revisions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="revisions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.run.revisions" /></td></tr>
 </tbody></table>
@@ -60,6 +61,16 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Unstructured key value map that may be set by external tools to store and arbitrary metadata. They are not queryable and should be preserved when modifying objects.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="client" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Arbitrary identifier for the API client.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="clientVersion" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Arbitrary version identifier for the API client.</td>
+</tr>
+<tr>
     <td><CopyableCode code="conditions" /></td>
     <td><code>array</code></td>
     <td>Output only. The Condition of this Revision, containing its readiness status, and detailed error information in case it did not reach a serving state.</td>
@@ -67,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="containers" /></td>
     <td><code>array</code></td>
-    <td>Holds the single container that defines the unit of execution for this Revision.</td>
+    <td>Holds the list which define the units of execution for this Revision.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -92,7 +103,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="encryptionKeyRevocationAction" /></td>
     <td><code>string</code></td>
-    <td>The action to take if the encryption key is revoked.</td>
+    <td>The action to take if the encryption key is revoked. (ENCRYPTION_KEY_REVOCATION_ACTION_UNSPECIFIED, PREVENT_NEW, SHUTDOWN)</td>
 </tr>
 <tr>
     <td><CopyableCode code="encryptionKeyShutdownDuration" /></td>
@@ -107,7 +118,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="executionEnvironment" /></td>
     <td><code>string</code></td>
-    <td>The execution environment being used to host this Revision.</td>
+    <td>The execution environment being used to host this Revision. (EXECUTION_ENVIRONMENT_UNSPECIFIED, EXECUTION_ENVIRONMENT_GEN1, EXECUTION_ENVIRONMENT_GEN2)</td>
 </tr>
 <tr>
     <td><CopyableCode code="expireTime" /></td>
@@ -132,7 +143,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="launchStage" /></td>
     <td><code>string</code></td>
-    <td>The least stable launch stage needed to create this resource, as defined by [Google Cloud Platform Launch Stages](https://cloud.google.com/terms/launch-stages). Cloud Run supports `ALPHA`, `BETA`, and `GA`. Note that this value might not be what was used as input. For example, if ALPHA was provided as input in the parent resource, but only BETA and GA-level features are were, this field will be BETA.</td>
+    <td>The least stable launch stage needed to create this resource, as defined by [Google Cloud Platform Launch Stages](https://cloud.google.com/terms/launch-stages). Cloud Run supports `ALPHA`, `BETA`, and `GA`. Note that this value might not be what was used as input. For example, if ALPHA was provided as input in the parent resource, but only BETA and GA-level features are used, this field will be BETA. (LAUNCH_STAGE_UNSPECIFIED, UNIMPLEMENTED, PRELAUNCH, EARLY_ACCESS, ALPHA, BETA, GA, DEPRECATED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="logUri" /></td>
@@ -244,6 +255,16 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Unstructured key value map that may be set by external tools to store and arbitrary metadata. They are not queryable and should be preserved when modifying objects.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="client" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Arbitrary identifier for the API client.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="clientVersion" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Arbitrary version identifier for the API client.</td>
+</tr>
+<tr>
     <td><CopyableCode code="conditions" /></td>
     <td><code>array</code></td>
     <td>Output only. The Condition of this Revision, containing its readiness status, and detailed error information in case it did not reach a serving state.</td>
@@ -251,7 +272,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="containers" /></td>
     <td><code>array</code></td>
-    <td>Holds the single container that defines the unit of execution for this Revision.</td>
+    <td>Holds the list which define the units of execution for this Revision.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -276,7 +297,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="encryptionKeyRevocationAction" /></td>
     <td><code>string</code></td>
-    <td>The action to take if the encryption key is revoked.</td>
+    <td>The action to take if the encryption key is revoked. (ENCRYPTION_KEY_REVOCATION_ACTION_UNSPECIFIED, PREVENT_NEW, SHUTDOWN)</td>
 </tr>
 <tr>
     <td><CopyableCode code="encryptionKeyShutdownDuration" /></td>
@@ -291,7 +312,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="executionEnvironment" /></td>
     <td><code>string</code></td>
-    <td>The execution environment being used to host this Revision.</td>
+    <td>The execution environment being used to host this Revision. (EXECUTION_ENVIRONMENT_UNSPECIFIED, EXECUTION_ENVIRONMENT_GEN1, EXECUTION_ENVIRONMENT_GEN2)</td>
 </tr>
 <tr>
     <td><CopyableCode code="expireTime" /></td>
@@ -316,7 +337,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="launchStage" /></td>
     <td><code>string</code></td>
-    <td>The least stable launch stage needed to create this resource, as defined by [Google Cloud Platform Launch Stages](https://cloud.google.com/terms/launch-stages). Cloud Run supports `ALPHA`, `BETA`, and `GA`. Note that this value might not be what was used as input. For example, if ALPHA was provided as input in the parent resource, but only BETA and GA-level features are were, this field will be BETA.</td>
+    <td>The least stable launch stage needed to create this resource, as defined by [Google Cloud Platform Launch Stages](https://cloud.google.com/terms/launch-stages). Cloud Run supports `ALPHA`, `BETA`, and `GA`. Note that this value might not be what was used as input. For example, if ALPHA was provided as input in the parent resource, but only BETA and GA-level features are used, this field will be BETA. (LAUNCH_STAGE_UNSPECIFIED, UNIMPLEMENTED, PRELAUNCH, EARLY_ACCESS, ALPHA, BETA, GA, DEPRECATED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="logUri" /></td>
@@ -434,14 +455,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
+    <td><a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Revisions from a given Service, or from a given location. Results are sorted by creation time, descending.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Deletes a Revision.</td>
 </tr>
 <tr>
@@ -537,6 +558,8 @@ Gets information about a Revision.
 SELECT
 name,
 annotations,
+client,
+clientVersion,
 conditions,
 containers,
 createTime,
@@ -585,6 +608,8 @@ Lists Revisions from a given Service, or from a given location. Results are sort
 SELECT
 name,
 annotations,
+client,
+clientVersion,
 conditions,
 containers,
 createTime,
@@ -621,9 +646,9 @@ FROM google.run.revisions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND servicesId = '{{ servicesId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND showDeleted = '{{ showDeleted }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -648,8 +673,8 @@ WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND servicesId = '{{ servicesId }}' --required
 AND revisionsId = '{{ revisionsId }}' --required
-AND validateOnly = '{{ validateOnly }}'
 AND etag = '{{ etag }}'
+AND validateOnly = '{{ validateOnly }}'
 ;
 ```
 </TabItem>

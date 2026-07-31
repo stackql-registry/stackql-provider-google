@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>executions</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>executions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="executions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.workflowexecutions.executions" /></td></tr>
 </tbody></table>
@@ -62,7 +63,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="callLogLevel" /></td>
     <td><code>string</code></td>
-    <td>The call logging level associated to this execution.</td>
+    <td>The call logging level associated to this execution. (CALL_LOG_LEVEL_UNSPECIFIED, LOG_ALL_CALLS, LOG_ERRORS_ONLY, LOG_NONE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -92,7 +93,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="executionHistoryLevel" /></td>
     <td><code>string</code></td>
-    <td>Optional. Describes the execution history level to apply to this execution. If not specified, the execution history level is determined by its workflow's execution history level. If the levels are different, the executionHistoryLevel overrides the workflow's execution history level for this execution.</td>
+    <td>Optional. Describes the execution history level to apply to this execution. If not specified, the execution history level is determined by its workflow's execution history level. If the levels are different, the executionHistoryLevel overrides the workflow's execution history level for this execution. (EXECUTION_HISTORY_LEVEL_UNSPECIFIED, EXECUTION_HISTORY_BASIC, EXECUTION_HISTORY_DETAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -112,7 +113,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the execution.</td>
+    <td>Output only. Current state of the execution. (STATE_UNSPECIFIED, ACTIVE, SUCCEEDED, FAILED, CANCELLED, UNAVAILABLE, QUEUED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateError" /></td>
@@ -156,7 +157,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="callLogLevel" /></td>
     <td><code>string</code></td>
-    <td>The call logging level associated to this execution.</td>
+    <td>The call logging level associated to this execution. (CALL_LOG_LEVEL_UNSPECIFIED, LOG_ALL_CALLS, LOG_ERRORS_ONLY, LOG_NONE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -186,7 +187,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="executionHistoryLevel" /></td>
     <td><code>string</code></td>
-    <td>Optional. Describes the execution history level to apply to this execution. If not specified, the execution history level is determined by its workflow's execution history level. If the levels are different, the executionHistoryLevel overrides the workflow's execution history level for this execution.</td>
+    <td>Optional. Describes the execution history level to apply to this execution. If not specified, the execution history level is determined by its workflow's execution history level. If the levels are different, the executionHistoryLevel overrides the workflow's execution history level for this execution. (EXECUTION_HISTORY_LEVEL_UNSPECIFIED, EXECUTION_HISTORY_BASIC, EXECUTION_HISTORY_DETAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -206,7 +207,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the execution.</td>
+    <td>Output only. Current state of the execution. (STATE_UNSPECIFIED, ACTIVE, SUCCEEDED, FAILED, CANCELLED, UNAVAILABLE, QUEUED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateError" /></td>
@@ -254,7 +255,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workflowsId"><code>workflowsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Returns a list of executions which belong to the workflow with the given name. The method returns executions of all workflow revisions. Returned executions are ordered by their start time (newest first).</td>
 </tr>
 <tr>
@@ -408,11 +409,11 @@ FROM google.workflowexecutions.executions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND workflowsId = '{{ workflowsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND view = '{{ view }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND view = '{{ view }}'
 ;
 ```
 </TabItem>
@@ -434,21 +435,21 @@ Creates a new execution using the latest revision of the given workflow. For mor
 
 ```sql
 INSERT INTO google.workflowexecutions.executions (
-data__argument,
-data__callLogLevel,
-data__labels,
 data__disableConcurrencyQuotaOverflowBuffering,
 data__executionHistoryLevel,
+data__argument,
+data__labels,
+data__callLogLevel,
 projectsId,
 locationsId,
 workflowsId
 )
 SELECT 
-'{{ argument }}',
-'{{ callLogLevel }}',
-'{{ labels }}',
 {{ disableConcurrencyQuotaOverflowBuffering }},
 '{{ executionHistoryLevel }}',
+'{{ argument }}',
+'{{ labels }}',
+'{{ callLogLevel }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ workflowsId }}'
@@ -474,47 +475,42 @@ workflowRevisionId
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: executions
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the executions resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the executions resource.
     - name: workflowsId
-      value: string
+      value: "{{ workflowsId }}"
       description: Required parameter for the executions resource.
-    - name: argument
-      value: string
-      description: >
-        Input parameters of the execution represented as a JSON string. The size limit is 32KB. *Note*: If you are using the REST API directly to run your workflow, you must escape any JSON string value of `argument`. Example: `'{"argument":"{\"firstName\":\"FIRST\",\"lastName\":\"LAST\"}"}'`
-        
-    - name: callLogLevel
-      value: string
-      description: >
-        The call logging level associated to this execution.
-        
-      valid_values: ['CALL_LOG_LEVEL_UNSPECIFIED', 'LOG_ALL_CALLS', 'LOG_ERRORS_ONLY', 'LOG_NONE']
-    - name: labels
-      value: object
-      description: >
-        Labels associated with this execution. Labels can contain at most 64 entries. Keys and values can be no longer than 63 characters and can only contain lowercase letters, numeric characters, underscores, and dashes. Label keys must start with a letter. International characters are allowed. By default, labels are inherited from the workflow but are overridden by any labels associated with the execution.
-        
     - name: disableConcurrencyQuotaOverflowBuffering
-      value: boolean
-      description: >
+      value: {{ disableConcurrencyQuotaOverflowBuffering }}
+      description: |
         Optional. If set to true, the execution will not be backlogged when the concurrency quota is exhausted. The backlog execution starts when the concurrency quota becomes available.
-        
     - name: executionHistoryLevel
-      value: string
-      description: >
+      value: "{{ executionHistoryLevel }}"
+      description: |
         Optional. Describes the execution history level to apply to this execution. If not specified, the execution history level is determined by its workflow's execution history level. If the levels are different, the executionHistoryLevel overrides the workflow's execution history level for this execution.
-        
       valid_values: ['EXECUTION_HISTORY_LEVEL_UNSPECIFIED', 'EXECUTION_HISTORY_BASIC', 'EXECUTION_HISTORY_DETAILED']
-```
+    - name: argument
+      value: "{{ argument }}"
+      description: |
+        Input parameters of the execution represented as a JSON string. The size limit is 32KB. *Note*: If you are using the REST API directly to run your workflow, you must escape any JSON string value of \`argument\`. Example: \`'{"argument":"{"firstName":"FIRST","lastName":"LAST"}"}'\`
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Labels associated with this execution. Labels can contain at most 64 entries. Keys and values can be no longer than 63 characters and can only contain lowercase letters, numeric characters, underscores, and dashes. Label keys must start with a letter. International characters are allowed. By default, labels are inherited from the workflow but are overridden by any labels associated with the execution.
+    - name: callLogLevel
+      value: "{{ callLogLevel }}"
+      description: |
+        The call logging level associated to this execution.
+      valid_values: ['CALL_LOG_LEVEL_UNSPECIFIED', 'LOG_ALL_CALLS', 'LOG_ERRORS_ONLY', 'LOG_NONE']
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

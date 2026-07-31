@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>user_events</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>user_events</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="user_events" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.retail.user_events" /></td></tr>
 </tbody></table>
@@ -50,25 +51,18 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_locations_catalogs_user_events_import"><CopyableCode code="projects_locations_catalogs_user_events_import" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a></td>
-    <td></td>
-    <td>Bulk import of User events. Request processing might be synchronous. Events that already exist are skipped. Use this method for backfilling historical user events. `Operation.response` is of type `ImportResponse`. Note that it is possible for a subset of the items to be successfully inserted. `Operation.metadata` is of type `ImportMetadata`.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_catalogs_user_events_rejoin"><CopyableCode code="projects_locations_catalogs_user_events_rejoin" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a></td>
-    <td></td>
-    <td>Starts a user-event rejoin operation with latest product catalog. Events are not annotated with detailed product information for products that are missing from the catalog when the user event is ingested. These events are stored as unjoined events with limited usage on training and serving. You can use this method to start a join operation on specified events with the latest version of product catalog. You can also use this method to correct events joined with the wrong product catalog. A rejoin operation can take hours or days to complete.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_catalogs_user_events_write"><CopyableCode code="projects_locations_catalogs_user_events_write" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a></td>
     <td><a href="#parameter-writeAsync"><code>writeAsync</code></a></td>
     <td>Writes a single user event.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_catalogs_user_events_collect"><CopyableCode code="projects_locations_catalogs_user_events_collect" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a></td>
+    <td></td>
+    <td>Writes a single user event from the browser. For larger user event payload over 16 KB, the POST method should be used instead, otherwise a 400 Bad Request error is returned. This method is used only by the AI Commerce Search API JavaScript pixel and Google Tag Manager. Users should not call this method directly.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_catalogs_user_events_purge"><CopyableCode code="projects_locations_catalogs_user_events_purge" /></a></td>
@@ -78,11 +72,18 @@ The following methods are available for this resource:
     <td>Deletes permanently all user events specified by the filter provided. Depending on the number of events specified by the filter, this operation could take hours or days to complete. To test a filter, use the list command first.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_catalogs_user_events_collect"><CopyableCode code="projects_locations_catalogs_user_events_collect" /></a></td>
+    <td><a href="#projects_locations_catalogs_user_events_rejoin"><CopyableCode code="projects_locations_catalogs_user_events_rejoin" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a></td>
     <td></td>
-    <td>Writes a single user event from the browser. For larger user event payload over 16 KB, the POST method should be used instead, otherwise a 400 Bad Request error is returned. This method is used only by the Retail API JavaScript pixel and Google Tag Manager. Users should not call this method directly.</td>
+    <td>Starts a user-event rejoin operation with latest product catalog. Events are not annotated with detailed product information for products that are missing from the catalog when the user event is ingested. These events are stored as unjoined events with limited usage on training and serving. You can use this method to start a join operation on specified events with the latest version of product catalog. You can also use this method to correct events joined with the wrong product catalog. A rejoin operation can take hours or days to complete.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_catalogs_user_events_import"><CopyableCode code="projects_locations_catalogs_user_events_import" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a></td>
+    <td></td>
+    <td>Bulk import of User events. Request processing might be synchronous. Events that already exist are skipped. Use this method for backfilling historical user events. `Operation.response` is of type `ImportResponse`. Note that it is possible for a subset of the items to be successfully inserted. `Operation.metadata` is of type `ImportMetadata`.</td>
 </tr>
 </tbody>
 </table>
@@ -126,48 +127,15 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_catalogs_user_events_import"
+    defaultValue="projects_locations_catalogs_user_events_write"
     values={[
-        { label: 'projects_locations_catalogs_user_events_import', value: 'projects_locations_catalogs_user_events_import' },
-        { label: 'projects_locations_catalogs_user_events_rejoin', value: 'projects_locations_catalogs_user_events_rejoin' },
         { label: 'projects_locations_catalogs_user_events_write', value: 'projects_locations_catalogs_user_events_write' },
+        { label: 'projects_locations_catalogs_user_events_collect', value: 'projects_locations_catalogs_user_events_collect' },
         { label: 'projects_locations_catalogs_user_events_purge', value: 'projects_locations_catalogs_user_events_purge' },
-        { label: 'projects_locations_catalogs_user_events_collect', value: 'projects_locations_catalogs_user_events_collect' }
+        { label: 'projects_locations_catalogs_user_events_rejoin', value: 'projects_locations_catalogs_user_events_rejoin' },
+        { label: 'projects_locations_catalogs_user_events_import', value: 'projects_locations_catalogs_user_events_import' }
     ]}
 >
-<TabItem value="projects_locations_catalogs_user_events_import">
-
-Bulk import of User events. Request processing might be synchronous. Events that already exist are skipped. Use this method for backfilling historical user events. `Operation.response` is of type `ImportResponse`. Note that it is possible for a subset of the items to be successfully inserted. `Operation.metadata` is of type `ImportMetadata`.
-
-```sql
-EXEC google.retail.user_events.projects_locations_catalogs_user_events_import 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@catalogsId='{{ catalogsId }}' --required 
-@@json=
-'{
-"inputConfig": "{{ inputConfig }}", 
-"errorsConfig": "{{ errorsConfig }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_catalogs_user_events_rejoin">
-
-Starts a user-event rejoin operation with latest product catalog. Events are not annotated with detailed product information for products that are missing from the catalog when the user event is ingested. These events are stored as unjoined events with limited usage on training and serving. You can use this method to start a join operation on specified events with the latest version of product catalog. You can also use this method to correct events joined with the wrong product catalog. A rejoin operation can take hours or days to complete.
-
-```sql
-EXEC google.retail.user_events.projects_locations_catalogs_user_events_rejoin 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@catalogsId='{{ catalogsId }}' --required 
-@@json=
-'{
-"userEventRejoinScope": "{{ userEventRejoinScope }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_catalogs_user_events_write">
 
 Writes a single user event.
@@ -180,28 +148,48 @@ EXEC google.retail.user_events.projects_locations_catalogs_user_events_write
 @writeAsync={{ writeAsync }} 
 @@json=
 '{
-"uri": "{{ uri }}", 
-"eventTime": "{{ eventTime }}", 
-"filter": "{{ filter }}", 
-"panels": "{{ panels }}", 
-"pageViewId": "{{ pageViewId }}", 
-"completionDetail": "{{ completionDetail }}", 
-"pageCategories": "{{ pageCategories }}", 
 "attributionToken": "{{ attributionToken }}", 
-"experimentIds": "{{ experimentIds }}", 
-"productDetails": "{{ productDetails }}", 
-"sessionId": "{{ sessionId }}", 
-"referrerUri": "{{ referrerUri }}", 
-"purchaseTransaction": "{{ purchaseTransaction }}", 
 "orderBy": "{{ orderBy }}", 
+"pageCategories": "{{ pageCategories }}", 
+"sessionId": "{{ sessionId }}", 
+"eventTime": "{{ eventTime }}", 
 "entity": "{{ entity }}", 
 "cartId": "{{ cartId }}", 
-"attributes": "{{ attributes }}", 
-"searchQuery": "{{ searchQuery }}", 
-"eventType": "{{ eventType }}", 
+"filter": "{{ filter }}", 
 "visitorId": "{{ visitorId }}", 
+"experimentIds": "{{ experimentIds }}", 
+"searchQuery": "{{ searchQuery }}", 
 "offset": {{ offset }}, 
-"userInfo": "{{ userInfo }}"
+"panels": "{{ panels }}", 
+"completionDetail": "{{ completionDetail }}", 
+"uri": "{{ uri }}", 
+"referrerUri": "{{ referrerUri }}", 
+"userInfo": "{{ userInfo }}", 
+"attributes": "{{ attributes }}", 
+"pageViewId": "{{ pageViewId }}", 
+"eventType": "{{ eventType }}", 
+"productDetails": "{{ productDetails }}", 
+"purchaseTransaction": "{{ purchaseTransaction }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_catalogs_user_events_collect">
+
+Writes a single user event from the browser. For larger user event payload over 16 KB, the POST method should be used instead, otherwise a 400 Bad Request error is returned. This method is used only by the AI Commerce Search API JavaScript pixel and Google Tag Manager. Users should not call this method directly.
+
+```sql
+EXEC google.retail.user_events.projects_locations_catalogs_user_events_collect 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@catalogsId='{{ catalogsId }}' --required 
+@@json=
+'{
+"userEvent": "{{ userEvent }}", 
+"uri": "{{ uri }}", 
+"rawJson": "{{ rawJson }}", 
+"ets": "{{ ets }}", 
+"prebuiltRule": "{{ prebuiltRule }}"
 }'
 ;
 ```
@@ -223,22 +211,35 @@ EXEC google.retail.user_events.projects_locations_catalogs_user_events_purge
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_catalogs_user_events_collect">
+<TabItem value="projects_locations_catalogs_user_events_rejoin">
 
-Writes a single user event from the browser. For larger user event payload over 16 KB, the POST method should be used instead, otherwise a 400 Bad Request error is returned. This method is used only by the Retail API JavaScript pixel and Google Tag Manager. Users should not call this method directly.
+Starts a user-event rejoin operation with latest product catalog. Events are not annotated with detailed product information for products that are missing from the catalog when the user event is ingested. These events are stored as unjoined events with limited usage on training and serving. You can use this method to start a join operation on specified events with the latest version of product catalog. You can also use this method to correct events joined with the wrong product catalog. A rejoin operation can take hours or days to complete.
 
 ```sql
-EXEC google.retail.user_events.projects_locations_catalogs_user_events_collect 
+EXEC google.retail.user_events.projects_locations_catalogs_user_events_rejoin 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @catalogsId='{{ catalogsId }}' --required 
 @@json=
 '{
-"prebuiltRule": "{{ prebuiltRule }}", 
-"userEvent": "{{ userEvent }}", 
-"rawJson": "{{ rawJson }}", 
-"uri": "{{ uri }}", 
-"ets": "{{ ets }}"
+"userEventRejoinScope": "{{ userEventRejoinScope }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_catalogs_user_events_import">
+
+Bulk import of User events. Request processing might be synchronous. Events that already exist are skipped. Use this method for backfilling historical user events. `Operation.response` is of type `ImportResponse`. Note that it is possible for a subset of the items to be successfully inserted. `Operation.metadata` is of type `ImportMetadata`.
+
+```sql
+EXEC google.retail.user_events.projects_locations_catalogs_user_events_import 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@catalogsId='{{ catalogsId }}' --required 
+@@json=
+'{
+"inputConfig": "{{ inputConfig }}", 
+"errorsConfig": "{{ errorsConfig }}"
 }'
 ;
 ```

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>occurrences_notes</code> resou
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>occurrences_notes</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="occurrences_notes" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.containeranalysis.occurrences_notes" /></td></tr>
 </tbody></table>
@@ -53,6 +54,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
     <td>Output only. The name of the note in the form of `projects/[PROVIDER_ID]/notes/[NOTE_ID]`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="aiSkillAnalysis" /></td>
+    <td><code>object</code></td>
+    <td>A note describing an AI skill analysis. (id: AISkillAnalysisNote)</td>
 </tr>
 <tr>
     <td><CopyableCode code="attestation" /></td>
@@ -102,7 +108,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>Output only. The type of analysis. This field can be used as a filter in list requests.</td>
+    <td>Output only. The type of analysis. This field can be used as a filter in list requests. (NOTE_KIND_UNSPECIFIED, VULNERABILITY, BUILD, IMAGE, PACKAGE, DEPLOYMENT, DISCOVERY, ATTESTATION, UPGRADE, COMPLIANCE, DSSE_ATTESTATION, VULNERABILITY_ASSESSMENT, SBOM_REFERENCE, SECRET, AI_SKILL_ANALYSIS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="longDescription" /></td>
@@ -179,6 +185,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The name of the note in the form of `projects/[PROVIDER_ID]/notes/[NOTE_ID]`.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="aiSkillAnalysis" /></td>
+    <td><code>object</code></td>
+    <td>A note describing an AI skill analysis. (id: AISkillAnalysisNote)</td>
+</tr>
+<tr>
     <td><CopyableCode code="attestation" /></td>
     <td><code>object</code></td>
     <td>A note describing an attestation role. (id: AttestationNote)</td>
@@ -226,7 +237,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>Output only. The type of analysis. This field can be used as a filter in list requests.</td>
+    <td>Output only. The type of analysis. This field can be used as a filter in list requests. (NOTE_KIND_UNSPECIFIED, VULNERABILITY, BUILD, IMAGE, PACKAGE, DEPLOYMENT, DISCOVERY, ATTESTATION, UPGRADE, COMPLIANCE, DSSE_ATTESTATION, VULNERABILITY_ASSESSMENT, SBOM_REFERENCE, SECRET, AI_SKILL_ANALYSIS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="longDescription" /></td>
@@ -367,6 +378,7 @@ Gets the note attached to the specified occurrence. Consumer projects can use th
 ```sql
 SELECT
 name,
+aiSkillAnalysis,
 attestation,
 build,
 compliance,
@@ -402,6 +414,7 @@ Gets the note attached to the specified occurrence. Consumer projects can use th
 ```sql
 SELECT
 name,
+aiSkillAnalysis,
 attestation,
 build,
 compliance,

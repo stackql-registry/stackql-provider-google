@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>apis</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>apis</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="apis" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apihub.apis" /></td></tr>
 </tbody></table>
@@ -82,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="businessUnit" /></td>
     <td><code>object</code></td>
-    <td>Optional. The business unit owning the API. This maps to the following system defined attribute: `projects/&#123;project&#125;/locations/&#123;location&#125;/attributes/system-business-unit` attribute. The number of values for this attribute will be based on the cardinality of the attribute. The same can be retrieved via GetAttribute API. All values should be from the list of allowed values defined for the attribute. (id: GoogleCloudApihubV1AttributeValues)</td>
+    <td>The attribute values associated with resource. (id: GoogleCloudApihubV1AttributeValues)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -112,7 +113,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="maturityLevel" /></td>
     <td><code>object</code></td>
-    <td>Optional. The maturity level of the API. This maps to the following system defined attribute: `projects/&#123;project&#125;/locations/&#123;location&#125;/attributes/system-maturity-level` attribute. The number of values for this attribute will be based on the cardinality of the attribute. The same can be retrieved via GetAttribute API. All values should be from the list of allowed values defined for the attribute. (id: GoogleCloudApihubV1AttributeValues)</td>
+    <td>The attribute values associated with resource. (id: GoogleCloudApihubV1AttributeValues)</td>
 </tr>
 <tr>
     <td><CopyableCode code="owner" /></td>
@@ -132,12 +133,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="targetUser" /></td>
     <td><code>object</code></td>
-    <td>Optional. The target users for the API. This maps to the following system defined attribute: `projects/&#123;project&#125;/locations/&#123;location&#125;/attributes/system-target-user` attribute. The number of values for this attribute will be based on the cardinality of the attribute. The same can be retrieved via GetAttribute API. All values should be from the list of allowed values defined for the attribute. (id: GoogleCloudApihubV1AttributeValues)</td>
+    <td>The attribute values associated with resource. (id: GoogleCloudApihubV1AttributeValues)</td>
 </tr>
 <tr>
     <td><CopyableCode code="team" /></td>
     <td><code>object</code></td>
-    <td>Optional. The team owning the API. This maps to the following system defined attribute: `projects/&#123;project&#125;/locations/&#123;location&#125;/attributes/system-team` attribute. The number of values for this attribute will be based on the cardinality of the attribute. The same can be retrieved via GetAttribute API. All values should be from the list of allowed values defined for the attribute. (id: GoogleCloudApihubV1AttributeValues)</td>
+    <td>The attribute values associated with resource. (id: GoogleCloudApihubV1AttributeValues)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -196,7 +197,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="businessUnit" /></td>
     <td><code>object</code></td>
-    <td>Optional. The business unit owning the API. This maps to the following system defined attribute: `projects/&#123;project&#125;/locations/&#123;location&#125;/attributes/system-business-unit` attribute. The number of values for this attribute will be based on the cardinality of the attribute. The same can be retrieved via GetAttribute API. All values should be from the list of allowed values defined for the attribute. (id: GoogleCloudApihubV1AttributeValues)</td>
+    <td>The attribute values associated with resource. (id: GoogleCloudApihubV1AttributeValues)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -226,7 +227,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="maturityLevel" /></td>
     <td><code>object</code></td>
-    <td>Optional. The maturity level of the API. This maps to the following system defined attribute: `projects/&#123;project&#125;/locations/&#123;location&#125;/attributes/system-maturity-level` attribute. The number of values for this attribute will be based on the cardinality of the attribute. The same can be retrieved via GetAttribute API. All values should be from the list of allowed values defined for the attribute. (id: GoogleCloudApihubV1AttributeValues)</td>
+    <td>The attribute values associated with resource. (id: GoogleCloudApihubV1AttributeValues)</td>
 </tr>
 <tr>
     <td><CopyableCode code="owner" /></td>
@@ -246,12 +247,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="targetUser" /></td>
     <td><code>object</code></td>
-    <td>Optional. The target users for the API. This maps to the following system defined attribute: `projects/&#123;project&#125;/locations/&#123;location&#125;/attributes/system-target-user` attribute. The number of values for this attribute will be based on the cardinality of the attribute. The same can be retrieved via GetAttribute API. All values should be from the list of allowed values defined for the attribute. (id: GoogleCloudApihubV1AttributeValues)</td>
+    <td>The attribute values associated with resource. (id: GoogleCloudApihubV1AttributeValues)</td>
 </tr>
 <tr>
     <td><CopyableCode code="team" /></td>
     <td><code>object</code></td>
-    <td>Optional. The team owning the API. This maps to the following system defined attribute: `projects/&#123;project&#125;/locations/&#123;location&#125;/attributes/system-team` attribute. The number of values for this attribute will be based on the cardinality of the attribute. The same can be retrieved via GetAttribute API. All values should be from the list of allowed values defined for the attribute. (id: GoogleCloudApihubV1AttributeValues)</td>
+    <td>The attribute values associated with resource. (id: GoogleCloudApihubV1AttributeValues)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -294,7 +295,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>List API resources in the API hub.</td>
 </tr>
 <tr>
@@ -453,9 +454,9 @@ versions
 FROM google.apihub.apis
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -478,20 +479,20 @@ Create an API resource in the API hub. Once an API resource is created, versions
 ```sql
 INSERT INTO google.apihub.apis (
 data__name,
-data__displayName,
 data__description,
-data__documentation,
 data__owner,
-data__targetUser,
-data__team,
-data__businessUnit,
-data__maturityLevel,
-data__attributes,
-data__apiStyle,
-data__selectedVersion,
 data__apiRequirements,
+data__documentation,
+data__selectedVersion,
+data__displayName,
+data__team,
+data__maturityLevel,
 data__fingerprint,
 data__apiFunctionalRequirements,
+data__attributes,
+data__apiStyle,
+data__businessUnit,
+data__targetUser,
 data__apiTechnicalRequirements,
 projectsId,
 locationsId,
@@ -499,20 +500,20 @@ apiId
 )
 SELECT 
 '{{ name }}',
-'{{ displayName }}',
 '{{ description }}',
-'{{ documentation }}',
 '{{ owner }}',
-'{{ targetUser }}',
-'{{ team }}',
-'{{ businessUnit }}',
-'{{ maturityLevel }}',
-'{{ attributes }}',
-'{{ apiStyle }}',
-'{{ selectedVersion }}',
 '{{ apiRequirements }}',
+'{{ documentation }}',
+'{{ selectedVersion }}',
+'{{ displayName }}',
+'{{ team }}',
+'{{ maturityLevel }}',
 '{{ fingerprint }}',
 '{{ apiFunctionalRequirements }}',
+'{{ attributes }}',
+'{{ apiStyle }}',
+'{{ businessUnit }}',
+'{{ targetUser }}',
 '{{ apiTechnicalRequirements }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -543,99 +544,214 @@ versions
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: apis
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the apis resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the apis resource.
     - name: name
-      value: string
-      description: >
-        Identifier. The name of the API resource in the API Hub. Format: `projects/{project}/locations/{location}/apis/{api}`
-        
-    - name: displayName
-      value: string
-      description: >
-        Required. The display name of the API resource.
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of the API resource in the API Hub. Format: \`projects/{project}/locations/{location}/apis/{api}\`
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. The description of the API resource.
-        
-    - name: documentation
-      value: object
-      description: >
-        Optional. The documentation for the API resource.
-        
     - name: owner
-      value: object
-      description: >
+      description: |
         Optional. Owner details for the API resource.
-        
-    - name: targetUser
-      value: object
-      description: >
-        Optional. The target users for the API. This maps to the following system defined attribute: `projects/{project}/locations/{location}/attributes/system-target-user` attribute. The number of values for this attribute will be based on the cardinality of the attribute. The same can be retrieved via GetAttribute API. All values should be from the list of allowed values defined for the attribute.
-        
-    - name: team
-      value: object
-      description: >
-        Optional. The team owning the API. This maps to the following system defined attribute: `projects/{project}/locations/{location}/attributes/system-team` attribute. The number of values for this attribute will be based on the cardinality of the attribute. The same can be retrieved via GetAttribute API. All values should be from the list of allowed values defined for the attribute.
-        
-    - name: businessUnit
-      value: object
-      description: >
-        Optional. The business unit owning the API. This maps to the following system defined attribute: `projects/{project}/locations/{location}/attributes/system-business-unit` attribute. The number of values for this attribute will be based on the cardinality of the attribute. The same can be retrieved via GetAttribute API. All values should be from the list of allowed values defined for the attribute.
-        
-    - name: maturityLevel
-      value: object
-      description: >
-        Optional. The maturity level of the API. This maps to the following system defined attribute: `projects/{project}/locations/{location}/attributes/system-maturity-level` attribute. The number of values for this attribute will be based on the cardinality of the attribute. The same can be retrieved via GetAttribute API. All values should be from the list of allowed values defined for the attribute.
-        
-    - name: attributes
-      value: object
-      description: >
-        Optional. The list of user defined attributes associated with the API resource. The key is the attribute name. It will be of the format: `projects/{project}/locations/{location}/attributes/{attribute}`. The value is the attribute values associated with the resource.
-        
-    - name: apiStyle
-      value: object
-      description: >
-        The attribute values associated with resource.
-        
-    - name: selectedVersion
-      value: string
-      description: >
-        Optional. The selected version for an API resource. This can be used when special handling is needed on client side for particular version of the API. Format is `projects/{project}/locations/{location}/apis/{api}/versions/{version}`
-        
+      value:
+        email: "{{ email }}"
+        displayName: "{{ displayName }}"
     - name: apiRequirements
-      value: object
-      description: >
+      description: |
         The attribute values associated with resource.
-        
+      value:
+        attribute: "{{ attribute }}"
+        enumValues:
+          values:
+            - description: "{{ description }}"
+              id: "{{ id }}"
+              displayName: "{{ displayName }}"
+              immutable: {{ immutable }}
+        stringValues:
+          values:
+            - "{{ values }}"
+        jsonValues:
+          values:
+            - "{{ values }}"
+        uriValues:
+          values:
+            - "{{ values }}"
+    - name: documentation
+      description: |
+        Optional. The documentation for the API resource.
+      value:
+        externalUri: "{{ externalUri }}"
+    - name: selectedVersion
+      value: "{{ selectedVersion }}"
+      description: |
+        Optional. The selected version for an API resource. This can be used when special handling is needed on client side for particular version of the API. Format is \`projects/{project}/locations/{location}/apis/{api}/versions/{version}\`
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. The display name of the API resource.
+    - name: team
+      description: |
+        The attribute values associated with resource.
+      value:
+        attribute: "{{ attribute }}"
+        enumValues:
+          values:
+            - description: "{{ description }}"
+              id: "{{ id }}"
+              displayName: "{{ displayName }}"
+              immutable: {{ immutable }}
+        stringValues:
+          values:
+            - "{{ values }}"
+        jsonValues:
+          values:
+            - "{{ values }}"
+        uriValues:
+          values:
+            - "{{ values }}"
+    - name: maturityLevel
+      description: |
+        The attribute values associated with resource.
+      value:
+        attribute: "{{ attribute }}"
+        enumValues:
+          values:
+            - description: "{{ description }}"
+              id: "{{ id }}"
+              displayName: "{{ displayName }}"
+              immutable: {{ immutable }}
+        stringValues:
+          values:
+            - "{{ values }}"
+        jsonValues:
+          values:
+            - "{{ values }}"
+        uriValues:
+          values:
+            - "{{ values }}"
     - name: fingerprint
-      value: string
-      description: >
+      value: "{{ fingerprint }}"
+      description: |
         Optional. Fingerprint of the API resource. This must be unique for each API resource. It can neither be unset nor be updated to an existing fingerprint of another API resource.
-        
     - name: apiFunctionalRequirements
-      value: object
-      description: >
+      description: |
         The attribute values associated with resource.
-        
+      value:
+        attribute: "{{ attribute }}"
+        enumValues:
+          values:
+            - description: "{{ description }}"
+              id: "{{ id }}"
+              displayName: "{{ displayName }}"
+              immutable: {{ immutable }}
+        stringValues:
+          values:
+            - "{{ values }}"
+        jsonValues:
+          values:
+            - "{{ values }}"
+        uriValues:
+          values:
+            - "{{ values }}"
+    - name: attributes
+      value: "{{ attributes }}"
+      description: |
+        Optional. The list of user defined attributes associated with the API resource. The key is the attribute name. It will be of the format: \`projects/{project}/locations/{location}/attributes/{attribute}\`. The value is the attribute values associated with the resource.
+    - name: apiStyle
+      description: |
+        The attribute values associated with resource.
+      value:
+        attribute: "{{ attribute }}"
+        enumValues:
+          values:
+            - description: "{{ description }}"
+              id: "{{ id }}"
+              displayName: "{{ displayName }}"
+              immutable: {{ immutable }}
+        stringValues:
+          values:
+            - "{{ values }}"
+        jsonValues:
+          values:
+            - "{{ values }}"
+        uriValues:
+          values:
+            - "{{ values }}"
+    - name: businessUnit
+      description: |
+        The attribute values associated with resource.
+      value:
+        attribute: "{{ attribute }}"
+        enumValues:
+          values:
+            - description: "{{ description }}"
+              id: "{{ id }}"
+              displayName: "{{ displayName }}"
+              immutable: {{ immutable }}
+        stringValues:
+          values:
+            - "{{ values }}"
+        jsonValues:
+          values:
+            - "{{ values }}"
+        uriValues:
+          values:
+            - "{{ values }}"
+    - name: targetUser
+      description: |
+        The attribute values associated with resource.
+      value:
+        attribute: "{{ attribute }}"
+        enumValues:
+          values:
+            - description: "{{ description }}"
+              id: "{{ id }}"
+              displayName: "{{ displayName }}"
+              immutable: {{ immutable }}
+        stringValues:
+          values:
+            - "{{ values }}"
+        jsonValues:
+          values:
+            - "{{ values }}"
+        uriValues:
+          values:
+            - "{{ values }}"
     - name: apiTechnicalRequirements
-      value: object
-      description: >
+      description: |
         The attribute values associated with resource.
-        
+      value:
+        attribute: "{{ attribute }}"
+        enumValues:
+          values:
+            - description: "{{ description }}"
+              id: "{{ id }}"
+              displayName: "{{ displayName }}"
+              immutable: {{ immutable }}
+        stringValues:
+          values:
+            - "{{ values }}"
+        jsonValues:
+          values:
+            - "{{ values }}"
+        uriValues:
+          values:
+            - "{{ values }}"
     - name: apiId
-      value: string
-```
+      value: "{{ apiId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -656,20 +772,20 @@ Update an API resource in the API hub. The following fields in the API can be up
 UPDATE google.apihub.apis
 SET 
 data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
 data__description = '{{ description }}',
-data__documentation = '{{ documentation }}',
 data__owner = '{{ owner }}',
-data__targetUser = '{{ targetUser }}',
-data__team = '{{ team }}',
-data__businessUnit = '{{ businessUnit }}',
-data__maturityLevel = '{{ maturityLevel }}',
-data__attributes = '{{ attributes }}',
-data__apiStyle = '{{ apiStyle }}',
-data__selectedVersion = '{{ selectedVersion }}',
 data__apiRequirements = '{{ apiRequirements }}',
+data__documentation = '{{ documentation }}',
+data__selectedVersion = '{{ selectedVersion }}',
+data__displayName = '{{ displayName }}',
+data__team = '{{ team }}',
+data__maturityLevel = '{{ maturityLevel }}',
 data__fingerprint = '{{ fingerprint }}',
 data__apiFunctionalRequirements = '{{ apiFunctionalRequirements }}',
+data__attributes = '{{ attributes }}',
+data__apiStyle = '{{ apiStyle }}',
+data__businessUnit = '{{ businessUnit }}',
+data__targetUser = '{{ targetUser }}',
 data__apiTechnicalRequirements = '{{ apiTechnicalRequirements }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

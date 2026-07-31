@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>scan_configs</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>scan_configs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="scan_configs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.websecurityscanner.scan_configs" /></td></tr>
 </tbody></table>
@@ -72,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="exportToSecurityCommandCenter" /></td>
     <td><code>string</code></td>
-    <td>Controls export of scan configurations and results to Security Command Center.</td>
+    <td>Controls export of scan configurations and results to Security Command Center. (EXPORT_TO_SECURITY_COMMAND_CENTER_UNSPECIFIED, ENABLED, DISABLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="ignoreHttpStatusErrors" /></td>
@@ -97,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="riskLevel" /></td>
     <td><code>string</code></td>
-    <td>The risk level selected for the scan</td>
+    <td>The risk level selected for the scan (RISK_LEVEL_UNSPECIFIED, NORMAL, LOW)</td>
 </tr>
 <tr>
     <td><CopyableCode code="schedule" /></td>
@@ -122,7 +123,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="userAgent" /></td>
     <td><code>string</code></td>
-    <td>The user agent used during scanning.</td>
+    <td>The user agent used during scanning. (USER_AGENT_UNSPECIFIED, CHROME_LINUX, CHROME_ANDROID, SAFARI_IPHONE)</td>
 </tr>
 </tbody>
 </table>
@@ -161,7 +162,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="exportToSecurityCommandCenter" /></td>
     <td><code>string</code></td>
-    <td>Controls export of scan configurations and results to Security Command Center.</td>
+    <td>Controls export of scan configurations and results to Security Command Center. (EXPORT_TO_SECURITY_COMMAND_CENTER_UNSPECIFIED, ENABLED, DISABLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="ignoreHttpStatusErrors" /></td>
@@ -186,7 +187,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="riskLevel" /></td>
     <td><code>string</code></td>
-    <td>The risk level selected for the scan</td>
+    <td>The risk level selected for the scan (RISK_LEVEL_UNSPECIFIED, NORMAL, LOW)</td>
 </tr>
 <tr>
     <td><CopyableCode code="schedule" /></td>
@@ -211,7 +212,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="userAgent" /></td>
     <td><code>string</code></td>
-    <td>The user agent used during scanning.</td>
+    <td>The user agent used during scanning. (USER_AGENT_UNSPECIFIED, CHROME_LINUX, CHROME_ANDROID, SAFARI_IPHONE)</td>
 </tr>
 </tbody>
 </table>
@@ -401,39 +402,39 @@ Creates a new ScanConfig.
 
 ```sql
 INSERT INTO google.websecurityscanner.scan_configs (
-data__name,
-data__displayName,
-data__maxQps,
-data__startingUrls,
-data__authentication,
-data__userAgent,
-data__blacklistPatterns,
 data__schedule,
-data__exportToSecurityCommandCenter,
-data__riskLevel,
 data__managedScan,
-data__staticIpScan,
-data__ignoreHttpStatusErrors,
+data__displayName,
 data__latestRun,
+data__riskLevel,
+data__authentication,
+data__maxQps,
+data__userAgent,
 data__targetPlatforms,
+data__staticIpScan,
+data__name,
+data__ignoreHttpStatusErrors,
+data__startingUrls,
+data__blacklistPatterns,
+data__exportToSecurityCommandCenter,
 projectsId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
-{{ maxQps }},
-'{{ startingUrls }}',
-'{{ authentication }}',
-'{{ userAgent }}',
-'{{ blacklistPatterns }}',
 '{{ schedule }}',
-'{{ exportToSecurityCommandCenter }}',
-'{{ riskLevel }}',
 {{ managedScan }},
-{{ staticIpScan }},
-{{ ignoreHttpStatusErrors }},
+'{{ displayName }}',
 '{{ latestRun }}',
+'{{ riskLevel }}',
+'{{ authentication }}',
+{{ maxQps }},
+'{{ userAgent }}',
 '{{ targetPlatforms }}',
+{{ staticIpScan }},
+'{{ name }}',
+{{ ignoreHttpStatusErrors }},
+'{{ startingUrls }}',
+'{{ blacklistPatterns }}',
+'{{ exportToSecurityCommandCenter }}',
 '{{ projectsId }}'
 RETURNING
 name,
@@ -456,92 +457,109 @@ userAgent
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: scan_configs
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the scan_configs resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the ScanConfig. The name follows the format of 'projects/{projectId}/scanConfigs/{scanConfigId}'. The ScanConfig IDs are generated by the system.
-        
-    - name: displayName
-      value: string
-      description: >
-        Required. The user provided display name of the ScanConfig.
-        
-    - name: maxQps
-      value: integer
-      description: >
-        The maximum QPS during scanning. A valid value ranges from 5 to 20 inclusively. If the field is unspecified or its value is set 0, server will default to 15. Other values outside of [5, 20] range will be rejected with INVALID_ARGUMENT error.
-        
-    - name: startingUrls
-      value: array
-      description: >
-        Required. The starting URLs from which the scanner finds site pages.
-        
-    - name: authentication
-      value: object
-      description: >
-        The authentication configuration. If specified, service will use the authentication configuration during scanning.
-        
-    - name: userAgent
-      value: string
-      description: >
-        The user agent used during scanning.
-        
-      valid_values: ['USER_AGENT_UNSPECIFIED', 'CHROME_LINUX', 'CHROME_ANDROID', 'SAFARI_IPHONE']
-    - name: blacklistPatterns
-      value: array
-      description: >
-        The excluded URL patterns as described in https://cloud.google.com/security-command-center/docs/how-to-use-web-security-scanner#excluding_urls
-        
     - name: schedule
-      value: object
-      description: >
+      description: |
         The schedule of the ScanConfig.
-        
-    - name: exportToSecurityCommandCenter
-      value: string
-      description: >
-        Controls export of scan configurations and results to Security Command Center.
-        
-      valid_values: ['EXPORT_TO_SECURITY_COMMAND_CENTER_UNSPECIFIED', 'ENABLED', 'DISABLED']
-    - name: riskLevel
-      value: string
-      description: >
-        The risk level selected for the scan
-        
-      valid_values: ['RISK_LEVEL_UNSPECIFIED', 'NORMAL', 'LOW']
+      value:
+        scheduleTime: "{{ scheduleTime }}"
+        intervalDurationDays: {{ intervalDurationDays }}
     - name: managedScan
-      value: boolean
-      description: >
+      value: {{ managedScan }}
+      description: |
         Whether the scan config is managed by Web Security Scanner, output only.
-        
-    - name: staticIpScan
-      value: boolean
-      description: >
-        Whether the scan configuration has enabled static IP address scan feature. If enabled, the scanner will access applications from static IP addresses.
-        
-    - name: ignoreHttpStatusErrors
-      value: boolean
-      description: >
-        Whether to keep scanning even if most requests return HTTP error codes.
-        
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. The user provided display name of the ScanConfig.
     - name: latestRun
-      value: object
-      description: >
+      description: |
         A ScanRun is a output-only resource representing an actual run of the scan. Next id: 12
-        
+      value:
+        warningTraces:
+          - code: "{{ code }}"
+        executionState: "{{ executionState }}"
+        name: "{{ name }}"
+        endTime: "{{ endTime }}"
+        progressPercent: {{ progressPercent }}
+        urlsTestedCount: "{{ urlsTestedCount }}"
+        errorTrace:
+          code: "{{ code }}"
+          scanConfigError:
+            code: "{{ code }}"
+            fieldName: "{{ fieldName }}"
+          mostCommonHttpErrorCode: {{ mostCommonHttpErrorCode }}
+        resultState: "{{ resultState }}"
+        startTime: "{{ startTime }}"
+        urlsCrawledCount: "{{ urlsCrawledCount }}"
+        hasVulnerabilities: {{ hasVulnerabilities }}
+    - name: riskLevel
+      value: "{{ riskLevel }}"
+      description: |
+        The risk level selected for the scan
+      valid_values: ['RISK_LEVEL_UNSPECIFIED', 'NORMAL', 'LOW']
+    - name: authentication
+      description: |
+        The authentication configuration. If specified, service will use the authentication configuration during scanning.
+      value:
+        iapCredential:
+          iapTestServiceAccountInfo:
+            targetAudienceClientId: "{{ targetAudienceClientId }}"
+        customAccount:
+          username: "{{ username }}"
+          password: "{{ password }}"
+          loginUrl: "{{ loginUrl }}"
+        googleAccount:
+          username: "{{ username }}"
+          password: "{{ password }}"
+    - name: maxQps
+      value: {{ maxQps }}
+      description: |
+        The maximum QPS during scanning. A valid value ranges from 5 to 20 inclusively. If the field is unspecified or its value is set 0, server will default to 15. Other values outside of [5, 20] range will be rejected with INVALID_ARGUMENT error.
+    - name: userAgent
+      value: "{{ userAgent }}"
+      description: |
+        The user agent used during scanning.
+      valid_values: ['USER_AGENT_UNSPECIFIED', 'CHROME_LINUX', 'CHROME_ANDROID', 'SAFARI_IPHONE']
     - name: targetPlatforms
-      value: array
-      description: >
+      value:
+        - "{{ targetPlatforms }}"
+      description: |
         Set of Google Cloud platforms targeted by the scan. If empty, APP_ENGINE will be used as a default.
-        
-```
+    - name: staticIpScan
+      value: {{ staticIpScan }}
+      description: |
+        Whether the scan configuration has enabled static IP address scan feature. If enabled, the scanner will access applications from static IP addresses.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the ScanConfig. The name follows the format of 'projects/{projectId}/scanConfigs/{scanConfigId}'. The ScanConfig IDs are generated by the system.
+    - name: ignoreHttpStatusErrors
+      value: {{ ignoreHttpStatusErrors }}
+      description: |
+        Whether to keep scanning even if most requests return HTTP error codes.
+    - name: startingUrls
+      value:
+        - "{{ startingUrls }}"
+      description: |
+        Required. The starting URLs from which the scanner finds site pages.
+    - name: blacklistPatterns
+      value:
+        - "{{ blacklistPatterns }}"
+      description: |
+        The excluded URL patterns as described in https://cloud.google.com/security-command-center/docs/how-to-use-web-security-scanner#excluding_urls
+    - name: exportToSecurityCommandCenter
+      value: "{{ exportToSecurityCommandCenter }}"
+      description: |
+        Controls export of scan configurations and results to Security Command Center.
+      valid_values: ['EXPORT_TO_SECURITY_COMMAND_CENTER_UNSPECIFIED', 'ENABLED', 'DISABLED']
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -561,21 +579,21 @@ Updates a ScanConfig. This method support partial update of a ScanConfig.
 ```sql
 UPDATE google.websecurityscanner.scan_configs
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__maxQps = {{ maxQps }},
-data__startingUrls = '{{ startingUrls }}',
-data__authentication = '{{ authentication }}',
-data__userAgent = '{{ userAgent }}',
-data__blacklistPatterns = '{{ blacklistPatterns }}',
 data__schedule = '{{ schedule }}',
-data__exportToSecurityCommandCenter = '{{ exportToSecurityCommandCenter }}',
-data__riskLevel = '{{ riskLevel }}',
 data__managedScan = {{ managedScan }},
-data__staticIpScan = {{ staticIpScan }},
-data__ignoreHttpStatusErrors = {{ ignoreHttpStatusErrors }},
+data__displayName = '{{ displayName }}',
 data__latestRun = '{{ latestRun }}',
-data__targetPlatforms = '{{ targetPlatforms }}'
+data__riskLevel = '{{ riskLevel }}',
+data__authentication = '{{ authentication }}',
+data__maxQps = {{ maxQps }},
+data__userAgent = '{{ userAgent }}',
+data__targetPlatforms = '{{ targetPlatforms }}',
+data__staticIpScan = {{ staticIpScan }},
+data__name = '{{ name }}',
+data__ignoreHttpStatusErrors = {{ ignoreHttpStatusErrors }},
+data__startingUrls = '{{ startingUrls }}',
+data__blacklistPatterns = '{{ blacklistPatterns }}',
+data__exportToSecurityCommandCenter = '{{ exportToSecurityCommandCenter }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND scanConfigsId = '{{ scanConfigsId }}' --required

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>gateway_security_policies</code
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>gateway_security_policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="gateway_security_policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networksecurity.gateway_security_policies" /></td></tr>
 </tbody></table>
@@ -144,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_gateway_security_policies_list"><CopyableCode code="projects_locations_gateway_security_policies_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists GatewaySecurityPolicies in a given project and location.</td>
 </tr>
 <tr>
@@ -263,8 +264,8 @@ updateTime
 FROM google.networksecurity.gateway_security_policies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -286,17 +287,17 @@ Creates a new GatewaySecurityPolicy in a given project and location.
 
 ```sql
 INSERT INTO google.networksecurity.gateway_security_policies (
-data__description,
 data__name,
 data__tlsInspectionPolicy,
+data__description,
 projectsId,
 locationsId,
 gatewaySecurityPolicyId
 )
 SELECT 
-'{{ description }}',
 '{{ name }}',
 '{{ tlsInspectionPolicy }}',
+'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ gatewaySecurityPolicyId }}'
@@ -311,34 +312,31 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: gateway_security_policies
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the gateway_security_policies resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the gateway_security_policies resource.
-    - name: description
-      value: string
-      description: >
-        Optional. Free-text description of the resource.
-        
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Required. Name of the resource. Name is of the form projects/{project}/locations/{location}/gatewaySecurityPolicies/{gateway_security_policy} gateway_security_policy should match the pattern:(^&#91;a-z&#93;([a-z0-9-]{0,61}[a-z0-9])?$).
-        
     - name: tlsInspectionPolicy
-      value: string
-      description: >
+      value: "{{ tlsInspectionPolicy }}"
+      description: |
         Optional. Name of a TLS Inspection Policy resource that defines how TLS inspection will be performed for any rule(s) which enables it.
-        
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Free-text description of the resource.
     - name: gatewaySecurityPolicyId
-      value: string
-```
+      value: "{{ gatewaySecurityPolicyId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -358,9 +356,9 @@ Updates the parameters of a single GatewaySecurityPolicy.
 ```sql
 UPDATE google.networksecurity.gateway_security_policies
 SET 
-data__description = '{{ description }}',
 data__name = '{{ name }}',
-data__tlsInspectionPolicy = '{{ tlsInspectionPolicy }}'
+data__tlsInspectionPolicy = '{{ tlsInspectionPolicy }}',
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>fields</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>fields</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="fields" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.firestore.fields" /></td></tr>
 </tbody></table>
@@ -124,7 +125,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a>, <a href="#parameter-collectionGroupsId"><code>collectionGroupsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the field configuration and metadata for this database. Currently, FirestoreAdmin.ListFields only supports listing fields that have been explicitly overridden. To issue this query, call FirestoreAdmin.ListFields with the filter set to `indexConfig.usesAncestorConfig:false` or `ttlConfig:*`.</td>
 </tr>
 <tr>
@@ -232,8 +233,8 @@ FROM google.firestore.fields
 WHERE projectsId = '{{ projectsId }}' -- required
 AND databasesId = '{{ databasesId }}' -- required
 AND collectionGroupsId = '{{ collectionGroupsId }}' -- required
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -257,8 +258,8 @@ Updates a field configuration. Currently, field updates apply only to single fie
 UPDATE google.firestore.fields
 SET 
 data__indexConfig = '{{ indexConfig }}',
-data__ttlConfig = '{{ ttlConfig }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__ttlConfig = '{{ ttlConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND databasesId = '{{ databasesId }}' --required

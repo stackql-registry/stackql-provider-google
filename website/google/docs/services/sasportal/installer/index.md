@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>installer</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>installer</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="installer" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.sasportal.installer" /></td></tr>
 </tbody></table>
@@ -50,18 +51,18 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#installer_generate_secret"><CopyableCode code="installer_generate_secret" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td></td>
-    <td></td>
-    <td>Generates a secret to be used with the ValidateInstaller.</td>
-</tr>
-<tr>
     <td><a href="#installer_validate"><CopyableCode code="installer_validate" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
     <td></td>
     <td>Validates the identity of a Certified Professional Installer (CPI).</td>
+</tr>
+<tr>
+    <td><a href="#installer_generate_secret"><CopyableCode code="installer_generate_secret" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td></td>
+    <td></td>
+    <td>Generates a secret to be used with the ValidateInstaller.</td>
 </tr>
 </tbody>
 </table>
@@ -85,22 +86,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="installer_generate_secret"
+    defaultValue="installer_validate"
     values={[
-        { label: 'installer_generate_secret', value: 'installer_generate_secret' },
-        { label: 'installer_validate', value: 'installer_validate' }
+        { label: 'installer_validate', value: 'installer_validate' },
+        { label: 'installer_generate_secret', value: 'installer_generate_secret' }
     ]}
 >
-<TabItem value="installer_generate_secret">
-
-Generates a secret to be used with the ValidateInstaller.
-
-```sql
-EXEC google.sasportal.installer.installer_generate_secret 
-
-;
-```
-</TabItem>
 <TabItem value="installer_validate">
 
 Validates the identity of a Certified Professional Installer (CPI).
@@ -109,10 +100,20 @@ Validates the identity of a Certified Professional Installer (CPI).
 EXEC google.sasportal.installer.installer_validate 
 @@json=
 '{
-"encodedSecret": "{{ encodedSecret }}", 
 "installerId": "{{ installerId }}", 
-"secret": "{{ secret }}"
+"secret": "{{ secret }}", 
+"encodedSecret": "{{ encodedSecret }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="installer_generate_secret">
+
+Generates a secret to be used with the ValidateInstaller.
+
+```sql
+EXEC google.sasportal.installer.installer_generate_secret 
+
 ;
 ```
 </TabItem>

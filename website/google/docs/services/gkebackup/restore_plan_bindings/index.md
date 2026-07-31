@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>restore_plan_bindings</code> re
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>restore_plan_bindings</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="restore_plan_bindings" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.gkebackup.restore_plan_bindings" /></td></tr>
 </tbody></table>
@@ -98,41 +99,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Identifier. The fully qualified name of the RestorePlanBinding. `projects/*/locations/*/restoreChannels/*/restorePlanBindings/*`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="backupPlan" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The fully qualified name of the BackupPlan bound to the specified RestorePlan. `projects/*/locations/*/backukpPlans/&#123;backup_plan&#125;`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp when this binding was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="etag" /></td>
-    <td><code>string</code></td>
-    <td>Output only. `etag` is used for optimistic concurrency control as a way to help prevent simultaneous updates of a RestorePlanBinding from overwriting each other. It is strongly suggested that systems make use of the 'etag' in the read-modify-write cycle to perform RestorePlanBinding updates in order to avoid race conditions: An `etag` is returned in the response to `GetRestorePlanBinding`, and systems are expected to put that etag in the request to `UpdateRestorePlanBinding` or `DeleteRestorePlanBinding` to ensure that their change will be applied to the same version of the resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="restorePlan" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The fully qualified name of the RestorePlan bound to this RestoreChannel. `projects/*/locations/*/restorePlans/&#123;restore_plan&#125;`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="uid" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Server generated global unique identifier of [UUID4](https://en.wikipedia.org/wiki/Universally_unique_identifier)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp when this binding was created.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -164,7 +130,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-restoreChannelsId"><code>restoreChannelsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists RestorePlanBindings in a given location.</td>
 </tr>
 </tbody>
@@ -262,21 +228,15 @@ Lists RestorePlanBindings in a given location.
 
 ```sql
 SELECT
-name,
-backupPlan,
-createTime,
-etag,
-restorePlan,
-uid,
-updateTime
+*
 FROM google.gkebackup.restore_plan_bindings
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND restoreChannelsId = '{{ restoreChannelsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>

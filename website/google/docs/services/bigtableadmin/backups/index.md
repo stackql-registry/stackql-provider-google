@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>backups</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>backups</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="backups" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.bigtableadmin.backups" /></td></tr>
 </tbody></table>
@@ -57,7 +58,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="backupType" /></td>
     <td><code>string</code></td>
-    <td>Indicates the backup type of the backup.</td>
+    <td>Indicates the backup type of the backup. (BACKUP_TYPE_UNSPECIFIED, STANDARD, HOT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="encryptionInfo" /></td>
@@ -102,7 +103,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the backup.</td>
+    <td>Output only. The current state of the backup. (STATE_UNSPECIFIED, CREATING, READY)</td>
 </tr>
 </tbody>
 </table>
@@ -126,7 +127,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="backupType" /></td>
     <td><code>string</code></td>
-    <td>Indicates the backup type of the backup.</td>
+    <td>Indicates the backup type of the backup. (BACKUP_TYPE_UNSPECIFIED, STANDARD, HOT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="encryptionInfo" /></td>
@@ -171,7 +172,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the backup.</td>
+    <td>Output only. The current state of the backup. (STATE_UNSPECIFIED, CREATING, READY)</td>
 </tr>
 </tbody>
 </table>
@@ -204,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists Cloud Bigtable backups. Returns both completed and pending backups.</td>
 </tr>
 <tr>
@@ -359,10 +360,10 @@ FROM google.bigtableadmin.backups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND instancesId = '{{ instancesId }}' -- required
 AND clustersId = '{{ clustersId }}' -- required
+AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -384,22 +385,22 @@ Starts creating a new Cloud Bigtable Backup. The returned backup long-running op
 
 ```sql
 INSERT INTO google.bigtableadmin.backups (
-data__name,
-data__expireTime,
 data__sourceTable,
 data__hotToStandardTime,
 data__backupType,
+data__name,
+data__expireTime,
 projectsId,
 instancesId,
 clustersId,
 backupId
 )
 SELECT 
-'{{ name }}',
-'{{ expireTime }}',
 '{{ sourceTable }}',
 '{{ hotToStandardTime }}',
 '{{ backupType }}',
+'{{ name }}',
+'{{ expireTime }}',
 '{{ projectsId }}',
 '{{ instancesId }}',
 '{{ clustersId }}',
@@ -415,48 +416,43 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: backups
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the backups resource.
     - name: instancesId
-      value: string
+      value: "{{ instancesId }}"
       description: Required parameter for the backups resource.
     - name: clustersId
-      value: string
+      value: "{{ clustersId }}"
       description: Required parameter for the backups resource.
-    - name: name
-      value: string
-      description: >
-        A globally unique identifier for the backup which cannot be changed. Values are of the form `projects/{project}/instances/{instance}/clusters/{cluster}/ backups/_a-zA-Z0-9*` The final segment of the name must be between 1 and 50 characters in length. The backup is stored in the cluster identified by the prefix of the backup name of the form `projects/{project}/instances/{instance}/clusters/{cluster}`.
-        
-    - name: expireTime
-      value: string
-      description: >
-        Required. The expiration time of the backup. When creating a backup or updating its `expire_time`, the value must be greater than the backup creation time by: - At least 6 hours - At most 90 days Once the `expire_time` has passed, Cloud Bigtable will delete the backup.
-        
     - name: sourceTable
-      value: string
-      description: >
-        Required. Immutable. Name of the table from which this backup was created. This needs to be in the same instance as the backup. Values are of the form `projects/{project}/instances/{instance}/tables/{source_table}`.
-        
+      value: "{{ sourceTable }}"
+      description: |
+        Required. Immutable. Name of the table from which this backup was created. This needs to be in the same instance as the backup. Values are of the form \`projects/{project}/instances/{instance}/tables/{source_table}\`.
     - name: hotToStandardTime
-      value: string
-      description: >
-        The time at which the hot backup will be converted to a standard backup. Once the `hot_to_standard_time` has passed, Cloud Bigtable will convert the hot backup to a standard backup. This value must be greater than the backup creation time by: - At least 24 hours This field only applies for hot backups. When creating or updating a standard backup, attempting to set this field will fail the request.
-        
+      value: "{{ hotToStandardTime }}"
+      description: |
+        The time at which the hot backup will be converted to a standard backup. Once the \`hot_to_standard_time\` has passed, Cloud Bigtable will convert the hot backup to a standard backup. This value must be greater than the backup creation time by: - At least 24 hours This field only applies for hot backups. When creating or updating a standard backup, attempting to set this field will fail the request.
     - name: backupType
-      value: string
-      description: >
+      value: "{{ backupType }}"
+      description: |
         Indicates the backup type of the backup.
-        
       valid_values: ['BACKUP_TYPE_UNSPECIFIED', 'STANDARD', 'HOT']
+    - name: name
+      value: "{{ name }}"
+      description: |
+        A globally unique identifier for the backup which cannot be changed. Values are of the form \`projects/{project}/instances/{instance}/clusters/{cluster}/ backups/_a-zA-Z0-9*\` The final segment of the name must be between 1 and 50 characters in length. The backup is stored in the cluster identified by the prefix of the backup name of the form \`projects/{project}/instances/{instance}/clusters/{cluster}\`.
+    - name: expireTime
+      value: "{{ expireTime }}"
+      description: |
+        Required. The expiration time of the backup. When creating a backup or updating its \`expire_time\`, the value must be greater than the backup creation time by: - At least 6 hours - At most 90 days Once the \`expire_time\` has passed, Cloud Bigtable will delete the backup.
     - name: backupId
-      value: string
-```
+      value: "{{ backupId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -476,11 +472,11 @@ Updates a pending or completed Cloud Bigtable Backup.
 ```sql
 UPDATE google.bigtableadmin.backups
 SET 
-data__name = '{{ name }}',
-data__expireTime = '{{ expireTime }}',
 data__sourceTable = '{{ sourceTable }}',
 data__hotToStandardTime = '{{ hotToStandardTime }}',
-data__backupType = '{{ backupType }}'
+data__backupType = '{{ backupType }}',
+data__name = '{{ name }}',
+data__expireTime = '{{ expireTime }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instancesId = '{{ instancesId }}' --required
@@ -547,9 +543,9 @@ EXEC google.bigtableadmin.backups.copy
 @clustersId='{{ clustersId }}' --required 
 @@json=
 '{
-"backupId": "{{ backupId }}", 
 "sourceBackup": "{{ sourceBackup }}", 
-"expireTime": "{{ expireTime }}"
+"expireTime": "{{ expireTime }}", 
+"backupId": "{{ backupId }}"
 }'
 ;
 ```

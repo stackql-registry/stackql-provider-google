@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>versions</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>versions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="versions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.secretmanager.versions" /></td></tr>
 </tbody></table>
@@ -92,7 +93,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the SecretVersion.</td>
+    <td>Output only. The current state of the SecretVersion. (STATE_UNSPECIFIED, ENABLED, DISABLED, DESTROYED)</td>
 </tr>
 </tbody>
 </table>
@@ -151,7 +152,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the SecretVersion.</td>
+    <td>Output only. The current state of the SecretVersion. (STATE_UNSPECIFIED, ENABLED, DISABLED, DESTROYED)</td>
 </tr>
 </tbody>
 </table>
@@ -195,13 +196,6 @@ The following methods are available for this resource:
     <td>Destroys a SecretVersion. Sets the state of the SecretVersion to DESTROYED and irrevocably destroys the secret data.</td>
 </tr>
 <tr>
-    <td><a href="#access"><CopyableCode code="access" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-secretsId"><code>secretsId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
-    <td></td>
-    <td>Accesses a SecretVersion. This call returns the secret data. `projects/*/secrets/*/versions/latest` is an alias to the most recently created SecretVersion.</td>
-</tr>
-<tr>
     <td><a href="#disable"><CopyableCode code="disable" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-secretsId"><code>secretsId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
@@ -214,6 +208,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-secretsId"><code>secretsId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
     <td></td>
     <td>Enables a SecretVersion. Sets the state of the SecretVersion to ENABLED.</td>
+</tr>
+<tr>
+    <td><a href="#access"><CopyableCode code="access" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-secretsId"><code>secretsId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
+    <td></td>
+    <td>Accesses a SecretVersion. This call returns the secret data. `projects/*/secrets/*/versions/latest` is an alias to the most recently created SecretVersion.</td>
 </tr>
 </tbody>
 </table>
@@ -348,25 +349,13 @@ AND versionsId = '{{ versionsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="access"
+    defaultValue="disable"
     values={[
-        { label: 'access', value: 'access' },
         { label: 'disable', value: 'disable' },
-        { label: 'enable', value: 'enable' }
+        { label: 'enable', value: 'enable' },
+        { label: 'access', value: 'access' }
     ]}
 >
-<TabItem value="access">
-
-Accesses a SecretVersion. This call returns the secret data. `projects/*/secrets/*/versions/latest` is an alias to the most recently created SecretVersion.
-
-```sql
-EXEC google.secretmanager.versions.access 
-@projectsId='{{ projectsId }}' --required, 
-@secretsId='{{ secretsId }}' --required, 
-@versionsId='{{ versionsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="disable">
 
 Disables a SecretVersion. Sets the state of the SecretVersion to DISABLED.
@@ -396,6 +385,18 @@ EXEC google.secretmanager.versions.enable
 '{
 "etag": "{{ etag }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="access">
+
+Accesses a SecretVersion. This call returns the secret data. `projects/*/secrets/*/versions/latest` is an alias to the most recently created SecretVersion.
+
+```sql
+EXEC google.secretmanager.versions.access 
+@projectsId='{{ projectsId }}' --required, 
+@secretsId='{{ secretsId }}' --required, 
+@versionsId='{{ versionsId }}' --required
 ;
 ```
 </TabItem>

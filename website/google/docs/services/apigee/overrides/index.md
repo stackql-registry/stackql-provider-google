@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>overrides</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>overrides</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="overrides" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.overrides" /></td></tr>
 </tbody></table>
@@ -258,15 +259,15 @@ Creates a trace configuration override. The response contains a system-generated
 ```sql
 INSERT INTO google.apigee.overrides (
 data__name,
-data__samplingConfig,
 data__apiProxy,
+data__samplingConfig,
 organizationsId,
 environmentsId
 )
 SELECT 
 '{{ name }}',
-'{{ samplingConfig }}',
 '{{ apiProxy }}',
+'{{ samplingConfig }}',
 '{{ organizationsId }}',
 '{{ environmentsId }}'
 RETURNING
@@ -278,32 +279,31 @@ samplingConfig
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: overrides
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the overrides resource.
     - name: environmentsId
-      value: string
+      value: "{{ environmentsId }}"
       description: Required parameter for the overrides resource.
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         ID of the trace configuration override specified as a system-generated UUID.
-        
-    - name: samplingConfig
-      value: object
-      description: >
-        Trace configuration to override.
-        
     - name: apiProxy
-      value: string
-      description: >
+      value: "{{ apiProxy }}"
+      description: |
         ID of the API proxy that will have its trace configuration overridden.
-        
-```
+    - name: samplingConfig
+      description: |
+        Trace configuration to override.
+      value:
+        samplingRate: {{ samplingRate }}
+        sampler: "{{ sampler }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -324,8 +324,8 @@ Updates a distributed trace configuration override. Note that the repeated field
 UPDATE google.apigee.overrides
 SET 
 data__name = '{{ name }}',
-data__samplingConfig = '{{ samplingConfig }}',
-data__apiProxy = '{{ apiProxy }}'
+data__apiProxy = '{{ apiProxy }}',
+data__samplingConfig = '{{ samplingConfig }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND environmentsId = '{{ environmentsId }}' --required

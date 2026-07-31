@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>provisioning_quotas</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>provisioning_quotas</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="provisioning_quotas" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.baremetalsolution.provisioning_quotas" /></td></tr>
 </tbody></table>
@@ -56,7 +57,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="assetType" /></td>
     <td><code>string</code></td>
-    <td>The asset type of this provisioning quota.</td>
+    <td>The asset type of this provisioning quota. (ASSET_TYPE_UNSPECIFIED, ASSET_TYPE_SERVER, ASSET_TYPE_STORAGE, ASSET_TYPE_NETWORK)</td>
 </tr>
 <tr>
     <td><CopyableCode code="availableCount" /></td>

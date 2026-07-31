@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>completion_config</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>completion_config</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="completion_config" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.discoveryengine.completion_config" /></td></tr>
 </tbody></table>
@@ -50,9 +51,9 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_locations_collections_engines_completion_config_complete_query"><CopyableCode code="projects_locations_collections_engines_completion_config_complete_query" /></a></td>
+    <td><a href="#projects_locations_data_stores_completion_config_complete_query"><CopyableCode code="projects_locations_data_stores_completion_config_complete_query" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-enginesId"><code>enginesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
     <td></td>
     <td>Completes the user input with advanced keyword suggestions.</td>
 </tr>
@@ -64,9 +65,9 @@ The following methods are available for this resource:
     <td>Completes the user input with advanced keyword suggestions.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_data_stores_completion_config_complete_query"><CopyableCode code="projects_locations_data_stores_completion_config_complete_query" /></a></td>
+    <td><a href="#projects_locations_collections_engines_completion_config_complete_query"><CopyableCode code="projects_locations_collections_engines_completion_config_complete_query" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-enginesId"><code>enginesId</code></a></td>
     <td></td>
     <td>Completes the user input with advanced keyword suggestions.</td>
 </tr>
@@ -117,33 +118,32 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_collections_engines_completion_config_complete_query"
+    defaultValue="projects_locations_data_stores_completion_config_complete_query"
     values={[
-        { label: 'projects_locations_collections_engines_completion_config_complete_query', value: 'projects_locations_collections_engines_completion_config_complete_query' },
+        { label: 'projects_locations_data_stores_completion_config_complete_query', value: 'projects_locations_data_stores_completion_config_complete_query' },
         { label: 'projects_locations_collections_data_stores_completion_config_complete_query', value: 'projects_locations_collections_data_stores_completion_config_complete_query' },
-        { label: 'projects_locations_data_stores_completion_config_complete_query', value: 'projects_locations_data_stores_completion_config_complete_query' }
+        { label: 'projects_locations_collections_engines_completion_config_complete_query', value: 'projects_locations_collections_engines_completion_config_complete_query' }
     ]}
 >
-<TabItem value="projects_locations_collections_engines_completion_config_complete_query">
+<TabItem value="projects_locations_data_stores_completion_config_complete_query">
 
 Completes the user input with advanced keyword suggestions.
 
 ```sql
-EXEC google.discoveryengine.completion_config.projects_locations_collections_engines_completion_config_complete_query 
+EXEC google.discoveryengine.completion_config.projects_locations_data_stores_completion_config_complete_query 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@collectionsId='{{ collectionsId }}' --required, 
-@enginesId='{{ enginesId }}' --required 
+@dataStoresId='{{ dataStoresId }}' --required 
 @@json=
 '{
+"query": "{{ query }}", 
 "queryModel": "{{ queryModel }}", 
-"userInfo": "{{ userInfo }}", 
-"suggestionTypes": "{{ suggestionTypes }}", 
 "boostSpec": "{{ boostSpec }}", 
 "includeTailSuggestions": {{ includeTailSuggestions }}, 
-"userPseudoId": "{{ userPseudoId }}", 
-"query": "{{ query }}", 
 "suggestionTypeSpecs": "{{ suggestionTypeSpecs }}", 
+"suggestionTypes": "{{ suggestionTypes }}", 
+"userPseudoId": "{{ userPseudoId }}", 
+"userInfo": "{{ userInfo }}", 
 "experimentIds": "{{ experimentIds }}"
 }'
 ;
@@ -161,38 +161,39 @@ EXEC google.discoveryengine.completion_config.projects_locations_collections_dat
 @dataStoresId='{{ dataStoresId }}' --required 
 @@json=
 '{
+"query": "{{ query }}", 
 "queryModel": "{{ queryModel }}", 
-"userInfo": "{{ userInfo }}", 
-"suggestionTypes": "{{ suggestionTypes }}", 
 "boostSpec": "{{ boostSpec }}", 
 "includeTailSuggestions": {{ includeTailSuggestions }}, 
-"userPseudoId": "{{ userPseudoId }}", 
-"query": "{{ query }}", 
 "suggestionTypeSpecs": "{{ suggestionTypeSpecs }}", 
+"suggestionTypes": "{{ suggestionTypes }}", 
+"userPseudoId": "{{ userPseudoId }}", 
+"userInfo": "{{ userInfo }}", 
 "experimentIds": "{{ experimentIds }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_data_stores_completion_config_complete_query">
+<TabItem value="projects_locations_collections_engines_completion_config_complete_query">
 
 Completes the user input with advanced keyword suggestions.
 
 ```sql
-EXEC google.discoveryengine.completion_config.projects_locations_data_stores_completion_config_complete_query 
+EXEC google.discoveryengine.completion_config.projects_locations_collections_engines_completion_config_complete_query 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@dataStoresId='{{ dataStoresId }}' --required 
+@collectionsId='{{ collectionsId }}' --required, 
+@enginesId='{{ enginesId }}' --required 
 @@json=
 '{
+"query": "{{ query }}", 
 "queryModel": "{{ queryModel }}", 
-"userInfo": "{{ userInfo }}", 
-"suggestionTypes": "{{ suggestionTypes }}", 
 "boostSpec": "{{ boostSpec }}", 
 "includeTailSuggestions": {{ includeTailSuggestions }}, 
-"userPseudoId": "{{ userPseudoId }}", 
-"query": "{{ query }}", 
 "suggestionTypeSpecs": "{{ suggestionTypeSpecs }}", 
+"suggestionTypes": "{{ suggestionTypes }}", 
+"userPseudoId": "{{ userPseudoId }}", 
+"userInfo": "{{ userInfo }}", 
 "experimentIds": "{{ experimentIds }}"
 }'
 ;

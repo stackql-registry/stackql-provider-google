@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>listings_subscriptions</code> r
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>listings_subscriptions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="listings_subscriptions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.analyticshub.listings_subscriptions" /></td></tr>
 </tbody></table>
@@ -111,12 +112,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="resourceType" /></td>
     <td><code>string</code></td>
-    <td>Output only. Listing shared asset type.</td>
+    <td>Output only. Listing shared asset type. (SHARED_RESOURCE_TYPE_UNSPECIFIED, BIGQUERY_DATASET, PUBSUB_TOPIC)</td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the subscription.</td>
+    <td>Output only. Current state of the subscription. (STATE_UNSPECIFIED, STATE_ACTIVE, STATE_STALE, STATE_INACTIVE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="subscriberContact" /></td>
@@ -147,7 +148,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_data_exchanges_listings_list_subscriptions"><CopyableCode code="projects_locations_data_exchanges_listings_list_subscriptions" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataExchangesId"><code>dataExchangesId</code></a>, <a href="#parameter-listingsId"><code>listingsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-includeDeletedSubscriptions"><code>includeDeletedSubscriptions</code></a></td>
+    <td><a href="#parameter-includeDeletedSubscriptions"><code>includeDeletedSubscriptions</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all subscriptions on a given Data Exchange or Listing.</td>
 </tr>
 </tbody>
@@ -238,9 +239,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND dataExchangesId = '{{ dataExchangesId }}' -- required
 AND listingsId = '{{ listingsId }}' -- required
+AND includeDeletedSubscriptions = '{{ includeDeletedSubscriptions }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND includeDeletedSubscriptions = '{{ includeDeletedSubscriptions }}'
 ;
 ```
 </TabItem>

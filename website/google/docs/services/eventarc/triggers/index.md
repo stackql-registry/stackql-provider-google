@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>triggers</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>triggers</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="triggers" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.eventarc.triggers" /></td></tr>
 </tbody></table>
@@ -244,7 +245,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List triggers.</td>
 </tr>
 <tr>
@@ -265,7 +266,7 @@ The following methods are available for this resource:
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-triggersId"><code>triggersId</code></a></td>
-    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
     <td>Delete a single trigger.</td>
 </tr>
 </tbody>
@@ -409,9 +410,9 @@ FROM google.eventarc.triggers
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -433,30 +434,30 @@ Create a new trigger in a particular project and location.
 
 ```sql
 INSERT INTO google.eventarc.triggers (
-data__name,
-data__eventFilters,
-data__serviceAccount,
-data__destination,
-data__transport,
-data__labels,
-data__channel,
 data__eventDataContentType,
+data__eventFilters,
+data__destination,
 data__retryPolicy,
+data__serviceAccount,
+data__name,
+data__labels,
+data__transport,
+data__channel,
 projectsId,
 locationsId,
 triggerId,
 validateOnly
 )
 SELECT 
-'{{ name }}',
-'{{ eventFilters }}',
-'{{ serviceAccount }}',
-'{{ destination }}',
-'{{ transport }}',
-'{{ labels }}',
-'{{ channel }}',
 '{{ eventDataContentType }}',
+'{{ eventFilters }}',
+'{{ destination }}',
 '{{ retryPolicy }}',
+'{{ serviceAccount }}',
+'{{ name }}',
+'{{ labels }}',
+'{{ transport }}',
+'{{ channel }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ triggerId }}',
@@ -472,66 +473,80 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: triggers
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the triggers resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the triggers resource.
-    - name: name
-      value: string
-      description: >
-        Required. The resource name of the trigger. Must be unique within the location of the project and must be in `projects/{project}/locations/{location}/triggers/{trigger}` format.
-        
-    - name: eventFilters
-      value: array
-      description: >
-        Required. Unordered list. The list of filters that applies to event attributes. Only events that match all the provided filters are sent to the destination.
-        
-    - name: serviceAccount
-      value: string
-      description: >
-        Optional. The IAM service account email associated with the trigger. The service account represents the identity of the trigger. The `iam.serviceAccounts.actAs` permission must be granted on the service account to allow a principal to impersonate the service account. For more information, see the [Roles and permissions](https://cloud.google.com/eventarc/docs/all-roles-permissions) page specific to the trigger destination.
-        
-    - name: destination
-      value: object
-      description: >
-        Required. Destination specifies where the events should be sent to.
-        
-    - name: transport
-      value: object
-      description: >
-        Optional. To deliver messages, Eventarc might use other Google Cloud products as a transport intermediary. This field contains a reference to that transport intermediary. This information can be used for debugging purposes.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. User labels attached to the triggers that can be used to group resources.
-        
-    - name: channel
-      value: string
-      description: >
-        Optional. The name of the channel associated with the trigger in `projects/{project}/locations/{location}/channels/{channel}` format. You must provide a channel to receive events from Eventarc SaaS partners.
-        
     - name: eventDataContentType
-      value: string
-      description: >
-        Optional. EventDataContentType specifies the type of payload in MIME format that is expected from the CloudEvent data field. This is set to `application/json` if the value is not defined.
-        
+      value: "{{ eventDataContentType }}"
+      description: |
+        Optional. EventDataContentType specifies the type of payload in MIME format that is expected from the CloudEvent data field. This is set to \`application/json\` if the value is not defined.
+    - name: eventFilters
+      description: |
+        Required. Unordered list. The list of filters that applies to event attributes. Only events that match all the provided filters are sent to the destination.
+      value:
+        - attribute: "{{ attribute }}"
+          value: "{{ value }}"
+          operator: "{{ operator }}"
+    - name: destination
+      description: |
+        Required. Destination specifies where the events should be sent to.
+      value:
+        cloudFunction: "{{ cloudFunction }}"
+        gke:
+          path: "{{ path }}"
+          service: "{{ service }}"
+          cluster: "{{ cluster }}"
+          location: "{{ location }}"
+          namespace: "{{ namespace }}"
+        networkConfig:
+          networkAttachment: "{{ networkAttachment }}"
+        httpEndpoint:
+          uri: "{{ uri }}"
+        workflow: "{{ workflow }}"
+        cloudRun:
+          service: "{{ service }}"
+          path: "{{ path }}"
+          region: "{{ region }}"
     - name: retryPolicy
-      value: object
-      description: >
+      description: |
         Optional. The retry policy to use in the Trigger. If unset, event delivery will be retried for up to 24 hours by default: https://cloud.google.com/eventarc/docs/retry-events
-        
+      value:
+        maxAttempts: {{ maxAttempts }}
+    - name: serviceAccount
+      value: "{{ serviceAccount }}"
+      description: |
+        Optional. The IAM service account email associated with the trigger. The service account represents the identity of the trigger. The \`iam.serviceAccounts.actAs\` permission must be granted on the service account to allow a principal to impersonate the service account. For more information, see the [Roles and permissions](https://cloud.google.com/eventarc/docs/all-roles-permissions) page specific to the trigger destination.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. The resource name of the trigger. Must be unique within the location of the project and must be in \`projects/{project}/locations/{location}/triggers/{trigger}\` format.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. User labels attached to the triggers that can be used to group resources.
+    - name: transport
+      description: |
+        Optional. To deliver messages, Eventarc might use other Google Cloud products as a transport intermediary. This field contains a reference to that transport intermediary. This information can be used for debugging purposes.
+      value:
+        pubsub:
+          subscription: "{{ subscription }}"
+          topic: "{{ topic }}"
+    - name: channel
+      value: "{{ channel }}"
+      description: |
+        Optional. The name of the channel associated with the trigger in \`projects/{project}/locations/{location}/channels/{channel}\` format. You must provide a channel to receive events from Eventarc SaaS partners.
     - name: triggerId
-      value: string
+      value: "{{ triggerId }}"
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -551,15 +566,15 @@ Update a single trigger.
 ```sql
 UPDATE google.eventarc.triggers
 SET 
-data__name = '{{ name }}',
-data__eventFilters = '{{ eventFilters }}',
-data__serviceAccount = '{{ serviceAccount }}',
-data__destination = '{{ destination }}',
-data__transport = '{{ transport }}',
-data__labels = '{{ labels }}',
-data__channel = '{{ channel }}',
 data__eventDataContentType = '{{ eventDataContentType }}',
-data__retryPolicy = '{{ retryPolicy }}'
+data__eventFilters = '{{ eventFilters }}',
+data__destination = '{{ destination }}',
+data__retryPolicy = '{{ retryPolicy }}',
+data__serviceAccount = '{{ serviceAccount }}',
+data__name = '{{ name }}',
+data__labels = '{{ labels }}',
+data__transport = '{{ transport }}',
+data__channel = '{{ channel }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -595,9 +610,9 @@ DELETE FROM google.eventarc.triggers
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND triggersId = '{{ triggersId }}' --required
-AND etag = '{{ etag }}'
-AND allowMissing = '{{ allowMissing }}'
 AND validateOnly = '{{ validateOnly }}'
+AND allowMissing = '{{ allowMissing }}'
+AND etag = '{{ etag }}'
 ;
 ```
 </TabItem>

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>org_policy_violations_previews
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>org_policy_violations_previews</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="org_policy_violations_previews" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.policysimulator.org_policy_violations_previews" /></td></tr>
 </tbody></table>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the `OrgPolicyViolationsPreview`.</td>
+    <td>Output only. The state of the `OrgPolicyViolationsPreview`. (PREVIEW_STATE_UNSPECIFIED, PREVIEW_PENDING, PREVIEW_RUNNING, PREVIEW_SUCCEEDED, PREVIEW_FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="violationsCount" /></td>
@@ -126,7 +127,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the `OrgPolicyViolationsPreview`.</td>
+    <td>Output only. The state of the `OrgPolicyViolationsPreview`. (PREVIEW_STATE_UNSPECIFIED, PREVIEW_PENDING, PREVIEW_RUNNING, PREVIEW_SUCCEEDED, PREVIEW_FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="violationsCount" /></td>
@@ -164,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_locations_org_policy_violations_previews_list"><CopyableCode code="organizations_locations_org_policy_violations_previews_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>ListOrgPolicyViolationsPreviews lists each OrgPolicyViolationsPreview in an organization. Each OrgPolicyViolationsPreview is available for at least 7 days.</td>
 </tr>
 <tr>
@@ -268,8 +269,8 @@ violationsCount
 FROM google.policysimulator.org_policy_violations_previews
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -312,23 +313,84 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: org_policy_violations_previews
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the org_policy_violations_previews resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the org_policy_violations_previews resource.
     - name: overlay
-      value: object
-      description: >
+      description: |
         Required. The proposed changes we are previewing violations for.
-        
+      value:
+        policies:
+          - policyParent: "{{ policyParent }}"
+            policy:
+              dryRunSpec:
+                updateTime: "{{ updateTime }}"
+                inheritFromParent: {{ inheritFromParent }}
+                reset: {{ reset }}
+                rules:
+                  - parameters: "{{ parameters }}"
+                    values:
+                      allowedValues: "{{ allowedValues }}"
+                      deniedValues: "{{ deniedValues }}"
+                    denyAll: {{ denyAll }}
+                    enforce: {{ enforce }}
+                    allowAll: {{ allowAll }}
+                    condition:
+                      location: "{{ location }}"
+                      description: "{{ description }}"
+                      expression: "{{ expression }}"
+                      title: "{{ title }}"
+                etag: "{{ etag }}"
+              alternate:
+                launch: "{{ launch }}"
+                spec:
+                  updateTime: "{{ updateTime }}"
+                  inheritFromParent: {{ inheritFromParent }}
+                  reset: {{ reset }}
+                  rules: "{{ rules }}"
+                  etag: "{{ etag }}"
+              name: "{{ name }}"
+              spec:
+                updateTime: "{{ updateTime }}"
+                inheritFromParent: {{ inheritFromParent }}
+                reset: {{ reset }}
+                rules:
+                  - parameters: "{{ parameters }}"
+                    values:
+                      allowedValues: "{{ allowedValues }}"
+                      deniedValues: "{{ deniedValues }}"
+                    denyAll: {{ denyAll }}
+                    enforce: {{ enforce }}
+                    allowAll: {{ allowAll }}
+                    condition:
+                      location: "{{ location }}"
+                      description: "{{ description }}"
+                      expression: "{{ expression }}"
+                      title: "{{ title }}"
+                etag: "{{ etag }}"
+              etag: "{{ etag }}"
+        customConstraints:
+          - customConstraintParent: "{{ customConstraintParent }}"
+            customConstraint:
+              resourceTypes:
+                - "{{ resourceTypes }}"
+              actionType: "{{ actionType }}"
+              methodTypes:
+                - "{{ methodTypes }}"
+              displayName: "{{ displayName }}"
+              updateTime: "{{ updateTime }}"
+              condition: "{{ condition }}"
+              description: "{{ description }}"
+              name: "{{ name }}"
     - name: orgPolicyViolationsPreviewId
-      value: string
-```
+      value: "{{ orgPolicyViolationsPreviewId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>google_analytics</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>google_analytics</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="google_analytics" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.firebase.google_analytics" /></td></tr>
 </tbody></table>
@@ -95,13 +96,13 @@ Links the specified FirebaseProject with an existing [Google Analytics account](
 
 ```sql
 INSERT INTO firebase.firebase.google_analytics (
-data__analyticsAccountId,
 data__analyticsPropertyId,
+data__analyticsAccountId,
 projectsId
 )
 SELECT 
-'{{ analyticsAccountId }}',
 '{{ analyticsPropertyId }}',
+'{{ analyticsAccountId }}',
 '{{ projectsId }}'
 RETURNING
 name,
@@ -114,23 +115,21 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: google_analytics
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the google_analytics resource.
-    - name: analyticsAccountId
-      value: string
-      description: >
-        The ID for the existing [Google Analytics account](http://www.google.com/analytics/) that you want to link with the `FirebaseProject`. Specifying this field will provision a new Google Analytics property in your Google Analytics account and associate the new property with the `FirebaseProject`.
-        
     - name: analyticsPropertyId
-      value: string
-      description: >
-        The ID for the existing Google Analytics property that you want to associate with the `FirebaseProject`.
-        
-```
+      value: "{{ analyticsPropertyId }}"
+      description: |
+        The ID for the existing Google Analytics property that you want to associate with the \`FirebaseProject\`.
+    - name: analyticsAccountId
+      value: "{{ analyticsAccountId }}"
+      description: |
+        The ID for the existing [Google Analytics account](http://www.google.com/analytics/) that you want to link with the \`FirebaseProject\`. Specifying this field will provision a new Google Analytics property in your Google Analytics account and associate the new property with the \`FirebaseProject\`.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

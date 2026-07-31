@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>asset_history</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>asset_history</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="asset_history" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudasset.asset_history" /></td></tr>
 </tbody></table>
@@ -77,7 +78,7 @@ The following methods are available for this resource:
     <td><a href="#batch_get_assets_history"><CopyableCode code="batch_get_assets_history" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-parentType"><code>parentType</code></a>, <a href="#parameter-parent"><code>parent</code></a></td>
-    <td><a href="#parameter-assetNames"><code>assetNames</code></a>, <a href="#parameter-relationshipTypes"><code>relationshipTypes</code></a>, <a href="#parameter-readTimeWindow.endTime"><code>readTimeWindow.endTime</code></a>, <a href="#parameter-contentType"><code>contentType</code></a>, <a href="#parameter-readTimeWindow.startTime"><code>readTimeWindow.startTime</code></a></td>
+    <td><a href="#parameter-assetNames"><code>assetNames</code></a>, <a href="#parameter-relationshipTypes"><code>relationshipTypes</code></a>, <a href="#parameter-contentType"><code>contentType</code></a>, <a href="#parameter-readTimeWindow.endTime"><code>readTimeWindow.endTime</code></a>, <a href="#parameter-readTimeWindow.startTime"><code>readTimeWindow.startTime</code></a></td>
     <td>Batch gets the update history of assets that overlap a time window. For IAM_POLICY content, this API outputs history when the asset and its attached IAM POLICY both exist. This can create gaps in the output history. Otherwise, this API outputs history with asset in both non-delete or deleted status. If a specified asset does not exist, this API returns an INVALID_ARGUMENT error.</td>
 </tr>
 </tbody>
@@ -154,8 +155,8 @@ WHERE parentType = '{{ parentType }}' -- required
 AND parent = '{{ parent }}' -- required
 AND assetNames = '{{ assetNames }}'
 AND relationshipTypes = '{{ relationshipTypes }}'
-AND readTimeWindow.endTime = '{{ readTimeWindow.endTime }}'
 AND contentType = '{{ contentType }}'
+AND readTimeWindow.endTime = '{{ readTimeWindow.endTime }}'
 AND readTimeWindow.startTime = '{{ readTimeWindow.startTime }}'
 ;
 ```

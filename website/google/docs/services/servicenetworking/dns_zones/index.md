@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>dns_zones</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>dns_zones</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="dns_zones" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.servicenetworking.dns_zones" /></td></tr>
 </tbody></table>
@@ -222,15 +223,15 @@ Service producers can use this method to add private DNS zones in the shared pro
 
 ```sql
 INSERT INTO google.servicenetworking.dns_zones (
-data__consumerNetwork,
 data__name,
 data__dnsSuffix,
+data__consumerNetwork,
 servicesId
 )
 SELECT 
-'{{ consumerNetwork }}',
 '{{ name }}',
 '{{ dnsSuffix }}',
+'{{ consumerNetwork }}',
 '{{ servicesId }}'
 RETURNING
 name,
@@ -243,29 +244,26 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: dns_zones
   props:
     - name: servicesId
-      value: string
+      value: "{{ servicesId }}"
       description: Required parameter for the dns_zones resource.
-    - name: consumerNetwork
-      value: string
-      description: >
-        Required. The network that the consumer is using to connect with services. Must be in the form of projects/{project}/global/networks/{network} {project} is the project number, as in '12345' {network} is the network name.
-        
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Required. The name for both the private zone in the shared producer host project and the peering zone in the consumer project. Must be unique within both projects. The name must be 1-63 characters long, must begin with a letter, end with a letter or digit, and only contain lowercase letters, digits or dashes.
-        
     - name: dnsSuffix
-      value: string
-      description: >
-        Required. The DNS name suffix for the zones e.g. `example.com.`. Cloud DNS requires that a DNS suffix ends with a trailing dot.
-        
-```
+      value: "{{ dnsSuffix }}"
+      description: |
+        Required. The DNS name suffix for the zones e.g. \`example.com.\`. Cloud DNS requires that a DNS suffix ends with a trailing dot.
+    - name: consumerNetwork
+      value: "{{ consumerNetwork }}"
+      description: |
+        Required. The network that the consumer is using to connect with services. Must be in the form of projects/{project}/global/networks/{network} {project} is the project number, as in '12345' {network} is the network name.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

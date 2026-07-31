@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>clusters</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>clusters</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="clusters" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.bigtableadmin.clusters" /></td></tr>
 </tbody></table>
@@ -62,7 +63,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="defaultStorageType" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The type of storage used by this cluster to serve its parent instance's tables, unless explicitly overridden.</td>
+    <td>Immutable. The type of storage used by this cluster to serve its parent instance's tables, unless explicitly overridden. (STORAGE_TYPE_UNSPECIFIED, SSD, HDD)</td>
 </tr>
 <tr>
     <td><CopyableCode code="encryptionConfig" /></td>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="nodeScalingFactor" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The node scaling factor of this cluster.</td>
+    <td>Immutable. The node scaling factor of this cluster. (NODE_SCALING_FACTOR_UNSPECIFIED, NODE_SCALING_FACTOR_1X, NODE_SCALING_FACTOR_2X)</td>
 </tr>
 <tr>
     <td><CopyableCode code="serveNodes" /></td>
@@ -87,7 +88,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the cluster.</td>
+    <td>Output only. The current state of the cluster. (STATE_NOT_KNOWN, READY, CREATING, RESIZING, DISABLED)</td>
 </tr>
 </tbody>
 </table>
@@ -116,7 +117,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="defaultStorageType" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The type of storage used by this cluster to serve its parent instance's tables, unless explicitly overridden.</td>
+    <td>Immutable. The type of storage used by this cluster to serve its parent instance's tables, unless explicitly overridden. (STORAGE_TYPE_UNSPECIFIED, SSD, HDD)</td>
 </tr>
 <tr>
     <td><CopyableCode code="encryptionConfig" /></td>
@@ -131,7 +132,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="nodeScalingFactor" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The node scaling factor of this cluster.</td>
+    <td>Immutable. The node scaling factor of this cluster. (NODE_SCALING_FACTOR_UNSPECIFIED, NODE_SCALING_FACTOR_1X, NODE_SCALING_FACTOR_2X)</td>
 </tr>
 <tr>
     <td><CopyableCode code="serveNodes" /></td>
@@ -141,7 +142,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the cluster.</td>
+    <td>Output only. The current state of the cluster. (STATE_NOT_KNOWN, READY, CREATING, RESIZING, DISABLED)</td>
 </tr>
 </tbody>
 </table>
@@ -323,25 +324,25 @@ Creates a cluster within an instance. Note that exactly one of Cluster.serve_nod
 
 ```sql
 INSERT INTO google.bigtableadmin.clusters (
-data__clusterConfig,
-data__location,
-data__serveNodes,
-data__name,
-data__nodeScalingFactor,
-data__encryptionConfig,
 data__defaultStorageType,
+data__name,
+data__serveNodes,
+data__nodeScalingFactor,
+data__clusterConfig,
+data__encryptionConfig,
+data__location,
 projectsId,
 instancesId,
 clusterId
 )
 SELECT 
-'{{ clusterConfig }}',
-'{{ location }}',
-{{ serveNodes }},
-'{{ name }}',
-'{{ nodeScalingFactor }}',
-'{{ encryptionConfig }}',
 '{{ defaultStorageType }}',
+'{{ name }}',
+{{ serveNodes }},
+'{{ nodeScalingFactor }}',
+'{{ clusterConfig }}',
+'{{ encryptionConfig }}',
+'{{ location }}',
 '{{ projectsId }}',
 '{{ instancesId }}',
 '{{ clusterId }}'
@@ -356,56 +357,57 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: clusters
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the clusters resource.
     - name: instancesId
-      value: string
+      value: "{{ instancesId }}"
       description: Required parameter for the clusters resource.
-    - name: clusterConfig
-      value: object
-      description: >
-        Configuration for this cluster.
-        
-    - name: location
-      value: string
-      description: >
-        Immutable. The location where this cluster's nodes and storage reside. For best performance, clients should be located as close as possible to this cluster. Currently only zones are supported, so values should be of the form `projects/{project}/locations/{zone}`.
-        
-    - name: serveNodes
-      value: integer
-      description: >
-        The number of nodes in the cluster. If no value is set, Cloud Bigtable automatically allocates nodes based on your data footprint and optimized for 50% storage utilization.
-        
-    - name: name
-      value: string
-      description: >
-        The unique name of the cluster. Values are of the form `projects/{project}/instances/{instance}/clusters/a-z*`.
-        
-    - name: nodeScalingFactor
-      value: string
-      description: >
-        Immutable. The node scaling factor of this cluster.
-        
-      valid_values: ['NODE_SCALING_FACTOR_UNSPECIFIED', 'NODE_SCALING_FACTOR_1X', 'NODE_SCALING_FACTOR_2X']
-    - name: encryptionConfig
-      value: object
-      description: >
-        Immutable. The encryption configuration for CMEK-protected clusters.
-        
     - name: defaultStorageType
-      value: string
-      description: >
+      value: "{{ defaultStorageType }}"
+      description: |
         Immutable. The type of storage used by this cluster to serve its parent instance's tables, unless explicitly overridden.
-        
       valid_values: ['STORAGE_TYPE_UNSPECIFIED', 'SSD', 'HDD']
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The unique name of the cluster. Values are of the form \`projects/{project}/instances/{instance}/clusters/a-z*\`.
+    - name: serveNodes
+      value: {{ serveNodes }}
+      description: |
+        The number of nodes in the cluster. If no value is set, Cloud Bigtable automatically allocates nodes based on your data footprint and optimized for 50% storage utilization.
+    - name: nodeScalingFactor
+      value: "{{ nodeScalingFactor }}"
+      description: |
+        Immutable. The node scaling factor of this cluster.
+      valid_values: ['NODE_SCALING_FACTOR_UNSPECIFIED', 'NODE_SCALING_FACTOR_1X', 'NODE_SCALING_FACTOR_2X']
+    - name: clusterConfig
+      description: |
+        Configuration for this cluster.
+      value:
+        clusterAutoscalingConfig:
+          autoscalingLimits:
+            minServeNodes: {{ minServeNodes }}
+            maxServeNodes: {{ maxServeNodes }}
+          autoscalingTargets:
+            cpuUtilizationPercent: {{ cpuUtilizationPercent }}
+            storageUtilizationGibPerNode: {{ storageUtilizationGibPerNode }}
+    - name: encryptionConfig
+      description: |
+        Immutable. The encryption configuration for CMEK-protected clusters.
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
+    - name: location
+      value: "{{ location }}"
+      description: |
+        Immutable. The location where this cluster's nodes and storage reside. For best performance, clients should be located as close as possible to this cluster. Currently only zones are supported, so values should be of the form \`projects/{project}/locations/{zone}\`.
     - name: clusterId
-      value: string
-```
+      value: "{{ clusterId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -425,13 +427,13 @@ Updates a cluster within an instance. Note that UpdateCluster does not support u
 ```sql
 REPLACE google.bigtableadmin.clusters
 SET 
-data__clusterConfig = '{{ clusterConfig }}',
-data__location = '{{ location }}',
-data__serveNodes = {{ serveNodes }},
+data__defaultStorageType = '{{ defaultStorageType }}',
 data__name = '{{ name }}',
+data__serveNodes = {{ serveNodes }},
 data__nodeScalingFactor = '{{ nodeScalingFactor }}',
+data__clusterConfig = '{{ clusterConfig }}',
 data__encryptionConfig = '{{ encryptionConfig }}',
-data__defaultStorageType = '{{ defaultStorageType }}'
+data__location = '{{ location }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instancesId = '{{ instancesId }}' --required
@@ -490,13 +492,13 @@ EXEC google.bigtableadmin.clusters.partial_update_cluster
 @updateMask='{{ updateMask }}' 
 @@json=
 '{
-"clusterConfig": "{{ clusterConfig }}", 
-"location": "{{ location }}", 
-"serveNodes": {{ serveNodes }}, 
+"defaultStorageType": "{{ defaultStorageType }}", 
 "name": "{{ name }}", 
+"serveNodes": {{ serveNodes }}, 
 "nodeScalingFactor": "{{ nodeScalingFactor }}", 
+"clusterConfig": "{{ clusterConfig }}", 
 "encryptionConfig": "{{ encryptionConfig }}", 
-"defaultStorageType": "{{ defaultStorageType }}"
+"location": "{{ location }}"
 }'
 ;
 ```

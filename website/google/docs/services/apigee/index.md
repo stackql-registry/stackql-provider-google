@@ -18,7 +18,7 @@ apigee service documentation.
 
 :::info[Service Summary]
 
-total resources: __91__  
+total resources: __94__  
 
 :::
 
@@ -33,9 +33,12 @@ total resources: __91__
 <a href="/services/apigee/apicategories/">apicategories</a><br />
 <a href="/services/apigee/apidocs/">apidocs</a><br />
 <a href="/services/apigee/apidocs_documentation/">apidocs_documentation</a><br />
+<a href="/services/apigee/apim_service_extensions/">apim_service_extensions</a><br />
 <a href="/services/apigee/apiproducts/">apiproducts</a><br />
 <a href="/services/apigee/apis/">apis</a><br />
 <a href="/services/apigee/appgroups/">appgroups</a><br />
+<a href="/services/apigee/appgroups_balance/">appgroups_balance</a><br />
+<a href="/services/apigee/appgroups_monetization_config/">appgroups_monetization_config</a><br />
 <a href="/services/apigee/apps/">apps</a><br />
 <a href="/services/apigee/archive_deployments/">archive_deployments</a><br />
 <a href="/services/apigee/attachments/">attachments</a><br />
@@ -68,11 +71,11 @@ total resources: __91__
 <a href="/services/apigee/host_queries/">host_queries</a><br />
 <a href="/services/apigee/host_queries_result/">host_queries_result</a><br />
 <a href="/services/apigee/host_queries_result_view/">host_queries_result_view</a><br />
-<a href="/services/apigee/host_security_reports/">host_security_reports</a><br />
-<a href="/services/apigee/host_security_reports_result/">host_security_reports_result</a><br />
-<a href="/services/apigee/host_security_reports_result_view/">host_security_reports_result_view</a>
+<a href="/services/apigee/host_security_reports/">host_security_reports</a>
 </div>
 <div class="providerDocColumn">
+<a href="/services/apigee/host_security_reports_result/">host_security_reports_result</a><br />
+<a href="/services/apigee/host_security_reports_result_view/">host_security_reports_result_view</a><br />
 <a href="/services/apigee/host_stats/">host_stats</a><br />
 <a href="/services/apigee/ingress_config/">ingress_config</a><br />
 <a href="/services/apigee/instances/">instances</a><br />

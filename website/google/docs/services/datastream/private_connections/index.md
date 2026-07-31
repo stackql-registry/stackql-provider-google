@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>private_connections</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>private_connections</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="private_connections" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.datastream.private_connections" /></td></tr>
 </tbody></table>
@@ -92,7 +93,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the Private Connection.</td>
+    <td>Output only. The state of the Private Connection. (STATE_UNSPECIFIED, CREATING, CREATED, FAILED, DELETING, FAILED_TO_DELETE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -161,7 +162,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the Private Connection.</td>
+    <td>Output only. The state of the Private Connection. (STATE_UNSPECIFIED, CREATING, CREATED, FAILED, DELETING, FAILED_TO_DELETE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -204,14 +205,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Use this method to list private connectivity configurations in a project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-privateConnectionId"><code>privateConnectionId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-force"><code>force</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-privateConnectionId"><code>privateConnectionId</code></a></td>
     <td>Use this method to create a private connectivity configuration.</td>
 </tr>
 <tr>
@@ -348,9 +349,9 @@ vpcPeeringConfig
 FROM google.datastream.private_connections
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -374,27 +375,27 @@ Use this method to create a private connectivity configuration.
 ```sql
 INSERT INTO google.datastream.private_connections (
 data__labels,
-data__displayName,
 data__vpcPeeringConfig,
 data__pscInterfaceConfig,
+data__displayName,
 projectsId,
 locationsId,
-privateConnectionId,
-requestId,
 force,
-validateOnly
+requestId,
+validateOnly,
+privateConnectionId
 )
 SELECT 
 '{{ labels }}',
-'{{ displayName }}',
 '{{ vpcPeeringConfig }}',
 '{{ pscInterfaceConfig }}',
+'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ privateConnectionId }}',
-'{{ requestId }}',
 '{{ force }}',
-'{{ validateOnly }}'
+'{{ requestId }}',
+'{{ validateOnly }}',
+'{{ privateConnectionId }}'
 RETURNING
 name,
 done,
@@ -406,45 +407,44 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: private_connections
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the private_connections resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the private_connections resource.
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Labels.
-        
-    - name: displayName
-      value: string
-      description: >
-        Required. Display name.
-        
     - name: vpcPeeringConfig
-      value: object
-      description: >
+      description: |
         VPC Peering Config.
-        
+      value:
+        vpc: "{{ vpc }}"
+        subnet: "{{ subnet }}"
     - name: pscInterfaceConfig
-      value: object
-      description: >
+      description: |
         PSC Interface Config.
-        
-    - name: privateConnectionId
-      value: string
-    - name: requestId
-      value: string
+      value:
+        networkAttachment: "{{ networkAttachment }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. Display name.
     - name: force
-      value: boolean
+      value: {{ force }}
+    - name: requestId
+      value: "{{ requestId }}"
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+    - name: privateConnectionId
+      value: "{{ privateConnectionId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

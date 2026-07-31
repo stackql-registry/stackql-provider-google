@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>services</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>services</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="services" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.servicenetworking.services" /></td></tr>
 </tbody></table>
@@ -50,6 +51,13 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
+    <td><a href="#validate"><CopyableCode code="validate" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-servicesId"><code>servicesId</code></a></td>
+    <td></td>
+    <td>Service producers use this method to validate if the consumer provided network, project and requested range are valid. This allows them to use a fail-fast mechanism for consumer requests, and not have to wait for AddSubnetwork operation completion to determine if user request is invalid.</td>
+</tr>
+<tr>
     <td><a href="#disable_vpc_service_controls"><CopyableCode code="disable_vpc_service_controls" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-servicesId"><code>servicesId</code></a></td>
@@ -69,13 +77,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-servicesId"><code>servicesId</code></a></td>
     <td></td>
     <td>Service producers can use this method to find a currently unused range within consumer allocated ranges. This returned range is not reserved, and not guaranteed to remain unused. It will validate previously provided allocated ranges, find non-conflicting sub-range of requested size (expressed in number of leading bits of ipv4 network mask, as in CIDR range notation).</td>
-</tr>
-<tr>
-    <td><a href="#validate"><CopyableCode code="validate" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-servicesId"><code>servicesId</code></a></td>
-    <td></td>
-    <td>Service producers use this method to validate if the consumer provided network, project and requested range are valid. This allows them to use a fail-fast mechanism for consumer requests, and not have to wait for AddSubnetwork operation completion to determine if user request is invalid.</td>
 </tr>
 </tbody>
 </table>
@@ -104,14 +105,32 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="disable_vpc_service_controls"
+    defaultValue="validate"
     values={[
+        { label: 'validate', value: 'validate' },
         { label: 'disable_vpc_service_controls', value: 'disable_vpc_service_controls' },
         { label: 'enable_vpc_service_controls', value: 'enable_vpc_service_controls' },
-        { label: 'search_range', value: 'search_range' },
-        { label: 'validate', value: 'validate' }
+        { label: 'search_range', value: 'search_range' }
     ]}
 >
+<TabItem value="validate">
+
+Service producers use this method to validate if the consumer provided network, project and requested range are valid. This allows them to use a fail-fast mechanism for consumer requests, and not have to wait for AddSubnetwork operation completion to determine if user request is invalid.
+
+```sql
+EXEC google.servicenetworking.services.validate 
+@servicesId='{{ servicesId }}' --required 
+@@json=
+'{
+"validateNetwork": {{ validateNetwork }}, 
+"rangeReservation": "{{ rangeReservation }}", 
+"checkServiceNetworkingUsePermission": {{ checkServiceNetworkingUsePermission }}, 
+"consumerProject": "{{ consumerProject }}", 
+"consumerNetwork": "{{ consumerNetwork }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="disable_vpc_service_controls">
 
 Disables VPC service controls for a connection.
@@ -151,24 +170,6 @@ EXEC google.servicenetworking.services.search_range
 '{
 "network": "{{ network }}", 
 "ipPrefixLength": {{ ipPrefixLength }}
-}'
-;
-```
-</TabItem>
-<TabItem value="validate">
-
-Service producers use this method to validate if the consumer provided network, project and requested range are valid. This allows them to use a fail-fast mechanism for consumer requests, and not have to wait for AddSubnetwork operation completion to determine if user request is invalid.
-
-```sql
-EXEC google.servicenetworking.services.validate 
-@servicesId='{{ servicesId }}' --required 
-@@json=
-'{
-"consumerNetwork": "{{ consumerNetwork }}", 
-"validateNetwork": {{ validateNetwork }}, 
-"consumerProject": "{{ consumerProject }}", 
-"rangeReservation": "{{ rangeReservation }}", 
-"checkServiceNetworkingUsePermission": {{ checkServiceNetworkingUsePermission }}
 }'
 ;
 ```

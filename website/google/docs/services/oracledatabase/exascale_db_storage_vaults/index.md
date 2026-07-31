@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>exascale_db_storage_vaults</co
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>exascale_db_storage_vaults</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="exascale_db_storage_vaults" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.oracledatabase.exascale_db_storage_vaults" /></td></tr>
 </tbody></table>
@@ -68,6 +69,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="entitlementId" /></td>
     <td><code>string</code></td>
     <td>Output only. The ID of the subscription entitlement associated with the ExascaleDbStorageVault.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="exadataInfrastructure" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The Exadata Infrastructure resource on which ExascaleDbStorageVault resource is created, in the following format: projects/&#123;project&#125;/locations/&#123;region&#125;/cloudExadataInfrastuctures/&#123;cloud_extradata_infrastructure&#125;</td>
 </tr>
 <tr>
     <td><CopyableCode code="gcpOracleZone" /></td>
@@ -119,6 +125,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The ID of the subscription entitlement associated with the ExascaleDbStorageVault.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="exadataInfrastructure" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The Exadata Infrastructure resource on which ExascaleDbStorageVault resource is created, in the following format: projects/&#123;project&#125;/locations/&#123;region&#125;/cloudExadataInfrastuctures/&#123;cloud_extradata_infrastructure&#125;</td>
+</tr>
+<tr>
     <td><CopyableCode code="gcpOracleZone" /></td>
     <td><code>string</code></td>
     <td>Optional. The GCP Oracle zone where Oracle ExascaleDbStorageVault is hosted. Example: us-east4-b-r2. If not specified, the system will pick a zone based on availability.</td>
@@ -164,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all the ExascaleDB Storage Vaults for the given project and location.</td>
 </tr>
 <tr>
@@ -264,6 +275,7 @@ name,
 createTime,
 displayName,
 entitlementId,
+exadataInfrastructure,
 gcpOracleZone,
 labels,
 properties
@@ -284,16 +296,17 @@ name,
 createTime,
 displayName,
 entitlementId,
+exadataInfrastructure,
 gcpOracleZone,
 labels,
 properties
 FROM google.oracledatabase.exascale_db_storage_vaults
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -315,22 +328,24 @@ Creates a new ExascaleDB Storage Vault resource.
 
 ```sql
 INSERT INTO google.oracledatabase.exascale_db_storage_vaults (
-data__name,
 data__displayName,
+data__labels,
+data__name,
 data__gcpOracleZone,
 data__properties,
-data__labels,
+data__exadataInfrastructure,
 projectsId,
 locationsId,
 exascaleDbStorageVaultId,
 requestId
 )
 SELECT 
-'{{ name }}',
 '{{ displayName }}',
+'{{ labels }}',
+'{{ name }}',
 '{{ gcpOracleZone }}',
 '{{ properties }}',
-'{{ labels }}',
+'{{ exadataInfrastructure }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ exascaleDbStorageVaultId }}',
@@ -346,46 +361,63 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: exascale_db_storage_vaults
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the exascale_db_storage_vaults resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the exascale_db_storage_vaults resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the ExascaleDbStorageVault. Format: projects/{project}/locations/{location}/exascaleDbStorageVaults/{exascale_db_storage_vault}
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Required. The display name for the ExascaleDbStorageVault. The name does not have to be unique within your project. The name must be 1-255 characters long and can only contain alphanumeric characters.
-        
-    - name: gcpOracleZone
-      value: string
-      description: >
-        Optional. The GCP Oracle zone where Oracle ExascaleDbStorageVault is hosted. Example: us-east4-b-r2. If not specified, the system will pick a zone based on availability.
-        
-    - name: properties
-      value: object
-      description: >
-        Required. The properties of the ExascaleDbStorageVault.
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. The labels or tags associated with the ExascaleDbStorageVault.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the ExascaleDbStorageVault. Format: projects/{project}/locations/{location}/exascaleDbStorageVaults/{exascale_db_storage_vault}
+    - name: gcpOracleZone
+      value: "{{ gcpOracleZone }}"
+      description: |
+        Optional. The GCP Oracle zone where Oracle ExascaleDbStorageVault is hosted. Example: us-east4-b-r2. If not specified, the system will pick a zone based on availability.
+    - name: properties
+      description: |
+        Required. The properties of the ExascaleDbStorageVault.
+      value:
+        ocid: "{{ ocid }}"
+        state: "{{ state }}"
+        timeZone:
+          id: "{{ id }}"
+          version: "{{ version }}"
+        attachedShapeAttributes:
+          - "{{ attachedShapeAttributes }}"
+        ociUri: "{{ ociUri }}"
+        description: "{{ description }}"
+        additionalFlashCachePercent: {{ additionalFlashCachePercent }}
+        exascaleDbStorageDetails:
+          availableSizeGbs: {{ availableSizeGbs }}
+          totalSizeGbs: {{ totalSizeGbs }}
+        availableShapeAttributes:
+          - "{{ availableShapeAttributes }}"
+        vmClusterIds:
+          - "{{ vmClusterIds }}"
+        vmClusterCount: {{ vmClusterCount }}
+    - name: exadataInfrastructure
+      value: "{{ exadataInfrastructure }}"
+      description: |
+        Optional. The Exadata Infrastructure resource on which ExascaleDbStorageVault resource is created, in the following format: projects/{project}/locations/{region}/cloudExadataInfrastuctures/{cloud_extradata_infrastructure}
     - name: exascaleDbStorageVaultId
-      value: string
+      value: "{{ exascaleDbStorageVaultId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

@@ -4,6 +4,24 @@ Generates OpenAPI 3.x specification from Google Discovery documents and creates 
 
 > OpenAPI 3 Specifications for Google Cloud APIs can be found at [__stackql/stackql-provider-registry__](https://github.com/stackql/stackql-provider-registry/tree/dev/providers/src/googleapis.com/v00.00.00000/services)
 
+## Quick start (Make)
+
+All pipeline steps are available as make targets (on Windows run from Git Bash):
+
+```bash
+make all                 # install, generate, test, smoke test, generate and build docs
+make install             # npm install
+make generate            # generate all providers (or generate-google, generate-googleworkspace, generate-googleadmin, generate-firebase)
+make test                # provider metadata tests (or test-<provider>) - uses WSL on Windows
+make smoke-test          # end-to-end GCP smoke test using the locally generated provider (requires GOOGLE_CREDENTIALS)
+make smoke-test-live     # same smoke test against the latest provider in the hosted registry
+make docs                # generate docusaurus markdown docs (or docs-<provider>)
+make docs-build          # build the docusaurus microsites (or docs-build-<provider>)
+make docs-serve-google   # serve a microsite locally
+```
+
+The sections below document the underlying commands that the make targets wrap.
+
 ## Overview
 
 This script performs the following steps:
@@ -36,32 +54,49 @@ To Run tests locally, clone [stackql-provider-tests](https://github.com/stackql/
 
 ```bash
 # run from the directory you cloned into
-cd ../../core/stackql-provider-tests/
+cd ../../../stackql/core/stackql-provider-tests/
 sh test-provider.sh \
 google \
 false \
-/mnt/c/LocalGitRepos/stackql/providers/stackql-provider-google/openapi \
+/mnt/c/LocalGitRepos/stackql-registry/providers/stackql-provider-google/openapi \
 true
 
 sh test-provider.sh \
 googleworkspace \
 false \
-/mnt/c/LocalGitRepos/stackql/providers/stackql-provider-google/openapi \
+/mnt/c/LocalGitRepos/stackql-registry/providers/stackql-provider-google/openapi \
 true
 
 sh test-provider.sh \
 googleadmin \
 false \
-/mnt/c/LocalGitRepos/stackql/providers/stackql-provider-google/openapi \
+/mnt/c/LocalGitRepos/stackql-registry/providers/stackql-provider-google/openapi \
 true
 
 sh test-provider.sh \
 firebase \
 false \
-/mnt/c/LocalGitRepos/stackql/providers/stackql-provider-google/openapi \
+/mnt/c/LocalGitRepos/stackql-registry/providers/stackql-provider-google/openapi \
 true
 
-cd ../../providers/stackql-provider-google/
+cd ../../../stackql-registry/providers/stackql-provider-google/
+```
+
+## Smoke tests
+
+`test/smoke-test-google.js` runs an end-to-end test against a real GCP project (default `stackql-demo`), exercising query, mutation and lifecycle operations: it creates a VPC, subnet and e2-micro VM (observing state via `SELECT` after each step), stops and starts the VM via `EXEC` lifecycle methods, deletes everything, then creates, reads, updates and deletes a GCS bucket.
+
+Requires `stackql` on the PATH and `GOOGLE_CREDENTIALS` set to a service account key.
+
+```bash
+# against the locally generated provider in ./openapi
+make smoke-test
+
+# against the latest google provider in the hosted registry
+make smoke-test-live
+
+# options
+node test/smoke-test-google.js [--live] [--project <id>] [--region <region>] [--zone <zone>]
 ```
 
 ## Inspect
@@ -98,6 +133,8 @@ npm run generate-docs -- \
   --output-dir ./website/google \
   --provider-data-dir ./docgen/provider-data/google
 sh bin/fix-broken-links-google.sh   
+cd website/google
+yarn build
 
 # googleadmin
 rm -rf ./website/googleadmin/docs/*

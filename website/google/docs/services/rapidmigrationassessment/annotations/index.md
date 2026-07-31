@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>annotations</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>annotations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="annotations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.rapidmigrationassessment.annotations" /></td></tr>
 </tbody></table>
@@ -66,7 +67,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Type of an annotation.</td>
+    <td>Type of an annotation. (TYPE_UNSPECIFIED, TYPE_LEGACY_EXPORT_CONSENT, TYPE_QWIKLAB)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -190,17 +191,17 @@ Creates an Annotation
 
 ```sql
 INSERT INTO google.rapidmigrationassessment.annotations (
+data__labels,
 data__name,
 data__type,
-data__labels,
 projectsId,
 locationsId,
 requestId
 )
 SELECT 
+'{{ labels }}',
 '{{ name }}',
 '{{ type }}',
-'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ requestId }}'
@@ -215,34 +216,31 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: annotations
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the annotations resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the annotations resource.
-    - name: name
-      value: string
-      description: >
-        name of resource.
-        
-    - name: type
-      value: string
-      description: >
-        Type of an annotation.
-        
-      valid_values: ['TYPE_UNSPECIFIED', 'TYPE_LEGACY_EXPORT_CONSENT', 'TYPE_QWIKLAB']
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Labels as key value pairs.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        name of resource.
+    - name: type
+      value: "{{ type }}"
+      description: |
+        Type of an annotation.
+      valid_values: ['TYPE_UNSPECIFIED', 'TYPE_LEGACY_EXPORT_CONSENT', 'TYPE_QWIKLAB']
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

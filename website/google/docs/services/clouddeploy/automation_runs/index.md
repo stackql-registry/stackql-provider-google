@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>automation_runs</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>automation_runs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="automation_runs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.clouddeploy.automation_runs" /></td></tr>
 </tbody></table>
@@ -67,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="automationSnapshot" /></td>
     <td><code>object</code></td>
-    <td>Output only. Snapshot of the Automation taken at AutomationRun creation time. (id: Automation)</td>
+    <td>An `Automation` resource in the Cloud Deploy API. An `Automation` enables the automation of manually driven actions for a Delivery Pipeline, which includes Release promotion among Targets, Rollout repair and Rollout deployment strategy advancement. The intention of Automation is to reduce manual intervention in the continuous delivery process. (id: Automation)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -112,7 +113,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the `AutomationRun`.</td>
+    <td>Output only. Current state of the `AutomationRun`. (STATE_UNSPECIFIED, SUCCEEDED, CANCELLED, FAILED, IN_PROGRESS, PENDING, ABORTED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateDescription" /></td>
@@ -128,6 +129,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="timedPromoteReleaseOperation" /></td>
     <td><code>object</code></td>
     <td>Output only. Promotes a release to a specified 'Target' as defined in a Timed Promote Release rule. (id: TimedPromoteReleaseOperation)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="uid" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Unique identifier of the `AutomationRun`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -153,96 +159,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Name of the `AutomationRun`. Format is `projects/&#123;project&#125;/locations/&#123;location&#125;/deliveryPipelines/&#123;delivery_pipeline&#125;/automationRuns/&#123;automation_run&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="advanceRolloutOperation" /></td>
-    <td><code>object</code></td>
-    <td>Output only. Advances a rollout to the next phase. (id: AdvanceRolloutOperation)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="automationId" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The ID of the automation that initiated the operation.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="automationSnapshot" /></td>
-    <td><code>object</code></td>
-    <td>Output only. Snapshot of the Automation taken at AutomationRun creation time. (id: Automation)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Time at which the `AutomationRun` was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="etag" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The weak etag of the `AutomationRun` resource. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="expireTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Time the `AutomationRun` expires. An `AutomationRun` expires after 14 days from its creation date.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="policyViolation" /></td>
-    <td><code>object</code></td>
-    <td>Output only. Contains information about what policies prevented the `AutomationRun` from proceeding. (id: PolicyViolation)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="promoteReleaseOperation" /></td>
-    <td><code>object</code></td>
-    <td>Output only. Promotes a release to a specified 'Target'. (id: PromoteReleaseOperation)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="repairRolloutOperation" /></td>
-    <td><code>object</code></td>
-    <td>Output only. Repairs a failed 'Rollout'. (id: RepairRolloutOperation)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="ruleId" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The ID of the automation rule that initiated the operation.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="serviceAccount" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Email address of the user-managed IAM service account that performs the operations against Cloud Deploy resources.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="state" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Current state of the `AutomationRun`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="stateDescription" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Explains the current state of the `AutomationRun`. Present only when an explanation is needed.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="targetId" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The ID of the source target that initiates the `AutomationRun`. The value of this field is the last segment of a target name.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="timedPromoteReleaseOperation" /></td>
-    <td><code>object</code></td>
-    <td>Output only. Promotes a release to a specified 'Target' as defined in a Timed Promote Release rule. (id: TimedPromoteReleaseOperation)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Time at which the automationRun was updated.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="waitUntilTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Earliest time the `AutomationRun` will attempt to resume. Wait-time is configured by `wait` in automation rule.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -274,7 +190,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deliveryPipelinesId"><code>deliveryPipelinesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists AutomationRuns in a given project and location.</td>
 </tr>
 <tr>
@@ -374,6 +290,7 @@ state,
 stateDescription,
 targetId,
 timedPromoteReleaseOperation,
+uid,
 updateTime,
 waitUntilTime
 FROM google.clouddeploy.automation_runs
@@ -390,32 +307,15 @@ Lists AutomationRuns in a given project and location.
 
 ```sql
 SELECT
-name,
-advanceRolloutOperation,
-automationId,
-automationSnapshot,
-createTime,
-etag,
-expireTime,
-policyViolation,
-promoteReleaseOperation,
-repairRolloutOperation,
-ruleId,
-serviceAccount,
-state,
-stateDescription,
-targetId,
-timedPromoteReleaseOperation,
-updateTime,
-waitUntilTime
+*
 FROM google.clouddeploy.automation_runs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND deliveryPipelinesId = '{{ deliveryPipelinesId }}' -- required
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>

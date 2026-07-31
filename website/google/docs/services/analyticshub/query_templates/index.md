@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>query_templates</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>query_templates</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="query_templates" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.analyticshub.query_templates" /></td></tr>
 </tbody></table>
@@ -92,7 +93,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The QueryTemplate lifecycle state.</td>
+    <td>Output only. The QueryTemplate lifecycle state. (STATE_UNSPECIFIED, DRAFTED, PENDING, DELETED, APPROVED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -156,7 +157,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The QueryTemplate lifecycle state.</td>
+    <td>Output only. The QueryTemplate lifecycle state. (STATE_UNSPECIFIED, DRAFTED, PENDING, DELETED, APPROVED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -219,18 +220,18 @@ The following methods are available for this resource:
     <td>Deletes a query template.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_data_exchanges_query_templates_submit"><CopyableCode code="projects_locations_data_exchanges_query_templates_submit" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataExchangesId"><code>dataExchangesId</code></a>, <a href="#parameter-queryTemplatesId"><code>queryTemplatesId</code></a></td>
-    <td></td>
-    <td>Submits a query template for approval.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_data_exchanges_query_templates_approve"><CopyableCode code="projects_locations_data_exchanges_query_templates_approve" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataExchangesId"><code>dataExchangesId</code></a>, <a href="#parameter-queryTemplatesId"><code>queryTemplatesId</code></a></td>
     <td></td>
     <td>Approves a query template.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_data_exchanges_query_templates_submit"><CopyableCode code="projects_locations_data_exchanges_query_templates_submit" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataExchangesId"><code>dataExchangesId</code></a>, <a href="#parameter-queryTemplatesId"><code>queryTemplatesId</code></a></td>
+    <td></td>
+    <td>Submits a query template for approval.</td>
 </tr>
 </tbody>
 </table>
@@ -367,24 +368,24 @@ Creates a new QueryTemplate
 
 ```sql
 INSERT INTO google.analyticshub.query_templates (
-data__primaryContact,
+data__displayName,
+data__documentation,
 data__description,
+data__primaryContact,
 data__routine,
 data__proposer,
-data__documentation,
-data__displayName,
 projectsId,
 locationsId,
 dataExchangesId,
 queryTemplateId
 )
 SELECT 
-'{{ primaryContact }}',
+'{{ displayName }}',
+'{{ documentation }}',
 '{{ description }}',
+'{{ primaryContact }}',
 '{{ routine }}',
 '{{ proposer }}',
-'{{ documentation }}',
-'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ dataExchangesId }}',
@@ -405,52 +406,48 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: query_templates
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the query_templates resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the query_templates resource.
     - name: dataExchangesId
-      value: string
+      value: "{{ dataExchangesId }}"
       description: Required parameter for the query_templates resource.
-    - name: primaryContact
-      value: string
-      description: >
-        Optional. Email or URL of the primary point of contact of the QueryTemplate. Max Length: 1000 bytes.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. Short description of the QueryTemplate. The description must not contain Unicode non-characters and C0 and C1 control codes except tabs (HT), new lines (LF), carriage returns (CR), and page breaks (FF). Default value is an empty string. Max length: 2000 bytes.
-        
-    - name: routine
-      value: object
-      description: >
-        Optional. The routine associated with the QueryTemplate.
-        
-    - name: proposer
-      value: string
-      description: >
-        Optional. Will be deprecated. Email or URL of the primary point of contact of the QueryTemplate. Max Length: 1000 bytes.
-        
-    - name: documentation
-      value: string
-      description: >
-        Optional. Documentation describing the QueryTemplate.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Required. Human-readable display name of the QueryTemplate. The display name must contain only Unicode letters, numbers (0-9), underscores (_), dashes (-), spaces ( ), ampersands (&) and can't start or end with spaces. Default value is an empty string. Max length: 63 bytes.
-        
+    - name: documentation
+      value: "{{ documentation }}"
+      description: |
+        Optional. Documentation describing the QueryTemplate.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Short description of the QueryTemplate. The description must not contain Unicode non-characters and C0 and C1 control codes except tabs (HT), new lines (LF), carriage returns (CR), and page breaks (FF). Default value is an empty string. Max length: 2000 bytes.
+    - name: primaryContact
+      value: "{{ primaryContact }}"
+      description: |
+        Optional. Email or URL of the primary point of contact of the QueryTemplate. Max Length: 1000 bytes.
+    - name: routine
+      description: |
+        Optional. The routine associated with the QueryTemplate.
+      value:
+        routineType: "{{ routineType }}"
+        definitionBody: "{{ definitionBody }}"
+    - name: proposer
+      value: "{{ proposer }}"
+      description: |
+        Optional. Will be deprecated. Email or URL of the primary point of contact of the QueryTemplate. Max Length: 1000 bytes.
     - name: queryTemplateId
-      value: string
-```
+      value: "{{ queryTemplateId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -470,12 +467,12 @@ Updates an existing QueryTemplate
 ```sql
 UPDATE google.analyticshub.query_templates
 SET 
-data__primaryContact = '{{ primaryContact }}',
-data__description = '{{ description }}',
-data__routine = '{{ routine }}',
-data__proposer = '{{ proposer }}',
+data__displayName = '{{ displayName }}',
 data__documentation = '{{ documentation }}',
-data__displayName = '{{ displayName }}'
+data__description = '{{ description }}',
+data__primaryContact = '{{ primaryContact }}',
+data__routine = '{{ routine }}',
+data__proposer = '{{ proposer }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -525,18 +522,18 @@ AND queryTemplatesId = '{{ queryTemplatesId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_data_exchanges_query_templates_submit"
+    defaultValue="projects_locations_data_exchanges_query_templates_approve"
     values={[
-        { label: 'projects_locations_data_exchanges_query_templates_submit', value: 'projects_locations_data_exchanges_query_templates_submit' },
-        { label: 'projects_locations_data_exchanges_query_templates_approve', value: 'projects_locations_data_exchanges_query_templates_approve' }
+        { label: 'projects_locations_data_exchanges_query_templates_approve', value: 'projects_locations_data_exchanges_query_templates_approve' },
+        { label: 'projects_locations_data_exchanges_query_templates_submit', value: 'projects_locations_data_exchanges_query_templates_submit' }
     ]}
 >
-<TabItem value="projects_locations_data_exchanges_query_templates_submit">
+<TabItem value="projects_locations_data_exchanges_query_templates_approve">
 
-Submits a query template for approval.
+Approves a query template.
 
 ```sql
-EXEC google.analyticshub.query_templates.projects_locations_data_exchanges_query_templates_submit 
+EXEC google.analyticshub.query_templates.projects_locations_data_exchanges_query_templates_approve 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @dataExchangesId='{{ dataExchangesId }}' --required, 
@@ -544,12 +541,12 @@ EXEC google.analyticshub.query_templates.projects_locations_data_exchanges_query
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_data_exchanges_query_templates_approve">
+<TabItem value="projects_locations_data_exchanges_query_templates_submit">
 
-Approves a query template.
+Submits a query template for approval.
 
 ```sql
-EXEC google.analyticshub.query_templates.projects_locations_data_exchanges_query_templates_approve 
+EXEC google.analyticshub.query_templates.projects_locations_data_exchanges_query_templates_submit 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @dataExchangesId='{{ dataExchangesId }}' --required, 

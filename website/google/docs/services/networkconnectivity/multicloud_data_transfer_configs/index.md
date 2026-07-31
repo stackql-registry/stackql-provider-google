@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>multicloud_data_transfer_config
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>multicloud_data_transfer_configs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="multicloud_data_transfer_configs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networkconnectivity.multicloud_data_transfer_configs" /></td></tr>
 </tbody></table>
@@ -113,6 +114,56 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. The name of the `MulticloudDataTransferConfig` resource. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/multicloudDataTransferConfigs/&#123;multicloud_data_transfer_config&#125;`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Time when the `MulticloudDataTransferConfig` resource was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Optional. A description of this resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="destinationsActiveCount" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Output only. The number of `Destination` resources in use with the `MulticloudDataTransferConfig` resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="destinationsCount" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Output only. The number of `Destination` resources configured for the `MulticloudDataTransferConfig` resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="etag" /></td>
+    <td><code>string</code></td>
+    <td>The etag is computed by the server, and might be sent with update and delete requests so that the client has an up-to-date value before proceeding.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. User-defined labels.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="services" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Maps services to their current or planned states. Service names are keys, and the associated values describe the state of the service. If a state change is expected, the value is either `ADDING` or `DELETING`, depending on the actions taken. Sample output: "services": &#123; "big-query": &#123; "states": [ &#123; "effectiveTime": "2024-12-12T08:00:00Z" "state": "ADDING", &#125;, ] &#125;, "cloud-storage": &#123; "states": [ &#123; "state": "ACTIVE", &#125; ] &#125; &#125;</td>
+</tr>
+<tr>
+    <td><CopyableCode code="uid" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The Google-generated unique ID for the `MulticloudDataTransferConfig` resource. This value is unique across all `MulticloudDataTransferConfig` resources. If a resource is deleted and another with the same name is created, the new resource is assigned a different and unique ID.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Time when the `MulticloudDataTransferConfig` resource was updated.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -144,14 +195,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists the `MulticloudDataTransferConfig` resources in a specified project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-multicloudDataTransferConfigId"><code>multicloudDataTransferConfigId</code></a></td>
+    <td><a href="#parameter-multicloudDataTransferConfigId"><code>multicloudDataTransferConfigId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a `MulticloudDataTransferConfig` resource in a specified project and location.</td>
 </tr>
 <tr>
@@ -165,7 +216,7 @@ The following methods are available for this resource:
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-multicloudDataTransferConfigsId"><code>multicloudDataTransferConfigsId</code></a></td>
-    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
     <td>Deletes a `MulticloudDataTransferConfig` resource.</td>
 </tr>
 </tbody>
@@ -285,14 +336,23 @@ Lists the `MulticloudDataTransferConfig` resources in a specified project and lo
 
 ```sql
 SELECT
-*
+name,
+createTime,
+description,
+destinationsActiveCount,
+destinationsCount,
+etag,
+labels,
+services,
+uid,
+updateTime
 FROM google.networkconnectivity.multicloud_data_transfer_configs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND filter = '{{ filter }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -315,26 +375,26 @@ Creates a `MulticloudDataTransferConfig` resource in a specified project and loc
 
 ```sql
 INSERT INTO google.networkconnectivity.multicloud_data_transfer_configs (
-data__labels,
 data__name,
-data__etag,
 data__description,
+data__labels,
 data__services,
+data__etag,
 projectsId,
 locationsId,
-requestId,
-multicloudDataTransferConfigId
+multicloudDataTransferConfigId,
+requestId
 )
 SELECT 
-'{{ labels }}',
 '{{ name }}',
-'{{ etag }}',
 '{{ description }}',
+'{{ labels }}',
 '{{ services }}',
+'{{ etag }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ multicloudDataTransferConfigId }}'
+'{{ multicloudDataTransferConfigId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -346,46 +406,41 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: multicloud_data_transfer_configs
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the multicloud_data_transfer_configs resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the multicloud_data_transfer_configs resource.
-    - name: labels
-      value: object
-      description: >
-        Optional. User-defined labels.
-        
     - name: name
-      value: string
-      description: >
-        Identifier. The name of the `MulticloudDataTransferConfig` resource. Format: `projects/{project}/locations/{location}/multicloudDataTransferConfigs/{multicloud_data_transfer_config}`.
-        
-    - name: etag
-      value: string
-      description: >
-        The etag is computed by the server, and might be sent with update and delete requests so that the client has an up-to-date value before proceeding.
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of the \`MulticloudDataTransferConfig\` resource. Format: \`projects/{project}/locations/{location}/multicloudDataTransferConfigs/{multicloud_data_transfer_config}\`.
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. A description of this resource.
-        
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. User-defined labels.
     - name: services
-      value: object
-      description: >
-        Optional. Maps services to their current or planned states. Service names are keys, and the associated values describe the state of the service. If a state change is expected, the value is either `ADDING` or `DELETING`, depending on the actions taken. Sample output: "services": { "big-query": { "states": [ { "effectiveTime": "2024-12-12T08:00:00Z" "state": "ADDING", }, ] }, "cloud-storage": { "states": [ { "state": "ACTIVE", } ] } }
-        
-    - name: requestId
-      value: string
+      value: "{{ services }}"
+      description: |
+        Optional. Maps services to their current or planned states. Service names are keys, and the associated values describe the state of the service. If a state change is expected, the value is either \`ADDING\` or \`DELETING\`, depending on the actions taken. Sample output: "services": { "big-query": { "states": [ { "effectiveTime": "2024-12-12T08:00:00Z" "state": "ADDING", }, ] }, "cloud-storage": { "states": [ { "state": "ACTIVE", } ] } }
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        The etag is computed by the server, and might be sent with update and delete requests so that the client has an up-to-date value before proceeding.
     - name: multicloudDataTransferConfigId
-      value: string
-```
+      value: "{{ multicloudDataTransferConfigId }}"
+    - name: requestId
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -405,11 +460,11 @@ Updates a `MulticloudDataTransferConfig` resource in a specified project and loc
 ```sql
 UPDATE google.networkconnectivity.multicloud_data_transfer_configs
 SET 
-data__labels = '{{ labels }}',
 data__name = '{{ name }}',
-data__etag = '{{ etag }}',
 data__description = '{{ description }}',
-data__services = '{{ services }}'
+data__labels = '{{ labels }}',
+data__services = '{{ services }}',
+data__etag = '{{ etag }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -444,8 +499,8 @@ DELETE FROM google.networkconnectivity.multicloud_data_transfer_configs
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND multicloudDataTransferConfigsId = '{{ multicloudDataTransferConfigsId }}' --required
-AND etag = '{{ etag }}'
 AND requestId = '{{ requestId }}'
+AND etag = '{{ etag }}'
 ;
 ```
 </TabItem>

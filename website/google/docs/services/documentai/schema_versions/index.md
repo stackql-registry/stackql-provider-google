@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>schema_versions</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>schema_versions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="schema_versions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.documentai.schema_versions" /></td></tr>
 </tbody></table>
@@ -62,12 +63,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Optional. The user-defined name of the SchemaVersion.</td>
+    <td>Required. The user-defined name of the SchemaVersion.</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
     <td><code>object</code></td>
-    <td>Optional. The GCP labels for the SchemaVersion.</td>
+    <td>Optional. The &#123;&#123;gcp_name_short&#125;&#125; labels for the SchemaVersion.</td>
 </tr>
 <tr>
     <td><CopyableCode code="schema" /></td>
@@ -101,12 +102,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Optional. The user-defined name of the SchemaVersion.</td>
+    <td>Required. The user-defined name of the SchemaVersion.</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
     <td><code>object</code></td>
-    <td>Optional. The GCP labels for the SchemaVersion.</td>
+    <td>Optional. The &#123;&#123;gcp_name_short&#125;&#125; labels for the SchemaVersion.</td>
 </tr>
 <tr>
     <td><CopyableCode code="schema" /></td>
@@ -295,19 +296,19 @@ Creates a schema version.
 
 ```sql
 INSERT INTO google.documentai.schema_versions (
+data__schema,
 data__name,
 data__displayName,
 data__labels,
-data__schema,
 projectsId,
 locationsId,
 schemasId
 )
 SELECT 
+'{{ schema }}',
 '{{ name }}',
 '{{ displayName }}',
 '{{ labels }}',
-'{{ schema }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ schemasId }}'
@@ -322,40 +323,52 @@ schema
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: schema_versions
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the schema_versions resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the schema_versions resource.
     - name: schemasId
-      value: string
+      value: "{{ schemasId }}"
       description: Required parameter for the schema_versions resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the SchemaVersion. Format: `projects/{project}/locations/{location}/schemas/{schema}/schemaVersions/{schema_version}`
-        
-    - name: displayName
-      value: string
-      description: >
-        Optional. The user-defined name of the SchemaVersion.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. The GCP labels for the SchemaVersion.
-        
     - name: schema
-      value: object
-      description: >
+      description: |
         Required. The schema of the SchemaVersion.
-        
-```
+      value:
+        documentPrompt: "{{ documentPrompt }}"
+        displayName: "{{ displayName }}"
+        description: "{{ description }}"
+        entityTypes:
+          - enumValues:
+              values:
+                - "{{ values }}"
+            baseTypes: "{{ baseTypes }}"
+            properties: "{{ properties }}"
+            displayName: "{{ displayName }}"
+            name: "{{ name }}"
+        metadata:
+          prefixedNamingOnProperties: {{ prefixedNamingOnProperties }}
+          documentSplitter: {{ documentSplitter }}
+          documentAllowMultipleLabels: {{ documentAllowMultipleLabels }}
+          skipNamingValidation: {{ skipNamingValidation }}
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the SchemaVersion. Format: \`projects/{project}/locations/{location}/schemas/{schema}/schemaVersions/{schema_version}\`
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. The user-defined name of the SchemaVersion.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. The {{gcp_name_short}} labels for the SchemaVersion.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -375,10 +388,10 @@ Updates a schema version. Editable fields are: - `display_name` - `labels`
 ```sql
 UPDATE google.documentai.schema_versions
 SET 
+data__schema = '{{ schema }}',
 data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
-data__labels = '{{ labels }}',
-data__schema = '{{ schema }}'
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -439,12 +452,12 @@ EXEC google.documentai.schema_versions.projects_locations_schemas_schema_version
 @schemasId='{{ schemasId }}' --required 
 @@json=
 '{
-"inlineDocuments": "{{ inlineDocuments }}", 
 "rawDocuments": "{{ rawDocuments }}", 
-"gcsDocuments": "{{ gcsDocuments }}", 
 "gcsPrefix": "{{ gcsPrefix }}", 
-"baseSchemaVersion": "{{ baseSchemaVersion }}", 
-"generateSchemaVersionParams": "{{ generateSchemaVersionParams }}"
+"generateSchemaVersionParams": "{{ generateSchemaVersionParams }}", 
+"gcsDocuments": "{{ gcsDocuments }}", 
+"inlineDocuments": "{{ inlineDocuments }}", 
+"baseSchemaVersion": "{{ baseSchemaVersion }}"
 }'
 ;
 ```

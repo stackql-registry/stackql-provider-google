@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>webhooks</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>webhooks</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="webhooks" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dialogflow.webhooks" /></td></tr>
 </tbody></table>
@@ -52,32 +53,32 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The unique identifier of the webhook. Required for the Webhooks.UpdateWebhook method. Webhooks.CreateWebhook populates the name automatically. Format: `projects//locations//agents//webhooks/`.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="disabled" /></td>
     <td><code>boolean</code></td>
-    <td>Indicates whether the webhook is disabled.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Required. The human-readable name of the webhook, unique within the agent.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="genericWebService" /></td>
     <td><code>object</code></td>
-    <td>Configuration for a generic web service. (id: GoogleCloudDialogflowCxV3WebhookGenericWebService)</td>
+    <td> (id: GoogleCloudDialogflowCxV3WebhookGenericWebService)</td>
 </tr>
 <tr>
     <td><CopyableCode code="serviceDirectory" /></td>
     <td><code>object</code></td>
-    <td>Configuration for a [Service Directory](https://cloud.google.com/service-directory) service. (id: GoogleCloudDialogflowCxV3WebhookServiceDirectoryConfig)</td>
+    <td> (id: GoogleCloudDialogflowCxV3WebhookServiceDirectoryConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="timeout" /></td>
     <td><code>string (google-duration)</code></td>
-    <td>Webhook execution timeout. Execution is considered failed if Dialogflow doesn't receive a response from webhook at the end of the timeout period. Defaults to 5 seconds, maximum allowed timeout is 30 seconds.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -96,32 +97,32 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The unique identifier of the webhook. Required for the Webhooks.UpdateWebhook method. Webhooks.CreateWebhook populates the name automatically. Format: `projects//locations//agents//webhooks/`.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="disabled" /></td>
     <td><code>boolean</code></td>
-    <td>Indicates whether the webhook is disabled.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Required. The human-readable name of the webhook, unique within the agent.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="genericWebService" /></td>
     <td><code>object</code></td>
-    <td>Configuration for a generic web service. (id: GoogleCloudDialogflowCxV3WebhookGenericWebService)</td>
+    <td> (id: GoogleCloudDialogflowCxV3WebhookGenericWebService)</td>
 </tr>
 <tr>
     <td><CopyableCode code="serviceDirectory" /></td>
     <td><code>object</code></td>
-    <td>Configuration for a [Service Directory](https://cloud.google.com/service-directory) service. (id: GoogleCloudDialogflowCxV3WebhookServiceDirectoryConfig)</td>
+    <td> (id: GoogleCloudDialogflowCxV3WebhookServiceDirectoryConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="timeout" /></td>
     <td><code>string (google-duration)</code></td>
-    <td>Webhook execution timeout. Execution is considered failed if Dialogflow doesn't receive a response from webhook at the end of the timeout period. Defaults to 5 seconds, maximum allowed timeout is 30 seconds.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -148,35 +149,35 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-webhooksId"><code>webhooksId</code></a></td>
     <td></td>
-    <td>Retrieves the specified webhook.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_webhooks_list"><CopyableCode code="projects_locations_agents_webhooks_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Returns the list of all webhooks in the specified agent.</td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_webhooks_create"><CopyableCode code="projects_locations_agents_webhooks_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
     <td></td>
-    <td>Creates a webhook in the specified agent.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_webhooks_patch"><CopyableCode code="projects_locations_agents_webhooks_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-webhooksId"><code>webhooksId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates the specified webhook.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_webhooks_delete"><CopyableCode code="projects_locations_agents_webhooks_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-webhooksId"><code>webhooksId</code></a></td>
     <td><a href="#parameter-force"><code>force</code></a></td>
-    <td>Deletes the specified webhook.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -248,7 +249,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="projects_locations_agents_webhooks_get">
 
-Retrieves the specified webhook.
+Successful response
 
 ```sql
 SELECT
@@ -268,7 +269,7 @@ AND webhooksId = '{{ webhooksId }}' -- required
 </TabItem>
 <TabItem value="projects_locations_agents_webhooks_list">
 
-Returns the list of all webhooks in the specified agent.
+Successful response
 
 ```sql
 SELECT
@@ -282,8 +283,8 @@ FROM google.dialogflow.webhooks
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND agentsId = '{{ agentsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -301,27 +302,27 @@ AND pageToken = '{{ pageToken }}'
 >
 <TabItem value="projects_locations_agents_webhooks_create">
 
-Creates a webhook in the specified agent.
+No description available.
 
 ```sql
 INSERT INTO google.dialogflow.webhooks (
 data__name,
-data__displayName,
 data__genericWebService,
-data__serviceDirectory,
+data__displayName,
 data__timeout,
 data__disabled,
+data__serviceDirectory,
 projectsId,
 locationsId,
 agentsId
 )
 SELECT 
 '{{ name }}',
-'{{ displayName }}',
 '{{ genericWebService }}',
-'{{ serviceDirectory }}',
+'{{ displayName }}',
 '{{ timeout }}',
 {{ disabled }},
+'{{ serviceDirectory }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ agentsId }}'
@@ -337,50 +338,78 @@ timeout
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: webhooks
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the webhooks resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the webhooks resource.
     - name: agentsId
-      value: string
+      value: "{{ agentsId }}"
       description: Required parameter for the webhooks resource.
     - name: name
-      value: string
-      description: >
-        The unique identifier of the webhook. Required for the Webhooks.UpdateWebhook method. Webhooks.CreateWebhook populates the name automatically. Format: `projects//locations//agents//webhooks/`.
-        
-    - name: displayName
-      value: string
-      description: >
-        Required. The human-readable name of the webhook, unique within the agent.
-        
+      value: "{{ name }}"
     - name: genericWebService
-      value: object
-      description: >
-        Configuration for a generic web service.
-        
-    - name: serviceDirectory
-      value: object
-      description: >
-        Configuration for a [Service Directory](https://cloud.google.com/service-directory) service.
-        
+      value:
+        allowedCaCerts:
+          - "{{ allowedCaCerts }}"
+        password: "{{ password }}"
+        username: "{{ username }}"
+        requestHeaders: "{{ requestHeaders }}"
+        serviceAgentAuth: "{{ serviceAgentAuth }}"
+        parameterMapping: "{{ parameterMapping }}"
+        oauthConfig:
+          clientSecret: "{{ clientSecret }}"
+          clientId: "{{ clientId }}"
+          tokenEndpoint: "{{ tokenEndpoint }}"
+          scopes:
+            - "{{ scopes }}"
+          secretVersionForClientSecret: "{{ secretVersionForClientSecret }}"
+        webhookType: "{{ webhookType }}"
+        secretVersionsForRequestHeaders: "{{ secretVersionsForRequestHeaders }}"
+        uri: "{{ uri }}"
+        secretVersionForUsernamePassword: "{{ secretVersionForUsernamePassword }}"
+        requestBody: "{{ requestBody }}"
+        httpMethod: "{{ httpMethod }}"
+        serviceAccountAuthConfig:
+          serviceAccount: "{{ serviceAccount }}"
+    - name: displayName
+      value: "{{ displayName }}"
     - name: timeout
-      value: string
-      description: >
-        Webhook execution timeout. Execution is considered failed if Dialogflow doesn't receive a response from webhook at the end of the timeout period. Defaults to 5 seconds, maximum allowed timeout is 30 seconds.
-        
+      value: "{{ timeout }}"
     - name: disabled
-      value: boolean
-      description: >
-        Indicates whether the webhook is disabled.
-        
-```
+      value: {{ disabled }}
+    - name: serviceDirectory
+      value:
+        service: "{{ service }}"
+        genericWebService:
+          allowedCaCerts:
+            - "{{ allowedCaCerts }}"
+          password: "{{ password }}"
+          username: "{{ username }}"
+          requestHeaders: "{{ requestHeaders }}"
+          serviceAgentAuth: "{{ serviceAgentAuth }}"
+          parameterMapping: "{{ parameterMapping }}"
+          oauthConfig:
+            clientSecret: "{{ clientSecret }}"
+            clientId: "{{ clientId }}"
+            tokenEndpoint: "{{ tokenEndpoint }}"
+            scopes:
+              - "{{ scopes }}"
+            secretVersionForClientSecret: "{{ secretVersionForClientSecret }}"
+          webhookType: "{{ webhookType }}"
+          secretVersionsForRequestHeaders: "{{ secretVersionsForRequestHeaders }}"
+          uri: "{{ uri }}"
+          secretVersionForUsernamePassword: "{{ secretVersionForUsernamePassword }}"
+          requestBody: "{{ requestBody }}"
+          httpMethod: "{{ httpMethod }}"
+          serviceAccountAuthConfig:
+            serviceAccount: "{{ serviceAccount }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -395,17 +424,17 @@ timeout
 >
 <TabItem value="projects_locations_agents_webhooks_patch">
 
-Updates the specified webhook.
+No description available.
 
 ```sql
 UPDATE google.dialogflow.webhooks
 SET 
 data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
 data__genericWebService = '{{ genericWebService }}',
-data__serviceDirectory = '{{ serviceDirectory }}',
+data__displayName = '{{ displayName }}',
 data__timeout = '{{ timeout }}',
-data__disabled = {{ disabled }}
+data__disabled = {{ disabled }},
+data__serviceDirectory = '{{ serviceDirectory }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -434,7 +463,7 @@ timeout;
 >
 <TabItem value="projects_locations_agents_webhooks_delete">
 
-Deletes the specified webhook.
+No description available.
 
 ```sql
 DELETE FROM google.dialogflow.webhooks

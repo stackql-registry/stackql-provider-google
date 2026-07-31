@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>evaluations</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>evaluations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="evaluations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.documentai.evaluations" /></td></tr>
 </tbody></table>
@@ -57,7 +58,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="allEntitiesMetrics" /></td>
     <td><code>object</code></td>
-    <td>Metrics for all the entities in aggregate. (id: GoogleCloudDocumentaiV1EvaluationMultiConfidenceMetrics)</td>
+    <td>Metrics across multiple confidence levels. (id: GoogleCloudDocumentaiV1EvaluationMultiConfidenceMetrics)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -83,6 +84,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="kmsKeyVersionName" /></td>
     <td><code>string</code></td>
     <td>The KMS key version with which data is encrypted.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="revisions" /></td>
+    <td><code>array</code></td>
+    <td>Contains all revisions of the evaluation, excluding the latest one.</td>
 </tr>
 </tbody>
 </table>
@@ -106,7 +112,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="allEntitiesMetrics" /></td>
     <td><code>object</code></td>
-    <td>Metrics for all the entities in aggregate. (id: GoogleCloudDocumentaiV1EvaluationMultiConfidenceMetrics)</td>
+    <td>Metrics across multiple confidence levels. (id: GoogleCloudDocumentaiV1EvaluationMultiConfidenceMetrics)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -132,6 +138,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="kmsKeyVersionName" /></td>
     <td><code>string</code></td>
     <td>The KMS key version with which data is encrypted.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="revisions" /></td>
+    <td><code>array</code></td>
+    <td>Contains all revisions of the evaluation, excluding the latest one.</td>
 </tr>
 </tbody>
 </table>
@@ -242,7 +253,8 @@ createTime,
 documentCounters,
 entityMetrics,
 kmsKeyName,
-kmsKeyVersionName
+kmsKeyVersionName,
+revisions
 FROM google.documentai.evaluations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
@@ -264,7 +276,8 @@ createTime,
 documentCounters,
 entityMetrics,
 kmsKeyName,
-kmsKeyVersionName
+kmsKeyVersionName,
+revisions
 FROM google.documentai.evaluations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required

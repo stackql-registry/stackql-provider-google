@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>folders</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>folders</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="folders" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.storage.folders" /></td></tr>
 </tbody></table>
@@ -417,62 +418,54 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: folders
   props:
     - name: bucket
-      value: string
+      value: "{{ bucket }}"
       description: Required parameter for the folders resource.
     - name: bucket
-      value: string
-      description: >
+      value: "{{ bucket }}"
+      description: |
         The name of the bucket containing this folder.
-        
     - name: id
-      value: string
-      description: >
+      value: "{{ id }}"
+      description: |
         The ID of the folder, including the bucket name, folder name.
-        
     - name: kind
-      value: string
-      description: >
+      value: "{{ kind }}"
+      description: |
         The kind of item this is. For folders, this is always storage#folder.
-        
       default: storage#folder
     - name: metageneration
-      value: string
-      description: >
+      value: "{{ metageneration }}"
+      description: |
         The version of the metadata for this folder. Used for preconditions and for detecting changes in metadata.
-        
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         The name of the folder. Required if not specified by URL parameter.
-        
     - name: selfLink
-      value: string
-      description: >
+      value: "{{ selfLink }}"
+      description: |
         The link to this folder.
-        
     - name: createTime
-      value: string
-      description: >
+      value: "{{ createTime }}"
+      description: |
         The creation time of the folder in RFC 3339 format.
-        
     - name: updateTime
-      value: string
-      description: >
+      value: "{{ updateTime }}"
+      description: |
         The modification time of the folder metadata in RFC 3339 format.
-        
     - name: pendingRenameInfo
-      value: object
-      description: >
+      description: |
         Only present if the folder is part of an ongoing rename folder operation. Contains information which can be used to query the operation status.
-        
+      value:
+        operationId: "{{ operationId }}"
     - name: recursive
-      value: boolean
-```
+      value: {{ recursive }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

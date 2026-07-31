@@ -15,6 +15,7 @@ image: /img/stackql-googleadmin-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>commands</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>commands</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="commands" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleadmin.directory.commands" /></td></tr>
 </tbody></table>
@@ -76,12 +77,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Indicates the command state.</td>
+    <td>Indicates the command state. (STATE_UNSPECIFIED, PENDING, EXPIRED, CANCELLED, SENT_TO_CLIENT, ACKED_BY_CLIENT, EXECUTED_BY_CLIENT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>The type of the command.</td>
+    <td>The type of the command. (COMMAND_TYPE_UNSPECIFIED, REBOOT, TAKE_A_SCREENSHOT, SET_VOLUME, WIPE_USERS, REMOTE_POWERWASH, DEVICE_START_CRD_SESSION, CAPTURE_LOGS, FETCH_CRD_AVAILABILITY_INFO, FETCH_SUPPORT_PACKET)</td>
 </tr>
 </tbody>
 </table>

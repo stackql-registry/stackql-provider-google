@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>tag_values_namespaced</code> re
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>tag_values_namespaced</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="tag_values_namespaced" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudresourcemanager.tag_values_namespaced" /></td></tr>
 </tbody></table>

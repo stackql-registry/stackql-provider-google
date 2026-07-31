@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>effective_tag_binding_collecti
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>effective_tag_binding_collections</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="effective_tag_binding_collections" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudresourcemanager.effective_tag_binding_collections" /></td></tr>
 </tbody></table>

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>models</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>models</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="models" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.bigquery.models" /></td></tr>
 </tbody></table>
@@ -132,7 +133,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="modelType" /></td>
     <td><code>string</code></td>
-    <td>Output only. Type of the model resource.</td>
+    <td>Output only. Type of the model resource. (MODEL_TYPE_UNSPECIFIED, LINEAR_REGRESSION, LOGISTIC_REGRESSION, KMEANS, MATRIX_FACTORIZATION, DNN_CLASSIFIER, TENSORFLOW, DNN_REGRESSOR, XGBOOST, BOOSTED_TREE_REGRESSOR, BOOSTED_TREE_CLASSIFIER, ARIMA, AUTOML_REGRESSOR, AUTOML_CLASSIFIER, PCA, DNN_LINEAR_COMBINED_CLASSIFIER, DNN_LINEAR_COMBINED_REGRESSOR, AUTOENCODER, ARIMA_PLUS, ARIMA_PLUS_XREG, RANDOM_FOREST_REGRESSOR, RANDOM_FOREST_CLASSIFIER, TENSORFLOW_LITE, ONNX, TRANSFORM_ONLY, CONTRIBUTION_ANALYSIS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="optimalTrialIds" /></td>
@@ -251,7 +252,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="modelType" /></td>
     <td><code>string</code></td>
-    <td>Output only. Type of the model resource.</td>
+    <td>Output only. Type of the model resource. (MODEL_TYPE_UNSPECIFIED, LINEAR_REGRESSION, LOGISTIC_REGRESSION, KMEANS, MATRIX_FACTORIZATION, DNN_CLASSIFIER, TENSORFLOW, DNN_REGRESSOR, XGBOOST, BOOSTED_TREE_REGRESSOR, BOOSTED_TREE_CLASSIFIER, ARIMA, AUTOML_REGRESSOR, AUTOML_CLASSIFIER, PCA, DNN_LINEAR_COMBINED_CLASSIFIER, DNN_LINEAR_COMBINED_REGRESSOR, AUTOENCODER, ARIMA_PLUS, ARIMA_PLUS_XREG, RANDOM_FOREST_REGRESSOR, RANDOM_FOREST_CLASSIFIER, TENSORFLOW_LITE, ONNX, TRANSFORM_ONLY, CONTRIBUTION_ANALYSIS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="optimalTrialIds" /></td>
@@ -298,28 +299,28 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+datasetId"><code>+datasetId</code></a>, <a href="#parameter-+modelId"><code>+modelId</code></a></td>
     <td></td>
-    <td>Gets the specified model resource by model ID.</td>
+    <td>Gets the specified model resource by model ID. # IAM Permissions Requires the `bigquery.models.getMetadata` permission on the model.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+datasetId"><code>+datasetId</code></a></td>
     <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a></td>
-    <td>Lists all models in the specified dataset. Requires the READER dataset role. After retrieving the list of models, you can get information about a particular model by calling the models.get method.</td>
+    <td>Lists all models in the specified dataset. Requires the READER dataset role. After retrieving the list of models, you can get information about a particular model by calling the models.get method. # IAM Permissions Requires the `bigquery.models.list` permission on the dataset.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+datasetId"><code>+datasetId</code></a>, <a href="#parameter-+modelId"><code>+modelId</code></a></td>
     <td></td>
-    <td>Patch specific fields in the specified model.</td>
+    <td>Patch specific fields in the specified model. # IAM Permissions Requires the `bigquery.models.updateMetadata` permission on the model.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+datasetId"><code>+datasetId</code></a>, <a href="#parameter-+modelId"><code>+modelId</code></a></td>
     <td></td>
-    <td>Deletes the model specified by modelId from the dataset.</td>
+    <td>Deletes the model specified by modelId from the dataset. # IAM Permissions Requires the `bigquery.models.delete` permission on the model.</td>
 </tr>
 </tbody>
 </table>
@@ -376,7 +377,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get">
 
-Gets the specified model resource by model ID.
+Gets the specified model resource by model ID. # IAM Permissions Requires the `bigquery.models.getMetadata` permission on the model.
 
 ```sql
 SELECT
@@ -410,7 +411,7 @@ AND +modelId = '{{ +modelId }}' -- required
 </TabItem>
 <TabItem value="list">
 
-Lists all models in the specified dataset. Requires the READER dataset role. After retrieving the list of models, you can get information about a particular model by calling the models.get method.
+Lists all models in the specified dataset. Requires the READER dataset role. After retrieving the list of models, you can get information about a particular model by calling the models.get method. # IAM Permissions Requires the `bigquery.models.list` permission on the dataset.
 
 ```sql
 SELECT
@@ -456,19 +457,19 @@ AND maxResults = '{{ maxResults }}'
 >
 <TabItem value="patch">
 
-Patch specific fields in the specified model.
+Patch specific fields in the specified model. # IAM Permissions Requires the `bigquery.models.updateMetadata` permission on the model.
 
 ```sql
 UPDATE google.bigquery.models
 SET 
 data__bestTrialId = '{{ bestTrialId }}',
-data__friendlyName = '{{ friendlyName }}',
-data__trainingRuns = '{{ trainingRuns }}',
 data__labels = '{{ labels }}',
-data__modelReference = '{{ modelReference }}',
-data__expirationTime = '{{ expirationTime }}',
 data__description = '{{ description }}',
-data__encryptionConfiguration = '{{ encryptionConfiguration }}'
+data__trainingRuns = '{{ trainingRuns }}',
+data__encryptionConfiguration = '{{ encryptionConfiguration }}',
+data__friendlyName = '{{ friendlyName }}',
+data__expirationTime = '{{ expirationTime }}',
+data__modelReference = '{{ modelReference }}'
 WHERE 
 projectId = '{{ projectId }}' --required
 AND +datasetId = '{{ +datasetId }}' --required
@@ -510,7 +511,7 @@ transformColumns;
 >
 <TabItem value="delete">
 
-Deletes the model specified by modelId from the dataset.
+Deletes the model specified by modelId from the dataset. # IAM Permissions Requires the `bigquery.models.delete` permission on the model.
 
 ```sql
 DELETE FROM google.bigquery.models

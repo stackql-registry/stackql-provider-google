@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>consumer_groups</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>consumer_groups</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="consumer_groups" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.managedkafka.consumer_groups" /></td></tr>
 </tbody></table>
@@ -114,7 +115,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the consumer groups in a given cluster.</td>
 </tr>
 <tr>
@@ -167,6 +168,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
+<tr id="parameter-filter">
+    <td><CopyableCode code="filter" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-pageSize">
     <td><CopyableCode code="pageSize" /></td>
     <td><code>integer (int32)</code></td>
@@ -180,6 +186,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-updateMask">
     <td><CopyableCode code="updateMask" /></td>
     <td><code>string (google-fieldmask)</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-view">
+    <td><CopyableCode code="view" /></td>
+    <td><code>string</code></td>
     <td></td>
 </tr>
 </tbody>
@@ -222,8 +233,10 @@ FROM google.managedkafka.consumer_groups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND clustersId = '{{ clustersId }}' -- required
-AND pageToken = '{{ pageToken }}'
+AND view = '{{ view }}'
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -245,8 +258,8 @@ Updates the properties of a single consumer group.
 ```sql
 UPDATE google.managedkafka.consumer_groups
 SET 
-data__topics = '{{ topics }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__topics = '{{ topics }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

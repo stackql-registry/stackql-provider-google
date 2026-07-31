@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>places</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>places</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="places" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.places.places" /></td></tr>
 </tbody></table>
@@ -91,7 +92,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="businessStatus" /></td>
     <td><code>string</code></td>
-    <td>The business status for the place.</td>
+    <td>The business status for the place. (BUSINESS_STATUS_UNSPECIFIED, OPERATIONAL, CLOSED_TEMPORARILY, CLOSED_PERMANENTLY, FUTURE_OPENING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="consumerAlert" /></td>
@@ -111,7 +112,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="currentOpeningHours" /></td>
     <td><code>object</code></td>
-    <td>The hours of operation for the next seven days (including today). The time period starts at midnight on the date of the request and ends at 11:59 pm six days later. This field includes the special_days subfield of all hours, set for dates that have exceptional hours. (id: GoogleMapsPlacesV1PlaceOpeningHours)</td>
+    <td>Information about business hour of the place. (id: GoogleMapsPlacesV1PlaceOpeningHours)</td>
 </tr>
 <tr>
     <td><CopyableCode code="currentSecondaryOpeningHours" /></td>
@@ -137,6 +138,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="editorialSummary" /></td>
     <td><code>object</code></td>
     <td>Contains a summary of the place. A summary is comprised of a textual overview, and also includes the language code for these if applicable. Summary text must be presented as-is and can not be modified or altered. (id: GoogleTypeLocalizedText)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="entrances" /></td>
+    <td><code>array</code></td>
+    <td>Entrances for this destination.</td>
 </tr>
 <tr>
     <td><CopyableCode code="evChargeAmenitySummary" /></td>
@@ -182,6 +188,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="googleMapsLinks" /></td>
     <td><code>object</code></td>
     <td>Links to trigger different Google Maps actions. (id: GoogleMapsPlacesV1PlaceGoogleMapsLinks)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="googleMapsTypeLabel" /></td>
+    <td><code>object</code></td>
+    <td>The type label of the place on Google Maps, localized to the request language if applicable, for example, "Restaurant", "Cafe", "Airport", etc. The type label may be different from the primary type display name and may not be a supported type in [Places API Place Types table](https://developers.google.com/maps/documentation/places/web-service/place-types). (id: GoogleTypeLocalizedText)</td>
 </tr>
 <tr>
     <td><CopyableCode code="googleMapsUri" /></td>
@@ -234,9 +245,19 @@ The following fields are returned by `SELECT` queries:
     <td>A human-readable phone number for the place, in national format.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="navigationPoints" /></td>
+    <td><code>array</code></td>
+    <td>Navigation points for this destination.</td>
+</tr>
+<tr>
     <td><CopyableCode code="neighborhoodSummary" /></td>
     <td><code>object</code></td>
     <td>A summary of points of interest near the place. (id: GoogleMapsPlacesV1PlaceNeighborhoodSummary)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="openingDate" /></td>
+    <td><code>object</code></td>
+    <td>The date this place will open in the future. This field is only populated if the business status is FUTURE_OPENING. (id: GoogleTypeDate)</td>
 </tr>
 <tr>
     <td><CopyableCode code="outdoorSeating" /></td>
@@ -271,7 +292,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="priceLevel" /></td>
     <td><code>string</code></td>
-    <td>Price level of the place.</td>
+    <td>Price level of the place. (PRICE_LEVEL_UNSPECIFIED, PRICE_LEVEL_FREE, PRICE_LEVEL_INEXPENSIVE, PRICE_LEVEL_MODERATE, PRICE_LEVEL_EXPENSIVE, PRICE_LEVEL_VERY_EXPENSIVE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="priceRange" /></td>
@@ -301,7 +322,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="regularOpeningHours" /></td>
     <td><code>object</code></td>
-    <td>The regular hours of operation. Note that if a place is always open (24 hours), the `close` field will not be set. Clients can rely on always open (24 hours) being represented as an [`open`](https://developers.google.com/maps/documentation/places/web-service/reference/rest/v1/places#Period) period containing [`day`](https://developers.google.com/maps/documentation/places/web-service/reference/rest/v1/places#Point) with value `0`, [`hour`](https://developers.google.com/maps/documentation/places/web-service/reference/rest/v1/places#Point) with value `0`, and [`minute`](https://developers.google.com/maps/documentation/places/web-service/reference/rest/v1/places#Point) with value `0`. (id: GoogleMapsPlacesV1PlaceOpeningHours)</td>
+    <td>Information about business hour of the place. (id: GoogleMapsPlacesV1PlaceOpeningHours)</td>
 </tr>
 <tr>
     <td><CopyableCode code="regularSecondaryOpeningHours" /></td>
@@ -399,6 +420,11 @@ The following fields are returned by `SELECT` queries:
     <td>IANA Time Zone Database time zone. For example "America/New_York". (id: GoogleTypeTimeZone)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="transitStation" /></td>
+    <td><code>object</code></td>
+    <td>The transit station information for the place. (id: GoogleMapsPlacesV1TransitStation)</td>
+</tr>
+<tr>
     <td><CopyableCode code="types" /></td>
     <td><code>array</code></td>
     <td>A set of type tags for this result. For example, "political" and "locality". For the complete list of possible values, see Table A and Table B at https://developers.google.com/maps/documentation/places/web-service/place-types</td>
@@ -447,15 +473,15 @@ The following methods are available for this resource:
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-placesId"><code>placesId</code></a></td>
-    <td><a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-sessionToken"><code>sessionToken</code></a>, <a href="#parameter-regionCode"><code>regionCode</code></a></td>
+    <td><a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-regionCode"><code>regionCode</code></a>, <a href="#parameter-sessionToken"><code>sessionToken</code></a></td>
     <td>Get the details of a place based on its resource name, which is a string in the `places/&#123;place_id&#125;` format.</td>
 </tr>
 <tr>
-    <td><a href="#autocomplete"><CopyableCode code="autocomplete" /></a></td>
+    <td><a href="#search_text"><CopyableCode code="search_text" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
     <td></td>
-    <td>Returns predictions for the given input.</td>
+    <td>Text query based place search.</td>
 </tr>
 <tr>
     <td><a href="#search_nearby"><CopyableCode code="search_nearby" /></a></td>
@@ -465,11 +491,11 @@ The following methods are available for this resource:
     <td>Search for places near locations.</td>
 </tr>
 <tr>
-    <td><a href="#search_text"><CopyableCode code="search_text" /></a></td>
+    <td><a href="#autocomplete"><CopyableCode code="autocomplete" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
     <td></td>
-    <td>Text query based place search.</td>
+    <td>Returns predictions for the given input.</td>
 </tr>
 </tbody>
 </table>
@@ -542,6 +568,7 @@ delivery,
 dineIn,
 displayName,
 editorialSummary,
+entrances,
 evChargeAmenitySummary,
 evChargeOptions,
 formattedAddress,
@@ -551,6 +578,7 @@ goodForChildren,
 goodForGroups,
 goodForWatchingSports,
 googleMapsLinks,
+googleMapsTypeLabel,
 googleMapsUri,
 iconBackgroundColor,
 iconMaskBaseUri,
@@ -561,7 +589,9 @@ menuForChildren,
 movedPlace,
 movedPlaceId,
 nationalPhoneNumber,
+navigationPoints,
 neighborhoodSummary,
+openingDate,
 outdoorSeating,
 parkingOptions,
 paymentOptions,
@@ -594,6 +624,7 @@ shortFormattedAddress,
 subDestinations,
 takeout,
 timeZone,
+transitStation,
 types,
 userRatingCount,
 utcOffsetMinutes,
@@ -602,8 +633,8 @@ websiteUri
 FROM google.places.places
 WHERE placesId = '{{ placesId }}' -- required
 AND languageCode = '{{ languageCode }}'
-AND sessionToken = '{{ sessionToken }}'
 AND regionCode = '{{ regionCode }}'
+AND sessionToken = '{{ sessionToken }}'
 ;
 ```
 </TabItem>
@@ -613,33 +644,40 @@ AND regionCode = '{{ regionCode }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="autocomplete"
+    defaultValue="search_text"
     values={[
-        { label: 'autocomplete', value: 'autocomplete' },
+        { label: 'search_text', value: 'search_text' },
         { label: 'search_nearby', value: 'search_nearby' },
-        { label: 'search_text', value: 'search_text' }
+        { label: 'autocomplete', value: 'autocomplete' }
     ]}
 >
-<TabItem value="autocomplete">
+<TabItem value="search_text">
 
-Returns predictions for the given input.
+Text query based place search.
 
 ```sql
-EXEC google.places.places.autocomplete 
+EXEC google.places.places.search_text 
 @@json=
 '{
-"origin": "{{ origin }}", 
-"locationRestriction": "{{ locationRestriction }}", 
+"textQuery": "{{ textQuery }}", 
 "languageCode": "{{ languageCode }}", 
-"includePureServiceAreaBusinesses": {{ includePureServiceAreaBusinesses }}, 
-"inputOffset": {{ inputOffset }}, 
-"includedRegionCodes": "{{ includedRegionCodes }}", 
-"input": "{{ input }}", 
-"includedPrimaryTypes": "{{ includedPrimaryTypes }}", 
+"rankPreference": "{{ rankPreference }}", 
+"routingParameters": "{{ routingParameters }}", 
+"searchAlongRouteParameters": "{{ searchAlongRouteParameters }}", 
+"includedType": "{{ includedType }}", 
+"pageToken": "{{ pageToken }}", 
 "locationBias": "{{ locationBias }}", 
-"includeQueryPredictions": {{ includeQueryPredictions }}, 
-"sessionToken": "{{ sessionToken }}", 
-"regionCode": "{{ regionCode }}"
+"evOptions": "{{ evOptions }}", 
+"pageSize": {{ pageSize }}, 
+"minRating": {{ minRating }}, 
+"regionCode": "{{ regionCode }}", 
+"priceLevels": "{{ priceLevels }}", 
+"includePureServiceAreaBusinesses": {{ includePureServiceAreaBusinesses }}, 
+"locationRestriction": "{{ locationRestriction }}", 
+"strictTypeFiltering": {{ strictTypeFiltering }}, 
+"includeFutureOpeningBusinesses": {{ includeFutureOpeningBusinesses }}, 
+"maxResultCount": {{ maxResultCount }}, 
+"openNow": {{ openNow }}
 }'
 ;
 ```
@@ -652,46 +690,42 @@ Search for places near locations.
 EXEC google.places.places.search_nearby 
 @@json=
 '{
-"routingParameters": "{{ routingParameters }}", 
-"excludedTypes": "{{ excludedTypes }}", 
-"maxResultCount": {{ maxResultCount }}, 
-"includedTypes": "{{ includedTypes }}", 
-"rankPreference": "{{ rankPreference }}", 
-"languageCode": "{{ languageCode }}", 
-"includedPrimaryTypes": "{{ includedPrimaryTypes }}", 
 "regionCode": "{{ regionCode }}", 
+"excludedTypes": "{{ excludedTypes }}", 
 "excludedPrimaryTypes": "{{ excludedPrimaryTypes }}", 
+"routingParameters": "{{ routingParameters }}", 
+"languageCode": "{{ languageCode }}", 
+"rankPreference": "{{ rankPreference }}", 
+"includedTypes": "{{ includedTypes }}", 
+"includedPrimaryTypes": "{{ includedPrimaryTypes }}", 
+"maxResultCount": {{ maxResultCount }}, 
+"includeFutureOpeningBusinesses": {{ includeFutureOpeningBusinesses }}, 
 "locationRestriction": "{{ locationRestriction }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="search_text">
+<TabItem value="autocomplete">
 
-Text query based place search.
+Returns predictions for the given input.
 
 ```sql
-EXEC google.places.places.search_text 
+EXEC google.places.places.autocomplete 
 @@json=
 '{
-"pageSize": {{ pageSize }}, 
-"evOptions": "{{ evOptions }}", 
-"languageCode": "{{ languageCode }}", 
-"priceLevels": "{{ priceLevels }}", 
-"rankPreference": "{{ rankPreference }}", 
-"pageToken": "{{ pageToken }}", 
-"openNow": {{ openNow }}, 
-"minRating": {{ minRating }}, 
-"includedType": "{{ includedType }}", 
+"origin": "{{ origin }}", 
 "regionCode": "{{ regionCode }}", 
-"maxResultCount": {{ maxResultCount }}, 
-"strictTypeFiltering": {{ strictTypeFiltering }}, 
+"includeFutureOpeningBusinesses": {{ includeFutureOpeningBusinesses }}, 
+"includedPrimaryTypes": "{{ includedPrimaryTypes }}", 
+"sessionToken": "{{ sessionToken }}", 
+"locationRestriction": "{{ locationRestriction }}", 
+"inputOffset": {{ inputOffset }}, 
 "includePureServiceAreaBusinesses": {{ includePureServiceAreaBusinesses }}, 
+"languageCode": "{{ languageCode }}", 
+"input": "{{ input }}", 
+"includedRegionCodes": "{{ includedRegionCodes }}", 
 "locationBias": "{{ locationBias }}", 
-"routingParameters": "{{ routingParameters }}", 
-"searchAlongRouteParameters": "{{ searchAlongRouteParameters }}", 
-"textQuery": "{{ textQuery }}", 
-"locationRestriction": "{{ locationRestriction }}"
+"includeQueryPredictions": {{ includeQueryPredictions }}
 }'
 ;
 ```

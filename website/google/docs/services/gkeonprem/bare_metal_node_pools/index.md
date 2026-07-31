@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>bare_metal_node_pools</code> re
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>bare_metal_node_pools</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="bare_metal_node_pools" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.gkeonprem.bare_metal_node_pools" /></td></tr>
 </tbody></table>
@@ -92,7 +93,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the bare metal node pool.</td>
+    <td>Output only. The current state of the bare metal node pool. (STATE_UNSPECIFIED, PROVISIONING, RUNNING, RECONCILING, STOPPING, ERROR, DEGRADED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="status" /></td>
@@ -171,7 +172,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the bare metal node pool.</td>
+    <td>Output only. The current state of the bare metal node pool. (STATE_UNSPECIFIED, PROVISIONING, RUNNING, RECONCILING, STOPPING, ERROR, DEGRADED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="status" /></td>
@@ -224,36 +225,29 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_bare_metal_clusters_bare_metal_node_pools_list"><CopyableCode code="projects_locations_bare_metal_clusters_bare_metal_node_pools_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bareMetalClustersId"><code>bareMetalClustersId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists bare metal node pools in a given project, location and bare metal cluster.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_bare_metal_clusters_bare_metal_node_pools_create"><CopyableCode code="projects_locations_bare_metal_clusters_bare_metal_node_pools_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bareMetalClustersId"><code>bareMetalClustersId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-bareMetalNodePoolId"><code>bareMetalNodePoolId</code></a></td>
+    <td><a href="#parameter-bareMetalNodePoolId"><code>bareMetalNodePoolId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a new bare metal node pool in a given project, location and Bare Metal cluster.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_bare_metal_clusters_bare_metal_node_pools_patch"><CopyableCode code="projects_locations_bare_metal_clusters_bare_metal_node_pools_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bareMetalClustersId"><code>bareMetalClustersId</code></a>, <a href="#parameter-bareMetalNodePoolsId"><code>bareMetalNodePoolsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Updates the parameters of a single bare metal node pool.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_bare_metal_clusters_bare_metal_node_pools_delete"><CopyableCode code="projects_locations_bare_metal_clusters_bare_metal_node_pools_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bareMetalClustersId"><code>bareMetalClustersId</code></a>, <a href="#parameter-bareMetalNodePoolsId"><code>bareMetalNodePoolsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-ignoreErrors"><code>ignoreErrors</code></a></td>
+    <td><a href="#parameter-ignoreErrors"><code>ignoreErrors</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
     <td>Deletes a single bare metal node pool.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_bare_metal_clusters_bare_metal_node_pools_unenroll"><CopyableCode code="projects_locations_bare_metal_clusters_bare_metal_node_pools_unenroll" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bareMetalClustersId"><code>bareMetalClustersId</code></a>, <a href="#parameter-bareMetalNodePoolsId"><code>bareMetalNodePoolsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
-    <td>Unenrolls a bare metal node pool from Anthos On-Prem API.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_bare_metal_clusters_bare_metal_node_pools_enroll"><CopyableCode code="projects_locations_bare_metal_clusters_bare_metal_node_pools_enroll" /></a></td>
@@ -261,6 +255,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bareMetalClustersId"><code>bareMetalClustersId</code></a></td>
     <td></td>
     <td>Enrolls an existing bare metal node pool to the Anthos On-Prem API within a given project and location. Through enrollment, an existing node pool will become Anthos On-Prem API managed. The corresponding GCP resources will be created.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_bare_metal_clusters_bare_metal_node_pools_unenroll"><CopyableCode code="projects_locations_bare_metal_clusters_bare_metal_node_pools_unenroll" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bareMetalClustersId"><code>bareMetalClustersId</code></a>, <a href="#parameter-bareMetalNodePoolsId"><code>bareMetalNodePoolsId</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
+    <td>Unenrolls a bare metal node pool from Anthos On-Prem API.</td>
 </tr>
 </tbody>
 </table>
@@ -406,9 +407,9 @@ FROM google.gkeonprem.bare_metal_node_pools
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND bareMetalClustersId = '{{ bareMetalClustersId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND view = '{{ view }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -430,30 +431,30 @@ Creates a new bare metal node pool in a given project, location and Bare Metal c
 
 ```sql
 INSERT INTO google.gkeonprem.bare_metal_node_pools (
-data__annotations,
-data__upgradePolicy,
-data__name,
-data__etag,
 data__displayName,
+data__name,
+data__upgradePolicy,
 data__nodePoolConfig,
+data__annotations,
+data__etag,
 projectsId,
 locationsId,
 bareMetalClustersId,
-validateOnly,
-bareMetalNodePoolId
+bareMetalNodePoolId,
+validateOnly
 )
 SELECT 
-'{{ annotations }}',
-'{{ upgradePolicy }}',
-'{{ name }}',
-'{{ etag }}',
 '{{ displayName }}',
+'{{ name }}',
+'{{ upgradePolicy }}',
 '{{ nodePoolConfig }}',
+'{{ annotations }}',
+'{{ etag }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ bareMetalClustersId }}',
-'{{ validateOnly }}',
-'{{ bareMetalNodePoolId }}'
+'{{ bareMetalNodePoolId }}',
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -465,54 +466,64 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: bare_metal_node_pools
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the bare_metal_node_pools resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the bare_metal_node_pools resource.
     - name: bareMetalClustersId
-      value: string
+      value: "{{ bareMetalClustersId }}"
       description: Required parameter for the bare_metal_node_pools resource.
-    - name: annotations
-      value: object
-      description: >
-        Annotations on the bare metal node pool. This field has the same restrictions as Kubernetes annotations. The total size of all keys and values combined is limited to 256k. Key can have 2 segments: prefix (optional) and name (required), separated by a slash (/). Prefix must be a DNS subdomain. Name must be 63 characters or less, begin and end with alphanumerics, with dashes (-), underscores (_), dots (.), and alphanumerics between.
-        
-    - name: upgradePolicy
-      value: object
-      description: >
-        The worker node pool upgrade policy.
-        
-    - name: name
-      value: string
-      description: >
-        Immutable. The bare metal node pool resource name.
-        
-    - name: etag
-      value: string
-      description: >
-        This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. Allows clients to perform consistent read-modify-writes through optimistic concurrency control.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         The display name for the bare metal node pool.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. The bare metal node pool resource name.
+    - name: upgradePolicy
+      description: |
+        The worker node pool upgrade policy.
+      value:
+        parallelUpgradeConfig:
+          minimumAvailableNodes: {{ minimumAvailableNodes }}
+          concurrentNodes: {{ concurrentNodes }}
     - name: nodePoolConfig
-      value: object
-      description: >
+      description: |
         Required. Node pool configuration.
-        
-    - name: validateOnly
-      value: boolean
+      value:
+        labels: "{{ labels }}"
+        kubeletConfig:
+          registryPullQps: {{ registryPullQps }}
+          registryBurst: {{ registryBurst }}
+          serializeImagePullsDisabled: {{ serializeImagePullsDisabled }}
+        operatingSystem: "{{ operatingSystem }}"
+        nodeConfigs:
+          - labels: "{{ labels }}"
+            nodeIp: "{{ nodeIp }}"
+        taints:
+          - key: "{{ key }}"
+            value: "{{ value }}"
+            effect: "{{ effect }}"
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Annotations on the bare metal node pool. This field has the same restrictions as Kubernetes annotations. The total size of all keys and values combined is limited to 256k. Key can have 2 segments: prefix (optional) and name (required), separated by a slash (/). Prefix must be a DNS subdomain. Name must be 63 characters or less, begin and end with alphanumerics, with dashes (-), underscores (_), dots (.), and alphanumerics between.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. Allows clients to perform consistent read-modify-writes through optimistic concurrency control.
     - name: bareMetalNodePoolId
-      value: string
-```
+      value: "{{ bareMetalNodePoolId }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -532,19 +543,19 @@ Updates the parameters of a single bare metal node pool.
 ```sql
 UPDATE google.gkeonprem.bare_metal_node_pools
 SET 
-data__annotations = '{{ annotations }}',
-data__upgradePolicy = '{{ upgradePolicy }}',
-data__name = '{{ name }}',
-data__etag = '{{ etag }}',
 data__displayName = '{{ displayName }}',
-data__nodePoolConfig = '{{ nodePoolConfig }}'
+data__name = '{{ name }}',
+data__upgradePolicy = '{{ upgradePolicy }}',
+data__nodePoolConfig = '{{ nodePoolConfig }}',
+data__annotations = '{{ annotations }}',
+data__etag = '{{ etag }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND bareMetalClustersId = '{{ bareMetalClustersId }}' --required
 AND bareMetalNodePoolsId = '{{ bareMetalNodePoolsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND allowMissing = {{ allowMissing}}
+AND updateMask = '{{ updateMask}}'
 AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
@@ -575,10 +586,10 @@ WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND bareMetalClustersId = '{{ bareMetalClustersId }}' --required
 AND bareMetalNodePoolsId = '{{ bareMetalNodePoolsId }}' --required
-AND validateOnly = '{{ validateOnly }}'
-AND etag = '{{ etag }}'
-AND allowMissing = '{{ allowMissing }}'
 AND ignoreErrors = '{{ ignoreErrors }}'
+AND etag = '{{ etag }}'
+AND validateOnly = '{{ validateOnly }}'
+AND allowMissing = '{{ allowMissing }}'
 ;
 ```
 </TabItem>
@@ -588,28 +599,12 @@ AND ignoreErrors = '{{ ignoreErrors }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_bare_metal_clusters_bare_metal_node_pools_unenroll"
+    defaultValue="projects_locations_bare_metal_clusters_bare_metal_node_pools_enroll"
     values={[
-        { label: 'projects_locations_bare_metal_clusters_bare_metal_node_pools_unenroll', value: 'projects_locations_bare_metal_clusters_bare_metal_node_pools_unenroll' },
-        { label: 'projects_locations_bare_metal_clusters_bare_metal_node_pools_enroll', value: 'projects_locations_bare_metal_clusters_bare_metal_node_pools_enroll' }
+        { label: 'projects_locations_bare_metal_clusters_bare_metal_node_pools_enroll', value: 'projects_locations_bare_metal_clusters_bare_metal_node_pools_enroll' },
+        { label: 'projects_locations_bare_metal_clusters_bare_metal_node_pools_unenroll', value: 'projects_locations_bare_metal_clusters_bare_metal_node_pools_unenroll' }
     ]}
 >
-<TabItem value="projects_locations_bare_metal_clusters_bare_metal_node_pools_unenroll">
-
-Unenrolls a bare metal node pool from Anthos On-Prem API.
-
-```sql
-EXEC google.gkeonprem.bare_metal_node_pools.projects_locations_bare_metal_clusters_bare_metal_node_pools_unenroll 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@bareMetalClustersId='{{ bareMetalClustersId }}' --required, 
-@bareMetalNodePoolsId='{{ bareMetalNodePoolsId }}' --required, 
-@validateOnly={{ validateOnly }}, 
-@etag='{{ etag }}', 
-@allowMissing={{ allowMissing }}
-;
-```
-</TabItem>
 <TabItem value="projects_locations_bare_metal_clusters_bare_metal_node_pools_enroll">
 
 Enrolls an existing bare metal node pool to the Anthos On-Prem API within a given project and location. Through enrollment, an existing node pool will become Anthos On-Prem API managed. The corresponding GCP resources will be created.
@@ -624,6 +619,22 @@ EXEC google.gkeonprem.bare_metal_node_pools.projects_locations_bare_metal_cluste
 "bareMetalNodePoolId": "{{ bareMetalNodePoolId }}", 
 "validateOnly": {{ validateOnly }}
 }'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_bare_metal_clusters_bare_metal_node_pools_unenroll">
+
+Unenrolls a bare metal node pool from Anthos On-Prem API.
+
+```sql
+EXEC google.gkeonprem.bare_metal_node_pools.projects_locations_bare_metal_clusters_bare_metal_node_pools_unenroll 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@bareMetalClustersId='{{ bareMetalClustersId }}' --required, 
+@bareMetalNodePoolsId='{{ bareMetalNodePoolsId }}' --required, 
+@etag='{{ etag }}', 
+@validateOnly={{ validateOnly }}, 
+@allowMissing={{ allowMissing }}
 ;
 ```
 </TabItem>

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>security_gateways</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>security_gateways</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="security_gateways" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.beyondcorp.security_gateways" /></td></tr>
 </tbody></table>
@@ -80,6 +81,11 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Map of Hubs that represents regional data path deployment with GCP region as a key.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="logging" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Configuration for Cloud Logging. If this field is present, the logging will be enabled. (id: GoogleCloudBeyondcorpSecuritygatewaysV1LoggingConfig)</td>
+</tr>
+<tr>
     <td><CopyableCode code="proxyProtocolConfig" /></td>
     <td><code>object</code></td>
     <td>Optional. Shared proxy configuration for all apps. (id: GoogleCloudBeyondcorpSecuritygatewaysV1ProxyProtocolConfig)</td>
@@ -92,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The operational state of the SecurityGateway.</td>
+    <td>Output only. The operational state of the SecurityGateway. (STATE_UNSPECIFIED, CREATING, UPDATING, DELETING, RUNNING, DOWN, ERROR)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -144,28 +150,28 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_security_gateways_list"><CopyableCode code="projects_locations_security_gateways_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists SecurityGateways in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_security_gateways_create"><CopyableCode code="projects_locations_security_gateways_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-securityGatewayId"><code>securityGatewayId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-securityGatewayId"><code>securityGatewayId</code></a></td>
     <td>Creates a new Security Gateway in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_security_gateways_patch"><CopyableCode code="projects_locations_security_gateways_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-securityGatewaysId"><code>securityGatewaysId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a single SecurityGateway.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_security_gateways_delete"><CopyableCode code="projects_locations_security_gateways_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-securityGatewaysId"><code>securityGatewaysId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Deletes a single SecurityGateway.</td>
 </tr>
 </tbody>
@@ -263,6 +269,7 @@ delegatingServiceAccount,
 displayName,
 externalIps,
 hubs,
+logging,
 proxyProtocolConfig,
 serviceDiscovery,
 state,
@@ -284,10 +291,10 @@ SELECT
 FROM google.beyondcorp.security_gateways
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -309,26 +316,28 @@ Creates a new Security Gateway in a given project and location.
 
 ```sql
 INSERT INTO google.beyondcorp.security_gateways (
-data__serviceDiscovery,
-data__name,
-data__displayName,
-data__proxyProtocolConfig,
 data__hubs,
+data__displayName,
+data__name,
+data__logging,
+data__proxyProtocolConfig,
+data__serviceDiscovery,
 projectsId,
 locationsId,
-securityGatewayId,
-requestId
+requestId,
+securityGatewayId
 )
 SELECT 
-'{{ serviceDiscovery }}',
-'{{ name }}',
-'{{ displayName }}',
-'{{ proxyProtocolConfig }}',
 '{{ hubs }}',
+'{{ displayName }}',
+'{{ name }}',
+'{{ logging }}',
+'{{ proxyProtocolConfig }}',
+'{{ serviceDiscovery }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ securityGatewayId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ securityGatewayId }}'
 RETURNING
 name,
 done,
@@ -340,46 +349,61 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: security_gateways
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the security_gateways resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the security_gateways resource.
-    - name: serviceDiscovery
-      value: object
-      description: >
-        Optional. Settings related to the Service Discovery.
-        
-    - name: name
-      value: string
-      description: >
-        Identifier. Name of the resource.
-        
-    - name: displayName
-      value: string
-      description: >
-        Optional. An arbitrary user-provided name for the SecurityGateway. Cannot exceed 64 characters.
-        
-    - name: proxyProtocolConfig
-      value: object
-      description: >
-        Optional. Shared proxy configuration for all apps.
-        
     - name: hubs
-      value: object
-      description: >
+      value: "{{ hubs }}"
+      description: |
         Optional. Map of Hubs that represents regional data path deployment with GCP region as a key.
-        
-    - name: securityGatewayId
-      value: string
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. An arbitrary user-provided name for the SecurityGateway. Cannot exceed 64 characters.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Name of the resource.
+    - name: logging
+      value: "{{ logging }}"
+      description: |
+        Optional. Configuration for Cloud Logging. If this field is present, the logging will be enabled.
+    - name: proxyProtocolConfig
+      description: |
+        Optional. Shared proxy configuration for all apps.
+      value:
+        gatewayIdentity: "{{ gatewayIdentity }}"
+        contextualHeaders:
+          userInfo:
+            outputType: "{{ outputType }}"
+          deviceInfo:
+            outputType: "{{ outputType }}"
+          outputType: "{{ outputType }}"
+          groupInfo:
+            outputType: "{{ outputType }}"
+        clientIp: {{ clientIp }}
+        allowedClientHeaders:
+          - "{{ allowedClientHeaders }}"
+        metadataHeaders: "{{ metadataHeaders }}"
+    - name: serviceDiscovery
+      description: |
+        Optional. Settings related to the Service Discovery.
+      value:
+        apiGateway:
+          resourceOverride:
+            path: "{{ path }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+    - name: securityGatewayId
+      value: "{{ securityGatewayId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -399,17 +423,18 @@ Updates the parameters of a single SecurityGateway.
 ```sql
 UPDATE google.beyondcorp.security_gateways
 SET 
-data__serviceDiscovery = '{{ serviceDiscovery }}',
-data__name = '{{ name }}',
+data__hubs = '{{ hubs }}',
 data__displayName = '{{ displayName }}',
+data__name = '{{ name }}',
+data__logging = '{{ logging }}',
 data__proxyProtocolConfig = '{{ proxyProtocolConfig }}',
-data__hubs = '{{ hubs }}'
+data__serviceDiscovery = '{{ serviceDiscovery }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND securityGatewaysId = '{{ securityGatewaysId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,
@@ -438,8 +463,8 @@ DELETE FROM google.beyondcorp.security_gateways
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND securityGatewaysId = '{{ securityGatewaysId }}' --required
-AND validateOnly = '{{ validateOnly }}'
 AND requestId = '{{ requestId }}'
+AND validateOnly = '{{ validateOnly }}'
 ;
 ```
 </TabItem>

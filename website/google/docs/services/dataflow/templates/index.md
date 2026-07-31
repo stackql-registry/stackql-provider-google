@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>templates</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>templates</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="templates" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataflow.templates" /></td></tr>
 </tbody></table>
@@ -67,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="templateType" /></td>
     <td><code>string</code></td>
-    <td>Template Type.</td>
+    <td>Template Type. (UNKNOWN, LEGACY, FLEX)</td>
 </tr>
 </tbody>
 </table>
@@ -101,7 +102,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="templateType" /></td>
     <td><code>string</code></td>
-    <td>Template Type.</td>
+    <td>Template Type. (UNKNOWN, LEGACY, FLEX)</td>
 </tr>
 </tbody>
 </table>
@@ -134,7 +135,7 @@ The following methods are available for this resource:
     <td><a href="#projects_templates_get"><CopyableCode code="projects_templates_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a></td>
-    <td><a href="#parameter-gcsPath"><code>gcsPath</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-location"><code>location</code></a></td>
+    <td><a href="#parameter-gcsPath"><code>gcsPath</code></a>, <a href="#parameter-location"><code>location</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Get the template associated with a template. To get the template, we recommend using `projects.locations.templates.get` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.get` is not recommended, because only templates that are running in `us-central1` are retrieved.</td>
 </tr>
 <tr>
@@ -152,17 +153,17 @@ The following methods are available for this resource:
     <td>Creates a Cloud Dataflow job from a template. Do not enter confidential information when you supply string values using the API. To create a job, we recommend using `projects.locations.templates.create` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.create` is not recommended, because your job will always start in `us-central1`.</td>
 </tr>
 <tr>
-    <td><a href="#projects_templates_launch"><CopyableCode code="projects_templates_launch" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-gcsPath"><code>gcsPath</code></a>, <a href="#parameter-dynamicTemplate.gcsPath"><code>dynamicTemplate.gcsPath</code></a>, <a href="#parameter-dynamicTemplate.stagingLocation"><code>dynamicTemplate.stagingLocation</code></a>, <a href="#parameter-location"><code>location</code></a></td>
-    <td>Launches a template. To launch a template, we recommend using `projects.locations.templates.launch` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.launch` is not recommended, because jobs launched from the template will always start in `us-central1`.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_templates_launch"><CopyableCode code="projects_locations_templates_launch" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-location"><code>location</code></a></td>
     <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-gcsPath"><code>gcsPath</code></a>, <a href="#parameter-dynamicTemplate.gcsPath"><code>dynamicTemplate.gcsPath</code></a>, <a href="#parameter-dynamicTemplate.stagingLocation"><code>dynamicTemplate.stagingLocation</code></a></td>
+    <td>Launches a template. To launch a template, we recommend using `projects.locations.templates.launch` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.launch` is not recommended, because jobs launched from the template will always start in `us-central1`.</td>
+</tr>
+<tr>
+    <td><a href="#projects_templates_launch"><CopyableCode code="projects_templates_launch" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a></td>
+    <td><a href="#parameter-dynamicTemplate.stagingLocation"><code>dynamicTemplate.stagingLocation</code></a>, <a href="#parameter-location"><code>location</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-gcsPath"><code>gcsPath</code></a>, <a href="#parameter-dynamicTemplate.gcsPath"><code>dynamicTemplate.gcsPath</code></a></td>
     <td>Launches a template. To launch a template, we recommend using `projects.locations.templates.launch` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.launch` is not recommended, because jobs launched from the template will always start in `us-central1`.</td>
 </tr>
 </tbody>
@@ -264,8 +265,8 @@ templateType
 FROM google.dataflow.templates
 WHERE projectId = '{{ projectId }}' -- required
 AND gcsPath = '{{ gcsPath }}'
-AND view = '{{ view }}'
 AND location = '{{ location }}'
+AND view = '{{ view }}'
 ;
 ```
 </TabItem>
@@ -288,20 +289,20 @@ Creates a Cloud Dataflow job from a template. Do not enter confidential informat
 
 ```sql
 INSERT INTO google.dataflow.templates (
-data__jobName,
 data__gcsPath,
-data__parameters,
 data__environment,
 data__location,
+data__jobName,
+data__parameters,
 projectId,
 location
 )
 SELECT 
-'{{ jobName }}',
 '{{ gcsPath }}',
-'{{ parameters }}',
 '{{ environment }}',
 '{{ location }}',
+'{{ jobName }}',
+'{{ parameters }}',
 '{{ projectId }}',
 '{{ location }}'
 RETURNING
@@ -317,6 +318,7 @@ executionInfo,
 jobMetadata,
 labels,
 location,
+pausable,
 pipelineDescription,
 projectId,
 replaceJobId,
@@ -342,19 +344,19 @@ Creates a Cloud Dataflow job from a template. Do not enter confidential informat
 
 ```sql
 INSERT INTO google.dataflow.templates (
-data__jobName,
 data__gcsPath,
-data__parameters,
 data__environment,
 data__location,
+data__jobName,
+data__parameters,
 projectId
 )
 SELECT 
-'{{ jobName }}',
 '{{ gcsPath }}',
-'{{ parameters }}',
 '{{ environment }}',
 '{{ location }}',
+'{{ jobName }}',
+'{{ parameters }}',
 '{{ projectId }}'
 RETURNING
 id,
@@ -369,6 +371,7 @@ executionInfo,
 jobMetadata,
 labels,
 location,
+pausable,
 pipelineDescription,
 projectId,
 replaceJobId,
@@ -390,42 +393,58 @@ type
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: templates
   props:
     - name: projectId
-      value: string
+      value: "{{ projectId }}"
       description: Required parameter for the templates resource.
     - name: location
-      value: string
+      value: "{{ location }}"
       description: Required parameter for the templates resource.
-    - name: jobName
-      value: string
-      description: >
-        Required. The job name to use for the created job.
-        
     - name: gcsPath
-      value: string
-      description: >
-        Required. A Cloud Storage path to the template from which to create the job. Must be a valid Cloud Storage URL, beginning with `gs://`.
-        
-    - name: parameters
-      value: object
-      description: >
-        The runtime parameters to pass to the job.
-        
+      value: "{{ gcsPath }}"
+      description: |
+        Required. A Cloud Storage path to the template from which to create the job. Must be a valid Cloud Storage URL, beginning with \`gs://\`.
     - name: environment
-      value: object
-      description: >
+      description: |
         The runtime environment for the job.
-        
+      value:
+        maxWorkers: {{ maxWorkers }}
+        additionalPipelineOptions:
+          - "{{ additionalPipelineOptions }}"
+        serviceAccountEmail: "{{ serviceAccountEmail }}"
+        subnetwork: "{{ subnetwork }}"
+        workerRegion: "{{ workerRegion }}"
+        enableStreamingEngine: {{ enableStreamingEngine }}
+        tempLocation: "{{ tempLocation }}"
+        bypassTempDirValidation: {{ bypassTempDirValidation }}
+        kmsKeyName: "{{ kmsKeyName }}"
+        additionalExperiments:
+          - "{{ additionalExperiments }}"
+        network: "{{ network }}"
+        zone: "{{ zone }}"
+        machineType: "{{ machineType }}"
+        numWorkers: {{ numWorkers }}
+        additionalUserLabels: "{{ additionalUserLabels }}"
+        ipConfiguration: "{{ ipConfiguration }}"
+        diskSizeGb: {{ diskSizeGb }}
+        workerZone: "{{ workerZone }}"
+        streamingMode: "{{ streamingMode }}"
     - name: location
-      value: string
-      description: >
+      value: "{{ location }}"
+      description: |
         The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) to which to direct the request.
-        
-```
+    - name: jobName
+      value: "{{ jobName }}"
+      description: |
+        Required. The job name to use for the created job.
+    - name: parameters
+      value: "{{ parameters }}"
+      description: |
+        The runtime parameters to pass to the job.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -433,35 +452,12 @@ type
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_templates_launch"
+    defaultValue="projects_locations_templates_launch"
     values={[
-        { label: 'projects_templates_launch', value: 'projects_templates_launch' },
-        { label: 'projects_locations_templates_launch', value: 'projects_locations_templates_launch' }
+        { label: 'projects_locations_templates_launch', value: 'projects_locations_templates_launch' },
+        { label: 'projects_templates_launch', value: 'projects_templates_launch' }
     ]}
 >
-<TabItem value="projects_templates_launch">
-
-Launches a template. To launch a template, we recommend using `projects.locations.templates.launch` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.launch` is not recommended, because jobs launched from the template will always start in `us-central1`.
-
-```sql
-EXEC google.dataflow.templates.projects_templates_launch 
-@projectId='{{ projectId }}' --required, 
-@validateOnly={{ validateOnly }}, 
-@gcsPath='{{ gcsPath }}', 
-@dynamicTemplate.gcsPath='{{ dynamicTemplate.gcsPath }}', 
-@dynamicTemplate.stagingLocation='{{ dynamicTemplate.stagingLocation }}', 
-@location='{{ location }}' 
-@@json=
-'{
-"jobName": "{{ jobName }}", 
-"parameters": "{{ parameters }}", 
-"environment": "{{ environment }}", 
-"update": {{ update }}, 
-"transformNameMapping": "{{ transformNameMapping }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_templates_launch">
 
 Launches a template. To launch a template, we recommend using `projects.locations.templates.launch` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.launch` is not recommended, because jobs launched from the template will always start in `us-central1`.
@@ -476,11 +472,34 @@ EXEC google.dataflow.templates.projects_locations_templates_launch
 @dynamicTemplate.stagingLocation='{{ dynamicTemplate.stagingLocation }}' 
 @@json=
 '{
-"jobName": "{{ jobName }}", 
+"transformNameMapping": "{{ transformNameMapping }}", 
 "parameters": "{{ parameters }}", 
-"environment": "{{ environment }}", 
+"jobName": "{{ jobName }}", 
 "update": {{ update }}, 
-"transformNameMapping": "{{ transformNameMapping }}"
+"environment": "{{ environment }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_templates_launch">
+
+Launches a template. To launch a template, we recommend using `projects.locations.templates.launch` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.launch` is not recommended, because jobs launched from the template will always start in `us-central1`.
+
+```sql
+EXEC google.dataflow.templates.projects_templates_launch 
+@projectId='{{ projectId }}' --required, 
+@dynamicTemplate.stagingLocation='{{ dynamicTemplate.stagingLocation }}', 
+@location='{{ location }}', 
+@validateOnly={{ validateOnly }}, 
+@gcsPath='{{ gcsPath }}', 
+@dynamicTemplate.gcsPath='{{ dynamicTemplate.gcsPath }}' 
+@@json=
+'{
+"transformNameMapping": "{{ transformNameMapping }}", 
+"parameters": "{{ parameters }}", 
+"jobName": "{{ jobName }}", 
+"update": {{ update }}, 
+"environment": "{{ environment }}"
 }'
 ;
 ```

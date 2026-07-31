@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>client_states</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>client_states</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="client_states" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudidentity.client_states" /></td></tr>
 </tbody></table>
@@ -62,7 +63,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="complianceState" /></td>
     <td><code>string</code></td>
-    <td>The compliance state of the resource as specified by the API client.</td>
+    <td>The compliance state of the resource as specified by the API client. (COMPLIANCE_STATE_UNSPECIFIED, COMPLIANT, NON_COMPLIANT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -82,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="healthScore" /></td>
     <td><code>string</code></td>
-    <td>The Health score of the resource. The Health score is the callers specification of the condition of the device from a usability point of view. For example, a third-party device management provider may specify a health score based on its compliance with organizational policies.</td>
+    <td>The Health score of the resource. The Health score is the callers specification of the condition of the device from a usability point of view. For example, a third-party device management provider may specify a health score based on its compliance with organizational policies. (HEALTH_SCORE_UNSPECIFIED, VERY_POOR, POOR, NEUTRAL, GOOD, VERY_GOOD)</td>
 </tr>
 <tr>
     <td><CopyableCode code="keyValuePairs" /></td>
@@ -97,12 +98,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="managed" /></td>
     <td><code>string</code></td>
-    <td>The management state of the resource as specified by the API client.</td>
+    <td>The management state of the resource as specified by the API client. (MANAGED_STATE_UNSPECIFIED, MANAGED, UNMANAGED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="ownerType" /></td>
     <td><code>string</code></td>
-    <td>Output only. The owner of the ClientState</td>
+    <td>Output only. The owner of the ClientState (OWNER_TYPE_UNSPECIFIED, OWNER_TYPE_CUSTOMER, OWNER_TYPE_PARTNER)</td>
 </tr>
 <tr>
     <td><CopyableCode code="scoreReason" /></td>
@@ -136,7 +137,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="complianceState" /></td>
     <td><code>string</code></td>
-    <td>The compliance state of the resource as specified by the API client.</td>
+    <td>The compliance state of the resource as specified by the API client. (COMPLIANCE_STATE_UNSPECIFIED, COMPLIANT, NON_COMPLIANT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -156,7 +157,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="healthScore" /></td>
     <td><code>string</code></td>
-    <td>The Health score of the resource. The Health score is the callers specification of the condition of the device from a usability point of view. For example, a third-party device management provider may specify a health score based on its compliance with organizational policies.</td>
+    <td>The Health score of the resource. The Health score is the callers specification of the condition of the device from a usability point of view. For example, a third-party device management provider may specify a health score based on its compliance with organizational policies. (HEALTH_SCORE_UNSPECIFIED, VERY_POOR, POOR, NEUTRAL, GOOD, VERY_GOOD)</td>
 </tr>
 <tr>
     <td><CopyableCode code="keyValuePairs" /></td>
@@ -171,12 +172,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="managed" /></td>
     <td><code>string</code></td>
-    <td>The management state of the resource as specified by the API client.</td>
+    <td>The management state of the resource as specified by the API client. (MANAGED_STATE_UNSPECIFIED, MANAGED, UNMANAGED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="ownerType" /></td>
     <td><code>string</code></td>
-    <td>Output only. The owner of the ClientState</td>
+    <td>Output only. The owner of the ClientState (OWNER_TYPE_UNSPECIFIED, OWNER_TYPE_CUSTOMER, OWNER_TYPE_PARTNER)</td>
 </tr>
 <tr>
     <td><CopyableCode code="scoreReason" /></td>
@@ -214,14 +215,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-devicesId"><code>devicesId</code></a>, <a href="#parameter-deviceUsersId"><code>deviceUsersId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-customer"><code>customer</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-customer"><code>customer</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists the client states for the given search query.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-devicesId"><code>devicesId</code></a>, <a href="#parameter-deviceUsersId"><code>deviceUsersId</code></a>, <a href="#parameter-clientStatesId"><code>clientStatesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-customer"><code>customer</code></a></td>
+    <td><a href="#parameter-customer"><code>customer</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the client state for the device user **Note**: This method is available only to customers who have one of the following SKUs: Enterprise Standard, Enterprise Plus, Enterprise for Education, and Cloud Identity Premium</td>
 </tr>
 </tbody>
@@ -340,8 +341,8 @@ FROM google.cloudidentity.client_states
 WHERE devicesId = '{{ devicesId }}' -- required
 AND deviceUsersId = '{{ deviceUsersId }}' -- required
 AND filter = '{{ filter }}'
-AND customer = '{{ customer }}'
 AND pageToken = '{{ pageToken }}'
+AND customer = '{{ customer }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -364,20 +365,20 @@ Updates the client state for the device user **Note**: This method is available 
 ```sql
 UPDATE google.cloudidentity.client_states
 SET 
-data__scoreReason = '{{ scoreReason }}',
-data__etag = '{{ etag }}',
-data__managed = '{{ managed }}',
 data__assetTags = '{{ assetTags }}',
-data__customId = '{{ customId }}',
 data__complianceState = '{{ complianceState }}',
+data__etag = '{{ etag }}',
+data__customId = '{{ customId }}',
+data__healthScore = '{{ healthScore }}',
+data__scoreReason = '{{ scoreReason }}',
 data__keyValuePairs = '{{ keyValuePairs }}',
-data__healthScore = '{{ healthScore }}'
+data__managed = '{{ managed }}'
 WHERE 
 devicesId = '{{ devicesId }}' --required
 AND deviceUsersId = '{{ deviceUsersId }}' --required
 AND clientStatesId = '{{ clientStatesId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND customer = '{{ customer}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

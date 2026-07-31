@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>ssh_public_keys</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>ssh_public_keys</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="ssh_public_keys" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.oslogin.ssh_public_keys" /></td></tr>
 </tbody></table>
@@ -210,24 +211,22 @@ key
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: ssh_public_keys
   props:
     - name: usersId
-      value: string
+      value: "{{ usersId }}"
       description: Required parameter for the ssh_public_keys resource.
     - name: expirationTimeUsec
-      value: string
-      description: >
+      value: "{{ expirationTimeUsec }}"
+      description: |
         An expiration time in microseconds since epoch.
-        
     - name: key
-      value: string
-      description: >
+      value: "{{ key }}"
+      description: |
         Required. Public key text in SSH format, defined by [RFC4253](https://www.ietf.org/rfc/rfc4253.txt) section 6.6.
-        
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

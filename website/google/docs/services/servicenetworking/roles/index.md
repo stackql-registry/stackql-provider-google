@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>roles</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>roles</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="roles" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.servicenetworking.roles" /></td></tr>
 </tbody></table>
@@ -95,13 +96,13 @@ Service producers can use this method to add roles in the shared VPC host projec
 
 ```sql
 INSERT INTO google.servicenetworking.roles (
-data__consumerNetwork,
 data__policyBinding,
+data__consumerNetwork,
 servicesId
 )
 SELECT 
-'{{ consumerNetwork }}',
 '{{ policyBinding }}',
+'{{ consumerNetwork }}',
 '{{ servicesId }}'
 RETURNING
 name,
@@ -114,23 +115,23 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: roles
   props:
     - name: servicesId
-      value: string
+      value: "{{ servicesId }}"
       description: Required parameter for the roles resource.
-    - name: consumerNetwork
-      value: string
-      description: >
-        Required. The network that the consumer is using to connect with services. Must be in the form of projects/{project}/global/networks/{network} {project} is a project number, as in '12345' {network} is a network name.
-        
     - name: policyBinding
-      value: array
-      description: >
+      description: |
         Required. List of policy bindings to add to shared VPC host project.
-        
-```
+      value:
+        - role: "{{ role }}"
+          member: "{{ member }}"
+    - name: consumerNetwork
+      value: "{{ consumerNetwork }}"
+      description: |
+        Required. The network that the consumer is using to connect with services. Must be in the form of projects/{project}/global/networks/{network} {project} is a project number, as in '12345' {network} is a network name.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

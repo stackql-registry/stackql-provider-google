@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>locations</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>locations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="locations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apphub.locations" /></td></tr>
 </tbody></table>
@@ -144,15 +145,8 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
-    <td>Lists information about the supported locations for this service.</td>
-</tr>
-<tr>
-    <td><a href="#lookup_service_project_attachment"><CopyableCode code="lookup_service_project_attachment" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Lists a service project attachment for a given service project. You can call this API from any project to find if it is attached to a host project.</td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td>Lists information about the supported locations for this service. This method lists locations based on the resource scope provided in the ListLocationsRequest.name field: * **Global locations**: If `name` is empty, the method lists the public locations available to all projects. * **Project-specific locations**: If `name` follows the format `projects/&#123;project&#125;`, the method lists locations visible to that specific project. This includes public, private, or other project-specific locations enabled for the project. For gRPC and client library implementations, the resource name is passed as the `name` field. For direct service calls, the resource name is incorporated into the request path based on the specific service implementation and version.</td>
 </tr>
 <tr>
     <td><a href="#detach_service_project_attachment"><CopyableCode code="detach_service_project_attachment" /></a></td>
@@ -160,6 +154,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Detaches a service project from a host project. You can call this API from any service project without needing access to the host project that it is attached to.</td>
+</tr>
+<tr>
+    <td><a href="#lookup_service_project_attachment"><CopyableCode code="lookup_service_project_attachment" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Lists a service project attachment for a given service project. You can call this API from any project to find if it is attached to a host project.</td>
 </tr>
 </tbody>
 </table>
@@ -238,7 +239,7 @@ AND locationsId = '{{ locationsId }}' -- required
 </TabItem>
 <TabItem value="list">
 
-Lists information about the supported locations for this service.
+Lists information about the supported locations for this service. This method lists locations based on the resource scope provided in the ListLocationsRequest.name field: * **Global locations**: If `name` is empty, the method lists the public locations available to all projects. * **Project-specific locations**: If `name` follows the format `projects/&#123;project&#125;`, the method lists locations visible to that specific project. This includes public, private, or other project-specific locations enabled for the project. For gRPC and client library implementations, the resource name is passed as the `name` field. For direct service calls, the resource name is incorporated into the request path based on the specific service implementation and version.
 
 ```sql
 SELECT
@@ -249,10 +250,10 @@ locationId,
 metadata
 FROM google.apphub.locations
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND extraLocationTypes = '{{ extraLocationTypes }}'
 AND filter = '{{ filter }}'
+AND extraLocationTypes = '{{ extraLocationTypes }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -262,29 +263,29 @@ AND filter = '{{ filter }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="lookup_service_project_attachment"
+    defaultValue="detach_service_project_attachment"
     values={[
-        { label: 'lookup_service_project_attachment', value: 'lookup_service_project_attachment' },
-        { label: 'detach_service_project_attachment', value: 'detach_service_project_attachment' }
+        { label: 'detach_service_project_attachment', value: 'detach_service_project_attachment' },
+        { label: 'lookup_service_project_attachment', value: 'lookup_service_project_attachment' }
     ]}
 >
-<TabItem value="lookup_service_project_attachment">
-
-Lists a service project attachment for a given service project. You can call this API from any project to find if it is attached to a host project.
-
-```sql
-EXEC google.apphub.locations.lookup_service_project_attachment 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="detach_service_project_attachment">
 
 Detaches a service project from a host project. You can call this API from any service project without needing access to the host project that it is attached to.
 
 ```sql
 EXEC google.apphub.locations.detach_service_project_attachment 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="lookup_service_project_attachment">
+
+Lists a service project attachment for a given service project. You can call this API from any project to find if it is attached to a host project.
+
+```sql
+EXEC google.apphub.locations.lookup_service_project_attachment 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required
 ;

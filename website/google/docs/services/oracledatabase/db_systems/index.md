@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>db_systems</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>db_systems</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="db_systems" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.oracledatabase.db_systems" /></td></tr>
 </tbody></table>
@@ -194,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists all the DbSystems for the given project and location.</td>
 </tr>
 <tr>
@@ -326,10 +327,10 @@ properties
 FROM google.oracledatabase.db_systems
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -351,26 +352,26 @@ Creates a new DbSystem in a given project and location.
 
 ```sql
 INSERT INTO google.oracledatabase.db_systems (
-data__name,
 data__properties,
+data__displayName,
+data__odbSubnet,
+data__odbNetwork,
+data__name,
 data__gcpOracleZone,
 data__labels,
-data__odbNetwork,
-data__odbSubnet,
-data__displayName,
 projectsId,
 locationsId,
 dbSystemId,
 requestId
 )
 SELECT 
-'{{ name }}',
 '{{ properties }}',
+'{{ displayName }}',
+'{{ odbSubnet }}',
+'{{ odbNetwork }}',
+'{{ name }}',
 '{{ gcpOracleZone }}',
 '{{ labels }}',
-'{{ odbNetwork }}',
-'{{ odbSubnet }}',
-'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ dbSystemId }}',
@@ -386,56 +387,111 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: db_systems
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the db_systems resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the db_systems resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The name of the DbSystem resource in the following format: projects/{project}/locations/{region}/dbSystems/{db_system}
-        
     - name: properties
-      value: object
-      description: >
+      description: |
         Optional. The properties of the DbSystem.
-        
-    - name: gcpOracleZone
-      value: string
-      description: >
-        Optional. The GCP Oracle zone where Oracle DbSystem is hosted. Example: us-east4-b-r2. If not specified, the system will pick a zone based on availability.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. The labels or tags associated with the DbSystem.
-        
-    - name: odbNetwork
-      value: string
-      description: >
-        Optional. The name of the OdbNetwork associated with the DbSystem. Format: projects/{project}/locations/{location}/odbNetworks/{odb_network} It is optional but if specified, this should match the parent ODBNetwork of the OdbSubnet.
-        
-    - name: odbSubnet
-      value: string
-      description: >
-        Required. The name of the OdbSubnet associated with the DbSystem for IP allocation. Format: projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/{odb_subnet}
-        
+      value:
+        initialDataStorageSizeGb: {{ initialDataStorageSizeGb }}
+        dataStorageSizeGb: {{ dataStorageSizeGb }}
+        computeModel: "{{ computeModel }}"
+        memorySizeGb: {{ memorySizeGb }}
+        timeZone:
+          id: "{{ id }}"
+          version: "{{ version }}"
+        sshPublicKeys:
+          - "{{ sshPublicKeys }}"
+        licenseModel: "{{ licenseModel }}"
+        hostname: "{{ hostname }}"
+        dbHome:
+          dbVersion: "{{ dbVersion }}"
+          database:
+            createTime: "{{ createTime }}"
+            pluggableDatabaseId: "{{ pluggableDatabaseId }}"
+            ncharacterSet: "{{ ncharacterSet }}"
+            tdeWalletPasswordSecretVersion: "{{ tdeWalletPasswordSecretVersion }}"
+            ociUrl: "{{ ociUrl }}"
+            opsInsightsStatus: "{{ opsInsightsStatus }}"
+            name: "{{ name }}"
+            dbUniqueName: "{{ dbUniqueName }}"
+            adminPassword: "{{ adminPassword }}"
+            pluggableDatabaseName: "{{ pluggableDatabaseName }}"
+            properties:
+              dbVersion: "{{ dbVersion }}"
+              dbBackupConfig:
+                autoBackupEnabled: {{ autoBackupEnabled }}
+                autoIncrementalBackupWindow: "{{ autoIncrementalBackupWindow }}"
+                autoFullBackupDay: "{{ autoFullBackupDay }}"
+                autoFullBackupWindow: "{{ autoFullBackupWindow }}"
+                backupDestinationDetails: "{{ backupDestinationDetails }}"
+                retentionPeriodDays: {{ retentionPeriodDays }}
+                backupDeletionPolicy: "{{ backupDeletionPolicy }}"
+              databaseManagementConfig:
+                managementState: "{{ managementState }}"
+                managementType: "{{ managementType }}"
+              state: "{{ state }}"
+            characterSet: "{{ characterSet }}"
+            databaseId: "{{ databaseId }}"
+            tdeWalletPassword: "{{ tdeWalletPassword }}"
+            dbName: "{{ dbName }}"
+            dbHomeName: "{{ dbHomeName }}"
+            adminPasswordSecretVersion: "{{ adminPasswordSecretVersion }}"
+            gcpOracleZone: "{{ gcpOracleZone }}"
+          isUnifiedAuditingEnabled: {{ isUnifiedAuditingEnabled }}
+          displayName: "{{ displayName }}"
+        privateIp: "{{ privateIp }}"
+        dataCollectionOptions:
+          isDiagnosticsEventsEnabled: {{ isDiagnosticsEventsEnabled }}
+          isIncidentLogsEnabled: {{ isIncidentLogsEnabled }}
+        hostnamePrefix: "{{ hostnamePrefix }}"
+        domain: "{{ domain }}"
+        shape: "{{ shape }}"
+        nodeCount: {{ nodeCount }}
+        dbSystemOptions:
+          storageManagement: "{{ storageManagement }}"
+        ocid: "{{ ocid }}"
+        computeCount: {{ computeCount }}
+        recoStorageSizeGb: {{ recoStorageSizeGb }}
+        lifecycleState: "{{ lifecycleState }}"
+        databaseEdition: "{{ databaseEdition }}"
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Required. The display name for the System db. The name does not have to be unique within your project.
-        
+    - name: odbSubnet
+      value: "{{ odbSubnet }}"
+      description: |
+        Required. The name of the OdbSubnet associated with the DbSystem for IP allocation. Format: projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/{odb_subnet}
+    - name: odbNetwork
+      value: "{{ odbNetwork }}"
+      description: |
+        Optional. The name of the OdbNetwork associated with the DbSystem. Format: projects/{project}/locations/{location}/odbNetworks/{odb_network} It is optional but if specified, this should match the parent ODBNetwork of the OdbSubnet.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of the DbSystem resource in the following format: projects/{project}/locations/{region}/dbSystems/{db_system}
+    - name: gcpOracleZone
+      value: "{{ gcpOracleZone }}"
+      description: |
+        Optional. The GCP Oracle zone where Oracle DbSystem is hosted. Example: us-east4-b-r2. If not specified, the system will pick a zone based on availability.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. The labels or tags associated with the DbSystem.
     - name: dbSystemId
-      value: string
+      value: "{{ dbSystemId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

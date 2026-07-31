@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>consents</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>consents</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="consents" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.healthcare.consents" /></td></tr>
 </tbody></table>
@@ -87,7 +88,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Required. Indicates the current state of this Consent.</td>
+    <td>Required. Indicates the current state of this Consent. (STATE_UNSPECIFIED, ACTIVE, ARCHIVED, REVOKED, DRAFT, REJECTED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="ttl" /></td>
@@ -151,7 +152,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Required. Indicates the current state of this Consent.</td>
+    <td>Required. Indicates the current state of this Consent. (STATE_UNSPECIFIED, ACTIVE, ARCHIVED, REVOKED, DRAFT, REJECTED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="ttl" /></td>
@@ -219,11 +220,11 @@ The following methods are available for this resource:
     <td>Deletes the Consent and its revisions. To keep a record of the Consent but mark it inactive, see [RevokeConsent]. To delete a revision of a Consent, see [DeleteConsentRevision]. This operation does not delete the related Consent artifact.</td>
 </tr>
 <tr>
-    <td><a href="#revoke"><CopyableCode code="revoke" /></a></td>
+    <td><a href="#reject"><CopyableCode code="reject" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-consentStoresId"><code>consentStoresId</code></a>, <a href="#parameter-consentsId"><code>consentsId</code></a></td>
     <td></td>
-    <td>Revokes the latest revision of the specified Consent by committing a new revision with `state` updated to `REVOKED`. If the latest revision of the specified Consent is in the `REVOKED` state, no new revision is committed. A FAILED_PRECONDITION error occurs if the latest revision of the given consent is in `DRAFT` or `REJECTED` state.</td>
+    <td>Rejects the latest revision of the specified Consent by committing a new revision with `state` updated to `REJECTED`. If the latest revision of the specified Consent is in the `REJECTED` state, no new revision is committed. A FAILED_PRECONDITION error occurs if the latest revision of the specified Consent is in the `ACTIVE` or `REVOKED` state.</td>
 </tr>
 <tr>
     <td><a href="#activate"><CopyableCode code="activate" /></a></td>
@@ -233,11 +234,11 @@ The following methods are available for this resource:
     <td>Activates the latest revision of the specified Consent by committing a new revision with `state` updated to `ACTIVE`. If the latest revision of the specified Consent is in the `ACTIVE` state, no new revision is committed. A FAILED_PRECONDITION error occurs if the latest revision of the specified Consent is in the `REJECTED` or `REVOKED` state.</td>
 </tr>
 <tr>
-    <td><a href="#reject"><CopyableCode code="reject" /></a></td>
+    <td><a href="#revoke"><CopyableCode code="revoke" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-consentStoresId"><code>consentStoresId</code></a>, <a href="#parameter-consentsId"><code>consentsId</code></a></td>
     <td></td>
-    <td>Rejects the latest revision of the specified Consent by committing a new revision with `state` updated to `REJECTED`. If the latest revision of the specified Consent is in the `REJECTED` state, no new revision is committed. A FAILED_PRECONDITION error occurs if the latest revision of the specified Consent is in the `ACTIVE` or `REVOKED` state.</td>
+    <td>Revokes the latest revision of the specified Consent by committing a new revision with `state` updated to `REVOKED`. If the latest revision of the specified Consent is in the `REVOKED` state, no new revision is committed. A FAILED_PRECONDITION error occurs if the latest revision of the given consent is in `DRAFT` or `REJECTED` state.</td>
 </tr>
 </tbody>
 </table>
@@ -382,28 +383,28 @@ Creates a new Consent in the parent consent store.
 
 ```sql
 INSERT INTO google.healthcare.consents (
+data__metadata,
+data__ttl,
+data__name,
+data__userId,
+data__policies,
 data__consentArtifact,
 data__state,
 data__expireTime,
-data__ttl,
-data__policies,
-data__name,
-data__metadata,
-data__userId,
 projectsId,
 locationsId,
 datasetsId,
 consentStoresId
 )
 SELECT 
+'{{ metadata }}',
+'{{ ttl }}',
+'{{ name }}',
+'{{ userId }}',
+'{{ policies }}',
 '{{ consentArtifact }}',
 '{{ state }}',
 '{{ expireTime }}',
-'{{ ttl }}',
-'{{ policies }}',
-'{{ name }}',
-'{{ metadata }}',
-'{{ userId }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ datasetsId }}',
@@ -424,64 +425,62 @@ userId
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: consents
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the consents resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the consents resource.
     - name: datasetsId
-      value: string
+      value: "{{ datasetsId }}"
       description: Required parameter for the consents resource.
     - name: consentStoresId
-      value: string
+      value: "{{ consentStoresId }}"
       description: Required parameter for the consents resource.
+    - name: metadata
+      value: "{{ metadata }}"
+      description: |
+        Optional. User-supplied key-value pairs used to organize Consent resources. Metadata keys must: - be between 1 and 63 characters long - have a UTF-8 encoding of maximum 128 bytes - begin with a letter - consist of up to 63 characters including lowercase letters, numeric characters, underscores, and dashes Metadata values must be: - be between 1 and 63 characters long - have a UTF-8 encoding of maximum 128 bytes - consist of up to 63 characters including lowercase letters, numeric characters, underscores, and dashes No more than 64 metadata entries can be associated with a given consent.
+    - name: ttl
+      value: "{{ ttl }}"
+      description: |
+        Input only. The time to live for this Consent from when it is created.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Resource name of the Consent, of the form \`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}\`. Cannot be changed after creation.
+    - name: userId
+      value: "{{ userId }}"
+      description: |
+        Required. User's UUID provided by the client.
+    - name: policies
+      description: |
+        Optional. Represents a user's consent in terms of the resources that can be accessed and under what conditions.
+      value:
+        - resourceAttributes: "{{ resourceAttributes }}"
+          authorizationRule:
+            expression: "{{ expression }}"
+            title: "{{ title }}"
+            description: "{{ description }}"
+            location: "{{ location }}"
     - name: consentArtifact
-      value: string
-      description: >
-        Required. The resource name of the Consent artifact that contains proof of the end user's consent, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consentArtifacts/{consent_artifact_id}`.
-        
+      value: "{{ consentArtifact }}"
+      description: |
+        Required. The resource name of the Consent artifact that contains proof of the end user's consent, of the form \`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consentArtifacts/{consent_artifact_id}\`.
     - name: state
-      value: string
-      description: >
+      value: "{{ state }}"
+      description: |
         Required. Indicates the current state of this Consent.
-        
       valid_values: ['STATE_UNSPECIFIED', 'ACTIVE', 'ARCHIVED', 'REVOKED', 'DRAFT', 'REJECTED']
     - name: expireTime
-      value: string
-      description: >
+      value: "{{ expireTime }}"
+      description: |
         Timestamp in UTC of when this Consent is considered expired.
-        
-    - name: ttl
-      value: string
-      description: >
-        Input only. The time to live for this Consent from when it is created.
-        
-    - name: policies
-      value: array
-      description: >
-        Optional. Represents a user's consent in terms of the resources that can be accessed and under what conditions.
-        
-    - name: name
-      value: string
-      description: >
-        Identifier. Resource name of the Consent, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}`. Cannot be changed after creation.
-        
-    - name: metadata
-      value: object
-      description: >
-        Optional. User-supplied key-value pairs used to organize Consent resources. Metadata keys must: - be between 1 and 63 characters long - have a UTF-8 encoding of maximum 128 bytes - begin with a letter - consist of up to 63 characters including lowercase letters, numeric characters, underscores, and dashes Metadata values must be: - be between 1 and 63 characters long - have a UTF-8 encoding of maximum 128 bytes - consist of up to 63 characters including lowercase letters, numeric characters, underscores, and dashes No more than 64 metadata entries can be associated with a given consent.
-        
-    - name: userId
-      value: string
-      description: >
-        Required. User's UUID provided by the client.
-        
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -501,14 +500,14 @@ Updates the latest revision of the specified Consent by committing a new revisio
 ```sql
 UPDATE google.healthcare.consents
 SET 
+data__metadata = '{{ metadata }}',
+data__ttl = '{{ ttl }}',
+data__name = '{{ name }}',
+data__userId = '{{ userId }}',
+data__policies = '{{ policies }}',
 data__consentArtifact = '{{ consentArtifact }}',
 data__state = '{{ state }}',
-data__expireTime = '{{ expireTime }}',
-data__ttl = '{{ ttl }}',
-data__policies = '{{ policies }}',
-data__name = '{{ name }}',
-data__metadata = '{{ metadata }}',
-data__userId = '{{ userId }}'
+data__expireTime = '{{ expireTime }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -560,19 +559,19 @@ AND consentsId = '{{ consentsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="revoke"
+    defaultValue="reject"
     values={[
-        { label: 'revoke', value: 'revoke' },
+        { label: 'reject', value: 'reject' },
         { label: 'activate', value: 'activate' },
-        { label: 'reject', value: 'reject' }
+        { label: 'revoke', value: 'revoke' }
     ]}
 >
-<TabItem value="revoke">
+<TabItem value="reject">
 
-Revokes the latest revision of the specified Consent by committing a new revision with `state` updated to `REVOKED`. If the latest revision of the specified Consent is in the `REVOKED` state, no new revision is committed. A FAILED_PRECONDITION error occurs if the latest revision of the given consent is in `DRAFT` or `REJECTED` state.
+Rejects the latest revision of the specified Consent by committing a new revision with `state` updated to `REJECTED`. If the latest revision of the specified Consent is in the `REJECTED` state, no new revision is committed. A FAILED_PRECONDITION error occurs if the latest revision of the specified Consent is in the `ACTIVE` or `REVOKED` state.
 
 ```sql
-EXEC google.healthcare.consents.revoke 
+EXEC google.healthcare.consents.reject 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @datasetsId='{{ datasetsId }}' --required, 
@@ -598,19 +597,19 @@ EXEC google.healthcare.consents.activate
 @consentsId='{{ consentsId }}' --required 
 @@json=
 '{
-"expireTime": "{{ expireTime }}", 
 "ttl": "{{ ttl }}", 
-"consentArtifact": "{{ consentArtifact }}"
+"consentArtifact": "{{ consentArtifact }}", 
+"expireTime": "{{ expireTime }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="reject">
+<TabItem value="revoke">
 
-Rejects the latest revision of the specified Consent by committing a new revision with `state` updated to `REJECTED`. If the latest revision of the specified Consent is in the `REJECTED` state, no new revision is committed. A FAILED_PRECONDITION error occurs if the latest revision of the specified Consent is in the `ACTIVE` or `REVOKED` state.
+Revokes the latest revision of the specified Consent by committing a new revision with `state` updated to `REVOKED`. If the latest revision of the specified Consent is in the `REVOKED` state, no new revision is committed. A FAILED_PRECONDITION error occurs if the latest revision of the given consent is in `DRAFT` or `REJECTED` state.
 
 ```sql
-EXEC google.healthcare.consents.reject 
+EXEC google.healthcare.consents.revoke 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @datasetsId='{{ datasetsId }}' --required, 

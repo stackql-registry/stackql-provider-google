@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>keys_ip_overrides</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>keys_ip_overrides</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="keys_ip_overrides" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.recaptchaenterprise.keys_ip_overrides" /></td></tr>
 </tbody></table>
@@ -56,7 +57,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="overrideType" /></td>
     <td><code>string</code></td>
-    <td>Required. Describes the type of IP override.</td>
+    <td>Required. Describes the type of IP override. (OVERRIDE_TYPE_UNSPECIFIED, ALLOW)</td>
 </tr>
 </tbody>
 </table>

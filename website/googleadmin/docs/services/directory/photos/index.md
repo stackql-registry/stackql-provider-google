@@ -15,6 +15,7 @@ image: /img/stackql-googleadmin-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>photos</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>photos</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="photos" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleadmin.directory.photos" /></td></tr>
 </tbody></table>
@@ -205,14 +206,14 @@ Adds a photo for the user. This method supports [patch semantics](https://develo
 ```sql
 UPDATE googleadmin.directory.photos
 SET 
+data__width = {{ width }},
+data__height = {{ height }},
 data__id = '{{ id }}',
-data__primaryEmail = '{{ primaryEmail }}',
-data__kind = '{{ kind }}',
-data__etag = '{{ etag }}',
 data__photoData = '{{ photoData }}',
 data__mimeType = '{{ mimeType }}',
-data__width = {{ width }},
-data__height = {{ height }}
+data__etag = '{{ etag }}',
+data__kind = '{{ kind }}',
+data__primaryEmail = '{{ primaryEmail }}'
 WHERE 
 userKey = '{{ userKey }}' --required
 RETURNING
@@ -244,14 +245,14 @@ Adds a photo for the user.
 ```sql
 REPLACE googleadmin.directory.photos
 SET 
+data__width = {{ width }},
+data__height = {{ height }},
 data__id = '{{ id }}',
-data__primaryEmail = '{{ primaryEmail }}',
-data__kind = '{{ kind }}',
-data__etag = '{{ etag }}',
 data__photoData = '{{ photoData }}',
 data__mimeType = '{{ mimeType }}',
-data__width = {{ width }},
-data__height = {{ height }}
+data__etag = '{{ etag }}',
+data__kind = '{{ kind }}',
+data__primaryEmail = '{{ primaryEmail }}'
 WHERE 
 userKey = '{{ userKey }}' --required
 RETURNING

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>notebook_runtimes</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>notebook_runtimes</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="notebook_runtimes" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.notebook_runtimes" /></td></tr>
 </tbody></table>
@@ -92,7 +93,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="healthState" /></td>
     <td><code>string</code></td>
-    <td>Output only. The health state of the NotebookRuntime.</td>
+    <td>Output only. The health state of the NotebookRuntime. (HEALTH_STATE_UNSPECIFIED, HEALTHY, UNHEALTHY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="idleShutdownConfig" /></td>
@@ -132,7 +133,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="notebookRuntimeType" /></td>
     <td><code>string</code></td>
-    <td>Output only. The type of the notebook runtime.</td>
+    <td>Output only. The type of the notebook runtime. (NOTEBOOK_RUNTIME_TYPE_UNSPECIFIED, USER_DEFINED, ONE_CLICK)</td>
 </tr>
 <tr>
     <td><CopyableCode code="proxyUri" /></td>
@@ -147,7 +148,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="runtimeState" /></td>
     <td><code>string</code></td>
-    <td>Output only. The runtime (instance) state of the NotebookRuntime.</td>
+    <td>Output only. The runtime (instance) state of the NotebookRuntime. (RUNTIME_STATE_UNSPECIFIED, RUNNING, BEING_STARTED, BEING_STOPPED, STOPPED, BEING_UPGRADED, ERROR, INVALID)</td>
 </tr>
 <tr>
     <td><CopyableCode code="runtimeUser" /></td>
@@ -246,7 +247,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="healthState" /></td>
     <td><code>string</code></td>
-    <td>Output only. The health state of the NotebookRuntime.</td>
+    <td>Output only. The health state of the NotebookRuntime. (HEALTH_STATE_UNSPECIFIED, HEALTHY, UNHEALTHY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="idleShutdownConfig" /></td>
@@ -286,7 +287,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="notebookRuntimeType" /></td>
     <td><code>string</code></td>
-    <td>Output only. The type of the notebook runtime.</td>
+    <td>Output only. The type of the notebook runtime. (NOTEBOOK_RUNTIME_TYPE_UNSPECIFIED, USER_DEFINED, ONE_CLICK)</td>
 </tr>
 <tr>
     <td><CopyableCode code="proxyUri" /></td>
@@ -301,7 +302,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="runtimeState" /></td>
     <td><code>string</code></td>
-    <td>Output only. The runtime (instance) state of the NotebookRuntime.</td>
+    <td>Output only. The runtime (instance) state of the NotebookRuntime. (RUNTIME_STATE_UNSPECIFIED, RUNNING, BEING_STARTED, BEING_STOPPED, STOPPED, BEING_UPGRADED, ERROR, INVALID)</td>
 </tr>
 <tr>
     <td><CopyableCode code="runtimeUser" /></td>
@@ -374,7 +375,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
     <td>Lists NotebookRuntimes in a Location.</td>
 </tr>
 <tr>
@@ -383,6 +384,20 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-notebookRuntimesId"><code>notebookRuntimesId</code></a></td>
     <td></td>
     <td>Deletes a NotebookRuntime.</td>
+</tr>
+<tr>
+    <td><a href="#assign"><CopyableCode code="assign" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Assigns a NotebookRuntime to a user for a particular Notebook file. This method will either returns an existing assignment or generates a new one.</td>
+</tr>
+<tr>
+    <td><a href="#upgrade"><CopyableCode code="upgrade" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-notebookRuntimesId"><code>notebookRuntimesId</code></a></td>
+    <td></td>
+    <td>Upgrades a NotebookRuntime.</td>
 </tr>
 <tr>
     <td><a href="#stop"><CopyableCode code="stop" /></a></td>
@@ -397,20 +412,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-notebookRuntimesId"><code>notebookRuntimesId</code></a></td>
     <td></td>
     <td>Starts a NotebookRuntime.</td>
-</tr>
-<tr>
-    <td><a href="#upgrade"><CopyableCode code="upgrade" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-notebookRuntimesId"><code>notebookRuntimesId</code></a></td>
-    <td></td>
-    <td>Upgrades a NotebookRuntime.</td>
-</tr>
-<tr>
-    <td><a href="#assign"><CopyableCode code="assign" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Assigns a NotebookRuntime to a user for a particular Notebook file. This method will either returns an existing assignment or generates a new one.</td>
 </tr>
 </tbody>
 </table>
@@ -558,11 +559,11 @@ version
 FROM google.aiplatform.notebook_runtimes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
-AND readMask = '{{ readMask }}'
 AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
+AND readMask = '{{ readMask }}'
 ;
 ```
 </TabItem>
@@ -595,14 +596,43 @@ AND notebookRuntimesId = '{{ notebookRuntimesId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="stop"
+    defaultValue="assign"
     values={[
-        { label: 'stop', value: 'stop' },
-        { label: 'start', value: 'start' },
+        { label: 'assign', value: 'assign' },
         { label: 'upgrade', value: 'upgrade' },
-        { label: 'assign', value: 'assign' }
+        { label: 'stop', value: 'stop' },
+        { label: 'start', value: 'start' }
     ]}
 >
+<TabItem value="assign">
+
+Assigns a NotebookRuntime to a user for a particular Notebook file. This method will either returns an existing assignment or generates a new one.
+
+```sql
+EXEC google.aiplatform.notebook_runtimes.assign 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"notebookRuntime": "{{ notebookRuntime }}", 
+"notebookRuntimeId": "{{ notebookRuntimeId }}", 
+"notebookRuntimeTemplate": "{{ notebookRuntimeTemplate }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="upgrade">
+
+Upgrades a NotebookRuntime.
+
+```sql
+EXEC google.aiplatform.notebook_runtimes.upgrade 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@notebookRuntimesId='{{ notebookRuntimesId }}' --required
+;
+```
+</TabItem>
 <TabItem value="stop">
 
 Stops a NotebookRuntime.
@@ -624,35 +654,6 @@ EXEC google.aiplatform.notebook_runtimes.start
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @notebookRuntimesId='{{ notebookRuntimesId }}' --required
-;
-```
-</TabItem>
-<TabItem value="upgrade">
-
-Upgrades a NotebookRuntime.
-
-```sql
-EXEC google.aiplatform.notebook_runtimes.upgrade 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@notebookRuntimesId='{{ notebookRuntimesId }}' --required
-;
-```
-</TabItem>
-<TabItem value="assign">
-
-Assigns a NotebookRuntime to a user for a particular Notebook file. This method will either returns an existing assignment or generates a new one.
-
-```sql
-EXEC google.aiplatform.notebook_runtimes.assign 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
-@@json=
-'{
-"notebookRuntimeTemplate": "{{ notebookRuntimeTemplate }}", 
-"notebookRuntimeId": "{{ notebookRuntimeId }}", 
-"notebookRuntime": "{{ notebookRuntime }}"
-}'
 ;
 ```
 </TabItem>

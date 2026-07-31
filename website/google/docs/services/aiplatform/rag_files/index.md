@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>rag_files</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>rag_files</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="rag_files" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.rag_files" /></td></tr>
 </tbody></table>
@@ -224,7 +225,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-ragCorporaId"><code>ragCorporaId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists RagFiles in a RagCorpus.</td>
 </tr>
 <tr>
@@ -235,18 +236,18 @@ The following methods are available for this resource:
     <td>Deletes a RagFile.</td>
 </tr>
 <tr>
-    <td><a href="#import"><CopyableCode code="import" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-ragCorporaId"><code>ragCorporaId</code></a></td>
-    <td></td>
-    <td>Import files from Google Cloud Storage or Google Drive into a RagCorpus.</td>
-</tr>
-<tr>
     <td><a href="#upload"><CopyableCode code="upload" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-ragCorporaId"><code>ragCorporaId</code></a></td>
     <td></td>
     <td>Upload a file into a RagCorpus.</td>
+</tr>
+<tr>
+    <td><a href="#import"><CopyableCode code="import" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-ragCorporaId"><code>ragCorporaId</code></a></td>
+    <td></td>
+    <td>Import files from Google Cloud Storage or Google Drive into a RagCorpus.</td>
 </tr>
 </tbody>
 </table>
@@ -361,8 +362,8 @@ FROM google.aiplatform.rag_files
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND ragCorporaId = '{{ ragCorporaId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -397,12 +398,29 @@ AND forceDelete = '{{ forceDelete }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="import"
+    defaultValue="upload"
     values={[
-        { label: 'import', value: 'import' },
-        { label: 'upload', value: 'upload' }
+        { label: 'upload', value: 'upload' },
+        { label: 'import', value: 'import' }
     ]}
 >
+<TabItem value="upload">
+
+Upload a file into a RagCorpus.
+
+```sql
+EXEC google.aiplatform.rag_files.upload 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@ragCorporaId='{{ ragCorporaId }}' --required 
+@@json=
+'{
+"ragFile": "{{ ragFile }}", 
+"uploadRagFileConfig": "{{ uploadRagFileConfig }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="import">
 
 Import files from Google Cloud Storage or Google Drive into a RagCorpus.
@@ -415,23 +433,6 @@ EXEC google.aiplatform.rag_files.import
 @@json=
 '{
 "importRagFilesConfig": "{{ importRagFilesConfig }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="upload">
-
-Upload a file into a RagCorpus.
-
-```sql
-EXEC google.aiplatform.rag_files.upload 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@ragCorporaId='{{ ragCorporaId }}' --required 
-@@json=
-'{
-"uploadRagFileConfig": "{{ uploadRagFileConfig }}", 
-"ragFile": "{{ ragFile }}"
 }'
 ;
 ```

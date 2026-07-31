@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>mirroring_endpoint_group_associ
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>mirroring_endpoint_group_associations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="mirroring_endpoint_group_associations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networksecurity.mirroring_endpoint_group_associations" /></td></tr>
 </tbody></table>
@@ -85,6 +86,11 @@ The following fields are returned by `SELECT` queries:
     <td>Immutable. The VPC network that is associated. for example: `projects/123456789/global/networks/my-network`. See https://google.aip.dev/124.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="networkCookie" /></td>
+    <td><code>integer (uint32)</code></td>
+    <td>Output only. Identifier used by the data-path. See the NSI GENEVE format for more details: https://docs.cloud.google.com/network-security-integration/docs/understand-geneve#network_id</td>
+</tr>
+<tr>
     <td><CopyableCode code="reconciling" /></td>
     <td><code>boolean</code></td>
     <td>Output only. The current state of the resource does not match the user's intended state, and the system is working to reconcile them. This part of the normal operation (e.g. adding a new location to the target deployment group). See https://google.aip.dev/128.</td>
@@ -92,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the endpoint group association.</td>
+    <td>Output only. Current state of the endpoint group association. (STATE_UNSPECIFIED, ACTIVE, CREATING, DELETING, CLOSED, OUT_OF_SYNC, DELETE_FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -149,6 +155,11 @@ The following fields are returned by `SELECT` queries:
     <td>Immutable. The VPC network that is associated. for example: `projects/123456789/global/networks/my-network`. See https://google.aip.dev/124.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="networkCookie" /></td>
+    <td><code>integer (uint32)</code></td>
+    <td>Output only. Identifier used by the data-path. See the NSI GENEVE format for more details: https://docs.cloud.google.com/network-security-integration/docs/understand-geneve#network_id</td>
+</tr>
+<tr>
     <td><CopyableCode code="reconciling" /></td>
     <td><code>boolean</code></td>
     <td>Output only. The current state of the resource does not match the user's intended state, and the system is working to reconcile them. This part of the normal operation (e.g. adding a new location to the target deployment group). See https://google.aip.dev/128.</td>
@@ -156,7 +167,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the endpoint group association.</td>
+    <td>Output only. Current state of the endpoint group association. (STATE_UNSPECIFIED, ACTIVE, CREATING, DELETING, CLOSED, OUT_OF_SYNC, DELETE_FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -208,7 +219,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_mirroring_endpoint_group_associations_patch"><CopyableCode code="projects_locations_mirroring_endpoint_group_associations_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-mirroringEndpointGroupAssociationsId"><code>mirroringEndpointGroupAssociationsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates an association. See https://google.aip.dev/134.</td>
 </tr>
 <tr>
@@ -309,6 +320,7 @@ locations,
 locationsDetails,
 mirroringEndpointGroup,
 network,
+networkCookie,
 reconciling,
 state,
 updateTime
@@ -332,6 +344,7 @@ locations,
 locationsDetails,
 mirroringEndpointGroup,
 network,
+networkCookie,
 reconciling,
 state,
 updateTime
@@ -363,20 +376,20 @@ Creates an association in a given project and location. See https://google.aip.d
 
 ```sql
 INSERT INTO google.networksecurity.mirroring_endpoint_group_associations (
-data__labels,
 data__network,
-data__name,
+data__labels,
 data__mirroringEndpointGroup,
+data__name,
 projectsId,
 locationsId,
 mirroringEndpointGroupAssociationId,
 requestId
 )
 SELECT 
-'{{ labels }}',
 '{{ network }}',
-'{{ name }}',
+'{{ labels }}',
 '{{ mirroringEndpointGroup }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ mirroringEndpointGroupAssociationId }}',
@@ -392,41 +405,37 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: mirroring_endpoint_group_associations
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the mirroring_endpoint_group_associations resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the mirroring_endpoint_group_associations resource.
-    - name: labels
-      value: object
-      description: >
-        Optional. Labels are key/value pairs that help to organize and filter resources.
-        
     - name: network
-      value: string
-      description: >
-        Immutable. The VPC network that is associated. for example: `projects/123456789/global/networks/my-network`. See https://google.aip.dev/124.
-        
-    - name: name
-      value: string
-      description: >
-        Immutable. Identifier. The resource name of this endpoint group association, for example: `projects/123456789/locations/global/mirroringEndpointGroupAssociations/my-eg-association`. See https://google.aip.dev/122 for more details.
-        
+      value: "{{ network }}"
+      description: |
+        Immutable. The VPC network that is associated. for example: \`projects/123456789/global/networks/my-network\`. See https://google.aip.dev/124.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Labels are key/value pairs that help to organize and filter resources.
     - name: mirroringEndpointGroup
-      value: string
-      description: >
-        Immutable. The endpoint group that this association is connected to, for example: `projects/123456789/locations/global/mirroringEndpointGroups/my-eg`. See https://google.aip.dev/124.
-        
+      value: "{{ mirroringEndpointGroup }}"
+      description: |
+        Immutable. The endpoint group that this association is connected to, for example: \`projects/123456789/locations/global/mirroringEndpointGroups/my-eg\`. See https://google.aip.dev/124.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. Identifier. The resource name of this endpoint group association, for example: \`projects/123456789/locations/global/mirroringEndpointGroupAssociations/my-eg-association\`. See https://google.aip.dev/122 for more details.
     - name: mirroringEndpointGroupAssociationId
-      value: string
+      value: "{{ mirroringEndpointGroupAssociationId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -446,16 +455,16 @@ Updates an association. See https://google.aip.dev/134.
 ```sql
 UPDATE google.networksecurity.mirroring_endpoint_group_associations
 SET 
-data__labels = '{{ labels }}',
 data__network = '{{ network }}',
-data__name = '{{ name }}',
-data__mirroringEndpointGroup = '{{ mirroringEndpointGroup }}'
+data__labels = '{{ labels }}',
+data__mirroringEndpointGroup = '{{ mirroringEndpointGroup }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND mirroringEndpointGroupAssociationsId = '{{ mirroringEndpointGroupAssociationsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

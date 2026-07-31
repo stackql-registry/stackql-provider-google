@@ -18,18 +18,19 @@ datalineage service documentation.
 
 :::info[Service Summary]
 
-total resources: __5__  
+total resources: __6__  
 
 :::
 
 ## Resources
 <div class="row">
 <div class="providerDocColumn">
+<a href="/services/datalineage/config/">config</a><br />
 <a href="/services/datalineage/lineage_events/">lineage_events</a><br />
-<a href="/services/datalineage/locations/">locations</a><br />
-<a href="/services/datalineage/operations/">operations</a>
+<a href="/services/datalineage/locations/">locations</a>
 </div>
 <div class="providerDocColumn">
+<a href="/services/datalineage/operations/">operations</a><br />
 <a href="/services/datalineage/processes/">processes</a><br />
 <a href="/services/datalineage/runs/">runs</a>
 </div>

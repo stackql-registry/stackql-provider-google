@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>target_tcp_proxies</code> resou
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>target_tcp_proxies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="target_tcp_proxies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.target_tcp_proxies" /></td></tr>
 </tbody></table>
@@ -35,7 +36,8 @@ The following fields are returned by `SELECT` queries:
     defaultValue="get"
     values={[
         { label: 'get', value: 'get' },
-        { label: 'list', value: 'list' }
+        { label: 'list', value: 'list' },
+        { label: 'aggregated_list', value: 'aggregated_list' }
     ]}
 >
 <TabItem value="get">
@@ -57,12 +59,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>[a-z](?:[-a-z0-9]&#123;0,61&#125;[a-z0-9])?</code>)</td>
+    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply withRFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>&#91;a-z&#93;(?:&#91;-a-z0-9&#93;&#123;0,61&#125;&#91;a-z0-9&#93;)?</code>)</td>
 </tr>
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Creation timestamp in RFC3339 text format.</td>
+    <td>Output only. [Output Only] Creation timestamp inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -72,22 +74,27 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of the resource. Always compute#targetTcpProxy for target TCP proxies. (default: compute#targetTcpProxy)</td>
+    <td>Output only. [Output Only] Type of the resource. Alwayscompute#targetTcpProxy for target TCP proxies. (default: compute#targetTcpProxy)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="loadBalancingScheme" /></td>
+    <td><code>string</code></td>
+    <td>Specifies the type of load balancing scheme used by this target proxy. (EXTERNAL, EXTERNAL_MANAGED, INTERNAL_MANAGED, LOAD_BALANCING_SCHEME_UNSPECIFIED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="proxyBind" /></td>
     <td><code>boolean</code></td>
-    <td>This field only applies when the forwarding rule that references this target proxy has a loadBalancingScheme set to INTERNAL_SELF_MANAGED. When this field is set to true, Envoy proxies set up inbound traffic interception and bind to the IP address and port specified in the forwarding rule. This is generally useful when using Traffic Director to configure Envoy as a gateway or middle proxy (in other words, not a sidecar proxy). The Envoy proxy listens for inbound requests and handles requests when it receives them. The default is false.</td>
+    <td>This field only applies when the forwarding rule that references this target proxy has a loadBalancingScheme set toINTERNAL_SELF_MANAGED.  When this field is set to true, Envoy proxies set up inbound traffic interception and bind to the IP address and port specified in the forwarding rule. This is generally useful when using Traffic Director to configure Envoy as a gateway or middle proxy (in other words, not a sidecar proxy). The Envoy proxy listens for inbound requests and handles requests when it receives them.  The default is false.</td>
 </tr>
 <tr>
     <td><CopyableCode code="proxyHeader" /></td>
     <td><code>string</code></td>
-    <td>Specifies the type of proxy header to append before sending data to the backend, either NONE or PROXY_V1. The default is NONE.</td>
+    <td>Specifies the type of proxy header to append before sending data to the backend, either NONE or PROXY_V1. The default is NONE. (NONE, PROXY_V1)</td>
 </tr>
 <tr>
     <td><CopyableCode code="region" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] URL of the region where the regional TCP proxy resides. This field is not applicable to global TCP proxy.</td>
+    <td>Output only. [Output Only] URL of the region where the regional TCP proxy resides. This field is not applicable to global TCP proxy.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
@@ -126,22 +133,91 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>Type of resource. (default: compute#targetTcpProxyList)</td>
+    <td>Output only. Type of resource. (default: compute#targetTcpProxyList)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextPageToken" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
+    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger thanmaxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for this resource.</td>
+    <td>Output only. [Output Only] Server-defined URL for this resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="warning" /></td>
     <td><code>object</code></td>
     <td>[Output Only] Informational warning message.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="aggregated_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="id" /></td>
+    <td><code>string (uint64)</code></td>
+    <td>[Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply withRFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>&#91;a-z&#93;(?:&#91;-a-z0-9&#93;&#123;0,61&#125;&#91;a-z0-9&#93;)?</code>)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="creationTimestamp" /></td>
+    <td><code>string</code></td>
+    <td>Output only. [Output Only] Creation timestamp inRFC3339 text format.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>An optional description of this resource. Provide this property when you create the resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="kind" /></td>
+    <td><code>string</code></td>
+    <td>Output only. [Output Only] Type of the resource. Alwayscompute#targetTcpProxy for target TCP proxies. (default: compute#targetTcpProxy)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="loadBalancingScheme" /></td>
+    <td><code>string</code></td>
+    <td>Specifies the type of load balancing scheme used by this target proxy. (EXTERNAL, EXTERNAL_MANAGED, INTERNAL_MANAGED, LOAD_BALANCING_SCHEME_UNSPECIFIED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="proxyBind" /></td>
+    <td><code>boolean</code></td>
+    <td>This field only applies when the forwarding rule that references this target proxy has a loadBalancingScheme set toINTERNAL_SELF_MANAGED.  When this field is set to true, Envoy proxies set up inbound traffic interception and bind to the IP address and port specified in the forwarding rule. This is generally useful when using Traffic Director to configure Envoy as a gateway or middle proxy (in other words, not a sidecar proxy). The Envoy proxy listens for inbound requests and handles requests when it receives them.  The default is false.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="proxyHeader" /></td>
+    <td><code>string</code></td>
+    <td>Specifies the type of proxy header to append before sending data to the backend, either NONE or PROXY_V1. The default is NONE. (NONE, PROXY_V1)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="region" /></td>
+    <td><code>string</code></td>
+    <td>Output only. [Output Only] URL of the region where the regional TCP proxy resides. This field is not applicable to global TCP proxy.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="selfLink" /></td>
+    <td><code>string</code></td>
+    <td>[Output Only] Server-defined URL for the resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="service" /></td>
+    <td><code>string</code></td>
+    <td>URL to the BackendService resource.</td>
 </tr>
 </tbody>
 </table>
@@ -174,15 +250,22 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
-    <td>Retrieves a list of TargetTcpProxy resources available to the specified project in a given region.</td>
+    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Retrieves a list of TargetTcpProxy resources<br />available to the specified project in a given region.</td>
+</tr>
+<tr>
+    <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-project"><code>project</code></a></td>
+    <td><a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Retrieves the list of all TargetTcpProxy resources, regional and global,<br />available to the specified project.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Creates a TargetTcpProxy resource in the specified project and region using the data included in the request.</td>
+    <td>Creates a TargetTcpProxy resource in the specified project and region using<br />the data included in the request.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
@@ -192,18 +275,18 @@ The following methods are available for this resource:
     <td>Deletes the specified TargetTcpProxy resource.</td>
 </tr>
 <tr>
-    <td><a href="#set_backend_service"><CopyableCode code="set_backend_service" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-targetTcpProxy"><code>targetTcpProxy</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Changes the BackendService for TargetTcpProxy.</td>
-</tr>
-<tr>
     <td><a href="#set_proxy_header"><CopyableCode code="set_proxy_header" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-targetTcpProxy"><code>targetTcpProxy</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Changes the ProxyHeaderType for TargetTcpProxy.</td>
+</tr>
+<tr>
+    <td><a href="#set_backend_service"><CopyableCode code="set_backend_service" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-targetTcpProxy"><code>targetTcpProxy</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Changes the BackendService for TargetTcpProxy.</td>
 </tr>
 </tbody>
 </table>
@@ -241,6 +324,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
+<tr id="parameter-includeAllScopes">
+    <td><CopyableCode code="includeAllScopes" /></td>
+    <td><code>boolean</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-maxResults">
     <td><CopyableCode code="maxResults" /></td>
     <td><code>integer (uint32)</code></td>
@@ -266,6 +354,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>boolean</code></td>
     <td></td>
 </tr>
+<tr id="parameter-serviceProjectNumber">
+    <td><CopyableCode code="serviceProjectNumber" /></td>
+    <td><code>string (int64)</code></td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 
@@ -275,7 +368,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="get"
     values={[
         { label: 'get', value: 'get' },
-        { label: 'list', value: 'list' }
+        { label: 'list', value: 'list' },
+        { label: 'aggregated_list', value: 'aggregated_list' }
     ]}
 >
 <TabItem value="get">
@@ -289,6 +383,7 @@ name,
 creationTimestamp,
 description,
 kind,
+loadBalancingScheme,
 proxyBind,
 proxyHeader,
 region,
@@ -303,7 +398,7 @@ AND targetTcpProxy = '{{ targetTcpProxy }}' -- required
 </TabItem>
 <TabItem value="list">
 
-Retrieves a list of TargetTcpProxy resources available to the specified project in a given region.
+Retrieves a list of TargetTcpProxy resources<br />available to the specified project in a given region.
 
 ```sql
 SELECT
@@ -316,10 +411,39 @@ warning
 FROM google.compute.target_tcp_proxies
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
-AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+;
+```
+</TabItem>
+<TabItem value="aggregated_list">
+
+Retrieves the list of all TargetTcpProxy resources, regional and global,<br />available to the specified project.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.
+
+```sql
+SELECT
+id,
+name,
+creationTimestamp,
+description,
+kind,
+loadBalancingScheme,
+proxyBind,
+proxyHeader,
+region,
+selfLink,
+service
+FROM google.compute.target_tcp_proxies
+WHERE project = '{{ project }}' -- required
+AND includeAllScopes = '{{ includeAllScopes }}'
+AND orderBy = '{{ orderBy }}'
+AND maxResults = '{{ maxResults }}'
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
@@ -338,35 +462,31 @@ AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 >
 <TabItem value="insert">
 
-Creates a TargetTcpProxy resource in the specified project and region using the data included in the request.
+Creates a TargetTcpProxy resource in the specified project and region using<br />the data included in the request.
 
 ```sql
 INSERT INTO google.compute.target_tcp_proxies (
-data__kind,
-data__id,
-data__creationTimestamp,
-data__name,
 data__description,
+data__loadBalancingScheme,
 data__selfLink,
-data__service,
-data__proxyHeader,
+data__id,
 data__proxyBind,
-data__region,
+data__service,
+data__name,
+data__proxyHeader,
 project,
 region,
 requestId
 )
 SELECT 
-'{{ kind }}',
-'{{ id }}',
-'{{ creationTimestamp }}',
-'{{ name }}',
 '{{ description }}',
+'{{ loadBalancingScheme }}',
 '{{ selfLink }}',
-'{{ service }}',
-'{{ proxyHeader }}',
+'{{ id }}',
 {{ proxyBind }},
-'{{ region }}',
+'{{ service }}',
+'{{ name }}',
+'{{ proxyHeader }}',
 '{{ project }}',
 '{{ region }}',
 '{{ requestId }}'
@@ -378,6 +498,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -402,71 +523,71 @@ zone
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: target_tcp_proxies
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the target_tcp_proxies resource.
     - name: region
-      value: string
+      value: "{{ region }}"
       description: Required parameter for the target_tcp_proxies resource.
-    - name: kind
-      value: string
-      description: >
-        [Output Only] Type of the resource. Always compute#targetTcpProxy for target TCP proxies.
-        
-      default: compute#targetTcpProxy
-    - name: id
-      value: string
-      description: >
-        [Output Only] The unique identifier for the resource. This identifier is defined by the server.
-        
-    - name: creationTimestamp
-      value: string
-      description: >
-        [Output Only] Creation timestamp in RFC3339 text format.
-        
-    - name: name
-      value: string
-      description: >
-        Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
-        
     - name: description
-      value: string
-      description: >
-        An optional description of this resource. Provide this property when you create the resource.
-        
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
+    - name: loadBalancingScheme
+      value: "{{ loadBalancingScheme }}"
+      description: |
+        Specifies the type of load balancing scheme used by this target proxy.
+      valid_values: ['EXTERNAL', 'EXTERNAL_MANAGED', 'INTERNAL_MANAGED', 'LOAD_BALANCING_SCHEME_UNSPECIFIED']
     - name: selfLink
-      value: string
-      description: >
+      value: "{{ selfLink }}"
+      description: |
         [Output Only] Server-defined URL for the resource.
-        
-    - name: service
-      value: string
-      description: >
-        URL to the BackendService resource.
-        
-    - name: proxyHeader
-      value: string
-      description: >
-        Specifies the type of proxy header to append before sending data to the backend, either NONE or PROXY_V1. The default is NONE.
-        
-      valid_values: ['NONE', 'PROXY_V1']
+    - name: id
+      value: "{{ id }}"
+      description: |
+        [Output Only] The unique identifier for the resource. This identifier is
+        defined by the server.
     - name: proxyBind
-      value: boolean
-      description: >
-        This field only applies when the forwarding rule that references this target proxy has a loadBalancingScheme set to INTERNAL_SELF_MANAGED. When this field is set to true, Envoy proxies set up inbound traffic interception and bind to the IP address and port specified in the forwarding rule. This is generally useful when using Traffic Director to configure Envoy as a gateway or middle proxy (in other words, not a sidecar proxy). The Envoy proxy listens for inbound requests and handles requests when it receives them. The default is false.
-        
-    - name: region
-      value: string
-      description: >
-        [Output Only] URL of the region where the regional TCP proxy resides. This field is not applicable to global TCP proxy.
-        
+      value: {{ proxyBind }}
+      description: |
+        This field only applies when the forwarding rule that references this
+        target proxy has a loadBalancingScheme set toINTERNAL_SELF_MANAGED.
+        When this field is set to true, Envoy proxies set up inbound
+        traffic interception and bind to the IP address and port specified in the
+        forwarding rule. This is generally useful when using Traffic Director to
+        configure Envoy as a gateway or middle proxy (in other words, not a
+        sidecar proxy). The Envoy proxy listens for inbound requests and handles
+        requests when it receives them.
+        The default is false.
+    - name: service
+      value: "{{ service }}"
+      description: |
+        URL to the BackendService resource.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the resource. Provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must
+        be a dash, lowercase letter, or digit, except the last character, which
+        cannot be a dash.
+    - name: proxyHeader
+      value: "{{ proxyHeader }}"
+      description: |
+        Specifies the type of proxy header to append before sending data to the
+        backend, either NONE or PROXY_V1. The default
+        is NONE.
+      valid_values: ['NONE', 'PROXY_V1']
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -498,28 +619,12 @@ AND requestId = '{{ requestId }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="set_backend_service"
+    defaultValue="set_proxy_header"
     values={[
-        { label: 'set_backend_service', value: 'set_backend_service' },
-        { label: 'set_proxy_header', value: 'set_proxy_header' }
+        { label: 'set_proxy_header', value: 'set_proxy_header' },
+        { label: 'set_backend_service', value: 'set_backend_service' }
     ]}
 >
-<TabItem value="set_backend_service">
-
-Changes the BackendService for TargetTcpProxy.
-
-```sql
-EXEC google.compute.target_tcp_proxies.set_backend_service 
-@project='{{ project }}' --required, 
-@targetTcpProxy='{{ targetTcpProxy }}' --required, 
-@requestId='{{ requestId }}' 
-@@json=
-'{
-"service": "{{ service }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="set_proxy_header">
 
 Changes the ProxyHeaderType for TargetTcpProxy.
@@ -532,6 +637,22 @@ EXEC google.compute.target_tcp_proxies.set_proxy_header
 @@json=
 '{
 "proxyHeader": "{{ proxyHeader }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="set_backend_service">
+
+Changes the BackendService for TargetTcpProxy.
+
+```sql
+EXEC google.compute.target_tcp_proxies.set_backend_service 
+@project='{{ project }}' --required, 
+@targetTcpProxy='{{ targetTcpProxy }}' --required, 
+@requestId='{{ requestId }}' 
+@@json=
+'{
+"service": "{{ service }}"
 }'
 ;
 ```

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>google_api_sources</code> resou
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>google_api_sources</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="google_api_sources" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.eventarc.google_api_sources" /></td></tr>
 </tbody></table>
@@ -128,71 +129,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Identifier. Resource name of the form projects/&#123;project&#125;/locations/&#123;location&#125;/googleApiSources/&#123;google_api_source&#125;</td>
-</tr>
-<tr>
-    <td><CopyableCode code="annotations" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Resource annotations.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The creation time.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="cryptoKeyName" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Resource name of a KMS crypto key (managed by the user) used to encrypt/decrypt their event data. It must match the pattern `projects/*/locations/*/keyRings/*/cryptoKeys/*`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="destination" /></td>
-    <td><code>string</code></td>
-    <td>Required. Destination is the message bus that the GoogleApiSource is delivering to. It must be point to the full resource name of a MessageBus. Format: "projects/&#123;PROJECT_ID&#125;/locations/&#123;region&#125;/messagesBuses/&#123;MESSAGE_BUS_ID)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Resource display name.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="etag" /></td>
-    <td><code>string</code></td>
-    <td>Output only. This checksum is computed by the server based on the value of other fields, and might be sent only on update and delete requests to ensure that the client has an up-to-date value before proceeding.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Resource labels.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="loggingConfig" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Config to control Platform logging for the GoogleApiSource. (id: LoggingConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="organizationSubscription" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Config to enable subscribing to events from all projects in the GoogleApiSource's org. (id: OrganizationSubscription)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="projectSubscriptions" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Config to enable subscribing to all events from a list of projects. All the projects must be in the same org as the GoogleApiSource. (id: ProjectSubscriptions)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="uid" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Server assigned unique identifier for the channel. The value is a UUID4 string and guaranteed to remain unchanged until the resource is deleted.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The last-modified time.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -224,7 +160,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>List GoogleApiSources.</td>
 </tr>
 <tr>
@@ -368,26 +304,14 @@ List GoogleApiSources.
 
 ```sql
 SELECT
-name,
-annotations,
-createTime,
-cryptoKeyName,
-destination,
-displayName,
-etag,
-labels,
-loggingConfig,
-organizationSubscription,
-projectSubscriptions,
-uid,
-updateTime
+*
 FROM google.eventarc.google_api_sources
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -409,30 +333,30 @@ Create a new GoogleApiSource in a particular project and location.
 
 ```sql
 INSERT INTO google.eventarc.google_api_sources (
-data__name,
-data__labels,
-data__annotations,
+data__loggingConfig,
+data__projectSubscriptions,
 data__displayName,
 data__destination,
-data__cryptoKeyName,
-data__loggingConfig,
+data__annotations,
+data__name,
 data__organizationSubscription,
-data__projectSubscriptions,
+data__labels,
+data__cryptoKeyName,
 projectsId,
 locationsId,
 googleApiSourceId,
 validateOnly
 )
 SELECT 
-'{{ name }}',
-'{{ labels }}',
-'{{ annotations }}',
+'{{ loggingConfig }}',
+'{{ projectSubscriptions }}',
 '{{ displayName }}',
 '{{ destination }}',
-'{{ cryptoKeyName }}',
-'{{ loggingConfig }}',
+'{{ annotations }}',
+'{{ name }}',
 '{{ organizationSubscription }}',
-'{{ projectSubscriptions }}',
+'{{ labels }}',
+'{{ cryptoKeyName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ googleApiSourceId }}',
@@ -448,66 +372,61 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: google_api_sources
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the google_api_sources resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the google_api_sources resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. Resource name of the form projects/{project}/locations/{location}/googleApiSources/{google_api_source}
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Resource labels.
-        
-    - name: annotations
-      value: object
-      description: >
-        Optional. Resource annotations.
-        
-    - name: displayName
-      value: string
-      description: >
-        Optional. Resource display name.
-        
-    - name: destination
-      value: string
-      description: >
-        Required. Destination is the message bus that the GoogleApiSource is delivering to. It must be point to the full resource name of a MessageBus. Format: "projects/{PROJECT_ID}/locations/{region}/messagesBuses/{MESSAGE_BUS_ID)
-        
-    - name: cryptoKeyName
-      value: string
-      description: >
-        Optional. Resource name of a KMS crypto key (managed by the user) used to encrypt/decrypt their event data. It must match the pattern `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
-        
     - name: loggingConfig
-      value: object
-      description: >
+      description: |
         Optional. Config to control Platform logging for the GoogleApiSource.
-        
-    - name: organizationSubscription
-      value: object
-      description: >
-        Optional. Config to enable subscribing to events from all projects in the GoogleApiSource's org.
-        
+      value:
+        logSeverity: "{{ logSeverity }}"
     - name: projectSubscriptions
-      value: object
-      description: >
+      description: |
         Optional. Config to enable subscribing to all events from a list of projects. All the projects must be in the same org as the GoogleApiSource.
-        
+      value:
+        list:
+          - "{{ list }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. Resource display name.
+    - name: destination
+      value: "{{ destination }}"
+      description: |
+        Required. Destination is the message bus that the GoogleApiSource is delivering to. It must be point to the full resource name of a MessageBus. Format: "projects/{PROJECT_ID}/locations/{region}/messagesBuses/{MESSAGE_BUS_ID)
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Optional. Resource annotations.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Resource name of the form projects/{project}/locations/{location}/googleApiSources/{google_api_source}
+    - name: organizationSubscription
+      description: |
+        Optional. Config to enable subscribing to events from all projects in the GoogleApiSource's org.
+      value:
+        enabled: {{ enabled }}
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Resource labels.
+    - name: cryptoKeyName
+      value: "{{ cryptoKeyName }}"
+      description: |
+        Optional. Resource name of a KMS crypto key (managed by the user) used to encrypt/decrypt their event data. It must match the pattern \`projects/*/locations/*/keyRings/*/cryptoKeys/*\`.
     - name: googleApiSourceId
-      value: string
+      value: "{{ googleApiSourceId }}"
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -527,15 +446,15 @@ Update a single GoogleApiSource.
 ```sql
 UPDATE google.eventarc.google_api_sources
 SET 
-data__name = '{{ name }}',
-data__labels = '{{ labels }}',
-data__annotations = '{{ annotations }}',
+data__loggingConfig = '{{ loggingConfig }}',
+data__projectSubscriptions = '{{ projectSubscriptions }}',
 data__displayName = '{{ displayName }}',
 data__destination = '{{ destination }}',
-data__cryptoKeyName = '{{ cryptoKeyName }}',
-data__loggingConfig = '{{ loggingConfig }}',
+data__annotations = '{{ annotations }}',
+data__name = '{{ name }}',
 data__organizationSubscription = '{{ organizationSubscription }}',
-data__projectSubscriptions = '{{ projectSubscriptions }}'
+data__labels = '{{ labels }}',
+data__cryptoKeyName = '{{ cryptoKeyName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>tls_inspection_policies</code> 
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>tls_inspection_policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="tls_inspection_policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networksecurity.tls_inspection_policies" /></td></tr>
 </tbody></table>
@@ -82,12 +83,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="minTlsVersion" /></td>
     <td><code>string</code></td>
-    <td>Optional. Minimum TLS version that the firewall should use when negotiating connections with both clients and servers. If this is not set, then the default value is to allow the broadest set of clients and servers (TLS 1.0 or higher). Setting this to more restrictive values may improve security, but may also prevent the firewall from connecting to some clients or servers. Note that Secure Web Proxy does not yet honor this field.</td>
+    <td>Optional. Minimum TLS version that the firewall should use when negotiating connections with both clients and servers. If this is not set, then the default value is to allow the broadest set of clients and servers (TLS 1.0 or higher). Setting this to more restrictive values may improve security, but may also prevent the firewall from connecting to some clients or servers. Note that Secure Web Proxy does not yet honor this field. (TLS_VERSION_UNSPECIFIED, TLS_1_0, TLS_1_1, TLS_1_2, TLS_1_3)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tlsFeatureProfile" /></td>
     <td><code>string</code></td>
-    <td>Optional. The selected Profile. If this is not set, then the default value is to allow the broadest set of clients and servers ("PROFILE_COMPATIBLE"). Setting this to more restrictive values may improve security, but may also prevent the TLS inspection proxy from connecting to some clients or servers. Note that Secure Web Proxy does not yet honor this field.</td>
+    <td>Optional. The selected Profile. If this is not set, then the default value is to allow the broadest set of clients and servers ("PROFILE_COMPATIBLE"). Setting this to more restrictive values may improve security, but may also prevent the TLS inspection proxy from connecting to some clients or servers. Note that Secure Web Proxy does not yet honor this field. (PROFILE_UNSPECIFIED, PROFILE_COMPATIBLE, PROFILE_MODERN, PROFILE_RESTRICTED, PROFILE_CUSTOM)</td>
 </tr>
 <tr>
     <td><CopyableCode code="trustConfig" /></td>
@@ -146,12 +147,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="minTlsVersion" /></td>
     <td><code>string</code></td>
-    <td>Optional. Minimum TLS version that the firewall should use when negotiating connections with both clients and servers. If this is not set, then the default value is to allow the broadest set of clients and servers (TLS 1.0 or higher). Setting this to more restrictive values may improve security, but may also prevent the firewall from connecting to some clients or servers. Note that Secure Web Proxy does not yet honor this field.</td>
+    <td>Optional. Minimum TLS version that the firewall should use when negotiating connections with both clients and servers. If this is not set, then the default value is to allow the broadest set of clients and servers (TLS 1.0 or higher). Setting this to more restrictive values may improve security, but may also prevent the firewall from connecting to some clients or servers. Note that Secure Web Proxy does not yet honor this field. (TLS_VERSION_UNSPECIFIED, TLS_1_0, TLS_1_1, TLS_1_2, TLS_1_3)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tlsFeatureProfile" /></td>
     <td><code>string</code></td>
-    <td>Optional. The selected Profile. If this is not set, then the default value is to allow the broadest set of clients and servers ("PROFILE_COMPATIBLE"). Setting this to more restrictive values may improve security, but may also prevent the TLS inspection proxy from connecting to some clients or servers. Note that Secure Web Proxy does not yet honor this field.</td>
+    <td>Optional. The selected Profile. If this is not set, then the default value is to allow the broadest set of clients and servers ("PROFILE_COMPATIBLE"). Setting this to more restrictive values may improve security, but may also prevent the TLS inspection proxy from connecting to some clients or servers. Note that Secure Web Proxy does not yet honor this field. (PROFILE_UNSPECIFIED, PROFILE_COMPATIBLE, PROFILE_MODERN, PROFILE_RESTRICTED, PROFILE_CUSTOM)</td>
 </tr>
 <tr>
     <td><CopyableCode code="trustConfig" /></td>
@@ -194,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_tls_inspection_policies_list"><CopyableCode code="projects_locations_tls_inspection_policies_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists TlsInspectionPolicies in a given project and location.</td>
 </tr>
 <tr>
@@ -328,8 +329,8 @@ updateTime
 FROM google.networksecurity.tls_inspection_policies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -351,27 +352,27 @@ Creates a new TlsInspectionPolicy in a given project and location.
 
 ```sql
 INSERT INTO google.networksecurity.tls_inspection_policies (
-data__customTlsFeatures,
-data__excludePublicCaSet,
-data__caPool,
+data__minTlsVersion,
 data__tlsFeatureProfile,
-data__trustConfig,
+data__caPool,
+data__excludePublicCaSet,
 data__description,
 data__name,
-data__minTlsVersion,
+data__trustConfig,
+data__customTlsFeatures,
 projectsId,
 locationsId,
 tlsInspectionPolicyId
 )
 SELECT 
-'{{ customTlsFeatures }}',
-{{ excludePublicCaSet }},
-'{{ caPool }}',
+'{{ minTlsVersion }}',
 '{{ tlsFeatureProfile }}',
-'{{ trustConfig }}',
+'{{ caPool }}',
+{{ excludePublicCaSet }},
 '{{ description }}',
 '{{ name }}',
-'{{ minTlsVersion }}',
+'{{ trustConfig }}',
+'{{ customTlsFeatures }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ tlsInspectionPolicyId }}'
@@ -386,61 +387,54 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: tls_inspection_policies
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the tls_inspection_policies resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the tls_inspection_policies resource.
-    - name: customTlsFeatures
-      value: array
-      description: >
-        Optional. List of custom TLS cipher suites selected. This field is valid only if the selected tls_feature_profile is CUSTOM. The compute.SslPoliciesService.ListAvailableFeatures method returns the set of features that can be specified in this list. Note that Secure Web Proxy does not yet honor this field.
-        
-    - name: excludePublicCaSet
-      value: boolean
-      description: >
-        Optional. If FALSE (the default), use our default set of public CAs in addition to any CAs specified in trust_config. These public CAs are currently based on the Mozilla Root Program and are subject to change over time. If TRUE, do not accept our default set of public CAs. Only CAs specified in trust_config will be accepted. This defaults to FALSE (use public CAs in addition to trust_config) for backwards compatibility, but trusting public root CAs is *not recommended* unless the traffic in question is outbound to public web servers. When possible, prefer setting this to "false" and explicitly specifying trusted CAs and certificates in a TrustConfig. Note that Secure Web Proxy does not yet honor this field.
-        
-    - name: caPool
-      value: string
-      description: >
-        Required. A CA pool resource used to issue interception certificates. The CA pool string has a relative resource path following the form "projects/{project}/locations/{location}/caPools/{ca_pool}".
-        
-    - name: tlsFeatureProfile
-      value: string
-      description: >
-        Optional. The selected Profile. If this is not set, then the default value is to allow the broadest set of clients and servers ("PROFILE_COMPATIBLE"). Setting this to more restrictive values may improve security, but may also prevent the TLS inspection proxy from connecting to some clients or servers. Note that Secure Web Proxy does not yet honor this field.
-        
-      valid_values: ['PROFILE_UNSPECIFIED', 'PROFILE_COMPATIBLE', 'PROFILE_MODERN', 'PROFILE_RESTRICTED', 'PROFILE_CUSTOM']
-    - name: trustConfig
-      value: string
-      description: >
-        Optional. A TrustConfig resource used when making a connection to the TLS server. This is a relative resource path following the form "projects/{project}/locations/{location}/trustConfigs/{trust_config}". This is necessary to intercept TLS connections to servers with certificates signed by a private CA or self-signed certificates. Note that Secure Web Proxy does not yet honor this field.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. Free-text description of the resource.
-        
-    - name: name
-      value: string
-      description: >
-        Required. Name of the resource. Name is of the form projects/{project}/locations/{location}/tlsInspectionPolicies/{tls_inspection_policy} tls_inspection_policy should match the pattern:(^&#91;a-z&#93;([a-z0-9-]{0,61}[a-z0-9])?$).
-        
     - name: minTlsVersion
-      value: string
-      description: >
+      value: "{{ minTlsVersion }}"
+      description: |
         Optional. Minimum TLS version that the firewall should use when negotiating connections with both clients and servers. If this is not set, then the default value is to allow the broadest set of clients and servers (TLS 1.0 or higher). Setting this to more restrictive values may improve security, but may also prevent the firewall from connecting to some clients or servers. Note that Secure Web Proxy does not yet honor this field.
-        
       valid_values: ['TLS_VERSION_UNSPECIFIED', 'TLS_1_0', 'TLS_1_1', 'TLS_1_2', 'TLS_1_3']
+    - name: tlsFeatureProfile
+      value: "{{ tlsFeatureProfile }}"
+      description: |
+        Optional. The selected Profile. If this is not set, then the default value is to allow the broadest set of clients and servers ("PROFILE_COMPATIBLE"). Setting this to more restrictive values may improve security, but may also prevent the TLS inspection proxy from connecting to some clients or servers. Note that Secure Web Proxy does not yet honor this field.
+      valid_values: ['PROFILE_UNSPECIFIED', 'PROFILE_COMPATIBLE', 'PROFILE_MODERN', 'PROFILE_RESTRICTED', 'PROFILE_CUSTOM']
+    - name: caPool
+      value: "{{ caPool }}"
+      description: |
+        Required. A CA pool resource used to issue interception certificates. The CA pool string has a relative resource path following the form "projects/{project}/locations/{location}/caPools/{ca_pool}".
+    - name: excludePublicCaSet
+      value: {{ excludePublicCaSet }}
+      description: |
+        Optional. If FALSE (the default), use our default set of public CAs in addition to any CAs specified in trust_config. These public CAs are currently based on the Mozilla Root Program and are subject to change over time. If TRUE, do not accept our default set of public CAs. Only CAs specified in trust_config will be accepted. This defaults to FALSE (use public CAs in addition to trust_config) for backwards compatibility, but trusting public root CAs is *not recommended* unless the traffic in question is outbound to public web servers. When possible, prefer setting this to "false" and explicitly specifying trusted CAs and certificates in a TrustConfig. Note that Secure Web Proxy does not yet honor this field.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Free-text description of the resource.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. Name of the resource. Name is of the form projects/{project}/locations/{location}/tlsInspectionPolicies/{tls_inspection_policy} tls_inspection_policy should match the pattern:(^&#91;a-z&#93;([a-z0-9-]{0,61}[a-z0-9])?$).
+    - name: trustConfig
+      value: "{{ trustConfig }}"
+      description: |
+        Optional. A TrustConfig resource used when making a connection to the TLS server. This is a relative resource path following the form "projects/{project}/locations/{location}/trustConfigs/{trust_config}". This is necessary to intercept TLS connections to servers with certificates signed by a private CA or self-signed certificates. Note that Secure Web Proxy does not yet honor this field.
+    - name: customTlsFeatures
+      value:
+        - "{{ customTlsFeatures }}"
+      description: |
+        Optional. List of custom TLS cipher suites selected. This field is valid only if the selected tls_feature_profile is CUSTOM. The compute.SslPoliciesService.ListAvailableFeatures method returns the set of features that can be specified in this list. Note that Secure Web Proxy does not yet honor this field.
     - name: tlsInspectionPolicyId
-      value: string
-```
+      value: "{{ tlsInspectionPolicyId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -460,14 +454,14 @@ Updates the parameters of a single TlsInspectionPolicy.
 ```sql
 UPDATE google.networksecurity.tls_inspection_policies
 SET 
-data__customTlsFeatures = '{{ customTlsFeatures }}',
-data__excludePublicCaSet = {{ excludePublicCaSet }},
-data__caPool = '{{ caPool }}',
+data__minTlsVersion = '{{ minTlsVersion }}',
 data__tlsFeatureProfile = '{{ tlsFeatureProfile }}',
-data__trustConfig = '{{ trustConfig }}',
+data__caPool = '{{ caPool }}',
+data__excludePublicCaSet = {{ excludePublicCaSet }},
 data__description = '{{ description }}',
 data__name = '{{ name }}',
-data__minTlsVersion = '{{ minTlsVersion }}'
+data__trustConfig = '{{ trustConfig }}',
+data__customTlsFeatures = '{{ customTlsFeatures }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

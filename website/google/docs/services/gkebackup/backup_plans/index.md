@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>backup_plans</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>backup_plans</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="backup_plans" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.gkebackup.backup_plans" /></td></tr>
 </tbody></table>
@@ -105,6 +106,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Completion time of the last successful Backup. This is sourced from a successful Backup's complete_time field. This field is added to maintain consistency with BackupPlanBinding to display last successful backup time.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="protectedNamespaceCount" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Output only. The number of user managed namespaces backed up in the last successful Backup created via this BackupPlan.</td>
+</tr>
+<tr>
     <td><CopyableCode code="protectedPodCount" /></td>
     <td><code>integer (int32)</code></td>
     <td>Output only. The number of Kubernetes Pods backed up in the last successful Backup created via this BackupPlan.</td>
@@ -127,7 +133,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the BackupPlan. This State field reflects the various stages a BackupPlan can be in during the Create operation. It will be set to "DEACTIVATED" if the BackupPlan is deactivated on an Update</td>
+    <td>Output only. State of the BackupPlan. This State field reflects the various stages a BackupPlan can be in during the Create operation. It will be set to "DEACTIVATED" if the BackupPlan is deactivated on an Update (STATE_UNSPECIFIED, CLUSTER_PENDING, PROVISIONING, READY, FAILED, DEACTIVATED, DELETING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateReason" /></td>
@@ -214,6 +220,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Completion time of the last successful Backup. This is sourced from a successful Backup's complete_time field. This field is added to maintain consistency with BackupPlanBinding to display last successful backup time.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="protectedNamespaceCount" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Output only. The number of user managed namespaces backed up in the last successful Backup created via this BackupPlan.</td>
+</tr>
+<tr>
     <td><CopyableCode code="protectedPodCount" /></td>
     <td><code>integer (int32)</code></td>
     <td>Output only. The number of Kubernetes Pods backed up in the last successful Backup created via this BackupPlan.</td>
@@ -236,7 +247,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the BackupPlan. This State field reflects the various stages a BackupPlan can be in during the Create operation. It will be set to "DEACTIVATED" if the BackupPlan is deactivated on an Update</td>
+    <td>Output only. State of the BackupPlan. This State field reflects the various stages a BackupPlan can be in during the Create operation. It will be set to "DEACTIVATED" if the BackupPlan is deactivated on an Update (STATE_UNSPECIFIED, CLUSTER_PENDING, PROVISIONING, READY, FAILED, DEACTIVATED, DELETING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateReason" /></td>
@@ -284,7 +295,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists BackupPlans in a given location.</td>
 </tr>
 <tr>
@@ -307,6 +318,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backupPlansId"><code>backupPlansId</code></a></td>
     <td><a href="#parameter-etag"><code>etag</code></a></td>
     <td>Deletes an existing BackupPlan.</td>
+</tr>
+<tr>
+    <td><a href="#set_tags"><CopyableCode code="set_tags" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backupPlansId"><code>backupPlansId</code></a></td>
+    <td></td>
+    <td>Updates tags directly bound to a GCP resource.</td>
 </tr>
 </tbody>
 </table>
@@ -403,6 +421,7 @@ description,
 etag,
 labels,
 lastSuccessfulBackupTime,
+protectedNamespaceCount,
 protectedPodCount,
 retentionPolicy,
 rpoRiskLevel,
@@ -435,6 +454,7 @@ description,
 etag,
 labels,
 lastSuccessfulBackupTime,
+protectedNamespaceCount,
 protectedPodCount,
 retentionPolicy,
 rpoRiskLevel,
@@ -446,10 +466,10 @@ updateTime
 FROM google.gkebackup.backup_plans
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -471,25 +491,25 @@ Creates a new BackupPlan in a given location.
 
 ```sql
 INSERT INTO google.gkebackup.backup_plans (
-data__description,
-data__cluster,
-data__retentionPolicy,
 data__labels,
 data__backupSchedule,
-data__deactivated,
+data__retentionPolicy,
 data__backupConfig,
+data__description,
+data__deactivated,
+data__cluster,
 projectsId,
 locationsId,
 backupPlanId
 )
 SELECT 
-'{{ description }}',
-'{{ cluster }}',
-'{{ retentionPolicy }}',
 '{{ labels }}',
 '{{ backupSchedule }}',
-{{ deactivated }},
+'{{ retentionPolicy }}',
 '{{ backupConfig }}',
+'{{ description }}',
+{{ deactivated }},
+'{{ cluster }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ backupPlanId }}'
@@ -504,54 +524,87 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: backup_plans
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the backup_plans resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the backup_plans resource.
-    - name: description
-      value: string
-      description: >
-        Optional. User specified descriptive string for this BackupPlan.
-        
-    - name: cluster
-      value: string
-      description: >
-        Required. Immutable. The source cluster from which Backups will be created via this BackupPlan. Valid formats: - `projects/*/locations/*/clusters/*` - `projects/*/zones/*/clusters/*`
-        
-    - name: retentionPolicy
-      value: object
-      description: >
-        Optional. RetentionPolicy governs lifecycle of Backups created under this plan.
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. A set of custom labels supplied by user.
-        
     - name: backupSchedule
-      value: object
-      description: >
+      description: |
         Optional. Defines a schedule for automatic Backup creation via this BackupPlan.
-        
-    - name: deactivated
-      value: boolean
-      description: >
-        Optional. This flag indicates whether this BackupPlan has been deactivated. Setting this field to True locks the BackupPlan such that no further updates will be allowed (except deletes), including the deactivated field itself. It also prevents any new Backups from being created via this BackupPlan (including scheduled Backups). Default: False
-        
+      value:
+        rpoConfig:
+          targetRpoMinutes: {{ targetRpoMinutes }}
+          exclusionWindows:
+            - duration: "{{ duration }}"
+              startTime:
+                hours: {{ hours }}
+                minutes: {{ minutes }}
+                nanos: {{ nanos }}
+                seconds: {{ seconds }}
+              daily: {{ daily }}
+              singleOccurrenceDate:
+                year: {{ year }}
+                day: {{ day }}
+                month: {{ month }}
+              daysOfWeek:
+                daysOfWeek:
+                  - "{{ daysOfWeek }}"
+        nextScheduledBackupTime: "{{ nextScheduledBackupTime }}"
+        cronSchedule: "{{ cronSchedule }}"
+        paused: {{ paused }}
+    - name: retentionPolicy
+      description: |
+        Optional. RetentionPolicy governs lifecycle of Backups created under this plan.
+      value:
+        backupRetainDays: {{ backupRetainDays }}
+        backupDeleteLockDays: {{ backupDeleteLockDays }}
+        locked: {{ locked }}
     - name: backupConfig
-      value: object
-      description: >
+      description: |
         Optional. Defines the configuration of Backups created via this BackupPlan.
-        
+      value:
+        selectedApplications:
+          namespacedNames:
+            - name: "{{ name }}"
+              namespace: "{{ namespace }}"
+        encryptionKey:
+          gcpKmsEncryptionKey: "{{ gcpKmsEncryptionKey }}"
+        selectedNamespaces:
+          namespaces:
+            - "{{ namespaces }}"
+        includeSecrets: {{ includeSecrets }}
+        allNamespaces: {{ allNamespaces }}
+        includeVolumeData: {{ includeVolumeData }}
+        selectedNamespaceLabels:
+          resourceLabels:
+            - value: "{{ value }}"
+              key: "{{ key }}"
+        permissiveMode: {{ permissiveMode }}
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. User specified descriptive string for this BackupPlan.
+    - name: deactivated
+      value: {{ deactivated }}
+      description: |
+        Optional. This flag indicates whether this BackupPlan has been deactivated. Setting this field to True locks the BackupPlan such that no further updates will be allowed (except deletes), including the deactivated field itself. It also prevents any new Backups from being created via this BackupPlan (including scheduled Backups). Default: False
+    - name: cluster
+      value: "{{ cluster }}"
+      description: |
+        Required. Immutable. The source cluster from which Backups will be created via this BackupPlan. Valid formats: - \`projects/*/locations/*/clusters/*\` - \`projects/*/zones/*/clusters/*\`
     - name: backupPlanId
-      value: string
-```
+      value: "{{ backupPlanId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -571,13 +624,13 @@ Update a BackupPlan.
 ```sql
 UPDATE google.gkebackup.backup_plans
 SET 
-data__description = '{{ description }}',
-data__cluster = '{{ cluster }}',
-data__retentionPolicy = '{{ retentionPolicy }}',
 data__labels = '{{ labels }}',
 data__backupSchedule = '{{ backupSchedule }}',
+data__retentionPolicy = '{{ retentionPolicy }}',
+data__backupConfig = '{{ backupConfig }}',
+data__description = '{{ description }}',
 data__deactivated = {{ deactivated }},
-data__backupConfig = '{{ backupConfig }}'
+data__cluster = '{{ cluster }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -612,6 +665,36 @@ WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND backupPlansId = '{{ backupPlansId }}' --required
 AND etag = '{{ etag }}'
+;
+```
+</TabItem>
+</Tabs>
+
+
+## Lifecycle Methods
+
+<Tabs
+    defaultValue="set_tags"
+    values={[
+        { label: 'set_tags', value: 'set_tags' }
+    ]}
+>
+<TabItem value="set_tags">
+
+Updates tags directly bound to a GCP resource.
+
+```sql
+EXEC google.gkebackup.backup_plans.set_tags 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@backupPlansId='{{ backupPlansId }}' --required 
+@@json=
+'{
+"tags": "{{ tags }}", 
+"etag": "{{ etag }}", 
+"name": "{{ name }}", 
+"requestId": "{{ requestId }}"
+}'
 ;
 ```
 </TabItem>

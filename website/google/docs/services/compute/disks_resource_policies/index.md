@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>disks_resource_policies</code> 
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>disks_resource_policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="disks_resource_policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.disks_resource_policies" /></td></tr>
 </tbody></table>
@@ -52,16 +53,16 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#add_resource_policies"><CopyableCode code="add_resource_policies" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-disk"><code>disk</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-disk"><code>disk</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Adds existing resource policies to a regional disk. You can only add one policy which will be applied to this disk for scheduling snapshot creation.</td>
+    <td>Adds existing resource policies to a disk. You can only add one<br />policy which will be applied to this disk for scheduling snapshot<br />creation.</td>
 </tr>
 <tr>
     <td><a href="#remove_resource_policies"><CopyableCode code="remove_resource_policies" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-disk"><code>disk</code></a></td>
+    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-disk"><code>disk</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Removes resource policies from a regional disk.</td>
+    <td>Removes resource policies from a disk.</td>
 </tr>
 </tbody>
 </table>
@@ -89,8 +90,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
-<tr id="parameter-region">
-    <td><CopyableCode code="region" /></td>
+<tr id="parameter-zone">
+    <td><CopyableCode code="zone" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -113,20 +114,20 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="add_resource_policies">
 
-Adds existing resource policies to a regional disk. You can only add one policy which will be applied to this disk for scheduling snapshot creation.
+Adds existing resource policies to a disk. You can only add one<br />policy which will be applied to this disk for scheduling snapshot<br />creation.
 
 ```sql
 INSERT INTO google.compute.disks_resource_policies (
 data__resourcePolicies,
 project,
-region,
+zone,
 disk,
 requestId
 )
 SELECT 
 '{{ resourcePolicies }}',
 '{{ project }}',
-'{{ region }}',
+'{{ zone }}',
 '{{ disk }}',
 '{{ requestId }}'
 RETURNING
@@ -137,6 +138,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -161,27 +163,28 @@ zone
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: disks_resource_policies
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the disks_resource_policies resource.
-    - name: region
-      value: string
+    - name: zone
+      value: "{{ zone }}"
       description: Required parameter for the disks_resource_policies resource.
     - name: disk
-      value: string
+      value: "{{ disk }}"
       description: Required parameter for the disks_resource_policies resource.
     - name: resourcePolicies
-      value: array
-      description: >
-        Resource policies to be added to this disk.
-        
+      value:
+        - "{{ resourcePolicies }}"
+      description: |
+        Full or relative path to the resource policy to be added to this disk. You
+        can only specify one resource policy.
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -196,12 +199,12 @@ zone
 >
 <TabItem value="remove_resource_policies">
 
-Removes resource policies from a regional disk.
+Removes resource policies from a disk.
 
 ```sql
 DELETE FROM google.compute.disks_resource_policies
 WHERE project = '{{ project }}' --required
-AND region = '{{ region }}' --required
+AND zone = '{{ zone }}' --required
 AND disk = '{{ disk }}' --required
 AND requestId = '{{ requestId }}'
 ;

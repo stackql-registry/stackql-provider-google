@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>exports</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>exports</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="exports" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.exports" /></td></tr>
 </tbody></table>
@@ -250,22 +251,22 @@ Submit a data export job to be processed in the background. If the request is su
 
 ```sql
 INSERT INTO google.apigee.exports (
-data__outputFormat,
-data__datastoreName,
 data__description,
-data__dateRange,
-data__csvDelimiter,
+data__datastoreName,
+data__outputFormat,
 data__name,
+data__csvDelimiter,
+data__dateRange,
 organizationsId,
 environmentsId
 )
 SELECT 
-'{{ outputFormat }}',
-'{{ datastoreName }}',
 '{{ description }}',
-'{{ dateRange }}',
-'{{ csvDelimiter }}',
+'{{ datastoreName }}',
+'{{ outputFormat }}',
 '{{ name }}',
+'{{ csvDelimiter }}',
+'{{ dateRange }}',
 '{{ organizationsId }}',
 '{{ environmentsId }}'
 RETURNING
@@ -283,46 +284,42 @@ updated
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: exports
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the exports resource.
     - name: environmentsId
-      value: string
+      value: "{{ environmentsId }}"
       description: Required parameter for the exports resource.
-    - name: outputFormat
-      value: string
-      description: >
-        Optional. Output format of the export. Valid values include: `csv` or `json`. Defaults to `json`. Note: Configure the delimiter for CSV output using the `csvDelimiter` property.
-        
-    - name: datastoreName
-      value: string
-      description: >
-        Required. Name of the preconfigured datastore.
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. Description of the export job.
-        
-    - name: dateRange
-      value: object
-      description: >
-        Required. Date range of the data to export.
-        
-    - name: csvDelimiter
-      value: string
-      description: >
-        Optional. Delimiter used in the CSV file, if `outputFormat` is set to `csv`. Defaults to the `,` (comma) character. Supported delimiter characters include comma (`,`), pipe (`|`), and tab (`\t`).
-        
+    - name: datastoreName
+      value: "{{ datastoreName }}"
+      description: |
+        Required. Name of the preconfigured datastore.
+    - name: outputFormat
+      value: "{{ outputFormat }}"
+      description: |
+        Optional. Output format of the export. Valid values include: \`csv\` or \`json\`. Defaults to \`json\`. Note: Configure the delimiter for CSV output using the \`csvDelimiter\` property.
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Required. Display name of the export job.
-        
-```
+    - name: csvDelimiter
+      value: "{{ csvDelimiter }}"
+      description: |
+        Optional. Delimiter used in the CSV file, if \`outputFormat\` is set to \`csv\`. Defaults to the \`,\` (comma) character. Supported delimiter characters include comma (\`,\`), pipe (\`|\`), and tab (\`t\`).
+    - name: dateRange
+      description: |
+        Required. Date range of the data to export.
+      value:
+        start: "{{ start }}"
+        end: "{{ end }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

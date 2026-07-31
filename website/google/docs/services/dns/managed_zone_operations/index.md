@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>managed_zone_operations</code> 
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>managed_zone_operations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="managed_zone_operations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dns.managed_zone_operations" /></td></tr>
 </tbody></table>
@@ -72,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>Status of the operation. Can be one of the following: "PENDING" or "DONE" (output only). A status of "DONE" means that the request to update the authoritative servers has been sent, but the servers might not be updated yet.</td>
+    <td>Status of the operation. Can be one of the following: "PENDING" or "DONE" (output only). A status of "DONE" means that the request to update the authoritative servers has been sent, but the servers might not be updated yet. (pending, done)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
@@ -126,7 +127,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>Status of the operation. Can be one of the following: "PENDING" or "DONE" (output only). A status of "DONE" means that the request to update the authoritative servers has been sent, but the servers might not be updated yet.</td>
+    <td>Status of the operation. Can be one of the following: "PENDING" or "DONE" (output only). A status of "DONE" means that the request to update the authoritative servers has been sent, but the servers might not be updated yet. (pending, done)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
@@ -174,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-managedZone"><code>managedZone</code></a></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-sortBy"><code>sortBy</code></a></td>
+    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-sortBy"><code>sortBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Enumerates Operations for the given ManagedZone.</td>
 </tr>
 </tbody>
@@ -280,8 +281,8 @@ FROM google.dns.managed_zone_operations
 WHERE project = '{{ project }}' -- required
 AND managedZone = '{{ managedZone }}' -- required
 AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 AND sortBy = '{{ sortBy }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

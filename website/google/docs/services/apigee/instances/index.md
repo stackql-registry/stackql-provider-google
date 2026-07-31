@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>instances</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>instances</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="instances" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.instances" /></td></tr>
 </tbody></table>
@@ -117,7 +118,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="peeringCidrRange" /></td>
     <td><code>string</code></td>
-    <td>Optional. Size of the CIDR block range that will be reserved by the instance. PAID organizations support `SLASH_16` to `SLASH_20` and defaults to `SLASH_16`. Evaluation organizations support only `SLASH_23`.</td>
+    <td>Optional. Size of the CIDR block range that will be reserved by the instance. PAID organizations support `SLASH_16` to `SLASH_20` and defaults to `SLASH_16`. Evaluation organizations support only `SLASH_23`. (CIDR_RANGE_UNSPECIFIED, SLASH_16, SLASH_17, SLASH_18, SLASH_19, SLASH_20, SLASH_22, SLASH_23)</td>
 </tr>
 <tr>
     <td><CopyableCode code="port" /></td>
@@ -142,7 +143,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the instance. Values other than `ACTIVE` means the resource is not ready to use.</td>
+    <td>Output only. State of the instance. Values other than `ACTIVE` means the resource is not ready to use. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, UPDATING)</td>
 </tr>
 </tbody>
 </table>
@@ -226,7 +227,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="peeringCidrRange" /></td>
     <td><code>string</code></td>
-    <td>Optional. Size of the CIDR block range that will be reserved by the instance. PAID organizations support `SLASH_16` to `SLASH_20` and defaults to `SLASH_16`. Evaluation organizations support only `SLASH_23`.</td>
+    <td>Optional. Size of the CIDR block range that will be reserved by the instance. PAID organizations support `SLASH_16` to `SLASH_20` and defaults to `SLASH_16`. Evaluation organizations support only `SLASH_23`. (CIDR_RANGE_UNSPECIFIED, SLASH_16, SLASH_17, SLASH_18, SLASH_19, SLASH_20, SLASH_22, SLASH_23)</td>
 </tr>
 <tr>
     <td><CopyableCode code="port" /></td>
@@ -251,7 +252,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the instance. Values other than `ACTIVE` means the resource is not ready to use.</td>
+    <td>Output only. State of the instance. Values other than `ACTIVE` means the resource is not ready to use. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, UPDATING)</td>
 </tr>
 </tbody>
 </table>
@@ -449,29 +450,29 @@ Creates an Apigee runtime instance. The instance is accessible from the authoriz
 
 ```sql
 INSERT INTO google.apigee.instances (
-data__peeringCidrRange,
-data__description,
-data__ipRange,
-data__consumerAcceptList,
-data__name,
 data__maintenanceUpdatePolicy,
-data__location,
-data__diskEncryptionKeyName,
-data__displayName,
+data__ipRange,
 data__accessLoggingConfig,
+data__displayName,
+data__peeringCidrRange,
+data__diskEncryptionKeyName,
+data__name,
+data__consumerAcceptList,
+data__location,
+data__description,
 organizationsId
 )
 SELECT 
-'{{ peeringCidrRange }}',
-'{{ description }}',
-'{{ ipRange }}',
-'{{ consumerAcceptList }}',
-'{{ name }}',
 '{{ maintenanceUpdatePolicy }}',
-'{{ location }}',
-'{{ diskEncryptionKeyName }}',
-'{{ displayName }}',
+'{{ ipRange }}',
 '{{ accessLoggingConfig }}',
+'{{ displayName }}',
+'{{ peeringCidrRange }}',
+'{{ diskEncryptionKeyName }}',
+'{{ name }}',
+'{{ consumerAcceptList }}',
+'{{ location }}',
+'{{ description }}',
 '{{ organizationsId }}'
 RETURNING
 name,
@@ -484,65 +485,66 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: instances
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the instances resource.
-    - name: peeringCidrRange
-      value: string
-      description: >
-        Optional. Size of the CIDR block range that will be reserved by the instance. PAID organizations support `SLASH_16` to `SLASH_20` and defaults to `SLASH_16`. Evaluation organizations support only `SLASH_23`.
-        
-      valid_values: ['CIDR_RANGE_UNSPECIFIED', 'SLASH_16', 'SLASH_17', 'SLASH_18', 'SLASH_19', 'SLASH_20', 'SLASH_22', 'SLASH_23']
-    - name: description
-      value: string
-      description: >
-        Optional. Description of the instance.
-        
-    - name: ipRange
-      value: string
-      description: >
-        Optional. Comma-separated list of CIDR blocks of length 22 and/or 28 used to create the Apigee instance. Providing CIDR ranges is optional. You can provide just /22 or /28 or both (or neither). Ranges you provide should be freely available as part of a larger named range you have allocated to the Service Networking peering. If this parameter is not provided, Apigee automatically requests an available /22 and /28 CIDR block from Service Networking. Use the /22 CIDR block for configuring your firewall needs to allow traffic from Apigee. Input formats: `a.b.c.d/22` or `e.f.g.h/28` or `a.b.c.d/22,e.f.g.h/28`
-        
-    - name: consumerAcceptList
-      value: array
-      description: >
-        Optional. Customer accept list represents the list of projects (id/number) on customer side that can privately connect to the service attachment. It is an optional field which the customers can provide during the instance creation. By default, the customer project associated with the Apigee organization will be included to the list.
-        
-    - name: name
-      value: string
-      description: >
-        Required. Resource ID of the instance. Values must match the regular expression `^a-z{0,30}[a-z\d]$`.
-        
     - name: maintenanceUpdatePolicy
-      value: object
-      description: >
+      description: |
         Optional. Apigee customers can set the preferred window to perform maintenance on the instance (day of the week and time of day).
-        
-    - name: location
-      value: string
-      description: >
-        Required. Compute Engine location where the instance resides.
-        
-    - name: diskEncryptionKeyName
-      value: string
-      description: >
-        Optional. Customer Managed Encryption Key (CMEK) used for disk and volume encryption. If not specified, a Google-Managed encryption key will be used. Use the following format: `projects/([^/]+)/locations/([^/]+)/keyRings/([^/]+)/cryptoKeys/([^/]+)`
-        
-    - name: displayName
-      value: string
-      description: >
-        Optional. Display name for the instance.
-        
+      value:
+        maintenanceWindows:
+          - day: "{{ day }}"
+            startTime:
+              nanos: {{ nanos }}
+              hours: {{ hours }}
+              minutes: {{ minutes }}
+              seconds: {{ seconds }}
+        maintenanceChannel: "{{ maintenanceChannel }}"
+    - name: ipRange
+      value: "{{ ipRange }}"
+      description: |
+        Optional. Comma-separated list of CIDR blocks of length 22 and/or 28 used to create the Apigee instance. Providing CIDR ranges is optional. You can provide just /22 or /28 or both (or neither). Ranges you provide should be freely available as part of a larger named range you have allocated to the Service Networking peering. If this parameter is not provided, Apigee automatically requests an available /22 and /28 CIDR block from Service Networking. Use the /22 CIDR block for configuring your firewall needs to allow traffic from Apigee. Input formats: \`a.b.c.d/22\` or \`e.f.g.h/28\` or \`a.b.c.d/22,e.f.g.h/28\`
     - name: accessLoggingConfig
-      value: object
-      description: >
+      description: |
         Optional. Access logging configuration enables the access logging feature at the instance. Apigee customers can enable access logging to ship the access logs to their own project's cloud logging.
-        
-```
+      value:
+        enabled: {{ enabled }}
+        filter: "{{ filter }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. Display name for the instance.
+    - name: peeringCidrRange
+      value: "{{ peeringCidrRange }}"
+      description: |
+        Optional. Size of the CIDR block range that will be reserved by the instance. PAID organizations support \`SLASH_16\` to \`SLASH_20\` and defaults to \`SLASH_16\`. Evaluation organizations support only \`SLASH_23\`.
+      valid_values: ['CIDR_RANGE_UNSPECIFIED', 'SLASH_16', 'SLASH_17', 'SLASH_18', 'SLASH_19', 'SLASH_20', 'SLASH_22', 'SLASH_23']
+    - name: diskEncryptionKeyName
+      value: "{{ diskEncryptionKeyName }}"
+      description: |
+        Optional. Customer Managed Encryption Key (CMEK) used for disk and volume encryption. If not specified, a Google-Managed encryption key will be used. Use the following format: \`projects/([^/]+)/locations/([^/]+)/keyRings/([^/]+)/cryptoKeys/([^/]+)\`
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. Resource ID of the instance. Values must match the regular expression \`^a-z{0,30}[a-zd]$\`.
+    - name: consumerAcceptList
+      value:
+        - "{{ consumerAcceptList }}"
+      description: |
+        Optional. Customer accept list represents the list of projects (id/number) on customer side that can privately connect to the service attachment. It is an optional field which the customers can provide during the instance creation. By default, the customer project associated with the Apigee organization will be included to the list.
+    - name: location
+      value: "{{ location }}"
+      description: |
+        Required. Compute Engine location where the instance resides.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the instance.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -562,16 +564,16 @@ Updates an Apigee runtime instance. You can update the fields described in NodeC
 ```sql
 UPDATE google.apigee.instances
 SET 
-data__peeringCidrRange = '{{ peeringCidrRange }}',
-data__description = '{{ description }}',
-data__ipRange = '{{ ipRange }}',
-data__consumerAcceptList = '{{ consumerAcceptList }}',
-data__name = '{{ name }}',
 data__maintenanceUpdatePolicy = '{{ maintenanceUpdatePolicy }}',
-data__location = '{{ location }}',
-data__diskEncryptionKeyName = '{{ diskEncryptionKeyName }}',
+data__ipRange = '{{ ipRange }}',
+data__accessLoggingConfig = '{{ accessLoggingConfig }}',
 data__displayName = '{{ displayName }}',
-data__accessLoggingConfig = '{{ accessLoggingConfig }}'
+data__peeringCidrRange = '{{ peeringCidrRange }}',
+data__diskEncryptionKeyName = '{{ diskEncryptionKeyName }}',
+data__name = '{{ name }}',
+data__consumerAcceptList = '{{ consumerAcceptList }}',
+data__location = '{{ location }}',
+data__description = '{{ description }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND instancesId = '{{ instancesId }}' --required
@@ -628,8 +630,8 @@ EXEC google.apigee.instances.organizations_instances_report_status
 @@json=
 '{
 "resources": "{{ resources }}", 
-"reportTime": "{{ reportTime }}", 
-"instanceUid": "{{ instanceUid }}"
+"instanceUid": "{{ instanceUid }}", 
+"reportTime": "{{ reportTime }}"
 }'
 ;
 ```

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>projects</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>projects</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="projects" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudkms.projects" /></td></tr>
 </tbody></table>
@@ -50,25 +51,25 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#show_effective_key_access_justifications_policy_config"><CopyableCode code="show_effective_key_access_justifications_policy_config" /></a></td>
+    <td><a href="#show_effective_key_access_justifications_enrollment_config"><CopyableCode code="show_effective_key_access_justifications_enrollment_config" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
-    <td>Returns the KeyAccessJustificationsPolicyConfig of the resource closest to the given project in hierarchy.</td>
+    <td>Returns the KeyAccessJustificationsEnrollmentConfig of the resource closest to the given project in hierarchy.</td>
 </tr>
 <tr>
     <td><a href="#show_effective_autokey_config"><CopyableCode code="show_effective_autokey_config" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
-    <td>Returns the effective Cloud KMS Autokey configuration for a given project.</td>
+    <td>Returns the effective Cloud KMS Autokey configuration for a given project or folder.</td>
 </tr>
 <tr>
-    <td><a href="#show_effective_key_access_justifications_enrollment_config"><CopyableCode code="show_effective_key_access_justifications_enrollment_config" /></a></td>
+    <td><a href="#show_effective_key_access_justifications_policy_config"><CopyableCode code="show_effective_key_access_justifications_policy_config" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
-    <td>Returns the KeyAccessJustificationsEnrollmentConfig of the resource closest to the given project in hierarchy.</td>
+    <td>Returns the KeyAccessJustificationsPolicyConfig of the resource closest to the given project in hierarchy.</td>
 </tr>
 </tbody>
 </table>
@@ -97,26 +98,26 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="show_effective_key_access_justifications_policy_config"
+    defaultValue="show_effective_key_access_justifications_enrollment_config"
     values={[
-        { label: 'show_effective_key_access_justifications_policy_config', value: 'show_effective_key_access_justifications_policy_config' },
+        { label: 'show_effective_key_access_justifications_enrollment_config', value: 'show_effective_key_access_justifications_enrollment_config' },
         { label: 'show_effective_autokey_config', value: 'show_effective_autokey_config' },
-        { label: 'show_effective_key_access_justifications_enrollment_config', value: 'show_effective_key_access_justifications_enrollment_config' }
+        { label: 'show_effective_key_access_justifications_policy_config', value: 'show_effective_key_access_justifications_policy_config' }
     ]}
 >
-<TabItem value="show_effective_key_access_justifications_policy_config">
+<TabItem value="show_effective_key_access_justifications_enrollment_config">
 
-Returns the KeyAccessJustificationsPolicyConfig of the resource closest to the given project in hierarchy.
+Returns the KeyAccessJustificationsEnrollmentConfig of the resource closest to the given project in hierarchy.
 
 ```sql
-EXEC google.cloudkms.projects.show_effective_key_access_justifications_policy_config 
+EXEC google.cloudkms.projects.show_effective_key_access_justifications_enrollment_config 
 @projectsId='{{ projectsId }}' --required
 ;
 ```
 </TabItem>
 <TabItem value="show_effective_autokey_config">
 
-Returns the effective Cloud KMS Autokey configuration for a given project.
+Returns the effective Cloud KMS Autokey configuration for a given project or folder.
 
 ```sql
 EXEC google.cloudkms.projects.show_effective_autokey_config 
@@ -124,12 +125,12 @@ EXEC google.cloudkms.projects.show_effective_autokey_config
 ;
 ```
 </TabItem>
-<TabItem value="show_effective_key_access_justifications_enrollment_config">
+<TabItem value="show_effective_key_access_justifications_policy_config">
 
-Returns the KeyAccessJustificationsEnrollmentConfig of the resource closest to the given project in hierarchy.
+Returns the KeyAccessJustificationsPolicyConfig of the resource closest to the given project in hierarchy.
 
 ```sql
-EXEC google.cloudkms.projects.show_effective_key_access_justifications_enrollment_config 
+EXEC google.cloudkms.projects.show_effective_key_access_justifications_policy_config 
 @projectsId='{{ projectsId }}' --required
 ;
 ```

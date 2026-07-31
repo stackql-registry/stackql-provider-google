@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>snapshots</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>snapshots</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="snapshots" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.baremetalsolution.snapshots" /></td></tr>
 </tbody></table>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Output only. The type of the snapshot which indicates whether it was scheduled or manual/ad-hoc.</td>
+    <td>Output only. The type of the snapshot which indicates whether it was scheduled or manual/ad-hoc. (SNAPSHOT_TYPE_UNSPECIFIED, AD_HOC, SCHEDULED)</td>
 </tr>
 </tbody>
 </table>
@@ -121,7 +122,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Output only. The type of the snapshot which indicates whether it was scheduled or manual/ad-hoc.</td>
+    <td>Output only. The type of the snapshot which indicates whether it was scheduled or manual/ad-hoc. (SNAPSHOT_TYPE_UNSPECIFIED, AD_HOC, SCHEDULED)</td>
 </tr>
 </tbody>
 </table>
@@ -154,7 +155,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Retrieves the list of snapshots for the specified volume. Returns a response with an empty list of snapshots if called for a non-boot volume.</td>
 </tr>
 <tr>
@@ -272,8 +273,8 @@ FROM google.baremetalsolution.snapshots
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND volumesId = '{{ volumesId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -319,30 +320,28 @@ type
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: snapshots
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the snapshots resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the snapshots resource.
     - name: volumesId
-      value: string
+      value: "{{ volumesId }}"
       description: Required parameter for the snapshots resource.
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         The name of the snapshot.
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         The description of the snapshot.
-        
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

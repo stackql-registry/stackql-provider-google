@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>certificates</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>certificates</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="certificates" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.privateca.certificates" /></td></tr>
 </tbody></table>
@@ -105,6 +106,11 @@ The following fields are returned by `SELECT` queries:
     <td>Immutable. A pem-encoded X.509 certificate signing request (CSR).</td>
 </tr>
 <tr>
+    <td><CopyableCode code="requestedNotBeforeTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Optional. The requested not_before_time of this Certificate. This field may only be set if the CaPool.IssuancePolicy.allow_requester_specified_not_before_time field is set to true for the issuing CaPool. If this field is specified, the certificate will be issued with this 'not_before_time'. If this is not specified, the 'not_before_time' will be set to the issuance time or issuance time minus backdate_duration depending on the CaPool configuration.</td>
+</tr>
+<tr>
     <td><CopyableCode code="revocationDetails" /></td>
     <td><code>object</code></td>
     <td>Output only. Details regarding the revocation of this Certificate. This Certificate is considered revoked if and only if this field is present. (id: RevocationDetails)</td>
@@ -112,7 +118,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="subjectMode" /></td>
     <td><code>string</code></td>
-    <td>Immutable. Specifies how the Certificate's identity fields are to be decided. If this is omitted, the `DEFAULT` subject mode will be used.</td>
+    <td>Immutable. Specifies how the Certificate's identity fields are to be decided. If this is omitted, the `DEFAULT` subject mode will be used. (SUBJECT_REQUEST_MODE_UNSPECIFIED, DEFAULT, RDN_SEQUENCE, REFLECTED_SPIFFE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -189,6 +195,11 @@ The following fields are returned by `SELECT` queries:
     <td>Immutable. A pem-encoded X.509 certificate signing request (CSR).</td>
 </tr>
 <tr>
+    <td><CopyableCode code="requestedNotBeforeTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Optional. The requested not_before_time of this Certificate. This field may only be set if the CaPool.IssuancePolicy.allow_requester_specified_not_before_time field is set to true for the issuing CaPool. If this field is specified, the certificate will be issued with this 'not_before_time'. If this is not specified, the 'not_before_time' will be set to the issuance time or issuance time minus backdate_duration depending on the CaPool configuration.</td>
+</tr>
+<tr>
     <td><CopyableCode code="revocationDetails" /></td>
     <td><code>object</code></td>
     <td>Output only. Details regarding the revocation of this Certificate. This Certificate is considered revoked if and only if this field is present. (id: RevocationDetails)</td>
@@ -196,7 +207,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="subjectMode" /></td>
     <td><code>string</code></td>
-    <td>Immutable. Specifies how the Certificate's identity fields are to be decided. If this is omitted, the `DEFAULT` subject mode will be used.</td>
+    <td>Immutable. Specifies how the Certificate's identity fields are to be decided. If this is omitted, the `DEFAULT` subject mode will be used. (SUBJECT_REQUEST_MODE_UNSPECIFIED, DEFAULT, RDN_SEQUENCE, REFLECTED_SPIFFE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -234,14 +245,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-caPoolsId"><code>caPoolsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists Certificates.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-caPoolsId"><code>caPoolsId</code></a></td>
-    <td><a href="#parameter-certificateId"><code>certificateId</code></a>, <a href="#parameter-issuingCertificateAuthorityId"><code>issuingCertificateAuthorityId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-certificateId"><code>certificateId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-issuingCertificateAuthorityId"><code>issuingCertificateAuthorityId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Create a new Certificate in a given Project, Location from a particular CaPool.</td>
 </tr>
 <tr>
@@ -368,6 +379,7 @@ lifetime,
 pemCertificate,
 pemCertificateChain,
 pemCsr,
+requestedNotBeforeTime,
 revocationDetails,
 subjectMode,
 updateTime
@@ -396,6 +408,7 @@ lifetime,
 pemCertificate,
 pemCertificateChain,
 pemCsr,
+requestedNotBeforeTime,
 revocationDetails,
 subjectMode,
 updateTime
@@ -403,10 +416,10 @@ FROM google.privateca.certificates
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND caPoolsId = '{{ caPoolsId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -428,36 +441,38 @@ Create a new Certificate in a given Project, Location from a particular CaPool.
 
 ```sql
 INSERT INTO google.privateca.certificates (
-data__certificateTemplate,
-data__config,
-data__subjectMode,
-data__name,
 data__pemCsr,
-data__lifetime,
+data__config,
 data__labels,
+data__certificateTemplate,
+data__name,
+data__lifetime,
+data__subjectMode,
+data__requestedNotBeforeTime,
 projectsId,
 locationsId,
 caPoolsId,
 certificateId,
+validateOnly,
 issuingCertificateAuthorityId,
-requestId,
-validateOnly
+requestId
 )
 SELECT 
-'{{ certificateTemplate }}',
-'{{ config }}',
-'{{ subjectMode }}',
-'{{ name }}',
 '{{ pemCsr }}',
-'{{ lifetime }}',
+'{{ config }}',
 '{{ labels }}',
+'{{ certificateTemplate }}',
+'{{ name }}',
+'{{ lifetime }}',
+'{{ subjectMode }}',
+'{{ requestedNotBeforeTime }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ caPoolsId }}',
 '{{ certificateId }}',
+'{{ validateOnly }}',
 '{{ issuingCertificateAuthorityId }}',
-'{{ requestId }}',
-'{{ validateOnly }}'
+'{{ requestId }}'
 RETURNING
 name,
 certificateDescription,
@@ -470,6 +485,7 @@ lifetime,
 pemCertificate,
 pemCertificateChain,
 pemCsr,
+requestedNotBeforeTime,
 revocationDetails,
 subjectMode,
 updateTime
@@ -478,64 +494,144 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: certificates
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the certificates resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the certificates resource.
     - name: caPoolsId
-      value: string
+      value: "{{ caPoolsId }}"
       description: Required parameter for the certificates resource.
-    - name: certificateTemplate
-      value: string
-      description: >
-        Immutable. The resource name for a CertificateTemplate used to issue this certificate, in the format `projects/*/locations/*/certificateTemplates/*`. If this is specified, the caller must have the necessary permission to use this template. If this is omitted, no template will be used. This template must be in the same location as the Certificate.
-        
-    - name: config
-      value: object
-      description: >
-        Immutable. A description of the certificate and key that does not require X.509 or ASN.1.
-        
-    - name: subjectMode
-      value: string
-      description: >
-        Immutable. Specifies how the Certificate's identity fields are to be decided. If this is omitted, the `DEFAULT` subject mode will be used.
-        
-      valid_values: ['SUBJECT_REQUEST_MODE_UNSPECIFIED', 'DEFAULT', 'RDN_SEQUENCE', 'REFLECTED_SPIFFE']
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name for this Certificate in the format `projects/*/locations/*/caPools/*/certificates/*`.
-        
     - name: pemCsr
-      value: string
-      description: >
+      value: "{{ pemCsr }}"
+      description: |
         Immutable. A pem-encoded X.509 certificate signing request (CSR).
-        
-    - name: lifetime
-      value: string
-      description: >
-        Required. Immutable. The desired lifetime of a certificate. Used to create the "not_before_time" and "not_after_time" fields inside an X.509 certificate. Note that the lifetime may be truncated if it would extend past the life of any certificate authority in the issuing chain.
-        
+    - name: config
+      description: |
+        Immutable. A description of the certificate and key that does not require X.509 or ASN.1.
+      value:
+        subjectKeyId:
+          keyId: "{{ keyId }}"
+        subjectConfig:
+          subject:
+            organizationalUnit: "{{ organizationalUnit }}"
+            streetAddress: "{{ streetAddress }}"
+            commonName: "{{ commonName }}"
+            organization: "{{ organization }}"
+            province: "{{ province }}"
+            locality: "{{ locality }}"
+            postalCode: "{{ postalCode }}"
+            rdnSequence:
+              - attributes: "{{ attributes }}"
+            countryCode: "{{ countryCode }}"
+          subjectAltName:
+            ipAddresses:
+              - "{{ ipAddresses }}"
+            dnsNames:
+              - "{{ dnsNames }}"
+            emailAddresses:
+              - "{{ emailAddresses }}"
+            uris:
+              - "{{ uris }}"
+            customSans:
+              - critical: {{ critical }}
+                objectId:
+                  objectIdPath: "{{ objectIdPath }}"
+                value: "{{ value }}"
+        publicKey:
+          format: "{{ format }}"
+          key: "{{ key }}"
+        x509Config:
+          caOptions:
+            isCa: {{ isCa }}
+            maxIssuerPathLength: {{ maxIssuerPathLength }}
+          aiaOcspServers:
+            - "{{ aiaOcspServers }}"
+          additionalExtensions:
+            - critical: {{ critical }}
+              objectId:
+                objectIdPath:
+                  - {{ objectIdPath }}
+              value: "{{ value }}"
+          policyIds:
+            - objectIdPath: "{{ objectIdPath }}"
+          nameConstraints:
+            critical: {{ critical }}
+            excludedIpRanges:
+              - "{{ excludedIpRanges }}"
+            permittedEmailAddresses:
+              - "{{ permittedEmailAddresses }}"
+            excludedDnsNames:
+              - "{{ excludedDnsNames }}"
+            permittedUris:
+              - "{{ permittedUris }}"
+            excludedEmailAddresses:
+              - "{{ excludedEmailAddresses }}"
+            excludedUris:
+              - "{{ excludedUris }}"
+            permittedIpRanges:
+              - "{{ permittedIpRanges }}"
+            permittedDnsNames:
+              - "{{ permittedDnsNames }}"
+          keyUsage:
+            baseKeyUsage:
+              keyEncipherment: {{ keyEncipherment }}
+              certSign: {{ certSign }}
+              digitalSignature: {{ digitalSignature }}
+              contentCommitment: {{ contentCommitment }}
+              encipherOnly: {{ encipherOnly }}
+              decipherOnly: {{ decipherOnly }}
+              dataEncipherment: {{ dataEncipherment }}
+              crlSign: {{ crlSign }}
+              keyAgreement: {{ keyAgreement }}
+            extendedKeyUsage:
+              serverAuth: {{ serverAuth }}
+              clientAuth: {{ clientAuth }}
+              emailProtection: {{ emailProtection }}
+              ocspSigning: {{ ocspSigning }}
+              codeSigning: {{ codeSigning }}
+              timeStamping: {{ timeStamping }}
+            unknownExtendedKeyUsages:
+              - objectIdPath: "{{ objectIdPath }}"
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. Labels with user-defined metadata.
-        
+    - name: certificateTemplate
+      value: "{{ certificateTemplate }}"
+      description: |
+        Immutable. The resource name for a CertificateTemplate used to issue this certificate, in the format \`projects/*/locations/*/certificateTemplates/*\`. If this is specified, the caller must have the necessary permission to use this template. If this is omitted, no template will be used. This template must be in the same location as the Certificate.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name for this Certificate in the format \`projects/*/locations/*/caPools/*/certificates/*\`.
+    - name: lifetime
+      value: "{{ lifetime }}"
+      description: |
+        Required. Immutable. The desired lifetime of a certificate. Used to create the "not_before_time" and "not_after_time" fields inside an X.509 certificate. Note that the lifetime may be truncated if it would extend past the life of any certificate authority in the issuing chain.
+    - name: subjectMode
+      value: "{{ subjectMode }}"
+      description: |
+        Immutable. Specifies how the Certificate's identity fields are to be decided. If this is omitted, the \`DEFAULT\` subject mode will be used.
+      valid_values: ['SUBJECT_REQUEST_MODE_UNSPECIFIED', 'DEFAULT', 'RDN_SEQUENCE', 'REFLECTED_SPIFFE']
+    - name: requestedNotBeforeTime
+      value: "{{ requestedNotBeforeTime }}"
+      description: |
+        Optional. The requested not_before_time of this Certificate. This field may only be set if the CaPool.IssuancePolicy.allow_requester_specified_not_before_time field is set to true for the issuing CaPool. If this field is specified, the certificate will be issued with this 'not_before_time'. If this is not specified, the 'not_before_time' will be set to the issuance time or issuance time minus backdate_duration depending on the CaPool configuration.
     - name: certificateId
-      value: string
-    - name: issuingCertificateAuthorityId
-      value: string
-    - name: requestId
-      value: string
+      value: "{{ certificateId }}"
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+    - name: issuingCertificateAuthorityId
+      value: "{{ issuingCertificateAuthorityId }}"
+    - name: requestId
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -555,13 +651,14 @@ Update a Certificate. Currently, the only field you can update is the labels fie
 ```sql
 UPDATE google.privateca.certificates
 SET 
-data__certificateTemplate = '{{ certificateTemplate }}',
-data__config = '{{ config }}',
-data__subjectMode = '{{ subjectMode }}',
-data__name = '{{ name }}',
 data__pemCsr = '{{ pemCsr }}',
+data__config = '{{ config }}',
+data__labels = '{{ labels }}',
+data__certificateTemplate = '{{ certificateTemplate }}',
+data__name = '{{ name }}',
 data__lifetime = '{{ lifetime }}',
-data__labels = '{{ labels }}'
+data__subjectMode = '{{ subjectMode }}',
+data__requestedNotBeforeTime = '{{ requestedNotBeforeTime }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -581,6 +678,7 @@ lifetime,
 pemCertificate,
 pemCertificateChain,
 pemCsr,
+requestedNotBeforeTime,
 revocationDetails,
 subjectMode,
 updateTime;
@@ -609,8 +707,8 @@ EXEC google.privateca.certificates.revoke
 @certificatesId='{{ certificatesId }}' --required 
 @@json=
 '{
-"requestId": "{{ requestId }}", 
-"reason": "{{ reason }}"
+"reason": "{{ reason }}", 
+"requestId": "{{ requestId }}"
 }'
 ;
 ```

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>groups_assets</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>groups_assets</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="groups_assets" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.migrationcenter.groups_assets" /></td></tr>
 </tbody></table>
@@ -113,16 +114,16 @@ Adds assets to a group.
 ```sql
 INSERT INTO google.migrationcenter.groups_assets (
 data__assets,
-data__allowExisting,
 data__requestId,
+data__allowExisting,
 projectsId,
 locationsId,
 groupsId
 )
 SELECT 
 '{{ assets }}',
-{{ allowExisting }},
 '{{ requestId }}',
+{{ allowExisting }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ groupsId }}'
@@ -137,35 +138,34 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: groups_assets
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the groups_assets resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the groups_assets resource.
     - name: groupsId
-      value: string
+      value: "{{ groupsId }}"
       description: Required parameter for the groups_assets resource.
     - name: assets
-      value: object
-      description: >
+      description: |
         Required. List of assets to be added. The maximum number of assets that can be added in a single request is 2000.
-        
-    - name: allowExisting
-      value: boolean
-      description: >
-        Optional. When this value is set to `false` and one of the given assets is already an existing member of the group, the operation fails with an `Already Exists` error. When set to `true` this situation is silently ignored by the server. Default value is `false`.
-        
+      value:
+        assetIds:
+          - "{{ assetIds }}"
     - name: requestId
-      value: string
-      description: >
+      value: "{{ requestId }}"
+      description: |
         Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
-        
-```
+    - name: allowExisting
+      value: {{ allowExisting }}
+      description: |
+        Optional. When this value is set to \`false\` and one of the given assets is already an existing member of the group, the operation fails with an \`Already Exists\` error. When set to \`true\` this situation is silently ignored by the server. Default value is \`false\`.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

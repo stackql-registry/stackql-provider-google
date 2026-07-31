@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>event_threat_detection_setting
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>event_threat_detection_settings</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="event_threat_detection_settings" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.securitycenter.event_threat_detection_settings" /></td></tr>
 </tbody></table>
@@ -50,25 +51,25 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#folders_event_threat_detection_settings_validate_custom_module"><CopyableCode code="folders_event_threat_detection_settings_validate_custom_module" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
-    <td></td>
-    <td>Validates the given Event Threat Detection custom module.</td>
-</tr>
-<tr>
     <td><a href="#organizations_event_threat_detection_settings_validate_custom_module"><CopyableCode code="organizations_event_threat_detection_settings_validate_custom_module" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
     <td></td>
-    <td>Validates the given Event Threat Detection custom module.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_event_threat_detection_settings_validate_custom_module"><CopyableCode code="projects_event_threat_detection_settings_validate_custom_module" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
-    <td>Validates the given Event Threat Detection custom module.</td>
+    <td></td>
+</tr>
+<tr>
+    <td><a href="#folders_event_threat_detection_settings_validate_custom_module"><CopyableCode code="folders_event_threat_detection_settings_validate_custom_module" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
+    <td></td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -107,54 +108,54 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="folders_event_threat_detection_settings_validate_custom_module"
+    defaultValue="organizations_event_threat_detection_settings_validate_custom_module"
     values={[
-        { label: 'folders_event_threat_detection_settings_validate_custom_module', value: 'folders_event_threat_detection_settings_validate_custom_module' },
         { label: 'organizations_event_threat_detection_settings_validate_custom_module', value: 'organizations_event_threat_detection_settings_validate_custom_module' },
-        { label: 'projects_event_threat_detection_settings_validate_custom_module', value: 'projects_event_threat_detection_settings_validate_custom_module' }
+        { label: 'projects_event_threat_detection_settings_validate_custom_module', value: 'projects_event_threat_detection_settings_validate_custom_module' },
+        { label: 'folders_event_threat_detection_settings_validate_custom_module', value: 'folders_event_threat_detection_settings_validate_custom_module' }
     ]}
 >
-<TabItem value="folders_event_threat_detection_settings_validate_custom_module">
-
-Validates the given Event Threat Detection custom module.
-
-```sql
-EXEC google.securitycenter.event_threat_detection_settings.folders_event_threat_detection_settings_validate_custom_module 
-@foldersId='{{ foldersId }}' --required 
-@@json=
-'{
-"type": "{{ type }}", 
-"rawText": "{{ rawText }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="organizations_event_threat_detection_settings_validate_custom_module">
 
-Validates the given Event Threat Detection custom module.
+Successful response
 
 ```sql
 EXEC google.securitycenter.event_threat_detection_settings.organizations_event_threat_detection_settings_validate_custom_module 
 @organizationsId='{{ organizationsId }}' --required 
 @@json=
 '{
-"type": "{{ type }}", 
-"rawText": "{{ rawText }}"
+"rawText": "{{ rawText }}", 
+"type": "{{ type }}"
 }'
 ;
 ```
 </TabItem>
 <TabItem value="projects_event_threat_detection_settings_validate_custom_module">
 
-Validates the given Event Threat Detection custom module.
+Successful response
 
 ```sql
 EXEC google.securitycenter.event_threat_detection_settings.projects_event_threat_detection_settings_validate_custom_module 
 @projectsId='{{ projectsId }}' --required 
 @@json=
 '{
-"type": "{{ type }}", 
-"rawText": "{{ rawText }}"
+"rawText": "{{ rawText }}", 
+"type": "{{ type }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="folders_event_threat_detection_settings_validate_custom_module">
+
+Successful response
+
+```sql
+EXEC google.securitycenter.event_threat_detection_settings.folders_event_threat_detection_settings_validate_custom_module 
+@foldersId='{{ foldersId }}' --required 
+@@json=
+'{
+"rawText": "{{ rawText }}", 
+"type": "{{ type }}"
 }'
 ;
 ```

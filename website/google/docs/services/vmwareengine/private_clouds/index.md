@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>private_clouds</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>private_clouds</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="private_clouds" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.vmwareengine.private_clouds" /></td></tr>
 </tbody></table>
@@ -70,6 +71,11 @@ The following fields are returned by `SELECT` queries:
     <td>User-provided description for this private cloud.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="encryptionConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Encryption configuration for the private cloud. If this field is left unspecified, Google default encryption is used. (id: EncryptionConfig)</td>
+</tr>
+<tr>
     <td><CopyableCode code="expireTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. Time when the resource will be irreversibly deleted.</td>
@@ -97,12 +103,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the resource. New values may be added to this enum when appropriate.</td>
+    <td>Output only. State of the resource. New values may be added to this enum when appropriate. (STATE_UNSPECIFIED, ACTIVE, CREATING, UPDATING, FAILED, DELETED, PURGING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Optional. Type of the private cloud. Defaults to STANDARD.</td>
+    <td>Optional. Type of the private cloud. Defaults to STANDARD. (STANDARD, TIME_LIMITED, STRETCHED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -154,6 +160,11 @@ The following fields are returned by `SELECT` queries:
     <td>User-provided description for this private cloud.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="encryptionConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Encryption configuration for the private cloud. If this field is left unspecified, Google default encryption is used. (id: EncryptionConfig)</td>
+</tr>
+<tr>
     <td><CopyableCode code="expireTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. Time when the resource will be irreversibly deleted.</td>
@@ -181,12 +192,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the resource. New values may be added to this enum when appropriate.</td>
+    <td>Output only. State of the resource. New values may be added to this enum when appropriate. (STATE_UNSPECIFIED, ACTIVE, CREATING, UPDATING, FAILED, DELETED, PURGING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Optional. Type of the private cloud. Defaults to STANDARD.</td>
+    <td>Optional. Type of the private cloud. Defaults to STANDARD. (STANDARD, TIME_LIMITED, STRETCHED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -234,43 +245,29 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists `PrivateCloud` resources in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-privateCloudId"><code>privateCloudId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-privateCloudId"><code>privateCloudId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new `PrivateCloud` resource in a given project and location. Private clouds of type `STANDARD` and `TIME_LIMITED` are zonal resources, `STRETCHED` private clouds are regional. Creating a private cloud also creates a [management cluster](https://cloud.google.com/vmware-engine/docs/concepts-vmware-components) for that private cloud.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Modifies a `PrivateCloud` resource. Only the following fields can be updated: `description`. Only fields specified in `updateMask` are applied. During operation processing, the resource is temporarily in the `ACTIVE` state before the operation fully completes. For that period of time, you can't update the resource. Use the operation status to determine when the processing fully completes.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a></td>
-    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-delayHours"><code>delayHours</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-force"><code>force</code></a>, <a href="#parameter-delayHours"><code>delayHours</code></a></td>
     <td>Schedules a `PrivateCloud` resource for deletion. A `PrivateCloud` resource scheduled for deletion has `PrivateCloud.state` set to `DELETED` and `expireTime` set to the time when deletion is final and can no longer be reversed. The delete operation is marked as done as soon as the `PrivateCloud` is successfully scheduled for deletion (this also applies when `delayHours` is set to zero), and the operation is not kept in pending state until `PrivateCloud` is purged. `PrivateCloud` can be restored using `UndeletePrivateCloud` method before the `expireTime` elapses. When `expireTime` is reached, deletion is final and all private cloud resources are irreversibly removed and billing stops. During the final removal process, `PrivateCloud.state` is set to `PURGING`. `PrivateCloud` can be polled using standard `GET` method for the whole period of deletion and purging. It will not be returned only when it is completely purged.</td>
-</tr>
-<tr>
-    <td><a href="#reset_nsx_credentials"><CopyableCode code="reset_nsx_credentials" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a></td>
-    <td></td>
-    <td>Resets credentials of the NSX appliance.</td>
-</tr>
-<tr>
-    <td><a href="#reset_vcenter_credentials"><CopyableCode code="reset_vcenter_credentials" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a></td>
-    <td></td>
-    <td>Resets credentials of the Vcenter appliance.</td>
 </tr>
 <tr>
     <td><a href="#private_cloud_deletion_now"><CopyableCode code="private_cloud_deletion_now" /></a></td>
@@ -280,11 +277,25 @@ The following methods are available for this resource:
     <td>Accelerates the deletion of a private cloud that is currently in soft deletion A `PrivateCloud` resource in soft deletion has `PrivateCloud.state` set to `SOFT_DELETED` and `PrivateCloud.expireTime` set to the time when deletion can no longer be reversed.</td>
 </tr>
 <tr>
-    <td><a href="#undelete"><CopyableCode code="undelete" /></a></td>
+    <td><a href="#reset_vcenter_credentials"><CopyableCode code="reset_vcenter_credentials" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a></td>
     <td></td>
-    <td>Restores a private cloud that was previously scheduled for deletion by `DeletePrivateCloud`. A `PrivateCloud` resource scheduled for deletion has `PrivateCloud.state` set to `DELETED` and `PrivateCloud.expireTime` set to the time when deletion can no longer be reversed.</td>
+    <td>Resets credentials of the Vcenter appliance.</td>
+</tr>
+<tr>
+    <td><a href="#reset_nsx_credentials"><CopyableCode code="reset_nsx_credentials" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a></td>
+    <td></td>
+    <td>Resets credentials of the NSX appliance.</td>
+</tr>
+<tr>
+    <td><a href="#show_nsx_credentials"><CopyableCode code="show_nsx_credentials" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a></td>
+    <td></td>
+    <td>Gets details of credentials for NSX appliance.</td>
 </tr>
 <tr>
     <td><a href="#show_vcenter_credentials"><CopyableCode code="show_vcenter_credentials" /></a></td>
@@ -294,11 +305,18 @@ The following methods are available for this resource:
     <td>Gets details of credentials for Vcenter appliance.</td>
 </tr>
 <tr>
-    <td><a href="#show_nsx_credentials"><CopyableCode code="show_nsx_credentials" /></a></td>
+    <td><a href="#undelete"><CopyableCode code="undelete" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a></td>
     <td></td>
-    <td>Gets details of credentials for NSX appliance.</td>
+    <td>Restores a private cloud that was previously scheduled for deletion by `DeletePrivateCloud`. A `PrivateCloud` resource scheduled for deletion has `PrivateCloud.state` set to `DELETED` and `PrivateCloud.expireTime` set to the time when deletion can no longer be reversed.</td>
+</tr>
+<tr>
+    <td><a href="#migrate_management_vms"><CopyableCode code="migrate_management_vms" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a></td>
+    <td></td>
+    <td>Migrates the management VMs of the PC from the current management cluster to a workload cluster. Post this migration, the provided workload cluster becomes the management cluster</td>
 </tr>
 </tbody>
 </table>
@@ -408,6 +426,7 @@ name,
 createTime,
 deleteTime,
 description,
+encryptionConfig,
 expireTime,
 hcx,
 managementCluster,
@@ -435,6 +454,7 @@ name,
 createTime,
 deleteTime,
 description,
+encryptionConfig,
 expireTime,
 hcx,
 managementCluster,
@@ -448,9 +468,9 @@ vcenter
 FROM google.vmwareengine.private_clouds
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 ;
 ```
@@ -474,24 +494,26 @@ Creates a new `PrivateCloud` resource in a given project and location. Private c
 ```sql
 INSERT INTO google.vmwareengine.private_clouds (
 data__networkConfig,
-data__description,
 data__type,
+data__description,
 data__managementCluster,
+data__encryptionConfig,
 projectsId,
 locationsId,
-validateOnly,
 privateCloudId,
+validateOnly,
 requestId
 )
 SELECT 
 '{{ networkConfig }}',
-'{{ description }}',
 '{{ type }}',
+'{{ description }}',
 '{{ managementCluster }}',
+'{{ encryptionConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ validateOnly }}',
 '{{ privateCloudId }}',
+'{{ validateOnly }}',
 '{{ requestId }}'
 RETURNING
 name,
@@ -504,44 +526,56 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: private_clouds
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the private_clouds resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the private_clouds resource.
     - name: networkConfig
-      value: object
-      description: >
+      description: |
         Required. Network configuration of the private cloud.
-        
-    - name: description
-      value: string
-      description: >
-        User-provided description for this private cloud.
-        
+      value:
+        vmwareEngineNetwork: "{{ vmwareEngineNetwork }}"
+        managementIpAddressLayoutVersion: {{ managementIpAddressLayoutVersion }}
+        vmwareEngineNetworkCanonical: "{{ vmwareEngineNetworkCanonical }}"
+        managementCidr: "{{ managementCidr }}"
+        dnsServerIp: "{{ dnsServerIp }}"
     - name: type
-      value: string
-      description: >
+      value: "{{ type }}"
+      description: |
         Optional. Type of the private cloud. Defaults to STANDARD.
-        
       valid_values: ['STANDARD', 'TIME_LIMITED', 'STRETCHED']
+    - name: description
+      value: "{{ description }}"
+      description: |
+        User-provided description for this private cloud.
     - name: managementCluster
-      value: object
-      description: >
-        Required. Input only. The management cluster for this private cloud. This field is required during creation of the private cloud to provide details for the default cluster. The following fields can't be changed after private cloud creation: `ManagementCluster.clusterId`, `ManagementCluster.nodeTypeId`.
-        
-    - name: validateOnly
-      value: boolean
+      description: |
+        Required. Input only. The management cluster for this private cloud. This field is required during creation of the private cloud to provide details for the default cluster. The following fields can't be changed after private cloud creation: \`ManagementCluster.clusterId\`, \`ManagementCluster.nodeTypeId\`.
+      value:
+        stretchedClusterConfig:
+          preferredLocation: "{{ preferredLocation }}"
+          secondaryLocation: "{{ secondaryLocation }}"
+        clusterId: "{{ clusterId }}"
+        nodeTypeConfigs: "{{ nodeTypeConfigs }}"
+    - name: encryptionConfig
+      description: |
+        Optional. Encryption configuration for the private cloud. If this field is left unspecified, Google default encryption is used.
+      value:
+        cryptoKeyName: "{{ cryptoKeyName }}"
+        type: "{{ type }}"
     - name: privateCloudId
-      value: string
+      value: "{{ privateCloudId }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -562,15 +596,17 @@ Modifies a `PrivateCloud` resource. Only the following fields can be updated: `d
 UPDATE google.vmwareengine.private_clouds
 SET 
 data__networkConfig = '{{ networkConfig }}',
-data__description = '{{ description }}',
 data__type = '{{ type }}',
-data__managementCluster = '{{ managementCluster }}'
+data__description = '{{ description }}',
+data__managementCluster = '{{ managementCluster }}',
+data__encryptionConfig = '{{ encryptionConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND privateCloudsId = '{{ privateCloudsId }}' --required
-AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
+AND requestId = '{{ requestId}}'
+AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
 done,
@@ -599,9 +635,9 @@ DELETE FROM google.vmwareengine.private_clouds
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND privateCloudsId = '{{ privateCloudsId }}' --required
+AND requestId = '{{ requestId }}'
 AND force = '{{ force }}'
 AND delayHours = '{{ delayHours }}'
-AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>
@@ -611,16 +647,51 @@ AND requestId = '{{ requestId }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="reset_nsx_credentials"
+    defaultValue="private_cloud_deletion_now"
     values={[
-        { label: 'reset_nsx_credentials', value: 'reset_nsx_credentials' },
-        { label: 'reset_vcenter_credentials', value: 'reset_vcenter_credentials' },
         { label: 'private_cloud_deletion_now', value: 'private_cloud_deletion_now' },
-        { label: 'undelete', value: 'undelete' },
+        { label: 'reset_vcenter_credentials', value: 'reset_vcenter_credentials' },
+        { label: 'reset_nsx_credentials', value: 'reset_nsx_credentials' },
+        { label: 'show_nsx_credentials', value: 'show_nsx_credentials' },
         { label: 'show_vcenter_credentials', value: 'show_vcenter_credentials' },
-        { label: 'show_nsx_credentials', value: 'show_nsx_credentials' }
+        { label: 'undelete', value: 'undelete' },
+        { label: 'migrate_management_vms', value: 'migrate_management_vms' }
     ]}
 >
+<TabItem value="private_cloud_deletion_now">
+
+Accelerates the deletion of a private cloud that is currently in soft deletion A `PrivateCloud` resource in soft deletion has `PrivateCloud.state` set to `SOFT_DELETED` and `PrivateCloud.expireTime` set to the time when deletion can no longer be reversed.
+
+```sql
+EXEC google.vmwareengine.private_clouds.private_cloud_deletion_now 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@privateCloudsId='{{ privateCloudsId }}' --required 
+@@json=
+'{
+"requestId": "{{ requestId }}", 
+"etag": "{{ etag }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="reset_vcenter_credentials">
+
+Resets credentials of the Vcenter appliance.
+
+```sql
+EXEC google.vmwareengine.private_clouds.reset_vcenter_credentials 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@privateCloudsId='{{ privateCloudsId }}' --required 
+@@json=
+'{
+"requestId": "{{ requestId }}", 
+"username": "{{ username }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="reset_nsx_credentials">
 
 Resets credentials of the NSX appliance.
@@ -637,37 +708,28 @@ EXEC google.vmwareengine.private_clouds.reset_nsx_credentials
 ;
 ```
 </TabItem>
-<TabItem value="reset_vcenter_credentials">
+<TabItem value="show_nsx_credentials">
 
-Resets credentials of the Vcenter appliance.
+Gets details of credentials for NSX appliance.
 
 ```sql
-EXEC google.vmwareengine.private_clouds.reset_vcenter_credentials 
+EXEC google.vmwareengine.private_clouds.show_nsx_credentials 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@privateCloudsId='{{ privateCloudsId }}' --required 
-@@json=
-'{
-"username": "{{ username }}", 
-"requestId": "{{ requestId }}"
-}'
+@privateCloudsId='{{ privateCloudsId }}' --required
 ;
 ```
 </TabItem>
-<TabItem value="private_cloud_deletion_now">
+<TabItem value="show_vcenter_credentials">
 
-Accelerates the deletion of a private cloud that is currently in soft deletion A `PrivateCloud` resource in soft deletion has `PrivateCloud.state` set to `SOFT_DELETED` and `PrivateCloud.expireTime` set to the time when deletion can no longer be reversed.
+Gets details of credentials for Vcenter appliance.
 
 ```sql
-EXEC google.vmwareengine.private_clouds.private_cloud_deletion_now 
+EXEC google.vmwareengine.private_clouds.show_vcenter_credentials 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@privateCloudsId='{{ privateCloudsId }}' --required 
-@@json=
-'{
-"etag": "{{ etag }}", 
-"requestId": "{{ requestId }}"
-}'
+@privateCloudsId='{{ privateCloudsId }}' --required, 
+@username='{{ username }}'
 ;
 ```
 </TabItem>
@@ -687,28 +749,21 @@ EXEC google.vmwareengine.private_clouds.undelete
 ;
 ```
 </TabItem>
-<TabItem value="show_vcenter_credentials">
+<TabItem value="migrate_management_vms">
 
-Gets details of credentials for Vcenter appliance.
-
-```sql
-EXEC google.vmwareengine.private_clouds.show_vcenter_credentials 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@privateCloudsId='{{ privateCloudsId }}' --required, 
-@username='{{ username }}'
-;
-```
-</TabItem>
-<TabItem value="show_nsx_credentials">
-
-Gets details of credentials for NSX appliance.
+Migrates the management VMs of the PC from the current management cluster to a workload cluster. Post this migration, the provided workload cluster becomes the management cluster
 
 ```sql
-EXEC google.vmwareengine.private_clouds.show_nsx_credentials 
+EXEC google.vmwareengine.private_clouds.migrate_management_vms 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@privateCloudsId='{{ privateCloudsId }}' --required
+@privateCloudsId='{{ privateCloudsId }}' --required 
+@@json=
+'{
+"requestId": "{{ requestId }}", 
+"clusterId": "{{ clusterId }}", 
+"etag": "{{ etag }}"
+}'
 ;
 ```
 </TabItem>

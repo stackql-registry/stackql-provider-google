@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>postures_revisions</code> resou
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>postures_revisions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="postures_revisions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.securityposture.postures_revisions" /></td></tr>
 </tbody></table>
@@ -96,7 +97,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Required. The state of the posture at the specified `revision_id`.</td>
+    <td>Required. The state of the posture at the specified `revision_id`. (STATE_UNSPECIFIED, DEPRECATED, DRAFT, ACTIVE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>

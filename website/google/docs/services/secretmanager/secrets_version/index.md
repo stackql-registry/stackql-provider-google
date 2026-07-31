@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>secrets_version</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>secrets_version</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="secrets_version" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.secretmanager.secrets_version" /></td></tr>
 </tbody></table>
@@ -123,21 +124,22 @@ state
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: secrets_version
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the secrets_version resource.
     - name: secretsId
-      value: string
+      value: "{{ secretsId }}"
       description: Required parameter for the secrets_version resource.
     - name: payload
-      value: object
-      description: >
+      description: |
         Required. The secret payload of the SecretVersion.
-        
-```
+      value:
+        data: "{{ data }}"
+        dataCrc32c: "{{ dataCrc32c }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

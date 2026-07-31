@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>data_stores</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>data_stores</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="data_stores" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.discoveryengine.data_stores" /></td></tr>
 </tbody></table>
@@ -35,8 +36,8 @@ The following fields are returned by `SELECT` queries:
     defaultValue="projects_locations_collections_data_stores_get"
     values={[
         { label: 'projects_locations_collections_data_stores_get', value: 'projects_locations_collections_data_stores_get' },
-        { label: 'projects_locations_collections_data_stores_list', value: 'projects_locations_collections_data_stores_list' },
         { label: 'projects_locations_data_stores_get', value: 'projects_locations_data_stores_get' },
+        { label: 'projects_locations_collections_data_stores_list', value: 'projects_locations_collections_data_stores_list' },
         { label: 'projects_locations_data_stores_list', value: 'projects_locations_data_stores_list' }
     ]}
 >
@@ -74,12 +75,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="cmekConfig" /></td>
     <td><code>object</code></td>
-    <td>Output only. CMEK-related information for the DataStore. (id: GoogleCloudDiscoveryengineV1CmekConfig)</td>
+    <td>Configurations used to enable CMEK data encryption with Cloud KMS keys. (id: GoogleCloudDiscoveryengineV1CmekConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="configurableBillingApproach" /></td>
     <td><code>string</code></td>
-    <td>Optional. Configuration for configurable billing approach. See</td>
+    <td>Optional. Configuration for configurable billing approach. See (CONFIGURABLE_BILLING_APPROACH_UNSPECIFIED, CONFIGURABLE_SUBSCRIPTION_INDEXING_CORE, CONFIGURABLE_CONSUMPTION_EMBEDDING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="configurableBillingApproachUpdateTime" /></td>
@@ -89,7 +90,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="contentConfig" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The content config of the data store. If this field is unset, the server behavior defaults to ContentConfig.NO_CONTENT.</td>
+    <td>Immutable. The content config of the data store. If this field is unset, the server behavior defaults to ContentConfig.NO_CONTENT. (CONTENT_CONFIG_UNSPECIFIED, NO_CONTENT, CONTENT_REQUIRED, PUBLIC_WEBSITE, GOOGLE_WORKSPACE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -112,6 +113,11 @@ The following fields are returned by `SELECT` queries:
     <td>Configuration for Document understanding and enrichment. (id: GoogleCloudDiscoveryengineV1DocumentProcessingConfig)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="federatedSearchConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. If set, this DataStore is a federated search DataStore. (id: GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfig)</td>
+</tr>
+<tr>
     <td><CopyableCode code="healthcareFhirConfig" /></td>
     <td><code>object</code></td>
     <td>Optional. Configuration for `HEALTHCARE_FHIR` vertical. (id: GoogleCloudDiscoveryengineV1HealthcareFhirConfig)</td>
@@ -124,7 +130,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="industryVertical" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The industry vertical that the data store registers.</td>
+    <td>Immutable. The industry vertical that the data store registers. (INDUSTRY_VERTICAL_UNSPECIFIED, GENERIC, MEDIA, HEALTHCARE_FHIR)</td>
 </tr>
 <tr>
     <td><CopyableCode code="isInfobotFaqDataStore" /></td>
@@ -154,131 +160,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="startingSchema" /></td>
     <td><code>object</code></td>
-    <td>Defines the structure and layout of a type of document data. (id: GoogleCloudDiscoveryengineV1Schema)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="workspaceConfig" /></td>
-    <td><code>object</code></td>
-    <td>Config to store data store type configuration for workspace data. This must be set when DataStore.content_config is set as DataStore.ContentConfig.GOOGLE_WORKSPACE. (id: GoogleCloudDiscoveryengineV1WorkspaceConfig)</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="projects_locations_collections_data_stores_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Immutable. Identifier. The full resource name of the data store. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/collections/&#123;collection_id&#125;/dataStores/&#123;data_store_id&#125;`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="aclEnabled" /></td>
-    <td><code>boolean</code></td>
-    <td>Immutable. Whether data in the DataStore has ACL information. If set to `true`, the source data must have ACL. ACL will be ingested when data is ingested by DocumentService.ImportDocuments methods. When ACL is enabled for the DataStore, Document can't be accessed by calling DocumentService.GetDocument or DocumentService.ListDocuments. Currently ACL is only supported in `GENERIC` industry vertical with non-`PUBLIC_WEBSITE` content config.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="advancedSiteSearchConfig" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Configuration for advanced site search. (id: GoogleCloudDiscoveryengineV1AdvancedSiteSearchConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="billingEstimation" /></td>
-    <td><code>object</code></td>
-    <td>Output only. Data size estimation for billing. (id: GoogleCloudDiscoveryengineV1DataStoreBillingEstimation)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="cmekConfig" /></td>
-    <td><code>object</code></td>
-    <td>Output only. CMEK-related information for the DataStore. (id: GoogleCloudDiscoveryengineV1CmekConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="configurableBillingApproach" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Configuration for configurable billing approach. See</td>
-</tr>
-<tr>
-    <td><CopyableCode code="configurableBillingApproachUpdateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp when configurable_billing_approach was last updated.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="contentConfig" /></td>
-    <td><code>string</code></td>
-    <td>Immutable. The content config of the data store. If this field is unset, the server behavior defaults to ContentConfig.NO_CONTENT.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Timestamp the DataStore was created at.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="defaultSchemaId" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The id of the default Schema associated to this data store.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>Required. The data store display name. This field must be a UTF-8 encoded string with a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT error is returned.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="documentProcessingConfig" /></td>
-    <td><code>object</code></td>
-    <td>Configuration for Document understanding and enrichment. (id: GoogleCloudDiscoveryengineV1DocumentProcessingConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="healthcareFhirConfig" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Configuration for `HEALTHCARE_FHIR` vertical. (id: GoogleCloudDiscoveryengineV1HealthcareFhirConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="identityMappingStore" /></td>
-    <td><code>string</code></td>
-    <td>Immutable. The fully qualified resource name of the associated IdentityMappingStore. This field can only be set for acl_enabled DataStores with `THIRD_PARTY` or `GSUITE` IdP. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/identityMappingStores/&#123;identity_mapping_store&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="industryVertical" /></td>
-    <td><code>string</code></td>
-    <td>Immutable. The industry vertical that the data store registers.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="isInfobotFaqDataStore" /></td>
-    <td><code>boolean</code></td>
-    <td>Optional. If set, this DataStore is an Infobot FAQ DataStore.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="kmsKeyName" /></td>
-    <td><code>string</code></td>
-    <td>Input only. The KMS key to be used to protect this DataStore at creation time. Must be set for requests that need to comply with CMEK Org Policy protections. If this field is set and processed successfully, the DataStore will be protected by the KMS key, as indicated in the cmek_config field.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="naturalLanguageQueryUnderstandingConfig" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Configuration for Natural Language Query Understanding. (id: GoogleCloudDiscoveryengineV1NaturalLanguageQueryUnderstandingConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="servingConfigDataStore" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Stores serving config at DataStore level. (id: GoogleCloudDiscoveryengineV1DataStoreServingConfigDataStore)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="solutionTypes" /></td>
-    <td><code>array</code></td>
-    <td>The solutions that the data store enrolls. Available solutions for each industry_vertical: * `MEDIA`: `SOLUTION_TYPE_RECOMMENDATION` and `SOLUTION_TYPE_SEARCH`. * `SITE_SEARCH`: `SOLUTION_TYPE_SEARCH` is automatically enrolled. Other solutions cannot be enrolled.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="startingSchema" /></td>
-    <td><code>object</code></td>
-    <td>Defines the structure and layout of a type of document data. (id: GoogleCloudDiscoveryengineV1Schema)</td>
+    <td>The start schema to use for this DataStore when provisioning it. If unset, a default vertical specialized schema will be used. This field is only used by CreateDataStore API, and will be ignored if used in other APIs. This field will be omitted from all API responses including CreateDataStore API. To retrieve a schema of a DataStore, use SchemaService.GetSchema API instead. The provided schema will be validated against certain rules on schema. Learn more from [this doc](https://cloud.google.com/generative-ai-app-builder/docs/provide-schema). (id: GoogleCloudDiscoveryengineV1Schema)</td>
 </tr>
 <tr>
     <td><CopyableCode code="workspaceConfig" /></td>
@@ -322,12 +204,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="cmekConfig" /></td>
     <td><code>object</code></td>
-    <td>Output only. CMEK-related information for the DataStore. (id: GoogleCloudDiscoveryengineV1CmekConfig)</td>
+    <td>Configurations used to enable CMEK data encryption with Cloud KMS keys. (id: GoogleCloudDiscoveryengineV1CmekConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="configurableBillingApproach" /></td>
     <td><code>string</code></td>
-    <td>Optional. Configuration for configurable billing approach. See</td>
+    <td>Optional. Configuration for configurable billing approach. See (CONFIGURABLE_BILLING_APPROACH_UNSPECIFIED, CONFIGURABLE_SUBSCRIPTION_INDEXING_CORE, CONFIGURABLE_CONSUMPTION_EMBEDDING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="configurableBillingApproachUpdateTime" /></td>
@@ -337,7 +219,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="contentConfig" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The content config of the data store. If this field is unset, the server behavior defaults to ContentConfig.NO_CONTENT.</td>
+    <td>Immutable. The content config of the data store. If this field is unset, the server behavior defaults to ContentConfig.NO_CONTENT. (CONTENT_CONFIG_UNSPECIFIED, NO_CONTENT, CONTENT_REQUIRED, PUBLIC_WEBSITE, GOOGLE_WORKSPACE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -360,6 +242,11 @@ The following fields are returned by `SELECT` queries:
     <td>Configuration for Document understanding and enrichment. (id: GoogleCloudDiscoveryengineV1DocumentProcessingConfig)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="federatedSearchConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. If set, this DataStore is a federated search DataStore. (id: GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfig)</td>
+</tr>
+<tr>
     <td><CopyableCode code="healthcareFhirConfig" /></td>
     <td><code>object</code></td>
     <td>Optional. Configuration for `HEALTHCARE_FHIR` vertical. (id: GoogleCloudDiscoveryengineV1HealthcareFhirConfig)</td>
@@ -372,7 +259,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="industryVertical" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The industry vertical that the data store registers.</td>
+    <td>Immutable. The industry vertical that the data store registers. (INDUSTRY_VERTICAL_UNSPECIFIED, GENERIC, MEDIA, HEALTHCARE_FHIR)</td>
 </tr>
 <tr>
     <td><CopyableCode code="isInfobotFaqDataStore" /></td>
@@ -402,7 +289,136 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="startingSchema" /></td>
     <td><code>object</code></td>
-    <td>Defines the structure and layout of a type of document data. (id: GoogleCloudDiscoveryengineV1Schema)</td>
+    <td>The start schema to use for this DataStore when provisioning it. If unset, a default vertical specialized schema will be used. This field is only used by CreateDataStore API, and will be ignored if used in other APIs. This field will be omitted from all API responses including CreateDataStore API. To retrieve a schema of a DataStore, use SchemaService.GetSchema API instead. The provided schema will be validated against certain rules on schema. Learn more from [this doc](https://cloud.google.com/generative-ai-app-builder/docs/provide-schema). (id: GoogleCloudDiscoveryengineV1Schema)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="workspaceConfig" /></td>
+    <td><code>object</code></td>
+    <td>Config to store data store type configuration for workspace data. This must be set when DataStore.content_config is set as DataStore.ContentConfig.GOOGLE_WORKSPACE. (id: GoogleCloudDiscoveryengineV1WorkspaceConfig)</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_locations_collections_data_stores_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Immutable. Identifier. The full resource name of the data store. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/collections/&#123;collection_id&#125;/dataStores/&#123;data_store_id&#125;`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="aclEnabled" /></td>
+    <td><code>boolean</code></td>
+    <td>Immutable. Whether data in the DataStore has ACL information. If set to `true`, the source data must have ACL. ACL will be ingested when data is ingested by DocumentService.ImportDocuments methods. When ACL is enabled for the DataStore, Document can't be accessed by calling DocumentService.GetDocument or DocumentService.ListDocuments. Currently ACL is only supported in `GENERIC` industry vertical with non-`PUBLIC_WEBSITE` content config.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="advancedSiteSearchConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Configuration for advanced site search. (id: GoogleCloudDiscoveryengineV1AdvancedSiteSearchConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="billingEstimation" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Data size estimation for billing. (id: GoogleCloudDiscoveryengineV1DataStoreBillingEstimation)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="cmekConfig" /></td>
+    <td><code>object</code></td>
+    <td>Configurations used to enable CMEK data encryption with Cloud KMS keys. (id: GoogleCloudDiscoveryengineV1CmekConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="configurableBillingApproach" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Configuration for configurable billing approach. See (CONFIGURABLE_BILLING_APPROACH_UNSPECIFIED, CONFIGURABLE_SUBSCRIPTION_INDEXING_CORE, CONFIGURABLE_CONSUMPTION_EMBEDDING)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="configurableBillingApproachUpdateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The timestamp when configurable_billing_approach was last updated.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="contentConfig" /></td>
+    <td><code>string</code></td>
+    <td>Immutable. The content config of the data store. If this field is unset, the server behavior defaults to ContentConfig.NO_CONTENT. (CONTENT_CONFIG_UNSPECIFIED, NO_CONTENT, CONTENT_REQUIRED, PUBLIC_WEBSITE, GOOGLE_WORKSPACE)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Timestamp the DataStore was created at.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="defaultSchemaId" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The id of the default Schema associated to this data store.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td>Required. The data store display name. This field must be a UTF-8 encoded string with a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT error is returned.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="documentProcessingConfig" /></td>
+    <td><code>object</code></td>
+    <td>Configuration for Document understanding and enrichment. (id: GoogleCloudDiscoveryengineV1DocumentProcessingConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="federatedSearchConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. If set, this DataStore is a federated search DataStore. (id: GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="healthcareFhirConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Configuration for `HEALTHCARE_FHIR` vertical. (id: GoogleCloudDiscoveryengineV1HealthcareFhirConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="identityMappingStore" /></td>
+    <td><code>string</code></td>
+    <td>Immutable. The fully qualified resource name of the associated IdentityMappingStore. This field can only be set for acl_enabled DataStores with `THIRD_PARTY` or `GSUITE` IdP. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/identityMappingStores/&#123;identity_mapping_store&#125;`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="industryVertical" /></td>
+    <td><code>string</code></td>
+    <td>Immutable. The industry vertical that the data store registers. (INDUSTRY_VERTICAL_UNSPECIFIED, GENERIC, MEDIA, HEALTHCARE_FHIR)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="isInfobotFaqDataStore" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. If set, this DataStore is an Infobot FAQ DataStore.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="kmsKeyName" /></td>
+    <td><code>string</code></td>
+    <td>Input only. The KMS key to be used to protect this DataStore at creation time. Must be set for requests that need to comply with CMEK Org Policy protections. If this field is set and processed successfully, the DataStore will be protected by the KMS key, as indicated in the cmek_config field.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="naturalLanguageQueryUnderstandingConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Configuration for Natural Language Query Understanding. (id: GoogleCloudDiscoveryengineV1NaturalLanguageQueryUnderstandingConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="servingConfigDataStore" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Stores serving config at DataStore level. (id: GoogleCloudDiscoveryengineV1DataStoreServingConfigDataStore)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="solutionTypes" /></td>
+    <td><code>array</code></td>
+    <td>The solutions that the data store enrolls. Available solutions for each industry_vertical: * `MEDIA`: `SOLUTION_TYPE_RECOMMENDATION` and `SOLUTION_TYPE_SEARCH`. * `SITE_SEARCH`: `SOLUTION_TYPE_SEARCH` is automatically enrolled. Other solutions cannot be enrolled.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="startingSchema" /></td>
+    <td><code>object</code></td>
+    <td>The start schema to use for this DataStore when provisioning it. If unset, a default vertical specialized schema will be used. This field is only used by CreateDataStore API, and will be ignored if used in other APIs. This field will be omitted from all API responses including CreateDataStore API. To retrieve a schema of a DataStore, use SchemaService.GetSchema API instead. The provided schema will be validated against certain rules on schema. Learn more from [this doc](https://cloud.google.com/generative-ai-app-builder/docs/provide-schema). (id: GoogleCloudDiscoveryengineV1Schema)</td>
 </tr>
 <tr>
     <td><CopyableCode code="workspaceConfig" /></td>
@@ -446,12 +462,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="cmekConfig" /></td>
     <td><code>object</code></td>
-    <td>Output only. CMEK-related information for the DataStore. (id: GoogleCloudDiscoveryengineV1CmekConfig)</td>
+    <td>Configurations used to enable CMEK data encryption with Cloud KMS keys. (id: GoogleCloudDiscoveryengineV1CmekConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="configurableBillingApproach" /></td>
     <td><code>string</code></td>
-    <td>Optional. Configuration for configurable billing approach. See</td>
+    <td>Optional. Configuration for configurable billing approach. See (CONFIGURABLE_BILLING_APPROACH_UNSPECIFIED, CONFIGURABLE_SUBSCRIPTION_INDEXING_CORE, CONFIGURABLE_CONSUMPTION_EMBEDDING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="configurableBillingApproachUpdateTime" /></td>
@@ -461,7 +477,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="contentConfig" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The content config of the data store. If this field is unset, the server behavior defaults to ContentConfig.NO_CONTENT.</td>
+    <td>Immutable. The content config of the data store. If this field is unset, the server behavior defaults to ContentConfig.NO_CONTENT. (CONTENT_CONFIG_UNSPECIFIED, NO_CONTENT, CONTENT_REQUIRED, PUBLIC_WEBSITE, GOOGLE_WORKSPACE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -484,6 +500,11 @@ The following fields are returned by `SELECT` queries:
     <td>Configuration for Document understanding and enrichment. (id: GoogleCloudDiscoveryengineV1DocumentProcessingConfig)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="federatedSearchConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. If set, this DataStore is a federated search DataStore. (id: GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfig)</td>
+</tr>
+<tr>
     <td><CopyableCode code="healthcareFhirConfig" /></td>
     <td><code>object</code></td>
     <td>Optional. Configuration for `HEALTHCARE_FHIR` vertical. (id: GoogleCloudDiscoveryengineV1HealthcareFhirConfig)</td>
@@ -496,7 +517,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="industryVertical" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The industry vertical that the data store registers.</td>
+    <td>Immutable. The industry vertical that the data store registers. (INDUSTRY_VERTICAL_UNSPECIFIED, GENERIC, MEDIA, HEALTHCARE_FHIR)</td>
 </tr>
 <tr>
     <td><CopyableCode code="isInfobotFaqDataStore" /></td>
@@ -526,7 +547,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="startingSchema" /></td>
     <td><code>object</code></td>
-    <td>Defines the structure and layout of a type of document data. (id: GoogleCloudDiscoveryengineV1Schema)</td>
+    <td>The start schema to use for this DataStore when provisioning it. If unset, a default vertical specialized schema will be used. This field is only used by CreateDataStore API, and will be ignored if used in other APIs. This field will be omitted from all API responses including CreateDataStore API. To retrieve a schema of a DataStore, use SchemaService.GetSchema API instead. The provided schema will be validated against certain rules on schema. Learn more from [this doc](https://cloud.google.com/generative-ai-app-builder/docs/provide-schema). (id: GoogleCloudDiscoveryengineV1Schema)</td>
 </tr>
 <tr>
     <td><CopyableCode code="workspaceConfig" /></td>
@@ -561,13 +582,6 @@ The following methods are available for this resource:
     <td>Gets a DataStore.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_collections_data_stores_list"><CopyableCode code="projects_locations_collections_data_stores_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists all the DataStores associated with the project.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_data_stores_get"><CopyableCode code="projects_locations_data_stores_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
@@ -575,24 +589,31 @@ The following methods are available for this resource:
     <td>Gets a DataStore.</td>
 </tr>
 <tr>
+    <td><a href="#projects_locations_collections_data_stores_list"><CopyableCode code="projects_locations_collections_data_stores_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td>Lists all the DataStores associated with the project.</td>
+</tr>
+<tr>
     <td><a href="#projects_locations_data_stores_list"><CopyableCode code="projects_locations_data_stores_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists all the DataStores associated with the project.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_collections_data_stores_create"><CopyableCode code="projects_locations_collections_data_stores_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a></td>
-    <td><a href="#parameter-skipDefaultSchemaCreation"><code>skipDefaultSchemaCreation</code></a>, <a href="#parameter-cmekConfigName"><code>cmekConfigName</code></a>, <a href="#parameter-disableCmek"><code>disableCmek</code></a>, <a href="#parameter-createAdvancedSiteSearch"><code>createAdvancedSiteSearch</code></a>, <a href="#parameter-dataStoreId"><code>dataStoreId</code></a></td>
+    <td><a href="#parameter-disableCmek"><code>disableCmek</code></a>, <a href="#parameter-cmekConfigName"><code>cmekConfigName</code></a>, <a href="#parameter-skipDefaultSchemaCreation"><code>skipDefaultSchemaCreation</code></a>, <a href="#parameter-createAdvancedSiteSearch"><code>createAdvancedSiteSearch</code></a>, <a href="#parameter-dataStoreId"><code>dataStoreId</code></a></td>
     <td>Creates a DataStore. DataStore is for storing Documents. To serve these documents for Search, or Recommendation use case, an Engine needs to be created separately.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_data_stores_create"><CopyableCode code="projects_locations_data_stores_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-skipDefaultSchemaCreation"><code>skipDefaultSchemaCreation</code></a>, <a href="#parameter-createAdvancedSiteSearch"><code>createAdvancedSiteSearch</code></a>, <a href="#parameter-dataStoreId"><code>dataStoreId</code></a>, <a href="#parameter-disableCmek"><code>disableCmek</code></a>, <a href="#parameter-cmekConfigName"><code>cmekConfigName</code></a></td>
+    <td><a href="#parameter-createAdvancedSiteSearch"><code>createAdvancedSiteSearch</code></a>, <a href="#parameter-dataStoreId"><code>dataStoreId</code></a>, <a href="#parameter-skipDefaultSchemaCreation"><code>skipDefaultSchemaCreation</code></a>, <a href="#parameter-cmekConfigName"><code>cmekConfigName</code></a>, <a href="#parameter-disableCmek"><code>disableCmek</code></a></td>
     <td>Creates a DataStore. DataStore is for storing Documents. To serve these documents for Search, or Recommendation use case, an Engine needs to be created separately.</td>
 </tr>
 <tr>
@@ -624,10 +645,10 @@ The following methods are available for this resource:
     <td>Deletes a DataStore.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_collections_data_stores_complete_query"><CopyableCode code="projects_locations_collections_data_stores_complete_query" /></a></td>
+    <td><a href="#projects_locations_data_stores_complete_query"><CopyableCode code="projects_locations_data_stores_complete_query" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
-    <td><a href="#parameter-query"><code>query</code></a>, <a href="#parameter-userPseudoId"><code>userPseudoId</code></a>, <a href="#parameter-queryModel"><code>queryModel</code></a>, <a href="#parameter-includeTailSuggestions"><code>includeTailSuggestions</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
+    <td><a href="#parameter-queryModel"><code>queryModel</code></a>, <a href="#parameter-includeTailSuggestions"><code>includeTailSuggestions</code></a>, <a href="#parameter-query"><code>query</code></a>, <a href="#parameter-userPseudoId"><code>userPseudoId</code></a></td>
     <td>Completes the specified user input with keyword suggestions.</td>
 </tr>
 <tr>
@@ -638,10 +659,10 @@ The following methods are available for this resource:
     <td>Trains a custom model.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_data_stores_complete_query"><CopyableCode code="projects_locations_data_stores_complete_query" /></a></td>
+    <td><a href="#projects_locations_collections_data_stores_complete_query"><CopyableCode code="projects_locations_collections_data_stores_complete_query" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
-    <td><a href="#parameter-userPseudoId"><code>userPseudoId</code></a>, <a href="#parameter-query"><code>query</code></a>, <a href="#parameter-includeTailSuggestions"><code>includeTailSuggestions</code></a>, <a href="#parameter-queryModel"><code>queryModel</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectionsId"><code>collectionsId</code></a>, <a href="#parameter-dataStoresId"><code>dataStoresId</code></a></td>
+    <td><a href="#parameter-query"><code>query</code></a>, <a href="#parameter-queryModel"><code>queryModel</code></a>, <a href="#parameter-includeTailSuggestions"><code>includeTailSuggestions</code></a>, <a href="#parameter-userPseudoId"><code>userPseudoId</code></a></td>
     <td>Completes the specified user input with keyword suggestions.</td>
 </tr>
 </tbody>
@@ -754,8 +775,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="projects_locations_collections_data_stores_get"
     values={[
         { label: 'projects_locations_collections_data_stores_get', value: 'projects_locations_collections_data_stores_get' },
-        { label: 'projects_locations_collections_data_stores_list', value: 'projects_locations_collections_data_stores_list' },
         { label: 'projects_locations_data_stores_get', value: 'projects_locations_data_stores_get' },
+        { label: 'projects_locations_collections_data_stores_list', value: 'projects_locations_collections_data_stores_list' },
         { label: 'projects_locations_data_stores_list', value: 'projects_locations_data_stores_list' }
     ]}
 >
@@ -777,6 +798,7 @@ createTime,
 defaultSchemaId,
 displayName,
 documentProcessingConfig,
+federatedSearchConfig,
 healthcareFhirConfig,
 identityMappingStore,
 industryVertical,
@@ -791,6 +813,42 @@ FROM google.discoveryengine.data_stores
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND collectionsId = '{{ collectionsId }}' -- required
+AND dataStoresId = '{{ dataStoresId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="projects_locations_data_stores_get">
+
+Gets a DataStore.
+
+```sql
+SELECT
+name,
+aclEnabled,
+advancedSiteSearchConfig,
+billingEstimation,
+cmekConfig,
+configurableBillingApproach,
+configurableBillingApproachUpdateTime,
+contentConfig,
+createTime,
+defaultSchemaId,
+displayName,
+documentProcessingConfig,
+federatedSearchConfig,
+healthcareFhirConfig,
+identityMappingStore,
+industryVertical,
+isInfobotFaqDataStore,
+kmsKeyName,
+naturalLanguageQueryUnderstandingConfig,
+servingConfigDataStore,
+solutionTypes,
+startingSchema,
+workspaceConfig
+FROM google.discoveryengine.data_stores
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
 AND dataStoresId = '{{ dataStoresId }}' -- required
 ;
 ```
@@ -813,6 +871,7 @@ createTime,
 defaultSchemaId,
 displayName,
 documentProcessingConfig,
+federatedSearchConfig,
 healthcareFhirConfig,
 identityMappingStore,
 industryVertical,
@@ -827,44 +886,9 @@ FROM google.discoveryengine.data_stores
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND collectionsId = '{{ collectionsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_data_stores_get">
-
-Gets a DataStore.
-
-```sql
-SELECT
-name,
-aclEnabled,
-advancedSiteSearchConfig,
-billingEstimation,
-cmekConfig,
-configurableBillingApproach,
-configurableBillingApproachUpdateTime,
-contentConfig,
-createTime,
-defaultSchemaId,
-displayName,
-documentProcessingConfig,
-healthcareFhirConfig,
-identityMappingStore,
-industryVertical,
-isInfobotFaqDataStore,
-kmsKeyName,
-naturalLanguageQueryUnderstandingConfig,
-servingConfigDataStore,
-solutionTypes,
-startingSchema,
-workspaceConfig
-FROM google.discoveryengine.data_stores
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND dataStoresId = '{{ dataStoresId }}' -- required
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -886,6 +910,7 @@ createTime,
 defaultSchemaId,
 displayName,
 documentProcessingConfig,
+federatedSearchConfig,
 healthcareFhirConfig,
 identityMappingStore,
 industryVertical,
@@ -899,9 +924,9 @@ workspaceConfig
 FROM google.discoveryengine.data_stores
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -924,56 +949,58 @@ Creates a DataStore. DataStore is for storing Documents. To serve these document
 
 ```sql
 INSERT INTO google.discoveryengine.data_stores (
-data__kmsKeyName,
-data__startingSchema,
 data__name,
-data__naturalLanguageQueryUnderstandingConfig,
-data__contentConfig,
-data__documentProcessingConfig,
-data__displayName,
-data__solutionTypes,
-data__healthcareFhirConfig,
-data__aclEnabled,
-data__industryVertical,
-data__configurableBillingApproach,
-data__workspaceConfig,
-data__identityMappingStore,
-data__advancedSiteSearchConfig,
 data__isInfobotFaqDataStore,
+data__documentProcessingConfig,
+data__contentConfig,
+data__aclEnabled,
+data__healthcareFhirConfig,
+data__configurableBillingApproach,
+data__advancedSiteSearchConfig,
+data__kmsKeyName,
+data__identityMappingStore,
+data__displayName,
+data__federatedSearchConfig,
+data__startingSchema,
+data__solutionTypes,
+data__workspaceConfig,
+data__naturalLanguageQueryUnderstandingConfig,
+data__industryVertical,
 data__servingConfigDataStore,
 projectsId,
 locationsId,
 collectionsId,
-skipDefaultSchemaCreation,
-cmekConfigName,
 disableCmek,
+cmekConfigName,
+skipDefaultSchemaCreation,
 createAdvancedSiteSearch,
 dataStoreId
 )
 SELECT 
-'{{ kmsKeyName }}',
-'{{ startingSchema }}',
 '{{ name }}',
-'{{ naturalLanguageQueryUnderstandingConfig }}',
-'{{ contentConfig }}',
-'{{ documentProcessingConfig }}',
-'{{ displayName }}',
-'{{ solutionTypes }}',
-'{{ healthcareFhirConfig }}',
-{{ aclEnabled }},
-'{{ industryVertical }}',
-'{{ configurableBillingApproach }}',
-'{{ workspaceConfig }}',
-'{{ identityMappingStore }}',
-'{{ advancedSiteSearchConfig }}',
 {{ isInfobotFaqDataStore }},
+'{{ documentProcessingConfig }}',
+'{{ contentConfig }}',
+{{ aclEnabled }},
+'{{ healthcareFhirConfig }}',
+'{{ configurableBillingApproach }}',
+'{{ advancedSiteSearchConfig }}',
+'{{ kmsKeyName }}',
+'{{ identityMappingStore }}',
+'{{ displayName }}',
+'{{ federatedSearchConfig }}',
+'{{ startingSchema }}',
+'{{ solutionTypes }}',
+'{{ workspaceConfig }}',
+'{{ naturalLanguageQueryUnderstandingConfig }}',
+'{{ industryVertical }}',
 '{{ servingConfigDataStore }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ collectionsId }}',
-'{{ skipDefaultSchemaCreation }}',
-'{{ cmekConfigName }}',
 '{{ disableCmek }}',
+'{{ cmekConfigName }}',
+'{{ skipDefaultSchemaCreation }}',
 '{{ createAdvancedSiteSearch }}',
 '{{ dataStoreId }}'
 RETURNING
@@ -991,56 +1018,58 @@ Creates a DataStore. DataStore is for storing Documents. To serve these document
 
 ```sql
 INSERT INTO google.discoveryengine.data_stores (
-data__kmsKeyName,
-data__startingSchema,
 data__name,
-data__naturalLanguageQueryUnderstandingConfig,
-data__contentConfig,
-data__documentProcessingConfig,
-data__displayName,
-data__solutionTypes,
-data__healthcareFhirConfig,
-data__aclEnabled,
-data__industryVertical,
-data__configurableBillingApproach,
-data__workspaceConfig,
-data__identityMappingStore,
-data__advancedSiteSearchConfig,
 data__isInfobotFaqDataStore,
+data__documentProcessingConfig,
+data__contentConfig,
+data__aclEnabled,
+data__healthcareFhirConfig,
+data__configurableBillingApproach,
+data__advancedSiteSearchConfig,
+data__kmsKeyName,
+data__identityMappingStore,
+data__displayName,
+data__federatedSearchConfig,
+data__startingSchema,
+data__solutionTypes,
+data__workspaceConfig,
+data__naturalLanguageQueryUnderstandingConfig,
+data__industryVertical,
 data__servingConfigDataStore,
 projectsId,
 locationsId,
-skipDefaultSchemaCreation,
 createAdvancedSiteSearch,
 dataStoreId,
-disableCmek,
-cmekConfigName
+skipDefaultSchemaCreation,
+cmekConfigName,
+disableCmek
 )
 SELECT 
-'{{ kmsKeyName }}',
-'{{ startingSchema }}',
 '{{ name }}',
-'{{ naturalLanguageQueryUnderstandingConfig }}',
-'{{ contentConfig }}',
-'{{ documentProcessingConfig }}',
-'{{ displayName }}',
-'{{ solutionTypes }}',
-'{{ healthcareFhirConfig }}',
-{{ aclEnabled }},
-'{{ industryVertical }}',
-'{{ configurableBillingApproach }}',
-'{{ workspaceConfig }}',
-'{{ identityMappingStore }}',
-'{{ advancedSiteSearchConfig }}',
 {{ isInfobotFaqDataStore }},
+'{{ documentProcessingConfig }}',
+'{{ contentConfig }}',
+{{ aclEnabled }},
+'{{ healthcareFhirConfig }}',
+'{{ configurableBillingApproach }}',
+'{{ advancedSiteSearchConfig }}',
+'{{ kmsKeyName }}',
+'{{ identityMappingStore }}',
+'{{ displayName }}',
+'{{ federatedSearchConfig }}',
+'{{ startingSchema }}',
+'{{ solutionTypes }}',
+'{{ workspaceConfig }}',
+'{{ naturalLanguageQueryUnderstandingConfig }}',
+'{{ industryVertical }}',
 '{{ servingConfigDataStore }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ skipDefaultSchemaCreation }}',
 '{{ createAdvancedSiteSearch }}',
 '{{ dataStoreId }}',
-'{{ disableCmek }}',
-'{{ cmekConfigName }}'
+'{{ skipDefaultSchemaCreation }}',
+'{{ cmekConfigName }}',
+'{{ disableCmek }}'
 RETURNING
 name,
 done,
@@ -1052,118 +1081,163 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: data_stores
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the data_stores resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the data_stores resource.
     - name: collectionsId
-      value: string
+      value: "{{ collectionsId }}"
       description: Required parameter for the data_stores resource.
-    - name: kmsKeyName
-      value: string
-      description: >
-        Input only. The KMS key to be used to protect this DataStore at creation time. Must be set for requests that need to comply with CMEK Org Policy protections. If this field is set and processed successfully, the DataStore will be protected by the KMS key, as indicated in the cmek_config field.
-        
-    - name: startingSchema
-      value: object
-      description: >
-        Defines the structure and layout of a type of document data.
-        
     - name: name
-      value: string
-      description: >
-        Immutable. Identifier. The full resource name of the data store. Format: `projects/{project}/locations/{location}/collections/{collection_id}/dataStores/{data_store_id}`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.
-        
-    - name: naturalLanguageQueryUnderstandingConfig
-      value: object
-      description: >
-        Optional. Configuration for Natural Language Query Understanding.
-        
-    - name: contentConfig
-      value: string
-      description: >
-        Immutable. The content config of the data store. If this field is unset, the server behavior defaults to ContentConfig.NO_CONTENT.
-        
-      valid_values: ['CONTENT_CONFIG_UNSPECIFIED', 'NO_CONTENT', 'CONTENT_REQUIRED', 'PUBLIC_WEBSITE', 'GOOGLE_WORKSPACE']
-    - name: documentProcessingConfig
-      value: object
-      description: >
-        Configuration for Document understanding and enrichment.
-        
-    - name: displayName
-      value: string
-      description: >
-        Required. The data store display name. This field must be a UTF-8 encoded string with a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT error is returned.
-        
-    - name: solutionTypes
-      value: array
-      description: >
-        The solutions that the data store enrolls. Available solutions for each industry_vertical: * `MEDIA`: `SOLUTION_TYPE_RECOMMENDATION` and `SOLUTION_TYPE_SEARCH`. * `SITE_SEARCH`: `SOLUTION_TYPE_SEARCH` is automatically enrolled. Other solutions cannot be enrolled.
-        
-    - name: healthcareFhirConfig
-      value: object
-      description: >
-        Optional. Configuration for `HEALTHCARE_FHIR` vertical.
-        
-    - name: aclEnabled
-      value: boolean
-      description: >
-        Immutable. Whether data in the DataStore has ACL information. If set to `true`, the source data must have ACL. ACL will be ingested when data is ingested by DocumentService.ImportDocuments methods. When ACL is enabled for the DataStore, Document can't be accessed by calling DocumentService.GetDocument or DocumentService.ListDocuments. Currently ACL is only supported in `GENERIC` industry vertical with non-`PUBLIC_WEBSITE` content config.
-        
-    - name: industryVertical
-      value: string
-      description: >
-        Immutable. The industry vertical that the data store registers.
-        
-      valid_values: ['INDUSTRY_VERTICAL_UNSPECIFIED', 'GENERIC', 'MEDIA', 'HEALTHCARE_FHIR']
-    - name: configurableBillingApproach
-      value: string
-      description: >
-        Optional. Configuration for configurable billing approach. See
-        
-      valid_values: ['CONFIGURABLE_BILLING_APPROACH_UNSPECIFIED', 'CONFIGURABLE_SUBSCRIPTION_INDEXING_CORE', 'CONFIGURABLE_CONSUMPTION_EMBEDDING']
-    - name: workspaceConfig
-      value: object
-      description: >
-        Config to store data store type configuration for workspace data. This must be set when DataStore.content_config is set as DataStore.ContentConfig.GOOGLE_WORKSPACE.
-        
-    - name: identityMappingStore
-      value: string
-      description: >
-        Immutable. The fully qualified resource name of the associated IdentityMappingStore. This field can only be set for acl_enabled DataStores with `THIRD_PARTY` or `GSUITE` IdP. Format: `projects/{project}/locations/{location}/identityMappingStores/{identity_mapping_store}`.
-        
-    - name: advancedSiteSearchConfig
-      value: object
-      description: >
-        Optional. Configuration for advanced site search.
-        
+      value: "{{ name }}"
+      description: |
+        Immutable. Identifier. The full resource name of the data store. Format: \`projects/{project}/locations/{location}/collections/{collection_id}/dataStores/{data_store_id}\`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.
     - name: isInfobotFaqDataStore
-      value: boolean
-      description: >
+      value: {{ isInfobotFaqDataStore }}
+      description: |
         Optional. If set, this DataStore is an Infobot FAQ DataStore.
-        
+    - name: documentProcessingConfig
+      description: |
+        Configuration for Document understanding and enrichment.
+      value:
+        parsingConfigOverrides: "{{ parsingConfigOverrides }}"
+        name: "{{ name }}"
+        chunkingConfig:
+          layoutBasedChunkingConfig:
+            chunkSize: {{ chunkSize }}
+            includeAncestorHeadings: {{ includeAncestorHeadings }}
+        defaultParsingConfig:
+          ocrParsingConfig:
+            enhancedDocumentElements:
+              - "{{ enhancedDocumentElements }}"
+            useNativeText: {{ useNativeText }}
+          layoutParsingConfig:
+            enableTableAnnotation: {{ enableTableAnnotation }}
+            enableGetProcessedDocument: {{ enableGetProcessedDocument }}
+            excludeHtmlElements:
+              - "{{ excludeHtmlElements }}"
+            excludeHtmlClasses:
+              - "{{ excludeHtmlClasses }}"
+            enableLlmLayoutParsing: {{ enableLlmLayoutParsing }}
+            enableImageAnnotation: {{ enableImageAnnotation }}
+            structuredContentTypes:
+              - "{{ structuredContentTypes }}"
+            excludeHtmlIds:
+              - "{{ excludeHtmlIds }}"
+          digitalParsingConfig: "{{ digitalParsingConfig }}"
+    - name: contentConfig
+      value: "{{ contentConfig }}"
+      description: |
+        Immutable. The content config of the data store. If this field is unset, the server behavior defaults to ContentConfig.NO_CONTENT.
+      valid_values: ['CONTENT_CONFIG_UNSPECIFIED', 'NO_CONTENT', 'CONTENT_REQUIRED', 'PUBLIC_WEBSITE', 'GOOGLE_WORKSPACE']
+    - name: aclEnabled
+      value: {{ aclEnabled }}
+      description: |
+        Immutable. Whether data in the DataStore has ACL information. If set to \`true\`, the source data must have ACL. ACL will be ingested when data is ingested by DocumentService.ImportDocuments methods. When ACL is enabled for the DataStore, Document can't be accessed by calling DocumentService.GetDocument or DocumentService.ListDocuments. Currently ACL is only supported in \`GENERIC\` industry vertical with non-\`PUBLIC_WEBSITE\` content config.
+    - name: healthcareFhirConfig
+      description: |
+        Optional. Configuration for \`HEALTHCARE_FHIR\` vertical.
+      value:
+        enableStaticIndexingForBatchIngestion: {{ enableStaticIndexingForBatchIngestion }}
+        initialFilterGroups:
+          - "{{ initialFilterGroups }}"
+        enableConfigurableSchema: {{ enableConfigurableSchema }}
+    - name: configurableBillingApproach
+      value: "{{ configurableBillingApproach }}"
+      description: |
+        Optional. Configuration for configurable billing approach. See
+      valid_values: ['CONFIGURABLE_BILLING_APPROACH_UNSPECIFIED', 'CONFIGURABLE_SUBSCRIPTION_INDEXING_CORE', 'CONFIGURABLE_CONSUMPTION_EMBEDDING']
+    - name: advancedSiteSearchConfig
+      description: |
+        Optional. Configuration for advanced site search.
+      value:
+        disableInitialIndex: {{ disableInitialIndex }}
+        disableAutomaticRefresh: {{ disableAutomaticRefresh }}
+    - name: kmsKeyName
+      value: "{{ kmsKeyName }}"
+      description: |
+        Input only. The KMS key to be used to protect this DataStore at creation time. Must be set for requests that need to comply with CMEK Org Policy protections. If this field is set and processed successfully, the DataStore will be protected by the KMS key, as indicated in the cmek_config field.
+    - name: identityMappingStore
+      value: "{{ identityMappingStore }}"
+      description: |
+        Immutable. The fully qualified resource name of the associated IdentityMappingStore. This field can only be set for acl_enabled DataStores with \`THIRD_PARTY\` or \`GSUITE\` IdP. Format: \`projects/{project}/locations/{location}/identityMappingStores/{identity_mapping_store}\`.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. The data store display name. This field must be a UTF-8 encoded string with a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT error is returned.
+    - name: federatedSearchConfig
+      description: |
+        Optional. If set, this DataStore is a federated search DataStore.
+      value:
+        notebooklmConfig:
+          searchConfig: "{{ searchConfig }}"
+        alloyDbConfig:
+          alloydbConnectionConfig:
+            instance: "{{ instance }}"
+            authMode: "{{ authMode }}"
+            database: "{{ database }}"
+            user: "{{ user }}"
+            password: "{{ password }}"
+            enablePsvs: {{ enablePsvs }}
+          returnedFields:
+            - "{{ returnedFields }}"
+          alloydbAiNlConfig:
+            nlConfigId: "{{ nlConfigId }}"
+        thirdPartyOauthConfig:
+          appName: "{{ appName }}"
+          instanceName: "{{ instanceName }}"
+    - name: startingSchema
+      description: |
+        The start schema to use for this DataStore when provisioning it. If unset, a default vertical specialized schema will be used. This field is only used by CreateDataStore API, and will be ignored if used in other APIs. This field will be omitted from all API responses including CreateDataStore API. To retrieve a schema of a DataStore, use SchemaService.GetSchema API instead. The provided schema will be validated against certain rules on schema. Learn more from [this doc](https://cloud.google.com/generative-ai-app-builder/docs/provide-schema).
+      value:
+        name: "{{ name }}"
+        jsonSchema: "{{ jsonSchema }}"
+        structSchema: "{{ structSchema }}"
+    - name: solutionTypes
+      value:
+        - "{{ solutionTypes }}"
+      description: |
+        The solutions that the data store enrolls. Available solutions for each industry_vertical: * \`MEDIA\`: \`SOLUTION_TYPE_RECOMMENDATION\` and \`SOLUTION_TYPE_SEARCH\`. * \`SITE_SEARCH\`: \`SOLUTION_TYPE_SEARCH\` is automatically enrolled. Other solutions cannot be enrolled.
+    - name: workspaceConfig
+      description: |
+        Config to store data store type configuration for workspace data. This must be set when DataStore.content_config is set as DataStore.ContentConfig.GOOGLE_WORKSPACE.
+      value:
+        dasherCustomerId: "{{ dasherCustomerId }}"
+        type: "{{ type }}"
+        superAdminServiceAccount: "{{ superAdminServiceAccount }}"
+        superAdminEmailAddress: "{{ superAdminEmailAddress }}"
+    - name: naturalLanguageQueryUnderstandingConfig
+      description: |
+        Optional. Configuration for Natural Language Query Understanding.
+      value:
+        mode: "{{ mode }}"
+    - name: industryVertical
+      value: "{{ industryVertical }}"
+      description: |
+        Immutable. The industry vertical that the data store registers.
+      valid_values: ['INDUSTRY_VERTICAL_UNSPECIFIED', 'GENERIC', 'MEDIA', 'HEALTHCARE_FHIR']
     - name: servingConfigDataStore
-      value: object
-      description: >
+      description: |
         Optional. Stores serving config at DataStore level.
-        
-    - name: skipDefaultSchemaCreation
-      value: boolean
-    - name: cmekConfigName
-      value: string
+      value:
+        disabledForServing: {{ disabledForServing }}
     - name: disableCmek
-      value: boolean
+      value: {{ disableCmek }}
+    - name: cmekConfigName
+      value: "{{ cmekConfigName }}"
+    - name: skipDefaultSchemaCreation
+      value: {{ skipDefaultSchemaCreation }}
     - name: createAdvancedSiteSearch
-      value: boolean
+      value: {{ createAdvancedSiteSearch }}
     - name: dataStoreId
-      value: string
-```
+      value: "{{ dataStoreId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -1184,22 +1258,23 @@ Updates a DataStore
 ```sql
 UPDATE google.discoveryengine.data_stores
 SET 
-data__kmsKeyName = '{{ kmsKeyName }}',
-data__startingSchema = '{{ startingSchema }}',
 data__name = '{{ name }}',
-data__naturalLanguageQueryUnderstandingConfig = '{{ naturalLanguageQueryUnderstandingConfig }}',
-data__contentConfig = '{{ contentConfig }}',
-data__documentProcessingConfig = '{{ documentProcessingConfig }}',
-data__displayName = '{{ displayName }}',
-data__solutionTypes = '{{ solutionTypes }}',
-data__healthcareFhirConfig = '{{ healthcareFhirConfig }}',
-data__aclEnabled = {{ aclEnabled }},
-data__industryVertical = '{{ industryVertical }}',
-data__configurableBillingApproach = '{{ configurableBillingApproach }}',
-data__workspaceConfig = '{{ workspaceConfig }}',
-data__identityMappingStore = '{{ identityMappingStore }}',
-data__advancedSiteSearchConfig = '{{ advancedSiteSearchConfig }}',
 data__isInfobotFaqDataStore = {{ isInfobotFaqDataStore }},
+data__documentProcessingConfig = '{{ documentProcessingConfig }}',
+data__contentConfig = '{{ contentConfig }}',
+data__aclEnabled = {{ aclEnabled }},
+data__healthcareFhirConfig = '{{ healthcareFhirConfig }}',
+data__configurableBillingApproach = '{{ configurableBillingApproach }}',
+data__advancedSiteSearchConfig = '{{ advancedSiteSearchConfig }}',
+data__kmsKeyName = '{{ kmsKeyName }}',
+data__identityMappingStore = '{{ identityMappingStore }}',
+data__displayName = '{{ displayName }}',
+data__federatedSearchConfig = '{{ federatedSearchConfig }}',
+data__startingSchema = '{{ startingSchema }}',
+data__solutionTypes = '{{ solutionTypes }}',
+data__workspaceConfig = '{{ workspaceConfig }}',
+data__naturalLanguageQueryUnderstandingConfig = '{{ naturalLanguageQueryUnderstandingConfig }}',
+data__industryVertical = '{{ industryVertical }}',
 data__servingConfigDataStore = '{{ servingConfigDataStore }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
@@ -1220,6 +1295,7 @@ createTime,
 defaultSchemaId,
 displayName,
 documentProcessingConfig,
+federatedSearchConfig,
 healthcareFhirConfig,
 identityMappingStore,
 industryVertical,
@@ -1239,22 +1315,23 @@ Updates a DataStore
 ```sql
 UPDATE google.discoveryengine.data_stores
 SET 
-data__kmsKeyName = '{{ kmsKeyName }}',
-data__startingSchema = '{{ startingSchema }}',
 data__name = '{{ name }}',
-data__naturalLanguageQueryUnderstandingConfig = '{{ naturalLanguageQueryUnderstandingConfig }}',
-data__contentConfig = '{{ contentConfig }}',
-data__documentProcessingConfig = '{{ documentProcessingConfig }}',
-data__displayName = '{{ displayName }}',
-data__solutionTypes = '{{ solutionTypes }}',
-data__healthcareFhirConfig = '{{ healthcareFhirConfig }}',
-data__aclEnabled = {{ aclEnabled }},
-data__industryVertical = '{{ industryVertical }}',
-data__configurableBillingApproach = '{{ configurableBillingApproach }}',
-data__workspaceConfig = '{{ workspaceConfig }}',
-data__identityMappingStore = '{{ identityMappingStore }}',
-data__advancedSiteSearchConfig = '{{ advancedSiteSearchConfig }}',
 data__isInfobotFaqDataStore = {{ isInfobotFaqDataStore }},
+data__documentProcessingConfig = '{{ documentProcessingConfig }}',
+data__contentConfig = '{{ contentConfig }}',
+data__aclEnabled = {{ aclEnabled }},
+data__healthcareFhirConfig = '{{ healthcareFhirConfig }}',
+data__configurableBillingApproach = '{{ configurableBillingApproach }}',
+data__advancedSiteSearchConfig = '{{ advancedSiteSearchConfig }}',
+data__kmsKeyName = '{{ kmsKeyName }}',
+data__identityMappingStore = '{{ identityMappingStore }}',
+data__displayName = '{{ displayName }}',
+data__federatedSearchConfig = '{{ federatedSearchConfig }}',
+data__startingSchema = '{{ startingSchema }}',
+data__solutionTypes = '{{ solutionTypes }}',
+data__workspaceConfig = '{{ workspaceConfig }}',
+data__naturalLanguageQueryUnderstandingConfig = '{{ naturalLanguageQueryUnderstandingConfig }}',
+data__industryVertical = '{{ industryVertical }}',
 data__servingConfigDataStore = '{{ servingConfigDataStore }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
@@ -1274,6 +1351,7 @@ createTime,
 defaultSchemaId,
 displayName,
 documentProcessingConfig,
+federatedSearchConfig,
 healthcareFhirConfig,
 identityMappingStore,
 industryVertical,
@@ -1329,27 +1407,26 @@ AND dataStoresId = '{{ dataStoresId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_collections_data_stores_complete_query"
+    defaultValue="projects_locations_data_stores_complete_query"
     values={[
-        { label: 'projects_locations_collections_data_stores_complete_query', value: 'projects_locations_collections_data_stores_complete_query' },
+        { label: 'projects_locations_data_stores_complete_query', value: 'projects_locations_data_stores_complete_query' },
         { label: 'projects_locations_collections_data_stores_train_custom_model', value: 'projects_locations_collections_data_stores_train_custom_model' },
-        { label: 'projects_locations_data_stores_complete_query', value: 'projects_locations_data_stores_complete_query' }
+        { label: 'projects_locations_collections_data_stores_complete_query', value: 'projects_locations_collections_data_stores_complete_query' }
     ]}
 >
-<TabItem value="projects_locations_collections_data_stores_complete_query">
+<TabItem value="projects_locations_data_stores_complete_query">
 
 Completes the specified user input with keyword suggestions.
 
 ```sql
-EXEC google.discoveryengine.data_stores.projects_locations_collections_data_stores_complete_query 
+EXEC google.discoveryengine.data_stores.projects_locations_data_stores_complete_query 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@collectionsId='{{ collectionsId }}' --required, 
 @dataStoresId='{{ dataStoresId }}' --required, 
-@query='{{ query }}', 
-@userPseudoId='{{ userPseudoId }}', 
 @queryModel='{{ queryModel }}', 
-@includeTailSuggestions={{ includeTailSuggestions }}
+@includeTailSuggestions={{ includeTailSuggestions }}, 
+@query='{{ query }}', 
+@userPseudoId='{{ userPseudoId }}'
 ;
 ```
 </TabItem>
@@ -1365,27 +1442,28 @@ EXEC google.discoveryengine.data_stores.projects_locations_collections_data_stor
 @dataStoresId='{{ dataStoresId }}' --required 
 @@json=
 '{
-"gcsTrainingInput": "{{ gcsTrainingInput }}", 
-"errorConfig": "{{ errorConfig }}", 
+"modelType": "{{ modelType }}", 
 "modelId": "{{ modelId }}", 
-"modelType": "{{ modelType }}"
+"gcsTrainingInput": "{{ gcsTrainingInput }}", 
+"errorConfig": "{{ errorConfig }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_data_stores_complete_query">
+<TabItem value="projects_locations_collections_data_stores_complete_query">
 
 Completes the specified user input with keyword suggestions.
 
 ```sql
-EXEC google.discoveryengine.data_stores.projects_locations_data_stores_complete_query 
+EXEC google.discoveryengine.data_stores.projects_locations_collections_data_stores_complete_query 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
+@collectionsId='{{ collectionsId }}' --required, 
 @dataStoresId='{{ dataStoresId }}' --required, 
-@userPseudoId='{{ userPseudoId }}', 
 @query='{{ query }}', 
+@queryModel='{{ queryModel }}', 
 @includeTailSuggestions={{ includeTailSuggestions }}, 
-@queryModel='{{ queryModel }}'
+@userPseudoId='{{ userPseudoId }}'
 ;
 ```
 </TabItem>

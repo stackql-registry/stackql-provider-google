@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>actions</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>actions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="actions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataplex.actions" /></td></tr>
 </tbody></table>
@@ -63,7 +64,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="category" /></td>
     <td><code>string</code></td>
-    <td>The category of issue associated with the action.</td>
+    <td>The category of issue associated with the action. (CATEGORY_UNSPECIFIED, RESOURCE_MANAGEMENT, SECURITY_POLICY, DATA_DISCOVERY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="dataLocations" /></td>
@@ -157,7 +158,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="category" /></td>
     <td><code>string</code></td>
-    <td>The category of issue associated with the action.</td>
+    <td>The category of issue associated with the action. (CATEGORY_UNSPECIFIED, RESOURCE_MANAGEMENT, SECURITY_POLICY, DATA_DISCOVERY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="dataLocations" /></td>
@@ -251,7 +252,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="category" /></td>
     <td><code>string</code></td>
-    <td>The category of issue associated with the action.</td>
+    <td>The category of issue associated with the action. (CATEGORY_UNSPECIFIED, RESOURCE_MANAGEMENT, SECURITY_POLICY, DATA_DISCOVERY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="dataLocations" /></td>
@@ -342,7 +343,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_lakes_zones_assets_actions_list"><CopyableCode code="projects_locations_lakes_zones_assets_actions_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-lakesId"><code>lakesId</code></a>, <a href="#parameter-zonesId"><code>zonesId</code></a>, <a href="#parameter-assetsId"><code>assetsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists action resources in an asset.</td>
 </tr>
 <tr>
@@ -356,7 +357,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_lakes_actions_list"><CopyableCode code="projects_locations_lakes_actions_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-lakesId"><code>lakesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists action resources in a lake.</td>
 </tr>
 </tbody>
@@ -451,8 +452,8 @@ AND locationsId = '{{ locationsId }}' -- required
 AND lakesId = '{{ lakesId }}' -- required
 AND zonesId = '{{ zonesId }}' -- required
 AND assetsId = '{{ assetsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -514,8 +515,8 @@ FROM google.dataplex.actions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND lakesId = '{{ lakesId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>

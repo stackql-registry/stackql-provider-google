@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>collectors</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>collectors</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="collectors" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.rapidmigrationassessment.collectors" /></td></tr>
 </tbody></table>
@@ -112,7 +113,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the Collector.</td>
+    <td>Output only. State of the Collector. (STATE_UNSPECIFIED, STATE_INITIALIZING, STATE_READY_TO_USE, STATE_REGISTERED, STATE_ACTIVE, STATE_PAUSED, STATE_DELETING, STATE_DECOMMISSIONED, STATE_ERROR)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -169,7 +170,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists Collectors in a given project and location.</td>
 </tr>
 <tr>
@@ -183,7 +184,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectorsId"><code>collectorsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Updates the parameters of a single Collector.</td>
 </tr>
 <tr>
@@ -194,11 +195,11 @@ The following methods are available for this resource:
     <td>Deletes a single Collector - changes state of collector to "Deleting". Background jobs does final deletion through producer API.</td>
 </tr>
 <tr>
-    <td><a href="#resume"><CopyableCode code="resume" /></a></td>
+    <td><a href="#pause"><CopyableCode code="pause" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectorsId"><code>collectorsId</code></a></td>
     <td></td>
-    <td>Resumes the given collector.</td>
+    <td>Pauses the given collector.</td>
 </tr>
 <tr>
     <td><a href="#register"><CopyableCode code="register" /></a></td>
@@ -208,11 +209,11 @@ The following methods are available for this resource:
     <td>Registers the given collector.</td>
 </tr>
 <tr>
-    <td><a href="#pause"><CopyableCode code="pause" /></a></td>
+    <td><a href="#resume"><CopyableCode code="resume" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-collectorsId"><code>collectorsId</code></a></td>
     <td></td>
-    <td>Pauses the given collector.</td>
+    <td>Resumes the given collector.</td>
 </tr>
 </tbody>
 </table>
@@ -330,9 +331,9 @@ SELECT
 FROM google.rapidmigrationassessment.collectors
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
 ;
 ```
@@ -355,12 +356,12 @@ Create a Collector to manage the on-prem appliance which collects information ab
 
 ```sql
 INSERT INTO google.rapidmigrationassessment.collectors (
-data__name,
-data__expectedAssetCount,
-data__eulaUri,
-data__serviceAccount,
-data__collectionDays,
 data__description,
+data__expectedAssetCount,
+data__serviceAccount,
+data__eulaUri,
+data__collectionDays,
+data__name,
 data__labels,
 data__displayName,
 projectsId,
@@ -369,12 +370,12 @@ collectorId,
 requestId
 )
 SELECT 
-'{{ name }}',
-'{{ expectedAssetCount }}',
-'{{ eulaUri }}',
-'{{ serviceAccount }}',
-{{ collectionDays }},
 '{{ description }}',
+'{{ expectedAssetCount }}',
+'{{ serviceAccount }}',
+'{{ eulaUri }}',
+{{ collectionDays }},
+'{{ name }}',
 '{{ labels }}',
 '{{ displayName }}',
 '{{ projectsId }}',
@@ -392,61 +393,53 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: collectors
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the collectors resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the collectors resource.
-    - name: name
-      value: string
-      description: >
-        name of resource.
-        
-    - name: expectedAssetCount
-      value: string
-      description: >
-        User specified expected asset count.
-        
-    - name: eulaUri
-      value: string
-      description: >
-        Uri for EULA (End User License Agreement) from customer.
-        
-    - name: serviceAccount
-      value: string
-      description: >
-        Service Account email used to ingest data to this Collector.
-        
-    - name: collectionDays
-      value: integer
-      description: >
-        How many days to collect data.
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         User specified description of the Collector.
-        
+    - name: expectedAssetCount
+      value: "{{ expectedAssetCount }}"
+      description: |
+        User specified expected asset count.
+    - name: serviceAccount
+      value: "{{ serviceAccount }}"
+      description: |
+        Service Account email used to ingest data to this Collector.
+    - name: eulaUri
+      value: "{{ eulaUri }}"
+      description: |
+        Uri for EULA (End User License Agreement) from customer.
+    - name: collectionDays
+      value: {{ collectionDays }}
+      description: |
+        How many days to collect data.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        name of resource.
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Labels as key value pairs.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         User specified name of the Collector.
-        
     - name: collectorId
-      value: string
+      value: "{{ collectorId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -466,20 +459,20 @@ Updates the parameters of a single Collector.
 ```sql
 UPDATE google.rapidmigrationassessment.collectors
 SET 
-data__name = '{{ name }}',
-data__expectedAssetCount = '{{ expectedAssetCount }}',
-data__eulaUri = '{{ eulaUri }}',
-data__serviceAccount = '{{ serviceAccount }}',
-data__collectionDays = {{ collectionDays }},
 data__description = '{{ description }}',
+data__expectedAssetCount = '{{ expectedAssetCount }}',
+data__serviceAccount = '{{ serviceAccount }}',
+data__eulaUri = '{{ eulaUri }}',
+data__collectionDays = {{ collectionDays }},
+data__name = '{{ name }}',
 data__labels = '{{ labels }}',
 data__displayName = '{{ displayName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND collectorsId = '{{ collectorsId }}' --required
-AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
+AND requestId = '{{ requestId}}'
 RETURNING
 name,
 done,
@@ -518,19 +511,19 @@ AND requestId = '{{ requestId }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="resume"
+    defaultValue="pause"
     values={[
-        { label: 'resume', value: 'resume' },
+        { label: 'pause', value: 'pause' },
         { label: 'register', value: 'register' },
-        { label: 'pause', value: 'pause' }
+        { label: 'resume', value: 'resume' }
     ]}
 >
-<TabItem value="resume">
+<TabItem value="pause">
 
-Resumes the given collector.
+Pauses the given collector.
 
 ```sql
-EXEC google.rapidmigrationassessment.collectors.resume 
+EXEC google.rapidmigrationassessment.collectors.pause 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @collectorsId='{{ collectorsId }}' --required 
@@ -557,12 +550,12 @@ EXEC google.rapidmigrationassessment.collectors.register
 ;
 ```
 </TabItem>
-<TabItem value="pause">
+<TabItem value="resume">
 
-Pauses the given collector.
+Resumes the given collector.
 
 ```sql
-EXEC google.rapidmigrationassessment.collectors.pause 
+EXEC google.rapidmigrationassessment.collectors.resume 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @collectorsId='{{ collectorsId }}' --required 

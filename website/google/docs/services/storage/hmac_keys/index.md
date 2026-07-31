@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>hmac_keys</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>hmac_keys</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="hmac_keys" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.storage.hmac_keys" /></td></tr>
 </tbody></table>
@@ -370,19 +371,19 @@ secret
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: hmac_keys
   props:
     - name: projectId
-      value: string
+      value: "{{ projectId }}"
       description: Required parameter for the hmac_keys resource.
     - name: serviceAccountEmail
-      value: string
+      value: "{{ serviceAccountEmail }}"
       description: Required parameter for the hmac_keys resource.
     - name: userProject
-      value: string
-```
+      value: "{{ userProject }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

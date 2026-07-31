@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>databases</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>databases</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="databases" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.sqladmin.databases" /></td></tr>
 </tbody></table>
@@ -277,28 +278,28 @@ Inserts a resource containing information about a database inside a Cloud SQL in
 
 ```sql
 INSERT INTO google.sqladmin.databases (
+data__selfLink,
+data__name,
+data__sqlserverDatabaseDetails,
+data__kind,
+data__charset,
+data__instance,
+data__project,
 data__collation,
 data__etag,
-data__name,
-data__charset,
-data__sqlserverDatabaseDetails,
-data__selfLink,
-data__kind,
-data__project,
-data__instance,
 project,
 instance
 )
 SELECT 
+'{{ selfLink }}',
+'{{ name }}',
+'{{ sqlserverDatabaseDetails }}',
+'{{ kind }}',
+'{{ charset }}',
+'{{ instance }}',
+'{{ project }}',
 '{{ collation }}',
 '{{ etag }}',
-'{{ name }}',
-'{{ charset }}',
-'{{ sqlserverDatabaseDetails }}',
-'{{ selfLink }}',
-'{{ kind }}',
-'{{ project }}',
-'{{ instance }}',
 '{{ project }}',
 '{{ instance }}'
 RETURNING
@@ -327,62 +328,55 @@ user
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: databases
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the databases resource.
     - name: instance
-      value: string
+      value: "{{ instance }}"
       description: Required parameter for the databases resource.
-    - name: collation
-      value: string
-      description: >
-        The Cloud SQL collation value.
-        
-    - name: etag
-      value: string
-      description: >
-        This field is deprecated and will be removed from a future version of the API.
-        
-    - name: name
-      value: string
-      description: >
-        The name of the database in the Cloud SQL instance. This does not include the project ID or instance name.
-        
-    - name: charset
-      value: string
-      description: >
-        The Cloud SQL charset value.
-        
-    - name: sqlserverDatabaseDetails
-      value: object
-      description: >
-        Represents a Sql Server database on the Cloud SQL instance.
-        
     - name: selfLink
-      value: string
-      description: >
+      value: "{{ selfLink }}"
+      description: |
         The URI of this resource.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The name of the database in the Cloud SQL instance. This does not include the project ID or instance name.
+    - name: sqlserverDatabaseDetails
+      description: |
+        Represents a Sql Server database on the Cloud SQL instance.
+      value:
+        recoveryModel: "{{ recoveryModel }}"
+        compatibilityLevel: {{ compatibilityLevel }}
     - name: kind
-      value: string
-      description: >
-        This is always `sql#database`.
-        
-    - name: project
-      value: string
-      description: >
-        The project ID of the project containing the Cloud SQL database. The Google apps domain is prefixed if applicable.
-        
+      value: "{{ kind }}"
+      description: |
+        This is always \`sql#database\`.
+    - name: charset
+      value: "{{ charset }}"
+      description: |
+        The Cloud SQL charset value.
     - name: instance
-      value: string
-      description: >
+      value: "{{ instance }}"
+      description: |
         The name of the Cloud SQL instance. This does not include the project ID.
-        
-```
+    - name: project
+      value: "{{ project }}"
+      description: |
+        The project ID of the project containing the Cloud SQL database. The Google apps domain is prefixed if applicable.
+    - name: collation
+      value: "{{ collation }}"
+      description: |
+        The Cloud SQL collation value.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        This field is deprecated and will be removed from a future version of the API.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -402,15 +396,15 @@ Partially updates a resource containing information about a database inside a Cl
 ```sql
 UPDATE google.sqladmin.databases
 SET 
-data__collation = '{{ collation }}',
-data__etag = '{{ etag }}',
-data__name = '{{ name }}',
-data__charset = '{{ charset }}',
-data__sqlserverDatabaseDetails = '{{ sqlserverDatabaseDetails }}',
 data__selfLink = '{{ selfLink }}',
+data__name = '{{ name }}',
+data__sqlserverDatabaseDetails = '{{ sqlserverDatabaseDetails }}',
 data__kind = '{{ kind }}',
+data__charset = '{{ charset }}',
+data__instance = '{{ instance }}',
 data__project = '{{ project }}',
-data__instance = '{{ instance }}'
+data__collation = '{{ collation }}',
+data__etag = '{{ etag }}'
 WHERE 
 project = '{{ project }}' --required
 AND instance = '{{ instance }}' --required
@@ -456,15 +450,15 @@ Updates a resource containing information about a database inside a Cloud SQL in
 ```sql
 REPLACE google.sqladmin.databases
 SET 
-data__collation = '{{ collation }}',
-data__etag = '{{ etag }}',
-data__name = '{{ name }}',
-data__charset = '{{ charset }}',
-data__sqlserverDatabaseDetails = '{{ sqlserverDatabaseDetails }}',
 data__selfLink = '{{ selfLink }}',
+data__name = '{{ name }}',
+data__sqlserverDatabaseDetails = '{{ sqlserverDatabaseDetails }}',
 data__kind = '{{ kind }}',
+data__charset = '{{ charset }}',
+data__instance = '{{ instance }}',
 data__project = '{{ project }}',
-data__instance = '{{ instance }}'
+data__collation = '{{ collation }}',
+data__etag = '{{ etag }}'
 WHERE 
 project = '{{ project }}' --required
 AND instance = '{{ instance }}' --required

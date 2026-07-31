@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>restores</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>restores</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="restores" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.gkebackup.restores" /></td></tr>
 </tbody></table>
@@ -117,7 +118,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the Restore.</td>
+    <td>Output only. The current state of the Restore. (STATE_UNSPECIFIED, CREATING, IN_PROGRESS, SUCCEEDED, FAILED, DELETING, VALIDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateReason" /></td>
@@ -231,7 +232,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the Restore.</td>
+    <td>Output only. The current state of the Restore. (STATE_UNSPECIFIED, CREATING, IN_PROGRESS, SUCCEEDED, FAILED, DELETING, VALIDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateReason" /></td>
@@ -294,7 +295,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-restorePlansId"><code>restorePlansId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists the Restores for a given RestorePlan.</td>
 </tr>
 <tr>
@@ -470,9 +471,9 @@ FROM google.gkebackup.restores
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND restorePlansId = '{{ restorePlansId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -495,22 +496,22 @@ Creates a new Restore for the given RestorePlan.
 
 ```sql
 INSERT INTO google.gkebackup.restores (
-data__description,
-data__backup,
 data__labels,
-data__filter,
+data__backup,
 data__volumeDataRestorePolicyOverrides,
+data__description,
+data__filter,
 projectsId,
 locationsId,
 restorePlansId,
 restoreId
 )
 SELECT 
-'{{ description }}',
-'{{ backup }}',
 '{{ labels }}',
-'{{ filter }}',
+'{{ backup }}',
 '{{ volumeDataRestorePolicyOverrides }}',
+'{{ description }}',
+'{{ filter }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ restorePlansId }}',
@@ -526,47 +527,61 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: restores
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the restores resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the restores resource.
     - name: restorePlansId
-      value: string
+      value: "{{ restorePlansId }}"
       description: Required parameter for the restores resource.
-    - name: description
-      value: string
-      description: >
-        Optional. User specified descriptive string for this Restore.
-        
-    - name: backup
-      value: string
-      description: >
-        Required. Immutable. A reference to the Backup used as the source from which this Restore will restore. Note that this Backup must be a sub-resource of the RestorePlan's backup_plan. Format: `projects/*/locations/*/backupPlans/*/backups/*`.
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         A set of custom labels supplied by user.
-        
-    - name: filter
-      value: object
-      description: >
-        Optional. Immutable. Filters resources for `Restore`. If not specified, the scope of the restore will remain the same as defined in the `RestorePlan`. If this is specified and no resources are matched by the `inclusion_filters` or everything is excluded by the `exclusion_filters`, nothing will be restored. This filter can only be specified if the value of namespaced_resource_restore_mode is set to `MERGE_SKIP_ON_CONFLICT`, `MERGE_REPLACE_VOLUME_ON_CONFLICT` or `MERGE_REPLACE_ON_CONFLICT`.
-        
+    - name: backup
+      value: "{{ backup }}"
+      description: |
+        Required. Immutable. A reference to the Backup used as the source from which this Restore will restore. Note that this Backup must be a sub-resource of the RestorePlan's backup_plan. Format: \`projects/*/locations/*/backupPlans/*/backups/*\`.
     - name: volumeDataRestorePolicyOverrides
-      value: array
-      description: >
+      description: |
         Optional. Immutable. Overrides the volume data restore policies selected in the Restore Config for override-scoped resources.
-        
+      value:
+        - policy: "{{ policy }}"
+          selectedPvcs:
+            namespacedNames:
+              - name: "{{ name }}"
+                namespace: "{{ namespace }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. User specified descriptive string for this Restore.
+    - name: filter
+      description: |
+        Optional. Immutable. Filters resources for \`Restore\`. If not specified, the scope of the restore will remain the same as defined in the \`RestorePlan\`. If this is specified and no resources are matched by the \`inclusion_filters\` or everything is excluded by the \`exclusion_filters\`, nothing will be restored. This filter can only be specified if the value of namespaced_resource_restore_mode is set to \`MERGE_SKIP_ON_CONFLICT\`, \`MERGE_REPLACE_VOLUME_ON_CONFLICT\` or \`MERGE_REPLACE_ON_CONFLICT\`.
+      value:
+        inclusionFilters:
+          - groupKind:
+              resourceGroup: "{{ resourceGroup }}"
+              resourceKind: "{{ resourceKind }}"
+            name: "{{ name }}"
+            labels: "{{ labels }}"
+            namespace: "{{ namespace }}"
+        exclusionFilters:
+          - groupKind:
+              resourceGroup: "{{ resourceGroup }}"
+              resourceKind: "{{ resourceKind }}"
+            name: "{{ name }}"
+            labels: "{{ labels }}"
+            namespace: "{{ namespace }}"
     - name: restoreId
-      value: string
-```
+      value: "{{ restoreId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -586,11 +601,11 @@ Update a Restore.
 ```sql
 UPDATE google.gkebackup.restores
 SET 
-data__description = '{{ description }}',
-data__backup = '{{ backup }}',
 data__labels = '{{ labels }}',
-data__filter = '{{ filter }}',
-data__volumeDataRestorePolicyOverrides = '{{ volumeDataRestorePolicyOverrides }}'
+data__backup = '{{ backup }}',
+data__volumeDataRestorePolicyOverrides = '{{ volumeDataRestorePolicyOverrides }}',
+data__description = '{{ description }}',
+data__filter = '{{ filter }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

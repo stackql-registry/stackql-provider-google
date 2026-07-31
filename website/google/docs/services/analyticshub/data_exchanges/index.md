@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>data_exchanges</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>data_exchanges</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="data_exchanges" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.analyticshub.data_exchanges" /></td></tr>
 </tbody></table>
@@ -35,8 +36,8 @@ The following fields are returned by `SELECT` queries:
     defaultValue="projects_locations_data_exchanges_get"
     values={[
         { label: 'projects_locations_data_exchanges_get', value: 'projects_locations_data_exchanges_get' },
-        { label: 'projects_locations_data_exchanges_list', value: 'projects_locations_data_exchanges_list' },
-        { label: 'organizations_locations_data_exchanges_list', value: 'organizations_locations_data_exchanges_list' }
+        { label: 'organizations_locations_data_exchanges_list', value: 'organizations_locations_data_exchanges_list' },
+        { label: 'projects_locations_data_exchanges_list', value: 'projects_locations_data_exchanges_list' }
     ]}
 >
 <TabItem value="projects_locations_data_exchanges_get">
@@ -63,71 +64,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="discoveryType" /></td>
     <td><code>string</code></td>
-    <td>Optional. Type of discovery on the discovery page for all the listings under this exchange. Updating this field also updates (overwrites) the discovery_type field for all the listings under this exchange.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>Required. Human-readable display name of the data exchange. The display name must contain only Unicode letters, numbers (0-9), underscores (_), dashes (-), spaces ( ), ampersands (&) and must not start or end with spaces. Default value is an empty string. Max length: 63 bytes.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="documentation" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Documentation describing the data exchange.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="icon" /></td>
-    <td><code>string (byte)</code></td>
-    <td>Optional. Base64 encoded image representing the data exchange. Max Size: 3.0MiB Expected image dimensions are 512x512 pixels, however the API only performs validation on size of the encoded data. Note: For byte fields, the content of the fields are base64-encoded (which increases the size of the data by 33-36%) when using JSON on the wire.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="listingCount" /></td>
-    <td><code>integer (int32)</code></td>
-    <td>Output only. Number of listings contained in the data exchange.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="logLinkedDatasetQueryUserEmail" /></td>
-    <td><code>boolean</code></td>
-    <td>Optional. By default, false. If true, the DataExchange has an email sharing mandate enabled.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="primaryContact" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Email or URL of the primary point of contact of the data exchange. Max Length: 1000 bytes.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="sharingEnvironmentConfig" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Configurable data sharing environment option for a data exchange. (id: SharingEnvironmentConfig)</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="projects_locations_data_exchanges_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The resource name of the data exchange. e.g. `projects/myproject/locations/us/dataExchanges/123`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Description of the data exchange. The description must not contain Unicode non-characters as well as C0 and C1 control codes except tabs (HT), new lines (LF), carriage returns (CR), and page breaks (FF). Default value is an empty string. Max length: 2000 bytes.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="discoveryType" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Type of discovery on the discovery page for all the listings under this exchange. Updating this field also updates (overwrites) the discovery_type field for all the listings under this exchange.</td>
+    <td>Optional. Type of discovery on the discovery page for all the listings under this exchange. Updating this field also updates (overwrites) the discovery_type field for all the listings under this exchange. (DISCOVERY_TYPE_UNSPECIFIED, DISCOVERY_TYPE_PRIVATE, DISCOVERY_TYPE_PUBLIC)</td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
@@ -191,7 +128,71 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="discoveryType" /></td>
     <td><code>string</code></td>
-    <td>Optional. Type of discovery on the discovery page for all the listings under this exchange. Updating this field also updates (overwrites) the discovery_type field for all the listings under this exchange.</td>
+    <td>Optional. Type of discovery on the discovery page for all the listings under this exchange. Updating this field also updates (overwrites) the discovery_type field for all the listings under this exchange. (DISCOVERY_TYPE_UNSPECIFIED, DISCOVERY_TYPE_PRIVATE, DISCOVERY_TYPE_PUBLIC)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td>Required. Human-readable display name of the data exchange. The display name must contain only Unicode letters, numbers (0-9), underscores (_), dashes (-), spaces ( ), ampersands (&) and must not start or end with spaces. Default value is an empty string. Max length: 63 bytes.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="documentation" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Documentation describing the data exchange.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="icon" /></td>
+    <td><code>string (byte)</code></td>
+    <td>Optional. Base64 encoded image representing the data exchange. Max Size: 3.0MiB Expected image dimensions are 512x512 pixels, however the API only performs validation on size of the encoded data. Note: For byte fields, the content of the fields are base64-encoded (which increases the size of the data by 33-36%) when using JSON on the wire.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="listingCount" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Output only. Number of listings contained in the data exchange.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="logLinkedDatasetQueryUserEmail" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. By default, false. If true, the DataExchange has an email sharing mandate enabled.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="primaryContact" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Email or URL of the primary point of contact of the data exchange. Max Length: 1000 bytes.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="sharingEnvironmentConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Configurable data sharing environment option for a data exchange. (id: SharingEnvironmentConfig)</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_locations_data_exchanges_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The resource name of the data exchange. e.g. `projects/myproject/locations/us/dataExchanges/123`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Description of the data exchange. The description must not contain Unicode non-characters as well as C0 and C1 control codes except tabs (HT), new lines (LF), carriage returns (CR), and page breaks (FF). Default value is an empty string. Max length: 2000 bytes.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="discoveryType" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Type of discovery on the discovery page for all the listings under this exchange. Updating this field also updates (overwrites) the discovery_type field for all the listings under this exchange. (DISCOVERY_TYPE_UNSPECIFIED, DISCOVERY_TYPE_PRIVATE, DISCOVERY_TYPE_PUBLIC)</td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
@@ -256,18 +257,18 @@ The following methods are available for this resource:
     <td>Gets the details of a data exchange.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_data_exchanges_list"><CopyableCode code="projects_locations_data_exchanges_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Lists all data exchanges in a given project and location.</td>
-</tr>
-<tr>
     <td><a href="#organizations_locations_data_exchanges_list"><CopyableCode code="organizations_locations_data_exchanges_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists all data exchanges from projects in a given organization and location.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_data_exchanges_list"><CopyableCode code="projects_locations_data_exchanges_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists all data exchanges in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_data_exchanges_create"><CopyableCode code="projects_locations_data_exchanges_create" /></a></td>
@@ -362,8 +363,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="projects_locations_data_exchanges_get"
     values={[
         { label: 'projects_locations_data_exchanges_get', value: 'projects_locations_data_exchanges_get' },
-        { label: 'projects_locations_data_exchanges_list', value: 'projects_locations_data_exchanges_list' },
-        { label: 'organizations_locations_data_exchanges_list', value: 'organizations_locations_data_exchanges_list' }
+        { label: 'organizations_locations_data_exchanges_list', value: 'organizations_locations_data_exchanges_list' },
+        { label: 'projects_locations_data_exchanges_list', value: 'projects_locations_data_exchanges_list' }
     ]}
 >
 <TabItem value="projects_locations_data_exchanges_get">
@@ -389,30 +390,6 @@ AND dataExchangesId = '{{ dataExchangesId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_data_exchanges_list">
-
-Lists all data exchanges in a given project and location.
-
-```sql
-SELECT
-name,
-description,
-discoveryType,
-displayName,
-documentation,
-icon,
-listingCount,
-logLinkedDatasetQueryUserEmail,
-primaryContact,
-sharingEnvironmentConfig
-FROM google.analyticshub.data_exchanges
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
-;
-```
-</TabItem>
 <TabItem value="organizations_locations_data_exchanges_list">
 
 Lists all data exchanges from projects in a given organization and location.
@@ -431,6 +408,30 @@ primaryContact,
 sharingEnvironmentConfig
 FROM google.analyticshub.data_exchanges
 WHERE organizationsId = '{{ organizationsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_data_exchanges_list">
+
+Lists all data exchanges in a given project and location.
+
+```sql
+SELECT
+name,
+description,
+discoveryType,
+displayName,
+documentation,
+icon,
+listingCount,
+logLinkedDatasetQueryUserEmail,
+primaryContact,
+sharingEnvironmentConfig
+FROM google.analyticshub.data_exchanges
+WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
@@ -455,27 +456,27 @@ Creates a new data exchange.
 
 ```sql
 INSERT INTO google.analyticshub.data_exchanges (
-data__description,
+data__logLinkedDatasetQueryUserEmail,
+data__primaryContact,
+data__discoveryType,
+data__sharingEnvironmentConfig,
 data__displayName,
 data__icon,
-data__sharingEnvironmentConfig,
-data__logLinkedDatasetQueryUserEmail,
-data__discoveryType,
-data__primaryContact,
 data__documentation,
+data__description,
 projectsId,
 locationsId,
 dataExchangeId
 )
 SELECT 
-'{{ description }}',
+{{ logLinkedDatasetQueryUserEmail }},
+'{{ primaryContact }}',
+'{{ discoveryType }}',
+'{{ sharingEnvironmentConfig }}',
 '{{ displayName }}',
 '{{ icon }}',
-'{{ sharingEnvironmentConfig }}',
-{{ logLinkedDatasetQueryUserEmail }},
-'{{ discoveryType }}',
-'{{ primaryContact }}',
 '{{ documentation }}',
+'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ dataExchangeId }}'
@@ -495,60 +496,56 @@ sharingEnvironmentConfig
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: data_exchanges
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the data_exchanges resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the data_exchanges resource.
-    - name: description
-      value: string
-      description: >
-        Optional. Description of the data exchange. The description must not contain Unicode non-characters as well as C0 and C1 control codes except tabs (HT), new lines (LF), carriage returns (CR), and page breaks (FF). Default value is an empty string. Max length: 2000 bytes.
-        
-    - name: displayName
-      value: string
-      description: >
-        Required. Human-readable display name of the data exchange. The display name must contain only Unicode letters, numbers (0-9), underscores (_), dashes (-), spaces ( ), ampersands (&) and must not start or end with spaces. Default value is an empty string. Max length: 63 bytes.
-        
-    - name: icon
-      value: string
-      description: >
-        Optional. Base64 encoded image representing the data exchange. Max Size: 3.0MiB Expected image dimensions are 512x512 pixels, however the API only performs validation on size of the encoded data. Note: For byte fields, the content of the fields are base64-encoded (which increases the size of the data by 33-36%) when using JSON on the wire.
-        
-    - name: sharingEnvironmentConfig
-      value: object
-      description: >
-        Optional. Configurable data sharing environment option for a data exchange.
-        
     - name: logLinkedDatasetQueryUserEmail
-      value: boolean
-      description: >
+      value: {{ logLinkedDatasetQueryUserEmail }}
+      description: |
         Optional. By default, false. If true, the DataExchange has an email sharing mandate enabled.
-        
-    - name: discoveryType
-      value: string
-      description: >
-        Optional. Type of discovery on the discovery page for all the listings under this exchange. Updating this field also updates (overwrites) the discovery_type field for all the listings under this exchange.
-        
-      valid_values: ['DISCOVERY_TYPE_UNSPECIFIED', 'DISCOVERY_TYPE_PRIVATE', 'DISCOVERY_TYPE_PUBLIC']
     - name: primaryContact
-      value: string
-      description: >
+      value: "{{ primaryContact }}"
+      description: |
         Optional. Email or URL of the primary point of contact of the data exchange. Max Length: 1000 bytes.
-        
+    - name: discoveryType
+      value: "{{ discoveryType }}"
+      description: |
+        Optional. Type of discovery on the discovery page for all the listings under this exchange. Updating this field also updates (overwrites) the discovery_type field for all the listings under this exchange.
+      valid_values: ['DISCOVERY_TYPE_UNSPECIFIED', 'DISCOVERY_TYPE_PRIVATE', 'DISCOVERY_TYPE_PUBLIC']
+    - name: sharingEnvironmentConfig
+      description: |
+        Optional. Configurable data sharing environment option for a data exchange.
+      value:
+        defaultExchangeConfig: "{{ defaultExchangeConfig }}"
+        dcrExchangeConfig:
+          singleSelectedResourceSharingRestriction: {{ singleSelectedResourceSharingRestriction }}
+          singleLinkedDatasetPerCleanroom: {{ singleLinkedDatasetPerCleanroom }}
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. Human-readable display name of the data exchange. The display name must contain only Unicode letters, numbers (0-9), underscores (_), dashes (-), spaces ( ), ampersands (&) and must not start or end with spaces. Default value is an empty string. Max length: 63 bytes.
+    - name: icon
+      value: "{{ icon }}"
+      description: |
+        Optional. Base64 encoded image representing the data exchange. Max Size: 3.0MiB Expected image dimensions are 512x512 pixels, however the API only performs validation on size of the encoded data. Note: For byte fields, the content of the fields are base64-encoded (which increases the size of the data by 33-36%) when using JSON on the wire.
     - name: documentation
-      value: string
-      description: >
+      value: "{{ documentation }}"
+      description: |
         Optional. Documentation describing the data exchange.
-        
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the data exchange. The description must not contain Unicode non-characters as well as C0 and C1 control codes except tabs (HT), new lines (LF), carriage returns (CR), and page breaks (FF). Default value is an empty string. Max length: 2000 bytes.
     - name: dataExchangeId
-      value: string
-```
+      value: "{{ dataExchangeId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -568,14 +565,14 @@ Updates an existing data exchange.
 ```sql
 UPDATE google.analyticshub.data_exchanges
 SET 
-data__description = '{{ description }}',
+data__logLinkedDatasetQueryUserEmail = {{ logLinkedDatasetQueryUserEmail }},
+data__primaryContact = '{{ primaryContact }}',
+data__discoveryType = '{{ discoveryType }}',
+data__sharingEnvironmentConfig = '{{ sharingEnvironmentConfig }}',
 data__displayName = '{{ displayName }}',
 data__icon = '{{ icon }}',
-data__sharingEnvironmentConfig = '{{ sharingEnvironmentConfig }}',
-data__logLinkedDatasetQueryUserEmail = {{ logLinkedDatasetQueryUserEmail }},
-data__discoveryType = '{{ discoveryType }}',
-data__primaryContact = '{{ primaryContact }}',
-data__documentation = '{{ documentation }}'
+data__documentation = '{{ documentation }}',
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -639,10 +636,10 @@ EXEC google.analyticshub.data_exchanges.projects_locations_data_exchanges_subscr
 @dataExchangesId='{{ dataExchangesId }}' --required 
 @@json=
 '{
-"destination": "{{ destination }}", 
-"subscriberContact": "{{ subscriberContact }}", 
+"subscription": "{{ subscription }}", 
 "destinationDataset": "{{ destinationDataset }}", 
-"subscription": "{{ subscription }}"
+"subscriberContact": "{{ subscriberContact }}", 
+"destination": "{{ destination }}"
 }'
 ;
 ```

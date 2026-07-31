@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>attributes</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>attributes</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="attributes" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataplex.attributes" /></td></tr>
 </tbody></table>
@@ -214,7 +215,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_data_taxonomies_attributes_list"><CopyableCode code="projects_locations_data_taxonomies_attributes_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataTaxonomiesId"><code>dataTaxonomiesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Data Attribute resources in a DataTaxonomy.</td>
 </tr>
 <tr>
@@ -374,10 +375,10 @@ FROM google.dataplex.attributes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND dataTaxonomiesId = '{{ dataTaxonomiesId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -399,12 +400,12 @@ Create a DataAttribute resource.
 
 ```sql
 INSERT INTO google.dataplex.attributes (
-data__description,
 data__displayName,
 data__labels,
 data__parentId,
-data__etag,
 data__resourceAccessSpec,
+data__description,
+data__etag,
 data__dataAccessSpec,
 projectsId,
 locationsId,
@@ -413,12 +414,12 @@ dataAttributeId,
 validateOnly
 )
 SELECT 
-'{{ description }}',
 '{{ displayName }}',
 '{{ labels }}',
 '{{ parentId }}',
-'{{ etag }}',
 '{{ resourceAccessSpec }}',
+'{{ description }}',
+'{{ etag }}',
 '{{ dataAccessSpec }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -436,59 +437,60 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: attributes
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the attributes resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the attributes resource.
     - name: dataTaxonomiesId
-      value: string
+      value: "{{ dataTaxonomiesId }}"
       description: Required parameter for the attributes resource.
-    - name: description
-      value: string
-      description: >
-        Optional. Description of the DataAttribute.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Optional. User friendly display name.
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. User-defined labels for the DataAttribute.
-        
     - name: parentId
-      value: string
-      description: >
+      value: "{{ parentId }}"
+      description: |
         Optional. The ID of the parent DataAttribute resource, should belong to the same data taxonomy. Circular dependency in parent chain is not valid. Maximum depth of the hierarchy allowed is 4. a -> b -> c -> d -> e, depth = 4
-        
-    - name: etag
-      value: string
-      description: >
-        This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
-        
     - name: resourceAccessSpec
-      value: object
-      description: >
+      description: |
         Optional. Specified when applied to a resource (eg: Cloud Storage bucket, BigQuery dataset, BigQuery table).
-        
+      value:
+        readers:
+          - "{{ readers }}"
+        writers:
+          - "{{ writers }}"
+        owners:
+          - "{{ owners }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the DataAttribute.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
     - name: dataAccessSpec
-      value: object
-      description: >
+      description: |
         Optional. Specified when applied to data stored on the resource (eg: rows, columns in BigQuery Tables).
-        
+      value:
+        readers:
+          - "{{ readers }}"
     - name: dataAttributeId
-      value: string
+      value: "{{ dataAttributeId }}"
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -508,12 +510,12 @@ Updates a DataAttribute resource.
 ```sql
 UPDATE google.dataplex.attributes
 SET 
-data__description = '{{ description }}',
 data__displayName = '{{ displayName }}',
 data__labels = '{{ labels }}',
 data__parentId = '{{ parentId }}',
-data__etag = '{{ etag }}',
 data__resourceAccessSpec = '{{ resourceAccessSpec }}',
+data__description = '{{ description }}',
+data__etag = '{{ etag }}',
 data__dataAccessSpec = '{{ dataAccessSpec }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

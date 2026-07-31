@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>regional_endpoints</code> resou
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>regional_endpoints</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="regional_endpoints" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networkconnectivity.regional_endpoints" /></td></tr>
 </tbody></table>
@@ -57,7 +58,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="accessType" /></td>
     <td><code>string</code></td>
-    <td>Required. The access type of this regional endpoint. This field is reflected in the PSC Forwarding Rule configuration to enable global access.</td>
+    <td>Required. The access type of this regional endpoint. This field is reflected in the PSC Forwarding Rule configuration to enable global access. (ACCESS_TYPE_UNSPECIFIED, GLOBAL, REGIONAL)</td>
 </tr>
 <tr>
     <td><CopyableCode code="address" /></td>
@@ -131,7 +132,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="accessType" /></td>
     <td><code>string</code></td>
-    <td>Required. The access type of this regional endpoint. This field is reflected in the PSC Forwarding Rule configuration to enable global access.</td>
+    <td>Required. The access type of this regional endpoint. This field is reflected in the PSC Forwarding Rule configuration to enable global access. (ACCESS_TYPE_UNSPECIFIED, GLOBAL, REGIONAL)</td>
 </tr>
 <tr>
     <td><CopyableCode code="address" /></td>
@@ -214,7 +215,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists RegionalEndpoints in a given project and location.</td>
 </tr>
 <tr>
@@ -350,10 +351,10 @@ updateTime
 FROM google.networkconnectivity.regional_endpoints
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -375,26 +376,26 @@ Creates a new RegionalEndpoint in a given project and location.
 
 ```sql
 INSERT INTO google.networkconnectivity.regional_endpoints (
-data__description,
-data__accessType,
-data__address,
-data__labels,
-data__network,
 data__targetGoogleApi,
 data__subnetwork,
+data__description,
+data__network,
+data__labels,
+data__accessType,
+data__address,
 projectsId,
 locationsId,
 regionalEndpointId,
 requestId
 )
 SELECT 
-'{{ description }}',
-'{{ accessType }}',
-'{{ address }}',
-'{{ labels }}',
-'{{ network }}',
 '{{ targetGoogleApi }}',
 '{{ subnetwork }}',
+'{{ description }}',
+'{{ network }}',
+'{{ labels }}',
+'{{ accessType }}',
+'{{ address }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ regionalEndpointId }}',
@@ -410,57 +411,50 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: regional_endpoints
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the regional_endpoints resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the regional_endpoints resource.
+    - name: targetGoogleApi
+      value: "{{ targetGoogleApi }}"
+      description: |
+        Required. The service endpoint this private regional endpoint connects to. Format: \`{apiname}.{region}.p.rep.googleapis.com\` Example: "cloudkms.us-central1.p.rep.googleapis.com".
+    - name: subnetwork
+      value: "{{ subnetwork }}"
+      description: |
+        Optional. The name of the subnetwork from which the IP address will be allocated. Format: \`projects/{project}/regions/{region}/subnetworks/{subnetwork}\`
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. A description of this resource.
-        
+    - name: network
+      value: "{{ network }}"
+      description: |
+        Optional. The name of the VPC network for this private regional endpoint. Format: \`projects/{project}/global/networks/{network}\`
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        User-defined labels.
     - name: accessType
-      value: string
-      description: >
+      value: "{{ accessType }}"
+      description: |
         Required. The access type of this regional endpoint. This field is reflected in the PSC Forwarding Rule configuration to enable global access.
-        
       valid_values: ['ACCESS_TYPE_UNSPECIFIED', 'GLOBAL', 'REGIONAL']
     - name: address
-      value: string
-      description: >
-        Optional. The IP Address of the Regional Endpoint. When no address is provided, an IP from the subnetwork is allocated. Use one of the following formats: * IPv4 address as in `10.0.0.1` * Address resource URI as in `projects/{project}/regions/{region}/addresses/{address_name}` for an IPv4 or IPv6 address.
-        
-    - name: labels
-      value: object
-      description: >
-        User-defined labels.
-        
-    - name: network
-      value: string
-      description: >
-        Optional. The name of the VPC network for this private regional endpoint. Format: `projects/{project}/global/networks/{network}`
-        
-    - name: targetGoogleApi
-      value: string
-      description: >
-        Required. The service endpoint this private regional endpoint connects to. Format: `{apiname}.{region}.p.rep.googleapis.com` Example: "cloudkms.us-central1.p.rep.googleapis.com".
-        
-    - name: subnetwork
-      value: string
-      description: >
-        Optional. The name of the subnetwork from which the IP address will be allocated. Format: `projects/{project}/regions/{region}/subnetworks/{subnetwork}`
-        
+      value: "{{ address }}"
+      description: |
+        Optional. The IP Address of the Regional Endpoint. When no address is provided, an IP from the subnetwork is allocated. Use one of the following formats: * IPv4 address as in \`10.0.0.1\` * Address resource URI as in \`projects/{project}/regions/{region}/addresses/{address_name}\` for an IPv4 or IPv6 address.
     - name: regionalEndpointId
-      value: string
+      value: "{{ regionalEndpointId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

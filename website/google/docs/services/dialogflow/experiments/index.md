@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>experiments</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>experiments</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="experiments" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dialogflow.experiments" /></td></tr>
 </tbody></table>
@@ -52,77 +53,77 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The name of the experiment. Format: projects//locations//agents//environments//experiments/.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Creation time of this experiment.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="definition" /></td>
     <td><code>object</code></td>
-    <td>The definition of the experiment. (id: GoogleCloudDialogflowCxV3ExperimentDefinition)</td>
+    <td> (id: GoogleCloudDialogflowCxV3ExperimentDefinition)</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
-    <td>The human-readable description of the experiment.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Required. The human-readable name of the experiment (unique in an environment). Limit of 64 characters.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="endTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>End time of this experiment.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="experimentLength" /></td>
     <td><code>string (google-duration)</code></td>
-    <td>Maximum number of days to run the experiment/rollout. If auto-rollout is not enabled, default value and maximum will be 30 days. If auto-rollout is enabled, default value and maximum will be 6 days.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="lastUpdateTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Last update time of this experiment.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="result" /></td>
     <td><code>object</code></td>
-    <td>Inference result of the experiment. (id: GoogleCloudDialogflowCxV3ExperimentResult)</td>
+    <td> (id: GoogleCloudDialogflowCxV3ExperimentResult)</td>
 </tr>
 <tr>
     <td><CopyableCode code="rolloutConfig" /></td>
     <td><code>object</code></td>
-    <td>The configuration for auto rollout. If set, there should be exactly two variants in the experiment (control variant being the default version of the flow), the traffic allocation for the non-control variant will gradually increase to 100% when conditions are met, and eventually replace the control variant to become the default version of the flow. (id: GoogleCloudDialogflowCxV3RolloutConfig)</td>
+    <td> (id: GoogleCloudDialogflowCxV3RolloutConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="rolloutFailureReason" /></td>
     <td><code>string</code></td>
-    <td>The reason why rollout has failed. Should only be set when state is ROLLOUT_FAILED.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="rolloutState" /></td>
     <td><code>object</code></td>
-    <td>State of the auto rollout process. (id: GoogleCloudDialogflowCxV3RolloutState)</td>
+    <td> (id: GoogleCloudDialogflowCxV3RolloutState)</td>
 </tr>
 <tr>
     <td><CopyableCode code="startTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Start time of this experiment.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>The current state of the experiment. Transition triggered by Experiments.StartExperiment: DRAFT-&gt;RUNNING. Transition triggered by Experiments.CancelExperiment: DRAFT-&gt;DONE or RUNNING-&gt;DONE.</td>
+    <td> (STATE_UNSPECIFIED, DRAFT, RUNNING, DONE, ROLLOUT_FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="variantsHistory" /></td>
     <td><code>array</code></td>
-    <td>The history of updates to the experiment variants.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -141,77 +142,77 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The name of the experiment. Format: projects//locations//agents//environments//experiments/.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Creation time of this experiment.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="definition" /></td>
     <td><code>object</code></td>
-    <td>The definition of the experiment. (id: GoogleCloudDialogflowCxV3ExperimentDefinition)</td>
+    <td> (id: GoogleCloudDialogflowCxV3ExperimentDefinition)</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
-    <td>The human-readable description of the experiment.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Required. The human-readable name of the experiment (unique in an environment). Limit of 64 characters.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="endTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>End time of this experiment.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="experimentLength" /></td>
     <td><code>string (google-duration)</code></td>
-    <td>Maximum number of days to run the experiment/rollout. If auto-rollout is not enabled, default value and maximum will be 30 days. If auto-rollout is enabled, default value and maximum will be 6 days.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="lastUpdateTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Last update time of this experiment.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="result" /></td>
     <td><code>object</code></td>
-    <td>Inference result of the experiment. (id: GoogleCloudDialogflowCxV3ExperimentResult)</td>
+    <td> (id: GoogleCloudDialogflowCxV3ExperimentResult)</td>
 </tr>
 <tr>
     <td><CopyableCode code="rolloutConfig" /></td>
     <td><code>object</code></td>
-    <td>The configuration for auto rollout. If set, there should be exactly two variants in the experiment (control variant being the default version of the flow), the traffic allocation for the non-control variant will gradually increase to 100% when conditions are met, and eventually replace the control variant to become the default version of the flow. (id: GoogleCloudDialogflowCxV3RolloutConfig)</td>
+    <td> (id: GoogleCloudDialogflowCxV3RolloutConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="rolloutFailureReason" /></td>
     <td><code>string</code></td>
-    <td>The reason why rollout has failed. Should only be set when state is ROLLOUT_FAILED.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="rolloutState" /></td>
     <td><code>object</code></td>
-    <td>State of the auto rollout process. (id: GoogleCloudDialogflowCxV3RolloutState)</td>
+    <td> (id: GoogleCloudDialogflowCxV3RolloutState)</td>
 </tr>
 <tr>
     <td><CopyableCode code="startTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Start time of this experiment.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>The current state of the experiment. Transition triggered by Experiments.StartExperiment: DRAFT-&gt;RUNNING. Transition triggered by Experiments.CancelExperiment: DRAFT-&gt;DONE or RUNNING-&gt;DONE.</td>
+    <td> (STATE_UNSPECIFIED, DRAFT, RUNNING, DONE, ROLLOUT_FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="variantsHistory" /></td>
     <td><code>array</code></td>
-    <td>The history of updates to the experiment variants.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -238,49 +239,49 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-experimentsId"><code>experimentsId</code></a></td>
     <td></td>
-    <td>Retrieves the specified Experiment.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_environments_experiments_list"><CopyableCode code="projects_locations_agents_environments_experiments_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Returns the list of all experiments in the specified Environment.</td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_environments_experiments_create"><CopyableCode code="projects_locations_agents_environments_experiments_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
     <td></td>
-    <td>Creates an Experiment in the specified Environment.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_environments_experiments_patch"><CopyableCode code="projects_locations_agents_environments_experiments_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-experimentsId"><code>experimentsId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates the specified Experiment.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_environments_experiments_delete"><CopyableCode code="projects_locations_agents_environments_experiments_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-experimentsId"><code>experimentsId</code></a></td>
     <td></td>
-    <td>Deletes the specified Experiment.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_environments_experiments_start"><CopyableCode code="projects_locations_agents_environments_experiments_start" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-experimentsId"><code>experimentsId</code></a></td>
     <td></td>
-    <td>Starts the specified Experiment. This rpc only changes the state of experiment from PENDING to RUNNING.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_environments_experiments_stop"><CopyableCode code="projects_locations_agents_environments_experiments_stop" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-experimentsId"><code>experimentsId</code></a></td>
     <td></td>
-    <td>Stops the specified Experiment. This rpc only changes the state of experiment from RUNNING to DONE.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -352,7 +353,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="projects_locations_agents_environments_experiments_get">
 
-Retrieves the specified Experiment.
+Successful response
 
 ```sql
 SELECT
@@ -382,7 +383,7 @@ AND experimentsId = '{{ experimentsId }}' -- required
 </TabItem>
 <TabItem value="projects_locations_agents_environments_experiments_list">
 
-Returns the list of all experiments in the specified Environment.
+Successful response
 
 ```sql
 SELECT
@@ -406,8 +407,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND agentsId = '{{ agentsId }}' -- required
 AND environmentsId = '{{ environmentsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -425,24 +426,24 @@ AND pageToken = '{{ pageToken }}'
 >
 <TabItem value="projects_locations_agents_environments_experiments_create">
 
-Creates an Experiment in the specified Environment.
+No description available.
 
 ```sql
 INSERT INTO google.dialogflow.experiments (
+data__result,
+data__endTime,
+data__experimentLength,
+data__rolloutConfig,
 data__name,
+data__lastUpdateTime,
+data__rolloutFailureReason,
+data__createTime,
+data__state,
+data__startTime,
 data__displayName,
 data__description,
-data__state,
-data__definition,
-data__rolloutConfig,
 data__rolloutState,
-data__rolloutFailureReason,
-data__result,
-data__createTime,
-data__startTime,
-data__endTime,
-data__lastUpdateTime,
-data__experimentLength,
+data__definition,
 data__variantsHistory,
 projectsId,
 locationsId,
@@ -450,20 +451,20 @@ agentsId,
 environmentsId
 )
 SELECT 
+'{{ result }}',
+'{{ endTime }}',
+'{{ experimentLength }}',
+'{{ rolloutConfig }}',
 '{{ name }}',
+'{{ lastUpdateTime }}',
+'{{ rolloutFailureReason }}',
+'{{ createTime }}',
+'{{ state }}',
+'{{ startTime }}',
 '{{ displayName }}',
 '{{ description }}',
-'{{ state }}',
-'{{ definition }}',
-'{{ rolloutConfig }}',
 '{{ rolloutState }}',
-'{{ rolloutFailureReason }}',
-'{{ result }}',
-'{{ createTime }}',
-'{{ startTime }}',
-'{{ endTime }}',
-'{{ lastUpdateTime }}',
-'{{ experimentLength }}',
+'{{ definition }}',
 '{{ variantsHistory }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -490,99 +491,80 @@ variantsHistory
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: experiments
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the experiments resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the experiments resource.
     - name: agentsId
-      value: string
+      value: "{{ agentsId }}"
       description: Required parameter for the experiments resource.
     - name: environmentsId
-      value: string
+      value: "{{ environmentsId }}"
       description: Required parameter for the experiments resource.
-    - name: name
-      value: string
-      description: >
-        The name of the experiment. Format: projects//locations//agents//environments//experiments/.
-        
-    - name: displayName
-      value: string
-      description: >
-        Required. The human-readable name of the experiment (unique in an environment). Limit of 64 characters.
-        
-    - name: description
-      value: string
-      description: >
-        The human-readable description of the experiment.
-        
-    - name: state
-      value: string
-      description: >
-        The current state of the experiment. Transition triggered by Experiments.StartExperiment: DRAFT->RUNNING. Transition triggered by Experiments.CancelExperiment: DRAFT->DONE or RUNNING->DONE.
-        
-      valid_values: ['STATE_UNSPECIFIED', 'DRAFT', 'RUNNING', 'DONE', 'ROLLOUT_FAILED']
-    - name: definition
-      value: object
-      description: >
-        The definition of the experiment.
-        
-    - name: rolloutConfig
-      value: object
-      description: >
-        The configuration for auto rollout. If set, there should be exactly two variants in the experiment (control variant being the default version of the flow), the traffic allocation for the non-control variant will gradually increase to 100% when conditions are met, and eventually replace the control variant to become the default version of the flow.
-        
-    - name: rolloutState
-      value: object
-      description: >
-        State of the auto rollout process.
-        
-    - name: rolloutFailureReason
-      value: string
-      description: >
-        The reason why rollout has failed. Should only be set when state is ROLLOUT_FAILED.
-        
     - name: result
-      value: object
-      description: >
-        Inference result of the experiment.
-        
-    - name: createTime
-      value: string
-      description: >
-        Creation time of this experiment.
-        
-    - name: startTime
-      value: string
-      description: >
-        Start time of this experiment.
-        
+      value:
+        versionMetrics:
+          - version: "{{ version }}"
+            sessionCount: {{ sessionCount }}
+            metrics: "{{ metrics }}"
+        lastUpdateTime: "{{ lastUpdateTime }}"
     - name: endTime
-      value: string
-      description: >
-        End time of this experiment.
-        
-    - name: lastUpdateTime
-      value: string
-      description: >
-        Last update time of this experiment.
-        
+      value: "{{ endTime }}"
     - name: experimentLength
-      value: string
-      description: >
-        Maximum number of days to run the experiment/rollout. If auto-rollout is not enabled, default value and maximum will be 30 days. If auto-rollout is enabled, default value and maximum will be 6 days.
-        
+      value: "{{ experimentLength }}"
+    - name: rolloutConfig
+      value:
+        rolloutSteps:
+          - trafficPercent: {{ trafficPercent }}
+            minDuration: "{{ minDuration }}"
+            displayName: "{{ displayName }}"
+        rolloutCondition: "{{ rolloutCondition }}"
+        failureCondition: "{{ failureCondition }}"
+    - name: name
+      value: "{{ name }}"
+    - name: lastUpdateTime
+      value: "{{ lastUpdateTime }}"
+    - name: rolloutFailureReason
+      value: "{{ rolloutFailureReason }}"
+    - name: createTime
+      value: "{{ createTime }}"
+    - name: state
+      value: "{{ state }}"
+      valid_values: ['STATE_UNSPECIFIED', 'DRAFT', 'RUNNING', 'DONE', 'ROLLOUT_FAILED']
+    - name: startTime
+      value: "{{ startTime }}"
+    - name: displayName
+      value: "{{ displayName }}"
+    - name: description
+      value: "{{ description }}"
+    - name: rolloutState
+      value:
+        step: "{{ step }}"
+        stepIndex: {{ stepIndex }}
+        startTime: "{{ startTime }}"
+    - name: definition
+      value:
+        condition: "{{ condition }}"
+        versionVariants:
+          variants:
+            - trafficAllocation: {{ trafficAllocation }}
+              version: "{{ version }}"
+              isControlGroup: {{ isControlGroup }}
     - name: variantsHistory
-      value: array
-      description: >
-        The history of updates to the experiment variants.
-        
-```
+      value:
+        - updateTime: "{{ updateTime }}"
+          versionVariants:
+            variants:
+              - trafficAllocation: {{ trafficAllocation }}
+                version: "{{ version }}"
+                isControlGroup: {{ isControlGroup }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -597,25 +579,25 @@ variantsHistory
 >
 <TabItem value="projects_locations_agents_environments_experiments_patch">
 
-Updates the specified Experiment.
+No description available.
 
 ```sql
 UPDATE google.dialogflow.experiments
 SET 
+data__result = '{{ result }}',
+data__endTime = '{{ endTime }}',
+data__experimentLength = '{{ experimentLength }}',
+data__rolloutConfig = '{{ rolloutConfig }}',
 data__name = '{{ name }}',
+data__lastUpdateTime = '{{ lastUpdateTime }}',
+data__rolloutFailureReason = '{{ rolloutFailureReason }}',
+data__createTime = '{{ createTime }}',
+data__state = '{{ state }}',
+data__startTime = '{{ startTime }}',
 data__displayName = '{{ displayName }}',
 data__description = '{{ description }}',
-data__state = '{{ state }}',
-data__definition = '{{ definition }}',
-data__rolloutConfig = '{{ rolloutConfig }}',
 data__rolloutState = '{{ rolloutState }}',
-data__rolloutFailureReason = '{{ rolloutFailureReason }}',
-data__result = '{{ result }}',
-data__createTime = '{{ createTime }}',
-data__startTime = '{{ startTime }}',
-data__endTime = '{{ endTime }}',
-data__lastUpdateTime = '{{ lastUpdateTime }}',
-data__experimentLength = '{{ experimentLength }}',
+data__definition = '{{ definition }}',
 data__variantsHistory = '{{ variantsHistory }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
@@ -655,7 +637,7 @@ variantsHistory;
 >
 <TabItem value="projects_locations_agents_environments_experiments_delete">
 
-Deletes the specified Experiment.
+No description available.
 
 ```sql
 DELETE FROM google.dialogflow.experiments
@@ -681,7 +663,7 @@ AND experimentsId = '{{ experimentsId }}' --required
 >
 <TabItem value="projects_locations_agents_environments_experiments_start">
 
-Starts the specified Experiment. This rpc only changes the state of experiment from PENDING to RUNNING.
+Successful response
 
 ```sql
 EXEC google.dialogflow.experiments.projects_locations_agents_environments_experiments_start 
@@ -695,7 +677,7 @@ EXEC google.dialogflow.experiments.projects_locations_agents_environments_experi
 </TabItem>
 <TabItem value="projects_locations_agents_environments_experiments_stop">
 
-Stops the specified Experiment. This rpc only changes the state of experiment from RUNNING to DONE.
+Successful response
 
 ```sql
 EXEC google.dialogflow.experiments.projects_locations_agents_environments_experiments_stop 

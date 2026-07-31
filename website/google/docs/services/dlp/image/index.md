@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>image</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>image</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="image" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dlp.image" /></td></tr>
 </tbody></table>
@@ -54,14 +55,14 @@ The following methods are available for this resource:
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
-    <td>Redacts potentially sensitive info from an image. This method has limits on input size, processing time, and output size. See https://cloud.google.com/sensitive-data-protection/docs/redacting-sensitive-data-images to learn more. When no InfoTypes or CustomInfoTypes are specified in this request, the system will automatically choose what detectors to run. By default this may be all types, but may change over time as detectors are updated. Only the first frame of each multiframe image is redacted. Metadata and other frames are omitted in the response.</td>
+    <td>Redacts potentially sensitive info from an image. This method has limits on input size, processing time, and output size. See https://docs.cloud.google.com/sensitive-data-protection/docs/redacting-sensitive-data-images to learn more. When no InfoTypes or CustomInfoTypes are specified in this request, the system will automatically choose what detectors to run. By default this may be all types, but may change over time as detectors are updated. Only the first frame of each multiframe image is redacted. Metadata and other frames are omitted in the response.</td>
 </tr>
 <tr>
     <td><a href="#projects_image_redact"><CopyableCode code="projects_image_redact" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
-    <td>Redacts potentially sensitive info from an image. This method has limits on input size, processing time, and output size. See https://cloud.google.com/sensitive-data-protection/docs/redacting-sensitive-data-images to learn more. When no InfoTypes or CustomInfoTypes are specified in this request, the system will automatically choose what detectors to run. By default this may be all types, but may change over time as detectors are updated. Only the first frame of each multiframe image is redacted. Metadata and other frames are omitted in the response.</td>
+    <td>Redacts potentially sensitive info from an image. This method has limits on input size, processing time, and output size. See https://docs.cloud.google.com/sensitive-data-protection/docs/redacting-sensitive-data-images to learn more. When no InfoTypes or CustomInfoTypes are specified in this request, the system will automatically choose what detectors to run. By default this may be all types, but may change over time as detectors are updated. Only the first frame of each multiframe image is redacted. Metadata and other frames are omitted in the response.</td>
 </tr>
 </tbody>
 </table>
@@ -103,7 +104,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="projects_locations_image_redact">
 
-Redacts potentially sensitive info from an image. This method has limits on input size, processing time, and output size. See https://cloud.google.com/sensitive-data-protection/docs/redacting-sensitive-data-images to learn more. When no InfoTypes or CustomInfoTypes are specified in this request, the system will automatically choose what detectors to run. By default this may be all types, but may change over time as detectors are updated. Only the first frame of each multiframe image is redacted. Metadata and other frames are omitted in the response.
+Redacts potentially sensitive info from an image. This method has limits on input size, processing time, and output size. See https://docs.cloud.google.com/sensitive-data-protection/docs/redacting-sensitive-data-images to learn more. When no InfoTypes or CustomInfoTypes are specified in this request, the system will automatically choose what detectors to run. By default this may be all types, but may change over time as detectors are updated. Only the first frame of each multiframe image is redacted. Metadata and other frames are omitted in the response.
 
 ```sql
 EXEC google.dlp.image.projects_locations_image_redact 
@@ -111,33 +112,33 @@ EXEC google.dlp.image.projects_locations_image_redact
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"locationId": "{{ locationId }}", 
-"deidentifyTemplate": "{{ deidentifyTemplate }}", 
-"includeFindings": {{ includeFindings }}, 
 "inspectConfig": "{{ inspectConfig }}", 
-"imageRedactionConfigs": "{{ imageRedactionConfigs }}", 
 "byteItem": "{{ byteItem }}", 
-"inspectTemplate": "{{ inspectTemplate }}"
+"deidentifyTemplate": "{{ deidentifyTemplate }}", 
+"locationId": "{{ locationId }}", 
+"imageRedactionConfigs": "{{ imageRedactionConfigs }}", 
+"inspectTemplate": "{{ inspectTemplate }}", 
+"includeFindings": {{ includeFindings }}
 }'
 ;
 ```
 </TabItem>
 <TabItem value="projects_image_redact">
 
-Redacts potentially sensitive info from an image. This method has limits on input size, processing time, and output size. See https://cloud.google.com/sensitive-data-protection/docs/redacting-sensitive-data-images to learn more. When no InfoTypes or CustomInfoTypes are specified in this request, the system will automatically choose what detectors to run. By default this may be all types, but may change over time as detectors are updated. Only the first frame of each multiframe image is redacted. Metadata and other frames are omitted in the response.
+Redacts potentially sensitive info from an image. This method has limits on input size, processing time, and output size. See https://docs.cloud.google.com/sensitive-data-protection/docs/redacting-sensitive-data-images to learn more. When no InfoTypes or CustomInfoTypes are specified in this request, the system will automatically choose what detectors to run. By default this may be all types, but may change over time as detectors are updated. Only the first frame of each multiframe image is redacted. Metadata and other frames are omitted in the response.
 
 ```sql
 EXEC google.dlp.image.projects_image_redact 
 @projectsId='{{ projectsId }}' --required 
 @@json=
 '{
-"locationId": "{{ locationId }}", 
-"deidentifyTemplate": "{{ deidentifyTemplate }}", 
-"includeFindings": {{ includeFindings }}, 
 "inspectConfig": "{{ inspectConfig }}", 
-"imageRedactionConfigs": "{{ imageRedactionConfigs }}", 
 "byteItem": "{{ byteItem }}", 
-"inspectTemplate": "{{ inspectTemplate }}"
+"deidentifyTemplate": "{{ deidentifyTemplate }}", 
+"locationId": "{{ locationId }}", 
+"imageRedactionConfigs": "{{ imageRedactionConfigs }}", 
+"inspectTemplate": "{{ inspectTemplate }}", 
+"includeFindings": {{ includeFindings }}
 }'
 ;
 ```

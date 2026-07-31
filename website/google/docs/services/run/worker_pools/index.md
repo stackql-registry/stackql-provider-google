@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>worker_pools</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>worker_pools</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="worker_pools" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.run.worker_pools" /></td></tr>
 </tbody></table>
@@ -92,7 +93,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="customAudiences" /></td>
     <td><code>array</code></td>
-    <td>Not supported, and ignored by Cloud Run.</td>
+    <td>Deprecated: Not supported, and ignored by Cloud Run.</td>
 </tr>
 <tr>
     <td><CopyableCode code="deleteTime" /></td>
@@ -152,7 +153,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="launchStage" /></td>
     <td><code>string</code></td>
-    <td>Optional. The launch stage as defined by [Google Cloud Platform Launch Stages](https://cloud.google.com/terms/launch-stages). Cloud Run supports `ALPHA`, `BETA`, and `GA`. If no value is specified, GA is assumed. Set the launch stage to a preview stage on input to allow use of preview features in that stage. On read (or output), describes whether the resource uses preview features. For example, if ALPHA is provided as input, but only BETA and GA-level features are used, this field will be BETA on output.</td>
+    <td>Optional. The launch stage as defined by [Google Cloud Platform Launch Stages](https://cloud.google.com/terms/launch-stages). Cloud Run supports `ALPHA`, `BETA`, and `GA`. If no value is specified, GA is assumed. Set the launch stage to a preview stage on input to allow use of preview features in that stage. On read (or output), describes whether the resource uses preview features. For example, if ALPHA is provided as input, but only BETA and GA-level features are used, this field will be BETA on output. (LAUNCH_STAGE_UNSPECIFIED, UNIMPLEMENTED, PRELAUNCH, EARLY_ACCESS, ALPHA, BETA, GA, DEPRECATED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="observedGeneration" /></td>
@@ -256,7 +257,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="customAudiences" /></td>
     <td><code>array</code></td>
-    <td>Not supported, and ignored by Cloud Run.</td>
+    <td>Deprecated: Not supported, and ignored by Cloud Run.</td>
 </tr>
 <tr>
     <td><CopyableCode code="deleteTime" /></td>
@@ -316,7 +317,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="launchStage" /></td>
     <td><code>string</code></td>
-    <td>Optional. The launch stage as defined by [Google Cloud Platform Launch Stages](https://cloud.google.com/terms/launch-stages). Cloud Run supports `ALPHA`, `BETA`, and `GA`. If no value is specified, GA is assumed. Set the launch stage to a preview stage on input to allow use of preview features in that stage. On read (or output), describes whether the resource uses preview features. For example, if ALPHA is provided as input, but only BETA and GA-level features are used, this field will be BETA on output.</td>
+    <td>Optional. The launch stage as defined by [Google Cloud Platform Launch Stages](https://cloud.google.com/terms/launch-stages). Cloud Run supports `ALPHA`, `BETA`, and `GA`. If no value is specified, GA is assumed. Set the launch stage to a preview stage on input to allow use of preview features in that stage. On read (or output), describes whether the resource uses preview features. For example, if ALPHA is provided as input, but only BETA and GA-level features are used, this field will be BETA on output. (LAUNCH_STAGE_UNSPECIFIED, UNIMPLEMENTED, PRELAUNCH, EARLY_ACCESS, ALPHA, BETA, GA, DEPRECATED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="observedGeneration" /></td>
@@ -394,21 +395,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
+    <td><a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists WorkerPools. Results are sorted by creation time, descending.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-workerPoolId"><code>workerPoolId</code></a></td>
+    <td><a href="#parameter-workerPoolId"><code>workerPoolId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a new WorkerPool in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workerPoolsId"><code>workerPoolsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-forceNewRevision"><code>forceNewRevision</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-forceNewRevision"><code>forceNewRevision</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a WorkerPool.</td>
 </tr>
 <tr>
@@ -588,9 +589,9 @@ updateTime
 FROM google.run.worker_pools
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND showDeleted = '{{ showDeleted }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -612,42 +613,42 @@ Creates a new WorkerPool in a given project and location.
 
 ```sql
 INSERT INTO google.run.worker_pools (
-data__etag,
-data__description,
-data__annotations,
-data__labels,
-data__clientVersion,
-data__launchStage,
-data__client,
-data__name,
-data__template,
 data__instanceSplits,
+data__name,
+data__description,
+data__launchStage,
+data__etag,
+data__annotations,
 data__scaling,
-data__customAudiences,
 data__binaryAuthorization,
+data__client,
+data__template,
+data__clientVersion,
+data__customAudiences,
+data__labels,
 projectsId,
 locationsId,
-validateOnly,
-workerPoolId
+workerPoolId,
+validateOnly
 )
 SELECT 
-'{{ etag }}',
-'{{ description }}',
-'{{ annotations }}',
-'{{ labels }}',
-'{{ clientVersion }}',
-'{{ launchStage }}',
-'{{ client }}',
-'{{ name }}',
-'{{ template }}',
 '{{ instanceSplits }}',
+'{{ name }}',
+'{{ description }}',
+'{{ launchStage }}',
+'{{ etag }}',
+'{{ annotations }}',
 '{{ scaling }}',
-'{{ customAudiences }}',
 '{{ binaryAuthorization }}',
+'{{ client }}',
+'{{ template }}',
+'{{ clientVersion }}',
+'{{ customAudiences }}',
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ validateOnly }}',
-'{{ workerPoolId }}'
+'{{ workerPoolId }}',
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -659,87 +660,203 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: worker_pools
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the worker_pools resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the worker_pools resource.
-    - name: etag
-      value: string
-      description: >
-        Optional. A system-generated fingerprint for this version of the resource. May be used to detect modification conflict during updates.
-        
-    - name: description
-      value: string
-      description: >
-        User-provided description of the WorkerPool. This field currently has a 512-character limit.
-        
-    - name: annotations
-      value: object
-      description: >
-        Optional. Unstructured key value map that may be set by external tools to store and arbitrary metadata. They are not queryable and should be preserved when modifying objects. Cloud Run API v2 does not support annotations with `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and they will be rejected in new resources. All system annotations in v1 now have a corresponding field in v2 WorkerPool. This field follows Kubernetes annotations' namespacing, limits, and rules.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Unstructured key value map that can be used to organize and categorize objects. User-provided labels are shared with Google's billing system, so they can be used to filter, or break down billing charges by team, component, environment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels. Cloud Run API v2 does not support labels with `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and they will be rejected. All system labels in v1 now have a corresponding field in v2 WorkerPool.
-        
-    - name: clientVersion
-      value: string
-      description: >
-        Arbitrary version identifier for the API client.
-        
-    - name: launchStage
-      value: string
-      description: >
-        Optional. The launch stage as defined by [Google Cloud Platform Launch Stages](https://cloud.google.com/terms/launch-stages). Cloud Run supports `ALPHA`, `BETA`, and `GA`. If no value is specified, GA is assumed. Set the launch stage to a preview stage on input to allow use of preview features in that stage. On read (or output), describes whether the resource uses preview features. For example, if ALPHA is provided as input, but only BETA and GA-level features are used, this field will be BETA on output.
-        
-      valid_values: ['LAUNCH_STAGE_UNSPECIFIED', 'UNIMPLEMENTED', 'PRELAUNCH', 'EARLY_ACCESS', 'ALPHA', 'BETA', 'GA', 'DEPRECATED']
-    - name: client
-      value: string
-      description: >
-        Arbitrary identifier for the API client.
-        
-    - name: name
-      value: string
-      description: >
-        The fully qualified name of this WorkerPool. In CreateWorkerPoolRequest, this field is ignored, and instead composed from CreateWorkerPoolRequest.parent and CreateWorkerPoolRequest.worker_id. Format: `projects/{project}/locations/{location}/workerPools/{worker_id}`
-        
-    - name: template
-      value: object
-      description: >
-        Required. The template used to create revisions for this WorkerPool.
-        
     - name: instanceSplits
-      value: array
-      description: >
-        Optional. Specifies how to distribute instances over a collection of Revisions belonging to the WorkerPool. If instance split is empty or not provided, defaults to 100% instances assigned to the latest `Ready` Revision.
-        
+      description: |
+        Optional. Specifies how to distribute instances over a collection of Revisions belonging to the WorkerPool. If instance split is empty or not provided, defaults to 100% instances assigned to the latest \`Ready\` Revision.
+      value:
+        - revision: "{{ revision }}"
+          type: "{{ type }}"
+          percent: {{ percent }}
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The fully qualified name of this WorkerPool. In CreateWorkerPoolRequest, this field is ignored, and instead composed from CreateWorkerPoolRequest.parent and CreateWorkerPoolRequest.worker_id. Format: \`projects/{project}/locations/{location}/workerPools/{worker_id}\`
+    - name: description
+      value: "{{ description }}"
+      description: |
+        User-provided description of the WorkerPool. This field currently has a 512-character limit.
+    - name: launchStage
+      value: "{{ launchStage }}"
+      description: |
+        Optional. The launch stage as defined by [Google Cloud Platform Launch Stages](https://cloud.google.com/terms/launch-stages). Cloud Run supports \`ALPHA\`, \`BETA\`, and \`GA\`. If no value is specified, GA is assumed. Set the launch stage to a preview stage on input to allow use of preview features in that stage. On read (or output), describes whether the resource uses preview features. For example, if ALPHA is provided as input, but only BETA and GA-level features are used, this field will be BETA on output.
+      valid_values: ['LAUNCH_STAGE_UNSPECIFIED', 'UNIMPLEMENTED', 'PRELAUNCH', 'EARLY_ACCESS', 'ALPHA', 'BETA', 'GA', 'DEPRECATED']
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. A system-generated fingerprint for this version of the resource. May be used to detect modification conflict during updates.
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Optional. Unstructured key value map that may be set by external tools to store and arbitrary metadata. They are not queryable and should be preserved when modifying objects. Cloud Run API v2 does not support annotations with \`run.googleapis.com\`, \`cloud.googleapis.com\`, \`serving.knative.dev\`, or \`autoscaling.knative.dev\` namespaces, and they will be rejected in new resources. All system annotations in v1 now have a corresponding field in v2 WorkerPool. This field follows Kubernetes annotations' namespacing, limits, and rules.
     - name: scaling
-      value: object
-      description: >
+      description: |
         Optional. Specifies worker-pool-level scaling settings
-        
-    - name: customAudiences
-      value: array
-      description: >
-        Not supported, and ignored by Cloud Run.
-        
+      value:
+        manualInstanceCount: {{ manualInstanceCount }}
     - name: binaryAuthorization
-      value: object
-      description: >
+      description: |
         Optional. Settings for the Binary Authorization feature.
-        
-    - name: validateOnly
-      value: boolean
+      value:
+        useDefault: {{ useDefault }}
+        breakglassJustification: "{{ breakglassJustification }}"
+        policy: "{{ policy }}"
+    - name: client
+      value: "{{ client }}"
+      description: |
+        Arbitrary identifier for the API client.
+    - name: template
+      description: |
+        Required. The template used to create revisions for this WorkerPool.
+      value:
+        labels: "{{ labels }}"
+        gpuZonalRedundancyDisabled: {{ gpuZonalRedundancyDisabled }}
+        clientVersion: "{{ clientVersion }}"
+        serviceAccount: "{{ serviceAccount }}"
+        containers:
+          - readinessProbe:
+              timeoutSeconds: {{ timeoutSeconds }}
+              grpc:
+                port: {{ port }}
+                service: "{{ service }}"
+              periodSeconds: {{ periodSeconds }}
+              initialDelaySeconds: {{ initialDelaySeconds }}
+              failureThreshold: {{ failureThreshold }}
+              httpGet:
+                port: {{ port }}
+                path: "{{ path }}"
+                httpHeaders:
+                  - name: "{{ name }}"
+                    value: "{{ value }}"
+              tcpSocket:
+                port: {{ port }}
+            ports: "{{ ports }}"
+            command: "{{ command }}"
+            env: "{{ env }}"
+            resources:
+              startupCpuBoost: {{ startupCpuBoost }}
+              limits: "{{ limits }}"
+              cpuIdle: {{ cpuIdle }}
+            livenessProbe:
+              timeoutSeconds: {{ timeoutSeconds }}
+              grpc:
+                port: {{ port }}
+                service: "{{ service }}"
+              periodSeconds: {{ periodSeconds }}
+              initialDelaySeconds: {{ initialDelaySeconds }}
+              failureThreshold: {{ failureThreshold }}
+              httpGet:
+                port: {{ port }}
+                path: "{{ path }}"
+                httpHeaders:
+                  - name: "{{ name }}"
+                    value: "{{ value }}"
+              tcpSocket:
+                port: {{ port }}
+            image: "{{ image }}"
+            args: "{{ args }}"
+            sourceCode:
+              inlinedSource:
+                sources:
+                  - content: "{{ content }}"
+                    filename: "{{ filename }}"
+              cloudStorageSource:
+                generation: "{{ generation }}"
+                bucket: "{{ bucket }}"
+                object: "{{ object }}"
+            name: "{{ name }}"
+            workingDir: "{{ workingDir }}"
+            startupProbe:
+              timeoutSeconds: {{ timeoutSeconds }}
+              grpc:
+                port: {{ port }}
+                service: "{{ service }}"
+              periodSeconds: {{ periodSeconds }}
+              initialDelaySeconds: {{ initialDelaySeconds }}
+              failureThreshold: {{ failureThreshold }}
+              httpGet:
+                port: {{ port }}
+                path: "{{ path }}"
+                httpHeaders:
+                  - name: "{{ name }}"
+                    value: "{{ value }}"
+              tcpSocket:
+                port: {{ port }}
+            dependsOn: "{{ dependsOn }}"
+            sandboxLauncher: {{ sandboxLauncher }}
+            volumeMounts: "{{ volumeMounts }}"
+            baseImageUri: "{{ baseImageUri }}"
+            buildInfo:
+              sourceLocation: "{{ sourceLocation }}"
+              functionTarget: "{{ functionTarget }}"
+        encryptionKey: "{{ encryptionKey }}"
+        annotations: "{{ annotations }}"
+        nodeSelector:
+          accelerator: "{{ accelerator }}"
+        vpcAccess:
+          egress: "{{ egress }}"
+          networkInterfaces:
+            - tags: "{{ tags }}"
+              network: "{{ network }}"
+              subnetwork: "{{ subnetwork }}"
+          connector: "{{ connector }}"
+        revision: "{{ revision }}"
+        encryptionKeyRevocationAction: "{{ encryptionKeyRevocationAction }}"
+        serviceMesh:
+          mesh: "{{ mesh }}"
+        encryptionKeyShutdownDuration: "{{ encryptionKeyShutdownDuration }}"
+        client: "{{ client }}"
+        volumes:
+          - gcs:
+              mountOptions:
+                - "{{ mountOptions }}"
+              readOnly: {{ readOnly }}
+              bucket: "{{ bucket }}"
+            nfs:
+              server: "{{ server }}"
+              path: "{{ path }}"
+              readOnly: {{ readOnly }}
+            cloudSqlInstance:
+              instances:
+                - "{{ instances }}"
+            emptyDir:
+              sizeLimit: "{{ sizeLimit }}"
+              medium: "{{ medium }}"
+            secret:
+              secret: "{{ secret }}"
+              items:
+                - version: "{{ version }}"
+                  mode: {{ mode }}
+                  path: "{{ path }}"
+              defaultMode: {{ defaultMode }}
+            name: "{{ name }}"
+    - name: clientVersion
+      value: "{{ clientVersion }}"
+      description: |
+        Arbitrary version identifier for the API client.
+    - name: customAudiences
+      value:
+        - "{{ customAudiences }}"
+      description: |
+        Deprecated: Not supported, and ignored by Cloud Run.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Unstructured key value map that can be used to organize and categorize objects. User-provided labels are shared with Google's billing system, so they can be used to filter, or break down billing charges by team, component, environment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels. Cloud Run API v2 does not support labels with \`run.googleapis.com\`, \`cloud.googleapis.com\`, \`serving.knative.dev\`, or \`autoscaling.knative.dev\` namespaces, and they will be rejected. All system labels in v1 now have a corresponding field in v2 WorkerPool.
     - name: workerPoolId
-      value: string
-```
+      value: "{{ workerPoolId }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -759,27 +876,27 @@ Updates a WorkerPool.
 ```sql
 UPDATE google.run.worker_pools
 SET 
-data__etag = '{{ etag }}',
-data__description = '{{ description }}',
-data__annotations = '{{ annotations }}',
-data__labels = '{{ labels }}',
-data__clientVersion = '{{ clientVersion }}',
-data__launchStage = '{{ launchStage }}',
-data__client = '{{ client }}',
-data__name = '{{ name }}',
-data__template = '{{ template }}',
 data__instanceSplits = '{{ instanceSplits }}',
+data__name = '{{ name }}',
+data__description = '{{ description }}',
+data__launchStage = '{{ launchStage }}',
+data__etag = '{{ etag }}',
+data__annotations = '{{ annotations }}',
 data__scaling = '{{ scaling }}',
+data__binaryAuthorization = '{{ binaryAuthorization }}',
+data__client = '{{ client }}',
+data__template = '{{ template }}',
+data__clientVersion = '{{ clientVersion }}',
 data__customAudiences = '{{ customAudiences }}',
-data__binaryAuthorization = '{{ binaryAuthorization }}'
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND workerPoolsId = '{{ workerPoolsId }}' --required
-AND updateMask = '{{ updateMask}}'
-AND allowMissing = {{ allowMissing}}
 AND forceNewRevision = {{ forceNewRevision}}
 AND validateOnly = {{ validateOnly}}
+AND allowMissing = {{ allowMissing}}
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

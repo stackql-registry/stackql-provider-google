@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>forecast</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>forecast</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="forecast" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.pollen.forecast" /></td></tr>
 </tbody></table>
@@ -53,7 +54,7 @@ The following methods are available for this resource:
     <td><a href="#lookup"><CopyableCode code="lookup" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
-    <td><a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-location.longitude"><code>location.longitude</code></a>, <a href="#parameter-location.latitude"><code>location.latitude</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-plantsDescription"><code>plantsDescription</code></a>, <a href="#parameter-days"><code>days</code></a></td>
+    <td><a href="#parameter-days"><code>days</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-plantsDescription"><code>plantsDescription</code></a>, <a href="#parameter-location.latitude"><code>location.latitude</code></a>, <a href="#parameter-location.longitude"><code>location.longitude</code></a></td>
     <td>Returns up to 5 days of daily pollen information in more than 65 countries, up to 1km resolution.</td>
 </tr>
 </tbody>
@@ -124,13 +125,13 @@ Returns up to 5 days of daily pollen information in more than 65 countries, up t
 
 ```sql
 EXEC google.pollen.forecast.lookup 
+@days='{{ days }}', 
 @languageCode='{{ languageCode }}', 
 @pageToken='{{ pageToken }}', 
-@location.longitude='{{ location.longitude }}', 
-@location.latitude='{{ location.latitude }}', 
 @pageSize='{{ pageSize }}', 
 @plantsDescription={{ plantsDescription }}, 
-@days='{{ days }}'
+@location.latitude='{{ location.latitude }}', 
+@location.longitude='{{ location.longitude }}'
 ;
 ```
 </TabItem>

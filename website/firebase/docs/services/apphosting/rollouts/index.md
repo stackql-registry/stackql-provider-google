@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>rollouts</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>rollouts</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="rollouts" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.apphosting.rollouts" /></td></tr>
 </tbody></table>
@@ -62,7 +63,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="build" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The name of a build that already exists. It doesn't have to be built; a rollout will wait for a build to be ready before updating traffic.</td>
+    <td>Required. Immutable. The name of a build that already exists. It doesn't have to be built; a rollout will wait for a build to be ready before updating traffic.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -82,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>Output only. A status and (human readable) error message for the rollout, if in a `FAILED` state. (id: Status)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: Status)</td>
 </tr>
 <tr>
     <td><CopyableCode code="etag" /></td>
@@ -102,7 +103,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the rollout.</td>
+    <td>Output only. The state of the rollout. (STATE_UNSPECIFIED, QUEUED, PENDING_BUILD, PROGRESSING, PAUSED, SUCCEEDED, FAILED, CANCELLED, SKIPPED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -128,71 +129,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Identifier. The resource name of the rollout. Format: `projects/&#123;project&#125;/locations/&#123;locationId&#125;/backends/&#123;backendId&#125;/rollouts/&#123;rolloutId&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="annotations" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Unstructured key value map that may be set by external tools to store and arbitrary metadata. They are not queryable and should be preserved when modifying objects.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="build" /></td>
-    <td><code>string</code></td>
-    <td>Immutable. The name of a build that already exists. It doesn't have to be built; a rollout will wait for a build to be ready before updating traffic.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Time at which the rollout was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="deleteTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Time at which the rollout was deleted.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Human-readable name. 63 character limit.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="error" /></td>
-    <td><code>object</code></td>
-    <td>Output only. A status and (human readable) error message for the rollout, if in a `FAILED` state. (id: Status)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="etag" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Server-computed checksum based on other values; may be sent on update or delete to ensure operation is done on expected resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Unstructured key value map that can be used to organize and categorize objects.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="reconciling" /></td>
-    <td><code>boolean</code></td>
-    <td>Output only. A field that, if true, indicates that the Rollout currently has an LRO.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="state" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The state of the rollout.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="uid" /></td>
-    <td><code>string</code></td>
-    <td>Output only. System-assigned, unique identifier.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Time at which the rollout was last updated.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -224,7 +160,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backendsId"><code>backendsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
     <td>Lists rollouts for a backend.</td>
 </tr>
 <tr>
@@ -355,27 +291,15 @@ Lists rollouts for a backend.
 
 ```sql
 SELECT
-name,
-annotations,
-build,
-createTime,
-deleteTime,
-displayName,
-error,
-etag,
-labels,
-reconciling,
-state,
-uid,
-updateTime
+*
 FROM firebase.apphosting.rollouts
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND backendsId = '{{ backendsId }}' -- required
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 AND showDeleted = '{{ showDeleted }}'
 ;
 ```
@@ -398,10 +322,10 @@ Creates a new rollout for a backend.
 
 ```sql
 INSERT INTO firebase.apphosting.rollouts (
+data__labels,
+data__build,
 data__name,
 data__displayName,
-data__build,
-data__labels,
 data__annotations,
 projectsId,
 locationsId,
@@ -411,10 +335,10 @@ requestId,
 validateOnly
 )
 SELECT 
+'{{ labels }}',
+'{{ build }}',
 '{{ name }}',
 '{{ displayName }}',
-'{{ build }}',
-'{{ labels }}',
 '{{ annotations }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -433,50 +357,45 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: rollouts
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the rollouts resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the rollouts resource.
     - name: backendsId
-      value: string
+      value: "{{ backendsId }}"
       description: Required parameter for the rollouts resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the rollout. Format: `projects/{project}/locations/{locationId}/backends/{backendId}/rollouts/{rolloutId}`.
-        
-    - name: displayName
-      value: string
-      description: >
-        Optional. Human-readable name. 63 character limit.
-        
-    - name: build
-      value: string
-      description: >
-        Immutable. The name of a build that already exists. It doesn't have to be built; a rollout will wait for a build to be ready before updating traffic.
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. Unstructured key value map that can be used to organize and categorize objects.
-        
+    - name: build
+      value: "{{ build }}"
+      description: |
+        Required. Immutable. The name of a build that already exists. It doesn't have to be built; a rollout will wait for a build to be ready before updating traffic.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the rollout. Format: \`projects/{project}/locations/{locationId}/backends/{backendId}/rollouts/{rolloutId}\`.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. Human-readable name. 63 character limit.
     - name: annotations
-      value: object
-      description: >
+      value: "{{ annotations }}"
+      description: |
         Optional. Unstructured key value map that may be set by external tools to store and arbitrary metadata. They are not queryable and should be preserved when modifying objects.
-        
     - name: rolloutId
-      value: string
+      value: "{{ rolloutId }}"
     - name: requestId
-      value: string
+      value: "{{ requestId }}"
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

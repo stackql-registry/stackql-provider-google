@@ -18,7 +18,7 @@ contactcenterinsights service documentation.
 
 :::info[Service Summary]
 
-total resources: __25__  
+total resources: __30__  
 
 :::
 
@@ -29,17 +29,22 @@ total resources: __25__
 <a href="/services/contactcenterinsights/analysis_rules/">analysis_rules</a><br />
 <a href="/services/contactcenterinsights/assessment_rules/">assessment_rules</a><br />
 <a href="/services/contactcenterinsights/assessments/">assessments</a><br />
+<a href="/services/contactcenterinsights/assistant_sessions/">assistant_sessions</a><br />
 <a href="/services/contactcenterinsights/authorized_view_sets/">authorized_view_sets</a><br />
 <a href="/services/contactcenterinsights/authorized_views/">authorized_views</a><br />
 <a href="/services/contactcenterinsights/authorized_views_iam_policies/">authorized_views_iam_policies</a><br />
+<a href="/services/contactcenterinsights/auto_labeling_rules/">auto_labeling_rules</a><br />
+<a href="/services/contactcenterinsights/charts/">charts</a><br />
 <a href="/services/contactcenterinsights/conversations/">conversations</a><br />
+<a href="/services/contactcenterinsights/correlation_config/">correlation_config</a><br />
+<a href="/services/contactcenterinsights/dashboards/">dashboards</a><br />
 <a href="/services/contactcenterinsights/datasets/">datasets</a><br />
-<a href="/services/contactcenterinsights/encryption_spec/">encryption_spec</a><br />
-<a href="/services/contactcenterinsights/feedback_labels/">feedback_labels</a><br />
-<a href="/services/contactcenterinsights/insightsdata/">insightsdata</a><br />
-<a href="/services/contactcenterinsights/issue_models/">issue_models</a>
+<a href="/services/contactcenterinsights/encryption_spec/">encryption_spec</a>
 </div>
 <div class="providerDocColumn">
+<a href="/services/contactcenterinsights/feedback_labels/">feedback_labels</a><br />
+<a href="/services/contactcenterinsights/insightsdata/">insightsdata</a><br />
+<a href="/services/contactcenterinsights/issue_models/">issue_models</a><br />
 <a href="/services/contactcenterinsights/issues/">issues</a><br />
 <a href="/services/contactcenterinsights/locations/">locations</a><br />
 <a href="/services/contactcenterinsights/notes/">notes</a><br />

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>studies</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>studies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="studies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.studies" /></td></tr>
 </tbody></table>
@@ -72,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The detailed state of a Study.</td>
+    <td>Output only. The detailed state of a Study. (STATE_UNSPECIFIED, ACTIVE, INACTIVE, COMPLETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="studySpec" /></td>
@@ -116,7 +117,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The detailed state of a Study.</td>
+    <td>Output only. The detailed state of a Study. (STATE_UNSPECIFIED, ACTIVE, INACTIVE, COMPLETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="studySpec" /></td>
@@ -288,14 +289,14 @@ Creates a Study. A resource name will be generated after creation of the Study.
 
 ```sql
 INSERT INTO google.aiplatform.studies (
-data__displayName,
 data__studySpec,
+data__displayName,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ displayName }}',
 '{{ studySpec }}',
+'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -310,27 +311,77 @@ studySpec
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: studies
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the studies resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the studies resource.
-    - name: displayName
-      value: string
-      description: >
-        Required. Describes the Study, default value is empty string.
-        
     - name: studySpec
-      value: object
-      description: >
+      description: |
         Required. Configuration of the Study.
-        
-```
+      value:
+        convexAutomatedStoppingSpec:
+          minStepCount: "{{ minStepCount }}"
+          updateAllStoppedTrials: {{ updateAllStoppedTrials }}
+          useElapsedDuration: {{ useElapsedDuration }}
+          minMeasurementCount: "{{ minMeasurementCount }}"
+          learningRateParameterName: "{{ learningRateParameterName }}"
+          maxStepCount: "{{ maxStepCount }}"
+        medianAutomatedStoppingSpec:
+          useElapsedDuration: {{ useElapsedDuration }}
+        measurementSelectionType: "{{ measurementSelectionType }}"
+        algorithm: "{{ algorithm }}"
+        metrics:
+          - safetyConfig:
+              safetyThreshold: {{ safetyThreshold }}
+              desiredMinSafeTrialsFraction: {{ desiredMinSafeTrialsFraction }}
+            goal: "{{ goal }}"
+            metricId: "{{ metricId }}"
+        studyStoppingConfig:
+          minNumTrials: {{ minNumTrials }}
+          shouldStopAsap: {{ shouldStopAsap }}
+          maxNumTrialsNoProgress: {{ maxNumTrialsNoProgress }}
+          minimumRuntimeConstraint:
+            maxDuration: "{{ maxDuration }}"
+            endTime: "{{ endTime }}"
+          maxNumTrials: {{ maxNumTrials }}
+          maxDurationNoProgress: "{{ maxDurationNoProgress }}"
+          maximumRuntimeConstraint:
+            maxDuration: "{{ maxDuration }}"
+            endTime: "{{ endTime }}"
+        decayCurveStoppingSpec:
+          useElapsedDuration: {{ useElapsedDuration }}
+        observationNoise: "{{ observationNoise }}"
+        parameters:
+          - doubleValueSpec:
+              defaultValue: {{ defaultValue }}
+              minValue: {{ minValue }}
+              maxValue: {{ maxValue }}
+            categoricalValueSpec:
+              values:
+                - "{{ values }}"
+              defaultValue: "{{ defaultValue }}"
+            scaleType: "{{ scaleType }}"
+            discreteValueSpec:
+              values:
+                - {{ values }}
+              defaultValue: {{ defaultValue }}
+            parameterId: "{{ parameterId }}"
+            integerValueSpec:
+              defaultValue: "{{ defaultValue }}"
+              minValue: "{{ minValue }}"
+              maxValue: "{{ maxValue }}"
+            conditionalParameterSpecs: "{{ conditionalParameterSpecs }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. Describes the Study, default value is empty string.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

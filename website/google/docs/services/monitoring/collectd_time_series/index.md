@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>collectd_time_series</code> res
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>collectd_time_series</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="collectd_time_series" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.monitoring.collectd_time_series" /></td></tr>
 </tbody></table>
@@ -95,15 +96,15 @@ Cloud Monitoring Agent only: Creates a new time series.This method is only for u
 
 ```sql
 INSERT INTO google.monitoring.collectd_time_series (
-data__resource,
 data__collectdVersion,
 data__collectdPayloads,
+data__resource,
 projectsId
 )
 SELECT 
-'{{ resource }}',
 '{{ collectdVersion }}',
 '{{ collectdPayloads }}',
+'{{ resource }}',
 '{{ projectsId }}'
 RETURNING
 payloadErrors,
@@ -113,28 +114,35 @@ summary
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: collectd_time_series
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the collectd_time_series resource.
-    - name: resource
-      value: object
-      description: >
-        The monitored resource associated with the time series.
-        
     - name: collectdVersion
-      value: string
-      description: >
+      value: "{{ collectdVersion }}"
+      description: |
         The version of collectd that collected the data. Example: "5.3.0-192.el6".
-        
     - name: collectdPayloads
-      value: array
-      description: >
+      description: |
         The collectd payloads representing the time series data. You must not include more than a single point for each time series, so no two payloads can have the same values for all of the fields plugin, plugin_instance, type, and type_instance.
-        
-```
+      value:
+        - pluginInstance: "{{ pluginInstance }}"
+          startTime: "{{ startTime }}"
+          endTime: "{{ endTime }}"
+          type: "{{ type }}"
+          metadata: "{{ metadata }}"
+          values: "{{ values }}"
+          typeInstance: "{{ typeInstance }}"
+          plugin: "{{ plugin }}"
+    - name: resource
+      description: |
+        The monitored resource associated with the time series.
+      value:
+        labels: "{{ labels }}"
+        type: "{{ type }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

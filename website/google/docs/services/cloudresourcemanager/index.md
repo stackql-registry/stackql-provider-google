@@ -18,7 +18,7 @@ cloudresourcemanager service documentation.
 
 :::info[Service Summary]
 
-total resources: __20__  
+total resources: __21__  
 
 :::
 
@@ -26,6 +26,7 @@ total resources: __20__
 <div class="row">
 <div class="providerDocColumn">
 <a href="/services/cloudresourcemanager/capabilities/">capabilities</a><br />
+<a href="/services/cloudresourcemanager/cloudresourcemanager_resource_semantics/">cloudresourcemanager_resource_semantics</a><br />
 <a href="/services/cloudresourcemanager/effective_tag_binding_collections/">effective_tag_binding_collections</a><br />
 <a href="/services/cloudresourcemanager/effective_tags/">effective_tags</a><br />
 <a href="/services/cloudresourcemanager/folders/">folders</a><br />

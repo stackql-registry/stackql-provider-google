@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>mirroring_deployment_groups</co
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>mirroring_deployment_groups</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="mirroring_deployment_groups" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networksecurity.mirroring_deployment_groups" /></td></tr>
 </tbody></table>
@@ -97,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the deployment group. See https://google.aip.dev/216.</td>
+    <td>Output only. The current state of the deployment group. See https://google.aip.dev/216. (STATE_UNSPECIFIED, ACTIVE, CREATING, DELETING, CLOSED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -166,7 +167,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the deployment group. See https://google.aip.dev/216.</td>
+    <td>Output only. The current state of the deployment group. See https://google.aip.dev/216. (STATE_UNSPECIFIED, ACTIVE, CREATING, DELETING, CLOSED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -204,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_mirroring_deployment_groups_list"><CopyableCode code="projects_locations_mirroring_deployment_groups_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists deployment groups in a given project and location. See https://google.aip.dev/132.</td>
 </tr>
 <tr>
@@ -350,10 +351,10 @@ updateTime
 FROM google.networksecurity.mirroring_deployment_groups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -375,9 +376,9 @@ Creates a deployment group in a given project and location. See https://google.a
 
 ```sql
 INSERT INTO google.networksecurity.mirroring_deployment_groups (
+data__network,
 data__labels,
 data__name,
-data__network,
 data__description,
 projectsId,
 locationsId,
@@ -385,9 +386,9 @@ mirroringDeploymentGroupId,
 requestId
 )
 SELECT 
+'{{ network }}',
 '{{ labels }}',
 '{{ name }}',
-'{{ network }}',
 '{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -404,41 +405,37 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: mirroring_deployment_groups
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the mirroring_deployment_groups resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the mirroring_deployment_groups resource.
-    - name: labels
-      value: object
-      description: >
-        Optional. Labels are key/value pairs that help to organize and filter resources.
-        
-    - name: name
-      value: string
-      description: >
-        Immutable. Identifier. The resource name of this deployment group, for example: `projects/123456789/locations/global/mirroringDeploymentGroups/my-dg`. See https://google.aip.dev/122 for more details.
-        
     - name: network
-      value: string
-      description: >
-        Required. Immutable. The network that will be used for all child deployments, for example: `projects/{project}/global/networks/{network}`. See https://google.aip.dev/124.
-        
+      value: "{{ network }}"
+      description: |
+        Required. Immutable. The network that will be used for all child deployments, for example: \`projects/{project}/global/networks/{network}\`. See https://google.aip.dev/124.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Labels are key/value pairs that help to organize and filter resources.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. Identifier. The resource name of this deployment group, for example: \`projects/123456789/locations/global/mirroringDeploymentGroups/my-dg\`. See https://google.aip.dev/122 for more details.
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. User-provided description of the deployment group. Used as additional context for the deployment group.
-        
     - name: mirroringDeploymentGroupId
-      value: string
+      value: "{{ mirroringDeploymentGroupId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -458,9 +455,9 @@ Updates a deployment group. See https://google.aip.dev/134.
 ```sql
 UPDATE google.networksecurity.mirroring_deployment_groups
 SET 
+data__network = '{{ network }}',
 data__labels = '{{ labels }}',
 data__name = '{{ name }}',
-data__network = '{{ network }}',
 data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

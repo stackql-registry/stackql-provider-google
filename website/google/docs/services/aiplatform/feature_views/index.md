@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>feature_views</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>feature_views</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="feature_views" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.feature_views" /></td></tr>
 </tbody></table>
@@ -112,7 +113,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="serviceAgentType" /></td>
     <td><code>string</code></td>
-    <td>Optional. Service agent type used during data sync. By default, the Vertex AI Service Agent is used. When using an IAM Policy to isolate this FeatureView within a project, a separate service account should be provisioned by setting this field to `SERVICE_AGENT_TYPE_FEATURE_VIEW`. This will generate a separate service account to access the BigQuery source table.</td>
+    <td>Optional. Service agent type used during data sync. By default, the Vertex AI Service Agent is used. When using an IAM Policy to isolate this FeatureView within a project, a separate service account should be provisioned by setting this field to `SERVICE_AGENT_TYPE_FEATURE_VIEW`. This will generate a separate service account to access the BigQuery source table. (SERVICE_AGENT_TYPE_UNSPECIFIED, SERVICE_AGENT_TYPE_PROJECT, SERVICE_AGENT_TYPE_FEATURE_VIEW)</td>
 </tr>
 <tr>
     <td><CopyableCode code="syncConfig" /></td>
@@ -206,7 +207,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="serviceAgentType" /></td>
     <td><code>string</code></td>
-    <td>Optional. Service agent type used during data sync. By default, the Vertex AI Service Agent is used. When using an IAM Policy to isolate this FeatureView within a project, a separate service account should be provisioned by setting this field to `SERVICE_AGENT_TYPE_FEATURE_VIEW`. This will generate a separate service account to access the BigQuery source table.</td>
+    <td>Optional. Service agent type used during data sync. By default, the Vertex AI Service Agent is used. When using an IAM Policy to isolate this FeatureView within a project, a separate service account should be provisioned by setting this field to `SERVICE_AGENT_TYPE_FEATURE_VIEW`. This will generate a separate service account to access the BigQuery source table. (SERVICE_AGENT_TYPE_UNSPECIFIED, SERVICE_AGENT_TYPE_PROJECT, SERVICE_AGENT_TYPE_FEATURE_VIEW)</td>
 </tr>
 <tr>
     <td><CopyableCode code="syncConfig" /></td>
@@ -254,7 +255,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featureOnlineStoresId"><code>featureOnlineStoresId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists FeatureViews in a given FeatureOnlineStore.</td>
 </tr>
 <tr>
@@ -279,18 +280,18 @@ The following methods are available for this resource:
     <td>Deletes a single FeatureView.</td>
 </tr>
 <tr>
-    <td><a href="#direct_write"><CopyableCode code="direct_write" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featureOnlineStoresId"><code>featureOnlineStoresId</code></a>, <a href="#parameter-featureViewsId"><code>featureViewsId</code></a></td>
-    <td></td>
-    <td>Bidirectional streaming RPC to directly write to feature values in a feature view. Requests may not have a one-to-one mapping to responses and responses may be returned out-of-order to reduce latency.</td>
-</tr>
-<tr>
     <td><a href="#generate_fetch_access_token"><CopyableCode code="generate_fetch_access_token" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featureOnlineStoresId"><code>featureOnlineStoresId</code></a>, <a href="#parameter-featureViewsId"><code>featureViewsId</code></a></td>
     <td></td>
     <td>RPC to generate an access token for the given feature view. FeatureViews under the same FeatureOnlineStore share the same access token.</td>
+</tr>
+<tr>
+    <td><a href="#fetch_feature_values"><CopyableCode code="fetch_feature_values" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featureOnlineStoresId"><code>featureOnlineStoresId</code></a>, <a href="#parameter-featureViewsId"><code>featureViewsId</code></a></td>
+    <td></td>
+    <td>Fetch feature values under a FeatureView.</td>
 </tr>
 <tr>
     <td><a href="#search_nearest_entities"><CopyableCode code="search_nearest_entities" /></a></td>
@@ -307,11 +308,11 @@ The following methods are available for this resource:
     <td>Triggers on-demand sync for the FeatureView.</td>
 </tr>
 <tr>
-    <td><a href="#fetch_feature_values"><CopyableCode code="fetch_feature_values" /></a></td>
+    <td><a href="#direct_write"><CopyableCode code="direct_write" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-featureOnlineStoresId"><code>featureOnlineStoresId</code></a>, <a href="#parameter-featureViewsId"><code>featureViewsId</code></a></td>
     <td></td>
-    <td>Fetch feature values under a FeatureView.</td>
+    <td>Bidirectional streaming RPC to directly write to feature values in a feature view. Requests may not have a one-to-one mapping to responses and responses may be returned out-of-order to reduce latency.</td>
 </tr>
 </tbody>
 </table>
@@ -452,10 +453,10 @@ FROM google.aiplatform.feature_views
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND featureOnlineStoresId = '{{ featureOnlineStoresId }}' -- required
-AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -477,16 +478,16 @@ Creates a new FeatureView in a given FeatureOnlineStore.
 
 ```sql
 INSERT INTO google.aiplatform.feature_views (
-data__labels,
-data__vertexRagSource,
-data__etag,
-data__indexConfig,
 data__syncConfig,
+data__vertexRagSource,
 data__featureRegistrySource,
-data__bigQuerySource,
-data__optimizedConfig,
 data__name,
+data__labels,
 data__serviceAgentType,
+data__indexConfig,
+data__etag,
+data__optimizedConfig,
+data__bigQuerySource,
 projectsId,
 locationsId,
 featureOnlineStoresId,
@@ -494,16 +495,16 @@ featureViewId,
 runSyncImmediately
 )
 SELECT 
-'{{ labels }}',
-'{{ vertexRagSource }}',
-'{{ etag }}',
-'{{ indexConfig }}',
 '{{ syncConfig }}',
+'{{ vertexRagSource }}',
 '{{ featureRegistrySource }}',
-'{{ bigQuerySource }}',
-'{{ optimizedConfig }}',
 '{{ name }}',
+'{{ labels }}',
 '{{ serviceAgentType }}',
+'{{ indexConfig }}',
+'{{ etag }}',
+'{{ optimizedConfig }}',
+'{{ bigQuerySource }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ featureOnlineStoresId }}',
@@ -520,75 +521,88 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: feature_views
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the feature_views resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the feature_views resource.
     - name: featureOnlineStoresId
-      value: string
+      value: "{{ featureOnlineStoresId }}"
       description: Required parameter for the feature_views resource.
-    - name: labels
-      value: object
-      description: >
-        Optional. The labels with user-defined metadata to organize your FeatureViews. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information on and examples of labels. No more than 64 user labels can be associated with one FeatureOnlineStore(System labels are excluded)." System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
-        
-    - name: vertexRagSource
-      value: object
-      description: >
-        Optional. The Vertex RAG Source that the FeatureView is linked to.
-        
-    - name: etag
-      value: string
-      description: >
-        Optional. Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
-        
-    - name: indexConfig
-      value: object
-      description: >
-        Optional. Configuration for index preparation for vector search. It contains the required configurations to create an index from source data, so that approximate nearest neighbor (a.k.a ANN) algorithms search can be performed during online serving.
-        
     - name: syncConfig
-      value: object
-      description: >
+      description: |
         Configures when data is to be synced/updated for this FeatureView. At the end of the sync the latest featureValues for each entityId of this FeatureView are made ready for online serving.
-        
+      value:
+        cron: "{{ cron }}"
+        continuous: {{ continuous }}
+    - name: vertexRagSource
+      description: |
+        Optional. The Vertex RAG Source that the FeatureView is linked to.
+      value:
+        uri: "{{ uri }}"
+        ragCorpusId: "{{ ragCorpusId }}"
     - name: featureRegistrySource
-      value: object
-      description: >
+      description: |
         Optional. Configures the features from a Feature Registry source that need to be loaded onto the FeatureOnlineStore.
-        
-    - name: bigQuerySource
-      value: object
-      description: >
-        Optional. Configures how data is supposed to be extracted from a BigQuery source to be loaded onto the FeatureOnlineStore.
-        
-    - name: optimizedConfig
-      value: object
-      description: >
-        Optional. Configuration for FeatureView created under Optimized FeatureOnlineStore.
-        
+      value:
+        featureGroups:
+          - featureGroupId: "{{ featureGroupId }}"
+            featureIds: "{{ featureIds }}"
+        projectNumber: "{{ projectNumber }}"
     - name: name
-      value: string
-      description: >
-        Identifier. Name of the FeatureView. Format: `projects/{project}/locations/{location}/featureOnlineStores/{feature_online_store}/featureViews/{feature_view}`
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. Name of the FeatureView. Format: \`projects/{project}/locations/{location}/featureOnlineStores/{feature_online_store}/featureViews/{feature_view}\`
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. The labels with user-defined metadata to organize your FeatureViews. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information on and examples of labels. No more than 64 user labels can be associated with one FeatureOnlineStore(System labels are excluded)." System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
     - name: serviceAgentType
-      value: string
-      description: >
-        Optional. Service agent type used during data sync. By default, the Vertex AI Service Agent is used. When using an IAM Policy to isolate this FeatureView within a project, a separate service account should be provisioned by setting this field to `SERVICE_AGENT_TYPE_FEATURE_VIEW`. This will generate a separate service account to access the BigQuery source table.
-        
+      value: "{{ serviceAgentType }}"
+      description: |
+        Optional. Service agent type used during data sync. By default, the Vertex AI Service Agent is used. When using an IAM Policy to isolate this FeatureView within a project, a separate service account should be provisioned by setting this field to \`SERVICE_AGENT_TYPE_FEATURE_VIEW\`. This will generate a separate service account to access the BigQuery source table.
       valid_values: ['SERVICE_AGENT_TYPE_UNSPECIFIED', 'SERVICE_AGENT_TYPE_PROJECT', 'SERVICE_AGENT_TYPE_FEATURE_VIEW']
+    - name: indexConfig
+      description: |
+        Optional. Configuration for index preparation for vector search. It contains the required configurations to create an index from source data, so that approximate nearest neighbor (a.k.a ANN) algorithms search can be performed during online serving.
+      value:
+        bruteForceConfig: "{{ bruteForceConfig }}"
+        embeddingColumn: "{{ embeddingColumn }}"
+        distanceMeasureType: "{{ distanceMeasureType }}"
+        crowdingColumn: "{{ crowdingColumn }}"
+        embeddingDimension: {{ embeddingDimension }}
+        treeAhConfig:
+          leafNodeEmbeddingCount: "{{ leafNodeEmbeddingCount }}"
+        filterColumns:
+          - "{{ filterColumns }}"
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+    - name: optimizedConfig
+      description: |
+        Optional. Configuration for FeatureView created under Optimized FeatureOnlineStore.
+      value:
+        automaticResources:
+          maxReplicaCount: {{ maxReplicaCount }}
+          minReplicaCount: {{ minReplicaCount }}
+    - name: bigQuerySource
+      description: |
+        Optional. Configures how data is supposed to be extracted from a BigQuery source to be loaded onto the FeatureOnlineStore.
+      value:
+        uri: "{{ uri }}"
+        entityIdColumns:
+          - "{{ entityIdColumns }}"
     - name: featureViewId
-      value: string
+      value: "{{ featureViewId }}"
     - name: runSyncImmediately
-      value: boolean
-```
+      value: {{ runSyncImmediately }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -608,16 +622,16 @@ Updates the parameters of a single FeatureView.
 ```sql
 UPDATE google.aiplatform.feature_views
 SET 
-data__labels = '{{ labels }}',
-data__vertexRagSource = '{{ vertexRagSource }}',
-data__etag = '{{ etag }}',
-data__indexConfig = '{{ indexConfig }}',
 data__syncConfig = '{{ syncConfig }}',
+data__vertexRagSource = '{{ vertexRagSource }}',
 data__featureRegistrySource = '{{ featureRegistrySource }}',
-data__bigQuerySource = '{{ bigQuerySource }}',
-data__optimizedConfig = '{{ optimizedConfig }}',
 data__name = '{{ name }}',
-data__serviceAgentType = '{{ serviceAgentType }}'
+data__labels = '{{ labels }}',
+data__serviceAgentType = '{{ serviceAgentType }}',
+data__indexConfig = '{{ indexConfig }}',
+data__etag = '{{ etag }}',
+data__optimizedConfig = '{{ optimizedConfig }}',
+data__bigQuerySource = '{{ bigQuerySource }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -662,69 +676,21 @@ AND featureViewsId = '{{ featureViewsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="direct_write"
+    defaultValue="generate_fetch_access_token"
     values={[
-        { label: 'direct_write', value: 'direct_write' },
         { label: 'generate_fetch_access_token', value: 'generate_fetch_access_token' },
+        { label: 'fetch_feature_values', value: 'fetch_feature_values' },
         { label: 'search_nearest_entities', value: 'search_nearest_entities' },
         { label: 'sync', value: 'sync' },
-        { label: 'fetch_feature_values', value: 'fetch_feature_values' }
+        { label: 'direct_write', value: 'direct_write' }
     ]}
 >
-<TabItem value="direct_write">
-
-Bidirectional streaming RPC to directly write to feature values in a feature view. Requests may not have a one-to-one mapping to responses and responses may be returned out-of-order to reduce latency.
-
-```sql
-EXEC google.aiplatform.feature_views.direct_write 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@featureOnlineStoresId='{{ featureOnlineStoresId }}' --required, 
-@featureViewsId='{{ featureViewsId }}' --required 
-@@json=
-'{
-"dataKeyAndFeatureValues": "{{ dataKeyAndFeatureValues }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="generate_fetch_access_token">
 
 RPC to generate an access token for the given feature view. FeatureViews under the same FeatureOnlineStore share the same access token.
 
 ```sql
 EXEC google.aiplatform.feature_views.generate_fetch_access_token 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@featureOnlineStoresId='{{ featureOnlineStoresId }}' --required, 
-@featureViewsId='{{ featureViewsId }}' --required
-;
-```
-</TabItem>
-<TabItem value="search_nearest_entities">
-
-Search the nearest entities under a FeatureView. Search only works for indexable feature view; if a feature view isn't indexable, returns Invalid argument response.
-
-```sql
-EXEC google.aiplatform.feature_views.search_nearest_entities 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@featureOnlineStoresId='{{ featureOnlineStoresId }}' --required, 
-@featureViewsId='{{ featureViewsId }}' --required 
-@@json=
-'{
-"returnFullEntity": {{ returnFullEntity }}, 
-"query": "{{ query }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="sync">
-
-Triggers on-demand sync for the FeatureView.
-
-```sql
-EXEC google.aiplatform.feature_views.sync 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @featureOnlineStoresId='{{ featureOnlineStoresId }}' --required, 
@@ -744,8 +710,56 @@ EXEC google.aiplatform.feature_views.fetch_feature_values
 @featureViewsId='{{ featureViewsId }}' --required 
 @@json=
 '{
-"dataKey": "{{ dataKey }}", 
-"dataFormat": "{{ dataFormat }}"
+"dataFormat": "{{ dataFormat }}", 
+"dataKey": "{{ dataKey }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="search_nearest_entities">
+
+Search the nearest entities under a FeatureView. Search only works for indexable feature view; if a feature view isn't indexable, returns Invalid argument response.
+
+```sql
+EXEC google.aiplatform.feature_views.search_nearest_entities 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@featureOnlineStoresId='{{ featureOnlineStoresId }}' --required, 
+@featureViewsId='{{ featureViewsId }}' --required 
+@@json=
+'{
+"query": "{{ query }}", 
+"returnFullEntity": {{ returnFullEntity }}
+}'
+;
+```
+</TabItem>
+<TabItem value="sync">
+
+Triggers on-demand sync for the FeatureView.
+
+```sql
+EXEC google.aiplatform.feature_views.sync 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@featureOnlineStoresId='{{ featureOnlineStoresId }}' --required, 
+@featureViewsId='{{ featureViewsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="direct_write">
+
+Bidirectional streaming RPC to directly write to feature values in a feature view. Requests may not have a one-to-one mapping to responses and responses may be returned out-of-order to reduce latency.
+
+```sql
+EXEC google.aiplatform.feature_views.direct_write 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@featureOnlineStoresId='{{ featureOnlineStoresId }}' --required, 
+@featureViewsId='{{ featureViewsId }}' --required 
+@@json=
+'{
+"dataKeyAndFeatureValues": "{{ dataKeyAndFeatureValues }}"
 }'
 ;
 ```

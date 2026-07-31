@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>tables</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>tables</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="tables" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.biglake.tables" /></td></tr>
 </tbody></table>
@@ -82,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>The table type.</td>
+    <td>The table type. (TYPE_UNSPECIFIED, HIVE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -136,7 +137,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>The table type.</td>
+    <td>The table type. (TYPE_UNSPECIFIED, HIVE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -349,8 +350,8 @@ Creates a new table.
 
 ```sql
 INSERT INTO google.biglake.tables (
-data__etag,
 data__type,
+data__etag,
 data__hiveOptions,
 projectsId,
 locationsId,
@@ -359,8 +360,8 @@ databasesId,
 tableId
 )
 SELECT 
-'{{ etag }}',
 '{{ type }}',
+'{{ etag }}',
 '{{ hiveOptions }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -381,41 +382,46 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: tables
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the tables resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the tables resource.
     - name: catalogsId
-      value: string
+      value: "{{ catalogsId }}"
       description: Required parameter for the tables resource.
     - name: databasesId
-      value: string
+      value: "{{ databasesId }}"
       description: Required parameter for the tables resource.
-    - name: etag
-      value: string
-      description: >
-        The checksum of a table object computed by the server based on the value of other fields. It may be sent on update requests to ensure the client has an up-to-date value before proceeding. It is only checked for update table operations.
-        
     - name: type
-      value: string
-      description: >
+      value: "{{ type }}"
+      description: |
         The table type.
-        
       valid_values: ['TYPE_UNSPECIFIED', 'HIVE']
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        The checksum of a table object computed by the server based on the value of other fields. It may be sent on update requests to ensure the client has an up-to-date value before proceeding. It is only checked for update table operations.
     - name: hiveOptions
-      value: object
-      description: >
+      description: |
         Options of a Hive table.
-        
+      value:
+        tableType: "{{ tableType }}"
+        storageDescriptor:
+          outputFormat: "{{ outputFormat }}"
+          locationUri: "{{ locationUri }}"
+          serdeInfo:
+            serializationLib: "{{ serializationLib }}"
+          inputFormat: "{{ inputFormat }}"
+        parameters: "{{ parameters }}"
     - name: tableId
-      value: string
-```
+      value: "{{ tableId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -435,8 +441,8 @@ Updates an existing table specified by the table ID.
 ```sql
 UPDATE google.biglake.tables
 SET 
-data__etag = '{{ etag }}',
 data__type = '{{ type }}',
+data__etag = '{{ etag }}',
 data__hiveOptions = '{{ hiveOptions }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

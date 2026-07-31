@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>connectors</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>connectors</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="connectors" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.managedkafka.connectors" /></td></tr>
 </tbody></table>
@@ -62,7 +63,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the connector.</td>
+    <td>Output only. The current state of the connector. (STATE_UNSPECIFIED, UNASSIGNED, RUNNING, PAUSED, FAILED, RESTARTING, STOPPED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="taskRestartPolicy" /></td>
@@ -96,7 +97,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the connector.</td>
+    <td>Output only. The current state of the connector. (STATE_UNSPECIFIED, UNASSIGNED, RUNNING, PAUSED, FAILED, RESTARTING, STOPPED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="taskRestartPolicy" /></td>
@@ -134,7 +135,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectClustersId"><code>connectClustersId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the connectors in a given Connect cluster.</td>
 </tr>
 <tr>
@@ -166,11 +167,11 @@ The following methods are available for this resource:
     <td>Pauses the connector and its tasks.</td>
 </tr>
 <tr>
-    <td><a href="#restart"><CopyableCode code="restart" /></a></td>
+    <td><a href="#resume"><CopyableCode code="resume" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectClustersId"><code>connectClustersId</code></a>, <a href="#parameter-connectorsId"><code>connectorsId</code></a></td>
     <td></td>
-    <td>Restarts the connector.</td>
+    <td>Resumes the connector and its tasks.</td>
 </tr>
 <tr>
     <td><a href="#stop"><CopyableCode code="stop" /></a></td>
@@ -180,11 +181,11 @@ The following methods are available for this resource:
     <td>Stops the connector.</td>
 </tr>
 <tr>
-    <td><a href="#resume"><CopyableCode code="resume" /></a></td>
+    <td><a href="#restart"><CopyableCode code="restart" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectClustersId"><code>connectClustersId</code></a>, <a href="#parameter-connectorsId"><code>connectorsId</code></a></td>
     <td></td>
-    <td>Resumes the connector and its tasks.</td>
+    <td>Restarts the connector.</td>
 </tr>
 </tbody>
 </table>
@@ -286,8 +287,8 @@ FROM google.managedkafka.connectors
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND connectClustersId = '{{ connectClustersId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -309,18 +310,18 @@ Creates a new connector in a given Connect cluster.
 
 ```sql
 INSERT INTO google.managedkafka.connectors (
-data__name,
 data__taskRestartPolicy,
 data__configs,
+data__name,
 projectsId,
 locationsId,
 connectClustersId,
 connectorId
 )
 SELECT 
-'{{ name }}',
 '{{ taskRestartPolicy }}',
 '{{ configs }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ connectClustersId }}',
@@ -335,37 +336,37 @@ taskRestartPolicy
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: connectors
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the connectors resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the connectors resource.
     - name: connectClustersId
-      value: string
+      value: "{{ connectClustersId }}"
       description: Required parameter for the connectors resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The name of the connector. Structured like: projects/{project}/locations/{location}/connectClusters/{connect_cluster}/connectors/{connector}
-        
     - name: taskRestartPolicy
-      value: object
-      description: >
+      description: |
         Optional. Restarts the individual tasks of a Connector.
-        
+      value:
+        maximumBackoff: "{{ maximumBackoff }}"
+        minimumBackoff: "{{ minimumBackoff }}"
+        taskRetryDisabled: {{ taskRetryDisabled }}
     - name: configs
-      value: object
-      description: >
-        Optional. Connector config as keys/values. The keys of the map are connector property names, for example: `connector.class`, `tasks.max`, `key.converter`.
-        
+      value: "{{ configs }}"
+      description: |
+        Optional. Connector config as keys/values. The keys of the map are connector property names, for example: \`connector.class\`, \`tasks.max\`, \`key.converter\`.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of the connector. Structured like: projects/{project}/locations/{location}/connectClusters/{connect_cluster}/connectors/{connector}
     - name: connectorId
-      value: string
-```
+      value: "{{ connectorId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -385,9 +386,9 @@ Updates the properties of a connector.
 ```sql
 UPDATE google.managedkafka.connectors
 SET 
-data__name = '{{ name }}',
 data__taskRestartPolicy = '{{ taskRestartPolicy }}',
-data__configs = '{{ configs }}'
+data__configs = '{{ configs }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -434,9 +435,9 @@ AND connectorsId = '{{ connectorsId }}' --required
     defaultValue="pause"
     values={[
         { label: 'pause', value: 'pause' },
-        { label: 'restart', value: 'restart' },
+        { label: 'resume', value: 'resume' },
         { label: 'stop', value: 'stop' },
-        { label: 'resume', value: 'resume' }
+        { label: 'restart', value: 'restart' }
     ]}
 >
 <TabItem value="pause">
@@ -452,12 +453,12 @@ EXEC google.managedkafka.connectors.pause
 ;
 ```
 </TabItem>
-<TabItem value="restart">
+<TabItem value="resume">
 
-Restarts the connector.
+Resumes the connector and its tasks.
 
 ```sql
-EXEC google.managedkafka.connectors.restart 
+EXEC google.managedkafka.connectors.resume 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @connectClustersId='{{ connectClustersId }}' --required, 
@@ -478,12 +479,12 @@ EXEC google.managedkafka.connectors.stop
 ;
 ```
 </TabItem>
-<TabItem value="resume">
+<TabItem value="restart">
 
-Resumes the connector and its tasks.
+Restarts the connector.
 
 ```sql
-EXEC google.managedkafka.connectors.resume 
+EXEC google.managedkafka.connectors.restart 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @connectClustersId='{{ connectClustersId }}' --required, 

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>rollouts</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>rollouts</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="rollouts" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.servicemanagement.rollouts" /></td></tr>
 </tbody></table>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>The status of this rollout. Readonly. In case of a failed rollout, the system will automatically rollback to the current Rollout version. Readonly.</td>
+    <td>The status of this rollout. Readonly. In case of a failed rollout, the system will automatically rollback to the current Rollout version. Readonly. (ROLLOUT_STATUS_UNSPECIFIED, IN_PROGRESS, SUCCESS, CANCELLED, FAILED, PENDING, FAILED_ROLLED_BACK)</td>
 </tr>
 <tr>
     <td><CopyableCode code="trafficPercentStrategy" /></td>
@@ -126,7 +127,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>The status of this rollout. Readonly. In case of a failed rollout, the system will automatically rollback to the current Rollout version. Readonly.</td>
+    <td>The status of this rollout. Readonly. In case of a failed rollout, the system will automatically rollback to the current Rollout version. Readonly. (ROLLOUT_STATUS_UNSPECIFIED, IN_PROGRESS, SUCCESS, CANCELLED, FAILED, PENDING, FAILED_ROLLED_BACK)</td>
 </tr>
 <tr>
     <td><CopyableCode code="trafficPercentStrategy" /></td>
@@ -285,23 +286,23 @@ Creates a new service configuration rollout. Based on rollout, the Google Servic
 
 ```sql
 INSERT INTO google.servicemanagement.rollouts (
+data__deleteServiceStrategy,
+data__status,
+data__serviceName,
+data__trafficPercentStrategy,
 data__rolloutId,
 data__createTime,
 data__createdBy,
-data__status,
-data__trafficPercentStrategy,
-data__deleteServiceStrategy,
-data__serviceName,
 serviceName
 )
 SELECT 
+'{{ deleteServiceStrategy }}',
+'{{ status }}',
+'{{ serviceName }}',
+'{{ trafficPercentStrategy }}',
 '{{ rolloutId }}',
 '{{ createTime }}',
 '{{ createdBy }}',
-'{{ status }}',
-'{{ trafficPercentStrategy }}',
-'{{ deleteServiceStrategy }}',
-'{{ serviceName }}',
 '{{ serviceName }}'
 RETURNING
 name,
@@ -314,49 +315,43 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: rollouts
   props:
     - name: serviceName
-      value: string
+      value: "{{ serviceName }}"
       description: Required parameter for the rollouts resource.
-    - name: rolloutId
-      value: string
-      description: >
-        Optional. Unique identifier of this Rollout. Must be no longer than 63 characters and only lower case letters, digits, '.', '_' and '-' are allowed. If not specified by client, the server will generate one. The generated id will have the form of , where "date" is the create date in ISO 8601 format. "revision number" is a monotonically increasing positive number that is reset every day for each service. An example of the generated rollout_id is '2016-02-16r1'
-        
-    - name: createTime
-      value: string
-      description: >
-        Creation time of the rollout. Readonly.
-        
-    - name: createdBy
-      value: string
-      description: >
-        The user who created the Rollout. Readonly.
-        
-    - name: status
-      value: string
-      description: >
-        The status of this rollout. Readonly. In case of a failed rollout, the system will automatically rollback to the current Rollout version. Readonly.
-        
-      valid_values: ['ROLLOUT_STATUS_UNSPECIFIED', 'IN_PROGRESS', 'SUCCESS', 'CANCELLED', 'FAILED', 'PENDING', 'FAILED_ROLLED_BACK']
-    - name: trafficPercentStrategy
-      value: object
-      description: >
-        Google Service Control selects service configurations based on traffic percentage.
-        
     - name: deleteServiceStrategy
-      value: object
-      description: >
-        The strategy associated with a rollout to delete a `ManagedService`. Readonly.
-        
+      value: "{{ deleteServiceStrategy }}"
+      description: |
+        The strategy associated with a rollout to delete a \`ManagedService\`. Readonly.
+    - name: status
+      value: "{{ status }}"
+      description: |
+        The status of this rollout. Readonly. In case of a failed rollout, the system will automatically rollback to the current Rollout version. Readonly.
+      valid_values: ['ROLLOUT_STATUS_UNSPECIFIED', 'IN_PROGRESS', 'SUCCESS', 'CANCELLED', 'FAILED', 'PENDING', 'FAILED_ROLLED_BACK']
     - name: serviceName
-      value: string
-      description: >
+      value: "{{ serviceName }}"
+      description: |
         The name of the service associated with this Rollout.
-        
-```
+    - name: trafficPercentStrategy
+      description: |
+        Google Service Control selects service configurations based on traffic percentage.
+      value:
+        percentages: "{{ percentages }}"
+    - name: rolloutId
+      value: "{{ rolloutId }}"
+      description: |
+        Optional. Unique identifier of this Rollout. Must be no longer than 63 characters and only lower case letters, digits, '.', '_' and '-' are allowed. If not specified by client, the server will generate one. The generated id will have the form of , where "date" is the create date in ISO 8601 format. "revision number" is a monotonically increasing positive number that is reset every day for each service. An example of the generated rollout_id is '2016-02-16r1'
+    - name: createTime
+      value: "{{ createTime }}"
+      description: |
+        Creation time of the rollout. Readonly.
+    - name: createdBy
+      value: "{{ createdBy }}"
+      description: |
+        The user who created the Rollout. Readonly.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>tls_routes</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>tls_routes</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="tls_routes" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networkservices.tls_routes" /></td></tr>
 </tbody></table>
@@ -90,6 +91,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Server-defined URL of this resource</td>
 </tr>
 <tr>
+    <td><CopyableCode code="targetProxies" /></td>
+    <td><code>array</code></td>
+    <td>Optional. TargetProxies defines a list of TargetTcpProxies this TlsRoute is attached to, as one of the routing rules to route the requests served by the TargetTcpProxy. Each TargetTcpProxy reference should match the pattern: `projects/*/locations/*/targetTcpProxies/`</td>
+</tr>
+<tr>
     <td><CopyableCode code="updateTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The timestamp when the resource was updated.</td>
@@ -108,6 +114,56 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. Name of the TlsRoute resource. It matches pattern `projects/*/locations/*/tlsRoutes/tls_route_name>`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The timestamp when the resource was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Optional. A free-text description of the resource. Max length 1024 characters.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="gateways" /></td>
+    <td><code>array</code></td>
+    <td>Optional. Gateways defines a list of gateways this TlsRoute is attached to, as one of the routing rules to route the requests served by the gateway. Each gateway reference should match the pattern: `projects/*/locations/*/gateways/`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Set of label tags associated with the TlsRoute resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="meshes" /></td>
+    <td><code>array</code></td>
+    <td>Optional. Meshes defines a list of meshes this TlsRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: `projects/*/locations/*/meshes/` The attached Mesh should be of a type SIDECAR</td>
+</tr>
+<tr>
+    <td><CopyableCode code="rules" /></td>
+    <td><code>array</code></td>
+    <td>Required. Rules that define how traffic is routed and handled. At least one RouteRule must be supplied. If there are multiple rules then the action taken will be the first rule to match.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="selfLink" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Server-defined URL of this resource</td>
+</tr>
+<tr>
+    <td><CopyableCode code="targetProxies" /></td>
+    <td><code>array</code></td>
+    <td>Optional. TargetProxies defines a list of TargetTcpProxies this TlsRoute is attached to, as one of the routing rules to route the requests served by the TargetTcpProxy. Each TargetTcpProxy reference should match the pattern: `projects/*/locations/*/targetTcpProxies/`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The timestamp when the resource was updated.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -139,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists TlsRoute in a given project and location.</td>
 </tr>
 <tr>
@@ -245,6 +301,7 @@ labels,
 meshes,
 rules,
 selfLink,
+targetProxies,
 updateTime
 FROM google.networkservices.tls_routes
 WHERE projectsId = '{{ projectsId }}' -- required
@@ -259,13 +316,22 @@ Lists TlsRoute in a given project and location.
 
 ```sql
 SELECT
-*
+name,
+createTime,
+description,
+gateways,
+labels,
+meshes,
+rules,
+selfLink,
+targetProxies,
+updateTime
 FROM google.networkservices.tls_routes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -288,22 +354,24 @@ Creates a new TlsRoute in a given project and location.
 ```sql
 INSERT INTO google.networkservices.tls_routes (
 data__name,
-data__labels,
-data__gateways,
 data__description,
-data__meshes,
 data__rules,
+data__meshes,
+data__gateways,
+data__targetProxies,
+data__labels,
 projectsId,
 locationsId,
 tlsRouteId
 )
 SELECT 
 '{{ name }}',
-'{{ labels }}',
-'{{ gateways }}',
 '{{ description }}',
-'{{ meshes }}',
 '{{ rules }}',
+'{{ meshes }}',
+'{{ gateways }}',
+'{{ targetProxies }}',
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ tlsRouteId }}'
@@ -318,49 +386,56 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: tls_routes
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the tls_routes resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the tls_routes resource.
     - name: name
-      value: string
-      description: >
-        Identifier. Name of the TlsRoute resource. It matches pattern `projects/*/locations/*/tlsRoutes/tls_route_name>`.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Set of label tags associated with the TlsRoute resource.
-        
-    - name: gateways
-      value: array
-      description: >
-        Optional. Gateways defines a list of gateways this TlsRoute is attached to, as one of the routing rules to route the requests served by the gateway. Each gateway reference should match the pattern: `projects/*/locations/*/gateways/`
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. Name of the TlsRoute resource. It matches pattern \`projects/*/locations/*/tlsRoutes/tls_route_name>\`.
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. A free-text description of the resource. Max length 1024 characters.
-        
-    - name: meshes
-      value: array
-      description: >
-        Optional. Meshes defines a list of meshes this TlsRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: `projects/*/locations/*/meshes/` The attached Mesh should be of a type SIDECAR
-        
     - name: rules
-      value: array
-      description: >
+      description: |
         Required. Rules that define how traffic is routed and handled. At least one RouteRule must be supplied. If there are multiple rules then the action taken will be the first rule to match.
-        
+      value:
+        - matches: "{{ matches }}"
+          action:
+            destinations:
+              - serviceName: "{{ serviceName }}"
+                weight: {{ weight }}
+            idleTimeout: "{{ idleTimeout }}"
+    - name: meshes
+      value:
+        - "{{ meshes }}"
+      description: |
+        Optional. Meshes defines a list of meshes this TlsRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: \`projects/*/locations/*/meshes/\` The attached Mesh should be of a type SIDECAR
+    - name: gateways
+      value:
+        - "{{ gateways }}"
+      description: |
+        Optional. Gateways defines a list of gateways this TlsRoute is attached to, as one of the routing rules to route the requests served by the gateway. Each gateway reference should match the pattern: \`projects/*/locations/*/gateways/\`
+    - name: targetProxies
+      value:
+        - "{{ targetProxies }}"
+      description: |
+        Optional. TargetProxies defines a list of TargetTcpProxies this TlsRoute is attached to, as one of the routing rules to route the requests served by the TargetTcpProxy. Each TargetTcpProxy reference should match the pattern: \`projects/*/locations/*/targetTcpProxies/\`
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Set of label tags associated with the TlsRoute resource.
     - name: tlsRouteId
-      value: string
-```
+      value: "{{ tlsRouteId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -381,11 +456,12 @@ Updates the parameters of a single TlsRoute.
 UPDATE google.networkservices.tls_routes
 SET 
 data__name = '{{ name }}',
-data__labels = '{{ labels }}',
-data__gateways = '{{ gateways }}',
 data__description = '{{ description }}',
+data__rules = '{{ rules }}',
 data__meshes = '{{ meshes }}',
-data__rules = '{{ rules }}'
+data__gateways = '{{ gateways }}',
+data__targetProxies = '{{ targetProxies }}',
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>addressvalidation</code> resou
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>addressvalidation</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="addressvalidation" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.addressvalidation.addressvalidation" /></td></tr>
 </tbody></table>
@@ -50,18 +51,18 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#validate_address"><CopyableCode code="validate_address" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td></td>
-    <td></td>
-    <td>Validates an address.</td>
-</tr>
-<tr>
     <td><a href="#provide_validation_feedback"><CopyableCode code="provide_validation_feedback" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
     <td></td>
     <td>Feedback about the outcome of the sequence of validation attempts. This should be the last call made after a sequence of validation calls for the same address, and should be called once the transaction is concluded. This should only be sent once for the sequence of `ValidateAddress` requests needed to validate an address fully.</td>
+</tr>
+<tr>
+    <td><a href="#validate_address"><CopyableCode code="validate_address" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td></td>
+    <td></td>
+    <td>Validates an address.</td>
 </tr>
 </tbody>
 </table>
@@ -85,29 +86,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="validate_address"
+    defaultValue="provide_validation_feedback"
     values={[
-        { label: 'validate_address', value: 'validate_address' },
-        { label: 'provide_validation_feedback', value: 'provide_validation_feedback' }
+        { label: 'provide_validation_feedback', value: 'provide_validation_feedback' },
+        { label: 'validate_address', value: 'validate_address' }
     ]}
 >
-<TabItem value="validate_address">
-
-Validates an address.
-
-```sql
-EXEC google.addressvalidation.addressvalidation.validate_address 
-@@json=
-'{
-"languageOptions": "{{ languageOptions }}", 
-"previousResponseId": "{{ previousResponseId }}", 
-"address": "{{ address }}", 
-"sessionToken": "{{ sessionToken }}", 
-"enableUspsCass": {{ enableUspsCass }}
-}'
-;
-```
-</TabItem>
 <TabItem value="provide_validation_feedback">
 
 Feedback about the outcome of the sequence of validation attempts. This should be the last call made after a sequence of validation calls for the same address, and should be called once the transaction is concluded. This should only be sent once for the sequence of `ValidateAddress` requests needed to validate an address fully.
@@ -118,6 +102,23 @@ EXEC google.addressvalidation.addressvalidation.provide_validation_feedback
 '{
 "conclusion": "{{ conclusion }}", 
 "responseId": "{{ responseId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="validate_address">
+
+Validates an address.
+
+```sql
+EXEC google.addressvalidation.addressvalidation.validate_address 
+@@json=
+'{
+"address": "{{ address }}", 
+"sessionToken": "{{ sessionToken }}", 
+"previousResponseId": "{{ previousResponseId }}", 
+"languageOptions": "{{ languageOptions }}", 
+"enableUspsCass": {{ enableUspsCass }}
 }'
 ;
 ```

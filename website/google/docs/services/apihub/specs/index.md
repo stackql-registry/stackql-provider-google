@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>specs</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>specs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="specs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apihub.specs" /></td></tr>
 </tbody></table>
@@ -97,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="parsingMode" /></td>
     <td><code>string</code></td>
-    <td>Optional. Input only. Enum specifying the parsing mode for OpenAPI Specification (OAS) parsing.</td>
+    <td>Optional. Input only. Enum specifying the parsing mode for OpenAPI Specification (OAS) parsing. (PARSING_MODE_UNSPECIFIED, RELAXED, STRICT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="sourceMetadata" /></td>
@@ -181,7 +182,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="parsingMode" /></td>
     <td><code>string</code></td>
-    <td>Optional. Input only. Enum specifying the parsing mode for OpenAPI Specification (OAS) parsing.</td>
+    <td>Optional. Input only. Enum specifying the parsing mode for OpenAPI Specification (OAS) parsing. (PARSING_MODE_UNSPECIFIED, RELAXED, STRICT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="sourceMetadata" /></td>
@@ -234,7 +235,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>List specs corresponding to a particular API resource.</td>
 </tr>
 <tr>
@@ -397,9 +398,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND apisId = '{{ apisId }}' -- required
 AND versionsId = '{{ versionsId }}' -- required
+AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -421,15 +422,15 @@ Add a spec to an API version in the API hub. Multiple specs can be added to an A
 
 ```sql
 INSERT INTO google.apihub.specs (
-data__name,
-data__displayName,
-data__specType,
 data__contents,
 data__sourceUri,
-data__lintResponse,
-data__attributes,
+data__name,
+data__specType,
 data__documentation,
+data__displayName,
 data__parsingMode,
+data__attributes,
+data__lintResponse,
 projectsId,
 locationsId,
 apisId,
@@ -437,15 +438,15 @@ versionsId,
 specId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
-'{{ specType }}',
 '{{ contents }}',
 '{{ sourceUri }}',
-'{{ lintResponse }}',
-'{{ attributes }}',
+'{{ name }}',
+'{{ specType }}',
 '{{ documentation }}',
+'{{ displayName }}',
 '{{ parsingMode }}',
+'{{ attributes }}',
+'{{ lintResponse }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ apisId }}',
@@ -471,71 +472,100 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: specs
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the specs resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the specs resource.
     - name: apisId
-      value: string
+      value: "{{ apisId }}"
       description: Required parameter for the specs resource.
     - name: versionsId
-      value: string
+      value: "{{ versionsId }}"
       description: Required parameter for the specs resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The name of the spec. Format: `projects/{project}/locations/{location}/apis/{api}/versions/{version}/specs/{spec}`
-        
-    - name: displayName
-      value: string
-      description: >
-        Required. The display name of the spec. This can contain the file name of the spec.
-        
-    - name: specType
-      value: object
-      description: >
-        The attribute values associated with resource.
-        
     - name: contents
-      value: object
-      description: >
+      description: |
         Optional. Input only. The contents of the uploaded spec.
-        
+      value:
+        contents: "{{ contents }}"
+        mimeType: "{{ mimeType }}"
     - name: sourceUri
-      value: string
-      description: >
+      value: "{{ sourceUri }}"
+      description: |
         Optional. The URI of the spec source in case file is uploaded from an external version control system.
-        
-    - name: lintResponse
-      value: object
-      description: >
-        Optional. The lint response for the spec.
-        
-    - name: attributes
-      value: object
-      description: >
-        Optional. The list of user defined attributes associated with the spec. The key is the attribute name. It will be of the format: `projects/{project}/locations/{location}/attributes/{attribute}`. The value is the attribute values associated with the resource.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of the spec. Format: \`projects/{project}/locations/{location}/apis/{api}/versions/{version}/specs/{spec}\`
+    - name: specType
+      description: |
+        The attribute values associated with resource.
+      value:
+        attribute: "{{ attribute }}"
+        enumValues:
+          values:
+            - description: "{{ description }}"
+              id: "{{ id }}"
+              displayName: "{{ displayName }}"
+              immutable: {{ immutable }}
+        stringValues:
+          values:
+            - "{{ values }}"
+        jsonValues:
+          values:
+            - "{{ values }}"
+        uriValues:
+          values:
+            - "{{ values }}"
     - name: documentation
-      value: object
-      description: >
-        Optional. The documentation of the spec. For OpenAPI spec, this will be populated from `externalDocs` in OpenAPI spec.
-        
+      description: |
+        Optional. The documentation of the spec. For OpenAPI spec, this will be populated from \`externalDocs\` in OpenAPI spec.
+      value:
+        externalUri: "{{ externalUri }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. The display name of the spec. This can contain the file name of the spec.
     - name: parsingMode
-      value: string
-      description: >
+      value: "{{ parsingMode }}"
+      description: |
         Optional. Input only. Enum specifying the parsing mode for OpenAPI Specification (OAS) parsing.
-        
       valid_values: ['PARSING_MODE_UNSPECIFIED', 'RELAXED', 'STRICT']
+    - name: attributes
+      value: "{{ attributes }}"
+      description: |
+        Optional. The list of user defined attributes associated with the spec. The key is the attribute name. It will be of the format: \`projects/{project}/locations/{location}/attributes/{attribute}\`. The value is the attribute values associated with the resource.
+    - name: lintResponse
+      description: |
+        Optional. The lint response for the spec.
+      value:
+        linter: "{{ linter }}"
+        issues:
+          - severity: "{{ severity }}"
+            path: "{{ path }}"
+            message: "{{ message }}"
+            range:
+              start:
+                line: {{ line }}
+                character: {{ character }}
+              end:
+                line: {{ line }}
+                character: {{ character }}
+            code: "{{ code }}"
+        source: "{{ source }}"
+        state: "{{ state }}"
+        summary:
+          - severity: "{{ severity }}"
+            count: {{ count }}
+        createTime: "{{ createTime }}"
     - name: specId
-      value: string
-```
+      value: "{{ specId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -555,15 +585,15 @@ Update spec. The following fields in the spec can be updated: * display_name * s
 ```sql
 UPDATE google.apihub.specs
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
-data__specType = '{{ specType }}',
 data__contents = '{{ contents }}',
 data__sourceUri = '{{ sourceUri }}',
-data__lintResponse = '{{ lintResponse }}',
-data__attributes = '{{ attributes }}',
+data__name = '{{ name }}',
+data__specType = '{{ specType }}',
 data__documentation = '{{ documentation }}',
-data__parsingMode = '{{ parsingMode }}'
+data__displayName = '{{ displayName }}',
+data__parsingMode = '{{ parsingMode }}',
+data__attributes = '{{ attributes }}',
+data__lintResponse = '{{ lintResponse }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

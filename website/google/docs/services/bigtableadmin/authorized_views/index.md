@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>authorized_views</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>authorized_views</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="authorized_views" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.bigtableadmin.authorized_views" /></td></tr>
 </tbody></table>
@@ -134,7 +135,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-tablesId"><code>tablesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all AuthorizedViews from a specific table.</td>
 </tr>
 <tr>
@@ -274,8 +275,8 @@ FROM google.bigtableadmin.authorized_views
 WHERE projectsId = '{{ projectsId }}' -- required
 AND instancesId = '{{ instancesId }}' -- required
 AND tablesId = '{{ tablesId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND view = '{{ view }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -298,20 +299,20 @@ Creates a new AuthorizedView in a table.
 
 ```sql
 INSERT INTO google.bigtableadmin.authorized_views (
-data__name,
-data__subsetView,
-data__deletionProtection,
 data__etag,
+data__subsetView,
+data__name,
+data__deletionProtection,
 projectsId,
 instancesId,
 tablesId,
 authorizedViewId
 )
 SELECT 
-'{{ name }}',
-'{{ subsetView }}',
-{{ deletionProtection }},
 '{{ etag }}',
+'{{ subsetView }}',
+'{{ name }}',
+{{ deletionProtection }},
 '{{ projectsId }}',
 '{{ instancesId }}',
 '{{ tablesId }}',
@@ -327,42 +328,41 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: authorized_views
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the authorized_views resource.
     - name: instancesId
-      value: string
+      value: "{{ instancesId }}"
       description: Required parameter for the authorized_views resource.
     - name: tablesId
-      value: string
+      value: "{{ tablesId }}"
       description: Required parameter for the authorized_views resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The name of this AuthorizedView. Values are of the form `projects/{project}/instances/{instance}/tables/{table}/authorizedViews/{authorized_view}`
-        
-    - name: subsetView
-      value: object
-      description: >
-        An AuthorizedView permitting access to an explicit subset of a Table.
-        
-    - name: deletionProtection
-      value: boolean
-      description: >
-        Set to true to make the AuthorizedView protected against deletion. The parent Table and containing Instance cannot be deleted if an AuthorizedView has this bit set.
-        
     - name: etag
-      value: string
-      description: >
+      value: "{{ etag }}"
+      description: |
         The etag for this AuthorizedView. If this is provided on update, it must match the server's etag. The server returns ABORTED error on a mismatched etag.
-        
+    - name: subsetView
+      description: |
+        An AuthorizedView permitting access to an explicit subset of a Table.
+      value:
+        familySubsets: "{{ familySubsets }}"
+        rowPrefixes:
+          - "{{ rowPrefixes }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of this AuthorizedView. Values are of the form \`projects/{project}/instances/{instance}/tables/{table}/authorizedViews/{authorized_view}\`
+    - name: deletionProtection
+      value: {{ deletionProtection }}
+      description: |
+        Set to true to make the AuthorizedView protected against deletion. The parent Table and containing Instance cannot be deleted if an AuthorizedView has this bit set.
     - name: authorizedViewId
-      value: string
-```
+      value: "{{ authorizedViewId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -382,10 +382,10 @@ Updates an AuthorizedView in a table.
 ```sql
 UPDATE google.bigtableadmin.authorized_views
 SET 
-data__name = '{{ name }}',
+data__etag = '{{ etag }}',
 data__subsetView = '{{ subsetView }}',
-data__deletionProtection = {{ deletionProtection }},
-data__etag = '{{ etag }}'
+data__name = '{{ name }}',
+data__deletionProtection = {{ deletionProtection }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instancesId = '{{ instancesId }}' --required

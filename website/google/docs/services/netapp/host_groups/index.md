@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>host_groups</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>host_groups</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="host_groups" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.netapp.host_groups" /></td></tr>
 </tbody></table>
@@ -77,17 +78,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="osType" /></td>
     <td><code>string</code></td>
-    <td>Required. The OS type of the host group. It indicates the type of operating system used by all of the hosts in the HostGroup. All hosts in a HostGroup must be of the same OS type. This can be set only when creating a HostGroup.</td>
+    <td>Required. The OS type of the host group. It indicates the type of operating system used by all of the hosts in the HostGroup. All hosts in a HostGroup must be of the same OS type. This can be set only when creating a HostGroup. (OS_TYPE_UNSPECIFIED, LINUX, WINDOWS, ESXI)</td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the host group.</td>
+    <td>Output only. State of the host group. (STATE_UNSPECIFIED, CREATING, READY, UPDATING, DELETING, DISABLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Required. Type of the host group.</td>
+    <td>Required. Type of the host group. (TYPE_UNSPECIFIED, ISCSI_INITIATOR)</td>
 </tr>
 </tbody>
 </table>
@@ -103,6 +104,46 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. The resource name of the host group. Format: `projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/hostGroups/&#123;host_group_id&#125;`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Create time of the host group.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Description of the host group.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="hosts" /></td>
+    <td><code>array</code></td>
+    <td>Required. The list of hosts associated with the host group.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Labels of the host group.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="osType" /></td>
+    <td><code>string</code></td>
+    <td>Required. The OS type of the host group. It indicates the type of operating system used by all of the hosts in the HostGroup. All hosts in a HostGroup must be of the same OS type. This can be set only when creating a HostGroup. (OS_TYPE_UNSPECIFIED, LINUX, WINDOWS, ESXI)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Output only. State of the host group. (STATE_UNSPECIFIED, CREATING, READY, UPDATING, DELETING, DISABLED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="type" /></td>
+    <td><code>string</code></td>
+    <td>Required. Type of the host group. (TYPE_UNSPECIFIED, ISCSI_INITIATOR)</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -134,8 +175,8 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
-    <td>Returns a list of host groups in a location. Use '-' as location to list host groups across all locations.</td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td>Returns a list of host groups in a `location`. Use `-` as location to list host groups across all locations.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
@@ -254,18 +295,25 @@ AND hostGroupsId = '{{ hostGroupsId }}' -- required
 </TabItem>
 <TabItem value="list">
 
-Returns a list of host groups in a location. Use '-' as location to list host groups across all locations.
+Returns a list of host groups in a `location`. Use `-` as location to list host groups across all locations.
 
 ```sql
 SELECT
-*
+name,
+createTime,
+description,
+hosts,
+labels,
+osType,
+state,
+type
 FROM google.netapp.host_groups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -288,22 +336,22 @@ Creates a new host group.
 ```sql
 INSERT INTO google.netapp.host_groups (
 data__hosts,
+data__labels,
+data__name,
 data__type,
 data__osType,
-data__name,
 data__description,
-data__labels,
 projectsId,
 locationsId,
 hostGroupId
 )
 SELECT 
 '{{ hosts }}',
+'{{ labels }}',
+'{{ name }}',
 '{{ type }}',
 '{{ osType }}',
-'{{ name }}',
 '{{ description }}',
-'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ hostGroupId }}'
@@ -318,51 +366,46 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: host_groups
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the host_groups resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the host_groups resource.
     - name: hosts
-      value: array
-      description: >
+      value:
+        - "{{ hosts }}"
+      description: |
         Required. The list of hosts associated with the host group.
-        
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Labels of the host group.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the host group. Format: \`projects/{project_number}/locations/{location_id}/hostGroups/{host_group_id}\`.
     - name: type
-      value: string
-      description: >
+      value: "{{ type }}"
+      description: |
         Required. Type of the host group.
-        
       valid_values: ['TYPE_UNSPECIFIED', 'ISCSI_INITIATOR']
     - name: osType
-      value: string
-      description: >
+      value: "{{ osType }}"
+      description: |
         Required. The OS type of the host group. It indicates the type of operating system used by all of the hosts in the HostGroup. All hosts in a HostGroup must be of the same OS type. This can be set only when creating a HostGroup.
-        
       valid_values: ['OS_TYPE_UNSPECIFIED', 'LINUX', 'WINDOWS', 'ESXI']
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the host group. Format: `projects/{project_number}/locations/{location_id}/hostGroups/{host_group_id}`.
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. Description of the host group.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Labels of the host group.
-        
     - name: hostGroupId
-      value: string
-```
+      value: "{{ hostGroupId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -383,11 +426,11 @@ Updates an existing host group.
 UPDATE google.netapp.host_groups
 SET 
 data__hosts = '{{ hosts }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
 data__type = '{{ type }}',
 data__osType = '{{ osType }}',
-data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__labels = '{{ labels }}'
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

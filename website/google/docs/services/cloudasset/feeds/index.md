@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>feeds</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>feeds</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="feeds" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudasset.feeds" /></td></tr>
 </tbody></table>
@@ -155,14 +156,14 @@ Creates a feed in a parent project/folder/organization to listen to its asset up
 
 ```sql
 INSERT INTO google.cloudasset.feeds (
-data__feed,
 data__feedId,
+data__feed,
 parentType,
 parent
 )
 SELECT 
-'{{ feed }}',
 '{{ feedId }}',
+'{{ feed }}',
 '{{ parentType }}',
 '{{ parent }}'
 RETURNING
@@ -178,26 +179,40 @@ relationshipTypes
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: feeds
   props:
     - name: parentType
-      value: string
+      value: "{{ parentType }}"
       description: Required parameter for the feeds resource.
     - name: parent
-      value: string
+      value: "{{ parent }}"
       description: Required parameter for the feeds resource.
-    - name: feed
-      value: object
-      description: >
-        An asset feed used to export asset updates to a destinations. An asset feed filter controls what updates are exported. The asset feed must be created within a project, organization, or folder. Supported destinations are: Pub/Sub topics.
-        
     - name: feedId
-      value: string
-      description: >
+      value: "{{ feedId }}"
+      description: |
         Required. This is the client-assigned asset feed identifier and it needs to be unique under a specific parent project/folder/organization.
-        
-```
+    - name: feed
+      description: |
+        An asset feed used to export asset updates to a destinations. An asset feed filter controls what updates are exported. The asset feed must be created within a project, organization, or folder. Supported destinations are: Pub/Sub topics.
+      value:
+        contentType: "{{ contentType }}"
+        feedOutputConfig:
+          pubsubDestination:
+            topic: "{{ topic }}"
+        name: "{{ name }}"
+        assetTypes:
+          - "{{ assetTypes }}"
+        condition:
+          description: "{{ description }}"
+          expression: "{{ expression }}"
+          title: "{{ title }}"
+          location: "{{ location }}"
+        assetNames:
+          - "{{ assetNames }}"
+        relationshipTypes:
+          - "{{ relationshipTypes }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

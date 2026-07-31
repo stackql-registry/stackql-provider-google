@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>dns_record_set</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>dns_record_set</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="dns_record_set" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.servicenetworking.dns_record_set" /></td></tr>
 </tbody></table>
@@ -92,7 +93,7 @@ The following methods are available for this resource:
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-servicesId"><code>servicesId</code></a></td>
-    <td><a href="#parameter-consumerNetwork"><code>consumerNetwork</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-domain"><code>domain</code></a>, <a href="#parameter-type"><code>type</code></a></td>
+    <td><a href="#parameter-domain"><code>domain</code></a>, <a href="#parameter-consumerNetwork"><code>consumerNetwork</code></a>, <a href="#parameter-type"><code>type</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
     <td>Producers can use this method to retrieve information about the DNS record set added to the private zone inside the shared tenant host project associated with a consumer network.</td>
 </tr>
 </tbody>
@@ -159,10 +160,10 @@ ttl,
 type
 FROM google.servicenetworking.dns_record_set
 WHERE servicesId = '{{ servicesId }}' -- required
-AND consumerNetwork = '{{ consumerNetwork }}'
-AND zone = '{{ zone }}'
 AND domain = '{{ domain }}'
+AND consumerNetwork = '{{ consumerNetwork }}'
 AND type = '{{ type }}'
+AND zone = '{{ zone }}'
 ;
 ```
 </TabItem>

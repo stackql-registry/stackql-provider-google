@@ -18,13 +18,15 @@ aiplatform service documentation.
 
 :::info[Service Summary]
 
-total resources: __86__  
+total resources: __100__  
 
 :::
 
 ## Resources
 <div class="row">
 <div class="providerDocColumn">
+<a href="/services/aiplatform/agents/">agents</a><br />
+<a href="/services/aiplatform/aiplatform/">aiplatform</a><br />
 <a href="/services/aiplatform/annotation_specs/">annotation_specs</a><br />
 <a href="/services/aiplatform/annotations/">annotations</a><br />
 <a href="/services/aiplatform/artifacts/">artifacts</a><br />
@@ -46,6 +48,7 @@ total resources: __86__
 <a href="/services/aiplatform/entity_types/">entity_types</a><br />
 <a href="/services/aiplatform/entity_types_iam_policies/">entity_types_iam_policies</a><br />
 <a href="/services/aiplatform/evaluation_items/">evaluation_items</a><br />
+<a href="/services/aiplatform/evaluation_metrics/">evaluation_metrics</a><br />
 <a href="/services/aiplatform/evaluation_runs/">evaluation_runs</a><br />
 <a href="/services/aiplatform/evaluation_sets/">evaluation_sets</a><br />
 <a href="/services/aiplatform/evaluations/">evaluations</a><br />
@@ -67,12 +70,13 @@ total resources: __86__
 <a href="/services/aiplatform/hyperparameter_tuning_jobs/">hyperparameter_tuning_jobs</a><br />
 <a href="/services/aiplatform/index_endpoints/">index_endpoints</a><br />
 <a href="/services/aiplatform/indexes/">indexes</a><br />
-<a href="/services/aiplatform/invoke/">invoke</a>
-</div>
-<div class="providerDocColumn">
+<a href="/services/aiplatform/invoke/">invoke</a><br />
 <a href="/services/aiplatform/locations/">locations</a><br />
 <a href="/services/aiplatform/memories/">memories</a><br />
-<a href="/services/aiplatform/metadata_schemas/">metadata_schemas</a><br />
+<a href="/services/aiplatform/memory_banks/">memory_banks</a><br />
+<a href="/services/aiplatform/metadata_schemas/">metadata_schemas</a>
+</div>
+<div class="providerDocColumn">
 <a href="/services/aiplatform/metadata_stores/">metadata_stores</a><br />
 <a href="/services/aiplatform/migratable_resources/">migratable_resources</a><br />
 <a href="/services/aiplatform/model_deployment_monitoring_jobs/">model_deployment_monitoring_jobs</a><br />
@@ -88,6 +92,7 @@ total resources: __86__
 <a href="/services/aiplatform/notebook_runtime_templates/">notebook_runtime_templates</a><br />
 <a href="/services/aiplatform/notebook_runtime_templates_iam_policies/">notebook_runtime_templates_iam_policies</a><br />
 <a href="/services/aiplatform/notebook_runtimes/">notebook_runtimes</a><br />
+<a href="/services/aiplatform/online_evaluators/">online_evaluators</a><br />
 <a href="/services/aiplatform/openapi/">openapi</a><br />
 <a href="/services/aiplatform/operations/">operations</a><br />
 <a href="/services/aiplatform/operations_wait/">operations_wait</a><br />
@@ -99,11 +104,19 @@ total resources: __86__
 <a href="/services/aiplatform/rag_file_operations/">rag_file_operations</a><br />
 <a href="/services/aiplatform/rag_files/">rag_files</a><br />
 <a href="/services/aiplatform/reasoning_engines/">reasoning_engines</a><br />
+<a href="/services/aiplatform/reasoning_engines_iam_policies/">reasoning_engines_iam_policies</a><br />
+<a href="/services/aiplatform/responses/">responses</a><br />
 <a href="/services/aiplatform/revisions/">revisions</a><br />
 <a href="/services/aiplatform/runs/">runs</a><br />
+<a href="/services/aiplatform/runtime_revisions/">runtime_revisions</a><br />
+<a href="/services/aiplatform/sandbox_environment_snapshots/">sandbox_environment_snapshots</a><br />
+<a href="/services/aiplatform/sandbox_environment_templates/">sandbox_environment_templates</a><br />
+<a href="/services/aiplatform/sandbox_environments/">sandbox_environments</a><br />
 <a href="/services/aiplatform/saved_queries/">saved_queries</a><br />
 <a href="/services/aiplatform/schedules/">schedules</a><br />
 <a href="/services/aiplatform/science/">science</a><br />
+<a href="/services/aiplatform/semantic_governance_policies/">semantic_governance_policies</a><br />
+<a href="/services/aiplatform/semantic_governance_policy_engine/">semantic_governance_policy_engine</a><br />
 <a href="/services/aiplatform/sessions/">sessions</a><br />
 <a href="/services/aiplatform/slices/">slices</a><br />
 <a href="/services/aiplatform/specialist_pools/">specialist_pools</a><br />
@@ -112,6 +125,7 @@ total resources: __86__
 <a href="/services/aiplatform/time_series/">time_series</a><br />
 <a href="/services/aiplatform/training_pipelines/">training_pipelines</a><br />
 <a href="/services/aiplatform/trials/">trials</a><br />
-<a href="/services/aiplatform/tuning_jobs/">tuning_jobs</a>
+<a href="/services/aiplatform/tuning_jobs/">tuning_jobs</a><br />
+<a href="/services/aiplatform/v1/">v1</a>
 </div>
 </div>

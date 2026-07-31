@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>snapshots</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>snapshots</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="snapshots" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.pubsub.snapshots" /></td></tr>
 </tbody></table>
@@ -32,13 +33,27 @@ Creates, updates, deletes, gets or lists a <code>snapshots</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_snapshots_get"
+    defaultValue="projects_topics_snapshots_list"
     values={[
-        { label: 'projects_snapshots_get', value: 'projects_snapshots_get' },
         { label: 'projects_topics_snapshots_list', value: 'projects_topics_snapshots_list' },
+        { label: 'projects_snapshots_get', value: 'projects_snapshots_get' },
         { label: 'projects_snapshots_list', value: 'projects_snapshots_list' }
     ]}
 >
+<TabItem value="projects_topics_snapshots_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</TabItem>
 <TabItem value="projects_snapshots_get">
 
 <table>
@@ -70,20 +85,6 @@ The following fields are returned by `SELECT` queries:
     <td><code>string</code></td>
     <td>Optional. The name of the topic from which this snapshot is retaining messages.</td>
 </tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="projects_topics_snapshots_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
 </tbody>
 </table>
 </TabItem>
@@ -139,13 +140,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#projects_snapshots_get"><CopyableCode code="projects_snapshots_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-snapshotsId"><code>snapshotsId</code></a></td>
-    <td></td>
-    <td>Gets the configuration details of a snapshot. Snapshots are used in [Seek](https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot.</td>
-</tr>
-<tr>
     <td><a href="#projects_topics_snapshots_list"><CopyableCode code="projects_topics_snapshots_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-topicsId"><code>topicsId</code></a></td>
@@ -153,10 +147,17 @@ The following methods are available for this resource:
     <td>Lists the names of the snapshots on this topic. Snapshots are used in [Seek](https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot.</td>
 </tr>
 <tr>
+    <td><a href="#projects_snapshots_get"><CopyableCode code="projects_snapshots_get" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-snapshotsId"><code>snapshotsId</code></a></td>
+    <td></td>
+    <td>Gets the configuration details of a snapshot. Snapshots are used in [Seek](https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot.</td>
+</tr>
+<tr>
     <td><a href="#projects_snapshots_list"><CopyableCode code="projects_snapshots_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists the existing snapshots. Snapshots are used in [Seek]( https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot.</td>
 </tr>
 <tr>
@@ -227,13 +228,28 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_snapshots_get"
+    defaultValue="projects_topics_snapshots_list"
     values={[
-        { label: 'projects_snapshots_get', value: 'projects_snapshots_get' },
         { label: 'projects_topics_snapshots_list', value: 'projects_topics_snapshots_list' },
+        { label: 'projects_snapshots_get', value: 'projects_snapshots_get' },
         { label: 'projects_snapshots_list', value: 'projects_snapshots_list' }
     ]}
 >
+<TabItem value="projects_topics_snapshots_list">
+
+Lists the names of the snapshots on this topic. Snapshots are used in [Seek](https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot.
+
+```sql
+SELECT
+*
+FROM google.pubsub.snapshots
+WHERE projectsId = '{{ projectsId }}' -- required
+AND topicsId = '{{ topicsId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
 <TabItem value="projects_snapshots_get">
 
 Gets the configuration details of a snapshot. Snapshots are used in [Seek](https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot.
@@ -250,21 +266,6 @@ AND snapshotsId = '{{ snapshotsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_topics_snapshots_list">
-
-Lists the names of the snapshots on this topic. Snapshots are used in [Seek](https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot.
-
-```sql
-SELECT
-*
-FROM google.pubsub.snapshots
-WHERE projectsId = '{{ projectsId }}' -- required
-AND topicsId = '{{ topicsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
 <TabItem value="projects_snapshots_list">
 
 Lists the existing snapshots. Snapshots are used in [Seek]( https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot.
@@ -277,8 +278,8 @@ labels,
 topic
 FROM google.pubsub.snapshots
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -300,8 +301,8 @@ Updates an existing snapshot by updating the fields specified in the update mask
 ```sql
 UPDATE google.pubsub.snapshots
 SET 
-data__updateMask = '{{ updateMask }}',
-data__snapshot = '{{ snapshot }}'
+data__snapshot = '{{ snapshot }}',
+data__updateMask = '{{ updateMask }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND snapshotsId = '{{ snapshotsId }}' --required
@@ -355,9 +356,9 @@ EXEC google.pubsub.snapshots.projects_snapshots_create
 @snapshotsId='{{ snapshotsId }}' --required 
 @@json=
 '{
-"tags": "{{ tags }}", 
 "labels": "{{ labels }}", 
-"subscription": "{{ subscription }}"
+"subscription": "{{ subscription }}", 
+"tags": "{{ tags }}"
 }'
 ;
 ```

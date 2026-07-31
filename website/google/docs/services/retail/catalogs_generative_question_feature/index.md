@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>catalogs_generative_question_fe
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>catalogs_generative_question_feature</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="catalogs_generative_question_feature" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.retail.catalogs_generative_question_feature" /></td></tr>
 </tbody></table>
@@ -178,9 +179,9 @@ Manages overal generative question feature state -- enables toggling feature on 
 ```sql
 UPDATE google.retail.catalogs_generative_question_feature
 SET 
+data__featureEnabled = {{ featureEnabled }},
 data__catalog = '{{ catalog }}',
-data__minimumProducts = {{ minimumProducts }},
-data__featureEnabled = {{ featureEnabled }}
+data__minimumProducts = {{ minimumProducts }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>agents</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>agents</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="agents" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dialogflow.agents" /></td></tr>
 </tbody></table>
@@ -52,122 +53,122 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The unique identifier of the agent. Required for the Agents.UpdateAgent method. Agents.CreateAgent populates the name automatically. Format: `projects//locations//agents/`.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="advancedSettings" /></td>
     <td><code>object</code></td>
-    <td>Hierarchical advanced settings for this agent. The settings exposed at the lower level overrides the settings exposed at the higher level. (id: GoogleCloudDialogflowCxV3AdvancedSettings)</td>
+    <td> (id: GoogleCloudDialogflowCxV3AdvancedSettings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="answerFeedbackSettings" /></td>
     <td><code>object</code></td>
-    <td>Optional. Answer feedback collection settings. (id: GoogleCloudDialogflowCxV3AgentAnswerFeedbackSettings)</td>
+    <td> (id: GoogleCloudDialogflowCxV3AgentAnswerFeedbackSettings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="avatarUri" /></td>
     <td><code>string</code></td>
-    <td>The URI of the agent's avatar. Avatars are used throughout the Dialogflow console and in the self-hosted [Web Demo](https://cloud.google.com/dialogflow/docs/integrations/web-demo) integration.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="clientCertificateSettings" /></td>
     <td><code>object</code></td>
-    <td>Optional. Settings for custom client certificates. (id: GoogleCloudDialogflowCxV3AgentClientCertificateSettings)</td>
+    <td> (id: GoogleCloudDialogflowCxV3AgentClientCertificateSettings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="defaultLanguageCode" /></td>
     <td><code>string</code></td>
-    <td>Required. Immutable. The default language of the agent as a language tag. See [Language Support](https://cloud.google.com/dialogflow/cx/docs/reference/language) for a list of the currently supported language codes. This field cannot be set by the Agents.UpdateAgent method.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
-    <td>The description of the agent. The maximum length is 500 characters. If exceeded, the request is rejected.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Required. The human-readable name of the agent, unique within the location.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="enableMultiLanguageTraining" /></td>
     <td><code>boolean</code></td>
-    <td>Optional. Enable training multi-lingual models for this agent. These models will be trained on all the languages supported by the agent.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="enableSpellCorrection" /></td>
     <td><code>boolean</code></td>
-    <td>Indicates if automatic spell correction is enabled in detect intent requests.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="enableStackdriverLogging" /></td>
     <td><code>boolean</code></td>
-    <td>Indicates if stackdriver logging is enabled for the agent. Please use agent.advanced_settings instead.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="genAppBuilderSettings" /></td>
     <td><code>object</code></td>
-    <td>Gen App Builder-related agent-level settings. (id: GoogleCloudDialogflowCxV3AgentGenAppBuilderSettings)</td>
+    <td> (id: GoogleCloudDialogflowCxV3AgentGenAppBuilderSettings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="gitIntegrationSettings" /></td>
     <td><code>object</code></td>
-    <td>Git integration settings for this agent. (id: GoogleCloudDialogflowCxV3AgentGitIntegrationSettings)</td>
+    <td> (id: GoogleCloudDialogflowCxV3AgentGitIntegrationSettings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="locked" /></td>
     <td><code>boolean</code></td>
-    <td>Indicates whether the agent is locked for changes. If the agent is locked, modifications to the agent will be rejected except for RestoreAgent.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="personalizationSettings" /></td>
     <td><code>object</code></td>
-    <td>Optional. Settings for end user personalization. (id: GoogleCloudDialogflowCxV3AgentPersonalizationSettings)</td>
+    <td> (id: GoogleCloudDialogflowCxV3AgentPersonalizationSettings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="satisfiesPzi" /></td>
     <td><code>boolean</code></td>
-    <td>Optional. Output only. A read only boolean field reflecting Zone Isolation status of the agent.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="satisfiesPzs" /></td>
     <td><code>boolean</code></td>
-    <td>Optional. Output only. A read only boolean field reflecting Zone Separation status of the agent.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="securitySettings" /></td>
     <td><code>string</code></td>
-    <td>Name of the SecuritySettings reference for the agent. Format: `projects//locations//securitySettings/`.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="speechToTextSettings" /></td>
     <td><code>object</code></td>
-    <td>Speech recognition related settings. (id: GoogleCloudDialogflowCxV3SpeechToTextSettings)</td>
+    <td> (id: GoogleCloudDialogflowCxV3SpeechToTextSettings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="startFlow" /></td>
     <td><code>string</code></td>
-    <td>Name of the start flow in this agent. A start flow will be automatically created when the agent is created, and can only be deleted by deleting the agent. Format: `projects//locations//agents//flows/`. Currently only the default start flow with id "00000000-0000-0000-0000-000000000000" is allowed.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="startPlaybook" /></td>
     <td><code>string</code></td>
-    <td>Name of the start playbook in this agent. A start playbook will be automatically created when the agent is created, and can only be deleted by deleting the agent. Format: `projects//locations//agents//playbooks/`. Currently only the default playbook with id "00000000-0000-0000-0000-000000000000" is allowed.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="supportedLanguageCodes" /></td>
     <td><code>array</code></td>
-    <td>The list of all languages supported by the agent (except for the `default_language_code`).</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="textToSpeechSettings" /></td>
     <td><code>object</code></td>
-    <td>Settings on instructing the speech synthesizer on how to generate the output audio content. (id: GoogleCloudDialogflowCxV3TextToSpeechSettings)</td>
+    <td> (id: GoogleCloudDialogflowCxV3TextToSpeechSettings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="timeZone" /></td>
     <td><code>string</code></td>
-    <td>Required. The time zone of the agent from the [time zone database](https://www.iana.org/time-zones), e.g., America/New_York, Europe/Paris.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -186,122 +187,122 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The unique identifier of the agent. Required for the Agents.UpdateAgent method. Agents.CreateAgent populates the name automatically. Format: `projects//locations//agents/`.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="advancedSettings" /></td>
     <td><code>object</code></td>
-    <td>Hierarchical advanced settings for this agent. The settings exposed at the lower level overrides the settings exposed at the higher level. (id: GoogleCloudDialogflowCxV3AdvancedSettings)</td>
+    <td> (id: GoogleCloudDialogflowCxV3AdvancedSettings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="answerFeedbackSettings" /></td>
     <td><code>object</code></td>
-    <td>Optional. Answer feedback collection settings. (id: GoogleCloudDialogflowCxV3AgentAnswerFeedbackSettings)</td>
+    <td> (id: GoogleCloudDialogflowCxV3AgentAnswerFeedbackSettings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="avatarUri" /></td>
     <td><code>string</code></td>
-    <td>The URI of the agent's avatar. Avatars are used throughout the Dialogflow console and in the self-hosted [Web Demo](https://cloud.google.com/dialogflow/docs/integrations/web-demo) integration.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="clientCertificateSettings" /></td>
     <td><code>object</code></td>
-    <td>Optional. Settings for custom client certificates. (id: GoogleCloudDialogflowCxV3AgentClientCertificateSettings)</td>
+    <td> (id: GoogleCloudDialogflowCxV3AgentClientCertificateSettings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="defaultLanguageCode" /></td>
     <td><code>string</code></td>
-    <td>Required. Immutable. The default language of the agent as a language tag. See [Language Support](https://cloud.google.com/dialogflow/cx/docs/reference/language) for a list of the currently supported language codes. This field cannot be set by the Agents.UpdateAgent method.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
-    <td>The description of the agent. The maximum length is 500 characters. If exceeded, the request is rejected.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Required. The human-readable name of the agent, unique within the location.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="enableMultiLanguageTraining" /></td>
     <td><code>boolean</code></td>
-    <td>Optional. Enable training multi-lingual models for this agent. These models will be trained on all the languages supported by the agent.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="enableSpellCorrection" /></td>
     <td><code>boolean</code></td>
-    <td>Indicates if automatic spell correction is enabled in detect intent requests.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="enableStackdriverLogging" /></td>
     <td><code>boolean</code></td>
-    <td>Indicates if stackdriver logging is enabled for the agent. Please use agent.advanced_settings instead.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="genAppBuilderSettings" /></td>
     <td><code>object</code></td>
-    <td>Gen App Builder-related agent-level settings. (id: GoogleCloudDialogflowCxV3AgentGenAppBuilderSettings)</td>
+    <td> (id: GoogleCloudDialogflowCxV3AgentGenAppBuilderSettings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="gitIntegrationSettings" /></td>
     <td><code>object</code></td>
-    <td>Git integration settings for this agent. (id: GoogleCloudDialogflowCxV3AgentGitIntegrationSettings)</td>
+    <td> (id: GoogleCloudDialogflowCxV3AgentGitIntegrationSettings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="locked" /></td>
     <td><code>boolean</code></td>
-    <td>Indicates whether the agent is locked for changes. If the agent is locked, modifications to the agent will be rejected except for RestoreAgent.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="personalizationSettings" /></td>
     <td><code>object</code></td>
-    <td>Optional. Settings for end user personalization. (id: GoogleCloudDialogflowCxV3AgentPersonalizationSettings)</td>
+    <td> (id: GoogleCloudDialogflowCxV3AgentPersonalizationSettings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="satisfiesPzi" /></td>
     <td><code>boolean</code></td>
-    <td>Optional. Output only. A read only boolean field reflecting Zone Isolation status of the agent.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="satisfiesPzs" /></td>
     <td><code>boolean</code></td>
-    <td>Optional. Output only. A read only boolean field reflecting Zone Separation status of the agent.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="securitySettings" /></td>
     <td><code>string</code></td>
-    <td>Name of the SecuritySettings reference for the agent. Format: `projects//locations//securitySettings/`.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="speechToTextSettings" /></td>
     <td><code>object</code></td>
-    <td>Speech recognition related settings. (id: GoogleCloudDialogflowCxV3SpeechToTextSettings)</td>
+    <td> (id: GoogleCloudDialogflowCxV3SpeechToTextSettings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="startFlow" /></td>
     <td><code>string</code></td>
-    <td>Name of the start flow in this agent. A start flow will be automatically created when the agent is created, and can only be deleted by deleting the agent. Format: `projects//locations//agents//flows/`. Currently only the default start flow with id "00000000-0000-0000-0000-000000000000" is allowed.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="startPlaybook" /></td>
     <td><code>string</code></td>
-    <td>Name of the start playbook in this agent. A start playbook will be automatically created when the agent is created, and can only be deleted by deleting the agent. Format: `projects//locations//agents//playbooks/`. Currently only the default playbook with id "00000000-0000-0000-0000-000000000000" is allowed.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="supportedLanguageCodes" /></td>
     <td><code>array</code></td>
-    <td>The list of all languages supported by the agent (except for the `default_language_code`).</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="textToSpeechSettings" /></td>
     <td><code>object</code></td>
-    <td>Settings on instructing the speech synthesizer on how to generate the output audio content. (id: GoogleCloudDialogflowCxV3TextToSpeechSettings)</td>
+    <td> (id: GoogleCloudDialogflowCxV3TextToSpeechSettings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="timeZone" /></td>
     <td><code>string</code></td>
-    <td>Required. The time zone of the agent from the [time zone database](https://www.iana.org/time-zones), e.g., America/New_York, Europe/Paris.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -328,56 +329,56 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
     <td></td>
-    <td>Retrieves the specified agent.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_list"><CopyableCode code="projects_locations_agents_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Returns the list of all agents in the specified location.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_create"><CopyableCode code="projects_locations_agents_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
-    <td>Creates an agent in the specified location. Note: You should always train flows prior to sending them queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_patch"><CopyableCode code="projects_locations_agents_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates the specified agent. Note: You should always train flows prior to sending them queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_delete"><CopyableCode code="projects_locations_agents_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
     <td></td>
-    <td>Deletes the specified agent.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_agents_export"><CopyableCode code="projects_locations_agents_export" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
     <td></td>
-    <td>Exports the specified agent to a binary file. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: An empty [Struct message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#struct) - `response`: ExportAgentResponse</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_restore"><CopyableCode code="projects_locations_agents_restore" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
     <td></td>
-    <td>Restores the specified agent from a binary file. Replaces the current agent with a new one. Note that all existing resources in agent (e.g. intents, entity types, flows) will be removed. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: An empty [Struct message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#struct) - `response`: An [Empty message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty) Note: You should always train flows prior to sending them queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_validate"><CopyableCode code="projects_locations_agents_validate" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
     <td></td>
-    <td>Validates the specified agent and creates or updates validation results. The agent in draft version is validated. Please call this API after the training is completed to get the complete validation results.</td>
+    <td></td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_agents_export"><CopyableCode code="projects_locations_agents_export" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
+    <td></td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -439,7 +440,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="projects_locations_agents_get">
 
-Retrieves the specified agent.
+Successful response
 
 ```sql
 SELECT
@@ -476,7 +477,7 @@ AND agentsId = '{{ agentsId }}' -- required
 </TabItem>
 <TabItem value="projects_locations_agents_list">
 
-Returns the list of all agents in the specified location.
+Successful response
 
 ```sql
 SELECT
@@ -526,58 +527,58 @@ AND pageToken = '{{ pageToken }}'
 >
 <TabItem value="projects_locations_agents_create">
 
-Creates an agent in the specified location. Note: You should always train flows prior to sending them queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+No description available.
 
 ```sql
 INSERT INTO google.dialogflow.agents (
-data__name,
-data__displayName,
 data__defaultLanguageCode,
-data__supportedLanguageCodes,
-data__timeZone,
-data__description,
-data__avatarUri,
 data__speechToTextSettings,
-data__startFlow,
-data__startPlaybook,
-data__securitySettings,
-data__enableStackdriverLogging,
-data__enableSpellCorrection,
-data__enableMultiLanguageTraining,
-data__locked,
-data__advancedSettings,
-data__gitIntegrationSettings,
-data__textToSpeechSettings,
-data__genAppBuilderSettings,
-data__answerFeedbackSettings,
 data__personalizationSettings,
+data__answerFeedbackSettings,
+data__enableMultiLanguageTraining,
+data__securitySettings,
+data__textToSpeechSettings,
+data__description,
 data__clientCertificateSettings,
+data__displayName,
+data__enableSpellCorrection,
+data__supportedLanguageCodes,
+data__genAppBuilderSettings,
+data__avatarUri,
+data__startPlaybook,
+data__enableStackdriverLogging,
+data__timeZone,
+data__name,
+data__locked,
+data__gitIntegrationSettings,
+data__advancedSettings,
+data__startFlow,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
 '{{ defaultLanguageCode }}',
-'{{ supportedLanguageCodes }}',
-'{{ timeZone }}',
-'{{ description }}',
-'{{ avatarUri }}',
 '{{ speechToTextSettings }}',
-'{{ startFlow }}',
-'{{ startPlaybook }}',
-'{{ securitySettings }}',
-{{ enableStackdriverLogging }},
-{{ enableSpellCorrection }},
-{{ enableMultiLanguageTraining }},
-{{ locked }},
-'{{ advancedSettings }}',
-'{{ gitIntegrationSettings }}',
-'{{ textToSpeechSettings }}',
-'{{ genAppBuilderSettings }}',
-'{{ answerFeedbackSettings }}',
 '{{ personalizationSettings }}',
+'{{ answerFeedbackSettings }}',
+{{ enableMultiLanguageTraining }},
+'{{ securitySettings }}',
+'{{ textToSpeechSettings }}',
+'{{ description }}',
 '{{ clientCertificateSettings }}',
+'{{ displayName }}',
+{{ enableSpellCorrection }},
+'{{ supportedLanguageCodes }}',
+'{{ genAppBuilderSettings }}',
+'{{ avatarUri }}',
+'{{ startPlaybook }}',
+{{ enableStackdriverLogging }},
+'{{ timeZone }}',
+'{{ name }}',
+{{ locked }},
+'{{ gitIntegrationSettings }}',
+'{{ advancedSettings }}',
+'{{ startFlow }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -610,127 +611,94 @@ timeZone
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: agents
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the agents resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the agents resource.
-    - name: name
-      value: string
-      description: >
-        The unique identifier of the agent. Required for the Agents.UpdateAgent method. Agents.CreateAgent populates the name automatically. Format: `projects//locations//agents/`.
-        
-    - name: displayName
-      value: string
-      description: >
-        Required. The human-readable name of the agent, unique within the location.
-        
     - name: defaultLanguageCode
-      value: string
-      description: >
-        Required. Immutable. The default language of the agent as a language tag. See [Language Support](https://cloud.google.com/dialogflow/cx/docs/reference/language) for a list of the currently supported language codes. This field cannot be set by the Agents.UpdateAgent method.
-        
-    - name: supportedLanguageCodes
-      value: array
-      description: >
-        The list of all languages supported by the agent (except for the `default_language_code`).
-        
-    - name: timeZone
-      value: string
-      description: >
-        Required. The time zone of the agent from the [time zone database](https://www.iana.org/time-zones), e.g., America/New_York, Europe/Paris.
-        
-    - name: description
-      value: string
-      description: >
-        The description of the agent. The maximum length is 500 characters. If exceeded, the request is rejected.
-        
-    - name: avatarUri
-      value: string
-      description: >
-        The URI of the agent's avatar. Avatars are used throughout the Dialogflow console and in the self-hosted [Web Demo](https://cloud.google.com/dialogflow/docs/integrations/web-demo) integration.
-        
+      value: "{{ defaultLanguageCode }}"
     - name: speechToTextSettings
-      value: object
-      description: >
-        Speech recognition related settings.
-        
-    - name: startFlow
-      value: string
-      description: >
-        Name of the start flow in this agent. A start flow will be automatically created when the agent is created, and can only be deleted by deleting the agent. Format: `projects//locations//agents//flows/`. Currently only the default start flow with id "00000000-0000-0000-0000-000000000000" is allowed.
-        
-    - name: startPlaybook
-      value: string
-      description: >
-        Name of the start playbook in this agent. A start playbook will be automatically created when the agent is created, and can only be deleted by deleting the agent. Format: `projects//locations//agents//playbooks/`. Currently only the default playbook with id "00000000-0000-0000-0000-000000000000" is allowed.
-        
-    - name: securitySettings
-      value: string
-      description: >
-        Name of the SecuritySettings reference for the agent. Format: `projects//locations//securitySettings/`.
-        
-    - name: enableStackdriverLogging
-      value: boolean
-      description: >
-        Indicates if stackdriver logging is enabled for the agent. Please use agent.advanced_settings instead.
-        
-    - name: enableSpellCorrection
-      value: boolean
-      description: >
-        Indicates if automatic spell correction is enabled in detect intent requests.
-        
-    - name: enableMultiLanguageTraining
-      value: boolean
-      description: >
-        Optional. Enable training multi-lingual models for this agent. These models will be trained on all the languages supported by the agent.
-        
-    - name: locked
-      value: boolean
-      description: >
-        Indicates whether the agent is locked for changes. If the agent is locked, modifications to the agent will be rejected except for RestoreAgent.
-        
-    - name: advancedSettings
-      value: object
-      description: >
-        Hierarchical advanced settings for this agent. The settings exposed at the lower level overrides the settings exposed at the higher level.
-        
-    - name: gitIntegrationSettings
-      value: object
-      description: >
-        Git integration settings for this agent.
-        
-    - name: textToSpeechSettings
-      value: object
-      description: >
-        Settings on instructing the speech synthesizer on how to generate the output audio content.
-        
-    - name: genAppBuilderSettings
-      value: object
-      description: >
-        Gen App Builder-related agent-level settings.
-        
-    - name: answerFeedbackSettings
-      value: object
-      description: >
-        Optional. Answer feedback collection settings.
-        
+      value:
+        enableSpeechAdaptation: {{ enableSpeechAdaptation }}
     - name: personalizationSettings
-      value: object
-      description: >
-        Optional. Settings for end user personalization.
-        
+      value:
+        defaultEndUserMetadata: "{{ defaultEndUserMetadata }}"
+    - name: answerFeedbackSettings
+      value:
+        enableAnswerFeedback: {{ enableAnswerFeedback }}
+    - name: enableMultiLanguageTraining
+      value: {{ enableMultiLanguageTraining }}
+    - name: securitySettings
+      value: "{{ securitySettings }}"
+    - name: textToSpeechSettings
+      value:
+        synthesizeSpeechConfigs: "{{ synthesizeSpeechConfigs }}"
+    - name: description
+      value: "{{ description }}"
     - name: clientCertificateSettings
-      value: object
-      description: >
-        Optional. Settings for custom client certificates.
-        
-```
+      value:
+        sslCertificate: "{{ sslCertificate }}"
+        privateKey: "{{ privateKey }}"
+        passphrase: "{{ passphrase }}"
+    - name: displayName
+      value: "{{ displayName }}"
+    - name: enableSpellCorrection
+      value: {{ enableSpellCorrection }}
+    - name: supportedLanguageCodes
+      value:
+        - "{{ supportedLanguageCodes }}"
+    - name: genAppBuilderSettings
+      value:
+        engine: "{{ engine }}"
+    - name: avatarUri
+      value: "{{ avatarUri }}"
+    - name: startPlaybook
+      value: "{{ startPlaybook }}"
+    - name: enableStackdriverLogging
+      value: {{ enableStackdriverLogging }}
+    - name: timeZone
+      value: "{{ timeZone }}"
+    - name: name
+      value: "{{ name }}"
+    - name: locked
+      value: {{ locked }}
+    - name: gitIntegrationSettings
+      value:
+        githubSettings:
+          branches:
+            - "{{ branches }}"
+          repositoryUri: "{{ repositoryUri }}"
+          trackingBranch: "{{ trackingBranch }}"
+          displayName: "{{ displayName }}"
+          accessToken: "{{ accessToken }}"
+    - name: advancedSettings
+      value:
+        loggingSettings:
+          enableInteractionLogging: {{ enableInteractionLogging }}
+          enableConsentBasedRedaction: {{ enableConsentBasedRedaction }}
+          enableStackdriverLogging: {{ enableStackdriverLogging }}
+        audioExportGcsDestination:
+          uri: "{{ uri }}"
+        speechSettings:
+          useTimeoutBasedEndpointing: {{ useTimeoutBasedEndpointing }}
+          models: "{{ models }}"
+          endpointerSensitivity: {{ endpointerSensitivity }}
+          noSpeechTimeout: "{{ noSpeechTimeout }}"
+        dtmfSettings:
+          maxDigits: {{ maxDigits }}
+          finishDigit: "{{ finishDigit }}"
+          interdigitTimeoutDuration: "{{ interdigitTimeoutDuration }}"
+          enabled: {{ enabled }}
+          endpointingTimeoutDuration: "{{ endpointingTimeoutDuration }}"
+    - name: startFlow
+      value: "{{ startFlow }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -745,33 +713,33 @@ timeZone
 >
 <TabItem value="projects_locations_agents_patch">
 
-Updates the specified agent. Note: You should always train flows prior to sending them queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+No description available.
 
 ```sql
 UPDATE google.dialogflow.agents
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
 data__defaultLanguageCode = '{{ defaultLanguageCode }}',
-data__supportedLanguageCodes = '{{ supportedLanguageCodes }}',
-data__timeZone = '{{ timeZone }}',
-data__description = '{{ description }}',
-data__avatarUri = '{{ avatarUri }}',
 data__speechToTextSettings = '{{ speechToTextSettings }}',
-data__startFlow = '{{ startFlow }}',
-data__startPlaybook = '{{ startPlaybook }}',
-data__securitySettings = '{{ securitySettings }}',
-data__enableStackdriverLogging = {{ enableStackdriverLogging }},
-data__enableSpellCorrection = {{ enableSpellCorrection }},
-data__enableMultiLanguageTraining = {{ enableMultiLanguageTraining }},
-data__locked = {{ locked }},
-data__advancedSettings = '{{ advancedSettings }}',
-data__gitIntegrationSettings = '{{ gitIntegrationSettings }}',
-data__textToSpeechSettings = '{{ textToSpeechSettings }}',
-data__genAppBuilderSettings = '{{ genAppBuilderSettings }}',
-data__answerFeedbackSettings = '{{ answerFeedbackSettings }}',
 data__personalizationSettings = '{{ personalizationSettings }}',
-data__clientCertificateSettings = '{{ clientCertificateSettings }}'
+data__answerFeedbackSettings = '{{ answerFeedbackSettings }}',
+data__enableMultiLanguageTraining = {{ enableMultiLanguageTraining }},
+data__securitySettings = '{{ securitySettings }}',
+data__textToSpeechSettings = '{{ textToSpeechSettings }}',
+data__description = '{{ description }}',
+data__clientCertificateSettings = '{{ clientCertificateSettings }}',
+data__displayName = '{{ displayName }}',
+data__enableSpellCorrection = {{ enableSpellCorrection }},
+data__supportedLanguageCodes = '{{ supportedLanguageCodes }}',
+data__genAppBuilderSettings = '{{ genAppBuilderSettings }}',
+data__avatarUri = '{{ avatarUri }}',
+data__startPlaybook = '{{ startPlaybook }}',
+data__enableStackdriverLogging = {{ enableStackdriverLogging }},
+data__timeZone = '{{ timeZone }}',
+data__name = '{{ name }}',
+data__locked = {{ locked }},
+data__gitIntegrationSettings = '{{ gitIntegrationSettings }}',
+data__advancedSettings = '{{ advancedSettings }}',
+data__startFlow = '{{ startFlow }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -817,7 +785,7 @@ timeZone;
 >
 <TabItem value="projects_locations_agents_delete">
 
-Deletes the specified agent.
+No description available.
 
 ```sql
 DELETE FROM google.dialogflow.agents
@@ -833,36 +801,16 @@ AND agentsId = '{{ agentsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_agents_export"
+    defaultValue="projects_locations_agents_restore"
     values={[
-        { label: 'projects_locations_agents_export', value: 'projects_locations_agents_export' },
         { label: 'projects_locations_agents_restore', value: 'projects_locations_agents_restore' },
-        { label: 'projects_locations_agents_validate', value: 'projects_locations_agents_validate' }
+        { label: 'projects_locations_agents_validate', value: 'projects_locations_agents_validate' },
+        { label: 'projects_locations_agents_export', value: 'projects_locations_agents_export' }
     ]}
 >
-<TabItem value="projects_locations_agents_export">
-
-Exports the specified agent to a binary file. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: An empty [Struct message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#struct) - `response`: ExportAgentResponse
-
-```sql
-EXEC google.dialogflow.agents.projects_locations_agents_export 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@agentsId='{{ agentsId }}' --required 
-@@json=
-'{
-"agentUri": "{{ agentUri }}", 
-"dataFormat": "{{ dataFormat }}", 
-"environment": "{{ environment }}", 
-"gitDestination": "{{ gitDestination }}", 
-"includeBigqueryExportSettings": {{ includeBigqueryExportSettings }}
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_agents_restore">
 
-Restores the specified agent from a binary file. Replaces the current agent with a new one. Note that all existing resources in agent (e.g. intents, entity types, flows) will be removed. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: An empty [Struct message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#struct) - `response`: An [Empty message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty) Note: You should always train flows prior to sending them queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+Successful response
 
 ```sql
 EXEC google.dialogflow.agents.projects_locations_agents_restore 
@@ -872,16 +820,16 @@ EXEC google.dialogflow.agents.projects_locations_agents_restore
 @@json=
 '{
 "agentUri": "{{ agentUri }}", 
+"restoreOption": "{{ restoreOption }}", 
 "agentContent": "{{ agentContent }}", 
-"gitSource": "{{ gitSource }}", 
-"restoreOption": "{{ restoreOption }}"
+"gitSource": "{{ gitSource }}"
 }'
 ;
 ```
 </TabItem>
 <TabItem value="projects_locations_agents_validate">
 
-Validates the specified agent and creates or updates validation results. The agent in draft version is validated. Please call this API after the training is completed to get the complete validation results.
+Successful response
 
 ```sql
 EXEC google.dialogflow.agents.projects_locations_agents_validate 
@@ -891,6 +839,26 @@ EXEC google.dialogflow.agents.projects_locations_agents_validate
 @@json=
 '{
 "languageCode": "{{ languageCode }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_agents_export">
+
+Successful response
+
+```sql
+EXEC google.dialogflow.agents.projects_locations_agents_export 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@agentsId='{{ agentsId }}' --required 
+@@json=
+'{
+"gitDestination": "{{ gitDestination }}", 
+"includeBigqueryExportSettings": {{ includeBigqueryExportSettings }}, 
+"environment": "{{ environment }}", 
+"agentUri": "{{ agentUri }}", 
+"dataFormat": "{{ dataFormat }}"
 }'
 ;
 ```

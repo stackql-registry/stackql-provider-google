@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>changes</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>changes</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="changes" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dns.changes" /></td></tr>
 </tbody></table>
@@ -82,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>Status of the operation (output only). A status of "done" means that the request to update the authoritative servers has been sent, but the servers might not be updated yet.</td>
+    <td>Status of the operation (output only). A status of "done" means that the request to update the authoritative servers has been sent, but the servers might not be updated yet. (pending, done)</td>
 </tr>
 </tbody>
 </table>
@@ -131,7 +132,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>Status of the operation (output only). A status of "done" means that the request to update the authoritative servers has been sent, but the servers might not be updated yet.</td>
+    <td>Status of the operation (output only). A status of "done" means that the request to update the authoritative servers has been sent, but the servers might not be updated yet. (pending, done)</td>
 </tr>
 </tbody>
 </table>
@@ -164,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-managedZone"><code>managedZone</code></a></td>
-    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-sortBy"><code>sortBy</code></a>, <a href="#parameter-sortOrder"><code>sortOrder</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-sortOrder"><code>sortOrder</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-sortBy"><code>sortBy</code></a></td>
     <td>Enumerates Changes to a ResourceRecordSet collection.</td>
 </tr>
 <tr>
@@ -172,7 +173,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-managedZone"><code>managedZone</code></a></td>
     <td><a href="#parameter-clientOperationId"><code>clientOperationId</code></a></td>
-    <td>Atomically updates the ResourceRecordSet collection.</td>
+    <td>Atomically updates the ResourceRecordSet collection. Note: While `dns.changes.create` is the baseline permission required to invoke this method, additional permissions are checked depending on the specific additions or deletions contained in the payload.</td>
 </tr>
 </tbody>
 </table>
@@ -279,10 +280,10 @@ status
 FROM google.dns.changes
 WHERE project = '{{ project }}' -- required
 AND managedZone = '{{ managedZone }}' -- required
-AND maxResults = '{{ maxResults }}'
 AND pageToken = '{{ pageToken }}'
-AND sortBy = '{{ sortBy }}'
 AND sortOrder = '{{ sortOrder }}'
+AND maxResults = '{{ maxResults }}'
+AND sortBy = '{{ sortBy }}'
 ;
 ```
 </TabItem>
@@ -300,29 +301,29 @@ AND sortOrder = '{{ sortOrder }}'
 >
 <TabItem value="create">
 
-Atomically updates the ResourceRecordSet collection.
+Atomically updates the ResourceRecordSet collection. Note: While `dns.changes.create` is the baseline permission required to invoke this method, additional permissions are checked depending on the specific additions or deletions contained in the payload.
 
 ```sql
 INSERT INTO google.dns.changes (
-data__additions,
 data__deletions,
-data__startTime,
-data__id,
 data__status,
-data__isServing,
 data__kind,
+data__isServing,
+data__id,
+data__additions,
+data__startTime,
 project,
 managedZone,
 clientOperationId
 )
 SELECT 
-'{{ additions }}',
 '{{ deletions }}',
-'{{ startTime }}',
-'{{ id }}',
 '{{ status }}',
-{{ isServing }},
 '{{ kind }}',
+{{ isServing }},
+'{{ id }}',
+'{{ additions }}',
+'{{ startTime }}',
 '{{ project }}',
 '{{ managedZone }}',
 '{{ clientOperationId }}'
@@ -339,52 +340,158 @@ status
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: changes
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the changes resource.
     - name: managedZone
-      value: string
+      value: "{{ managedZone }}"
       description: Required parameter for the changes resource.
-    - name: additions
-      value: array
-      description: >
-        Which ResourceRecordSets to add?
-        
     - name: deletions
-      value: array
-      description: >
+      description: |
         Which ResourceRecordSets to remove? Must match existing data exactly.
-        
-    - name: startTime
-      value: string
-      description: >
-        The time that this operation was started by the server (output only). This is in RFC3339 text format.
-        
-    - name: id
-      value: string
-      description: >
-        Unique identifier for the resource; defined by the server (output only).
-        
+      value:
+        - routingPolicy:
+            geo:
+              enableFencing: {{ enableFencing }}
+              kind: "{{ kind }}"
+              items:
+                - kind: "{{ kind }}"
+                  location: "{{ location }}"
+                  rrdatas: "{{ rrdatas }}"
+                  signatureRrdatas: "{{ signatureRrdatas }}"
+                  healthCheckedTargets:
+                    internalLoadBalancers: "{{ internalLoadBalancers }}"
+                    externalEndpoints: "{{ externalEndpoints }}"
+            primaryBackup:
+              primaryTargets:
+                internalLoadBalancers:
+                  - ipAddress: "{{ ipAddress }}"
+                    kind: "{{ kind }}"
+                    ipProtocol: "{{ ipProtocol }}"
+                    region: "{{ region }}"
+                    project: "{{ project }}"
+                    loadBalancerType: "{{ loadBalancerType }}"
+                    networkUrl: "{{ networkUrl }}"
+                    port: "{{ port }}"
+                externalEndpoints:
+                  - "{{ externalEndpoints }}"
+              kind: "{{ kind }}"
+              trickleTraffic: {{ trickleTraffic }}
+              backupGeoTargets:
+                enableFencing: {{ enableFencing }}
+                kind: "{{ kind }}"
+                items:
+                  - kind: "{{ kind }}"
+                    location: "{{ location }}"
+                    rrdatas: "{{ rrdatas }}"
+                    signatureRrdatas: "{{ signatureRrdatas }}"
+                    healthCheckedTargets:
+                      internalLoadBalancers: "{{ internalLoadBalancers }}"
+                      externalEndpoints: "{{ externalEndpoints }}"
+            healthCheck: "{{ healthCheck }}"
+            kind: "{{ kind }}"
+            wrr:
+              items:
+                - weight: {{ weight }}
+                  kind: "{{ kind }}"
+                  rrdatas: "{{ rrdatas }}"
+                  signatureRrdatas: "{{ signatureRrdatas }}"
+                  healthCheckedTargets:
+                    internalLoadBalancers: "{{ internalLoadBalancers }}"
+                    externalEndpoints: "{{ externalEndpoints }}"
+              kind: "{{ kind }}"
+          kind: "{{ kind }}"
+          ttl: {{ ttl }}
+          rrdatas: "{{ rrdatas }}"
+          signatureRrdatas: "{{ signatureRrdatas }}"
+          type: "{{ type }}"
+          name: "{{ name }}"
     - name: status
-      value: string
-      description: >
+      value: "{{ status }}"
+      description: |
         Status of the operation (output only). A status of "done" means that the request to update the authoritative servers has been sent, but the servers might not be updated yet.
-        
       valid_values: ['pending', 'done']
-    - name: isServing
-      value: boolean
-      description: >
-        If the DNS queries for the zone will be served.
-        
     - name: kind
-      value: string
+      value: "{{ kind }}"
       default: dns#change
+    - name: isServing
+      value: {{ isServing }}
+      description: |
+        If the DNS queries for the zone will be served.
+    - name: id
+      value: "{{ id }}"
+      description: |
+        Unique identifier for the resource; defined by the server (output only).
+    - name: additions
+      description: |
+        Which ResourceRecordSets to add?
+      value:
+        - routingPolicy:
+            geo:
+              enableFencing: {{ enableFencing }}
+              kind: "{{ kind }}"
+              items:
+                - kind: "{{ kind }}"
+                  location: "{{ location }}"
+                  rrdatas: "{{ rrdatas }}"
+                  signatureRrdatas: "{{ signatureRrdatas }}"
+                  healthCheckedTargets:
+                    internalLoadBalancers: "{{ internalLoadBalancers }}"
+                    externalEndpoints: "{{ externalEndpoints }}"
+            primaryBackup:
+              primaryTargets:
+                internalLoadBalancers:
+                  - ipAddress: "{{ ipAddress }}"
+                    kind: "{{ kind }}"
+                    ipProtocol: "{{ ipProtocol }}"
+                    region: "{{ region }}"
+                    project: "{{ project }}"
+                    loadBalancerType: "{{ loadBalancerType }}"
+                    networkUrl: "{{ networkUrl }}"
+                    port: "{{ port }}"
+                externalEndpoints:
+                  - "{{ externalEndpoints }}"
+              kind: "{{ kind }}"
+              trickleTraffic: {{ trickleTraffic }}
+              backupGeoTargets:
+                enableFencing: {{ enableFencing }}
+                kind: "{{ kind }}"
+                items:
+                  - kind: "{{ kind }}"
+                    location: "{{ location }}"
+                    rrdatas: "{{ rrdatas }}"
+                    signatureRrdatas: "{{ signatureRrdatas }}"
+                    healthCheckedTargets:
+                      internalLoadBalancers: "{{ internalLoadBalancers }}"
+                      externalEndpoints: "{{ externalEndpoints }}"
+            healthCheck: "{{ healthCheck }}"
+            kind: "{{ kind }}"
+            wrr:
+              items:
+                - weight: {{ weight }}
+                  kind: "{{ kind }}"
+                  rrdatas: "{{ rrdatas }}"
+                  signatureRrdatas: "{{ signatureRrdatas }}"
+                  healthCheckedTargets:
+                    internalLoadBalancers: "{{ internalLoadBalancers }}"
+                    externalEndpoints: "{{ externalEndpoints }}"
+              kind: "{{ kind }}"
+          kind: "{{ kind }}"
+          ttl: {{ ttl }}
+          rrdatas: "{{ rrdatas }}"
+          signatureRrdatas: "{{ signatureRrdatas }}"
+          type: "{{ type }}"
+          name: "{{ name }}"
+    - name: startTime
+      value: "{{ startTime }}"
+      description: |
+        The time that this operation was started by the server (output only). This is in RFC3339 text format.
     - name: clientOperationId
-      value: string
-```
+      value: "{{ clientOperationId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>feedback_labels</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>feedback_labels</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="feedback_labels" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.contactcenterinsights.feedback_labels" /></td></tr>
 </tbody></table>
@@ -191,42 +192,42 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-feedbackLabelsId"><code>feedbackLabelsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-feedbackLabelsId"><code>feedbackLabelsId</code></a></td>
     <td></td>
     <td>Get feedback label.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>List feedback labels.</td>
 </tr>
 <tr>
     <td><a href="#list_all_feedback_labels"><CopyableCode code="list_all_feedback_labels" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>List all feedback labels by project number.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a></td>
     <td><a href="#parameter-feedbackLabelId"><code>feedbackLabelId</code></a></td>
     <td>Create feedback label.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-feedbackLabelsId"><code>feedbackLabelsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-feedbackLabelsId"><code>feedbackLabelsId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Update feedback label.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-feedbackLabelsId"><code>feedbackLabelsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-feedbackLabelsId"><code>feedbackLabelsId</code></a></td>
     <td></td>
     <td>Delete feedback label.</td>
 </tr>
@@ -324,7 +325,6 @@ updateTime
 FROM google.contactcenterinsights.feedback_labels
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND datasetsId = '{{ datasetsId }}' -- required
 AND conversationsId = '{{ conversationsId }}' -- required
 AND feedbackLabelsId = '{{ feedbackLabelsId }}' -- required
 ;
@@ -345,10 +345,9 @@ updateTime
 FROM google.contactcenterinsights.feedback_labels
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND datasetsId = '{{ datasetsId }}' -- required
 AND conversationsId = '{{ conversationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 ;
 ```
@@ -369,9 +368,9 @@ FROM google.contactcenterinsights.feedback_labels
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND datasetsId = '{{ datasetsId }}' -- required
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -393,24 +392,22 @@ Create feedback label.
 
 ```sql
 INSERT INTO google.contactcenterinsights.feedback_labels (
-data__label,
 data__qaAnswerLabel,
-data__labeledResource,
 data__name,
+data__labeledResource,
+data__label,
 projectsId,
 locationsId,
-datasetsId,
 conversationsId,
 feedbackLabelId
 )
 SELECT 
-'{{ label }}',
 '{{ qaAnswerLabel }}',
-'{{ labeledResource }}',
 '{{ name }}',
+'{{ labeledResource }}',
+'{{ label }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ datasetsId }}',
 '{{ conversationsId }}',
 '{{ feedbackLabelId }}'
 RETURNING
@@ -425,45 +422,47 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: feedback_labels
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the feedback_labels resource.
     - name: locationsId
-      value: string
-      description: Required parameter for the feedback_labels resource.
-    - name: datasetsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the feedback_labels resource.
     - name: conversationsId
-      value: string
+      value: "{{ conversationsId }}"
       description: Required parameter for the feedback_labels resource.
-    - name: label
-      value: string
-      description: >
-        String label used for Topic Modeling.
-        
     - name: qaAnswerLabel
-      value: object
-      description: >
+      description: |
         QaAnswer label used for Quality AI example conversations.
-        
-    - name: labeledResource
-      value: string
-      description: >
-        Name of the resource to be labeled. Supported resources are: * `projects/{project}/locations/{location}/qaScorecards/{scorecard}/revisions/{revision}/qaQuestions/{question}` * `projects/{project}/locations/{location}/issueModels/{issue_model}` * `projects/{project}/locations/{location}/generators/{generator_id}`
-        
+      value:
+        numValue: {{ numValue }}
+        boolValue: {{ boolValue }}
+        key: "{{ key }}"
+        potentialScore: {{ potentialScore }}
+        score: {{ score }}
+        strValue: "{{ strValue }}"
+        naValue: {{ naValue }}
+        skipValue: {{ skipValue }}
+        normalizedScore: {{ normalizedScore }}
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Immutable. Resource name of the FeedbackLabel. Format: projects/{project}/locations/{location}/conversations/{conversation}/feedbackLabels/{feedback_label}
-        
+    - name: labeledResource
+      value: "{{ labeledResource }}"
+      description: |
+        Name of the resource to be labeled. Supported resources are: * \`projects/{project}/locations/{location}/qaScorecards/{scorecard}/revisions/{revision}/qaQuestions/{question}\` * \`projects/{project}/locations/{location}/issueModels/{issue_model}\` * \`projects/{project}/locations/{location}/generators/{generator_id}\`
+    - name: label
+      value: "{{ label }}"
+      description: |
+        String label used for Topic Modeling.
     - name: feedbackLabelId
-      value: string
-```
+      value: "{{ feedbackLabelId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -483,14 +482,13 @@ Update feedback label.
 ```sql
 UPDATE google.contactcenterinsights.feedback_labels
 SET 
-data__label = '{{ label }}',
 data__qaAnswerLabel = '{{ qaAnswerLabel }}',
+data__name = '{{ name }}',
 data__labeledResource = '{{ labeledResource }}',
-data__name = '{{ name }}'
+data__label = '{{ label }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
-AND datasetsId = '{{ datasetsId }}' --required
 AND conversationsId = '{{ conversationsId }}' --required
 AND feedbackLabelsId = '{{ feedbackLabelsId }}' --required
 AND updateMask = '{{ updateMask}}'
@@ -522,7 +520,6 @@ Delete feedback label.
 DELETE FROM google.contactcenterinsights.feedback_labels
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
-AND datasetsId = '{{ datasetsId }}' --required
 AND conversationsId = '{{ conversationsId }}' --required
 AND feedbackLabelsId = '{{ feedbackLabelsId }}' --required
 ;

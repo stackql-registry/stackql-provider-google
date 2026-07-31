@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>restore_plans</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>restore_plans</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="restore_plans" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.gkebackup.restore_plans" /></td></tr>
 </tbody></table>
@@ -97,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the RestorePlan. This State field reflects the various stages a RestorePlan can be in during the Create operation.</td>
+    <td>Output only. State of the RestorePlan. This State field reflects the various stages a RestorePlan can be in during the Create operation. (STATE_UNSPECIFIED, CLUSTER_PENDING, READY, FAILED, DELETING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateReason" /></td>
@@ -176,7 +177,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the RestorePlan. This State field reflects the various stages a RestorePlan can be in during the Create operation.</td>
+    <td>Output only. State of the RestorePlan. This State field reflects the various stages a RestorePlan can be in during the Create operation. (STATE_UNSPECIFIED, CLUSTER_PENDING, READY, FAILED, DELETING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateReason" /></td>
@@ -224,7 +225,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists RestorePlans in a given location.</td>
 </tr>
 <tr>
@@ -245,8 +246,15 @@ The following methods are available for this resource:
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-restorePlansId"><code>restorePlansId</code></a></td>
-    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-force"><code>force</code></a></td>
+    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
     <td>Deletes an existing RestorePlan.</td>
+</tr>
+<tr>
+    <td><a href="#set_tags"><CopyableCode code="set_tags" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-restorePlansId"><code>restorePlansId</code></a></td>
+    <td></td>
+    <td>Updates tags directly bound to a GCP resource.</td>
 </tr>
 </tbody>
 </table>
@@ -379,10 +387,10 @@ updateTime
 FROM google.gkebackup.restore_plans
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -404,21 +412,21 @@ Creates a new RestorePlan in a given location.
 
 ```sql
 INSERT INTO google.gkebackup.restore_plans (
-data__description,
-data__backupPlan,
-data__cluster,
 data__restoreConfig,
 data__labels,
+data__backupPlan,
+data__cluster,
+data__description,
 projectsId,
 locationsId,
 restorePlanId
 )
 SELECT 
-'{{ description }}',
-'{{ backupPlan }}',
-'{{ cluster }}',
 '{{ restoreConfig }}',
 '{{ labels }}',
+'{{ backupPlan }}',
+'{{ cluster }}',
+'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ restorePlanId }}'
@@ -433,44 +441,90 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: restore_plans
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the restore_plans resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the restore_plans resource.
-    - name: description
-      value: string
-      description: >
-        Optional. User specified descriptive string for this RestorePlan.
-        
-    - name: backupPlan
-      value: string
-      description: >
-        Required. Immutable. A reference to the BackupPlan from which Backups may be used as the source for Restores created via this RestorePlan. Format: `projects/*/locations/*/backupPlans/*`.
-        
-    - name: cluster
-      value: string
-      description: >
-        Required. Immutable. The target cluster into which Restores created via this RestorePlan will restore data. NOTE: the cluster's region must be the same as the RestorePlan. Valid formats: - `projects/*/locations/*/clusters/*` - `projects/*/zones/*/clusters/*`
-        
     - name: restoreConfig
-      value: object
-      description: >
+      description: |
         Required. Configuration of Restores created via this RestorePlan.
-        
+      value:
+        excludedNamespaces:
+          namespaces:
+            - "{{ namespaces }}"
+        substitutionRules:
+          - targetJsonPath: "{{ targetJsonPath }}"
+            targetGroupKinds: "{{ targetGroupKinds }}"
+            newValue: "{{ newValue }}"
+            originalValuePattern: "{{ originalValuePattern }}"
+            targetNamespaces: "{{ targetNamespaces }}"
+        allNamespaces: {{ allNamespaces }}
+        volumeDataRestorePolicyBindings:
+          - policy: "{{ policy }}"
+            volumeType: "{{ volumeType }}"
+        noNamespaces: {{ noNamespaces }}
+        clusterResourceRestoreScope:
+          selectedGroupKinds:
+            - resourceGroup: "{{ resourceGroup }}"
+              resourceKind: "{{ resourceKind }}"
+          excludedGroupKinds:
+            - resourceGroup: "{{ resourceGroup }}"
+              resourceKind: "{{ resourceKind }}"
+          allGroupKinds: {{ allGroupKinds }}
+          noGroupKinds: {{ noGroupKinds }}
+        selectedNamespaces:
+          namespaces:
+            - "{{ namespaces }}"
+        restoreOrder:
+          groupKindDependencies:
+            - satisfying:
+                resourceGroup: "{{ resourceGroup }}"
+                resourceKind: "{{ resourceKind }}"
+              requiring:
+                resourceGroup: "{{ resourceGroup }}"
+                resourceKind: "{{ resourceKind }}"
+        clusterResourceConflictPolicy: "{{ clusterResourceConflictPolicy }}"
+        selectedApplications:
+          namespacedNames:
+            - name: "{{ name }}"
+              namespace: "{{ namespace }}"
+        transformationRules:
+          - resourceFilter:
+              namespaces:
+                - "{{ namespaces }}"
+              groupKinds:
+                - resourceGroup: "{{ resourceGroup }}"
+                  resourceKind: "{{ resourceKind }}"
+              jsonPath: "{{ jsonPath }}"
+            description: "{{ description }}"
+            fieldActions: "{{ fieldActions }}"
+        volumeDataRestorePolicy: "{{ volumeDataRestorePolicy }}"
+        namespacedResourceRestoreMode: "{{ namespacedResourceRestoreMode }}"
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. A set of custom labels supplied by user.
-        
+    - name: backupPlan
+      value: "{{ backupPlan }}"
+      description: |
+        Required. Immutable. A reference to the BackupPlan from which Backups may be used as the source for Restores created via this RestorePlan. Format: \`projects/*/locations/*/backupPlans/*\`.
+    - name: cluster
+      value: "{{ cluster }}"
+      description: |
+        Required. Immutable. The target cluster into which Restores created via this RestorePlan will restore data. NOTE: the cluster's region must be the same as the RestorePlan. Valid formats: - \`projects/*/locations/*/clusters/*\` - \`projects/*/zones/*/clusters/*\`
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. User specified descriptive string for this RestorePlan.
     - name: restorePlanId
-      value: string
-```
+      value: "{{ restorePlanId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -490,11 +544,11 @@ Update a RestorePlan.
 ```sql
 UPDATE google.gkebackup.restore_plans
 SET 
-data__description = '{{ description }}',
+data__restoreConfig = '{{ restoreConfig }}',
+data__labels = '{{ labels }}',
 data__backupPlan = '{{ backupPlan }}',
 data__cluster = '{{ cluster }}',
-data__restoreConfig = '{{ restoreConfig }}',
-data__labels = '{{ labels }}'
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -528,8 +582,38 @@ DELETE FROM google.gkebackup.restore_plans
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND restorePlansId = '{{ restorePlansId }}' --required
-AND etag = '{{ etag }}'
 AND force = '{{ force }}'
+AND etag = '{{ etag }}'
+;
+```
+</TabItem>
+</Tabs>
+
+
+## Lifecycle Methods
+
+<Tabs
+    defaultValue="set_tags"
+    values={[
+        { label: 'set_tags', value: 'set_tags' }
+    ]}
+>
+<TabItem value="set_tags">
+
+Updates tags directly bound to a GCP resource.
+
+```sql
+EXEC google.gkebackup.restore_plans.set_tags 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@restorePlansId='{{ restorePlansId }}' --required 
+@@json=
+'{
+"tags": "{{ tags }}", 
+"etag": "{{ etag }}", 
+"name": "{{ name }}", 
+"requestId": "{{ requestId }}"
+}'
 ;
 ```
 </TabItem>

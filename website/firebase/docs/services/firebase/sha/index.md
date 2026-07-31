@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>sha</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>sha</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="sha" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.firebase.sha" /></td></tr>
 </tbody></table>
@@ -167,16 +168,16 @@ Adds a ShaCertificate to the specified AndroidApp.
 
 ```sql
 INSERT INTO firebase.firebase.sha (
-data__name,
 data__shaHash,
 data__certType,
+data__name,
 projectsId,
 androidAppsId
 )
 SELECT 
-'{{ name }}',
 '{{ shaHash }}',
 '{{ certType }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ androidAppsId }}'
 RETURNING
@@ -188,33 +189,30 @@ shaHash
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: sha
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the sha resource.
     - name: androidAppsId
-      value: string
+      value: "{{ androidAppsId }}"
       description: Required parameter for the sha resource.
-    - name: name
-      value: string
-      description: >
-        The resource name of the ShaCertificate for the AndroidApp, in the format: projects/PROJECT_IDENTIFIER/androidApps/APP_ID/sha/SHA_HASH * PROJECT_IDENTIFIER: the parent Project's [`ProjectNumber`](../projects#FirebaseProject.FIELDS.project_number) ***(recommended)*** or its [`ProjectId`](../projects#FirebaseProject.FIELDS.project_id). Learn more about using project identifiers in Google's [AIP 2510 standard](https://google.aip.dev/cloud/2510). Note that the value for PROJECT_IDENTIFIER in any response body will be the `ProjectId`. * APP_ID: the globally unique, Firebase-assigned identifier for the App (see [`appId`](../projects.androidApps#AndroidApp.FIELDS.app_id)). * SHA_HASH: the certificate hash for the App (see [`shaHash`](../projects.androidApps.sha#ShaCertificate.FIELDS.sha_hash)).
-        
     - name: shaHash
-      value: string
-      description: >
-        The certificate hash for the `AndroidApp`.
-        
+      value: "{{ shaHash }}"
+      description: |
+        The certificate hash for the \`AndroidApp\`.
     - name: certType
-      value: string
-      description: >
+      value: "{{ certType }}"
+      description: |
         The type of SHA certificate encoded in the hash.
-        
       valid_values: ['SHA_CERTIFICATE_TYPE_UNSPECIFIED', 'SHA_1', 'SHA_256']
-```
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The resource name of the ShaCertificate for the AndroidApp, in the format: projects/PROJECT_IDENTIFIER/androidApps/APP_ID/sha/SHA_HASH * PROJECT_IDENTIFIER: the parent Project's [\`ProjectNumber\`](../projects#FirebaseProject.FIELDS.project_number) ***(recommended)*** or its [\`ProjectId\`](../projects#FirebaseProject.FIELDS.project_id). Learn more about using project identifiers in Google's [AIP 2510 standard](https://google.aip.dev/cloud/2510). Note that the value for PROJECT_IDENTIFIER in any response body will be the \`ProjectId\`. * APP_ID: the globally unique, Firebase-assigned identifier for the App (see [\`appId\`](../projects.androidApps#AndroidApp.FIELDS.app_id)). * SHA_HASH: the certificate hash for the App (see [\`shaHash\`](../projects.androidApps.sha#ShaCertificate.FIELDS.sha_hash)).
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

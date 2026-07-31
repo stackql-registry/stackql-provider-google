@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>jobs</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>jobs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="jobs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataplex.jobs" /></td></tr>
 </tbody></table>
@@ -84,7 +85,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="service" /></td>
     <td><code>string</code></td>
-    <td>Output only. The underlying service running a job.</td>
+    <td>Output only. The underlying service running a job. (SERVICE_UNSPECIFIED, DATAPROC)</td>
 </tr>
 <tr>
     <td><CopyableCode code="serviceJob" /></td>
@@ -99,12 +100,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Execution state for the job.</td>
+    <td>Output only. Execution state for the job. (STATE_UNSPECIFIED, RUNNING, CANCELLING, CANCELLED, SUCCEEDED, FAILED, ABORTED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="trigger" /></td>
     <td><code>string</code></td>
-    <td>Output only. Job execution trigger.</td>
+    <td>Output only. Job execution trigger. (TRIGGER_UNSPECIFIED, TASK_CONFIG, RUN_REQUEST)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -158,7 +159,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="service" /></td>
     <td><code>string</code></td>
-    <td>Output only. The underlying service running a job.</td>
+    <td>Output only. The underlying service running a job. (SERVICE_UNSPECIFIED, DATAPROC)</td>
 </tr>
 <tr>
     <td><CopyableCode code="serviceJob" /></td>
@@ -173,12 +174,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Execution state for the job.</td>
+    <td>Output only. Execution state for the job. (STATE_UNSPECIFIED, RUNNING, CANCELLING, CANCELLED, SUCCEEDED, FAILED, ABORTED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="trigger" /></td>
     <td><code>string</code></td>
-    <td>Output only. Job execution trigger.</td>
+    <td>Output only. Job execution trigger. (TRIGGER_UNSPECIFIED, TASK_CONFIG, RUN_REQUEST)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -260,6 +261,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Additional information about the current state.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="partialFailureMessage" /></td>
+    <td><code>string</code></td>
+    <td>Output only. A message indicating partial failure details.</td>
+</tr>
+<tr>
     <td><CopyableCode code="startTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The time when the DataScanJob was started.</td>
@@ -267,17 +273,27 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Execution state for the DataScanJob.</td>
+    <td>Output only. Execution state for the DataScanJob. (STATE_UNSPECIFIED, RUNNING, CANCELING, CANCELLED, SUCCEEDED, FAILED, PENDING, SUCCEEDED_WITH_ERRORS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Output only. The type of the parent DataScan.</td>
+    <td>Output only. The type of the parent DataScan. (DATA_SCAN_TYPE_UNSPECIFIED, DATA_QUALITY, DATA_PROFILE, DATA_DISCOVERY, DATA_DOCUMENTATION, UNSTRUCTURED_DATA_PROFILE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
     <td><code>string</code></td>
     <td>Output only. System generated globally unique ID for the DataScanJob.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="unstructuredDataProfileResult" /></td>
+    <td><code>object</code></td>
+    <td>Output only. The result of an unstructured data profile scan. (id: GoogleCloudDataplexV1UnstructuredDataProfileResult)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="unstructuredDataProfileSpec" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Settings for an unstructured data profile scan. (id: GoogleCloudDataplexV1UnstructuredDataProfileSpec)</td>
 </tr>
 </tbody>
 </table>
@@ -354,6 +370,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Additional information about the current state.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="partialFailureMessage" /></td>
+    <td><code>string</code></td>
+    <td>Output only. A message indicating partial failure details.</td>
+</tr>
+<tr>
     <td><CopyableCode code="startTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The time when the DataScanJob was started.</td>
@@ -361,17 +382,27 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Execution state for the DataScanJob.</td>
+    <td>Output only. Execution state for the DataScanJob. (STATE_UNSPECIFIED, RUNNING, CANCELING, CANCELLED, SUCCEEDED, FAILED, PENDING, SUCCEEDED_WITH_ERRORS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Output only. The type of the parent DataScan.</td>
+    <td>Output only. The type of the parent DataScan. (DATA_SCAN_TYPE_UNSPECIFIED, DATA_QUALITY, DATA_PROFILE, DATA_DISCOVERY, DATA_DOCUMENTATION, UNSTRUCTURED_DATA_PROFILE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
     <td><code>string</code></td>
     <td>Output only. System generated globally unique ID for the DataScanJob.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="unstructuredDataProfileResult" /></td>
+    <td><code>object</code></td>
+    <td>Output only. The result of an unstructured data profile scan. (id: GoogleCloudDataplexV1UnstructuredDataProfileResult)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="unstructuredDataProfileSpec" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Settings for an unstructured data profile scan. (id: GoogleCloudDataplexV1UnstructuredDataProfileSpec)</td>
 </tr>
 </tbody>
 </table>
@@ -418,7 +449,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_data_scans_jobs_list"><CopyableCode code="projects_locations_data_scans_jobs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataScansId"><code>dataScansId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists DataScanJobs under the given DataScan.</td>
 </tr>
 <tr>
@@ -434,6 +465,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataScansId"><code>dataScansId</code></a>, <a href="#parameter-jobsId"><code>jobsId</code></a></td>
     <td></td>
     <td>Generates recommended data quality rules based on the results of a data profiling scan.Use the recommendations to build rules for a data quality scan.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_data_scans_jobs_cancel"><CopyableCode code="projects_locations_data_scans_jobs_cancel" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataScansId"><code>dataScansId</code></a>, <a href="#parameter-jobsId"><code>jobsId</code></a></td>
+    <td></td>
+    <td>Cancels a running/pending DataScan job.</td>
 </tr>
 </tbody>
 </table>
@@ -588,10 +626,13 @@ dataQualityResult,
 dataQualitySpec,
 endTime,
 message,
+partialFailureMessage,
 startTime,
 state,
 type,
-uid
+uid,
+unstructuredDataProfileResult,
+unstructuredDataProfileSpec
 FROM google.dataplex.jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
@@ -619,16 +660,19 @@ dataQualityResult,
 dataQualitySpec,
 endTime,
 message,
+partialFailureMessage,
 startTime,
 state,
 type,
-uid
+uid,
+unstructuredDataProfileResult,
+unstructuredDataProfileSpec
 FROM google.dataplex.jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND dataScansId = '{{ dataScansId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
 ;
 ```
@@ -642,7 +686,8 @@ AND filter = '{{ filter }}'
     defaultValue="projects_locations_lakes_tasks_jobs_cancel"
     values={[
         { label: 'projects_locations_lakes_tasks_jobs_cancel', value: 'projects_locations_lakes_tasks_jobs_cancel' },
-        { label: 'projects_locations_data_scans_jobs_generate_data_quality_rules', value: 'projects_locations_data_scans_jobs_generate_data_quality_rules' }
+        { label: 'projects_locations_data_scans_jobs_generate_data_quality_rules', value: 'projects_locations_data_scans_jobs_generate_data_quality_rules' },
+        { label: 'projects_locations_data_scans_jobs_cancel', value: 'projects_locations_data_scans_jobs_cancel' }
     ]}
 >
 <TabItem value="projects_locations_lakes_tasks_jobs_cancel">
@@ -665,6 +710,19 @@ Generates recommended data quality rules based on the results of a data profilin
 
 ```sql
 EXEC google.dataplex.jobs.projects_locations_data_scans_jobs_generate_data_quality_rules 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@dataScansId='{{ dataScansId }}' --required, 
+@jobsId='{{ jobsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="projects_locations_data_scans_jobs_cancel">
+
+Cancels a running/pending DataScan job.
+
+```sql
+EXEC google.dataplex.jobs.projects_locations_data_scans_jobs_cancel 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @dataScansId='{{ dataScansId }}' --required, 

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>accounts</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>accounts</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="accounts" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudcommerceprocurement.accounts" /></td></tr>
 </tbody></table>
@@ -82,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the account. This is used to decide whether the customer is in good standing with the provider and is able to make purchases. An account might not be able to make a purchase if the billing account is suspended, for example.</td>
+    <td>Output only. The state of the account. This is used to decide whether the customer is in good standing with the provider and is able to make purchases. An account might not be able to make a purchase if the billing account is suspended, for example. (ACCOUNT_STATE_UNSPECIFIED, ACCOUNT_ACTIVATION_REQUESTED, ACCOUNT_ACTIVE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -136,7 +137,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the account. This is used to decide whether the customer is in good standing with the provider and is able to make purchases. An account might not be able to make a purchase if the billing account is suspended, for example.</td>
+    <td>Output only. The state of the account. This is used to decide whether the customer is in good standing with the provider and is able to make purchases. An account might not be able to make a purchase if the billing account is suspended, for example. (ACCOUNT_STATE_UNSPECIFIED, ACCOUNT_ACTIVATION_REQUESTED, ACCOUNT_ACTIVE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -178,13 +179,6 @@ The following methods are available for this resource:
     <td>Lists Accounts that the provider has access to.</td>
 </tr>
 <tr>
-    <td><a href="#reset"><CopyableCode code="reset" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-accountsId"><code>accountsId</code></a></td>
-    <td></td>
-    <td>Resets an Account and cancels all associated Entitlements. Partner can only reset accounts they own rather than customer accounts.</td>
-</tr>
-<tr>
     <td><a href="#reject"><CopyableCode code="reject" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-accountsId"><code>accountsId</code></a></td>
@@ -197,6 +191,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-accountsId"><code>accountsId</code></a></td>
     <td></td>
     <td>Grants an approval on an Account.</td>
+</tr>
+<tr>
+    <td><a href="#reset"><CopyableCode code="reset" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-providersId"><code>providersId</code></a>, <a href="#parameter-accountsId"><code>accountsId</code></a></td>
+    <td></td>
+    <td>Resets an Account and cancels all associated Entitlements. Partner can only reset accounts they own rather than customer accounts.</td>
 </tr>
 </tbody>
 </table>
@@ -299,24 +300,13 @@ AND pageToken = '{{ pageToken }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="reset"
+    defaultValue="reject"
     values={[
-        { label: 'reset', value: 'reset' },
         { label: 'reject', value: 'reject' },
-        { label: 'approve', value: 'approve' }
+        { label: 'approve', value: 'approve' },
+        { label: 'reset', value: 'reset' }
     ]}
 >
-<TabItem value="reset">
-
-Resets an Account and cancels all associated Entitlements. Partner can only reset accounts they own rather than customer accounts.
-
-```sql
-EXEC google.cloudcommerceprocurement.accounts.reset 
-@providersId='{{ providersId }}' --required, 
-@accountsId='{{ accountsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="reject">
 
 Rejects an approval on an Account.
@@ -343,10 +333,21 @@ EXEC google.cloudcommerceprocurement.accounts.approve
 @accountsId='{{ accountsId }}' --required 
 @@json=
 '{
-"approvalName": "{{ approvalName }}", 
 "reason": "{{ reason }}", 
-"properties": "{{ properties }}"
+"properties": "{{ properties }}", 
+"approvalName": "{{ approvalName }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="reset">
+
+Resets an Account and cancels all associated Entitlements. Partner can only reset accounts they own rather than customer accounts.
+
+```sql
+EXEC google.cloudcommerceprocurement.accounts.reset 
+@providersId='{{ providersId }}' --required, 
+@accountsId='{{ accountsId }}' --required
 ;
 ```
 </TabItem>

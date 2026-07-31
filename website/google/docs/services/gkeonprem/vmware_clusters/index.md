@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>vmware_clusters</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>vmware_clusters</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="vmware_clusters" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.gkeonprem.vmware_clusters" /></td></tr>
 </tbody></table>
@@ -172,7 +173,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of VMware user cluster.</td>
+    <td>Output only. The current state of VMware user cluster. (STATE_UNSPECIFIED, PROVISIONING, RUNNING, RECONCILING, STOPPING, ERROR, DEGRADED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="status" /></td>
@@ -351,7 +352,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of VMware user cluster.</td>
+    <td>Output only. The current state of VMware user cluster. (STATE_UNSPECIFIED, PROVISIONING, RUNNING, RECONCILING, STOPPING, ERROR, DEGRADED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="status" /></td>
@@ -417,42 +418,49 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_vmware_clusters_get"><CopyableCode code="projects_locations_vmware_clusters_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-vmwareClustersId"><code>vmwareClustersId</code></a></td>
-    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Gets details of a single VMware Cluster.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_vmware_clusters_list"><CopyableCode code="projects_locations_vmware_clusters_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
+    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
     <td>Lists VMware Clusters in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_vmware_clusters_create"><CopyableCode code="projects_locations_vmware_clusters_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-skipValidations"><code>skipValidations</code></a>, <a href="#parameter-vmwareClusterId"><code>vmwareClusterId</code></a>, <a href="#parameter-allowPreflightFailure"><code>allowPreflightFailure</code></a></td>
+    <td><a href="#parameter-skipValidations"><code>skipValidations</code></a>, <a href="#parameter-allowPreflightFailure"><code>allowPreflightFailure</code></a>, <a href="#parameter-vmwareClusterId"><code>vmwareClusterId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a new VMware user cluster in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_vmware_clusters_patch"><CopyableCode code="projects_locations_vmware_clusters_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-vmwareClustersId"><code>vmwareClustersId</code></a></td>
-    <td><a href="#parameter-skipValidations"><code>skipValidations</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-skipValidations"><code>skipValidations</code></a></td>
     <td>Updates the parameters of a single VMware cluster.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_vmware_clusters_delete"><CopyableCode code="projects_locations_vmware_clusters_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-vmwareClustersId"><code>vmwareClustersId</code></a></td>
-    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-ignoreErrors"><code>ignoreErrors</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-force"><code>force</code></a></td>
+    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-ignoreErrors"><code>ignoreErrors</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
     <td>Deletes a single VMware Cluster.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_vmware_clusters_query_version_config"><CopyableCode code="projects_locations_vmware_clusters_query_version_config" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-upgradeConfig.clusterName"><code>upgradeConfig.clusterName</code></a>, <a href="#parameter-createConfig.adminClusterMembership"><code>createConfig.adminClusterMembership</code></a>, <a href="#parameter-createConfig.adminClusterName"><code>createConfig.adminClusterName</code></a></td>
+    <td>Queries the VMware user cluster version config.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_vmware_clusters_unenroll"><CopyableCode code="projects_locations_vmware_clusters_unenroll" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-vmwareClustersId"><code>vmwareClustersId</code></a></td>
-    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-force"><code>force</code></a></td>
     <td>Unenrolls an existing VMware user cluster and its node pools from the Anthos On-Prem API within a given project and location. Unenrollment removes the Cloud reference to the cluster without modifying the underlying OnPrem Resources. Clusters and node pools will continue to run; however, they will no longer be accessible through the Anthos On-Prem API or UI.</td>
 </tr>
 <tr>
@@ -461,13 +469,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Enrolls an existing VMware user cluster and its node pools to the Anthos On-Prem API within a given project and location. Through enrollment, an existing cluster will become Anthos On-Prem API managed. The corresponding GCP resources will be created and all future modifications to the cluster and/or its node pools will be expected to be performed through the API.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_vmware_clusters_query_version_config"><CopyableCode code="projects_locations_vmware_clusters_query_version_config" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-upgradeConfig.clusterName"><code>upgradeConfig.clusterName</code></a>, <a href="#parameter-createConfig.adminClusterName"><code>createConfig.adminClusterName</code></a>, <a href="#parameter-createConfig.adminClusterMembership"><code>createConfig.adminClusterMembership</code></a></td>
-    <td>Queries the VMware user cluster version config.</td>
 </tr>
 </tbody>
 </table>
@@ -635,8 +636,8 @@ FROM google.gkeonprem.vmware_clusters
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND vmwareClustersId = '{{ vmwareClustersId }}' -- required
-AND view = '{{ view }}'
 AND allowMissing = '{{ allowMissing }}'
+AND view = '{{ view }}'
 ;
 ```
 </TabItem>
@@ -682,10 +683,10 @@ vmTrackingEnabled
 FROM google.gkeonprem.vmware_clusters
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
 AND view = '{{ view }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 AND allowMissing = '{{ allowMissing }}'
 ;
 ```
@@ -708,62 +709,62 @@ Creates a new VMware user cluster in a given project and location.
 
 ```sql
 INSERT INTO google.gkeonprem.vmware_clusters (
-data__controlPlaneNode,
-data__annotations,
 data__name,
-data__description,
-data__disableBundledIngress,
 data__antiAffinityGroups,
-data__vmTrackingEnabled,
-data__dataplaneV2,
 data__enableControlPlaneV2,
+data__onPremVersion,
+data__disableBundledIngress,
+data__controlPlaneNode,
 data__adminClusterMembership,
 data__autoRepairConfig,
-data__vcenter,
-data__binaryAuthorization,
+data__description,
+data__vmTrackingEnabled,
 data__authorization,
 data__upgradePolicy,
 data__enableAdvancedCluster,
-data__loadBalancer,
-data__onPremVersion,
-data__networkConfig,
-data__storage,
+data__dataplaneV2,
 data__etag,
+data__binaryAuthorization,
+data__annotations,
+data__networkConfig,
+data__loadBalancer,
+data__storage,
+data__vcenter,
 projectsId,
 locationsId,
-validateOnly,
 skipValidations,
+allowPreflightFailure,
 vmwareClusterId,
-allowPreflightFailure
+validateOnly
 )
 SELECT 
-'{{ controlPlaneNode }}',
-'{{ annotations }}',
 '{{ name }}',
-'{{ description }}',
-{{ disableBundledIngress }},
 '{{ antiAffinityGroups }}',
-{{ vmTrackingEnabled }},
-'{{ dataplaneV2 }}',
 {{ enableControlPlaneV2 }},
+'{{ onPremVersion }}',
+{{ disableBundledIngress }},
+'{{ controlPlaneNode }}',
 '{{ adminClusterMembership }}',
 '{{ autoRepairConfig }}',
-'{{ vcenter }}',
-'{{ binaryAuthorization }}',
+'{{ description }}',
+{{ vmTrackingEnabled }},
 '{{ authorization }}',
 '{{ upgradePolicy }}',
 {{ enableAdvancedCluster }},
-'{{ loadBalancer }}',
-'{{ onPremVersion }}',
-'{{ networkConfig }}',
-'{{ storage }}',
+'{{ dataplaneV2 }}',
 '{{ etag }}',
+'{{ binaryAuthorization }}',
+'{{ annotations }}',
+'{{ networkConfig }}',
+'{{ loadBalancer }}',
+'{{ storage }}',
+'{{ vcenter }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ validateOnly }}',
 '{{ skipValidations }}',
+'{{ allowPreflightFailure }}',
 '{{ vmwareClusterId }}',
-'{{ allowPreflightFailure }}'
+'{{ validateOnly }}'
 RETURNING
 name,
 done,
@@ -775,130 +776,191 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: vmware_clusters
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the vmware_clusters resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the vmware_clusters resource.
-    - name: controlPlaneNode
-      value: object
-      description: >
-        VMware user cluster control plane nodes must have either 1 or 3 replicas.
-        
-    - name: annotations
-      value: object
-      description: >
-        Annotations on the VMware user cluster. This field has the same restrictions as Kubernetes annotations. The total size of all keys and values combined is limited to 256k. Key can have 2 segments: prefix (optional) and name (required), separated by a slash (/). Prefix must be a DNS subdomain. Name must be 63 characters or less, begin and end with alphanumerics, with dashes (-), underscores (_), dots (.), and alphanumerics between.
-        
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Immutable. The VMware user cluster resource name.
-        
-    - name: description
-      value: string
-      description: >
-        A human readable description of this VMware user cluster.
-        
-    - name: disableBundledIngress
-      value: boolean
-      description: >
-        Disable bundled ingress.
-        
     - name: antiAffinityGroups
-      value: object
-      description: >
+      description: |
         AAGConfig specifies whether to spread VMware user cluster nodes across at least three physical hosts in the datacenter.
-        
-    - name: vmTrackingEnabled
-      value: boolean
-      description: >
-        Enable VM tracking.
-        
-    - name: dataplaneV2
-      value: object
-      description: >
-        VmwareDataplaneV2Config specifies configuration for Dataplane V2.
-        
+      value:
+        aagConfigDisabled: {{ aagConfigDisabled }}
     - name: enableControlPlaneV2
-      value: boolean
-      description: >
+      value: {{ enableControlPlaneV2 }}
+      description: |
         Enable control plane V2. Default to false.
-        
-    - name: adminClusterMembership
-      value: string
-      description: >
-        Required. The admin cluster this VMware user cluster belongs to. This is the full resource name of the admin cluster's fleet membership. In the future, references to other resource types might be allowed if admin clusters are modeled as their own resources.
-        
-    - name: autoRepairConfig
-      value: object
-      description: >
-        Configuration for auto repairing.
-        
-    - name: vcenter
-      value: object
-      description: >
-        VmwareVCenterConfig specifies vCenter config for the user cluster. If unspecified, it is inherited from the admin cluster.
-        
-    - name: binaryAuthorization
-      value: object
-      description: >
-        Binary Authorization related configurations.
-        
-    - name: authorization
-      value: object
-      description: >
-        RBAC policy that will be applied and managed by the Anthos On-Prem API.
-        
-    - name: upgradePolicy
-      value: object
-      description: >
-        Specifies upgrade policy for the cluster.
-        
-    - name: enableAdvancedCluster
-      value: boolean
-      description: >
-        Enable advanced cluster.
-        
-    - name: loadBalancer
-      value: object
-      description: >
-        Load balancer configuration.
-        
     - name: onPremVersion
-      value: string
-      description: >
+      value: "{{ onPremVersion }}"
+      description: |
         Required. The Anthos clusters on the VMware version for your user cluster.
-        
-    - name: networkConfig
-      value: object
-      description: >
-        The VMware user cluster network configuration.
-        
-    - name: storage
-      value: object
-      description: >
-        Storage configuration.
-        
+    - name: disableBundledIngress
+      value: {{ disableBundledIngress }}
+      description: |
+        Disable bundled ingress.
+    - name: controlPlaneNode
+      description: |
+        VMware user cluster control plane nodes must have either 1 or 3 replicas.
+      value:
+        autoResizeConfig:
+          enabled: {{ enabled }}
+        memory: "{{ memory }}"
+        vsphereConfig:
+          datastore: "{{ datastore }}"
+          storagePolicyName: "{{ storagePolicyName }}"
+        cpus: "{{ cpus }}"
+        replicas: "{{ replicas }}"
+    - name: adminClusterMembership
+      value: "{{ adminClusterMembership }}"
+      description: |
+        Required. The admin cluster this VMware user cluster belongs to. This is the full resource name of the admin cluster's fleet membership. In the future, references to other resource types might be allowed if admin clusters are modeled as their own resources.
+    - name: autoRepairConfig
+      description: |
+        Configuration for auto repairing.
+      value:
+        enabled: {{ enabled }}
+    - name: description
+      value: "{{ description }}"
+      description: |
+        A human readable description of this VMware user cluster.
+    - name: vmTrackingEnabled
+      value: {{ vmTrackingEnabled }}
+      description: |
+        Enable VM tracking.
+    - name: authorization
+      description: |
+        RBAC policy that will be applied and managed by the Anthos On-Prem API.
+      value:
+        adminUsers:
+          - username: "{{ username }}"
+    - name: upgradePolicy
+      description: |
+        Specifies upgrade policy for the cluster.
+      value:
+        controlPlaneOnly: {{ controlPlaneOnly }}
+    - name: enableAdvancedCluster
+      value: {{ enableAdvancedCluster }}
+      description: |
+        Enable advanced cluster.
+    - name: dataplaneV2
+      description: |
+        VmwareDataplaneV2Config specifies configuration for Dataplane V2.
+      value:
+        dataplaneV2Enabled: {{ dataplaneV2Enabled }}
+        advancedNetworking: {{ advancedNetworking }}
+        forwardMode: "{{ forwardMode }}"
+        windowsDataplaneV2Enabled: {{ windowsDataplaneV2Enabled }}
     - name: etag
-      value: string
-      description: >
+      value: "{{ etag }}"
+      description: |
         This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. Allows clients to perform consistent read-modify-writes through optimistic concurrency control.
-        
-    - name: validateOnly
-      value: boolean
+    - name: binaryAuthorization
+      description: |
+        Binary Authorization related configurations.
+      value:
+        evaluationMode: "{{ evaluationMode }}"
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Annotations on the VMware user cluster. This field has the same restrictions as Kubernetes annotations. The total size of all keys and values combined is limited to 256k. Key can have 2 segments: prefix (optional) and name (required), separated by a slash (/). Prefix must be a DNS subdomain. Name must be 63 characters or less, begin and end with alphanumerics, with dashes (-), underscores (_), dots (.), and alphanumerics between.
+    - name: networkConfig
+      description: |
+        The VMware user cluster network configuration.
+      value:
+        staticIpConfig:
+          ipBlocks:
+            - gateway: "{{ gateway }}"
+              netmask: "{{ netmask }}"
+              ips: "{{ ips }}"
+        dhcpIpConfig:
+          enabled: {{ enabled }}
+        controlPlaneV2Config:
+          controlPlaneIpBlock:
+            gateway: "{{ gateway }}"
+            netmask: "{{ netmask }}"
+            ips:
+              - ip: "{{ ip }}"
+                hostname: "{{ hostname }}"
+        serviceAddressCidrBlocks:
+          - "{{ serviceAddressCidrBlocks }}"
+        hostConfig:
+          ntpServers:
+            - "{{ ntpServers }}"
+          dnsServers:
+            - "{{ dnsServers }}"
+          dnsSearchDomains:
+            - "{{ dnsSearchDomains }}"
+        podAddressCidrBlocks:
+          - "{{ podAddressCidrBlocks }}"
+        vcenterNetwork: "{{ vcenterNetwork }}"
+    - name: loadBalancer
+      description: |
+        Load balancer configuration.
+      value:
+        f5Config:
+          partition: "{{ partition }}"
+          snatPool: "{{ snatPool }}"
+          address: "{{ address }}"
+        manualLbConfig:
+          ingressHttpsNodePort: {{ ingressHttpsNodePort }}
+          controlPlaneNodePort: {{ controlPlaneNodePort }}
+          ingressHttpNodePort: {{ ingressHttpNodePort }}
+          konnectivityServerNodePort: {{ konnectivityServerNodePort }}
+        seesawConfig:
+          masterIp: "{{ masterIp }}"
+          group: "{{ group }}"
+          stackdriverName: "{{ stackdriverName }}"
+          ipBlocks:
+            - gateway: "{{ gateway }}"
+              netmask: "{{ netmask }}"
+              ips: "{{ ips }}"
+          enableHa: {{ enableHa }}
+          vms:
+            - "{{ vms }}"
+        vipConfig:
+          controlPlaneVip: "{{ controlPlaneVip }}"
+          ingressVip: "{{ ingressVip }}"
+        metalLbConfig:
+          addressPools:
+            - avoidBuggyIps: {{ avoidBuggyIps }}
+              pool: "{{ pool }}"
+              addresses: "{{ addresses }}"
+              manualAssign: {{ manualAssign }}
+    - name: storage
+      description: |
+        Storage configuration.
+      value:
+        vsphereCsiDisabled: {{ vsphereCsiDisabled }}
+    - name: vcenter
+      description: |
+        VmwareVCenterConfig specifies vCenter config for the user cluster. If unspecified, it is inherited from the admin cluster.
+      value:
+        datacenter: "{{ datacenter }}"
+        folder: "{{ folder }}"
+        address: "{{ address }}"
+        storagePolicyName: "{{ storagePolicyName }}"
+        resourcePool: "{{ resourcePool }}"
+        datastore: "{{ datastore }}"
+        cluster: "{{ cluster }}"
+        caCertData: "{{ caCertData }}"
     - name: skipValidations
-      value: string
-    - name: vmwareClusterId
-      value: string
+      value: "{{ skipValidations }}"
     - name: allowPreflightFailure
-      value: boolean
-```
+      value: {{ allowPreflightFailure }}
+    - name: vmwareClusterId
+      value: "{{ vmwareClusterId }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -918,34 +980,34 @@ Updates the parameters of a single VMware cluster.
 ```sql
 UPDATE google.gkeonprem.vmware_clusters
 SET 
-data__controlPlaneNode = '{{ controlPlaneNode }}',
-data__annotations = '{{ annotations }}',
 data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__disableBundledIngress = {{ disableBundledIngress }},
 data__antiAffinityGroups = '{{ antiAffinityGroups }}',
-data__vmTrackingEnabled = {{ vmTrackingEnabled }},
-data__dataplaneV2 = '{{ dataplaneV2 }}',
 data__enableControlPlaneV2 = {{ enableControlPlaneV2 }},
+data__onPremVersion = '{{ onPremVersion }}',
+data__disableBundledIngress = {{ disableBundledIngress }},
+data__controlPlaneNode = '{{ controlPlaneNode }}',
 data__adminClusterMembership = '{{ adminClusterMembership }}',
 data__autoRepairConfig = '{{ autoRepairConfig }}',
-data__vcenter = '{{ vcenter }}',
-data__binaryAuthorization = '{{ binaryAuthorization }}',
+data__description = '{{ description }}',
+data__vmTrackingEnabled = {{ vmTrackingEnabled }},
 data__authorization = '{{ authorization }}',
 data__upgradePolicy = '{{ upgradePolicy }}',
 data__enableAdvancedCluster = {{ enableAdvancedCluster }},
-data__loadBalancer = '{{ loadBalancer }}',
-data__onPremVersion = '{{ onPremVersion }}',
+data__dataplaneV2 = '{{ dataplaneV2 }}',
+data__etag = '{{ etag }}',
+data__binaryAuthorization = '{{ binaryAuthorization }}',
+data__annotations = '{{ annotations }}',
 data__networkConfig = '{{ networkConfig }}',
+data__loadBalancer = '{{ loadBalancer }}',
 data__storage = '{{ storage }}',
-data__etag = '{{ etag }}'
+data__vcenter = '{{ vcenter }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND vmwareClustersId = '{{ vmwareClustersId }}' --required
-AND skipValidations = '{{ skipValidations}}'
-AND validateOnly = {{ validateOnly}}
 AND updateMask = '{{ updateMask}}'
+AND validateOnly = {{ validateOnly}}
+AND skipValidations = '{{ skipValidations}}'
 RETURNING
 name,
 done,
@@ -974,11 +1036,11 @@ DELETE FROM google.gkeonprem.vmware_clusters
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND vmwareClustersId = '{{ vmwareClustersId }}' --required
-AND allowMissing = '{{ allowMissing }}'
-AND etag = '{{ etag }}'
-AND ignoreErrors = '{{ ignoreErrors }}'
-AND validateOnly = '{{ validateOnly }}'
 AND force = '{{ force }}'
+AND ignoreErrors = '{{ ignoreErrors }}'
+AND etag = '{{ etag }}'
+AND validateOnly = '{{ validateOnly }}'
+AND allowMissing = '{{ allowMissing }}'
 ;
 ```
 </TabItem>
@@ -988,13 +1050,27 @@ AND force = '{{ force }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_vmware_clusters_unenroll"
+    defaultValue="projects_locations_vmware_clusters_query_version_config"
     values={[
+        { label: 'projects_locations_vmware_clusters_query_version_config', value: 'projects_locations_vmware_clusters_query_version_config' },
         { label: 'projects_locations_vmware_clusters_unenroll', value: 'projects_locations_vmware_clusters_unenroll' },
-        { label: 'projects_locations_vmware_clusters_enroll', value: 'projects_locations_vmware_clusters_enroll' },
-        { label: 'projects_locations_vmware_clusters_query_version_config', value: 'projects_locations_vmware_clusters_query_version_config' }
+        { label: 'projects_locations_vmware_clusters_enroll', value: 'projects_locations_vmware_clusters_enroll' }
     ]}
 >
+<TabItem value="projects_locations_vmware_clusters_query_version_config">
+
+Queries the VMware user cluster version config.
+
+```sql
+EXEC google.gkeonprem.vmware_clusters.projects_locations_vmware_clusters_query_version_config 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@upgradeConfig.clusterName='{{ upgradeConfig.clusterName }}', 
+@createConfig.adminClusterMembership='{{ createConfig.adminClusterMembership }}', 
+@createConfig.adminClusterName='{{ createConfig.adminClusterName }}'
+;
+```
+</TabItem>
 <TabItem value="projects_locations_vmware_clusters_unenroll">
 
 Unenrolls an existing VMware user cluster and its node pools from the Anthos On-Prem API within a given project and location. Unenrollment removes the Cloud reference to the cluster without modifying the underlying OnPrem Resources. Clusters and node pools will continue to run; however, they will no longer be accessible through the Anthos On-Prem API or UI.
@@ -1004,10 +1080,10 @@ EXEC google.gkeonprem.vmware_clusters.projects_locations_vmware_clusters_unenrol
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @vmwareClustersId='{{ vmwareClustersId }}' --required, 
-@force={{ force }}, 
-@validateOnly={{ validateOnly }}, 
 @allowMissing={{ allowMissing }}, 
-@etag='{{ etag }}'
+@etag='{{ etag }}', 
+@validateOnly={{ validateOnly }}, 
+@force={{ force }}
 ;
 ```
 </TabItem>
@@ -1021,25 +1097,11 @@ EXEC google.gkeonprem.vmware_clusters.projects_locations_vmware_clusters_enroll
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"validateOnly": {{ validateOnly }}, 
 "adminClusterMembership": "{{ adminClusterMembership }}", 
-"localName": "{{ localName }}", 
-"vmwareClusterId": "{{ vmwareClusterId }}"
+"validateOnly": {{ validateOnly }}, 
+"vmwareClusterId": "{{ vmwareClusterId }}", 
+"localName": "{{ localName }}"
 }'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_vmware_clusters_query_version_config">
-
-Queries the VMware user cluster version config.
-
-```sql
-EXEC google.gkeonprem.vmware_clusters.projects_locations_vmware_clusters_query_version_config 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@upgradeConfig.clusterName='{{ upgradeConfig.clusterName }}', 
-@createConfig.adminClusterName='{{ createConfig.adminClusterName }}', 
-@createConfig.adminClusterMembership='{{ createConfig.adminClusterMembership }}'
 ;
 ```
 </TabItem>

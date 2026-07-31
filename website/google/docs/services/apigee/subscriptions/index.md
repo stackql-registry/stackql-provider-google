@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>subscriptions</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>subscriptions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="subscriptions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.subscriptions" /></td></tr>
 </tbody></table>
@@ -35,7 +36,9 @@ The following fields are returned by `SELECT` queries:
     defaultValue="organizations_developers_subscriptions_get"
     values={[
         { label: 'organizations_developers_subscriptions_get', value: 'organizations_developers_subscriptions_get' },
-        { label: 'organizations_developers_subscriptions_list', value: 'organizations_developers_subscriptions_list' }
+        { label: 'organizations_appgroups_subscriptions_get', value: 'organizations_appgroups_subscriptions_get' },
+        { label: 'organizations_developers_subscriptions_list', value: 'organizations_developers_subscriptions_list' },
+        { label: 'organizations_appgroups_subscriptions_list', value: 'organizations_appgroups_subscriptions_list' }
     ]}
 >
 <TabItem value="organizations_developers_subscriptions_get">
@@ -82,6 +85,50 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
+<TabItem value="organizations_appgroups_subscriptions_get">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Name of the API product subscription.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="apiproduct" /></td>
+    <td><code>string</code></td>
+    <td>Required. Name of the API product for which the appgroup is purchasing a subscription.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createdAt" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Output only. Time when the API product subscription was created in milliseconds since epoch.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="endTime" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Output only. Time when the API product subscription ends in milliseconds since epoch.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="lastModifiedAt" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Output only. Time when the API product subscription was last modified in milliseconds since epoch.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="startTime" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Output only. Time when the API product subscription starts in milliseconds since epoch.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
 <TabItem value="organizations_developers_subscriptions_list">
 
 <table>
@@ -102,6 +149,50 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="nextStartKey" /></td>
     <td><code>string</code></td>
     <td>Value that can be sent as `startKey` to retrieve the next page of content. If this field is omitted, there are no subsequent pages.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="organizations_appgroups_subscriptions_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Name of the API product subscription.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="apiproduct" /></td>
+    <td><code>string</code></td>
+    <td>Required. Name of the API product for which the appgroup is purchasing a subscription.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createdAt" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Output only. Time when the API product subscription was created in milliseconds since epoch.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="endTime" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Output only. Time when the API product subscription ends in milliseconds since epoch.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="lastModifiedAt" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Output only. Time when the API product subscription was last modified in milliseconds since epoch.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="startTime" /></td>
+    <td><code>string (int64)</code></td>
+    <td>Output only. Time when the API product subscription starts in milliseconds since epoch.</td>
 </tr>
 </tbody>
 </table>
@@ -131,11 +222,25 @@ The following methods are available for this resource:
     <td>Gets details for an API product subscription.</td>
 </tr>
 <tr>
+    <td><a href="#organizations_appgroups_subscriptions_get"><CopyableCode code="organizations_appgroups_subscriptions_get" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-appgroupsId"><code>appgroupsId</code></a>, <a href="#parameter-subscriptionsId"><code>subscriptionsId</code></a></td>
+    <td></td>
+    <td>Get an api product subscription for an appgroup.</td>
+</tr>
+<tr>
     <td><a href="#organizations_developers_subscriptions_list"><CopyableCode code="organizations_developers_subscriptions_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-developersId"><code>developersId</code></a></td>
     <td><a href="#parameter-startKey"><code>startKey</code></a>, <a href="#parameter-count"><code>count</code></a></td>
     <td>Lists all API product subscriptions for a developer.</td>
+</tr>
+<tr>
+    <td><a href="#organizations_appgroups_subscriptions_list"><CopyableCode code="organizations_appgroups_subscriptions_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-appgroupsId"><code>appgroupsId</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td>List all api product subscriptions for an appgroup.</td>
 </tr>
 <tr>
     <td><a href="#organizations_developers_subscriptions_create"><CopyableCode code="organizations_developers_subscriptions_create" /></a></td>
@@ -145,9 +250,23 @@ The following methods are available for this resource:
     <td>Creates a subscription to an API product. </td>
 </tr>
 <tr>
+    <td><a href="#organizations_appgroups_subscriptions_create"><CopyableCode code="organizations_appgroups_subscriptions_create" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-appgroupsId"><code>appgroupsId</code></a></td>
+    <td></td>
+    <td>Creates a subscription to an API product. </td>
+</tr>
+<tr>
     <td><a href="#organizations_developers_subscriptions_expire"><CopyableCode code="organizations_developers_subscriptions_expire" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-developersId"><code>developersId</code></a>, <a href="#parameter-subscriptionsId"><code>subscriptionsId</code></a></td>
+    <td></td>
+    <td>Expires an API product subscription immediately.</td>
+</tr>
+<tr>
+    <td><a href="#organizations_appgroups_subscriptions_expire"><CopyableCode code="organizations_appgroups_subscriptions_expire" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-appgroupsId"><code>appgroupsId</code></a>, <a href="#parameter-subscriptionsId"><code>subscriptionsId</code></a></td>
     <td></td>
     <td>Expires an API product subscription immediately.</td>
 </tr>
@@ -167,6 +286,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
+<tr id="parameter-appgroupsId">
+    <td><CopyableCode code="appgroupsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-developersId">
     <td><CopyableCode code="developersId" /></td>
     <td><code>string</code></td>
@@ -187,6 +311,16 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>integer (int32)</code></td>
     <td></td>
 </tr>
+<tr id="parameter-pageSize">
+    <td><CopyableCode code="pageSize" /></td>
+    <td><code>integer (int32)</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-pageToken">
+    <td><CopyableCode code="pageToken" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-startKey">
     <td><CopyableCode code="startKey" /></td>
     <td><code>string</code></td>
@@ -201,7 +335,9 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="organizations_developers_subscriptions_get"
     values={[
         { label: 'organizations_developers_subscriptions_get', value: 'organizations_developers_subscriptions_get' },
-        { label: 'organizations_developers_subscriptions_list', value: 'organizations_developers_subscriptions_list' }
+        { label: 'organizations_appgroups_subscriptions_get', value: 'organizations_appgroups_subscriptions_get' },
+        { label: 'organizations_developers_subscriptions_list', value: 'organizations_developers_subscriptions_list' },
+        { label: 'organizations_appgroups_subscriptions_list', value: 'organizations_appgroups_subscriptions_list' }
     ]}
 >
 <TabItem value="organizations_developers_subscriptions_get">
@@ -223,6 +359,25 @@ AND subscriptionsId = '{{ subscriptionsId }}' -- required
 ;
 ```
 </TabItem>
+<TabItem value="organizations_appgroups_subscriptions_get">
+
+Get an api product subscription for an appgroup.
+
+```sql
+SELECT
+name,
+apiproduct,
+createdAt,
+endTime,
+lastModifiedAt,
+startTime
+FROM google.apigee.subscriptions
+WHERE organizationsId = '{{ organizationsId }}' -- required
+AND appgroupsId = '{{ appgroupsId }}' -- required
+AND subscriptionsId = '{{ subscriptionsId }}' -- required
+;
+```
+</TabItem>
 <TabItem value="organizations_developers_subscriptions_list">
 
 Lists all API product subscriptions for a developer.
@@ -239,6 +394,26 @@ AND count = '{{ count }}'
 ;
 ```
 </TabItem>
+<TabItem value="organizations_appgroups_subscriptions_list">
+
+List all api product subscriptions for an appgroup.
+
+```sql
+SELECT
+name,
+apiproduct,
+createdAt,
+endTime,
+lastModifiedAt,
+startTime
+FROM google.apigee.subscriptions
+WHERE organizationsId = '{{ organizationsId }}' -- required
+AND appgroupsId = '{{ appgroupsId }}' -- required
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+;
+```
+</TabItem>
 </Tabs>
 
 
@@ -248,6 +423,7 @@ AND count = '{{ count }}'
     defaultValue="organizations_developers_subscriptions_create"
     values={[
         { label: 'organizations_developers_subscriptions_create', value: 'organizations_developers_subscriptions_create' },
+        { label: 'organizations_appgroups_subscriptions_create', value: 'organizations_appgroups_subscriptions_create' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
@@ -257,15 +433,15 @@ Creates a subscription to an API product.
 
 ```sql
 INSERT INTO google.apigee.subscriptions (
-data__startTime,
 data__endTime,
+data__startTime,
 data__apiproduct,
 organizationsId,
 developersId
 )
 SELECT 
-'{{ startTime }}',
 '{{ endTime }}',
+'{{ startTime }}',
 '{{ apiproduct }}',
 '{{ organizationsId }}',
 '{{ developersId }}'
@@ -279,34 +455,58 @@ startTime
 ;
 ```
 </TabItem>
+<TabItem value="organizations_appgroups_subscriptions_create">
+
+Creates a subscription to an API product. 
+
+```sql
+INSERT INTO google.apigee.subscriptions (
+data__apiproduct,
+organizationsId,
+appgroupsId
+)
+SELECT 
+'{{ apiproduct }}',
+'{{ organizationsId }}',
+'{{ appgroupsId }}'
+RETURNING
+name,
+apiproduct,
+createdAt,
+endTime,
+lastModifiedAt,
+startTime
+;
+```
+</TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: subscriptions
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the subscriptions resource.
     - name: developersId
-      value: string
+      value: "{{ developersId }}"
       description: Required parameter for the subscriptions resource.
-    - name: startTime
-      value: string
-      description: >
-        Time when the API product subscription starts in milliseconds since epoch.
-        
+    - name: appgroupsId
+      value: "{{ appgroupsId }}"
+      description: Required parameter for the subscriptions resource.
     - name: endTime
-      value: string
-      description: >
+      value: "{{ endTime }}"
+      description: |
         Time when the API product subscription ends in milliseconds since epoch.
-        
+    - name: startTime
+      value: "{{ startTime }}"
+      description: |
+        Time when the API product subscription starts in milliseconds since epoch.
     - name: apiproduct
-      value: string
-      description: >
-        Name of the API product for which the developer is purchasing a subscription.
-        
-```
+      value: "{{ apiproduct }}"
+      description: |
+        Required. Name of the API product for which the appgroup is purchasing a subscription.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -316,7 +516,8 @@ startTime
 <Tabs
     defaultValue="organizations_developers_subscriptions_expire"
     values={[
-        { label: 'organizations_developers_subscriptions_expire', value: 'organizations_developers_subscriptions_expire' }
+        { label: 'organizations_developers_subscriptions_expire', value: 'organizations_developers_subscriptions_expire' },
+        { label: 'organizations_appgroups_subscriptions_expire', value: 'organizations_appgroups_subscriptions_expire' }
     ]}
 >
 <TabItem value="organizations_developers_subscriptions_expire">
@@ -327,6 +528,18 @@ Expires an API product subscription immediately.
 EXEC google.apigee.subscriptions.organizations_developers_subscriptions_expire 
 @organizationsId='{{ organizationsId }}' --required, 
 @developersId='{{ developersId }}' --required, 
+@subscriptionsId='{{ subscriptionsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="organizations_appgroups_subscriptions_expire">
+
+Expires an API product subscription immediately.
+
+```sql
+EXEC google.apigee.subscriptions.organizations_appgroups_subscriptions_expire 
+@organizationsId='{{ organizationsId }}' --required, 
+@appgroupsId='{{ appgroupsId }}' --required, 
 @subscriptionsId='{{ subscriptionsId }}' --required
 ;
 ```

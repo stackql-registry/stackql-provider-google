@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>compatibility</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>compatibility</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="compatibility" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.managedkafka.compatibility" /></td></tr>
 </tbody></table>
@@ -52,7 +53,7 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#check_compatibility"><CopyableCode code="check_compatibility" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a>, <a href="#parameter-contextsId"><code>contextsId</code></a>, <a href="#parameter-compatibilityId"><code>compatibilityId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-schemaRegistriesId"><code>schemaRegistriesId</code></a>, <a href="#parameter-compatibilityId"><code>compatibilityId</code></a></td>
     <td></td>
     <td>Check compatibility of a schema with all versions or a specific version of a subject.</td>
 </tr>
@@ -74,11 +75,6 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tbody>
 <tr id="parameter-compatibilityId">
     <td><CopyableCode code="compatibilityId" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr id="parameter-contextsId">
-    <td><CopyableCode code="contextsId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -117,14 +113,13 @@ EXEC google.managedkafka.compatibility.check_compatibility
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @schemaRegistriesId='{{ schemaRegistriesId }}' --required, 
-@contextsId='{{ contextsId }}' --required, 
 @compatibilityId='{{ compatibilityId }}' --required 
 @@json=
 '{
-"references": "{{ references }}", 
-"schemaType": "{{ schemaType }}", 
 "verbose": {{ verbose }}, 
-"schema": "{{ schema }}"
+"schemaType": "{{ schemaType }}", 
+"schema": "{{ schema }}", 
+"references": "{{ references }}"
 }'
 ;
 ```

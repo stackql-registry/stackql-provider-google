@@ -18,7 +18,7 @@ migrationcenter service documentation.
 
 :::info[Service Summary]
 
-total resources: __15__  
+total resources: __16__  
 
 :::
 
@@ -26,15 +26,16 @@ total resources: __15__
 <div class="row">
 <div class="providerDocColumn">
 <a href="/services/migrationcenter/assets/">assets</a><br />
+<a href="/services/migrationcenter/assets_export_jobs/">assets_export_jobs</a><br />
 <a href="/services/migrationcenter/discovery_clients/">discovery_clients</a><br />
 <a href="/services/migrationcenter/error_frames/">error_frames</a><br />
 <a href="/services/migrationcenter/groups/">groups</a><br />
 <a href="/services/migrationcenter/groups_assets/">groups_assets</a><br />
 <a href="/services/migrationcenter/import_data_files/">import_data_files</a><br />
-<a href="/services/migrationcenter/import_jobs/">import_jobs</a><br />
-<a href="/services/migrationcenter/locations/">locations</a>
+<a href="/services/migrationcenter/import_jobs/">import_jobs</a>
 </div>
 <div class="providerDocColumn">
+<a href="/services/migrationcenter/locations/">locations</a><br />
 <a href="/services/migrationcenter/operations/">operations</a><br />
 <a href="/services/migrationcenter/preference_sets/">preference_sets</a><br />
 <a href="/services/migrationcenter/relations/">relations</a><br />

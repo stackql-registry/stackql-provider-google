@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>aliases</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>aliases</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="aliases" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.aliases" /></td></tr>
 </tbody></table>
@@ -61,7 +62,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Type of alias.</td>
+    <td>Type of alias. (ALIAS_TYPE_UNSPECIFIED, CERT, KEY_CERT)</td>
 </tr>
 </tbody>
 </table>
@@ -94,14 +95,14 @@ The following methods are available for this resource:
     <td><a href="#organizations_environments_keystores_aliases_create"><CopyableCode code="organizations_environments_keystores_aliases_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-keystoresId"><code>keystoresId</code></a></td>
-    <td><a href="#parameter-ignoreExpiryValidation"><code>ignoreExpiryValidation</code></a>, <a href="#parameter-_password"><code>_password</code></a>, <a href="#parameter-format"><code>format</code></a>, <a href="#parameter-ignoreNewlineValidation"><code>ignoreNewlineValidation</code></a>, <a href="#parameter-alias"><code>alias</code></a></td>
+    <td><a href="#parameter-alias"><code>alias</code></a>, <a href="#parameter-_password"><code>_password</code></a>, <a href="#parameter-ignoreExpiryValidation"><code>ignoreExpiryValidation</code></a>, <a href="#parameter-ignoreNewlineValidation"><code>ignoreNewlineValidation</code></a>, <a href="#parameter-format"><code>format</code></a></td>
     <td>Creates an alias from a key/certificate pair. The structure of the request is controlled by the `format` query parameter: - `keycertfile` - Separate PEM-encoded key and certificate files are uploaded. Set `Content-Type: multipart/form-data` and include the `keyFile`, `certFile`, and `password` (if keys are encrypted) fields in the request body. If uploading to a truststore, omit `keyFile`. - `pkcs12` - A PKCS12 file is uploaded. Set `Content-Type: multipart/form-data`, provide the file in the `file` field, and include the `password` field if the file is encrypted in the request body. - `selfsignedcert` - A new private key and certificate are generated. Set `Content-Type: application/json` and include CertificateGenerationSpec in the request body.</td>
 </tr>
 <tr>
     <td><a href="#organizations_environments_keystores_aliases_update"><CopyableCode code="organizations_environments_keystores_aliases_update" /></a></td>
     <td><CopyableCode code="replace" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a>, <a href="#parameter-keystoresId"><code>keystoresId</code></a>, <a href="#parameter-aliasesId"><code>aliasesId</code></a></td>
-    <td><a href="#parameter-ignoreNewlineValidation"><code>ignoreNewlineValidation</code></a>, <a href="#parameter-ignoreExpiryValidation"><code>ignoreExpiryValidation</code></a></td>
+    <td><a href="#parameter-ignoreExpiryValidation"><code>ignoreExpiryValidation</code></a>, <a href="#parameter-ignoreNewlineValidation"><code>ignoreNewlineValidation</code></a></td>
     <td>Updates the certificate in an alias. The updated certificate must be in PEM- or DER-encoded X.509 format.</td>
 </tr>
 <tr>
@@ -225,30 +226,30 @@ Creates an alias from a key/certificate pair. The structure of the request is co
 
 ```sql
 INSERT INTO google.apigee.aliases (
-data__data,
-data__extensions,
 data__contentType,
+data__extensions,
+data__data,
 organizationsId,
 environmentsId,
 keystoresId,
-ignoreExpiryValidation,
+alias,
 _password,
-format,
+ignoreExpiryValidation,
 ignoreNewlineValidation,
-alias
+format
 )
 SELECT 
-'{{ data }}',
-'{{ extensions }}',
 '{{ contentType }}',
+'{{ extensions }}',
+'{{ data }}',
 '{{ organizationsId }}',
 '{{ environmentsId }}',
 '{{ keystoresId }}',
-'{{ ignoreExpiryValidation }}',
+'{{ alias }}',
 '{{ _password }}',
-'{{ format }}',
+'{{ ignoreExpiryValidation }}',
 '{{ ignoreNewlineValidation }}',
-'{{ alias }}'
+'{{ format }}'
 RETURNING
 alias,
 certsInfo,
@@ -258,45 +259,42 @@ type
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: aliases
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the aliases resource.
     - name: environmentsId
-      value: string
+      value: "{{ environmentsId }}"
       description: Required parameter for the aliases resource.
     - name: keystoresId
-      value: string
+      value: "{{ keystoresId }}"
       description: Required parameter for the aliases resource.
-    - name: data
-      value: string
-      description: >
-        The HTTP request/response body as raw binary.
-        
-    - name: extensions
-      value: array
-      description: >
-        Application specific response metadata. Must be set in the first response for streaming APIs.
-        
     - name: contentType
-      value: string
-      description: >
+      value: "{{ contentType }}"
+      description: |
         The HTTP Content-Type header value specifying the content type of the body.
-        
-    - name: ignoreExpiryValidation
-      value: boolean
-    - name: _password
-      value: string
-    - name: format
-      value: string
-    - name: ignoreNewlineValidation
-      value: boolean
+    - name: extensions
+      value: "{{ extensions }}"
+      description: |
+        Application specific response metadata. Must be set in the first response for streaming APIs.
+    - name: data
+      value: "{{ data }}"
+      description: |
+        The HTTP request/response body as raw binary.
     - name: alias
-      value: string
-```
+      value: "{{ alias }}"
+    - name: _password
+      value: "{{ _password }}"
+    - name: ignoreExpiryValidation
+      value: {{ ignoreExpiryValidation }}
+    - name: ignoreNewlineValidation
+      value: {{ ignoreNewlineValidation }}
+    - name: format
+      value: "{{ format }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -316,16 +314,16 @@ Updates the certificate in an alias. The updated certificate must be in PEM- or 
 ```sql
 REPLACE google.apigee.aliases
 SET 
-data__data = '{{ data }}',
+data__contentType = '{{ contentType }}',
 data__extensions = '{{ extensions }}',
-data__contentType = '{{ contentType }}'
+data__data = '{{ data }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND environmentsId = '{{ environmentsId }}' --required
 AND keystoresId = '{{ keystoresId }}' --required
 AND aliasesId = '{{ aliasesId }}' --required
-AND ignoreNewlineValidation = {{ ignoreNewlineValidation}}
 AND ignoreExpiryValidation = {{ ignoreExpiryValidation}}
+AND ignoreNewlineValidation = {{ ignoreNewlineValidation}}
 RETURNING
 alias,
 certsInfo,

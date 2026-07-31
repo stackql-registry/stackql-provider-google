@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>batches</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>batches</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="batches" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataproc.batches" /></td></tr>
 </tbody></table>
@@ -85,6 +86,11 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. PySpark batch config. (id: PySparkBatch)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="pysparkNotebookBatch" /></td>
+    <td><code>object</code></td>
+    <td>Optional. PySpark notebook batch config. (id: PySparkNotebookBatch)</td>
+</tr>
+<tr>
     <td><CopyableCode code="runtimeConfig" /></td>
     <td><code>object</code></td>
     <td>Optional. Runtime configuration for the batch execution. (id: RuntimeConfig)</td>
@@ -112,7 +118,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the batch.</td>
+    <td>Output only. The state of the batch. (STATE_UNSPECIFIED, PENDING, RUNNING, CANCELLING, CANCELLED, SUCCEEDED, FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateHistory" /></td>
@@ -148,91 +154,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The resource name of the batch.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time when the batch was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="creator" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The email address of the user who created the batch.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="environmentConfig" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Environment configuration for the batch execution. (id: EnvironmentConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Optional. The labels to associate with this batch. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty, but, if present, must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with a batch.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="operation" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The resource name of the operation associated with this batch.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="pysparkBatch" /></td>
-    <td><code>object</code></td>
-    <td>Optional. PySpark batch config. (id: PySparkBatch)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="runtimeConfig" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Runtime configuration for the batch execution. (id: RuntimeConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="runtimeInfo" /></td>
-    <td><code>object</code></td>
-    <td>Output only. Runtime information about batch execution. (id: RuntimeInfo)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="sparkBatch" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Spark batch config. (id: SparkBatch)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="sparkRBatch" /></td>
-    <td><code>object</code></td>
-    <td>Optional. SparkR batch config. (id: SparkRBatch)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="sparkSqlBatch" /></td>
-    <td><code>object</code></td>
-    <td>Optional. SparkSql batch config. (id: SparkSqlBatch)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="state" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The state of the batch.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="stateHistory" /></td>
-    <td><code>array</code></td>
-    <td>Output only. Historical state information for the batch.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="stateMessage" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Batch state details, such as a failure description if the state is FAILED.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="stateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time when the batch entered a current state.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="uuid" /></td>
-    <td><code>string</code></td>
-    <td>Output only. A batch UUID (Unique Universal Identifier). The service generates this value when it creates the batch.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -264,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_batches_list"><CopyableCode code="projects_locations_batches_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists batch workloads.</td>
 </tr>
 <tr>
@@ -374,6 +295,7 @@ environmentConfig,
 labels,
 operation,
 pysparkBatch,
+pysparkNotebookBatch,
 runtimeConfig,
 runtimeInfo,
 sparkBatch,
@@ -397,30 +319,14 @@ Lists batch workloads.
 
 ```sql
 SELECT
-name,
-createTime,
-creator,
-environmentConfig,
-labels,
-operation,
-pysparkBatch,
-runtimeConfig,
-runtimeInfo,
-sparkBatch,
-sparkRBatch,
-sparkSqlBatch,
-state,
-stateHistory,
-stateMessage,
-stateTime,
-uuid
+*
 FROM google.dataproc.batches
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -442,26 +348,28 @@ Creates a batch workload that executes asynchronously.
 
 ```sql
 INSERT INTO google.dataproc.batches (
-data__labels,
-data__sparkSqlBatch,
 data__pysparkBatch,
 data__sparkRBatch,
-data__sparkBatch,
-data__runtimeConfig,
 data__environmentConfig,
+data__runtimeConfig,
+data__sparkBatch,
+data__labels,
+data__pysparkNotebookBatch,
+data__sparkSqlBatch,
 projectsId,
 locationsId,
 requestId,
 batchId
 )
 SELECT 
-'{{ labels }}',
-'{{ sparkSqlBatch }}',
 '{{ pysparkBatch }}',
 '{{ sparkRBatch }}',
-'{{ sparkBatch }}',
-'{{ runtimeConfig }}',
 '{{ environmentConfig }}',
+'{{ runtimeConfig }}',
+'{{ sparkBatch }}',
+'{{ labels }}',
+'{{ pysparkNotebookBatch }}',
+'{{ sparkSqlBatch }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ requestId }}',
@@ -477,56 +385,122 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: batches
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the batches resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the batches resource.
-    - name: labels
-      value: object
-      description: >
-        Optional. The labels to associate with this batch. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty, but, if present, must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with a batch.
-        
-    - name: sparkSqlBatch
-      value: object
-      description: >
-        Optional. SparkSql batch config.
-        
     - name: pysparkBatch
-      value: object
-      description: >
+      description: |
         Optional. PySpark batch config.
-        
+      value:
+        mainPythonFileUri: "{{ mainPythonFileUri }}"
+        pythonFileUris:
+          - "{{ pythonFileUris }}"
+        jarFileUris:
+          - "{{ jarFileUris }}"
+        fileUris:
+          - "{{ fileUris }}"
+        args:
+          - "{{ args }}"
+        archiveUris:
+          - "{{ archiveUris }}"
     - name: sparkRBatch
-      value: object
-      description: >
+      description: |
         Optional. SparkR batch config.
-        
-    - name: sparkBatch
-      value: object
-      description: >
-        Optional. Spark batch config.
-        
-    - name: runtimeConfig
-      value: object
-      description: >
-        Optional. Runtime configuration for the batch execution.
-        
+      value:
+        args:
+          - "{{ args }}"
+        archiveUris:
+          - "{{ archiveUris }}"
+        mainRFileUri: "{{ mainRFileUri }}"
+        fileUris:
+          - "{{ fileUris }}"
     - name: environmentConfig
-      value: object
-      description: >
+      description: |
         Optional. Environment configuration for the batch execution.
-        
+      value:
+        peripheralsConfig:
+          metastoreService: "{{ metastoreService }}"
+          sparkHistoryServerConfig:
+            dataprocCluster: "{{ dataprocCluster }}"
+        executionConfig:
+          idleTtl: "{{ idleTtl }}"
+          authenticationConfig:
+            userWorkloadAuthenticationType: "{{ userWorkloadAuthenticationType }}"
+          subnetworkUri: "{{ subnetworkUri }}"
+          kmsKey: "{{ kmsKey }}"
+          networkTags:
+            - "{{ networkTags }}"
+          ttl: "{{ ttl }}"
+          serviceAccount: "{{ serviceAccount }}"
+          networkUri: "{{ networkUri }}"
+          resourceManagerTags: "{{ resourceManagerTags }}"
+          stagingBucket: "{{ stagingBucket }}"
+    - name: runtimeConfig
+      description: |
+        Optional. Runtime configuration for the batch execution.
+      value:
+        properties: "{{ properties }}"
+        version: "{{ version }}"
+        repositoryConfig:
+          pypiRepositoryConfig:
+            pypiRepository: "{{ pypiRepository }}"
+        autotuningConfig:
+          scenarios:
+            - "{{ scenarios }}"
+        containerImage: "{{ containerImage }}"
+        cohort: "{{ cohort }}"
+    - name: sparkBatch
+      description: |
+        Optional. Spark batch config.
+      value:
+        fileUris:
+          - "{{ fileUris }}"
+        args:
+          - "{{ args }}"
+        archiveUris:
+          - "{{ archiveUris }}"
+        jarFileUris:
+          - "{{ jarFileUris }}"
+        mainJarFileUri: "{{ mainJarFileUri }}"
+        mainClass: "{{ mainClass }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. The labels to associate with this batch. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty, but, if present, must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with a batch.
+    - name: pysparkNotebookBatch
+      description: |
+        Optional. PySpark notebook batch config.
+      value:
+        params: "{{ params }}"
+        notebookFileUri: "{{ notebookFileUri }}"
+        pythonFileUris:
+          - "{{ pythonFileUris }}"
+        jarFileUris:
+          - "{{ jarFileUris }}"
+        archiveUris:
+          - "{{ archiveUris }}"
+        fileUris:
+          - "{{ fileUris }}"
+    - name: sparkSqlBatch
+      description: |
+        Optional. SparkSql batch config.
+      value:
+        queryVariables: "{{ queryVariables }}"
+        jarFileUris:
+          - "{{ jarFileUris }}"
+        queryFileUri: "{{ queryFileUri }}"
     - name: requestId
-      value: string
+      value: "{{ requestId }}"
     - name: batchId
-      value: string
-```
+      value: "{{ batchId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -573,8 +547,8 @@ EXEC google.dataproc.batches.projects_locations_batches_analyze
 @batchesId='{{ batchesId }}' --required 
 @@json=
 '{
-"requestorId": "{{ requestorId }}", 
-"requestId": "{{ requestId }}"
+"requestId": "{{ requestId }}", 
+"requestorId": "{{ requestorId }}"
 }'
 ;
 ```

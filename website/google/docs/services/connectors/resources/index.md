@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>resources</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>resources</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="resources" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.connectors.resources" /></td></tr>
 </tbody></table>
@@ -49,6 +50,11 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="_meta" /></td>
+    <td><code>object</code></td>
+    <td>Metadata for the resource.</td>
+</tr>
 <tr>
     <td><CopyableCode code="data" /></td>
     <td><code>string (byte)</code></td>
@@ -82,6 +88,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
     <td>A human-readable name for this resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="_meta" /></td>
+    <td><code>object</code></td>
+    <td>Metadata for the resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -127,14 +138,14 @@ The following methods are available for this resource:
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a>, <a href="#parameter-resourcesId"><code>resourcesId</code></a></td>
-    <td></td>
+    <td><a href="#parameter-executionConfig.headers"><code>executionConfig.headers</code></a></td>
     <td>Gets a specific resource.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-executionConfig.headers"><code>executionConfig.headers</code></a></td>
     <td>Lists all available resources.</td>
 </tr>
 </tbody>
@@ -173,6 +184,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
+<tr id="parameter-executionConfig.headers">
+    <td><CopyableCode code="executionConfig.headers" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-pageSize">
     <td><CopyableCode code="pageSize" /></td>
     <td><code>integer (int32)</code></td>
@@ -201,6 +217,7 @@ Gets a specific resource.
 
 ```sql
 SELECT
+_meta,
 data,
 metadata,
 mimeType
@@ -209,6 +226,7 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND connectionsId = '{{ connectionsId }}' -- required
 AND resourcesId = '{{ resourcesId }}' -- required
+AND executionConfig.headers = '{{ executionConfig.headers }}'
 ;
 ```
 </TabItem>
@@ -219,6 +237,7 @@ Lists all available resources.
 ```sql
 SELECT
 name,
+_meta,
 description,
 mimeType,
 size,
@@ -229,6 +248,7 @@ AND locationsId = '{{ locationsId }}' -- required
 AND connectionsId = '{{ connectionsId }}' -- required
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND executionConfig.headers = '{{ executionConfig.headers }}'
 ;
 ```
 </TabItem>

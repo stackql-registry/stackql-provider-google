@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>intents</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>intents</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="intents" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dialogflow.intents" /></td></tr>
 </tbody></table>
@@ -52,42 +53,47 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The unique identifier of the intent. Required for the Intents.UpdateIntent method. Intents.CreateIntent populates the name automatically. Format: `projects//locations//agents//intents/`.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
-    <td>Human readable description for better understanding an intent like its scope, content, result etc. Maximum character limit: 140 characters.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Required. The human-readable name of the intent, unique within the agent.</td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="dtmfPattern" /></td>
+    <td><code>string</code></td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="isFallback" /></td>
     <td><code>boolean</code></td>
-    <td>Indicates whether this is a fallback intent. Currently only default fallback intent is allowed in the agent, which is added upon agent creation. Adding training phrases to fallback intent is useful in the case of requests that are mistakenly matched, since training phrases assigned to fallback intents act as negative examples that triggers no-match event.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
     <td><code>object</code></td>
-    <td>The key/value metadata to label an intent. Labels can contain lowercase letters, digits and the symbols '-' and '_'. International characters are allowed, including letters from unicase alphabets. Keys must start with a letter. Keys and values can be no longer than 63 characters and no more than 128 bytes. Prefix "sys-" is reserved for Dialogflow defined labels. Currently allowed Dialogflow defined labels include: * sys-head * sys-contextual The above labels do not require value. "sys-head" means the intent is a head intent. "sys.contextual" means the intent is a contextual intent.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="parameters" /></td>
     <td><code>array</code></td>
-    <td>The collection of parameters associated with the intent.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="priority" /></td>
     <td><code>integer (int32)</code></td>
-    <td>The priority of this intent. Higher numbers represent higher priorities. - If the supplied value is unspecified or 0, the service translates the value to 500,000, which corresponds to the `Normal` priority in the console. - If the supplied value is negative, the intent is ignored in runtime detect intent requests.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="trainingPhrases" /></td>
     <td><code>array</code></td>
-    <td>The collection of training phrases the agent is trained on to identify the intent.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -106,42 +112,47 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The unique identifier of the intent. Required for the Intents.UpdateIntent method. Intents.CreateIntent populates the name automatically. Format: `projects//locations//agents//intents/`.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
-    <td>Human readable description for better understanding an intent like its scope, content, result etc. Maximum character limit: 140 characters.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Required. The human-readable name of the intent, unique within the agent.</td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="dtmfPattern" /></td>
+    <td><code>string</code></td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="isFallback" /></td>
     <td><code>boolean</code></td>
-    <td>Indicates whether this is a fallback intent. Currently only default fallback intent is allowed in the agent, which is added upon agent creation. Adding training phrases to fallback intent is useful in the case of requests that are mistakenly matched, since training phrases assigned to fallback intents act as negative examples that triggers no-match event.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
     <td><code>object</code></td>
-    <td>The key/value metadata to label an intent. Labels can contain lowercase letters, digits and the symbols '-' and '_'. International characters are allowed, including letters from unicase alphabets. Keys must start with a letter. Keys and values can be no longer than 63 characters and no more than 128 bytes. Prefix "sys-" is reserved for Dialogflow defined labels. Currently allowed Dialogflow defined labels include: * sys-head * sys-contextual The above labels do not require value. "sys-head" means the intent is a head intent. "sys.contextual" means the intent is a contextual intent.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="parameters" /></td>
     <td><code>array</code></td>
-    <td>The collection of parameters associated with the intent.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="priority" /></td>
     <td><code>integer (int32)</code></td>
-    <td>The priority of this intent. Higher numbers represent higher priorities. - If the supplied value is unspecified or 0, the service translates the value to 500,000, which corresponds to the `Normal` priority in the console. - If the supplied value is negative, the intent is ignored in runtime detect intent requests.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="trainingPhrases" /></td>
     <td><code>array</code></td>
-    <td>The collection of training phrases the agent is trained on to identify the intent.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -168,49 +179,49 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-intentsId"><code>intentsId</code></a></td>
     <td><a href="#parameter-languageCode"><code>languageCode</code></a></td>
-    <td>Retrieves the specified intent.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_intents_list"><CopyableCode code="projects_locations_agents_intents_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
-    <td><a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-intentView"><code>intentView</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Returns the list of all intents in the specified agent.</td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-intentView"><code>intentView</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_intents_create"><CopyableCode code="projects_locations_agents_intents_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
     <td><a href="#parameter-languageCode"><code>languageCode</code></a></td>
-    <td>Creates an intent in the specified agent. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_intents_patch"><CopyableCode code="projects_locations_agents_intents_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-intentsId"><code>intentsId</code></a></td>
-    <td><a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates the specified intent. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).</td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a></td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_intents_delete"><CopyableCode code="projects_locations_agents_intents_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-intentsId"><code>intentsId</code></a></td>
     <td></td>
-    <td>Deletes the specified intent. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_intents_import"><CopyableCode code="projects_locations_agents_intents_import" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
     <td></td>
-    <td>Imports the specified intents into the agent. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: ImportIntentsMetadata - `response`: ImportIntentsResponse</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_intents_export"><CopyableCode code="projects_locations_agents_intents_export" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
     <td></td>
-    <td>Exports the selected intents. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: ExportIntentsMetadata - `response`: ExportIntentsResponse</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -287,13 +298,14 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="projects_locations_agents_intents_get">
 
-Retrieves the specified intent.
+Successful response
 
 ```sql
 SELECT
 name,
 description,
 displayName,
+dtmfPattern,
 isFallback,
 labels,
 parameters,
@@ -310,13 +322,14 @@ AND languageCode = '{{ languageCode }}'
 </TabItem>
 <TabItem value="projects_locations_agents_intents_list">
 
-Returns the list of all intents in the specified agent.
+Successful response
 
 ```sql
 SELECT
 name,
 description,
 displayName,
+dtmfPattern,
 isFallback,
 labels,
 parameters,
@@ -326,9 +339,9 @@ FROM google.dialogflow.intents
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND agentsId = '{{ agentsId }}' -- required
+AND pageSize = '{{ pageSize }}'
 AND languageCode = '{{ languageCode }}'
 AND intentView = '{{ intentView }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -347,16 +360,17 @@ AND pageToken = '{{ pageToken }}'
 >
 <TabItem value="projects_locations_agents_intents_create">
 
-Creates an intent in the specified agent. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+No description available.
 
 ```sql
 INSERT INTO google.dialogflow.intents (
-data__name,
-data__displayName,
 data__trainingPhrases,
-data__parameters,
 data__priority,
+data__displayName,
+data__parameters,
 data__isFallback,
+data__dtmfPattern,
+data__name,
 data__labels,
 data__description,
 projectsId,
@@ -365,12 +379,13 @@ agentsId,
 languageCode
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
 '{{ trainingPhrases }}',
-'{{ parameters }}',
 {{ priority }},
+'{{ displayName }}',
+'{{ parameters }}',
 {{ isFallback }},
+'{{ dtmfPattern }}',
+'{{ name }}',
 '{{ labels }}',
 '{{ description }}',
 '{{ projectsId }}',
@@ -381,6 +396,7 @@ RETURNING
 name,
 description,
 displayName,
+dtmfPattern,
 isFallback,
 labels,
 parameters,
@@ -391,62 +407,47 @@ trainingPhrases
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: intents
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the intents resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the intents resource.
     - name: agentsId
-      value: string
+      value: "{{ agentsId }}"
       description: Required parameter for the intents resource.
-    - name: name
-      value: string
-      description: >
-        The unique identifier of the intent. Required for the Intents.UpdateIntent method. Intents.CreateIntent populates the name automatically. Format: `projects//locations//agents//intents/`.
-        
-    - name: displayName
-      value: string
-      description: >
-        Required. The human-readable name of the intent, unique within the agent.
-        
     - name: trainingPhrases
-      value: array
-      description: >
-        The collection of training phrases the agent is trained on to identify the intent.
-        
-    - name: parameters
-      value: array
-      description: >
-        The collection of parameters associated with the intent.
-        
+      value:
+        - parts: "{{ parts }}"
+          repeatCount: {{ repeatCount }}
+          id: "{{ id }}"
     - name: priority
-      value: integer
-      description: >
-        The priority of this intent. Higher numbers represent higher priorities. - If the supplied value is unspecified or 0, the service translates the value to 500,000, which corresponds to the `Normal` priority in the console. - If the supplied value is negative, the intent is ignored in runtime detect intent requests.
-        
+      value: {{ priority }}
+    - name: displayName
+      value: "{{ displayName }}"
+    - name: parameters
+      value:
+        - entityType: "{{ entityType }}"
+          redact: {{ redact }}
+          id: "{{ id }}"
+          isList: {{ isList }}
     - name: isFallback
-      value: boolean
-      description: >
-        Indicates whether this is a fallback intent. Currently only default fallback intent is allowed in the agent, which is added upon agent creation. Adding training phrases to fallback intent is useful in the case of requests that are mistakenly matched, since training phrases assigned to fallback intents act as negative examples that triggers no-match event.
-        
+      value: {{ isFallback }}
+    - name: dtmfPattern
+      value: "{{ dtmfPattern }}"
+    - name: name
+      value: "{{ name }}"
     - name: labels
-      value: object
-      description: >
-        The key/value metadata to label an intent. Labels can contain lowercase letters, digits and the symbols '-' and '_'. International characters are allowed, including letters from unicase alphabets. Keys must start with a letter. Keys and values can be no longer than 63 characters and no more than 128 bytes. Prefix "sys-" is reserved for Dialogflow defined labels. Currently allowed Dialogflow defined labels include: * sys-head * sys-contextual The above labels do not require value. "sys-head" means the intent is a head intent. "sys.contextual" means the intent is a contextual intent.
-        
+      value: "{{ labels }}"
     - name: description
-      value: string
-      description: >
-        Human readable description for better understanding an intent like its scope, content, result etc. Maximum character limit: 140 characters.
-        
+      value: "{{ description }}"
     - name: languageCode
-      value: string
-```
+      value: "{{ languageCode }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -461,17 +462,18 @@ trainingPhrases
 >
 <TabItem value="projects_locations_agents_intents_patch">
 
-Updates the specified intent. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+No description available.
 
 ```sql
 UPDATE google.dialogflow.intents
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
 data__trainingPhrases = '{{ trainingPhrases }}',
-data__parameters = '{{ parameters }}',
 data__priority = {{ priority }},
+data__displayName = '{{ displayName }}',
+data__parameters = '{{ parameters }}',
 data__isFallback = {{ isFallback }},
+data__dtmfPattern = '{{ dtmfPattern }}',
+data__name = '{{ name }}',
 data__labels = '{{ labels }}',
 data__description = '{{ description }}'
 WHERE 
@@ -479,12 +481,13 @@ projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND agentsId = '{{ agentsId }}' --required
 AND intentsId = '{{ intentsId }}' --required
-AND languageCode = '{{ languageCode}}'
 AND updateMask = '{{ updateMask}}'
+AND languageCode = '{{ languageCode}}'
 RETURNING
 name,
 description,
 displayName,
+dtmfPattern,
 isFallback,
 labels,
 parameters,
@@ -505,7 +508,7 @@ trainingPhrases;
 >
 <TabItem value="projects_locations_agents_intents_delete">
 
-Deletes the specified intent. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+No description available.
 
 ```sql
 DELETE FROM google.dialogflow.intents
@@ -530,7 +533,7 @@ AND intentsId = '{{ intentsId }}' --required
 >
 <TabItem value="projects_locations_agents_intents_import">
 
-Imports the specified intents into the agent. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: ImportIntentsMetadata - `response`: ImportIntentsResponse
+Successful response
 
 ```sql
 EXEC google.dialogflow.intents.projects_locations_agents_intents_import 
@@ -548,7 +551,7 @@ EXEC google.dialogflow.intents.projects_locations_agents_intents_import
 </TabItem>
 <TabItem value="projects_locations_agents_intents_export">
 
-Exports the selected intents. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: ExportIntentsMetadata - `response`: ExportIntentsResponse
+Successful response
 
 ```sql
 EXEC google.dialogflow.intents.projects_locations_agents_intents_export 
@@ -557,10 +560,10 @@ EXEC google.dialogflow.intents.projects_locations_agents_intents_export
 @agentsId='{{ agentsId }}' --required 
 @@json=
 '{
+"dataFormat": "{{ dataFormat }}", 
 "intents": "{{ intents }}", 
 "intentsUri": "{{ intentsUri }}", 
-"intentsContentInline": {{ intentsContentInline }}, 
-"dataFormat": "{{ dataFormat }}"
+"intentsContentInline": {{ intentsContentInline }}
 }'
 ;
 ```

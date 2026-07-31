@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>bucket_access_controls</code> r
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>bucket_access_controls</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="bucket_access_controls" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.storage.bucket_access_controls" /></td></tr>
 </tbody></table>
@@ -334,83 +335,74 @@ selfLink
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: bucket_access_controls
   props:
     - name: bucket
-      value: string
+      value: "{{ bucket }}"
       description: Required parameter for the bucket_access_controls resource.
     - name: bucket
-      value: string
-      description: >
+      value: "{{ bucket }}"
+      description: |
         The name of the bucket.
-        
     - name: domain
-      value: string
-      description: >
+      value: "{{ domain }}"
+      description: |
         The domain associated with the entity, if any.
-        
     - name: email
-      value: string
-      description: >
+      value: "{{ email }}"
+      description: |
         The email address associated with the entity, if any.
-        
     - name: entity
-      value: string
-      description: >
-        The entity holding the permission, in one of the following forms: 
-- user-userId 
-- user-email 
-- group-groupId 
-- group-email 
-- domain-domain 
-- project-team-projectId 
-- allUsers 
-- allAuthenticatedUsers Examples: 
-- The user liz@example.com would be user-liz@example.com. 
-- The group example@googlegroups.com would be group-example@googlegroups.com. 
-- To refer to all members of the Google Apps for Business domain example.com, the entity would be domain-example.com.
-        
+      value: "{{ entity }}"
+      description: |
+        The entity holding the permission, in one of the following forms:
+        - user-userId
+        - user-email
+        - group-groupId
+        - group-email
+        - domain-domain
+        - project-team-projectId
+        - allUsers
+        - allAuthenticatedUsers Examples:
+        - The user liz@example.com would be user-liz@example.com.
+        - The group example@googlegroups.com would be group-example@googlegroups.com.
+        - To refer to all members of the Google Apps for Business domain example.com, the entity would be domain-example.com.
     - name: entityId
-      value: string
-      description: >
+      value: "{{ entityId }}"
+      description: |
         The ID for the entity, if any.
-        
     - name: etag
-      value: string
-      description: >
+      value: "{{ etag }}"
+      description: |
         HTTP 1.1 Entity tag for the access-control entry.
-        
     - name: id
-      value: string
-      description: >
+      value: "{{ id }}"
+      description: |
         The ID of the access-control entry.
-        
     - name: kind
-      value: string
-      description: >
+      value: "{{ kind }}"
+      description: |
         The kind of item this is. For bucket access control entries, this is always storage#bucketAccessControl.
-        
       default: storage#bucketAccessControl
     - name: projectTeam
-      value: object
-      description: >
+      description: |
         The project team associated with the entity, if any.
-        
+      value:
+        projectNumber: "{{ projectNumber }}"
+        team: "{{ team }}"
     - name: role
-      value: string
-      description: >
+      value: "{{ role }}"
+      description: |
         The access permission for the entity.
-        
     - name: selfLink
-      value: string
-      description: >
+      value: "{{ selfLink }}"
+      description: |
         The link to this access-control entry.
-        
     - name: userProject
-      value: string
-```
+      value: "{{ userProject }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

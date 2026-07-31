@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>workloads</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>workloads</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="workloads" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.assuredworkloads.workloads" /></td></tr>
 </tbody></table>
@@ -62,7 +63,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="complianceRegime" /></td>
     <td><code>string</code></td>
-    <td>Required. Immutable. Compliance Regime associated with this workload.</td>
+    <td>Required. Immutable. Compliance Regime associated with this workload. (COMPLIANCE_REGIME_UNSPECIFIED, ASSURED_WORKLOADS_FOR_PARTNERS, AUSTRALIA_DATA_BOUNDARY_AND_SUPPORT, CANADA_DATA_BOUNDARY_AND_SUPPORT, DATA_BOUNDARY_FOR_CANADA_CONTROLLED_GOODS, DATA_BOUNDARY_FOR_CANADA_PROTECTED_B, DATA_BOUNDARY_FOR_CJIS, DATA_BOUNDARY_FOR_FEDRAMP_HIGH, DATA_BOUNDARY_FOR_FEDRAMP_MODERATE, DATA_BOUNDARY_FOR_IL2, DATA_BOUNDARY_FOR_IL4, DATA_BOUNDARY_FOR_IL5, DATA_BOUNDARY_FOR_IRS_PUBLICATION_1075, DATA_BOUNDARY_FOR_ITAR, EU_DATA_BOUNDARY_AND_SUPPORT, ISRAEL_DATA_BOUNDARY_AND_SUPPORT, JAPAN_DATA_BOUNDARY, SWITZERLAND_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS, KSA_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS, REGIONAL_DATA_BOUNDARY, US_DATA_BOUNDARY_AND_SUPPORT, US_DATA_BOUNDARY_FOR_HEALTHCARE_AND_LIFE_SCIENCES, US_DATA_BOUNDARY_FOR_HEALTHCARE_AND_LIFE_SCIENCES_WITH_SUPPORT, AU_REGIONS_AND_US_SUPPORT, CA_PROTECTED_B, CA_REGIONS_AND_SUPPORT, CANADA_CONTROLLED_GOODS, CJIS, EU_REGIONS_AND_SUPPORT, FEDRAMP_HIGH, FEDRAMP_MODERATE, HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS, HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS_US_SUPPORT, HIPAA, HITRUST, IL2, IL4, IL5, IRS_1075, ISR_REGIONS, ISR_REGIONS_AND_SUPPORT, ITAR, JP_REGIONS_AND_SUPPORT, KSA_REGIONS_AND_SUPPORT_WITH_SOVEREIGNTY_CONTROLS, REGIONAL_CONTROLS, US_REGIONAL_ACCESS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="complianceStatus" /></td>
@@ -102,7 +103,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kajEnrollmentState" /></td>
     <td><code>string</code></td>
-    <td>Output only. Represents the KAJ enrollment state of the given workload.</td>
+    <td>Output only. Represents the KAJ enrollment state of the given workload. (KAJ_ENROLLMENT_STATE_UNSPECIFIED, KAJ_ENROLLMENT_STATE_PENDING, KAJ_ENROLLMENT_STATE_COMPLETE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="kmsSettings" /></td>
@@ -117,7 +118,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="partner" /></td>
     <td><code>string</code></td>
-    <td>Optional. Partner regime associated with this workload.</td>
+    <td>Optional. Partner regime associated with this workload. (PARTNER_UNSPECIFIED, LOCAL_CONTROLS_BY_S3NS, SOVEREIGN_CONTROLS_BY_T_SYSTEMS, SOVEREIGN_CONTROLS_BY_SIA_MINSAIT, SOVEREIGN_CONTROLS_BY_PSN, SOVEREIGN_CONTROLS_BY_CNTXT, SOVEREIGN_CONTROLS_BY_CNTXT_NO_EKM, SPAIN_DATA_BOUNDARY_BY_TELEFONICA)</td>
 </tr>
 <tr>
     <td><CopyableCode code="partnerPermissions" /></td>
@@ -127,7 +128,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="partnerServicesBillingAccount" /></td>
     <td><code>string</code></td>
-    <td>Optional. Billing account necessary for purchasing services from Sovereign Partners. This field is required for creating SIA/PSN/CNTXT partner workloads. The caller should have 'billing.resourceAssociations.create' IAM permission on this billing-account. The format of this string is billingAccounts/AAAAAA-BBBBBB-CCCCCC</td>
+    <td>Optional. Billing account necessary for purchasing services from Sovereign Partners. This field is required for creating SIA/PSN/CNTXT/Telefonica partner workloads. The caller should have 'billing.resourceAssociations.create' IAM permission on this billing-account. The format of this string is billingAccounts/AAAAAA-BBBBBB-CCCCCC</td>
 </tr>
 <tr>
     <td><CopyableCode code="provisionedResourcesParent" /></td>
@@ -191,7 +192,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="complianceRegime" /></td>
     <td><code>string</code></td>
-    <td>Required. Immutable. Compliance Regime associated with this workload.</td>
+    <td>Required. Immutable. Compliance Regime associated with this workload. (COMPLIANCE_REGIME_UNSPECIFIED, ASSURED_WORKLOADS_FOR_PARTNERS, AUSTRALIA_DATA_BOUNDARY_AND_SUPPORT, CANADA_DATA_BOUNDARY_AND_SUPPORT, DATA_BOUNDARY_FOR_CANADA_CONTROLLED_GOODS, DATA_BOUNDARY_FOR_CANADA_PROTECTED_B, DATA_BOUNDARY_FOR_CJIS, DATA_BOUNDARY_FOR_FEDRAMP_HIGH, DATA_BOUNDARY_FOR_FEDRAMP_MODERATE, DATA_BOUNDARY_FOR_IL2, DATA_BOUNDARY_FOR_IL4, DATA_BOUNDARY_FOR_IL5, DATA_BOUNDARY_FOR_IRS_PUBLICATION_1075, DATA_BOUNDARY_FOR_ITAR, EU_DATA_BOUNDARY_AND_SUPPORT, ISRAEL_DATA_BOUNDARY_AND_SUPPORT, JAPAN_DATA_BOUNDARY, SWITZERLAND_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS, KSA_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS, REGIONAL_DATA_BOUNDARY, US_DATA_BOUNDARY_AND_SUPPORT, US_DATA_BOUNDARY_FOR_HEALTHCARE_AND_LIFE_SCIENCES, US_DATA_BOUNDARY_FOR_HEALTHCARE_AND_LIFE_SCIENCES_WITH_SUPPORT, AU_REGIONS_AND_US_SUPPORT, CA_PROTECTED_B, CA_REGIONS_AND_SUPPORT, CANADA_CONTROLLED_GOODS, CJIS, EU_REGIONS_AND_SUPPORT, FEDRAMP_HIGH, FEDRAMP_MODERATE, HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS, HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS_US_SUPPORT, HIPAA, HITRUST, IL2, IL4, IL5, IRS_1075, ISR_REGIONS, ISR_REGIONS_AND_SUPPORT, ITAR, JP_REGIONS_AND_SUPPORT, KSA_REGIONS_AND_SUPPORT_WITH_SOVEREIGNTY_CONTROLS, REGIONAL_CONTROLS, US_REGIONAL_ACCESS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="complianceStatus" /></td>
@@ -231,7 +232,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kajEnrollmentState" /></td>
     <td><code>string</code></td>
-    <td>Output only. Represents the KAJ enrollment state of the given workload.</td>
+    <td>Output only. Represents the KAJ enrollment state of the given workload. (KAJ_ENROLLMENT_STATE_UNSPECIFIED, KAJ_ENROLLMENT_STATE_PENDING, KAJ_ENROLLMENT_STATE_COMPLETE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="kmsSettings" /></td>
@@ -246,7 +247,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="partner" /></td>
     <td><code>string</code></td>
-    <td>Optional. Partner regime associated with this workload.</td>
+    <td>Optional. Partner regime associated with this workload. (PARTNER_UNSPECIFIED, LOCAL_CONTROLS_BY_S3NS, SOVEREIGN_CONTROLS_BY_T_SYSTEMS, SOVEREIGN_CONTROLS_BY_SIA_MINSAIT, SOVEREIGN_CONTROLS_BY_PSN, SOVEREIGN_CONTROLS_BY_CNTXT, SOVEREIGN_CONTROLS_BY_CNTXT_NO_EKM, SPAIN_DATA_BOUNDARY_BY_TELEFONICA)</td>
 </tr>
 <tr>
     <td><CopyableCode code="partnerPermissions" /></td>
@@ -256,7 +257,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="partnerServicesBillingAccount" /></td>
     <td><code>string</code></td>
-    <td>Optional. Billing account necessary for purchasing services from Sovereign Partners. This field is required for creating SIA/PSN/CNTXT partner workloads. The caller should have 'billing.resourceAssociations.create' IAM permission on this billing-account. The format of this string is billingAccounts/AAAAAA-BBBBBB-CCCCCC</td>
+    <td>Optional. Billing account necessary for purchasing services from Sovereign Partners. This field is required for creating SIA/PSN/CNTXT/Telefonica partner workloads. The caller should have 'billing.resourceAssociations.create' IAM permission on this billing-account. The format of this string is billingAccounts/AAAAAA-BBBBBB-CCCCCC</td>
 </tr>
 <tr>
     <td><CopyableCode code="provisionedResourcesParent" /></td>
@@ -324,7 +325,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Assured Workloads under a CRM Node.</td>
 </tr>
 <tr>
@@ -349,18 +350,18 @@ The following methods are available for this resource:
     <td>Deletes the workload. Make sure that workload's direct children are already in a deleted state, otherwise the request will fail with a FAILED_PRECONDITION error. In addition to assuredworkloads.workload.delete permission, the user should also have orgpolicy.policy.set permission on the deleted folder to remove Assured Workloads OrgPolicies.</td>
 </tr>
 <tr>
-    <td><a href="#analyze_workload_move"><CopyableCode code="analyze_workload_move" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workloadsId"><code>workloadsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-assetTypes"><code>assetTypes</code></a>, <a href="#parameter-project"><code>project</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Analyzes a hypothetical move of a source resource to a target workload to surface compliance risks. The analysis is best effort and is not guaranteed to be exhaustive.</td>
-</tr>
-<tr>
     <td><a href="#restrict_allowed_resources"><CopyableCode code="restrict_allowed_resources" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workloadsId"><code>workloadsId</code></a></td>
     <td></td>
     <td>Restrict the list of resources allowed in the Workload environment. The current list of allowed products can be found at https://cloud.google.com/assured-workloads/docs/supported-products In addition to assuredworkloads.workload.update permission, the user should also have orgpolicy.policy.set permission on the folder resource to use this functionality.</td>
+</tr>
+<tr>
+    <td><a href="#analyze_workload_move"><CopyableCode code="analyze_workload_move" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workloadsId"><code>workloadsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-project"><code>project</code></a>, <a href="#parameter-assetTypes"><code>assetTypes</code></a></td>
+    <td>Analyzes a hypothetical move of a source resource to a target workload to surface compliance risks. The analysis is best effort and is not guaranteed to be exhaustive.</td>
 </tr>
 <tr>
     <td><a href="#enable_resource_monitoring"><CopyableCode code="enable_resource_monitoring" /></a></td>
@@ -534,9 +535,9 @@ workloadOptions
 FROM google.assuredworkloads.workloads
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -558,40 +559,40 @@ Creates Assured Workload.
 
 ```sql
 INSERT INTO google.assuredworkloads.workloads (
+data__labels,
 data__billingAccount,
-data__complianceRegime,
-data__partnerPermissions,
+data__resourceSettings,
 data__kmsSettings,
-data__violationNotificationsEnabled,
-data__provisionedResourcesParent,
+data__workloadOptions,
+data__partnerPermissions,
+data__etag,
 data__partner,
 data__name,
-data__workloadOptions,
-data__partnerServicesBillingAccount,
+data__complianceRegime,
 data__enableSovereignControls,
-data__labels,
-data__etag,
-data__resourceSettings,
+data__partnerServicesBillingAccount,
+data__provisionedResourcesParent,
+data__violationNotificationsEnabled,
 data__displayName,
 organizationsId,
 locationsId,
 externalId
 )
 SELECT 
+'{{ labels }}',
 '{{ billingAccount }}',
-'{{ complianceRegime }}',
-'{{ partnerPermissions }}',
+'{{ resourceSettings }}',
 '{{ kmsSettings }}',
-{{ violationNotificationsEnabled }},
-'{{ provisionedResourcesParent }}',
+'{{ workloadOptions }}',
+'{{ partnerPermissions }}',
+'{{ etag }}',
 '{{ partner }}',
 '{{ name }}',
-'{{ workloadOptions }}',
-'{{ partnerServicesBillingAccount }}',
+'{{ complianceRegime }}',
 {{ enableSovereignControls }},
-'{{ labels }}',
-'{{ etag }}',
-'{{ resourceSettings }}',
+'{{ partnerServicesBillingAccount }}',
+'{{ provisionedResourcesParent }}',
+{{ violationNotificationsEnabled }},
 '{{ displayName }}',
 '{{ organizationsId }}',
 '{{ locationsId }}',
@@ -607,96 +608,91 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: workloads
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the workloads resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the workloads resource.
-    - name: billingAccount
-      value: string
-      description: >
-        Optional. The billing account used for the resources which are direct children of workload. This billing account is initially associated with the resources created as part of Workload creation. After the initial creation of these resources, the customer can change the assigned billing account. The resource name has the form `billingAccounts/{billing_account_id}`. For example, `billingAccounts/012345-567890-ABCDEF`.
-        
-    - name: complianceRegime
-      value: string
-      description: >
-        Required. Immutable. Compliance Regime associated with this workload.
-        
-      valid_values: ['COMPLIANCE_REGIME_UNSPECIFIED', 'IL4', 'CJIS', 'FEDRAMP_HIGH', 'FEDRAMP_MODERATE', 'US_REGIONAL_ACCESS', 'HIPAA', 'HITRUST', 'EU_REGIONS_AND_SUPPORT', 'CA_REGIONS_AND_SUPPORT', 'ITAR', 'AU_REGIONS_AND_US_SUPPORT', 'ASSURED_WORKLOADS_FOR_PARTNERS', 'ISR_REGIONS', 'ISR_REGIONS_AND_SUPPORT', 'CA_PROTECTED_B', 'IL5', 'IL2', 'JP_REGIONS_AND_SUPPORT', 'KSA_REGIONS_AND_SUPPORT_WITH_SOVEREIGNTY_CONTROLS', 'REGIONAL_CONTROLS', 'HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS', 'HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS_US_SUPPORT', 'IRS_1075', 'CANADA_CONTROLLED_GOODS', 'AUSTRALIA_DATA_BOUNDARY_AND_SUPPORT', 'CANADA_DATA_BOUNDARY_AND_SUPPORT', 'DATA_BOUNDARY_FOR_CANADA_CONTROLLED_GOODS', 'DATA_BOUNDARY_FOR_CANADA_PROTECTED_B', 'DATA_BOUNDARY_FOR_CJIS', 'DATA_BOUNDARY_FOR_FEDRAMP_HIGH', 'DATA_BOUNDARY_FOR_FEDRAMP_MODERATE', 'DATA_BOUNDARY_FOR_IL2', 'DATA_BOUNDARY_FOR_IL4', 'DATA_BOUNDARY_FOR_IL5', 'DATA_BOUNDARY_FOR_IRS_PUBLICATION_1075', 'DATA_BOUNDARY_FOR_ITAR', 'EU_DATA_BOUNDARY_AND_SUPPORT', 'ISRAEL_DATA_BOUNDARY_AND_SUPPORT', 'US_DATA_BOUNDARY_AND_SUPPORT', 'US_DATA_BOUNDARY_FOR_HEALTHCARE_AND_LIFE_SCIENCES', 'US_DATA_BOUNDARY_FOR_HEALTHCARE_AND_LIFE_SCIENCES_WITH_SUPPORT', 'KSA_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS', 'REGIONAL_DATA_BOUNDARY', 'JAPAN_DATA_BOUNDARY']
-    - name: partnerPermissions
-      value: object
-      description: >
-        Optional. Permissions granted to the AW Partner SA account for the customer workload
-        
-    - name: kmsSettings
-      value: object
-      description: >
-        Input only. Settings used to create a CMEK crypto key. When set, a project with a KMS CMEK key is provisioned. This field is deprecated as of Feb 28, 2022. In order to create a Keyring, callers should specify, ENCRYPTION_KEYS_PROJECT or KEYRING in ResourceSettings.resource_type field.
-        
-    - name: violationNotificationsEnabled
-      value: boolean
-      description: >
-        Optional. Indicates whether the e-mail notification for a violation is enabled for a workload. This value will be by default True, and if not present will be considered as true. This should only be updated via updateWorkload call. Any Changes to this field during the createWorkload call will not be honored. This will always be true while creating the workload.
-        
-    - name: provisionedResourcesParent
-      value: string
-      description: >
-        Input only. The parent resource for the resources managed by this Assured Workload. May be either empty or a folder resource which is a child of the Workload parent. If not specified all resources are created under the parent organization. Format: folders/{folder_id}
-        
-    - name: partner
-      value: string
-      description: >
-        Optional. Partner regime associated with this workload.
-        
-      valid_values: ['PARTNER_UNSPECIFIED', 'LOCAL_CONTROLS_BY_S3NS', 'SOVEREIGN_CONTROLS_BY_T_SYSTEMS', 'SOVEREIGN_CONTROLS_BY_SIA_MINSAIT', 'SOVEREIGN_CONTROLS_BY_PSN', 'SOVEREIGN_CONTROLS_BY_CNTXT', 'SOVEREIGN_CONTROLS_BY_CNTXT_NO_EKM']
-    - name: name
-      value: string
-      description: >
-        Optional. The resource name of the workload. Format: organizations/{organization}/locations/{location}/workloads/{workload} Read-only.
-        
-    - name: workloadOptions
-      value: object
-      description: >
-        Optional. Options to be set for the given created workload.
-        
-    - name: partnerServicesBillingAccount
-      value: string
-      description: >
-        Optional. Billing account necessary for purchasing services from Sovereign Partners. This field is required for creating SIA/PSN/CNTXT partner workloads. The caller should have 'billing.resourceAssociations.create' IAM permission on this billing-account. The format of this string is billingAccounts/AAAAAA-BBBBBB-CCCCCC
-        
-    - name: enableSovereignControls
-      value: boolean
-      description: >
-        Optional. Indicates the sovereignty status of the given workload. Currently meant to be used by Europe/Canada customers.
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. Labels applied to the workload.
-        
-    - name: etag
-      value: string
-      description: >
-        Optional. ETag of the workload, it is calculated on the basis of the Workload contents. It will be used in Update & Delete operations.
-        
+    - name: billingAccount
+      value: "{{ billingAccount }}"
+      description: |
+        Optional. The billing account used for the resources which are direct children of workload. This billing account is initially associated with the resources created as part of Workload creation. After the initial creation of these resources, the customer can change the assigned billing account. The resource name has the form \`billingAccounts/{billing_account_id}\`. For example, \`billingAccounts/012345-567890-ABCDEF\`.
     - name: resourceSettings
-      value: array
-      description: >
+      description: |
         Input only. Resource properties that are used to customize workload resources. These properties (such as custom project id) will be used to create workload resources if possible. This field is optional.
-        
+      value:
+        - resourceId: "{{ resourceId }}"
+          displayName: "{{ displayName }}"
+          resourceType: "{{ resourceType }}"
+    - name: kmsSettings
+      description: |
+        Input only. Settings used to create a CMEK crypto key. When set, a project with a KMS CMEK key is provisioned. This field is deprecated as of Feb 28, 2022. In order to create a Keyring, callers should specify, ENCRYPTION_KEYS_PROJECT or KEYRING in ResourceSettings.resource_type field.
+      value:
+        nextRotationTime: "{{ nextRotationTime }}"
+        rotationPeriod: "{{ rotationPeriod }}"
+    - name: workloadOptions
+      description: |
+        Optional. Options to be set for the given created workload.
+      value:
+        kajEnrollmentType: "{{ kajEnrollmentType }}"
+    - name: partnerPermissions
+      description: |
+        Optional. Permissions granted to the AW Partner SA account for the customer workload
+      value:
+        dataLogsViewer: {{ dataLogsViewer }}
+        serviceAccessApprover: {{ serviceAccessApprover }}
+        assuredWorkloadsMonitoring: {{ assuredWorkloadsMonitoring }}
+        accessTransparencyLogsSupportCaseViewer: {{ accessTransparencyLogsSupportCaseViewer }}
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. ETag of the workload, it is calculated on the basis of the Workload contents. It will be used in Update & Delete operations.
+    - name: partner
+      value: "{{ partner }}"
+      description: |
+        Optional. Partner regime associated with this workload.
+      valid_values: ['PARTNER_UNSPECIFIED', 'LOCAL_CONTROLS_BY_S3NS', 'SOVEREIGN_CONTROLS_BY_T_SYSTEMS', 'SOVEREIGN_CONTROLS_BY_SIA_MINSAIT', 'SOVEREIGN_CONTROLS_BY_PSN', 'SOVEREIGN_CONTROLS_BY_CNTXT', 'SOVEREIGN_CONTROLS_BY_CNTXT_NO_EKM', 'SPAIN_DATA_BOUNDARY_BY_TELEFONICA']
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Optional. The resource name of the workload. Format: organizations/{organization}/locations/{location}/workloads/{workload} Read-only.
+    - name: complianceRegime
+      value: "{{ complianceRegime }}"
+      description: |
+        Required. Immutable. Compliance Regime associated with this workload.
+      valid_values: ['COMPLIANCE_REGIME_UNSPECIFIED', 'ASSURED_WORKLOADS_FOR_PARTNERS', 'AUSTRALIA_DATA_BOUNDARY_AND_SUPPORT', 'CANADA_DATA_BOUNDARY_AND_SUPPORT', 'DATA_BOUNDARY_FOR_CANADA_CONTROLLED_GOODS', 'DATA_BOUNDARY_FOR_CANADA_PROTECTED_B', 'DATA_BOUNDARY_FOR_CJIS', 'DATA_BOUNDARY_FOR_FEDRAMP_HIGH', 'DATA_BOUNDARY_FOR_FEDRAMP_MODERATE', 'DATA_BOUNDARY_FOR_IL2', 'DATA_BOUNDARY_FOR_IL4', 'DATA_BOUNDARY_FOR_IL5', 'DATA_BOUNDARY_FOR_IRS_PUBLICATION_1075', 'DATA_BOUNDARY_FOR_ITAR', 'EU_DATA_BOUNDARY_AND_SUPPORT', 'ISRAEL_DATA_BOUNDARY_AND_SUPPORT', 'JAPAN_DATA_BOUNDARY', 'SWITZERLAND_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS', 'KSA_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS', 'REGIONAL_DATA_BOUNDARY', 'US_DATA_BOUNDARY_AND_SUPPORT', 'US_DATA_BOUNDARY_FOR_HEALTHCARE_AND_LIFE_SCIENCES', 'US_DATA_BOUNDARY_FOR_HEALTHCARE_AND_LIFE_SCIENCES_WITH_SUPPORT', 'AU_REGIONS_AND_US_SUPPORT', 'CA_PROTECTED_B', 'CA_REGIONS_AND_SUPPORT', 'CANADA_CONTROLLED_GOODS', 'CJIS', 'EU_REGIONS_AND_SUPPORT', 'FEDRAMP_HIGH', 'FEDRAMP_MODERATE', 'HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS', 'HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS_US_SUPPORT', 'HIPAA', 'HITRUST', 'IL2', 'IL4', 'IL5', 'IRS_1075', 'ISR_REGIONS', 'ISR_REGIONS_AND_SUPPORT', 'ITAR', 'JP_REGIONS_AND_SUPPORT', 'KSA_REGIONS_AND_SUPPORT_WITH_SOVEREIGNTY_CONTROLS', 'REGIONAL_CONTROLS', 'US_REGIONAL_ACCESS']
+    - name: enableSovereignControls
+      value: {{ enableSovereignControls }}
+      description: |
+        Optional. Indicates the sovereignty status of the given workload. Currently meant to be used by Europe/Canada customers.
+    - name: partnerServicesBillingAccount
+      value: "{{ partnerServicesBillingAccount }}"
+      description: |
+        Optional. Billing account necessary for purchasing services from Sovereign Partners. This field is required for creating SIA/PSN/CNTXT/Telefonica partner workloads. The caller should have 'billing.resourceAssociations.create' IAM permission on this billing-account. The format of this string is billingAccounts/AAAAAA-BBBBBB-CCCCCC
+    - name: provisionedResourcesParent
+      value: "{{ provisionedResourcesParent }}"
+      description: |
+        Input only. The parent resource for the resources managed by this Assured Workload. May be either empty or a folder resource which is a child of the Workload parent. If not specified all resources are created under the parent organization. Format: folders/{folder_id}
+    - name: violationNotificationsEnabled
+      value: {{ violationNotificationsEnabled }}
+      description: |
+        Optional. Indicates whether the e-mail notification for a violation is enabled for a workload. This value will be by default True, and if not present will be considered as true. This should only be updated via updateWorkload call. Any Changes to this field during the createWorkload call will not be honored. This will always be true while creating the workload.
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Required. The user-assigned display name of the Workload. When present it must be between 4 to 30 characters. Allowed characters are: lowercase and uppercase letters, numbers, hyphen, and spaces. Example: My Workload
-        
     - name: externalId
-      value: string
-```
+      value: "{{ externalId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -716,20 +712,20 @@ Updates an existing workload. Currently allows updating of workload display_name
 ```sql
 UPDATE google.assuredworkloads.workloads
 SET 
+data__labels = '{{ labels }}',
 data__billingAccount = '{{ billingAccount }}',
-data__complianceRegime = '{{ complianceRegime }}',
-data__partnerPermissions = '{{ partnerPermissions }}',
+data__resourceSettings = '{{ resourceSettings }}',
 data__kmsSettings = '{{ kmsSettings }}',
-data__violationNotificationsEnabled = {{ violationNotificationsEnabled }},
-data__provisionedResourcesParent = '{{ provisionedResourcesParent }}',
+data__workloadOptions = '{{ workloadOptions }}',
+data__partnerPermissions = '{{ partnerPermissions }}',
+data__etag = '{{ etag }}',
 data__partner = '{{ partner }}',
 data__name = '{{ name }}',
-data__workloadOptions = '{{ workloadOptions }}',
-data__partnerServicesBillingAccount = '{{ partnerServicesBillingAccount }}',
+data__complianceRegime = '{{ complianceRegime }}',
 data__enableSovereignControls = {{ enableSovereignControls }},
-data__labels = '{{ labels }}',
-data__etag = '{{ etag }}',
-data__resourceSettings = '{{ resourceSettings }}',
+data__partnerServicesBillingAccount = '{{ partnerServicesBillingAccount }}',
+data__provisionedResourcesParent = '{{ provisionedResourcesParent }}',
+data__violationNotificationsEnabled = {{ violationNotificationsEnabled }},
 data__displayName = '{{ displayName }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
@@ -792,31 +788,15 @@ AND etag = '{{ etag }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="analyze_workload_move"
+    defaultValue="restrict_allowed_resources"
     values={[
-        { label: 'analyze_workload_move', value: 'analyze_workload_move' },
         { label: 'restrict_allowed_resources', value: 'restrict_allowed_resources' },
+        { label: 'analyze_workload_move', value: 'analyze_workload_move' },
         { label: 'enable_resource_monitoring', value: 'enable_resource_monitoring' },
         { label: 'enable_compliance_updates', value: 'enable_compliance_updates' },
         { label: 'mutate_partner_permissions', value: 'mutate_partner_permissions' }
     ]}
 >
-<TabItem value="analyze_workload_move">
-
-Analyzes a hypothetical move of a source resource to a target workload to surface compliance risks. The analysis is best effort and is not guaranteed to be exhaustive.
-
-```sql
-EXEC google.assuredworkloads.workloads.analyze_workload_move 
-@organizationsId='{{ organizationsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@workloadsId='{{ workloadsId }}' --required, 
-@pageToken='{{ pageToken }}', 
-@assetTypes='{{ assetTypes }}', 
-@project='{{ project }}', 
-@pageSize='{{ pageSize }}'
-;
-```
-</TabItem>
 <TabItem value="restrict_allowed_resources">
 
 Restrict the list of resources allowed in the Workload environment. The current list of allowed products can be found at https://cloud.google.com/assured-workloads/docs/supported-products In addition to assuredworkloads.workload.update permission, the user should also have orgpolicy.policy.set permission on the folder resource to use this functionality.
@@ -830,6 +810,22 @@ EXEC google.assuredworkloads.workloads.restrict_allowed_resources
 '{
 "restrictionType": "{{ restrictionType }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="analyze_workload_move">
+
+Analyzes a hypothetical move of a source resource to a target workload to surface compliance risks. The analysis is best effort and is not guaranteed to be exhaustive.
+
+```sql
+EXEC google.assuredworkloads.workloads.analyze_workload_move 
+@organizationsId='{{ organizationsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@workloadsId='{{ workloadsId }}' --required, 
+@pageSize='{{ pageSize }}', 
+@pageToken='{{ pageToken }}', 
+@project='{{ project }}', 
+@assetTypes='{{ assetTypes }}'
 ;
 ```
 </TabItem>
@@ -868,9 +864,9 @@ EXEC google.assuredworkloads.workloads.mutate_partner_permissions
 @workloadsId='{{ workloadsId }}' --required 
 @@json=
 '{
+"updateMask": "{{ updateMask }}", 
 "partnerPermissions": "{{ partnerPermissions }}", 
-"etag": "{{ etag }}", 
-"updateMask": "{{ updateMask }}"
+"etag": "{{ etag }}"
 }'
 ;
 ```

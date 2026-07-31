@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>nas_trial_details</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>nas_trial_details</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="nas_trial_details" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.nas_trial_details" /></td></tr>
 </tbody></table>
@@ -62,12 +63,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="searchTrial" /></td>
     <td><code>object</code></td>
-    <td>The requested search NasTrial. (id: GoogleCloudAiplatformV1NasTrial)</td>
+    <td>Represents a uCAIP NasJob trial. (id: GoogleCloudAiplatformV1NasTrial)</td>
 </tr>
 <tr>
     <td><CopyableCode code="trainTrial" /></td>
     <td><code>object</code></td>
-    <td>The train NasTrial corresponding to search_trial. Only populated if search_trial is used for training. (id: GoogleCloudAiplatformV1NasTrial)</td>
+    <td>Represents a uCAIP NasJob trial. (id: GoogleCloudAiplatformV1NasTrial)</td>
 </tr>
 </tbody>
 </table>
@@ -96,12 +97,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="searchTrial" /></td>
     <td><code>object</code></td>
-    <td>The requested search NasTrial. (id: GoogleCloudAiplatformV1NasTrial)</td>
+    <td>Represents a uCAIP NasJob trial. (id: GoogleCloudAiplatformV1NasTrial)</td>
 </tr>
 <tr>
     <td><CopyableCode code="trainTrial" /></td>
     <td><code>object</code></td>
-    <td>The train NasTrial corresponding to search_trial. Only populated if search_trial is used for training. (id: GoogleCloudAiplatformV1NasTrial)</td>
+    <td>Represents a uCAIP NasJob trial. (id: GoogleCloudAiplatformV1NasTrial)</td>
 </tr>
 </tbody>
 </table>

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>router_bgp_routes</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>router_bgp_routes</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="router_bgp_routes" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.router_bgp_routes" /></td></tr>
 </tbody></table>
@@ -61,12 +62,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of resource. Always compute#routersListBgpRoutes for lists of bgp routes. (default: compute#routersListBgpRoutes)</td>
+    <td>Output only. [Output Only] Type of resource. Alwayscompute#routersListBgpRoutes for lists of bgp routes. (default: compute#routersListBgpRoutes)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextPageToken" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
+    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger thanmaxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
 </tr>
 <tr>
     <td><CopyableCode code="result" /></td>
@@ -76,12 +77,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for this resource.</td>
+    <td>Output only. [Output Only] Server-defined URL for this resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="unreachables" /></td>
     <td><code>array</code></td>
-    <td>[Output Only] Unreachable resources.</td>
+    <td>Output only. [Output Only] Unreachable resources.</td>
 </tr>
 <tr>
     <td><CopyableCode code="warning" /></td>
@@ -112,7 +113,7 @@ The following methods are available for this resource:
     <td><a href="#list_bgp_routes"><CopyableCode code="list_bgp_routes" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-router"><code>router</code></a></td>
-    <td><a href="#parameter-addressFamily"><code>addressFamily</code></a>, <a href="#parameter-destinationPrefix"><code>destinationPrefix</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-peer"><code>peer</code></a>, <a href="#parameter-policyApplied"><code>policyApplied</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-routeType"><code>routeType</code></a></td>
+    <td><a href="#parameter-peer"><code>peer</code></a>, <a href="#parameter-addressFamily"><code>addressFamily</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-routeType"><code>routeType</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-destinationPrefix"><code>destinationPrefix</code></a>, <a href="#parameter-policyApplied"><code>policyApplied</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Retrieves a list of router bgp routes available to the specified project.</td>
 </tr>
 </tbody>
@@ -225,16 +226,16 @@ FROM google.compute.router_bgp_routes
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
 AND router = '{{ router }}' -- required
-AND addressFamily = '{{ addressFamily }}'
-AND destinationPrefix = '{{ destinationPrefix }}'
-AND filter = '{{ filter }}'
-AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND peer = '{{ peer }}'
-AND policyApplied = '{{ policyApplied }}'
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND addressFamily = '{{ addressFamily }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 AND routeType = '{{ routeType }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND maxResults = '{{ maxResults }}'
+AND destinationPrefix = '{{ destinationPrefix }}'
+AND policyApplied = '{{ policyApplied }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>

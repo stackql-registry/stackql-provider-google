@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>instances</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>instances</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="instances" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.database.instances" /></td></tr>
 </tbody></table>
@@ -67,12 +68,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The database's lifecycle state. Read-only.</td>
+    <td>Output only. The database's lifecycle state. Read-only. (LIFECYCLE_STATE_UNSPECIFIED, ACTIVE, DISABLED, DELETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The database instance type. On creation only USER_DATABASE is allowed, which is also the default when omitted.</td>
+    <td>Immutable. The database instance type. On creation only USER_DATABASE is allowed, which is also the default when omitted. (DATABASE_INSTANCE_TYPE_UNSPECIFIED, DEFAULT_DATABASE, USER_DATABASE)</td>
 </tr>
 </tbody>
 </table>
@@ -106,12 +107,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The database's lifecycle state. Read-only.</td>
+    <td>Output only. The database's lifecycle state. Read-only. (LIFECYCLE_STATE_UNSPECIFIED, ACTIVE, DISABLED, DELETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The database instance type. On creation only USER_DATABASE is allowed, which is also the default when omitted.</td>
+    <td>Immutable. The database instance type. On creation only USER_DATABASE is allowed, which is also the default when omitted. (DATABASE_INSTANCE_TYPE_UNSPECIFIED, DEFAULT_DATABASE, USER_DATABASE)</td>
 </tr>
 </tbody>
 </table>
@@ -144,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
+    <td><a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists each DatabaseInstance associated with the specified parent project. The list items are returned in no particular order, but will be a consistent view of the database instances when additional requests are made with a `pageToken`. The resulting list contains instances in any STATE. The list results may be stale by a few seconds. Use GetDatabaseInstance for consistent reads.</td>
 </tr>
 <tr>
@@ -162,13 +163,6 @@ The following methods are available for this resource:
     <td>Marks a DatabaseInstance to be deleted. The DatabaseInstance will be set to the DELETED state for 20 days, and will be purged within 30 days. The default database cannot be deleted. IDs for deleted database instances may never be recovered or re-used. The Database may only be deleted if it is already in a DISABLED state.</td>
 </tr>
 <tr>
-    <td><a href="#undelete"><CopyableCode code="undelete" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td></td>
-    <td>Restores a DatabaseInstance that was previously marked to be deleted. After the delete method is used, DatabaseInstances are set to the DELETED state for 20 days, and will be purged within 30 days. Databases in the DELETED state can be undeleted without losing any data. This method may only be used on a DatabaseInstance in the DELETED state. Purged DatabaseInstances may not be recovered.</td>
-</tr>
-<tr>
     <td><a href="#disable"><CopyableCode code="disable" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
@@ -181,6 +175,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
     <td></td>
     <td>Enables a DatabaseInstance. The database must have been disabled previously using DisableDatabaseInstance. The state of a successfully reenabled DatabaseInstance is ACTIVE.</td>
+</tr>
+<tr>
+    <td><a href="#undelete"><CopyableCode code="undelete" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Restores a DatabaseInstance that was previously marked to be deleted. After the delete method is used, DatabaseInstances are set to the DELETED state for 20 days, and will be purged within 30 days. Databases in the DELETED state can be undeleted without losing any data. This method may only be used on a DatabaseInstance in the DELETED state. Purged DatabaseInstances may not be recovered.</td>
 </tr>
 </tbody>
 </table>
@@ -282,9 +283,9 @@ type
 FROM firebase.database.instances
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND showDeleted = '{{ showDeleted }}'
 AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
-AND showDeleted = '{{ showDeleted }}'
 ;
 ```
 </TabItem>
@@ -306,16 +307,16 @@ Requests that a new DatabaseInstance be created. The state of a successfully cre
 
 ```sql
 INSERT INTO firebase.database.instances (
-data__name,
 data__type,
+data__name,
 projectsId,
 locationsId,
 databaseId,
 validateOnly
 )
 SELECT 
-'{{ name }}',
 '{{ type }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ databaseId }}',
@@ -331,32 +332,30 @@ type
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: instances
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the instances resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the instances resource.
-    - name: name
-      value: string
-      description: >
-        The fully qualified resource name of the database instance, in the form: `projects/{project-number}/locations/{location-id}/instances/{database-id}`.
-        
     - name: type
-      value: string
-      description: >
+      value: "{{ type }}"
+      description: |
         Immutable. The database instance type. On creation only USER_DATABASE is allowed, which is also the default when omitted.
-        
       valid_values: ['DATABASE_INSTANCE_TYPE_UNSPECIFIED', 'DEFAULT_DATABASE', 'USER_DATABASE']
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The fully qualified resource name of the database instance, in the form: \`projects/{project-number}/locations/{location-id}/instances/{database-id}\`.
     - name: databaseId
-      value: string
+      value: "{{ databaseId }}"
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -387,25 +386,13 @@ AND instancesId = '{{ instancesId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="undelete"
+    defaultValue="disable"
     values={[
-        { label: 'undelete', value: 'undelete' },
         { label: 'disable', value: 'disable' },
-        { label: 'reenable', value: 'reenable' }
+        { label: 'reenable', value: 'reenable' },
+        { label: 'undelete', value: 'undelete' }
     ]}
 >
-<TabItem value="undelete">
-
-Restores a DatabaseInstance that was previously marked to be deleted. After the delete method is used, DatabaseInstances are set to the DELETED state for 20 days, and will be purged within 30 days. Databases in the DELETED state can be undeleted without losing any data. This method may only be used on a DatabaseInstance in the DELETED state. Purged DatabaseInstances may not be recovered.
-
-```sql
-EXEC firebase.database.instances.undelete 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@instancesId='{{ instancesId }}' --required
-;
-```
-</TabItem>
 <TabItem value="disable">
 
 Disables a DatabaseInstance. The database can be re-enabled later using ReenableDatabaseInstance. When a database is disabled, all reads and writes are denied, including view access in the Firebase console.
@@ -424,6 +411,18 @@ Enables a DatabaseInstance. The database must have been disabled previously usin
 
 ```sql
 EXEC firebase.database.instances.reenable 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@instancesId='{{ instancesId }}' --required
+;
+```
+</TabItem>
+<TabItem value="undelete">
+
+Restores a DatabaseInstance that was previously marked to be deleted. After the delete method is used, DatabaseInstances are set to the DELETED state for 20 days, and will be purged within 30 days. Databases in the DELETED state can be undeleted without losing any data. This method may only be used on a DatabaseInstance in the DELETED state. Purged DatabaseInstances may not be recovered.
+
+```sql
+EXEC firebase.database.instances.undelete 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @instancesId='{{ instancesId }}' --required

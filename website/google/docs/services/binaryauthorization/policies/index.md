@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>policies</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.binaryauthorization.policies" /></td></tr>
 </tbody></table>
@@ -161,7 +162,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="globalPolicyEvaluationMode" /></td>
     <td><code>string</code></td>
-    <td>Optional. Controls the evaluation of a Google-maintained global admission policy for common system-level images. Images not covered by the global policy will be subject to the project admission policy. This setting has no effect when specified inside a global admission policy.</td>
+    <td>Optional. Controls the evaluation of a Google-maintained global admission policy for common system-level images. Images not covered by the global policy will be subject to the project admission policy. This setting has no effect when specified inside a global admission policy. (GLOBAL_POLICY_EVALUATION_MODE_UNSPECIFIED, ENABLE, DISABLE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="istioServiceIdentityAdmissionRules" /></td>
@@ -214,7 +215,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-platformsId"><code>platformsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists platform policies owned by a project in the specified platform. Returns `INVALID_ARGUMENT` if the project or the platform doesn't exist.</td>
 </tr>
 <tr>
@@ -355,8 +356,8 @@ updateTime
 FROM google.binaryauthorization.policies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND platformsId = '{{ platformsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -400,16 +401,16 @@ Creates a platform policy, and returns a copy of it. Returns `NOT_FOUND` if the 
 
 ```sql
 INSERT INTO google.binaryauthorization.policies (
-data__description,
 data__etag,
+data__description,
 data__gkePolicy,
 projectsId,
 platformsId,
 policyId
 )
 SELECT 
-'{{ description }}',
 '{{ etag }}',
+'{{ description }}',
 '{{ gkePolicy }}',
 '{{ projectsId }}',
 '{{ platformsId }}',
@@ -425,34 +426,43 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: policies
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the policies resource.
     - name: platformsId
-      value: string
+      value: "{{ platformsId }}"
       description: Required parameter for the policies resource.
-    - name: description
-      value: string
-      description: >
-        Optional. A description comment about the policy.
-        
     - name: etag
-      value: string
-      description: >
+      value: "{{ etag }}"
+      description: |
         Optional. Used to prevent updating the policy when another request has updated it since it was retrieved.
-        
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. A description comment about the policy.
     - name: gkePolicy
-      value: object
-      description: >
+      description: |
         Optional. GKE platform-specific policy.
-        
+      value:
+        imageAllowlist:
+          allowPattern:
+            - "{{ allowPattern }}"
+        checkSets:
+          - displayName: "{{ displayName }}"
+            scope:
+              kubernetesServiceAccount: "{{ kubernetesServiceAccount }}"
+              kubernetesNamespace: "{{ kubernetesNamespace }}"
+            imageAllowlist:
+              allowPattern:
+                - "{{ allowPattern }}"
+            checks: "{{ checks }}"
     - name: policyId
-      value: string
-```
+      value: "{{ policyId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -473,8 +483,8 @@ Replaces a platform policy. Returns `NOT_FOUND` if the policy doesn't exist.
 ```sql
 REPLACE google.binaryauthorization.policies
 SET 
-data__description = '{{ description }}',
 data__etag = '{{ etag }}',
+data__description = '{{ description }}',
 data__gkePolicy = '{{ gkePolicy }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
@@ -495,15 +505,15 @@ Creates or updates a project's policy, and returns a copy of the new policy. A p
 ```sql
 REPLACE google.binaryauthorization.policies
 SET 
-data__etag = '{{ etag }}',
-data__istioServiceIdentityAdmissionRules = '{{ istioServiceIdentityAdmissionRules }}',
-data__description = '{{ description }}',
-data__globalPolicyEvaluationMode = '{{ globalPolicyEvaluationMode }}',
-data__clusterAdmissionRules = '{{ clusterAdmissionRules }}',
 data__kubernetesNamespaceAdmissionRules = '{{ kubernetesNamespaceAdmissionRules }}',
+data__clusterAdmissionRules = '{{ clusterAdmissionRules }}',
+data__istioServiceIdentityAdmissionRules = '{{ istioServiceIdentityAdmissionRules }}',
+data__globalPolicyEvaluationMode = '{{ globalPolicyEvaluationMode }}',
+data__etag = '{{ etag }}',
+data__description = '{{ description }}',
 data__defaultAdmissionRule = '{{ defaultAdmissionRule }}',
-data__kubernetesServiceAccountAdmissionRules = '{{ kubernetesServiceAccountAdmissionRules }}',
-data__admissionWhitelistPatterns = '{{ admissionWhitelistPatterns }}'
+data__admissionWhitelistPatterns = '{{ admissionWhitelistPatterns }}',
+data__kubernetesServiceAccountAdmissionRules = '{{ kubernetesServiceAccountAdmissionRules }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 RETURNING

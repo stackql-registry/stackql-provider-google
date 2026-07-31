@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>oauth_clients</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>oauth_clients</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="oauth_clients" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.iam.oauth_clients" /></td></tr>
 </tbody></table>
@@ -67,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="allowedScopes" /></td>
     <td><code>array</code></td>
-    <td>Required. The list of scopes that the OauthClient is allowed to request during OAuth flows. The following scopes are supported: * `https://www.googleapis.com/auth/cloud-platform`: See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account. * `openid`: The OAuth client can associate you with your personal information on Google Cloud. * `email`: The OAuth client can read a federated identity's email address. * `groups`: The OAuth client can read a federated identity's groups.</td>
+    <td>Required. The list of scopes that the OauthClient is allowed to request during OAuth flows. The following scopes are supported: * `https://www.googleapis.com/auth/cloud-platform`: See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account.</td>
 </tr>
 <tr>
     <td><CopyableCode code="clientId" /></td>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="clientType" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The type of OauthClient. Either public or private. For private clients, the client secret can be managed using the dedicated OauthClientCredential resource.</td>
+    <td>Immutable. The type of OauthClient. Either public or private. For private clients, the client secret can be managed using the dedicated OauthClientCredential resource. (CLIENT_TYPE_UNSPECIFIED, PUBLIC_CLIENT, CONFIDENTIAL_CLIENT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -102,7 +103,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the OauthClient.</td>
+    <td>Output only. The state of the OauthClient. (STATE_UNSPECIFIED, ACTIVE, DELETED)</td>
 </tr>
 </tbody>
 </table>
@@ -136,7 +137,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="allowedScopes" /></td>
     <td><code>array</code></td>
-    <td>Required. The list of scopes that the OauthClient is allowed to request during OAuth flows. The following scopes are supported: * `https://www.googleapis.com/auth/cloud-platform`: See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account. * `openid`: The OAuth client can associate you with your personal information on Google Cloud. * `email`: The OAuth client can read a federated identity's email address. * `groups`: The OAuth client can read a federated identity's groups.</td>
+    <td>Required. The list of scopes that the OauthClient is allowed to request during OAuth flows. The following scopes are supported: * `https://www.googleapis.com/auth/cloud-platform`: See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account.</td>
 </tr>
 <tr>
     <td><CopyableCode code="clientId" /></td>
@@ -146,7 +147,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="clientType" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The type of OauthClient. Either public or private. For private clients, the client secret can be managed using the dedicated OauthClientCredential resource.</td>
+    <td>Immutable. The type of OauthClient. Either public or private. For private clients, the client secret can be managed using the dedicated OauthClientCredential resource. (CLIENT_TYPE_UNSPECIFIED, PUBLIC_CLIENT, CONFIDENTIAL_CLIENT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -171,7 +172,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the OauthClient.</td>
+    <td>Output only. The state of the OauthClient. (STATE_UNSPECIFIED, ACTIVE, DELETED)</td>
 </tr>
 </tbody>
 </table>
@@ -204,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
     <td>Lists all non-deleted OauthClients in a project. If `show_deleted` is set to `true`, then deleted OauthClients are also listed.</td>
 </tr>
 <tr>
@@ -347,8 +348,8 @@ state
 FROM google.iam.oauth_clients
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND showDeleted = '{{ showDeleted }}'
 ;
 ```
@@ -371,27 +372,27 @@ Creates a new OauthClient. You cannot reuse the name of a deleted OauthClient un
 
 ```sql
 INSERT INTO google.iam.oauth_clients (
-data__name,
+data__allowedRedirectUris,
 data__disabled,
-data__displayName,
 data__description,
+data__name,
+data__displayName,
 data__clientType,
 data__allowedGrantTypes,
 data__allowedScopes,
-data__allowedRedirectUris,
 projectsId,
 locationsId,
 oauthClientId
 )
 SELECT 
-'{{ name }}',
+'{{ allowedRedirectUris }}',
 {{ disabled }},
-'{{ displayName }}',
 '{{ description }}',
+'{{ name }}',
+'{{ displayName }}',
 '{{ clientType }}',
 '{{ allowedGrantTypes }}',
 '{{ allowedScopes }}',
-'{{ allowedRedirectUris }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ oauthClientId }}'
@@ -412,60 +413,55 @@ state
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: oauth_clients
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the oauth_clients resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the oauth_clients resource.
-    - name: name
-      value: string
-      description: >
-        Immutable. Identifier. The resource name of the OauthClient. Format:`projects/{project}/locations/{location}/oauthClients/{oauth_client}`.
-        
+    - name: allowedRedirectUris
+      value:
+        - "{{ allowedRedirectUris }}"
+      description: |
+        Required. The list of redirect uris that is allowed to redirect back when authorization process is completed.
     - name: disabled
-      value: boolean
-      description: >
+      value: {{ disabled }}
+      description: |
         Optional. Whether the OauthClient is disabled. You cannot use a disabled OAuth client.
-        
-    - name: displayName
-      value: string
-      description: >
-        Optional. A user-specified display name of the OauthClient. Cannot exceed 32 characters.
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. A user-specified description of the OauthClient. Cannot exceed 256 characters.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. Identifier. The resource name of the OauthClient. Format:\`projects/{project}/locations/{location}/oauthClients/{oauth_client}\`.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. A user-specified display name of the OauthClient. Cannot exceed 32 characters.
     - name: clientType
-      value: string
-      description: >
+      value: "{{ clientType }}"
+      description: |
         Immutable. The type of OauthClient. Either public or private. For private clients, the client secret can be managed using the dedicated OauthClientCredential resource.
-        
       valid_values: ['CLIENT_TYPE_UNSPECIFIED', 'PUBLIC_CLIENT', 'CONFIDENTIAL_CLIENT']
     - name: allowedGrantTypes
-      value: array
-      description: >
+      value:
+        - "{{ allowedGrantTypes }}"
+      description: |
         Required. The list of OAuth grant types is allowed for the OauthClient.
-        
     - name: allowedScopes
-      value: array
-      description: >
-        Required. The list of scopes that the OauthClient is allowed to request during OAuth flows. The following scopes are supported: * `https://www.googleapis.com/auth/cloud-platform`: See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account. * `openid`: The OAuth client can associate you with your personal information on Google Cloud. * `email`: The OAuth client can read a federated identity's email address. * `groups`: The OAuth client can read a federated identity's groups.
-        
-    - name: allowedRedirectUris
-      value: array
-      description: >
-        Required. The list of redirect uris that is allowed to redirect back when authorization process is completed.
-        
+      value:
+        - "{{ allowedScopes }}"
+      description: |
+        Required. The list of scopes that the OauthClient is allowed to request during OAuth flows. The following scopes are supported: * \`https://www.googleapis.com/auth/cloud-platform\`: See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account.
     - name: oauthClientId
-      value: string
-```
+      value: "{{ oauthClientId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -485,14 +481,14 @@ Updates an existing OauthClient.
 ```sql
 UPDATE google.iam.oauth_clients
 SET 
-data__name = '{{ name }}',
+data__allowedRedirectUris = '{{ allowedRedirectUris }}',
 data__disabled = {{ disabled }},
-data__displayName = '{{ displayName }}',
 data__description = '{{ description }}',
+data__name = '{{ name }}',
+data__displayName = '{{ displayName }}',
 data__clientType = '{{ clientType }}',
 data__allowedGrantTypes = '{{ allowedGrantTypes }}',
-data__allowedScopes = '{{ allowedScopes }}',
-data__allowedRedirectUris = '{{ allowedRedirectUris }}'
+data__allowedScopes = '{{ allowedScopes }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

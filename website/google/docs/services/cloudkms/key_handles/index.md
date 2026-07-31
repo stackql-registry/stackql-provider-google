@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>key_handles</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>key_handles</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="key_handles" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudkms.key_handles" /></td></tr>
 </tbody></table>
@@ -124,7 +125,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists KeyHandles.</td>
 </tr>
 <tr>
@@ -226,8 +227,8 @@ FROM google.cloudkms.key_handles
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -249,15 +250,15 @@ Creates a new KeyHandle, triggering the provisioning of a new CryptoKey for CMEK
 
 ```sql
 INSERT INTO google.cloudkms.key_handles (
-data__name,
 data__resourceTypeSelector,
+data__name,
 projectsId,
 locationsId,
 keyHandleId
 )
 SELECT 
-'{{ name }}',
 '{{ resourceTypeSelector }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ keyHandleId }}'
@@ -272,28 +273,26 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: key_handles
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the key_handles resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the key_handles resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. Name of the KeyHandle resource, e.g. `projects/{PROJECT_ID}/locations/{LOCATION}/keyHandles/{KEY_HANDLE_ID}`.
-        
     - name: resourceTypeSelector
-      value: string
-      description: >
-        Required. Indicates the resource type that the resulting CryptoKey is meant to protect, e.g. `{SERVICE}.googleapis.com/{TYPE}`. See documentation for supported resource types.
-        
+      value: "{{ resourceTypeSelector }}"
+      description: |
+        Required. Indicates the resource type that the resulting CryptoKey is meant to protect, e.g. \`{SERVICE}.googleapis.com/{TYPE}\`. See documentation for supported resource types.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Name of the KeyHandle resource, e.g. \`projects/{PROJECT_ID}/locations/{LOCATION}/keyHandles/{KEY_HANDLE_ID}\`.
     - name: keyHandleId
-      value: string
-```
+      value: "{{ keyHandleId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

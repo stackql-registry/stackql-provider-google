@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>dest_groups</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>dest_groups</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="dest_groups" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.iap.dest_groups" /></td></tr>
 </tbody></table>
@@ -262,16 +263,16 @@ Creates a new TunnelDestGroup.
 
 ```sql
 INSERT INTO google.iap.dest_groups (
-data__name,
 data__cidrs,
+data__name,
 data__fqdns,
 projectsId,
 locationsId,
 tunnelDestGroupId
 )
 SELECT 
-'{{ name }}',
 '{{ cidrs }}',
+'{{ name }}',
 '{{ fqdns }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -285,34 +286,33 @@ fqdns
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: dest_groups
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the dest_groups resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the dest_groups resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. Identifier for the TunnelDestGroup. Must be unique within the project and contain only lower case letters (a-z) and dashes (-).
-        
     - name: cidrs
-      value: array
-      description: >
+      value:
+        - "{{ cidrs }}"
+      description: |
         Optional. Unordered list. List of CIDRs that this group applies to.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Identifier for the TunnelDestGroup. Must be unique within the project and contain only lower case letters (a-z) and dashes (-).
     - name: fqdns
-      value: array
-      description: >
+      value:
+        - "{{ fqdns }}"
+      description: |
         Optional. Unordered list. List of FQDNs that this group applies to.
-        
     - name: tunnelDestGroupId
-      value: string
-```
+      value: "{{ tunnelDestGroupId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -332,8 +332,8 @@ Updates a TunnelDestGroup.
 ```sql
 UPDATE google.iap.dest_groups
 SET 
-data__name = '{{ name }}',
 data__cidrs = '{{ cidrs }}',
+data__name = '{{ name }}',
 data__fqdns = '{{ fqdns }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

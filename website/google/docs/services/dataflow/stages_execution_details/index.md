@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>stages_execution_details</code>
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>stages_execution_details</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="stages_execution_details" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataflow.stages_execution_details" /></td></tr>
 </tbody></table>
@@ -82,7 +83,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_jobs_stages_get_execution_details"><CopyableCode code="projects_locations_jobs_stages_get_execution_details" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-location"><code>location</code></a>, <a href="#parameter-jobId"><code>jobId</code></a>, <a href="#parameter-stageId"><code>stageId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-startTime"><code>startTime</code></a>, <a href="#parameter-endTime"><code>endTime</code></a></td>
+    <td><a href="#parameter-startTime"><code>startTime</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-endTime"><code>endTime</code></a></td>
     <td>Request detailed information about the execution status of a stage of the job. EXPERIMENTAL. This API is subject to change or removal without notice.</td>
 </tr>
 </tbody>
@@ -165,9 +166,9 @@ WHERE projectId = '{{ projectId }}' -- required
 AND location = '{{ location }}' -- required
 AND jobId = '{{ jobId }}' -- required
 AND stageId = '{{ stageId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND startTime = '{{ startTime }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND endTime = '{{ endTime }}'
 ;
 ```

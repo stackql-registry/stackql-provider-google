@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>message_buses</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>message_buses</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="message_buses" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.eventarc.message_buses" /></td></tr>
 </tbody></table>
@@ -194,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>List message buses.</td>
 </tr>
 <tr>
@@ -208,7 +209,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-messageBusesId"><code>messageBusesId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Update a single message bus.</td>
 </tr>
 <tr>
@@ -349,8 +350,8 @@ FROM google.eventarc.message_buses
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 ;
 ```
@@ -373,24 +374,24 @@ Create a new MessageBus in a particular project and location.
 
 ```sql
 INSERT INTO google.eventarc.message_buses (
+data__displayName,
 data__name,
+data__loggingConfig,
+data__cryptoKeyName,
 data__labels,
 data__annotations,
-data__displayName,
-data__cryptoKeyName,
-data__loggingConfig,
 projectsId,
 locationsId,
 messageBusId,
 validateOnly
 )
 SELECT 
+'{{ displayName }}',
 '{{ name }}',
+'{{ loggingConfig }}',
+'{{ cryptoKeyName }}',
 '{{ labels }}',
 '{{ annotations }}',
-'{{ displayName }}',
-'{{ cryptoKeyName }}',
-'{{ loggingConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ messageBusId }}',
@@ -406,51 +407,46 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: message_buses
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the message_buses resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the message_buses resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. Resource name of the form projects/{project}/locations/{location}/messageBuses/{message_bus}
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Resource labels.
-        
-    - name: annotations
-      value: object
-      description: >
-        Optional. Resource annotations.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Optional. Resource display name.
-        
-    - name: cryptoKeyName
-      value: string
-      description: >
-        Optional. Resource name of a KMS crypto key (managed by the user) used to encrypt/decrypt their event data. It must match the pattern `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Resource name of the form projects/{project}/locations/{location}/messageBuses/{message_bus}
     - name: loggingConfig
-      value: object
-      description: >
+      description: |
         Optional. Config to control Platform logging for the Message Bus. This log configuration is applied to the Message Bus itself, and all the Enrollments attached to it.
-        
+      value:
+        logSeverity: "{{ logSeverity }}"
+    - name: cryptoKeyName
+      value: "{{ cryptoKeyName }}"
+      description: |
+        Optional. Resource name of a KMS crypto key (managed by the user) used to encrypt/decrypt their event data. It must match the pattern \`projects/*/locations/*/keyRings/*/cryptoKeys/*\`.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Resource labels.
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Optional. Resource annotations.
     - name: messageBusId
-      value: string
+      value: "{{ messageBusId }}"
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -470,19 +466,19 @@ Update a single message bus.
 ```sql
 UPDATE google.eventarc.message_buses
 SET 
-data__name = '{{ name }}',
-data__labels = '{{ labels }}',
-data__annotations = '{{ annotations }}',
 data__displayName = '{{ displayName }}',
+data__name = '{{ name }}',
+data__loggingConfig = '{{ loggingConfig }}',
 data__cryptoKeyName = '{{ cryptoKeyName }}',
-data__loggingConfig = '{{ loggingConfig }}'
+data__labels = '{{ labels }}',
+data__annotations = '{{ annotations }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND messageBusesId = '{{ messageBusesId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND allowMissing = {{ allowMissing}}
 AND validateOnly = {{ validateOnly}}
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

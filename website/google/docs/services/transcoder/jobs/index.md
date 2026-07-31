@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>jobs</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>jobs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="jobs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.transcoder.jobs" /></td></tr>
 </tbody></table>
@@ -97,12 +98,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="mode" /></td>
     <td><code>string</code></td>
-    <td>The processing mode of the job. The default is `PROCESSING_MODE_INTERACTIVE`.</td>
+    <td>The processing mode of the job. The default is `PROCESSING_MODE_INTERACTIVE`. (PROCESSING_MODE_UNSPECIFIED, PROCESSING_MODE_INTERACTIVE, PROCESSING_MODE_BATCH)</td>
 </tr>
 <tr>
     <td><CopyableCode code="optimization" /></td>
     <td><code>string</code></td>
-    <td>Optional. The optimization strategy of the job. The default is `AUTODETECT`.</td>
+    <td>Optional. The optimization strategy of the job. The default is `AUTODETECT`. (OPTIMIZATION_STRATEGY_UNSPECIFIED, AUTODETECT, DISABLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="outputUri" /></td>
@@ -117,7 +118,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the job.</td>
+    <td>Output only. The current state of the job. (PROCESSING_STATE_UNSPECIFIED, PENDING, RUNNING, SUCCEEDED, FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="templateId" /></td>
@@ -191,12 +192,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="mode" /></td>
     <td><code>string</code></td>
-    <td>The processing mode of the job. The default is `PROCESSING_MODE_INTERACTIVE`.</td>
+    <td>The processing mode of the job. The default is `PROCESSING_MODE_INTERACTIVE`. (PROCESSING_MODE_UNSPECIFIED, PROCESSING_MODE_INTERACTIVE, PROCESSING_MODE_BATCH)</td>
 </tr>
 <tr>
     <td><CopyableCode code="optimization" /></td>
     <td><code>string</code></td>
-    <td>Optional. The optimization strategy of the job. The default is `AUTODETECT`.</td>
+    <td>Optional. The optimization strategy of the job. The default is `AUTODETECT`. (OPTIMIZATION_STRATEGY_UNSPECIFIED, AUTODETECT, DISABLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="outputUri" /></td>
@@ -211,7 +212,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the job.</td>
+    <td>Output only. The current state of the job. (PROCESSING_STATE_UNSPECIFIED, PENDING, RUNNING, SUCCEEDED, FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="templateId" /></td>
@@ -254,7 +255,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists jobs in the specified region.</td>
 </tr>
 <tr>
@@ -393,10 +394,10 @@ ttlAfterCompletionDays
 FROM google.transcoder.jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -418,32 +419,32 @@ Creates a job in the specified region.
 
 ```sql
 INSERT INTO google.transcoder.jobs (
-data__name,
-data__inputUri,
-data__outputUri,
 data__templateId,
+data__fillContentGaps,
+data__optimization,
+data__name,
+data__mode,
+data__inputUri,
 data__config,
+data__batchModePriority,
+data__outputUri,
 data__ttlAfterCompletionDays,
 data__labels,
-data__mode,
-data__batchModePriority,
-data__optimization,
-data__fillContentGaps,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ name }}',
-'{{ inputUri }}',
-'{{ outputUri }}',
 '{{ templateId }}',
+{{ fillContentGaps }},
+'{{ optimization }}',
+'{{ name }}',
+'{{ mode }}',
+'{{ inputUri }}',
 '{{ config }}',
+{{ batchModePriority }},
+'{{ outputUri }}',
 {{ ttlAfterCompletionDays }},
 '{{ labels }}',
-'{{ mode }}',
-{{ batchModePriority }},
-'{{ optimization }}',
-{{ fillContentGaps }},
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -468,74 +469,257 @@ ttlAfterCompletionDays
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: jobs
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the jobs resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the jobs resource.
-    - name: name
-      value: string
-      description: >
-        The resource name of the job. Format: `projects/{project_number}/locations/{location}/jobs/{job}`
-        
-    - name: inputUri
-      value: string
-      description: >
-        Input only. Specify the `input_uri` to populate empty `uri` fields in each element of `Job.config.inputs` or `JobTemplate.config.inputs` when using template. URI of the media. Input files must be at least 5 seconds in duration and stored in Cloud Storage (for example, `gs://bucket/inputs/file.mp4`). See [Supported input and output formats](https://cloud.google.com/transcoder/docs/concepts/supported-input-and-output-formats).
-        
-    - name: outputUri
-      value: string
-      description: >
-        Input only. Specify the `output_uri` to populate an empty `Job.config.output.uri` or `JobTemplate.config.output.uri` when using template. URI for the output file(s). For example, `gs://my-bucket/outputs/`. See [Supported input and output formats](https://cloud.google.com/transcoder/docs/concepts/supported-input-and-output-formats).
-        
     - name: templateId
-      value: string
-      description: >
-        Input only. Specify the `template_id` to use for populating `Job.config`. The default is `preset/web-hd`, which is the only supported preset. User defined JobTemplate: `{job_template_id}`
-        
-    - name: config
-      value: object
-      description: >
-        The configuration for this job.
-        
-    - name: ttlAfterCompletionDays
-      value: integer
-      description: >
-        Job time to live value in days, which will be effective after job completion. Job should be deleted automatically after the given TTL. Enter a value between 1 and 90. The default is 30.
-        
-    - name: labels
-      value: object
-      description: >
-        The labels associated with this job. You can use these to organize and group your jobs.
-        
-    - name: mode
-      value: string
-      description: >
-        The processing mode of the job. The default is `PROCESSING_MODE_INTERACTIVE`.
-        
-      valid_values: ['PROCESSING_MODE_UNSPECIFIED', 'PROCESSING_MODE_INTERACTIVE', 'PROCESSING_MODE_BATCH']
-    - name: batchModePriority
-      value: integer
-      description: >
-        The processing priority of a batch job. This field can only be set for batch mode jobs. The default value is 0. This value cannot be negative. Higher values correspond to higher priorities for the job.
-        
-    - name: optimization
-      value: string
-      description: >
-        Optional. The optimization strategy of the job. The default is `AUTODETECT`.
-        
-      valid_values: ['OPTIMIZATION_STRATEGY_UNSPECIFIED', 'AUTODETECT', 'DISABLED']
+      value: "{{ templateId }}"
+      description: |
+        Input only. Specify the \`template_id\` to use for populating \`Job.config\`. The default is \`preset/web-hd\`, which is the only supported preset. User defined JobTemplate: \`{job_template_id}\`
     - name: fillContentGaps
-      value: boolean
-      description: >
+      value: {{ fillContentGaps }}
+      description: |
         Optional. Insert silence and duplicate frames when timestamp gaps are detected in a given stream.
-        
-```
+    - name: optimization
+      value: "{{ optimization }}"
+      description: |
+        Optional. The optimization strategy of the job. The default is \`AUTODETECT\`.
+      valid_values: ['OPTIMIZATION_STRATEGY_UNSPECIFIED', 'AUTODETECT', 'DISABLED']
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The resource name of the job. Format: \`projects/{project_number}/locations/{location}/jobs/{job}\`
+    - name: mode
+      value: "{{ mode }}"
+      description: |
+        The processing mode of the job. The default is \`PROCESSING_MODE_INTERACTIVE\`.
+      valid_values: ['PROCESSING_MODE_UNSPECIFIED', 'PROCESSING_MODE_INTERACTIVE', 'PROCESSING_MODE_BATCH']
+    - name: inputUri
+      value: "{{ inputUri }}"
+      description: |
+        Input only. Specify the \`input_uri\` to populate empty \`uri\` fields in each element of \`Job.config.inputs\` or \`JobTemplate.config.inputs\` when using template. URI of the media. Input files must be at least 5 seconds in duration and stored in Cloud Storage (for example, \`gs://bucket/inputs/file.mp4\`). See [Supported input and output formats](https://cloud.google.com/transcoder/docs/concepts/supported-input-and-output-formats).
+    - name: config
+      description: |
+        The configuration for this job.
+      value:
+        muxStreams:
+          - fileName: "{{ fileName }}"
+            container: "{{ container }}"
+            fmp4:
+              codecTag: "{{ codecTag }}"
+            segmentSettings:
+              segmentDuration: "{{ segmentDuration }}"
+              individualSegments: {{ individualSegments }}
+            key: "{{ key }}"
+            encryptionId: "{{ encryptionId }}"
+            elementaryStreams: "{{ elementaryStreams }}"
+        overlays:
+          - image:
+              uri: "{{ uri }}"
+              resolution:
+                x: {{ x }}
+                y: {{ y }}
+              alpha: {{ alpha }}
+            animations: "{{ animations }}"
+        manifests:
+          - fileName: "{{ fileName }}"
+            muxStreams: "{{ muxStreams }}"
+            type: "{{ type }}"
+            dash:
+              segmentReferenceScheme: "{{ segmentReferenceScheme }}"
+        spriteSheets:
+          - columnCount: {{ columnCount }}
+            startTimeOffset: "{{ startTimeOffset }}"
+            spriteWidthPixels: {{ spriteWidthPixels }}
+            rowCount: {{ rowCount }}
+            endTimeOffset: "{{ endTimeOffset }}"
+            totalCount: {{ totalCount }}
+            format: "{{ format }}"
+            interval: "{{ interval }}"
+            filePrefix: "{{ filePrefix }}"
+            spriteHeightPixels: {{ spriteHeightPixels }}
+            quality: {{ quality }}
+        output:
+          uri: "{{ uri }}"
+        encryptions:
+          - drmSystems:
+              fairplay: "{{ fairplay }}"
+              widevine: "{{ widevine }}"
+              playready: "{{ playready }}"
+              clearkey: "{{ clearkey }}"
+            aes128: "{{ aes128 }}"
+            secretManagerKeySource:
+              secretVersion: "{{ secretVersion }}"
+            id: "{{ id }}"
+            sampleAes: "{{ sampleAes }}"
+            mpegCenc:
+              scheme: "{{ scheme }}"
+        adBreaks:
+          - startTimeOffset: "{{ startTimeOffset }}"
+        inputs:
+          - uri: "{{ uri }}"
+            preprocessingConfig:
+              audio:
+                highBoost: {{ highBoost }}
+                lufs: {{ lufs }}
+                lowBoost: {{ lowBoost }}
+              deinterlace:
+                yadif:
+                  mode: "{{ mode }}"
+                  disableSpatialInterlacing: {{ disableSpatialInterlacing }}
+                  parity: "{{ parity }}"
+                  deinterlaceAllFrames: {{ deinterlaceAllFrames }}
+                bwdif:
+                  mode: "{{ mode }}"
+                  parity: "{{ parity }}"
+                  deinterlaceAllFrames: {{ deinterlaceAllFrames }}
+              color:
+                contrast: {{ contrast }}
+                brightness: {{ brightness }}
+                saturation: {{ saturation }}
+              denoise:
+                strength: {{ strength }}
+                tune: "{{ tune }}"
+              deblock:
+                enabled: {{ enabled }}
+                strength: {{ strength }}
+              crop:
+                topPixels: {{ topPixels }}
+                bottomPixels: {{ bottomPixels }}
+                leftPixels: {{ leftPixels }}
+                rightPixels: {{ rightPixels }}
+              pad:
+                leftPixels: {{ leftPixels }}
+                rightPixels: {{ rightPixels }}
+                topPixels: {{ topPixels }}
+                bottomPixels: {{ bottomPixels }}
+            key: "{{ key }}"
+            attributes:
+              trackDefinitions:
+                - languages: "{{ languages }}"
+                  detectedLanguages: "{{ detectedLanguages }}"
+                  inputTrack: {{ inputTrack }}
+                  detectLanguages: {{ detectLanguages }}
+        elementaryStreams:
+          - key: "{{ key }}"
+            textStream:
+              codec: "{{ codec }}"
+              mapping:
+                - atomKey: "{{ atomKey }}"
+                  inputKey: "{{ inputKey }}"
+                  inputTrack: {{ inputTrack }}
+              displayName: "{{ displayName }}"
+              languageCode: "{{ languageCode }}"
+            videoStream:
+              h264:
+                bitrateBps: {{ bitrateBps }}
+                vbvFullnessBits: {{ vbvFullnessBits }}
+                aqStrength: {{ aqStrength }}
+                entropyCoder: "{{ entropyCoder }}"
+                widthPixels: {{ widthPixels }}
+                pixelFormat: "{{ pixelFormat }}"
+                bPyramid: {{ bPyramid }}
+                bFrameCount: {{ bFrameCount }}
+                rateControlMode: "{{ rateControlMode }}"
+                hlg: "{{ hlg }}"
+                heightPixels: {{ heightPixels }}
+                gopFrameCount: {{ gopFrameCount }}
+                profile: "{{ profile }}"
+                sdr: "{{ sdr }}"
+                vbvSizeBits: {{ vbvSizeBits }}
+                frameRateConversionStrategy: "{{ frameRateConversionStrategy }}"
+                tune: "{{ tune }}"
+                allowOpenGop: {{ allowOpenGop }}
+                frameRate: {{ frameRate }}
+                gopDuration: "{{ gopDuration }}"
+                enableTwoPass: {{ enableTwoPass }}
+                crfLevel: {{ crfLevel }}
+                preset: "{{ preset }}"
+              h265:
+                frameRateConversionStrategy: "{{ frameRateConversionStrategy }}"
+                hdr10: "{{ hdr10 }}"
+                tune: "{{ tune }}"
+                allowOpenGop: {{ allowOpenGop }}
+                frameRate: {{ frameRate }}
+                gopDuration: "{{ gopDuration }}"
+                enableTwoPass: {{ enableTwoPass }}
+                crfLevel: {{ crfLevel }}
+                preset: "{{ preset }}"
+                bitrateBps: {{ bitrateBps }}
+                vbvFullnessBits: {{ vbvFullnessBits }}
+                aqStrength: {{ aqStrength }}
+                widthPixels: {{ widthPixels }}
+                pixelFormat: "{{ pixelFormat }}"
+                bPyramid: {{ bPyramid }}
+                bFrameCount: {{ bFrameCount }}
+                heightPixels: {{ heightPixels }}
+                rateControlMode: "{{ rateControlMode }}"
+                hlg: "{{ hlg }}"
+                profile: "{{ profile }}"
+                gopFrameCount: {{ gopFrameCount }}
+                vbvSizeBits: {{ vbvSizeBits }}
+                sdr: "{{ sdr }}"
+              vp9:
+                frameRate: {{ frameRate }}
+                gopDuration: "{{ gopDuration }}"
+                crfLevel: {{ crfLevel }}
+                frameRateConversionStrategy: "{{ frameRateConversionStrategy }}"
+                rateControlMode: "{{ rateControlMode }}"
+                hlg: "{{ hlg }}"
+                heightPixels: {{ heightPixels }}
+                gopFrameCount: {{ gopFrameCount }}
+                profile: "{{ profile }}"
+                sdr: "{{ sdr }}"
+                bitrateBps: {{ bitrateBps }}
+                widthPixels: {{ widthPixels }}
+                pixelFormat: "{{ pixelFormat }}"
+            audioStream:
+              codec: "{{ codec }}"
+              mapping:
+                - inputTrack: {{ inputTrack }}
+                  inputChannel: {{ inputChannel }}
+                  gainDb: {{ gainDb }}
+                  inputKey: "{{ inputKey }}"
+                  atomKey: "{{ atomKey }}"
+                  outputChannel: {{ outputChannel }}
+              displayName: "{{ displayName }}"
+              channelCount: {{ channelCount }}
+              channelLayout:
+                - "{{ channelLayout }}"
+              languageCode: "{{ languageCode }}"
+              bitrateBps: {{ bitrateBps }}
+              sampleRateHertz: {{ sampleRateHertz }}
+        pubsubDestination:
+          topic: "{{ topic }}"
+        editList:
+          - startTimeOffset: "{{ startTimeOffset }}"
+            endTimeOffset: "{{ endTimeOffset }}"
+            key: "{{ key }}"
+            inputs: "{{ inputs }}"
+    - name: batchModePriority
+      value: {{ batchModePriority }}
+      description: |
+        The processing priority of a batch job. This field can only be set for batch mode jobs. The default value is 0. This value cannot be negative. Higher values correspond to higher priorities for the job.
+    - name: outputUri
+      value: "{{ outputUri }}"
+      description: |
+        Input only. Specify the \`output_uri\` to populate an empty \`Job.config.output.uri\` or \`JobTemplate.config.output.uri\` when using template. URI for the output file(s). For example, \`gs://my-bucket/outputs/\`. See [Supported input and output formats](https://cloud.google.com/transcoder/docs/concepts/supported-input-and-output-formats).
+    - name: ttlAfterCompletionDays
+      value: {{ ttlAfterCompletionDays }}
+      description: |
+        Job time to live value in days, which will be effective after job completion. Job should be deleted automatically after the given TTL. Enter a value between 1 and 90. The default is 30.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        The labels associated with this job. You can use these to organize and group your jobs.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

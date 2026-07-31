@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>access_policies</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>access_policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="access_policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.accesscontextmanager.access_policies" /></td></tr>
 </tbody></table>
@@ -144,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-parent"><code>parent</code></a></td>
     <td>Lists all access policies in an organization.</td>
 </tr>
 <tr>
@@ -249,9 +250,9 @@ parent,
 scopes,
 title
 FROM google.accesscontextmanager.access_policies
-WHERE parent = '{{ parent }}'
+WHERE pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
+AND parent = '{{ parent }}'
 ;
 ```
 </TabItem>
@@ -273,16 +274,16 @@ Creates an access policy. This method fails if the organization already has an a
 
 ```sql
 INSERT INTO google.accesscontextmanager.access_policies (
-data__name,
-data__title,
 data__scopes,
-data__parent
+data__parent,
+data__title,
+data__name
 )
 SELECT 
-'{{ name }}',
-'{{ title }}',
 '{{ scopes }}',
-'{{ parent }}'
+'{{ parent }}',
+'{{ title }}',
+'{{ name }}'
 RETURNING
 name,
 done,
@@ -294,31 +295,28 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: access_policies
   props:
-    - name: name
-      value: string
-      description: >
-        Output only. Identifier. Resource name of the `AccessPolicy`. Format: `accessPolicies/{access_policy}`
-        
-    - name: title
-      value: string
-      description: >
-        Required. Human readable title. Does not affect behavior.
-        
     - name: scopes
-      value: array
-      description: >
-        The scopes of the AccessPolicy. Scopes define which resources a policy can restrict and where its resources can be referenced. For example, policy A with `scopes=["folders/123"]` has the following behavior: - ServicePerimeter can only restrict projects within `folders/123`. - ServicePerimeter within policy A can only reference access levels defined within policy A. - Only one policy can include a given scope; thus, attempting to create a second policy which includes `folders/123` will result in an error. If no scopes are provided, then any resource within the organization can be restricted. Scopes cannot be modified after a policy is created. Policies can only have a single scope. Format: list of `folders/{folder_number}` or `projects/{project_number}`
-        
+      value:
+        - "{{ scopes }}"
+      description: |
+        The scopes of the AccessPolicy. Scopes define which resources a policy can restrict and where its resources can be referenced. For example, policy A with \`scopes=["folders/123"]\` has the following behavior: - ServicePerimeter can only restrict projects within \`folders/123\`. - ServicePerimeter within policy A can only reference access levels defined within policy A. - Only one policy can include a given scope; thus, attempting to create a second policy which includes \`folders/123\` will result in an error. If no scopes are provided, then any resource within the organization can be restricted. Scopes cannot be modified after a policy is created. Policies can only have a single scope. Format: list of \`folders/{folder_number}\` or \`projects/{project_number}\`
     - name: parent
-      value: string
-      description: >
-        Required. The parent of this `AccessPolicy` in the Cloud Resource Hierarchy. Currently immutable once created. Format: `organizations/{organization_id}`
-        
-```
+      value: "{{ parent }}"
+      description: |
+        Required. The parent of this \`AccessPolicy\` in the Cloud Resource Hierarchy. Currently immutable once created. Format: \`organizations/{organization_id}\`
+    - name: title
+      value: "{{ title }}"
+      description: |
+        Required. Human readable title. Does not affect behavior.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Output only. Identifier. Resource name of the \`AccessPolicy\`. Format: \`accessPolicies/{access_policy}\`
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -338,10 +336,10 @@ Updates an access policy. The long-running operation from this RPC has a success
 ```sql
 UPDATE google.accesscontextmanager.access_policies
 SET 
-data__name = '{{ name }}',
-data__title = '{{ title }}',
 data__scopes = '{{ scopes }}',
-data__parent = '{{ parent }}'
+data__parent = '{{ parent }}',
+data__title = '{{ title }}',
+data__name = '{{ name }}'
 WHERE 
 accessPoliciesId = '{{ accessPoliciesId }}' --required
 AND updateMask = '{{ updateMask}}'

@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>groups</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>groups</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="groups" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.appdistribution.groups" /></td></tr>
 </tbody></table>
@@ -169,18 +170,18 @@ The following methods are available for this resource:
     <td>Delete a group.</td>
 </tr>
 <tr>
-    <td><a href="#batch_join"><CopyableCode code="batch_join" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-groupsId"><code>groupsId</code></a></td>
-    <td></td>
-    <td>Batch adds members to a group. The testers will gain access to all releases that the groups have access to.</td>
-</tr>
-<tr>
     <td><a href="#batch_leave"><CopyableCode code="batch_leave" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-groupsId"><code>groupsId</code></a></td>
     <td></td>
     <td>Batch removed members from a group. The testers will lose access to all releases that the groups have access to.</td>
+</tr>
+<tr>
+    <td><a href="#batch_join"><CopyableCode code="batch_join" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-groupsId"><code>groupsId</code></a></td>
+    <td></td>
+    <td>Batch adds members to a group. The testers will gain access to all releases that the groups have access to.</td>
 </tr>
 </tbody>
 </table>
@@ -314,26 +315,24 @@ testerCount
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: groups
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the groups resource.
     - name: name
-      value: string
-      description: >
-        The name of the group resource. Format: `projects/{project_number}/groups/{group_alias}`
-        
+      value: "{{ name }}"
+      description: |
+        The name of the group resource. Format: \`projects/{project_number}/groups/{group_alias}\`
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Required. The display name of the group.
-        
     - name: groupId
-      value: string
-```
+      value: "{{ groupId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -395,28 +394,12 @@ AND groupsId = '{{ groupsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="batch_join"
+    defaultValue="batch_leave"
     values={[
-        { label: 'batch_join', value: 'batch_join' },
-        { label: 'batch_leave', value: 'batch_leave' }
+        { label: 'batch_leave', value: 'batch_leave' },
+        { label: 'batch_join', value: 'batch_join' }
     ]}
 >
-<TabItem value="batch_join">
-
-Batch adds members to a group. The testers will gain access to all releases that the groups have access to.
-
-```sql
-EXEC firebase.appdistribution.groups.batch_join 
-@projectsId='{{ projectsId }}' --required, 
-@groupsId='{{ groupsId }}' --required 
-@@json=
-'{
-"emails": "{{ emails }}", 
-"createMissingTesters": {{ createMissingTesters }}
-}'
-;
-```
-</TabItem>
 <TabItem value="batch_leave">
 
 Batch removed members from a group. The testers will lose access to all releases that the groups have access to.
@@ -427,6 +410,22 @@ EXEC firebase.appdistribution.groups.batch_leave
 @groupsId='{{ groupsId }}' --required 
 @@json=
 '{
+"emails": "{{ emails }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="batch_join">
+
+Batch adds members to a group. The testers will gain access to all releases that the groups have access to.
+
+```sql
+EXEC firebase.appdistribution.groups.batch_join 
+@projectsId='{{ projectsId }}' --required, 
+@groupsId='{{ groupsId }}' --required 
+@@json=
+'{
+"createMissingTesters": {{ createMissingTesters }}, 
 "emails": "{{ emails }}"
 }'
 ;

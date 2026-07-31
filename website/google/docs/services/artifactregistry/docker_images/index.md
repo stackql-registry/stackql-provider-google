@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>docker_images</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>docker_images</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="docker_images" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.artifactregistry.docker_images" /></td></tr>
 </tbody></table>
@@ -55,9 +56,19 @@ The following fields are returned by `SELECT` queries:
     <td>Required. registry_location, project_id, repository_name and image id forms a unique image name:`projects//locations//repositories//dockerImages/`. For example, "projects/test-project/locations/us-west4/repositories/test-repo/dockerImages/ nginx@sha256:e9954c1fc875017be1c3e36eca16be2d9e9bccc4bf072163515467d6a823c7cf", where "us-west4" is the registry_location, "test-project" is the project_id, "test-repo" is the repository_name and "nginx@sha256:e9954c1fc875017be1c3e36eca16be2d9e9bccc4bf072163515467d6a823c7cf" is the image's digest.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="artifactType" /></td>
+    <td><code>string</code></td>
+    <td>ArtifactType of this image, e.g. "application/vnd.example+type". If the `subject_digest` is set and no `artifact_type` is given, the `media_type` will be considered as the `artifact_type`. This field is returned as the `metadata.artifactType` field in the Version resource.</td>
+</tr>
+<tr>
     <td><CopyableCode code="buildTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>The time this image was built. This field is returned as the 'metadata.buildTime' field in the Version resource. The build time is returned to the client as an RFC 3339 string, which can be easily used with the JavaScript Date constructor.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="imageManifests" /></td>
+    <td><code>array</code></td>
+    <td>Optional. For multi-arch images (manifest lists), this field contains the list of image manifests.</td>
 </tr>
 <tr>
     <td><CopyableCode code="imageSizeBytes" /></td>
@@ -109,9 +120,19 @@ The following fields are returned by `SELECT` queries:
     <td>Required. registry_location, project_id, repository_name and image id forms a unique image name:`projects//locations//repositories//dockerImages/`. For example, "projects/test-project/locations/us-west4/repositories/test-repo/dockerImages/ nginx@sha256:e9954c1fc875017be1c3e36eca16be2d9e9bccc4bf072163515467d6a823c7cf", where "us-west4" is the registry_location, "test-project" is the project_id, "test-repo" is the repository_name and "nginx@sha256:e9954c1fc875017be1c3e36eca16be2d9e9bccc4bf072163515467d6a823c7cf" is the image's digest.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="artifactType" /></td>
+    <td><code>string</code></td>
+    <td>ArtifactType of this image, e.g. "application/vnd.example+type". If the `subject_digest` is set and no `artifact_type` is given, the `media_type` will be considered as the `artifact_type`. This field is returned as the `metadata.artifactType` field in the Version resource.</td>
+</tr>
+<tr>
     <td><CopyableCode code="buildTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>The time this image was built. This field is returned as the 'metadata.buildTime' field in the Version resource. The build time is returned to the client as an RFC 3339 string, which can be easily used with the JavaScript Date constructor.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="imageManifests" /></td>
+    <td><code>array</code></td>
+    <td>Optional. For multi-arch images (manifest lists), this field contains the list of image manifests.</td>
 </tr>
 <tr>
     <td><CopyableCode code="imageSizeBytes" /></td>
@@ -174,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists docker images.</td>
 </tr>
 </tbody>
@@ -247,7 +268,9 @@ Gets a docker image.
 ```sql
 SELECT
 name,
+artifactType,
 buildTime,
+imageManifests,
 imageSizeBytes,
 mediaType,
 tags,
@@ -269,7 +292,9 @@ Lists docker images.
 ```sql
 SELECT
 name,
+artifactType,
 buildTime,
+imageManifests,
 imageSizeBytes,
 mediaType,
 tags,
@@ -280,9 +305,9 @@ FROM google.artifactregistry.docker_images
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND repositoriesId = '{{ repositoriesId }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>

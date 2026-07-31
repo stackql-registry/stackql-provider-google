@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>products_local_inventories</cod
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>products_local_inventories</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="products_local_inventories" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.retail.products_local_inventories" /></td></tr>
 </tbody></table>
@@ -122,10 +123,10 @@ Updates local inventory information for a Product at a list of places, while res
 
 ```sql
 INSERT INTO google.retail.products_local_inventories (
-data__addMask,
 data__localInventories,
-data__allowMissing,
+data__addMask,
 data__addTime,
+data__allowMissing,
 projectsId,
 locationsId,
 catalogsId,
@@ -133,10 +134,10 @@ branchesId,
 productsId
 )
 SELECT 
-'{{ addMask }}',
 '{{ localInventories }}',
-{{ allowMissing }},
+'{{ addMask }}',
 '{{ addTime }}',
+{{ allowMissing }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ catalogsId }}',
@@ -153,46 +154,63 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: products_local_inventories
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the products_local_inventories resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the products_local_inventories resource.
     - name: catalogsId
-      value: string
+      value: "{{ catalogsId }}"
       description: Required parameter for the products_local_inventories resource.
     - name: branchesId
-      value: string
+      value: "{{ branchesId }}"
       description: Required parameter for the products_local_inventories resource.
     - name: productsId
-      value: string
+      value: "{{ productsId }}"
       description: Required parameter for the products_local_inventories resource.
-    - name: addMask
-      value: string
-      description: >
-        Indicates which inventory fields in the provided list of LocalInventory to update. The field is updated to the provided value. If a field is set while the place does not have a previous local inventory, the local inventory at that store is created. If a field is set while the value of that field is not provided, the original field value, if it exists, is deleted. If the mask is not set or set with empty paths, all inventory fields will be updated. If an unsupported or unknown field is provided, an INVALID_ARGUMENT error is returned and the entire update will be ignored.
-        
     - name: localInventories
-      value: array
-      description: >
+      description: |
         Required. A list of inventory information at difference places. Each place is identified by its place ID. At most 3000 inventories are allowed per request.
-        
-    - name: allowMissing
-      value: boolean
-      description: >
-        If set to true, and the Product is not found, the local inventory will still be processed and retained for at most 1 day and processed once the Product is created. If set to false, a NOT_FOUND error is returned if the Product is not found.
-        
+      value:
+        - priceInfo:
+            price: {{ price }}
+            originalPrice: {{ originalPrice }}
+            priceEffectiveTime: "{{ priceEffectiveTime }}"
+            cost: {{ cost }}
+            priceRange:
+              price:
+                minimum: {{ minimum }}
+                maximum: {{ maximum }}
+                exclusiveMaximum: {{ exclusiveMaximum }}
+                exclusiveMinimum: {{ exclusiveMinimum }}
+              originalPrice:
+                minimum: {{ minimum }}
+                maximum: {{ maximum }}
+                exclusiveMaximum: {{ exclusiveMaximum }}
+                exclusiveMinimum: {{ exclusiveMinimum }}
+            currencyCode: "{{ currencyCode }}"
+            priceExpireTime: "{{ priceExpireTime }}"
+          attributes: "{{ attributes }}"
+          placeId: "{{ placeId }}"
+          fulfillmentTypes: "{{ fulfillmentTypes }}"
+    - name: addMask
+      value: "{{ addMask }}"
+      description: |
+        Indicates which inventory fields in the provided list of LocalInventory to update. The field is updated to the provided value. If a field is set while the place does not have a previous local inventory, the local inventory at that store is created. If a field is set while the value of that field is not provided, the original field value, if it exists, is deleted. If the mask is not set or set with empty paths, all inventory fields will be updated. If an unsupported or unknown field is provided, an INVALID_ARGUMENT error is returned and the entire update will be ignored.
     - name: addTime
-      value: string
-      description: >
+      value: "{{ addTime }}"
+      description: |
         The time when the inventory updates are issued. Used to prevent out-of-order updates on local inventory fields. If not provided, the internal system time will be used.
-        
-```
+    - name: allowMissing
+      value: {{ allowMissing }}
+      description: |
+        If set to true, and the Product is not found, the local inventory will still be processed and retained for at most 1 day and processed once the Product is created. If set to false, a NOT_FOUND error is returned if the Product is not found.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

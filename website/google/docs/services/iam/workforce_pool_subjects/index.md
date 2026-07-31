@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>workforce_pool_subjects</code> 
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>workforce_pool_subjects</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="workforce_pool_subjects" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.iam.workforce_pool_subjects" /></td></tr>
 </tbody></table>

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>investigations</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>investigations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="investigations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.geminicloudassist.investigations" /></td></tr>
 </tbody></table>
@@ -72,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="executionState" /></td>
     <td><code>string</code></td>
-    <td>Output only. The execution state of the investigation.</td>
+    <td>Output only. The execution state of the investigation. (INVESTIGATION_EXECUTION_STATE_UNSPECIFIED, INVESTIGATION_EXECUTION_STATE_RUNNING, INVESTIGATION_EXECUTION_STATE_MODIFIED, INVESTIGATION_EXECUTION_STATE_FAILED, INVESTIGATION_EXECUTION_STATE_CANCELLED, INVESTIGATION_EXECUTION_STATE_COMPLETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -156,7 +157,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="executionState" /></td>
     <td><code>string</code></td>
-    <td>Output only. The execution state of the investigation.</td>
+    <td>Output only. The execution state of the investigation. (INVESTIGATION_EXECUTION_STATE_UNSPECIFIED, INVESTIGATION_EXECUTION_STATE_RUNNING, INVESTIGATION_EXECUTION_STATE_MODIFIED, INVESTIGATION_EXECUTION_STATE_FAILED, INVESTIGATION_EXECUTION_STATE_CANCELLED, INVESTIGATION_EXECUTION_STATE_COMPLETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -234,21 +235,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Investigations in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-investigationId"><code>investigationId</code></a></td>
+    <td><a href="#parameter-investigationId"><code>investigationId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a new Investigation in a given project.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-investigationsId"><code>investigationsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a single Investigation.</td>
 </tr>
 <tr>
@@ -324,6 +325,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string (google-fieldmask)</code></td>
     <td></td>
 </tr>
+<tr id="parameter-validateOnly">
+    <td><CopyableCode code="validateOnly" /></td>
+    <td><code>boolean</code></td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 
@@ -387,9 +393,9 @@ FROM google.geminicloudassist.investigations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -412,29 +418,31 @@ Creates a new Investigation in a given project.
 ```sql
 INSERT INTO google.geminicloudassist.investigations (
 data__name,
+data__labels,
+data__title,
+data__observations,
 data__observerStatuses,
 data__revisionPredecessor,
 data__annotations,
-data__title,
-data__observations,
-data__labels,
 projectsId,
 locationsId,
+investigationId,
 requestId,
-investigationId
+validateOnly
 )
 SELECT 
 '{{ name }}',
+'{{ labels }}',
+'{{ title }}',
+'{{ observations }}',
 '{{ observerStatuses }}',
 '{{ revisionPredecessor }}',
 '{{ annotations }}',
-'{{ title }}',
-'{{ observations }}',
-'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
+'{{ investigationId }}',
 '{{ requestId }}',
-'{{ investigationId }}'
+'{{ validateOnly }}'
 RETURNING
 name,
 annotations,
@@ -455,56 +463,57 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: investigations
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the investigations resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the investigations resource.
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Identifier. Name of the investigation, of the form: projects/{project_number}/locations/{location_id}/investigations/{investigation_id}
-        
-    - name: observerStatuses
-      value: object
-      description: >
-        Optional. Statuses of observers which have been invoked in order to run the investigation.
-        
-    - name: revisionPredecessor
-      value: string
-      description: >
-        Optional. The name of the revision that was this revision's predecessor.
-        
-    - name: annotations
-      value: object
-      description: >
-        Optional. Additional annotations on the investigation.
-        
-    - name: title
-      value: string
-      description: >
-        Optional. Human-readable display title for the investigation.
-        
-    - name: observations
-      value: object
-      description: >
-        Optional. Observations about the project state that comprise the contents of the investigation.
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. User-defined labels for the investigation.
-        
-    - name: requestId
-      value: string
+    - name: title
+      value: "{{ title }}"
+      description: |
+        Optional. Human-readable display title for the investigation.
+    - name: observations
+      value: "{{ observations }}"
+      description: |
+        Optional. Observations about the project state that comprise the contents of the investigation.
+    - name: observerStatuses
+      value: "{{ observerStatuses }}"
+      description: |
+        Optional. Statuses of observers which have been invoked in order to run the investigation.
+    - name: revisionPredecessor
+      value: "{{ revisionPredecessor }}"
+      description: |
+        Optional. The name of the revision that was this revision's predecessor.
+    - name: annotations
+      description: |
+        Optional. Additional annotations on the investigation.
+      value:
+        supportCase: "{{ supportCase }}"
+        revisionLastRunInterval:
+          endTime: "{{ endTime }}"
+          startTime: "{{ startTime }}"
+        pagePath: "{{ pagePath }}"
+        extrasMap: "{{ extrasMap }}"
     - name: investigationId
-      value: string
-```
+      value: "{{ investigationId }}"
+    - name: requestId
+      value: "{{ requestId }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -525,18 +534,18 @@ Updates the parameters of a single Investigation.
 UPDATE google.geminicloudassist.investigations
 SET 
 data__name = '{{ name }}',
-data__observerStatuses = '{{ observerStatuses }}',
-data__revisionPredecessor = '{{ revisionPredecessor }}',
-data__annotations = '{{ annotations }}',
+data__labels = '{{ labels }}',
 data__title = '{{ title }}',
 data__observations = '{{ observations }}',
-data__labels = '{{ labels }}'
+data__observerStatuses = '{{ observerStatuses }}',
+data__revisionPredecessor = '{{ revisionPredecessor }}',
+data__annotations = '{{ annotations }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND investigationsId = '{{ investigationsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 annotations,

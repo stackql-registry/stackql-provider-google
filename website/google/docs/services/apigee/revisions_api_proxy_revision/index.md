@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>revisions_api_proxy_revision</c
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>revisions_api_proxy_revision</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="revisions_api_proxy_revision" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.revisions_api_proxy_revision" /></td></tr>
 </tbody></table>
@@ -110,9 +111,9 @@ Updates an existing API proxy revision by uploading the API proxy configuration 
 ```sql
 UPDATE google.apigee.revisions_api_proxy_revision
 SET 
-data__data = '{{ data }}',
+data__contentType = '{{ contentType }}',
 data__extensions = '{{ extensions }}',
-data__contentType = '{{ contentType }}'
+data__data = '{{ data }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND apisId = '{{ apisId }}' --required
@@ -131,6 +132,7 @@ entityMetaDataAsProperties,
 hasExtensiblePolicy,
 integrationEndpoints,
 lastModifiedAt,
+mcp,
 policies,
 proxies,
 proxyEndpoints,

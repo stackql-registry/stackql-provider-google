@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>security_stats</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>security_stats</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="security_stats" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.security_stats" /></td></tr>
 </tbody></table>
@@ -111,11 +112,11 @@ EXEC google.apigee.security_stats.organizations_environments_security_stats_quer
 @environmentsId='{{ environmentsId }}' --required 
 @@json=
 '{
-"dimensions": "{{ dimensions }}", 
-"filter": "{{ filter }}", 
-"pageToken": "{{ pageToken }}", 
-"metrics": "{{ metrics }}", 
 "timeRange": "{{ timeRange }}", 
+"pageToken": "{{ pageToken }}", 
+"filter": "{{ filter }}", 
+"dimensions": "{{ dimensions }}", 
+"metrics": "{{ metrics }}", 
 "pageSize": {{ pageSize }}
 }'
 ;
@@ -131,14 +132,14 @@ EXEC google.apigee.security_stats.organizations_environments_security_stats_quer
 @environmentsId='{{ environmentsId }}' --required 
 @@json=
 '{
-"pageToken": "{{ pageToken }}", 
-"filter": "{{ filter }}", 
 "metrics": "{{ metrics }}", 
-"timestampOrder": "{{ timestampOrder }}", 
+"pageSize": {{ pageSize }}, 
 "dimensions": "{{ dimensions }}", 
-"timeRange": "{{ timeRange }}", 
+"filter": "{{ filter }}", 
 "windowSize": "{{ windowSize }}", 
-"pageSize": {{ pageSize }}
+"pageToken": "{{ pageToken }}", 
+"timeRange": "{{ timeRange }}", 
+"timestampOrder": "{{ timestampOrder }}"
 }'
 ;
 ```

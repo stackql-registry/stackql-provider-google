@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>groups</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>groups</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="groups" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.vmmigration.groups" /></td></tr>
 </tbody></table>
@@ -72,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="migrationTargetType" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The target type of this group.</td>
+    <td>Immutable. The target type of this group. (MIGRATION_TARGET_TYPE_UNSPECIFIED, MIGRATION_TARGET_TYPE_GCE, MIGRATION_TARGET_TYPE_DISKS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -116,7 +117,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="migrationTargetType" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The target type of this group.</td>
+    <td>Immutable. The target type of this group. (MIGRATION_TARGET_TYPE_UNSPECIFIED, MIGRATION_TARGET_TYPE_GCE, MIGRATION_TARGET_TYPE_DISKS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -154,14 +155,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists Groups in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-groupId"><code>groupId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-groupId"><code>groupId</code></a></td>
     <td>Creates a new Group in a given project and location.</td>
 </tr>
 <tr>
@@ -290,8 +291,8 @@ updateTime
 FROM google.vmmigration.groups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 ;
@@ -316,21 +317,21 @@ Creates a new Group in a given project and location.
 ```sql
 INSERT INTO google.vmmigration.groups (
 data__description,
-data__displayName,
 data__migrationTargetType,
+data__displayName,
 projectsId,
 locationsId,
-groupId,
-requestId
+requestId,
+groupId
 )
 SELECT 
 '{{ description }}',
-'{{ displayName }}',
 '{{ migrationTargetType }}',
+'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ groupId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ groupId }}'
 RETURNING
 name,
 done,
@@ -342,37 +343,34 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: groups
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the groups resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the groups resource.
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         User-provided description of the group.
-        
-    - name: displayName
-      value: string
-      description: >
-        Display name is a user defined name for this group which can be updated.
-        
     - name: migrationTargetType
-      value: string
-      description: >
+      value: "{{ migrationTargetType }}"
+      description: |
         Immutable. The target type of this group.
-        
       valid_values: ['MIGRATION_TARGET_TYPE_UNSPECIFIED', 'MIGRATION_TARGET_TYPE_GCE', 'MIGRATION_TARGET_TYPE_DISKS']
-    - name: groupId
-      value: string
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Display name is a user defined name for this group which can be updated.
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+    - name: groupId
+      value: "{{ groupId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -393,8 +391,8 @@ Updates the parameters of a single Group.
 UPDATE google.vmmigration.groups
 SET 
 data__description = '{{ description }}',
-data__displayName = '{{ displayName }}',
-data__migrationTargetType = '{{ migrationTargetType }}'
+data__migrationTargetType = '{{ migrationTargetType }}',
+data__displayName = '{{ displayName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

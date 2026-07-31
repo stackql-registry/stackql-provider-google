@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>operations</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>operations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="operations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apihub.operations" /></td></tr>
 </tbody></table>
@@ -52,37 +53,27 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Identifier. The name of the operation. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/apis/&#123;api&#125;/versions/&#123;version&#125;/operations/&#123;operation&#125;`</td>
+    <td>The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should be a resource name ending with `operations/&#123;unique_id&#125;`.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="attributes" /></td>
+    <td><CopyableCode code="done" /></td>
+    <td><code>boolean</code></td>
+    <td>If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>Optional. The list of user defined attributes associated with the API operation resource. The key is the attribute name. It will be of the format: `projects/&#123;project&#125;/locations/&#123;location&#125;/attributes/&#123;attribute&#125;`. The value is the attribute values associated with the resource.</td>
+    <td>The error result of the operation in case of failure or cancellation. (id: GoogleRpcStatus)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time at which the operation was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="details" /></td>
+    <td><CopyableCode code="metadata" /></td>
     <td><code>object</code></td>
-    <td>Optional. Operation details. Note: Even though this field is optional, it is required for CreateApiOperation API and we will fail the request if not provided. (id: GoogleCloudApihubV1OperationDetails)</td>
+    <td>Service-specific metadata associated with the operation. It typically contains progress information and common metadata such as create time. Some services might not provide such metadata. Any method that returns a long-running operation should document the metadata type, if any.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="sourceMetadata" /></td>
-    <td><code>array</code></td>
-    <td>Output only. The list of sources and metadata from the sources of the API operation.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="spec" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The name of the spec will be of the format: `projects/&#123;project&#125;/locations/&#123;location&#125;/apis/&#123;api&#125;/versions/&#123;version&#125;/specs/&#123;spec&#125;` Note:The name of the spec will be empty if the operation is created via CreateApiOperation API.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time at which the operation was last updated.</td>
+    <td><CopyableCode code="response" /></td>
+    <td><code>object</code></td>
+    <td>The normal, successful response of the operation. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.</td>
 </tr>
 </tbody>
 </table>
@@ -101,37 +92,27 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Identifier. The name of the operation. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/apis/&#123;api&#125;/versions/&#123;version&#125;/operations/&#123;operation&#125;`</td>
+    <td>The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should be a resource name ending with `operations/&#123;unique_id&#125;`.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="attributes" /></td>
+    <td><CopyableCode code="done" /></td>
+    <td><code>boolean</code></td>
+    <td>If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>Optional. The list of user defined attributes associated with the API operation resource. The key is the attribute name. It will be of the format: `projects/&#123;project&#125;/locations/&#123;location&#125;/attributes/&#123;attribute&#125;`. The value is the attribute values associated with the resource.</td>
+    <td>The error result of the operation in case of failure or cancellation. (id: GoogleRpcStatus)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time at which the operation was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="details" /></td>
+    <td><CopyableCode code="metadata" /></td>
     <td><code>object</code></td>
-    <td>Optional. Operation details. Note: Even though this field is optional, it is required for CreateApiOperation API and we will fail the request if not provided. (id: GoogleCloudApihubV1OperationDetails)</td>
+    <td>Service-specific metadata associated with the operation. It typically contains progress information and common metadata such as create time. Some services might not provide such metadata. Any method that returns a long-running operation should document the metadata type, if any.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="sourceMetadata" /></td>
-    <td><code>array</code></td>
-    <td>Output only. The list of sources and metadata from the sources of the API operation.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="spec" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The name of the spec will be of the format: `projects/&#123;project&#125;/locations/&#123;location&#125;/apis/&#123;api&#125;/versions/&#123;version&#125;/specs/&#123;spec&#125;` Note:The name of the spec will be empty if the operation is created via CreateApiOperation API.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time at which the operation was last updated.</td>
+    <td><CopyableCode code="response" /></td>
+    <td><code>object</code></td>
+    <td>The normal, successful response of the operation. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.</td>
 </tr>
 </tbody>
 </table>
@@ -156,16 +137,16 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
     <td></td>
-    <td>Get details about a particular operation in API version.</td>
+    <td>Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>List operations in an API version.</td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
@@ -184,9 +165,9 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-operationsId"><code>operationsId</code></a></td>
     <td></td>
-    <td>Delete an operation in an API version and we can delete only the operations created via create API. If the operation was created by parsing the spec, then it can be deleted by editing or deleting the spec.</td>
+    <td>Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.</td>
 </tr>
 <tr>
     <td><a href="#cancel"><CopyableCode code="cancel" /></a></td>
@@ -256,6 +237,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
+<tr id="parameter-returnPartialSuccess">
+    <td><CopyableCode code="returnPartialSuccess" /></td>
+    <td><code>boolean</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-updateMask">
     <td><CopyableCode code="updateMask" /></td>
     <td><code>string (google-fieldmask)</code></td>
@@ -275,47 +261,40 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get">
 
-Get details about a particular operation in API version.
+Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.
 
 ```sql
 SELECT
 name,
-attributes,
-createTime,
-details,
-sourceMetadata,
-spec,
-updateTime
+done,
+error,
+metadata,
+response
 FROM google.apihub.operations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND apisId = '{{ apisId }}' -- required
-AND versionsId = '{{ versionsId }}' -- required
 AND operationsId = '{{ operationsId }}' -- required
 ;
 ```
 </TabItem>
 <TabItem value="list">
 
-List operations in an API version.
+Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.
 
 ```sql
 SELECT
 name,
-attributes,
-createTime,
-details,
-sourceMetadata,
-spec,
-updateTime
+done,
+error,
+metadata,
+response
 FROM google.apihub.operations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND apisId = '{{ apisId }}' -- required
-AND versionsId = '{{ versionsId }}' -- required
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -337,9 +316,9 @@ Create an apiOperation in an API version. An apiOperation can be created only if
 
 ```sql
 INSERT INTO google.apihub.operations (
-data__name,
-data__details,
 data__attributes,
+data__details,
+data__name,
 projectsId,
 locationsId,
 apisId,
@@ -347,9 +326,9 @@ versionsId,
 apiOperationId
 )
 SELECT 
-'{{ name }}',
-'{{ details }}',
 '{{ attributes }}',
+'{{ details }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ apisId }}',
@@ -368,40 +347,61 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: operations
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the operations resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the operations resource.
     - name: apisId
-      value: string
+      value: "{{ apisId }}"
       description: Required parameter for the operations resource.
     - name: versionsId
-      value: string
+      value: "{{ versionsId }}"
       description: Required parameter for the operations resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The name of the operation. Format: `projects/{project}/locations/{location}/apis/{api}/versions/{version}/operations/{operation}`
-        
-    - name: details
-      value: object
-      description: >
-        Optional. Operation details. Note: Even though this field is optional, it is required for CreateApiOperation API and we will fail the request if not provided.
-        
     - name: attributes
-      value: object
-      description: >
-        Optional. The list of user defined attributes associated with the API operation resource. The key is the attribute name. It will be of the format: `projects/{project}/locations/{location}/attributes/{attribute}`. The value is the attribute values associated with the resource.
-        
+      value: "{{ attributes }}"
+      description: |
+        Optional. The list of user defined attributes associated with the API operation resource. The key is the attribute name. It will be of the format: \`projects/{project}/locations/{location}/attributes/{attribute}\`. The value is the attribute values associated with the resource.
+    - name: details
+      description: |
+        Optional. Operation details. Note: Even though this field is optional, it is required for CreateApiOperation API and we will fail the request if not provided.
+      value:
+        deprecated: {{ deprecated }}
+        mcpTool:
+          title: "{{ title }}"
+          inputSchema:
+            jsonSchema: "{{ jsonSchema }}"
+          outputSchema:
+            jsonSchema: "{{ jsonSchema }}"
+          description: "{{ description }}"
+          name: "{{ name }}"
+          annotations:
+            title: "{{ title }}"
+            readOnlyHint: {{ readOnlyHint }}
+            idempotentHint: {{ idempotentHint }}
+            additionalHints: "{{ additionalHints }}"
+            destructiveHint: {{ destructiveHint }}
+            openWorldHint: {{ openWorldHint }}
+        description: "{{ description }}"
+        httpOperation:
+          path:
+            path: "{{ path }}"
+            description: "{{ description }}"
+          method: "{{ method }}"
+        documentation:
+          externalUri: "{{ externalUri }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of the operation. Format: \`projects/{project}/locations/{location}/apis/{api}/versions/{version}/operations/{operation}\`
     - name: apiOperationId
-      value: string
-```
+      value: "{{ apiOperationId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -421,9 +421,9 @@ Update an operation in an API version. The following fields in the ApiOperation 
 ```sql
 UPDATE google.apihub.operations
 SET 
-data__name = '{{ name }}',
+data__attributes = '{{ attributes }}',
 data__details = '{{ details }}',
-data__attributes = '{{ attributes }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -454,14 +454,12 @@ updateTime;
 >
 <TabItem value="delete">
 
-Delete an operation in an API version and we can delete only the operations created via create API. If the operation was created by parsing the spec, then it can be deleted by editing or deleting the spec.
+Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.
 
 ```sql
 DELETE FROM google.apihub.operations
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
-AND apisId = '{{ apisId }}' --required
-AND versionsId = '{{ versionsId }}' --required
 AND operationsId = '{{ operationsId }}' --required
 ;
 ```

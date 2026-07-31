@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>policies</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dns.policies" /></td></tr>
 </tbody></table>
@@ -330,28 +331,28 @@ Creates a new policy.
 
 ```sql
 INSERT INTO google.dns.policies (
-data__id,
-data__name,
-data__enableInboundForwarding,
-data__description,
-data__networks,
 data__alternativeNameServerConfig,
-data__enableLogging,
-data__dns64Config,
+data__name,
+data__description,
 data__kind,
+data__id,
+data__enableInboundForwarding,
+data__enableLogging,
+data__networks,
+data__dns64Config,
 project,
 clientOperationId
 )
 SELECT 
-'{{ id }}',
-'{{ name }}',
-{{ enableInboundForwarding }},
-'{{ description }}',
-'{{ networks }}',
 '{{ alternativeNameServerConfig }}',
-{{ enableLogging }},
-'{{ dns64Config }}',
+'{{ name }}',
+'{{ description }}',
 '{{ kind }}',
+'{{ id }}',
+{{ enableInboundForwarding }},
+{{ enableLogging }},
+'{{ networks }}',
+'{{ dns64Config }}',
 '{{ project }}',
 '{{ clientOperationId }}'
 RETURNING
@@ -369,59 +370,63 @@ networks
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: policies
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the policies resource.
-    - name: id
-      value: string
-      description: >
-        Unique identifier for the resource; defined by the server (output only).
-        
-    - name: name
-      value: string
-      description: >
-        User-assigned name for this policy.
-        
-    - name: enableInboundForwarding
-      value: boolean
-      description: >
-        Allows networks bound to this policy to receive DNS queries sent by VMs or applications over VPN connections. When enabled, a virtual IP address is allocated from each of the subnetworks that are bound to this policy.
-        
-    - name: description
-      value: string
-      description: >
-        A mutable string of at most 1024 characters associated with this resource for the user's convenience. Has no effect on the policy's function.
-        
-    - name: networks
-      value: array
-      description: >
-        List of network names specifying networks to which this policy is applied.
-        
     - name: alternativeNameServerConfig
-      value: object
-      description: >
+      description: |
         Sets an alternative name server for the associated networks. When specified, all DNS queries are forwarded to a name server that you choose. Names such as .internal are not available when an alternative name server is specified.
-        
-    - name: enableLogging
-      value: boolean
-      description: >
-        Controls whether logging is enabled for the networks bound to this policy. Defaults to no logging if not set.
-        
-    - name: dns64Config
-      value: object
-      description: >
-        Configurations related to DNS64 for this policy.
-        
+      value:
+        targetNameServers:
+          - ipv4Address: "{{ ipv4Address }}"
+            kind: "{{ kind }}"
+            forwardingPath: "{{ forwardingPath }}"
+            ipv6Address: "{{ ipv6Address }}"
+        kind: "{{ kind }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        User-assigned name for this policy.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        A mutable string of at most 1024 characters associated with this resource for the user's convenience. Has no effect on the policy's function.
     - name: kind
-      value: string
+      value: "{{ kind }}"
       default: dns#policy
+    - name: id
+      value: "{{ id }}"
+      description: |
+        Unique identifier for the resource; defined by the server (output only).
+    - name: enableInboundForwarding
+      value: {{ enableInboundForwarding }}
+      description: |
+        Allows networks bound to this policy to receive DNS queries sent by VMs or applications over VPN connections. When enabled, a virtual IP address is allocated from each of the subnetworks that are bound to this policy.
+    - name: enableLogging
+      value: {{ enableLogging }}
+      description: |
+        Controls whether logging is enabled for the networks bound to this policy. Defaults to no logging if not set.
+    - name: networks
+      description: |
+        List of network names specifying networks to which this policy is applied.
+      value:
+        - kind: "{{ kind }}"
+          networkUrl: "{{ networkUrl }}"
+    - name: dns64Config
+      description: |
+        Configurations related to DNS64 for this policy.
+      value:
+        scope:
+          allQueries: {{ allQueries }}
+          kind: "{{ kind }}"
+        kind: "{{ kind }}"
     - name: clientOperationId
-      value: string
-```
+      value: "{{ clientOperationId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -441,15 +446,15 @@ Applies a partial update to an existing policy.
 ```sql
 UPDATE google.dns.policies
 SET 
-data__id = '{{ id }}',
-data__name = '{{ name }}',
-data__enableInboundForwarding = {{ enableInboundForwarding }},
-data__description = '{{ description }}',
-data__networks = '{{ networks }}',
 data__alternativeNameServerConfig = '{{ alternativeNameServerConfig }}',
+data__name = '{{ name }}',
+data__description = '{{ description }}',
+data__kind = '{{ kind }}',
+data__id = '{{ id }}',
+data__enableInboundForwarding = {{ enableInboundForwarding }},
 data__enableLogging = {{ enableLogging }},
-data__dns64Config = '{{ dns64Config }}',
-data__kind = '{{ kind }}'
+data__networks = '{{ networks }}',
+data__dns64Config = '{{ dns64Config }}'
 WHERE 
 project = '{{ project }}' --required
 AND policy = '{{ policy }}' --required
@@ -476,15 +481,15 @@ Updates an existing policy.
 ```sql
 REPLACE google.dns.policies
 SET 
-data__id = '{{ id }}',
-data__name = '{{ name }}',
-data__enableInboundForwarding = {{ enableInboundForwarding }},
-data__description = '{{ description }}',
-data__networks = '{{ networks }}',
 data__alternativeNameServerConfig = '{{ alternativeNameServerConfig }}',
+data__name = '{{ name }}',
+data__description = '{{ description }}',
+data__kind = '{{ kind }}',
+data__id = '{{ id }}',
+data__enableInboundForwarding = {{ enableInboundForwarding }},
 data__enableLogging = {{ enableLogging }},
-data__dns64Config = '{{ dns64Config }}',
-data__kind = '{{ kind }}'
+data__networks = '{{ networks }}',
+data__dns64Config = '{{ dns64Config }}'
 WHERE 
 project = '{{ project }}' --required
 AND policy = '{{ policy }}' --required

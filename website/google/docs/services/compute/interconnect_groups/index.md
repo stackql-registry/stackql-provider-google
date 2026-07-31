@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>interconnect_groups</code> res
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>interconnect_groups</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="interconnect_groups" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.interconnect_groups" /></td></tr>
 </tbody></table>
@@ -52,12 +53,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="id" /></td>
     <td><code>string (uint64)</code></td>
-    <td>[Output Only] The unique identifier for the resource type. The server generates this identifier.</td>
+    <td>Output only. [Output Only] The unique identifier for the resource type. The server generates this identifier.</td>
 </tr>
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>[a-z](?:[-a-z0-9]&#123;0,61&#125;[a-z0-9])?</code>)</td>
+    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply withRFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>&#91;a-z&#93;(?:&#91;-a-z0-9&#93;&#123;0,61&#125;&#91;a-z0-9&#93;)?</code>)</td>
 </tr>
 <tr>
     <td><CopyableCode code="configured" /></td>
@@ -67,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Creation timestamp in RFC3339 text format.</td>
+    <td>Output only. [Output Only] Creation timestamp inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="etag" /></td>
     <td><code>string</code></td>
-    <td>Opaque system-generated token that uniquely identifies the configuration. If provided when patching a configuration in update mode, the provided token must match the current token or the update is rejected. This provides a reliable means of doing read-modify-write (optimistic locking) as described by API 154.</td>
+    <td>Opaque system-generated token that uniquely identifies the configuration. If provided when patching a configuration in update mode, the provided token must match the current token or the update is rejected. This provides a reliable means of doing read-modify-write (optimistic locking) as described by AIP 154.</td>
 </tr>
 <tr>
     <td><CopyableCode code="intent" /></td>
@@ -92,7 +93,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of the resource. Always compute#InterconnectGroup (default: compute#InterconnectGroup)</td>
+    <td>Output only. [Output Only] Type of the resource. Always compute#InterconnectGroup (default: compute#InterconnectGroup)</td>
 </tr>
 <tr>
     <td><CopyableCode code="physicalStructure" /></td>
@@ -102,7 +103,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for the resource.</td>
+    <td>Output only. [Output Only] Server-defined URL for the resource.</td>
 </tr>
 </tbody>
 </table>
@@ -141,7 +142,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="nextPageToken" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
+    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger thanmaxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
@@ -151,7 +152,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="unreachables" /></td>
     <td><code>array</code></td>
-    <td>[Output Only] Unreachable resources. end_interface: MixerListResponseWithEtagBuilder</td>
+    <td>Output only. [Output Only] Unreachable resources. end_interface: MixerListResponseWithEtagBuilder</td>
 </tr>
 <tr>
     <td><CopyableCode code="warning" /></td>
@@ -189,7 +190,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists the InterconnectGroups for a project in the given scope.</td>
 </tr>
 <tr>
@@ -197,21 +198,21 @@ The following methods are available for this resource:
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-interconnectGroup"><code>interconnectGroup</code></a></td>
     <td></td>
-    <td>Create Interconnects with redundancy by creating them in a specified interconnect group.</td>
+    <td>Create Interconnects with redundancy by creating them in a specified<br />interconnect group.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Creates a InterconnectGroup in the specified project in the given scope using the parameters that are included in the request.</td>
+    <td>Creates a InterconnectGroup in the specified project in the given scope<br />using the parameters that are included in the request.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-interconnectGroup"><code>interconnectGroup</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Patches the specified InterconnectGroup resource with the data included in the request. This method supports PATCH semantics and uses JSON merge patch format and processing rules.</td>
+    <td>Patches the specified InterconnectGroup resource with the data included in<br />the request. This method supports PATCH<br />semantics and usesJSON merge<br />patch format and processing rules.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
@@ -332,11 +333,11 @@ unreachables,
 warning
 FROM google.compute.interconnect_groups
 WHERE project = '{{ project }}' -- required
-AND filter = '{{ filter }}'
-AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND maxResults = '{{ maxResults }}'
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -355,7 +356,7 @@ AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 >
 <TabItem value="create_members">
 
-Create Interconnects with redundancy by creating them in a specified interconnect group.
+Create Interconnects with redundancy by creating them in a specified<br />interconnect group.
 
 ```sql
 INSERT INTO google.compute.interconnect_groups (
@@ -375,6 +376,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -399,36 +401,24 @@ zone
 </TabItem>
 <TabItem value="insert">
 
-Creates a InterconnectGroup in the specified project in the given scope using the parameters that are included in the request.
+Creates a InterconnectGroup in the specified project in the given scope<br />using the parameters that are included in the request.
 
 ```sql
 INSERT INTO google.compute.interconnect_groups (
-data__kind,
-data__id,
-data__creationTimestamp,
-data__name,
-data__description,
-data__selfLink,
-data__etag,
-data__interconnects,
 data__intent,
-data__physicalStructure,
-data__configured,
+data__description,
+data__interconnects,
+data__etag,
+data__name,
 project,
 requestId
 )
 SELECT 
-'{{ kind }}',
-'{{ id }}',
-'{{ creationTimestamp }}',
-'{{ name }}',
-'{{ description }}',
-'{{ selfLink }}',
-'{{ etag }}',
-'{{ interconnects }}',
 '{{ intent }}',
-'{{ physicalStructure }}',
-'{{ configured }}',
+'{{ description }}',
+'{{ interconnects }}',
+'{{ etag }}',
+'{{ name }}',
 '{{ project }}',
 '{{ requestId }}'
 RETURNING
@@ -439,6 +429,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -463,77 +454,84 @@ zone
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: interconnect_groups
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the interconnect_groups resource.
     - name: interconnectGroup
-      value: string
+      value: "{{ interconnectGroup }}"
       description: Required parameter for the interconnect_groups resource.
     - name: request
-      value: object
-    - name: kind
-      value: string
-      description: >
-        [Output Only] Type of the resource. Always compute#InterconnectGroup
-        
-      default: compute#InterconnectGroup
-    - name: id
-      value: string
-      description: >
-        [Output Only] The unique identifier for the resource type. The server generates this identifier.
-        
-    - name: creationTimestamp
-      value: string
-      description: >
-        [Output Only] Creation timestamp in RFC3339 text format.
-        
-    - name: name
-      value: string
-      description: >
-        Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
-        
-    - name: description
-      value: string
-      description: >
-        An optional description of this resource. Provide this property when you create the resource.
-        
-    - name: selfLink
-      value: string
-      description: >
-        [Output Only] Server-defined URL for the resource.
-        
-    - name: etag
-      value: string
-      description: >
-        Opaque system-generated token that uniquely identifies the configuration. If provided when patching a configuration in update mode, the provided token must match the current token or the update is rejected. This provides a reliable means of doing read-modify-write (optimistic locking) as described by API 154.
-        
-    - name: interconnects
-      value: object
-      description: >
-        Interconnects in the InterconnectGroup. Keys are arbitrary user-specified strings. Users are encouraged, but not required, to use their preferred format for resource links as keys. Note that there are add-members and remove-members methods in gcloud. The size of this map is limited by an "Interconnects per group" quota.
-        
+      value:
+        intentMismatchBehavior: "{{ intentMismatchBehavior }}"
+        interconnects:
+          - interconnectType: "{{ interconnectType }}"
+            adminEnabled: {{ adminEnabled }}
+            requestedFeatures: "{{ requestedFeatures }}"
+            nocContactEmail: "{{ nocContactEmail }}"
+            name: "{{ name }}"
+            customerName: "{{ customerName }}"
+            remoteLocation: "{{ remoteLocation }}"
+            linkType: "{{ linkType }}"
+            requestedLinkCount: {{ requestedLinkCount }}
+            description: "{{ description }}"
+            facility: "{{ facility }}"
+        templateInterconnect:
+          interconnectType: "{{ interconnectType }}"
+          adminEnabled: {{ adminEnabled }}
+          requestedFeatures:
+            - "{{ requestedFeatures }}"
+          nocContactEmail: "{{ nocContactEmail }}"
+          name: "{{ name }}"
+          customerName: "{{ customerName }}"
+          remoteLocation: "{{ remoteLocation }}"
+          linkType: "{{ linkType }}"
+          requestedLinkCount: {{ requestedLinkCount }}
+          description: "{{ description }}"
+          facility: "{{ facility }}"
     - name: intent
-      value: object
-      description: >
-        The user's intent for this group. This is the only required field besides the name that must be specified on group creation.
-        
-    - name: physicalStructure
-      value: object
-      description: >
-        [Output Only] An analysis of the physical layout of Interconnects in this group. Every Interconnect in the group is shown once in this structure.
-        
-    - name: configured
-      value: object
-      description: >
-        [Output Only] The status of the group as configured. This has the same structure as the operational field reported by the OperationalStatus method, but does not take into account the operational status of each resource.
-        
+      description: |
+        The user's intent for this group. This is the only required field besides
+        the name that must be specified on group creation.
+      value:
+        topologyCapability: "{{ topologyCapability }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
+    - name: interconnects
+      value: "{{ interconnects }}"
+      description: |
+        Interconnects in the InterconnectGroup. Keys are arbitrary user-specified
+        strings. Users are encouraged, but not required, to use their preferred
+        format for resource links as keys.
+        Note that there are add-members and remove-members methods in gcloud.
+        The size of this map is limited by an "Interconnects per group" quota.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Opaque system-generated token that uniquely identifies the configuration.
+        If provided when patching a configuration in update mode, the provided
+        token must match the current token or the update is rejected. This provides
+        a reliable means of doing read-modify-write (optimistic locking) as
+        described by AIP 154.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the resource. Provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must
+        be a dash, lowercase letter, or digit, except the last character, which
+        cannot be a dash.
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -548,22 +546,16 @@ zone
 >
 <TabItem value="patch">
 
-Patches the specified InterconnectGroup resource with the data included in the request. This method supports PATCH semantics and uses JSON merge patch format and processing rules.
+Patches the specified InterconnectGroup resource with the data included in<br />the request. This method supports PATCH<br />semantics and usesJSON merge<br />patch format and processing rules.
 
 ```sql
 UPDATE google.compute.interconnect_groups
 SET 
-data__kind = '{{ kind }}',
-data__id = '{{ id }}',
-data__creationTimestamp = '{{ creationTimestamp }}',
-data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__selfLink = '{{ selfLink }}',
-data__etag = '{{ etag }}',
-data__interconnects = '{{ interconnects }}',
 data__intent = '{{ intent }}',
-data__physicalStructure = '{{ physicalStructure }}',
-data__configured = '{{ configured }}'
+data__description = '{{ description }}',
+data__interconnects = '{{ interconnects }}',
+data__etag = '{{ etag }}',
+data__name = '{{ name }}'
 WHERE 
 project = '{{ project }}' --required
 AND interconnectGroup = '{{ interconnectGroup }}' --required
@@ -577,6 +569,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,

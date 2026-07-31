@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>agents_generative_settings</co
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>agents_generative_settings</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="agents_generative_settings" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dialogflow.agents_generative_settings" /></td></tr>
 </tbody></table>
@@ -51,32 +52,32 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Format: `projects//locations//agents//generativeSettings`.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="fallbackSettings" /></td>
     <td><code>object</code></td>
-    <td>Settings for Generative Fallback. (id: GoogleCloudDialogflowCxV3GenerativeSettingsFallbackSettings)</td>
+    <td> (id: GoogleCloudDialogflowCxV3GenerativeSettingsFallbackSettings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="generativeSafetySettings" /></td>
     <td><code>object</code></td>
-    <td>Settings for Generative Safety. (id: GoogleCloudDialogflowCxV3SafetySettings)</td>
+    <td> (id: GoogleCloudDialogflowCxV3SafetySettings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="knowledgeConnectorSettings" /></td>
     <td><code>object</code></td>
-    <td>Settings for knowledge connector. (id: GoogleCloudDialogflowCxV3GenerativeSettingsKnowledgeConnectorSettings)</td>
+    <td> (id: GoogleCloudDialogflowCxV3GenerativeSettingsKnowledgeConnectorSettings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="languageCode" /></td>
     <td><code>string</code></td>
-    <td>Language for this settings.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="llmModelSettings" /></td>
     <td><code>object</code></td>
-    <td>LLM model settings. (id: GoogleCloudDialogflowCxV3LlmModelSettings)</td>
+    <td> (id: GoogleCloudDialogflowCxV3LlmModelSettings)</td>
 </tr>
 </tbody>
 </table>
@@ -103,14 +104,14 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
     <td><a href="#parameter-languageCode"><code>languageCode</code></a></td>
-    <td>Gets the generative settings for the agent.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_update_generative_settings"><CopyableCode code="projects_locations_agents_update_generative_settings" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates the generative settings for the agent.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -166,7 +167,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="projects_locations_agents_get_generative_settings">
 
-Gets the generative settings for the agent.
+Successful response
 
 ```sql
 SELECT
@@ -197,17 +198,17 @@ AND languageCode = '{{ languageCode }}'
 >
 <TabItem value="projects_locations_agents_update_generative_settings">
 
-Updates the generative settings for the agent.
+No description available.
 
 ```sql
 UPDATE google.dialogflow.agents_generative_settings
 SET 
-data__name = '{{ name }}',
-data__fallbackSettings = '{{ fallbackSettings }}',
-data__generativeSafetySettings = '{{ generativeSafetySettings }}',
 data__knowledgeConnectorSettings = '{{ knowledgeConnectorSettings }}',
+data__generativeSafetySettings = '{{ generativeSafetySettings }}',
+data__fallbackSettings = '{{ fallbackSettings }}',
+data__llmModelSettings = '{{ llmModelSettings }}',
 data__languageCode = '{{ languageCode }}',
-data__llmModelSettings = '{{ llmModelSettings }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

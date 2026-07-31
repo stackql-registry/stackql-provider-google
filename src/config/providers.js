@@ -107,7 +107,10 @@ export const providerConfig = {
       'fcm',
       'fcmdata',
       'testing',
-      'toolresults'      
+      'toolresults',
+      'poly',
+      'area120tables',
+      'datalabeling'
     ],
     excludedServiceNamePattern: '^firebase($|.*)',
     requiredScopes: ['https://www.googleapis.com/auth/cloud-platform'],

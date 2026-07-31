@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>keys</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>keys</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="keys" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apikeys.keys" /></td></tr>
 </tbody></table>
@@ -52,7 +53,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Output only. The resource name of the key. The `name` has the form: `projects//locations/global/keys/`. For example: `projects/123456867718/locations/global/keys/b7ff1f9f-8275-410a-94dd-3855ee9b5dd2` NOTE: Key is a global resource; hence the only supported value for location is `global`.</td>
+    <td>Identifier. The resource name of the key. The `name` has the form: `projects//locations/global/keys/`. For example: `projects/123456867718/locations/global/keys/b7ff1f9f-8275-410a-94dd-3855ee9b5dd2` NOTE: Key is a global resource; hence the only supported value for location is `global`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="annotations" /></td>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="etag" /></td>
     <td><code>string</code></td>
-    <td>Output only. A checksum computed by the server based on the current value of the Key resource. This may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. See https://google.aip.dev/154.</td>
+    <td>A checksum computed by the server based on the current value of the Key resource. This may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. See https://google.aip.dev/154.</td>
 </tr>
 <tr>
     <td><CopyableCode code="keyString" /></td>
@@ -121,7 +122,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Output only. The resource name of the key. The `name` has the form: `projects//locations/global/keys/`. For example: `projects/123456867718/locations/global/keys/b7ff1f9f-8275-410a-94dd-3855ee9b5dd2` NOTE: Key is a global resource; hence the only supported value for location is `global`.</td>
+    <td>Identifier. The resource name of the key. The `name` has the form: `projects//locations/global/keys/`. For example: `projects/123456867718/locations/global/keys/b7ff1f9f-8275-410a-94dd-3855ee9b5dd2` NOTE: Key is a global resource; hence the only supported value for location is `global`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="annotations" /></td>
@@ -146,7 +147,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="etag" /></td>
     <td><code>string</code></td>
-    <td>Output only. A checksum computed by the server based on the current value of the Key resource. This may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. See https://google.aip.dev/154.</td>
+    <td>A checksum computed by the server based on the current value of the Key resource. This may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. See https://google.aip.dev/154.</td>
 </tr>
 <tr>
     <td><CopyableCode code="keyString" /></td>
@@ -388,19 +389,23 @@ Creates a new API key. NOTE: Key is a global resource; hence the only supported 
 
 ```sql
 INSERT INTO google.apikeys.keys (
-data__displayName,
 data__serviceAccountEmail,
+data__name,
+data__displayName,
 data__annotations,
 data__restrictions,
+data__etag,
 projectsId,
 locationsId,
 keyId
 )
 SELECT 
-'{{ displayName }}',
 '{{ serviceAccountEmail }}',
+'{{ name }}',
+'{{ displayName }}',
 '{{ annotations }}',
 '{{ restrictions }}',
+'{{ etag }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ keyId }}'
@@ -415,39 +420,59 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: keys
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the keys resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the keys resource.
-    - name: displayName
-      value: string
-      description: >
-        Human-readable display name of this key that you can modify. The maximum length is 63 characters.
-        
     - name: serviceAccountEmail
-      value: string
-      description: >
+      value: "{{ serviceAccountEmail }}"
+      description: |
         Optional. The email address of [the service account](https://cloud.google.com/iam/docs/service-accounts) the key is bound to.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the key. The \`name\` has the form: \`projects//locations/global/keys/\`. For example: \`projects/123456867718/locations/global/keys/b7ff1f9f-8275-410a-94dd-3855ee9b5dd2\` NOTE: Key is a global resource; hence the only supported value for location is \`global\`.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Human-readable display name of this key that you can modify. The maximum length is 63 characters.
     - name: annotations
-      value: object
-      description: >
+      value: "{{ annotations }}"
+      description: |
         Annotations is an unstructured key-value map stored with a policy that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects.
-        
     - name: restrictions
-      value: object
-      description: >
+      description: |
         Key restrictions.
-        
+      value:
+        browserKeyRestrictions:
+          allowedReferrers:
+            - "{{ allowedReferrers }}"
+        apiTargets:
+          - service: "{{ service }}"
+            methods: "{{ methods }}"
+        serverKeyRestrictions:
+          allowedIps:
+            - "{{ allowedIps }}"
+        iosKeyRestrictions:
+          allowedBundleIds:
+            - "{{ allowedBundleIds }}"
+        androidKeyRestrictions:
+          allowedApplications:
+            - packageName: "{{ packageName }}"
+              sha1Fingerprint: "{{ sha1Fingerprint }}"
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        A checksum computed by the server based on the current value of the Key resource. This may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. See https://google.aip.dev/154.
     - name: keyId
-      value: string
-```
+      value: "{{ keyId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -467,10 +492,12 @@ Patches the modifiable fields of an API key. The key string of the API key isn't
 ```sql
 UPDATE google.apikeys.keys
 SET 
-data__displayName = '{{ displayName }}',
 data__serviceAccountEmail = '{{ serviceAccountEmail }}',
+data__name = '{{ name }}',
+data__displayName = '{{ displayName }}',
 data__annotations = '{{ annotations }}',
-data__restrictions = '{{ restrictions }}'
+data__restrictions = '{{ restrictions }}',
+data__etag = '{{ etag }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

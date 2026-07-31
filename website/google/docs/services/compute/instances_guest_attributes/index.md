@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>instances_guest_attributes</co
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>instances_guest_attributes</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="instances_guest_attributes" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.instances_guest_attributes" /></td></tr>
 </tbody></table>
@@ -51,7 +52,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of the resource. Always compute#guestAttributes for guest attributes entry. (default: compute#guestAttributes)</td>
+    <td>Output only. [Output Only] Type of the resource. Alwayscompute#guestAttributes for guest attributes entry. (default: compute#guestAttributes)</td>
 </tr>
 <tr>
     <td><CopyableCode code="queryPath" /></td>
@@ -61,12 +62,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="queryValue" /></td>
     <td><code>object</code></td>
-    <td>[Output Only] The value of the requested queried path. (id: GuestAttributesValue)</td>
+    <td>Output only. [Output Only] The value of the requested queried path. (id: GuestAttributesValue)</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for this resource.</td>
+    <td>Output only. [Output Only] Server-defined URL for this resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="variableKey" /></td>
@@ -76,7 +77,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="variableValue" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The value found for the requested key.</td>
+    <td>Output only. [Output Only] The value found for the requested key.</td>
 </tr>
 </tbody>
 </table>

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>utilization_reports</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>utilization_reports</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="utilization_reports" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.vmmigration.utilization_reports" /></td></tr>
 </tbody></table>
@@ -67,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>Output only. Provides details on the state of the report in case of an error. (id: Status)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: Status)</td>
 </tr>
 <tr>
     <td><CopyableCode code="frameEndTime" /></td>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the report.</td>
+    <td>Output only. Current state of the report. (STATE_UNSPECIFIED, CREATING, SUCCEEDED, FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateTime" /></td>
@@ -87,7 +88,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="timeFrame" /></td>
     <td><code>string</code></td>
-    <td>Time frame of the report.</td>
+    <td>Time frame of the report. (TIME_FRAME_UNSPECIFIED, WEEK, MONTH, YEAR)</td>
 </tr>
 <tr>
     <td><CopyableCode code="vmCount" /></td>
@@ -131,7 +132,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>Output only. Provides details on the state of the report in case of an error. (id: Status)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: Status)</td>
 </tr>
 <tr>
     <td><CopyableCode code="frameEndTime" /></td>
@@ -141,7 +142,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the report.</td>
+    <td>Output only. Current state of the report. (STATE_UNSPECIFIED, CREATING, SUCCEEDED, FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateTime" /></td>
@@ -151,7 +152,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="timeFrame" /></td>
     <td><code>string</code></td>
-    <td>Time frame of the report.</td>
+    <td>Time frame of the report. (TIME_FRAME_UNSPECIFIED, WEEK, MONTH, YEAR)</td>
 </tr>
 <tr>
     <td><CopyableCode code="vmCount" /></td>
@@ -194,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a></td>
-    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists Utilization Reports of the given Source.</td>
 </tr>
 <tr>
@@ -339,11 +340,11 @@ FROM google.vmmigration.utilization_reports
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND sourcesId = '{{ sourcesId }}' -- required
-AND view = '{{ view }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
+AND view = '{{ view }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -365,9 +366,9 @@ Creates a new UtilizationReport.
 
 ```sql
 INSERT INTO google.vmmigration.utilization_reports (
+data__vms,
 data__displayName,
 data__timeFrame,
-data__vms,
 projectsId,
 locationsId,
 sourcesId,
@@ -375,9 +376,9 @@ utilizationReportId,
 requestId
 )
 SELECT 
+'{{ vms }}',
 '{{ displayName }}',
 '{{ timeFrame }}',
-'{{ vms }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ sourcesId }}',
@@ -394,40 +395,61 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: utilization_reports
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the utilization_reports resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the utilization_reports resource.
     - name: sourcesId
-      value: string
+      value: "{{ sourcesId }}"
       description: Required parameter for the utilization_reports resource.
-    - name: displayName
-      value: string
-      description: >
-        The report display name, as assigned by the user.
-        
-    - name: timeFrame
-      value: string
-      description: >
-        Time frame of the report.
-        
-      valid_values: ['TIME_FRAME_UNSPECIFIED', 'WEEK', 'MONTH', 'YEAR']
     - name: vms
-      value: array
-      description: >
+      description: |
         List of utilization information per VM. When sent as part of the request, the "vm_id" field is used in order to specify which VMs to include in the report. In that case all other fields are ignored.
-        
+      value:
+        - vmwareVmDetails:
+            memoryMb: {{ memoryMb }}
+            vmId: "{{ vmId }}"
+            powerState: "{{ powerState }}"
+            committedStorageMb: "{{ committedStorageMb }}"
+            datacenterDescription: "{{ datacenterDescription }}"
+            displayName: "{{ displayName }}"
+            bootOption: "{{ bootOption }}"
+            datacenterId: "{{ datacenterId }}"
+            cpuCount: {{ cpuCount }}
+            guestDescription: "{{ guestDescription }}"
+            uuid: "{{ uuid }}"
+            architecture: "{{ architecture }}"
+            diskCount: {{ diskCount }}
+          utilization:
+            cpuMaxPercent: {{ cpuMaxPercent }}
+            memoryMaxPercent: {{ memoryMaxPercent }}
+            memoryAveragePercent: {{ memoryAveragePercent }}
+            diskIoRateAverageKbps: "{{ diskIoRateAverageKbps }}"
+            networkThroughputAverageKbps: "{{ networkThroughputAverageKbps }}"
+            cpuAveragePercent: {{ cpuAveragePercent }}
+            diskIoRateMaxKbps: "{{ diskIoRateMaxKbps }}"
+            networkThroughputMaxKbps: "{{ networkThroughputMaxKbps }}"
+          vmId: "{{ vmId }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        The report display name, as assigned by the user.
+    - name: timeFrame
+      value: "{{ timeFrame }}"
+      description: |
+        Time frame of the report.
+      valid_values: ['TIME_FRAME_UNSPECIFIED', 'WEEK', 'MONTH', 'YEAR']
     - name: utilizationReportId
-      value: string
+      value: "{{ utilizationReportId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

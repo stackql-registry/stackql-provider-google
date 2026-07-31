@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>release_configs</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>release_configs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="release_configs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataform.release_configs" /></td></tr>
 </tbody></table>
@@ -341,26 +342,26 @@ Creates a new ReleaseConfig in a given Repository.
 
 ```sql
 INSERT INTO google.dataform.release_configs (
-data__releaseCompilationResult,
-data__timeZone,
-data__cronSchedule,
 data__name,
-data__disabled,
+data__releaseCompilationResult,
 data__gitCommitish,
+data__cronSchedule,
+data__disabled,
 data__codeCompilationConfig,
+data__timeZone,
 projectsId,
 locationsId,
 repositoriesId,
 releaseConfigId
 )
 SELECT 
-'{{ releaseCompilationResult }}',
-'{{ timeZone }}',
-'{{ cronSchedule }}',
 '{{ name }}',
-{{ disabled }},
+'{{ releaseCompilationResult }}',
 '{{ gitCommitish }}',
+'{{ cronSchedule }}',
+{{ disabled }},
 '{{ codeCompilationConfig }}',
+'{{ timeZone }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ repositoriesId }}',
@@ -380,57 +381,62 @@ timeZone
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: release_configs
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the release_configs resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the release_configs resource.
     - name: repositoriesId
-      value: string
+      value: "{{ repositoriesId }}"
       description: Required parameter for the release_configs resource.
-    - name: releaseCompilationResult
-      value: string
-      description: >
-        Optional. The name of the currently released compilation result for this release config. This value is updated when a compilation result is automatically created from this release config (using cron_schedule), or when this resource is updated by API call (perhaps to roll back to an earlier release). The compilation result must have been created using this release config. Must be in the format `projects/*/locations/*/repositories/*/compilationResults/*`.
-        
-    - name: timeZone
-      value: string
-      description: >
-        Optional. Specifies the time zone to be used when interpreting cron_schedule. Must be a time zone name from the time zone database (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). If left unspecified, the default is UTC.
-        
-    - name: cronSchedule
-      value: string
-      description: >
-        Optional. Optional schedule (in cron format) for automatic creation of compilation results.
-        
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Identifier. The release config's name.
-        
-    - name: disabled
-      value: boolean
-      description: >
-        Optional. Disables automatic creation of compilation results.
-        
+    - name: releaseCompilationResult
+      value: "{{ releaseCompilationResult }}"
+      description: |
+        Optional. The name of the currently released compilation result for this release config. This value is updated when a compilation result is automatically created from this release config (using cron_schedule), or when this resource is updated by API call (perhaps to roll back to an earlier release). The compilation result must have been created using this release config. Must be in the format \`projects/*/locations/*/repositories/*/compilationResults/*\`.
     - name: gitCommitish
-      value: string
-      description: >
-        Required. Git commit/tag/branch name at which the repository should be compiled. Must exist in the remote repository. Examples: - a commit SHA: `12ade345` - a tag: `tag1` - a branch name: `branch1`
-        
+      value: "{{ gitCommitish }}"
+      description: |
+        Required. Git commit/tag/branch name at which the repository should be compiled. Must exist in the remote repository. Examples: - a commit SHA: \`12ade345\` - a tag: \`tag1\` - a branch name: \`branch1\`
+    - name: cronSchedule
+      value: "{{ cronSchedule }}"
+      description: |
+        Optional. Optional schedule (in cron format) for automatic creation of compilation results.
+    - name: disabled
+      value: {{ disabled }}
+      description: |
+        Optional. Disables automatic creation of compilation results.
     - name: codeCompilationConfig
-      value: object
-      description: >
-        Optional. If set, fields of `code_compilation_config` override the default compilation settings that are specified in dataform.json.
-        
+      description: |
+        Optional. If set, fields of \`code_compilation_config\` override the default compilation settings that are specified in dataform.json.
+      value:
+        assertionSchema: "{{ assertionSchema }}"
+        defaultLocation: "{{ defaultLocation }}"
+        defaultDatabase: "{{ defaultDatabase }}"
+        vars: "{{ vars }}"
+        defaultNotebookRuntimeOptions:
+          aiPlatformNotebookRuntimeTemplate: "{{ aiPlatformNotebookRuntimeTemplate }}"
+          gcsOutputBucket: "{{ gcsOutputBucket }}"
+        schemaSuffix: "{{ schemaSuffix }}"
+        tablePrefix: "{{ tablePrefix }}"
+        databaseSuffix: "{{ databaseSuffix }}"
+        defaultSchema: "{{ defaultSchema }}"
+        builtinAssertionNamePrefix: "{{ builtinAssertionNamePrefix }}"
+    - name: timeZone
+      value: "{{ timeZone }}"
+      description: |
+        Optional. Specifies the time zone to be used when interpreting cron_schedule. Must be a time zone name from the time zone database (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). If left unspecified, the default is UTC.
     - name: releaseConfigId
-      value: string
-```
+      value: "{{ releaseConfigId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -450,13 +456,13 @@ Updates a single ReleaseConfig. **Note:** *This method does not fully implement 
 ```sql
 UPDATE google.dataform.release_configs
 SET 
-data__releaseCompilationResult = '{{ releaseCompilationResult }}',
-data__timeZone = '{{ timeZone }}',
-data__cronSchedule = '{{ cronSchedule }}',
 data__name = '{{ name }}',
-data__disabled = {{ disabled }},
+data__releaseCompilationResult = '{{ releaseCompilationResult }}',
 data__gitCommitish = '{{ gitCommitish }}',
-data__codeCompilationConfig = '{{ codeCompilationConfig }}'
+data__cronSchedule = '{{ cronSchedule }}',
+data__disabled = {{ disabled }},
+data__codeCompilationConfig = '{{ codeCompilationConfig }}',
+data__timeZone = '{{ timeZone }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

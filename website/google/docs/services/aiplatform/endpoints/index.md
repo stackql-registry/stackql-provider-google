@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>endpoints</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>endpoints</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="endpoints" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.endpoints" /></td></tr>
 </tbody></table>
@@ -52,7 +53,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Output only. The resource name of the Endpoint.</td>
+    <td>Identifier. The resource name of the Endpoint.</td>
 </tr>
 <tr>
     <td><CopyableCode code="clientConnectionConfig" /></td>
@@ -176,7 +177,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Output only. The resource name of the Endpoint.</td>
+    <td>Identifier. The resource name of the Endpoint.</td>
 </tr>
 <tr>
     <td><CopyableCode code="clientConnectionConfig" /></td>
@@ -314,7 +315,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-gdcZone"><code>gdcZone</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-gdcZone"><code>gdcZone</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists Endpoints in a Location.</td>
 </tr>
 <tr>
@@ -325,18 +326,18 @@ The following methods are available for this resource:
     <td>Creates an Endpoint.</td>
 </tr>
 <tr>
-    <td><a href="#patch"><CopyableCode code="patch" /></a></td>
-    <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-endpointsId"><code>endpointsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates an Endpoint.</td>
-</tr>
-<tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-endpointsId"><code>endpointsId</code></a></td>
     <td></td>
     <td>Updates an Endpoint with a long running operation.</td>
+</tr>
+<tr>
+    <td><a href="#patch"><CopyableCode code="patch" /></a></td>
+    <td><CopyableCode code="update" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-endpointsId"><code>endpointsId</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td>Updates an Endpoint.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
@@ -346,39 +347,11 @@ The following methods are available for this resource:
     <td>Deletes an Endpoint.</td>
 </tr>
 <tr>
-    <td><a href="#compute_tokens"><CopyableCode code="compute_tokens" /></a></td>
+    <td><a href="#fetch_predict_operation"><CopyableCode code="fetch_predict_operation" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-endpointsId"><code>endpointsId</code></a></td>
+    <td><a href="#parameter-endpointsId"><code>endpointsId</code></a></td>
     <td></td>
-    <td>Return a list of tokens based on the input text.</td>
-</tr>
-<tr>
-    <td><a href="#predict_long_running"><CopyableCode code="predict_long_running" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-endpointsId"><code>endpointsId</code></a></td>
-    <td></td>
-    <td></td>
-</tr>
-<tr>
-    <td><a href="#count_tokens"><CopyableCode code="count_tokens" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-endpointsId"><code>endpointsId</code></a></td>
-    <td></td>
-    <td>Perform a token counting.</td>
-</tr>
-<tr>
-    <td><a href="#generate_content"><CopyableCode code="generate_content" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-endpointsId"><code>endpointsId</code></a></td>
-    <td></td>
-    <td>Generate content with multimodal inputs.</td>
-</tr>
-<tr>
-    <td><a href="#predict"><CopyableCode code="predict" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-endpointsId"><code>endpointsId</code></a></td>
-    <td></td>
-    <td>Perform an online prediction.</td>
+    <td>Fetch an asynchronous online prediction operation.</td>
 </tr>
 <tr>
     <td><a href="#stream_generate_content"><CopyableCode code="stream_generate_content" /></a></td>
@@ -388,25 +361,46 @@ The following methods are available for this resource:
     <td>Generate content with multimodal inputs with streaming support.</td>
 </tr>
 <tr>
-    <td><a href="#fetch_predict_operation"><CopyableCode code="fetch_predict_operation" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-endpointsId"><code>endpointsId</code></a></td>
-    <td></td>
-    <td>Fetch an asynchronous online prediction operation.</td>
-</tr>
-<tr>
-    <td><a href="#direct_predict"><CopyableCode code="direct_predict" /></a></td>
+    <td><a href="#predict"><CopyableCode code="predict" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-endpointsId"><code>endpointsId</code></a></td>
     <td></td>
-    <td>Perform an unary online prediction request to a gRPC model server for Vertex first-party products and frameworks.</td>
+    <td></td>
 </tr>
 <tr>
-    <td><a href="#direct_raw_predict"><CopyableCode code="direct_raw_predict" /></a></td>
+    <td><a href="#generate_content"><CopyableCode code="generate_content" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-endpointsId"><code>endpointsId</code></a></td>
     <td></td>
-    <td>Perform an unary online prediction request to a gRPC model server for custom containers.</td>
+    <td>Generate content with multimodal inputs.</td>
+</tr>
+<tr>
+    <td><a href="#compute_tokens"><CopyableCode code="compute_tokens" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-endpointsId"><code>endpointsId</code></a></td>
+    <td></td>
+    <td>Return a list of tokens based on the input text.</td>
+</tr>
+<tr>
+    <td><a href="#count_tokens"><CopyableCode code="count_tokens" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-endpointsId"><code>endpointsId</code></a></td>
+    <td></td>
+    <td>Perform a token counting.</td>
+</tr>
+<tr>
+    <td><a href="#predict_long_running"><CopyableCode code="predict_long_running" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-endpointsId"><code>endpointsId</code></a></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td><a href="#deploy_model"><CopyableCode code="deploy_model" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-endpointsId"><code>endpointsId</code></a></td>
+    <td></td>
+    <td>Deploys a Model into this Endpoint, creating a DeployedModel within it.</td>
 </tr>
 <tr>
     <td><a href="#stream_raw_predict"><CopyableCode code="stream_raw_predict" /></a></td>
@@ -416,32 +410,11 @@ The following methods are available for this resource:
     <td>Perform a streaming online prediction with an arbitrary HTTP payload.</td>
 </tr>
 <tr>
-    <td><a href="#raw_predict"><CopyableCode code="raw_predict" /></a></td>
+    <td><a href="#direct_raw_predict"><CopyableCode code="direct_raw_predict" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-endpointsId"><code>endpointsId</code></a></td>
     <td></td>
-    <td>Perform an online prediction with an arbitrary HTTP payload. The response includes the following HTTP headers: * `X-Vertex-AI-Endpoint-Id`: ID of the Endpoint that served this prediction. * `X-Vertex-AI-Deployed-Model-Id`: ID of the Endpoint's DeployedModel that served this prediction.</td>
-</tr>
-<tr>
-    <td><a href="#server_streaming_predict"><CopyableCode code="server_streaming_predict" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-endpointsId"><code>endpointsId</code></a></td>
-    <td></td>
-    <td>Perform a server-side streaming online prediction request for Vertex LLM streaming.</td>
-</tr>
-<tr>
-    <td><a href="#mutate_deployed_model"><CopyableCode code="mutate_deployed_model" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-endpointsId"><code>endpointsId</code></a></td>
-    <td></td>
-    <td>Updates an existing deployed model. Updatable fields include `min_replica_count`, `max_replica_count`, `required_replica_count`, `autoscaling_metric_specs`, `disable_container_logging` (v1 only), and `enable_container_logging` (v1beta1 only).</td>
-</tr>
-<tr>
-    <td><a href="#explain"><CopyableCode code="explain" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-endpointsId"><code>endpointsId</code></a></td>
-    <td></td>
-    <td>Perform an online explanation. If deployed_model_id is specified, the corresponding DeployModel must have explanation_spec populated. If deployed_model_id is not specified, all DeployedModels must have explanation_spec populated.</td>
+    <td>Perform an unary online prediction request to a gRPC model server for custom containers.</td>
 </tr>
 <tr>
     <td><a href="#undeploy_model"><CopyableCode code="undeploy_model" /></a></td>
@@ -451,11 +424,39 @@ The following methods are available for this resource:
     <td>Undeploys a Model from an Endpoint, removing a DeployedModel from it, and freeing all resources it's using.</td>
 </tr>
 <tr>
-    <td><a href="#deploy_model"><CopyableCode code="deploy_model" /></a></td>
+    <td><a href="#explain"><CopyableCode code="explain" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-endpointsId"><code>endpointsId</code></a></td>
     <td></td>
-    <td>Deploys a Model into this Endpoint, creating a DeployedModel within it.</td>
+    <td>Perform an online explanation. If deployed_model_id is specified, the corresponding DeployModel must have explanation_spec populated. If deployed_model_id is not specified, all DeployedModels must have explanation_spec populated.</td>
+</tr>
+<tr>
+    <td><a href="#raw_predict"><CopyableCode code="raw_predict" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-endpointsId"><code>endpointsId</code></a></td>
+    <td></td>
+    <td>Perform an online prediction with an arbitrary HTTP payload. The response includes the following HTTP headers: * `X-Vertex-AI-Endpoint-Id`: ID of the Endpoint that served this prediction. * `X-Vertex-AI-Deployed-Model-Id`: ID of the Endpoint's DeployedModel that served this prediction.</td>
+</tr>
+<tr>
+    <td><a href="#direct_predict"><CopyableCode code="direct_predict" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-endpointsId"><code>endpointsId</code></a></td>
+    <td></td>
+    <td>Perform an unary online prediction request to a gRPC model server for Vertex first-party products and frameworks.</td>
+</tr>
+<tr>
+    <td><a href="#mutate_deployed_model"><CopyableCode code="mutate_deployed_model" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-endpointsId"><code>endpointsId</code></a></td>
+    <td></td>
+    <td>Updates an existing deployed model. Updatable fields include `min_replica_count`, `max_replica_count`, `required_replica_count`, `autoscaling_metric_specs`, `disable_container_logging` (v1 only), and `enable_container_logging` (v1beta1 only).</td>
+</tr>
+<tr>
+    <td><a href="#server_streaming_predict"><CopyableCode code="server_streaming_predict" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-endpointsId"><code>endpointsId</code></a></td>
+    <td></td>
+    <td>Perform a server-side streaming online prediction request for Vertex LLM streaming.</td>
 </tr>
 </tbody>
 </table>
@@ -606,12 +607,12 @@ updateTime
 FROM google.aiplatform.endpoints
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 AND readMask = '{{ readMask }}'
-AND gdcZone = '{{ gdcZone }}'
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND gdcZone = '{{ gdcZone }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -633,39 +634,41 @@ Creates an Endpoint.
 
 ```sql
 INSERT INTO google.aiplatform.endpoints (
-data__gdcConfig,
-data__displayName,
-data__enablePrivateServiceConnect,
-data__etag,
-data__genAiAdvancedFeaturesConfig,
-data__privateServiceConnectConfig,
 data__network,
-data__trafficSplit,
+data__enablePrivateServiceConnect,
+data__privateServiceConnectConfig,
 data__predictRequestResponseLoggingConfig,
-data__description,
-data__clientConnectionConfig,
 data__labels,
 data__encryptionSpec,
+data__name,
+data__clientConnectionConfig,
+data__displayName,
+data__etag,
 data__dedicatedEndpointEnabled,
+data__trafficSplit,
+data__description,
+data__genAiAdvancedFeaturesConfig,
+data__gdcConfig,
 projectsId,
 locationsId,
 endpointId
 )
 SELECT 
-'{{ gdcConfig }}',
-'{{ displayName }}',
-{{ enablePrivateServiceConnect }},
-'{{ etag }}',
-'{{ genAiAdvancedFeaturesConfig }}',
-'{{ privateServiceConnectConfig }}',
 '{{ network }}',
-'{{ trafficSplit }}',
+{{ enablePrivateServiceConnect }},
+'{{ privateServiceConnectConfig }}',
 '{{ predictRequestResponseLoggingConfig }}',
-'{{ description }}',
-'{{ clientConnectionConfig }}',
 '{{ labels }}',
 '{{ encryptionSpec }}',
+'{{ name }}',
+'{{ clientConnectionConfig }}',
+'{{ displayName }}',
+'{{ etag }}',
 {{ dedicatedEndpointEnabled }},
+'{{ trafficSplit }}',
+'{{ description }}',
+'{{ genAiAdvancedFeaturesConfig }}',
+'{{ gdcConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ endpointId }}'
@@ -680,89 +683,99 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: endpoints
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the endpoints resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the endpoints resource.
-    - name: gdcConfig
-      value: object
-      description: >
-        Configures the Google Distributed Cloud (GDC) environment for online prediction. Only set this field when the Endpoint is to be deployed in a GDC environment.
-        
-    - name: displayName
-      value: string
-      description: >
-        Required. The display name of the Endpoint. The name can be up to 128 characters long and can consist of any UTF-8 characters.
-        
-    - name: enablePrivateServiceConnect
-      value: boolean
-      description: >
-        Deprecated: If true, expose the Endpoint via private service connect. Only one of the fields, network or enable_private_service_connect, can be set.
-        
-    - name: etag
-      value: string
-      description: >
-        Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
-        
-    - name: genAiAdvancedFeaturesConfig
-      value: object
-      description: >
-        Optional. Configuration for GenAiAdvancedFeatures. If the endpoint is serving GenAI models, advanced features like native RAG integration can be configured. Currently, only Model Garden models are supported.
-        
-    - name: privateServiceConnectConfig
-      value: object
-      description: >
-        Optional. Configuration for private service connect. network and private_service_connect_config are mutually exclusive.
-        
     - name: network
-      value: string
-      description: >
-        Optional. The full name of the Google Compute Engine [network](https://cloud.google.com//compute/docs/networks-and-firewalls#networks) to which the Endpoint should be peered. Private services access must already be configured for the network. If left unspecified, the Endpoint is not peered with any network. Only one of the fields, network or enable_private_service_connect, can be set. [Format](https://cloud.google.com/compute/docs/reference/rest/v1/networks/insert): `projects/{project}/global/networks/{network}`. Where `{project}` is a project number, as in `12345`, and `{network}` is network name.
-        
-    - name: trafficSplit
-      value: object
-      description: >
-        A map from a DeployedModel's ID to the percentage of this Endpoint's traffic that should be forwarded to that DeployedModel. If a DeployedModel's ID is not listed in this map, then it receives no traffic. The traffic percentage values must add up to 100, or map must be empty if the Endpoint is to not accept any traffic at a moment.
-        
+      value: "{{ network }}"
+      description: |
+        Optional. The full name of the Google Compute Engine [network](https://cloud.google.com//compute/docs/networks-and-firewalls#networks) to which the Endpoint should be peered. Private services access must already be configured for the network. If left unspecified, the Endpoint is not peered with any network. Only one of the fields, network or enable_private_service_connect, can be set. [Format](https://cloud.google.com/compute/docs/reference/rest/v1/networks/insert): \`projects/{project}/global/networks/{network}\`. Where \`{project}\` is a project number, as in \`12345\`, and \`{network}\` is network name.
+    - name: enablePrivateServiceConnect
+      value: {{ enablePrivateServiceConnect }}
+      description: |
+        Deprecated: If true, expose the Endpoint via private service connect. Only one of the fields, network or enable_private_service_connect, can be set.
+    - name: privateServiceConnectConfig
+      description: |
+        Optional. Configuration for private service connect. network and private_service_connect_config are mutually exclusive.
+      value:
+        enablePrivateServiceConnect: {{ enablePrivateServiceConnect }}
+        projectAllowlist:
+          - "{{ projectAllowlist }}"
+        serviceAttachment: "{{ serviceAttachment }}"
+        pscAutomationConfigs:
+          - network: "{{ network }}"
+            forwardingRule: "{{ forwardingRule }}"
+            state: "{{ state }}"
+            errorMessage: "{{ errorMessage }}"
+            ipAddress: "{{ ipAddress }}"
+            projectId: "{{ projectId }}"
     - name: predictRequestResponseLoggingConfig
-      value: object
-      description: >
+      description: |
         Configures the request-response logging for online prediction.
-        
-    - name: description
-      value: string
-      description: >
-        The description of the Endpoint.
-        
-    - name: clientConnectionConfig
-      value: object
-      description: >
-        Configurations that are applied to the endpoint for online prediction.
-        
+      value:
+        bigqueryDestination:
+          outputUri: "{{ outputUri }}"
+        samplingRate: {{ samplingRate }}
+        enabled: {{ enabled }}
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         The labels with user-defined metadata to organize your Endpoints. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
-        
     - name: encryptionSpec
-      value: object
-      description: >
+      description: |
         Customer-managed encryption key spec for an Endpoint. If set, this Endpoint and all sub-resources of this Endpoint will be secured by this key.
-        
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the Endpoint.
+    - name: clientConnectionConfig
+      description: |
+        Configurations that are applied to the endpoint for online prediction.
+      value:
+        inferenceTimeout: "{{ inferenceTimeout }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. The display name of the Endpoint. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
     - name: dedicatedEndpointEnabled
-      value: boolean
-      description: >
+      value: {{ dedicatedEndpointEnabled }}
+      description: |
         If true, the endpoint will be exposed through a dedicated DNS [Endpoint.dedicated_endpoint_dns]. Your request to the dedicated DNS will be isolated from other users' traffic and will have better performance and reliability. Note: Once you enabled dedicated endpoint, you won't be able to send request to the shared DNS {region}-aiplatform.googleapis.com. The limitation will be removed soon.
-        
+    - name: trafficSplit
+      value: "{{ trafficSplit }}"
+      description: |
+        A map from a DeployedModel's ID to the percentage of this Endpoint's traffic that should be forwarded to that DeployedModel. If a DeployedModel's ID is not listed in this map, then it receives no traffic. The traffic percentage values must add up to 100, or map must be empty if the Endpoint is to not accept any traffic at a moment.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        The description of the Endpoint.
+    - name: genAiAdvancedFeaturesConfig
+      description: |
+        Optional. Configuration for GenAiAdvancedFeatures. If the endpoint is serving GenAI models, advanced features like native RAG integration can be configured. Currently, only Model Garden models are supported.
+      value:
+        ragConfig:
+          enableRag: {{ enableRag }}
+    - name: gdcConfig
+      description: |
+        Configures the Google Distributed Cloud (GDC) environment for online prediction. Only set this field when the Endpoint is to be deployed in a GDC environment.
+      value:
+        zone: "{{ zone }}"
     - name: endpointId
-      value: string
-```
+      value: "{{ endpointId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -770,12 +783,32 @@ response
 ## `UPDATE` examples
 
 <Tabs
-    defaultValue="patch"
+    defaultValue="update"
     values={[
-        { label: 'patch', value: 'patch' },
-        { label: 'update', value: 'update' }
+        { label: 'update', value: 'update' },
+        { label: 'patch', value: 'patch' }
     ]}
 >
+<TabItem value="update">
+
+Updates an Endpoint with a long running operation.
+
+```sql
+UPDATE google.aiplatform.endpoints
+SET 
+data__endpoint = '{{ endpoint }}'
+WHERE 
+projectsId = '{{ projectsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND endpointsId = '{{ endpointsId }}' --required
+RETURNING
+name,
+done,
+error,
+metadata,
+response;
+```
+</TabItem>
 <TabItem value="patch">
 
 Updates an Endpoint.
@@ -783,20 +816,21 @@ Updates an Endpoint.
 ```sql
 UPDATE google.aiplatform.endpoints
 SET 
-data__gdcConfig = '{{ gdcConfig }}',
-data__displayName = '{{ displayName }}',
-data__enablePrivateServiceConnect = {{ enablePrivateServiceConnect }},
-data__etag = '{{ etag }}',
-data__genAiAdvancedFeaturesConfig = '{{ genAiAdvancedFeaturesConfig }}',
-data__privateServiceConnectConfig = '{{ privateServiceConnectConfig }}',
 data__network = '{{ network }}',
-data__trafficSplit = '{{ trafficSplit }}',
+data__enablePrivateServiceConnect = {{ enablePrivateServiceConnect }},
+data__privateServiceConnectConfig = '{{ privateServiceConnectConfig }}',
 data__predictRequestResponseLoggingConfig = '{{ predictRequestResponseLoggingConfig }}',
-data__description = '{{ description }}',
-data__clientConnectionConfig = '{{ clientConnectionConfig }}',
 data__labels = '{{ labels }}',
 data__encryptionSpec = '{{ encryptionSpec }}',
-data__dedicatedEndpointEnabled = {{ dedicatedEndpointEnabled }}
+data__name = '{{ name }}',
+data__clientConnectionConfig = '{{ clientConnectionConfig }}',
+data__displayName = '{{ displayName }}',
+data__etag = '{{ etag }}',
+data__dedicatedEndpointEnabled = {{ dedicatedEndpointEnabled }},
+data__trafficSplit = '{{ trafficSplit }}',
+data__description = '{{ description }}',
+data__genAiAdvancedFeaturesConfig = '{{ genAiAdvancedFeaturesConfig }}',
+data__gdcConfig = '{{ gdcConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -825,26 +859,6 @@ satisfiesPzi,
 satisfiesPzs,
 trafficSplit,
 updateTime;
-```
-</TabItem>
-<TabItem value="update">
-
-Updates an Endpoint with a long running operation.
-
-```sql
-UPDATE google.aiplatform.endpoints
-SET 
-data__endpoint = '{{ endpoint }}'
-WHERE 
-projectsId = '{{ projectsId }}' --required
-AND locationsId = '{{ locationsId }}' --required
-AND endpointsId = '{{ endpointsId }}' --required
-RETURNING
-name,
-done,
-error,
-metadata,
-response;
 ```
 </TabItem>
 </Tabs>
@@ -876,26 +890,106 @@ AND endpointsId = '{{ endpointsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="compute_tokens"
+    defaultValue="fetch_predict_operation"
     values={[
-        { label: 'compute_tokens', value: 'compute_tokens' },
-        { label: 'predict_long_running', value: 'predict_long_running' },
-        { label: 'count_tokens', value: 'count_tokens' },
-        { label: 'generate_content', value: 'generate_content' },
-        { label: 'predict', value: 'predict' },
-        { label: 'stream_generate_content', value: 'stream_generate_content' },
         { label: 'fetch_predict_operation', value: 'fetch_predict_operation' },
-        { label: 'direct_predict', value: 'direct_predict' },
-        { label: 'direct_raw_predict', value: 'direct_raw_predict' },
+        { label: 'stream_generate_content', value: 'stream_generate_content' },
+        { label: 'predict', value: 'predict' },
+        { label: 'generate_content', value: 'generate_content' },
+        { label: 'compute_tokens', value: 'compute_tokens' },
+        { label: 'count_tokens', value: 'count_tokens' },
+        { label: 'predict_long_running', value: 'predict_long_running' },
+        { label: 'deploy_model', value: 'deploy_model' },
         { label: 'stream_raw_predict', value: 'stream_raw_predict' },
-        { label: 'raw_predict', value: 'raw_predict' },
-        { label: 'server_streaming_predict', value: 'server_streaming_predict' },
-        { label: 'mutate_deployed_model', value: 'mutate_deployed_model' },
-        { label: 'explain', value: 'explain' },
+        { label: 'direct_raw_predict', value: 'direct_raw_predict' },
         { label: 'undeploy_model', value: 'undeploy_model' },
-        { label: 'deploy_model', value: 'deploy_model' }
+        { label: 'explain', value: 'explain' },
+        { label: 'raw_predict', value: 'raw_predict' },
+        { label: 'direct_predict', value: 'direct_predict' },
+        { label: 'mutate_deployed_model', value: 'mutate_deployed_model' },
+        { label: 'server_streaming_predict', value: 'server_streaming_predict' }
     ]}
 >
+<TabItem value="fetch_predict_operation">
+
+Fetch an asynchronous online prediction operation.
+
+```sql
+EXEC google.aiplatform.endpoints.fetch_predict_operation 
+@endpointsId='{{ endpointsId }}' --required 
+@@json=
+'{
+"operationName": "{{ operationName }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="stream_generate_content">
+
+Generate content with multimodal inputs with streaming support.
+
+```sql
+EXEC google.aiplatform.endpoints.stream_generate_content 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@endpointsId='{{ endpointsId }}' --required 
+@@json=
+'{
+"systemInstruction": "{{ systemInstruction }}", 
+"tools": "{{ tools }}", 
+"generationConfig": "{{ generationConfig }}", 
+"safetySettings": "{{ safetySettings }}", 
+"contents": "{{ contents }}", 
+"cachedContent": "{{ cachedContent }}", 
+"labels": "{{ labels }}", 
+"toolConfig": "{{ toolConfig }}", 
+"modelArmorConfig": "{{ modelArmorConfig }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="predict">
+
+Successful response
+
+```sql
+EXEC google.aiplatform.endpoints.predict 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@endpointsId='{{ endpointsId }}' --required 
+@@json=
+'{
+"parameters": "{{ parameters }}", 
+"instances": "{{ instances }}", 
+"labels": "{{ labels }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="generate_content">
+
+Generate content with multimodal inputs.
+
+```sql
+EXEC google.aiplatform.endpoints.generate_content 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@endpointsId='{{ endpointsId }}' --required 
+@@json=
+'{
+"systemInstruction": "{{ systemInstruction }}", 
+"tools": "{{ tools }}", 
+"generationConfig": "{{ generationConfig }}", 
+"safetySettings": "{{ safetySettings }}", 
+"contents": "{{ contents }}", 
+"cachedContent": "{{ cachedContent }}", 
+"labels": "{{ labels }}", 
+"toolConfig": "{{ toolConfig }}", 
+"modelArmorConfig": "{{ modelArmorConfig }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="compute_tokens">
 
 Return a list of tokens based on the input text.
@@ -914,23 +1008,6 @@ EXEC google.aiplatform.endpoints.compute_tokens
 ;
 ```
 </TabItem>
-<TabItem value="predict_long_running">
-
-Successful response
-
-```sql
-EXEC google.aiplatform.endpoints.predict_long_running 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@endpointsId='{{ endpointsId }}' --required 
-@@json=
-'{
-"instances": "{{ instances }}", 
-"parameters": "{{ parameters }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="count_tokens">
 
 Perform a token counting.
@@ -942,126 +1019,47 @@ EXEC google.aiplatform.endpoints.count_tokens
 @endpointsId='{{ endpointsId }}' --required 
 @@json=
 '{
-"generationConfig": "{{ generationConfig }}", 
-"tools": "{{ tools }}", 
-"systemInstruction": "{{ systemInstruction }}", 
 "model": "{{ model }}", 
 "contents": "{{ contents }}", 
+"systemInstruction": "{{ systemInstruction }}", 
+"tools": "{{ tools }}", 
+"generationConfig": "{{ generationConfig }}", 
 "instances": "{{ instances }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="generate_content">
+<TabItem value="predict_long_running">
 
-Generate content with multimodal inputs.
-
-```sql
-EXEC google.aiplatform.endpoints.generate_content 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@endpointsId='{{ endpointsId }}' --required 
-@@json=
-'{
-"safetySettings": "{{ safetySettings }}", 
-"generationConfig": "{{ generationConfig }}", 
-"cachedContent": "{{ cachedContent }}", 
-"labels": "{{ labels }}", 
-"tools": "{{ tools }}", 
-"toolConfig": "{{ toolConfig }}", 
-"contents": "{{ contents }}", 
-"modelArmorConfig": "{{ modelArmorConfig }}", 
-"systemInstruction": "{{ systemInstruction }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="predict">
-
-Perform an online prediction.
+Successful response
 
 ```sql
-EXEC google.aiplatform.endpoints.predict 
+EXEC google.aiplatform.endpoints.predict_long_running 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @endpointsId='{{ endpointsId }}' --required 
 @@json=
 '{
 "labels": "{{ labels }}", 
-"parameters": "{{ parameters }}", 
-"instances": "{{ instances }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="stream_generate_content">
-
-Generate content with multimodal inputs with streaming support.
-
-```sql
-EXEC google.aiplatform.endpoints.stream_generate_content 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@endpointsId='{{ endpointsId }}' --required 
-@@json=
-'{
-"safetySettings": "{{ safetySettings }}", 
-"generationConfig": "{{ generationConfig }}", 
-"cachedContent": "{{ cachedContent }}", 
-"labels": "{{ labels }}", 
-"tools": "{{ tools }}", 
-"toolConfig": "{{ toolConfig }}", 
-"contents": "{{ contents }}", 
-"modelArmorConfig": "{{ modelArmorConfig }}", 
-"systemInstruction": "{{ systemInstruction }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="fetch_predict_operation">
-
-Fetch an asynchronous online prediction operation.
-
-```sql
-EXEC google.aiplatform.endpoints.fetch_predict_operation 
-@endpointsId='{{ endpointsId }}' --required 
-@@json=
-'{
-"operationName": "{{ operationName }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="direct_predict">
-
-Perform an unary online prediction request to a gRPC model server for Vertex first-party products and frameworks.
-
-```sql
-EXEC google.aiplatform.endpoints.direct_predict 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@endpointsId='{{ endpointsId }}' --required 
-@@json=
-'{
-"inputs": "{{ inputs }}", 
+"instances": "{{ instances }}", 
 "parameters": "{{ parameters }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="direct_raw_predict">
+<TabItem value="deploy_model">
 
-Perform an unary online prediction request to a gRPC model server for custom containers.
+Deploys a Model into this Endpoint, creating a DeployedModel within it.
 
 ```sql
-EXEC google.aiplatform.endpoints.direct_raw_predict 
+EXEC google.aiplatform.endpoints.deploy_model 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @endpointsId='{{ endpointsId }}' --required 
 @@json=
 '{
-"input": "{{ input }}", 
-"methodName": "{{ methodName }}"
+"deployedModel": "{{ deployedModel }}", 
+"trafficSplit": "{{ trafficSplit }}"
 }'
 ;
 ```
@@ -1082,6 +1080,59 @@ EXEC google.aiplatform.endpoints.stream_raw_predict
 ;
 ```
 </TabItem>
+<TabItem value="direct_raw_predict">
+
+Perform an unary online prediction request to a gRPC model server for custom containers.
+
+```sql
+EXEC google.aiplatform.endpoints.direct_raw_predict 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@endpointsId='{{ endpointsId }}' --required 
+@@json=
+'{
+"methodName": "{{ methodName }}", 
+"input": "{{ input }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="undeploy_model">
+
+Undeploys a Model from an Endpoint, removing a DeployedModel from it, and freeing all resources it's using.
+
+```sql
+EXEC google.aiplatform.endpoints.undeploy_model 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@endpointsId='{{ endpointsId }}' --required 
+@@json=
+'{
+"trafficSplit": "{{ trafficSplit }}", 
+"deployedModelId": "{{ deployedModelId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="explain">
+
+Perform an online explanation. If deployed_model_id is specified, the corresponding DeployModel must have explanation_spec populated. If deployed_model_id is not specified, all DeployedModels must have explanation_spec populated.
+
+```sql
+EXEC google.aiplatform.endpoints.explain 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@endpointsId='{{ endpointsId }}' --required 
+@@json=
+'{
+"instances": "{{ instances }}", 
+"explanationSpecOverride": "{{ explanationSpecOverride }}", 
+"deployedModelId": "{{ deployedModelId }}", 
+"parameters": "{{ parameters }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="raw_predict">
 
 Perform an online prediction with an arbitrary HTTP payload. The response includes the following HTTP headers: * `X-Vertex-AI-Endpoint-Id`: ID of the Endpoint that served this prediction. * `X-Vertex-AI-Deployed-Model-Id`: ID of the Endpoint's DeployedModel that served this prediction.
@@ -1098,12 +1149,12 @@ EXEC google.aiplatform.endpoints.raw_predict
 ;
 ```
 </TabItem>
-<TabItem value="server_streaming_predict">
+<TabItem value="direct_predict">
 
-Perform a server-side streaming online prediction request for Vertex LLM streaming.
+Perform an unary online prediction request to a gRPC model server for Vertex first-party products and frameworks.
 
 ```sql
-EXEC google.aiplatform.endpoints.server_streaming_predict 
+EXEC google.aiplatform.endpoints.direct_predict 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @endpointsId='{{ endpointsId }}' --required 
@@ -1126,61 +1177,25 @@ EXEC google.aiplatform.endpoints.mutate_deployed_model
 @endpointsId='{{ endpointsId }}' --required 
 @@json=
 '{
-"updateMask": "{{ updateMask }}", 
-"deployedModel": "{{ deployedModel }}"
+"deployedModel": "{{ deployedModel }}", 
+"updateMask": "{{ updateMask }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="explain">
+<TabItem value="server_streaming_predict">
 
-Perform an online explanation. If deployed_model_id is specified, the corresponding DeployModel must have explanation_spec populated. If deployed_model_id is not specified, all DeployedModels must have explanation_spec populated.
+Perform a server-side streaming online prediction request for Vertex LLM streaming.
 
 ```sql
-EXEC google.aiplatform.endpoints.explain 
+EXEC google.aiplatform.endpoints.server_streaming_predict 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @endpointsId='{{ endpointsId }}' --required 
 @@json=
 '{
-"explanationSpecOverride": "{{ explanationSpecOverride }}", 
-"parameters": "{{ parameters }}", 
-"deployedModelId": "{{ deployedModelId }}", 
-"instances": "{{ instances }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="undeploy_model">
-
-Undeploys a Model from an Endpoint, removing a DeployedModel from it, and freeing all resources it's using.
-
-```sql
-EXEC google.aiplatform.endpoints.undeploy_model 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@endpointsId='{{ endpointsId }}' --required 
-@@json=
-'{
-"trafficSplit": "{{ trafficSplit }}", 
-"deployedModelId": "{{ deployedModelId }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="deploy_model">
-
-Deploys a Model into this Endpoint, creating a DeployedModel within it.
-
-```sql
-EXEC google.aiplatform.endpoints.deploy_model 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@endpointsId='{{ endpointsId }}' --required 
-@@json=
-'{
-"trafficSplit": "{{ trafficSplit }}", 
-"deployedModel": "{{ deployedModel }}"
+"inputs": "{{ inputs }}", 
+"parameters": "{{ parameters }}"
 }'
 ;
 ```

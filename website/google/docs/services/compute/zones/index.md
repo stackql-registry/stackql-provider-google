@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>zones</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>zones</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="zones" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.zones" /></td></tr>
 </tbody></table>
@@ -32,12 +33,56 @@ Creates, updates, deletes, gets or lists a <code>zones</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="get"
+    defaultValue="list"
     values={[
-        { label: 'get', value: 'get' },
-        { label: 'list', value: 'list' }
+        { label: 'list', value: 'list' },
+        { label: 'get', value: 'get' }
     ]}
 >
+<TabItem value="list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="id" /></td>
+    <td><code>string</code></td>
+    <td>[Output Only] Unique identifier for the resource; defined by the server.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="items" /></td>
+    <td><code>array</code></td>
+    <td>A list of Zone resources.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="kind" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Type of resource. (default: compute#zoneList)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="nextPageToken" /></td>
+    <td><code>string</code></td>
+    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger thanmaxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="selfLink" /></td>
+    <td><code>string</code></td>
+    <td>Output only. [Output Only] Server-defined URL for this resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="warning" /></td>
+    <td><code>object</code></td>
+    <td>[Output Only] Informational warning message.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
 <TabItem value="get">
 
 <table>
@@ -67,7 +112,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Creation timestamp in RFC3339 text format.</td>
+    <td>[Output Only] Creation timestamp inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="deprecated" /></td>
@@ -82,12 +127,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of the resource. Always compute#zone for zones. (default: compute#zone)</td>
+    <td>Output only. [Output Only] Type of the resource. Always compute#zone for zones. (default: compute#zone)</td>
 </tr>
 <tr>
     <td><CopyableCode code="region" /></td>
     <td><code>string</code></td>
     <td>[Output Only] Full URL reference to the region which hosts the zone.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="resourceStatus" /></td>
+    <td><code>object</code></td>
+    <td> (id: ZoneResourceStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
@@ -97,56 +147,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Status of the zone, either UP or DOWN.</td>
+    <td>[Output Only] Status of the zone, either UP orDOWN. (DOWN, UP)</td>
 </tr>
 <tr>
     <td><CopyableCode code="supportsPzs" /></td>
     <td><code>boolean</code></td>
-    <td>[Output Only] Reserved for future use.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="id" /></td>
-    <td><code>string</code></td>
-    <td>[Output Only] Unique identifier for the resource; defined by the server.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="items" /></td>
-    <td><code>array</code></td>
-    <td>A list of Zone resources.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="kind" /></td>
-    <td><code>string</code></td>
-    <td>Type of resource. (default: compute#zoneList)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="nextPageToken" /></td>
-    <td><code>string</code></td>
-    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="selfLink" /></td>
-    <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for this resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="warning" /></td>
-    <td><code>object</code></td>
-    <td>[Output Only] Informational warning message.</td>
+    <td>Output only. [Output Only] Reserved for future use.</td>
 </tr>
 </tbody>
 </table>
@@ -169,18 +175,18 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
+    <td><a href="#list"><CopyableCode code="list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-project"><code>project</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Retrieves the list of Zone resources available to the specified project.</td>
+</tr>
+<tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a></td>
     <td></td>
     <td>Returns the specified Zone resource.</td>
-</tr>
-<tr>
-    <td><a href="#list"><CopyableCode code="list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
-    <td>Retrieves the list of Zone resources under the specific region available to the specified project.</td>
 </tr>
 </tbody>
 </table>
@@ -200,11 +206,6 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tbody>
 <tr id="parameter-project">
     <td><CopyableCode code="project" /></td>
-    <td><code>string</code></td>
-    <td></td>
-</tr>
-<tr id="parameter-region">
-    <td><CopyableCode code="region" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -244,12 +245,34 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="get"
+    defaultValue="list"
     values={[
-        { label: 'get', value: 'get' },
-        { label: 'list', value: 'list' }
+        { label: 'list', value: 'list' },
+        { label: 'get', value: 'get' }
     ]}
 >
+<TabItem value="list">
+
+Retrieves the list of Zone resources available to the specified project.
+
+```sql
+SELECT
+id,
+items,
+kind,
+nextPageToken,
+selfLink,
+warning
+FROM google.compute.zones
+WHERE project = '{{ project }}' -- required
+AND filter = '{{ filter }}'
+AND maxResults = '{{ maxResults }}'
+AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+;
+```
+</TabItem>
 <TabItem value="get">
 
 Returns the specified Zone resource.
@@ -264,35 +287,13 @@ deprecated,
 description,
 kind,
 region,
+resourceStatus,
 selfLink,
 status,
 supportsPzs
 FROM google.compute.zones
 WHERE project = '{{ project }}' -- required
 AND zone = '{{ zone }}' -- required
-;
-```
-</TabItem>
-<TabItem value="list">
-
-Retrieves the list of Zone resources under the specific region available to the specified project.
-
-```sql
-SELECT
-id,
-items,
-kind,
-nextPageToken,
-selfLink,
-warning
-FROM google.compute.zones
-WHERE project = '{{ project }}' -- required
-AND region = '{{ region }}' -- required
-AND filter = '{{ filter }}'
-AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>

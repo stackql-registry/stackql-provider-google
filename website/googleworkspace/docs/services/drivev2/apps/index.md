@@ -15,6 +15,7 @@ image: /img/stackql-googleworkspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>apps</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>apps</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="apps" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleworkspace.drivev2.apps" /></td></tr>
 </tbody></table>
@@ -239,7 +240,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-appFilterExtensions"><code>appFilterExtensions</code></a>, <a href="#parameter-appFilterMimeTypes"><code>appFilterMimeTypes</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a></td>
+    <td><a href="#parameter-appFilterMimeTypes"><code>appFilterMimeTypes</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-appFilterExtensions"><code>appFilterExtensions</code></a></td>
     <td>Lists a user's installed apps.</td>
 </tr>
 </tbody>
@@ -337,9 +338,9 @@ items,
 kind,
 selfLink
 FROM googleworkspace.drivev2.apps
-WHERE appFilterExtensions = '{{ appFilterExtensions }}'
-AND appFilterMimeTypes = '{{ appFilterMimeTypes }}'
+WHERE appFilterMimeTypes = '{{ appFilterMimeTypes }}'
 AND languageCode = '{{ languageCode }}'
+AND appFilterExtensions = '{{ appFilterExtensions }}'
 ;
 ```
 </TabItem>

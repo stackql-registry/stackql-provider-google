@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>studies</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>studies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="studies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.ml.studies" /></td></tr>
 </tbody></table>
@@ -67,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The detailed state of a study.</td>
+    <td>Output only. The detailed state of a study. (STATE_UNSPECIFIED, ACTIVE, INACTIVE, COMPLETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="studyConfig" /></td>
@@ -259,24 +260,58 @@ studyConfig
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: studies
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the studies resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the studies resource.
     - name: studyConfig
-      value: object
-      description: >
+      description: |
         Required. Configuration of the study.
-        
+      value:
+        parameters:
+          - parentCategoricalValues:
+              values:
+                - "{{ values }}"
+            type: "{{ type }}"
+            categoricalValueSpec:
+              values:
+                - "{{ values }}"
+            scaleType: "{{ scaleType }}"
+            childParameterSpecs: "{{ childParameterSpecs }}"
+            parentIntValues:
+              values:
+                - "{{ values }}"
+            doubleValueSpec:
+              maxValue: {{ maxValue }}
+              minValue: {{ minValue }}
+            parentDiscreteValues:
+              values:
+                - {{ values }}
+            parameter: "{{ parameter }}"
+            integerValueSpec:
+              minValue: "{{ minValue }}"
+              maxValue: "{{ maxValue }}"
+            discreteValueSpec:
+              values:
+                - {{ values }}
+        algorithm: "{{ algorithm }}"
+        metrics:
+          - metric: "{{ metric }}"
+            goal: "{{ goal }}"
+        automatedStoppingConfig:
+          medianAutomatedStoppingConfig:
+            useElapsedTime: {{ useElapsedTime }}
+          decayCurveStoppingConfig:
+            useElapsedTime: {{ useElapsedTime }}
     - name: studyId
-      value: string
-```
+      value: "{{ studyId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

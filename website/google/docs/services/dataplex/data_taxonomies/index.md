@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>data_taxonomies</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>data_taxonomies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="data_taxonomies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataplex.data_taxonomies" /></td></tr>
 </tbody></table>
@@ -194,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_data_taxonomies_list"><CopyableCode code="projects_locations_data_taxonomies_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists DataTaxonomy resources in a project and location.</td>
 </tr>
 <tr>
@@ -344,9 +345,9 @@ FROM google.dataplex.data_taxonomies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -368,9 +369,9 @@ Create a DataTaxonomy resource.
 
 ```sql
 INSERT INTO google.dataplex.data_taxonomies (
-data__description,
 data__displayName,
 data__labels,
+data__description,
 data__etag,
 projectsId,
 locationsId,
@@ -378,9 +379,9 @@ dataTaxonomyId,
 validateOnly
 )
 SELECT 
-'{{ description }}',
 '{{ displayName }}',
 '{{ labels }}',
+'{{ description }}',
 '{{ etag }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -397,41 +398,37 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: data_taxonomies
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the data_taxonomies resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the data_taxonomies resource.
-    - name: description
-      value: string
-      description: >
-        Optional. Description of the DataTaxonomy.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Optional. User friendly display name.
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. User-defined labels for the DataTaxonomy.
-        
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the DataTaxonomy.
     - name: etag
-      value: string
-      description: >
+      value: "{{ etag }}"
+      description: |
         This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
-        
     - name: dataTaxonomyId
-      value: string
+      value: "{{ dataTaxonomyId }}"
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -451,9 +448,9 @@ Updates a DataTaxonomy resource.
 ```sql
 UPDATE google.dataplex.data_taxonomies
 SET 
-data__description = '{{ description }}',
 data__displayName = '{{ displayName }}',
 data__labels = '{{ labels }}',
+data__description = '{{ description }}',
 data__etag = '{{ etag }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>assessments</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>assessments</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="assessments" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.recaptchaenterprise.assessments" /></td></tr>
 </tbody></table>
@@ -109,15 +110,15 @@ Creates an Assessment of the likelihood an event is legitimate.
 INSERT INTO google.recaptchaenterprise.assessments (
 data__assessmentEnvironment,
 data__accountVerification,
-data__event,
 data__privatePasswordLeakVerification,
+data__event,
 projectsId
 )
 SELECT 
 '{{ assessmentEnvironment }}',
 '{{ accountVerification }}',
-'{{ event }}',
 '{{ privatePasswordLeakVerification }}',
+'{{ event }}',
 '{{ projectsId }}'
 RETURNING
 name,
@@ -129,6 +130,7 @@ firewallPolicyAssessment,
 fraudPreventionAssessment,
 fraudSignals,
 phoneFraudAssessment,
+policyEvaluation,
 privatePasswordLeakVerification,
 riskAnalysis,
 tokenProperties
@@ -137,34 +139,115 @@ tokenProperties
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: assessments
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the assessments resource.
     - name: assessmentEnvironment
-      value: object
-      description: >
+      description: |
         Optional. The environment creating the assessment. This describes your environment (the system invoking CreateAssessment), NOT the environment of your user.
-        
+      value:
+        client: "{{ client }}"
+        version: "{{ version }}"
     - name: accountVerification
-      value: object
-      description: >
+      description: |
         Optional. Account verification information for identity verification. The assessment event must include a token and site key to use this feature.
-        
-    - name: event
-      value: object
-      description: >
-        Optional. The event being assessed.
-        
+      value:
+        languageCode: "{{ languageCode }}"
+        latestVerificationResult: "{{ latestVerificationResult }}"
+        username: "{{ username }}"
+        endpoints:
+          - lastVerificationTime: "{{ lastVerificationTime }}"
+            emailAddress: "{{ emailAddress }}"
+            phoneNumber: "{{ phoneNumber }}"
+            requestToken: "{{ requestToken }}"
     - name: privatePasswordLeakVerification
-      value: object
-      description: >
+      description: |
         Optional. The private password leak verification field contains the parameters that are used to to check for leaks privately without sharing user credentials.
-        
-```
+      value:
+        encryptedUserCredentialsHash: "{{ encryptedUserCredentialsHash }}"
+        encryptedLeakMatchPrefixes:
+          - "{{ encryptedLeakMatchPrefixes }}"
+        lookupHashPrefix: "{{ lookupHashPrefix }}"
+        reencryptedUserCredentialsHash: "{{ reencryptedUserCredentialsHash }}"
+    - name: event
+      description: |
+        Optional. The event being assessed.
+      value:
+        hashedAccountId: "{{ hashedAccountId }}"
+        ja3: "{{ ja3 }}"
+        userAgent: "{{ userAgent }}"
+        transactionData:
+          paymentMethod: "{{ paymentMethod }}"
+          items:
+            - name: "{{ name }}"
+              quantity: "{{ quantity }}"
+              merchantAccountId: "{{ merchantAccountId }}"
+              value: {{ value }}
+          user:
+            emailVerified: {{ emailVerified }}
+            phoneNumber: "{{ phoneNumber }}"
+            accountId: "{{ accountId }}"
+            phoneVerified: {{ phoneVerified }}
+            email: "{{ email }}"
+            creationMs: "{{ creationMs }}"
+          shippingAddress:
+            address:
+              - "{{ address }}"
+            locality: "{{ locality }}"
+            administrativeArea: "{{ administrativeArea }}"
+            regionCode: "{{ regionCode }}"
+            postalCode: "{{ postalCode }}"
+            recipient: "{{ recipient }}"
+          merchants:
+            - emailVerified: {{ emailVerified }}
+              phoneNumber: "{{ phoneNumber }}"
+              accountId: "{{ accountId }}"
+              phoneVerified: {{ phoneVerified }}
+              email: "{{ email }}"
+              creationMs: "{{ creationMs }}"
+          currencyCode: "{{ currencyCode }}"
+          transactionId: "{{ transactionId }}"
+          gatewayInfo:
+            gatewayResponseCode: "{{ gatewayResponseCode }}"
+            cvvResponseCode: "{{ cvvResponseCode }}"
+            avsResponseCode: "{{ avsResponseCode }}"
+            name: "{{ name }}"
+          cardBin: "{{ cardBin }}"
+          cardLastFour: "{{ cardLastFour }}"
+          billingAddress:
+            address:
+              - "{{ address }}"
+            locality: "{{ locality }}"
+            administrativeArea: "{{ administrativeArea }}"
+            regionCode: "{{ regionCode }}"
+            postalCode: "{{ postalCode }}"
+            recipient: "{{ recipient }}"
+          value: {{ value }}
+          shippingValue: {{ shippingValue }}
+        firewallPolicyEvaluation: {{ firewallPolicyEvaluation }}
+        ja4: "{{ ja4 }}"
+        expectedAction: "{{ expectedAction }}"
+        requestedUri: "{{ requestedUri }}"
+        siteKey: "{{ siteKey }}"
+        express: {{ express }}
+        headers:
+          - "{{ headers }}"
+        token: "{{ token }}"
+        userInfo:
+          createAccountTime: "{{ createAccountTime }}"
+          userIds:
+            - email: "{{ email }}"
+              phoneNumber: "{{ phoneNumber }}"
+              username: "{{ username }}"
+          accountId: "{{ accountId }}"
+        wafTokenAssessment: {{ wafTokenAssessment }}
+        fraudPrevention: "{{ fraudPrevention }}"
+        userIpAddress: "{{ userIpAddress }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -187,12 +270,12 @@ EXEC google.recaptchaenterprise.assessments.annotate
 @assessmentsId='{{ assessmentsId }}' --required 
 @@json=
 '{
-"accountId": "{{ accountId }}", 
-"annotation": "{{ annotation }}", 
-"transactionEvent": "{{ transactionEvent }}", 
 "reasons": "{{ reasons }}", 
+"annotation": "{{ annotation }}", 
 "hashedAccountId": "{{ hashedAccountId }}", 
-"phoneAuthenticationEvent": "{{ phoneAuthenticationEvent }}"
+"accountId": "{{ accountId }}", 
+"phoneAuthenticationEvent": "{{ phoneAuthenticationEvent }}", 
+"transactionEvent": "{{ transactionEvent }}"
 }'
 ;
 ```

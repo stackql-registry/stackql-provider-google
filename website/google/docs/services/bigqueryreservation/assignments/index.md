@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>assignments</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>assignments</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="assignments" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.bigqueryreservation.assignments" /></td></tr>
 </tbody></table>
@@ -61,12 +62,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="enableGeminiInBigquery" /></td>
     <td><code>boolean</code></td>
-    <td>Optional. This field controls if "Gemini in BigQuery" (https://cloud.google.com/gemini/docs/bigquery/overview) features should be enabled for this reservation assignment, which is not on by default. "Gemini in BigQuery" has a distinct compliance posture from BigQuery. If this field is set to true, the assignment job type is QUERY, and the parent reservation edition is ENTERPRISE_PLUS, then the assignment will give the grantee project/organization access to "Gemini in BigQuery" features.</td>
+    <td>Optional. Deprecated: "Gemini in BigQuery" is now available by default for all BigQuery editions and should not be explicitly set. Controls if "Gemini in BigQuery" (https://cloud.google.com/gemini/docs/bigquery/overview) features should be enabled for this reservation assignment.</td>
 </tr>
 <tr>
     <td><CopyableCode code="jobType" /></td>
     <td><code>string</code></td>
-    <td>Optional. Which type of jobs will use the reservation.</td>
+    <td>Optional. Which type of jobs will use the reservation. (JOB_TYPE_UNSPECIFIED, PIPELINE, QUERY, ML_EXTERNAL, BACKGROUND, CONTINUOUS, BACKGROUND_CHANGE_DATA_CAPTURE, BACKGROUND_COLUMN_METADATA_INDEX, BACKGROUND_SEARCH_INDEX_REFRESH)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="principal" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Represents the principal for this assignment. If not empty, jobs run by this principal will utilize the associated reservation. Otherwise, jobs will fall back to using the reservation assigned to the project, folder, or organization (in that order). If no reservation is assigned at any of these levels, on-demand capacity will be used. The supported formats are: * `principal://goog/subject/USER_EMAIL_ADDRESS` for users, * `principal://iam.googleapis.com/projects/-/serviceAccounts/SA_EMAIL_ADDRESS` for service accounts, * `principal://iam.googleapis.com/projects/PROJECT_NUMBER/locations/global/workloadIdentityPools/POOL_ID/subject/SUBJECT_ID` for workload identity pool identities. * The special value `unknown_or_deleted_user` represents principals which cannot be read from the user info service, for example deleted users.</td>
 </tr>
 <tr>
     <td><CopyableCode code="schedulingPolicy" /></td>
@@ -76,7 +82,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the assignment.</td>
+    <td>Output only. State of the assignment. (STATE_UNSPECIFIED, PENDING, ACTIVE)</td>
 </tr>
 </tbody>
 </table>
@@ -210,6 +216,7 @@ name,
 assignee,
 enableGeminiInBigquery,
 jobType,
+principal,
 schedulingPolicy,
 state
 FROM google.bigqueryreservation.assignments
@@ -242,6 +249,7 @@ INSERT INTO google.bigqueryreservation.assignments (
 data__enableGeminiInBigquery,
 data__schedulingPolicy,
 data__assignee,
+data__principal,
 data__jobType,
 projectsId,
 locationsId,
@@ -252,6 +260,7 @@ SELECT
 {{ enableGeminiInBigquery }},
 '{{ schedulingPolicy }}',
 '{{ assignee }}',
+'{{ principal }}',
 '{{ jobType }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -262,6 +271,7 @@ name,
 assignee,
 enableGeminiInBigquery,
 jobType,
+principal,
 schedulingPolicy,
 state
 ;
@@ -269,43 +279,45 @@ state
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: assignments
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the assignments resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the assignments resource.
     - name: reservationsId
-      value: string
+      value: "{{ reservationsId }}"
       description: Required parameter for the assignments resource.
     - name: enableGeminiInBigquery
-      value: boolean
-      description: >
-        Optional. This field controls if "Gemini in BigQuery" (https://cloud.google.com/gemini/docs/bigquery/overview) features should be enabled for this reservation assignment, which is not on by default. "Gemini in BigQuery" has a distinct compliance posture from BigQuery. If this field is set to true, the assignment job type is QUERY, and the parent reservation edition is ENTERPRISE_PLUS, then the assignment will give the grantee project/organization access to "Gemini in BigQuery" features.
-        
+      value: {{ enableGeminiInBigquery }}
+      description: |
+        Optional. Deprecated: "Gemini in BigQuery" is now available by default for all BigQuery editions and should not be explicitly set. Controls if "Gemini in BigQuery" (https://cloud.google.com/gemini/docs/bigquery/overview) features should be enabled for this reservation assignment.
     - name: schedulingPolicy
-      value: object
-      description: >
+      description: |
         Optional. The scheduling policy to use for jobs and queries of this assignee when running under the associated reservation. The scheduling policy controls how the reservation's resources are distributed. This overrides the default scheduling policy specified on the reservation. This feature is not yet generally available.
-        
+      value:
+        concurrency: "{{ concurrency }}"
+        maxSlots: "{{ maxSlots }}"
     - name: assignee
-      value: string
-      description: >
-        Optional. The resource which will use the reservation. E.g. `projects/myproject`, `folders/123`, or `organizations/456`.
-        
+      value: "{{ assignee }}"
+      description: |
+        Optional. The resource which will use the reservation. E.g. \`projects/myproject\`, \`folders/123\`, or \`organizations/456\`.
+    - name: principal
+      value: "{{ principal }}"
+      description: |
+        Optional. Represents the principal for this assignment. If not empty, jobs run by this principal will utilize the associated reservation. Otherwise, jobs will fall back to using the reservation assigned to the project, folder, or organization (in that order). If no reservation is assigned at any of these levels, on-demand capacity will be used. The supported formats are: * \`principal://goog/subject/USER_EMAIL_ADDRESS\` for users, * \`principal://iam.googleapis.com/projects/-/serviceAccounts/SA_EMAIL_ADDRESS\` for service accounts, * \`principal://iam.googleapis.com/projects/PROJECT_NUMBER/locations/global/workloadIdentityPools/POOL_ID/subject/SUBJECT_ID\` for workload identity pool identities. * The special value \`unknown_or_deleted_user\` represents principals which cannot be read from the user info service, for example deleted users.
     - name: jobType
-      value: string
-      description: >
+      value: "{{ jobType }}"
+      description: |
         Optional. Which type of jobs will use the reservation.
-        
       valid_values: ['JOB_TYPE_UNSPECIFIED', 'PIPELINE', 'QUERY', 'ML_EXTERNAL', 'BACKGROUND', 'CONTINUOUS', 'BACKGROUND_CHANGE_DATA_CAPTURE', 'BACKGROUND_COLUMN_METADATA_INDEX', 'BACKGROUND_SEARCH_INDEX_REFRESH']
     - name: assignmentId
-      value: string
-```
+      value: "{{ assignmentId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -328,6 +340,7 @@ SET
 data__enableGeminiInBigquery = {{ enableGeminiInBigquery }},
 data__schedulingPolicy = '{{ schedulingPolicy }}',
 data__assignee = '{{ assignee }}',
+data__principal = '{{ principal }}',
 data__jobType = '{{ jobType }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
@@ -340,6 +353,7 @@ name,
 assignee,
 enableGeminiInBigquery,
 jobType,
+principal,
 schedulingPolicy,
 state;
 ```
@@ -391,8 +405,8 @@ EXEC google.bigqueryreservation.assignments.move
 @assignmentsId='{{ assignmentsId }}' --required 
 @@json=
 '{
-"assignmentId": "{{ assignmentId }}", 
-"destinationId": "{{ destinationId }}"
+"destinationId": "{{ destinationId }}", 
+"assignmentId": "{{ assignmentId }}"
 }'
 ;
 ```

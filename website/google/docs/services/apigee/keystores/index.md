@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>keystores</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>keystores</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="keystores" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.keystores" /></td></tr>
 </tbody></table>
@@ -197,24 +198,23 @@ aliases
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: keystores
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the keystores resource.
     - name: environmentsId
-      value: string
+      value: "{{ environmentsId }}"
       description: Required parameter for the keystores resource.
     - name: name
-      value: string
-      description: >
-        Required. Resource ID for this keystore. Values must match the regular expression `[\w[:space:].-]{1,255}`.
-        
+      value: "{{ name }}"
+      description: |
+        Required. Resource ID for this keystore. Values must match the regular expression \`[w[:space:].-]{1,255}\`.
     - name: name
-      value: string
-```
+      value: "{{ name }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

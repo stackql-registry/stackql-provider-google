@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>clusters</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>clusters</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="clusters" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.alloydb.clusters" /></td></tr>
 </tbody></table>
@@ -87,7 +88,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="clusterType" /></td>
     <td><code>string</code></td>
-    <td>Output only. The type of the cluster. This is an output-only field and it's populated at the Cluster creation time or the Cluster promotion time. The cluster type is determined by which RPC was used to create the cluster (i.e. `CreateCluster` vs. `CreateSecondaryCluster`</td>
+    <td>Output only. The type of the cluster. This is an output-only field and it's populated at the Cluster creation time or the Cluster promotion time. The cluster type is determined by which RPC was used to create the cluster (i.e. `CreateCluster` vs. `CreateSecondaryCluster` (CLUSTER_TYPE_UNSPECIFIED, PRIMARY, SECONDARY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="continuousBackupConfig" /></td>
@@ -107,7 +108,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="databaseVersion" /></td>
     <td><code>string</code></td>
-    <td>Optional. The database engine major version. This is an optional field and it is populated at the Cluster creation time. If a database version is not supplied at cluster creation time, then a default database version will be used.</td>
+    <td>Optional. The database engine major version. This is an optional field and it is populated at the Cluster creation time. If a database version is not supplied at cluster creation time, then a default database version will be used. (DATABASE_VERSION_UNSPECIFIED, POSTGRES_13, POSTGRES_14, POSTGRES_15, POSTGRES_16, POSTGRES_17, POSTGRES_18)</td>
 </tr>
 <tr>
     <td><CopyableCode code="dataplexConfig" /></td>
@@ -162,7 +163,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="maintenanceVersionSelectionPolicy" /></td>
     <td><code>string</code></td>
-    <td>Input only. Policy to use to automatically select the maintenance version to which to update the cluster's instances.</td>
+    <td>Input only. Policy to use to automatically select the maintenance version to which to update the cluster's instances. (MAINTENANCE_VERSION_SELECTION_POLICY_UNSPECIFIED, MAINTENANCE_VERSION_SELECTION_POLICY_LATEST, MAINTENANCE_VERSION_SELECTION_POLICY_DEFAULT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="migrationSource" /></td>
@@ -212,12 +213,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current serving state of the cluster.</td>
+    <td>Output only. The current serving state of the cluster. (STATE_UNSPECIFIED, READY, STOPPED, EMPTY, CREATING, DELETING, FAILED, BOOTSTRAPPING, MAINTENANCE, PROMOTING, SWITCHOVER)</td>
 </tr>
 <tr>
     <td><CopyableCode code="subscriptionType" /></td>
     <td><code>string</code></td>
-    <td>Optional. Subscription type of the cluster.</td>
+    <td>Optional. Subscription type of the cluster. (SUBSCRIPTION_TYPE_UNSPECIFIED, STANDARD, TRIAL)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tags" /></td>
@@ -291,7 +292,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="clusterType" /></td>
     <td><code>string</code></td>
-    <td>Output only. The type of the cluster. This is an output-only field and it's populated at the Cluster creation time or the Cluster promotion time. The cluster type is determined by which RPC was used to create the cluster (i.e. `CreateCluster` vs. `CreateSecondaryCluster`</td>
+    <td>Output only. The type of the cluster. This is an output-only field and it's populated at the Cluster creation time or the Cluster promotion time. The cluster type is determined by which RPC was used to create the cluster (i.e. `CreateCluster` vs. `CreateSecondaryCluster` (CLUSTER_TYPE_UNSPECIFIED, PRIMARY, SECONDARY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="continuousBackupConfig" /></td>
@@ -311,7 +312,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="databaseVersion" /></td>
     <td><code>string</code></td>
-    <td>Optional. The database engine major version. This is an optional field and it is populated at the Cluster creation time. If a database version is not supplied at cluster creation time, then a default database version will be used.</td>
+    <td>Optional. The database engine major version. This is an optional field and it is populated at the Cluster creation time. If a database version is not supplied at cluster creation time, then a default database version will be used. (DATABASE_VERSION_UNSPECIFIED, POSTGRES_13, POSTGRES_14, POSTGRES_15, POSTGRES_16, POSTGRES_17, POSTGRES_18)</td>
 </tr>
 <tr>
     <td><CopyableCode code="dataplexConfig" /></td>
@@ -366,7 +367,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="maintenanceVersionSelectionPolicy" /></td>
     <td><code>string</code></td>
-    <td>Input only. Policy to use to automatically select the maintenance version to which to update the cluster's instances.</td>
+    <td>Input only. Policy to use to automatically select the maintenance version to which to update the cluster's instances. (MAINTENANCE_VERSION_SELECTION_POLICY_UNSPECIFIED, MAINTENANCE_VERSION_SELECTION_POLICY_LATEST, MAINTENANCE_VERSION_SELECTION_POLICY_DEFAULT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="migrationSource" /></td>
@@ -416,12 +417,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current serving state of the cluster.</td>
+    <td>Output only. The current serving state of the cluster. (STATE_UNSPECIFIED, READY, STOPPED, EMPTY, CREATING, DELETING, FAILED, BOOTSTRAPPING, MAINTENANCE, PROMOTING, SWITCHOVER)</td>
 </tr>
 <tr>
     <td><CopyableCode code="subscriptionType" /></td>
     <td><code>string</code></td>
-    <td>Optional. Subscription type of the cluster.</td>
+    <td>Optional. Subscription type of the cluster. (SUBSCRIPTION_TYPE_UNSPECIFIED, STANDARD, TRIAL)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tags" /></td>
@@ -474,7 +475,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists Clusters in a given project and location.</td>
 </tr>
 <tr>
@@ -488,29 +489,15 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a single Cluster.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-force"><code>force</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-force"><code>force</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
     <td>Deletes a single Cluster.</td>
-</tr>
-<tr>
-    <td><a href="#restore_from_cloud_sql"><CopyableCode code="restore_from_cloud_sql" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Restores an AlloyDB cluster from a CloudSQL resource.</td>
-</tr>
-<tr>
-    <td><a href="#export"><CopyableCode code="export" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
-    <td></td>
-    <td>Exports data from the cluster. Imperative only.</td>
 </tr>
 <tr>
     <td><a href="#import"><CopyableCode code="import" /></a></td>
@@ -520,11 +507,32 @@ The following methods are available for this resource:
     <td>Imports data to the cluster. Imperative only.</td>
 </tr>
 <tr>
+    <td><a href="#restore"><CopyableCode code="restore" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Creates a new Cluster in a given project and location, with a volume restored from the provided source, either a backup ID or a point-in-time and a source cluster.</td>
+</tr>
+<tr>
+    <td><a href="#export"><CopyableCode code="export" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
+    <td></td>
+    <td>Exports data from the cluster. Imperative only.</td>
+</tr>
+<tr>
     <td><a href="#upgrade"><CopyableCode code="upgrade" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
     <td></td>
     <td>Upgrades a single Cluster. Imperative only.</td>
+</tr>
+<tr>
+    <td><a href="#restore_from_cloud_sql"><CopyableCode code="restore_from_cloud_sql" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Restores an AlloyDB cluster from a CloudSQL resource.</td>
 </tr>
 <tr>
     <td><a href="#promote"><CopyableCode code="promote" /></a></td>
@@ -539,13 +547,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
     <td></td>
     <td>Switches the roles of PRIMARY and SECONDARY clusters without any data loss. This promotes the SECONDARY cluster to PRIMARY and sets up the original PRIMARY cluster to replicate from this newly promoted cluster.</td>
-</tr>
-<tr>
-    <td><a href="#restore"><CopyableCode code="restore" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Creates a new Cluster in a given project and location, with a volume restored from the provided source, either a backup ID or a point-in-time and a source cluster.</td>
 </tr>
 </tbody>
 </table>
@@ -750,8 +751,8 @@ FROM google.alloydb.clusters
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -774,25 +775,25 @@ Creates a new Cluster in a given project and location.
 
 ```sql
 INSERT INTO google.alloydb.clusters (
-data__maintenanceVersionSelectionPolicy,
-data__displayName,
-data__labels,
-data__databaseVersion,
-data__networkConfig,
-data__network,
-data__etag,
-data__annotations,
-data__initialUser,
-data__automatedBackupPolicy,
-data__sslConfig,
-data__encryptionConfig,
 data__continuousBackupConfig,
-data__secondaryConfig,
-data__pscConfig,
+data__databaseVersion,
+data__annotations,
+data__displayName,
 data__maintenanceUpdatePolicy,
-data__subscriptionType,
-data__tags,
+data__encryptionConfig,
+data__network,
 data__dataplexConfig,
+data__sslConfig,
+data__networkConfig,
+data__tags,
+data__labels,
+data__secondaryConfig,
+data__initialUser,
+data__maintenanceVersionSelectionPolicy,
+data__etag,
+data__subscriptionType,
+data__pscConfig,
+data__automatedBackupPolicy,
 projectsId,
 locationsId,
 clusterId,
@@ -800,25 +801,25 @@ requestId,
 validateOnly
 )
 SELECT 
-'{{ maintenanceVersionSelectionPolicy }}',
-'{{ displayName }}',
-'{{ labels }}',
-'{{ databaseVersion }}',
-'{{ networkConfig }}',
-'{{ network }}',
-'{{ etag }}',
-'{{ annotations }}',
-'{{ initialUser }}',
-'{{ automatedBackupPolicy }}',
-'{{ sslConfig }}',
-'{{ encryptionConfig }}',
 '{{ continuousBackupConfig }}',
-'{{ secondaryConfig }}',
-'{{ pscConfig }}',
+'{{ databaseVersion }}',
+'{{ annotations }}',
+'{{ displayName }}',
 '{{ maintenanceUpdatePolicy }}',
-'{{ subscriptionType }}',
-'{{ tags }}',
+'{{ encryptionConfig }}',
+'{{ network }}',
 '{{ dataplexConfig }}',
+'{{ sslConfig }}',
+'{{ networkConfig }}',
+'{{ tags }}',
+'{{ labels }}',
+'{{ secondaryConfig }}',
+'{{ initialUser }}',
+'{{ maintenanceVersionSelectionPolicy }}',
+'{{ etag }}',
+'{{ subscriptionType }}',
+'{{ pscConfig }}',
+'{{ automatedBackupPolicy }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ clusterId }}',
@@ -835,121 +836,156 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: clusters
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the clusters resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the clusters resource.
-    - name: maintenanceVersionSelectionPolicy
-      value: string
-      description: >
-        Input only. Policy to use to automatically select the maintenance version to which to update the cluster's instances.
-        
-      valid_values: ['MAINTENANCE_VERSION_SELECTION_POLICY_UNSPECIFIED', 'MAINTENANCE_VERSION_SELECTION_POLICY_LATEST', 'MAINTENANCE_VERSION_SELECTION_POLICY_DEFAULT']
-    - name: displayName
-      value: string
-      description: >
-        User-settable and human-readable display name for the Cluster.
-        
-    - name: labels
-      value: object
-      description: >
-        Labels as key value pairs
-        
-    - name: databaseVersion
-      value: string
-      description: >
-        Optional. The database engine major version. This is an optional field and it is populated at the Cluster creation time. If a database version is not supplied at cluster creation time, then a default database version will be used.
-        
-      valid_values: ['DATABASE_VERSION_UNSPECIFIED', 'POSTGRES_13', 'POSTGRES_14', 'POSTGRES_15', 'POSTGRES_16', 'POSTGRES_17']
-    - name: networkConfig
-      value: object
-      description: >
-        Metadata related to network configuration.
-        
-    - name: network
-      value: string
-      description: >
-        Required. The resource link for the VPC network in which cluster resources are created and from which they are accessible via Private IP. The network must belong to the same project as the cluster. It is specified in the form: `projects/{project}/global/networks/{network_id}`. This is required to create a cluster. Deprecated, use network_config.network instead.
-        
-    - name: etag
-      value: string
-      description: >
-        For Resource freshness validation (https://google.aip.dev/154)
-        
-    - name: annotations
-      value: object
-      description: >
-        Annotations to allow client tools to store small amount of arbitrary data. This is distinct from labels. https://google.aip.dev/128
-        
-    - name: initialUser
-      value: object
-      description: >
-        Input only. Initial user to setup during cluster creation. Required. If used in `RestoreCluster` this is ignored.
-        
-    - name: automatedBackupPolicy
-      value: object
-      description: >
-        The automated backup policy for this cluster. If no policy is provided then the default policy will be used. If backups are supported for the cluster, the default policy takes one backup a day, has a backup window of 1 hour, and retains backups for 14 days. For more information on the defaults, consult the documentation for the message type.
-        
-    - name: sslConfig
-      value: object
-      description: >
-        SSL configuration for this AlloyDB cluster.
-        
-    - name: encryptionConfig
-      value: object
-      description: >
-        Optional. The encryption config can be specified to encrypt the data disks and other persistent data resources of a cluster with a customer-managed encryption key (CMEK). When this field is not specified, the cluster will then use default encryption scheme to protect the user data.
-        
     - name: continuousBackupConfig
-      value: object
-      description: >
+      description: |
         Optional. Continuous backup configuration for this cluster.
-        
-    - name: secondaryConfig
-      value: object
-      description: >
-        Cross Region replication config specific to SECONDARY cluster.
-        
-    - name: pscConfig
-      value: object
-      description: >
-        Optional. The configuration for Private Service Connect (PSC) for the cluster.
-        
+      value:
+        enabled: {{ enabled }}
+        encryptionConfig:
+          kmsKeyName: "{{ kmsKeyName }}"
+        recoveryWindowDays: {{ recoveryWindowDays }}
+    - name: databaseVersion
+      value: "{{ databaseVersion }}"
+      description: |
+        Optional. The database engine major version. This is an optional field and it is populated at the Cluster creation time. If a database version is not supplied at cluster creation time, then a default database version will be used.
+      valid_values: ['DATABASE_VERSION_UNSPECIFIED', 'POSTGRES_13', 'POSTGRES_14', 'POSTGRES_15', 'POSTGRES_16', 'POSTGRES_17', 'POSTGRES_18']
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Annotations to allow client tools to store small amount of arbitrary data. This is distinct from labels. https://google.aip.dev/128
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        User-settable and human-readable display name for the Cluster.
     - name: maintenanceUpdatePolicy
-      value: object
-      description: >
+      description: |
         Optional. The maintenance update policy determines when to allow or deny updates.
-        
-    - name: subscriptionType
-      value: string
-      description: >
-        Optional. Subscription type of the cluster.
-        
-      valid_values: ['SUBSCRIPTION_TYPE_UNSPECIFIED', 'STANDARD', 'TRIAL']
-    - name: tags
-      value: object
-      description: >
-        Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: ``` "123/environment": "production", "123/costCenter": "marketing" ```
-        
+      value:
+        maintenanceWindows:
+          - day: "{{ day }}"
+            startTime:
+              minutes: {{ minutes }}
+              seconds: {{ seconds }}
+              hours: {{ hours }}
+              nanos: {{ nanos }}
+        denyMaintenancePeriods:
+          - time:
+              minutes: {{ minutes }}
+              seconds: {{ seconds }}
+              hours: {{ hours }}
+              nanos: {{ nanos }}
+            startDate:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
+            endDate:
+              day: {{ day }}
+              month: {{ month }}
+              year: {{ year }}
+    - name: encryptionConfig
+      description: |
+        Optional. The encryption config can be specified to encrypt the data disks and other persistent data resources of a cluster with a customer-managed encryption key (CMEK). When this field is not specified, the cluster will then use default encryption scheme to protect the user data.
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
+    - name: network
+      value: "{{ network }}"
+      description: |
+        Required. The resource link for the VPC network in which cluster resources are created and from which they are accessible via Private IP. The network must belong to the same project as the cluster. It is specified in the form: \`projects/{project}/global/networks/{network_id}\`. This is required to create a cluster. Deprecated, use network_config.network instead.
     - name: dataplexConfig
-      value: object
-      description: >
+      description: |
         Optional. Configuration for Dataplex integration.
-        
+      value:
+        enabled: {{ enabled }}
+    - name: sslConfig
+      description: |
+        SSL configuration for this AlloyDB cluster.
+      value:
+        sslMode: "{{ sslMode }}"
+        caSource: "{{ caSource }}"
+    - name: networkConfig
+      description: |
+        Metadata related to network configuration.
+      value:
+        allocatedIpRange: "{{ allocatedIpRange }}"
+        network: "{{ network }}"
+    - name: tags
+      value: "{{ tags }}"
+      description: |
+        Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: \`\`\` "123/environment": "production", "123/costCenter": "marketing" \`\`\`
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Labels as key value pairs
+    - name: secondaryConfig
+      description: |
+        Cross Region replication config specific to SECONDARY cluster.
+      value:
+        primaryClusterName: "{{ primaryClusterName }}"
+    - name: initialUser
+      description: |
+        Input only. Initial user to setup during cluster creation. Required. If used in \`RestoreCluster\` this is ignored.
+      value:
+        user: "{{ user }}"
+        password: "{{ password }}"
+    - name: maintenanceVersionSelectionPolicy
+      value: "{{ maintenanceVersionSelectionPolicy }}"
+      description: |
+        Input only. Policy to use to automatically select the maintenance version to which to update the cluster's instances.
+      valid_values: ['MAINTENANCE_VERSION_SELECTION_POLICY_UNSPECIFIED', 'MAINTENANCE_VERSION_SELECTION_POLICY_LATEST', 'MAINTENANCE_VERSION_SELECTION_POLICY_DEFAULT']
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        For Resource freshness validation (https://google.aip.dev/154)
+    - name: subscriptionType
+      value: "{{ subscriptionType }}"
+      description: |
+        Optional. Subscription type of the cluster.
+      valid_values: ['SUBSCRIPTION_TYPE_UNSPECIFIED', 'STANDARD', 'TRIAL']
+    - name: pscConfig
+      description: |
+        Optional. The configuration for Private Service Connect (PSC) for the cluster.
+      value:
+        pscEnabled: {{ pscEnabled }}
+        serviceOwnedProjectNumber: "{{ serviceOwnedProjectNumber }}"
+    - name: automatedBackupPolicy
+      description: |
+        The automated backup policy for this cluster. If no policy is provided then the default policy will be used. If backups are supported for the cluster, the default policy takes one backup a day, has a backup window of 1 hour, and retains backups for 14 days. For more information on the defaults, consult the documentation for the message type.
+      value:
+        labels: "{{ labels }}"
+        encryptionConfig:
+          kmsKeyName: "{{ kmsKeyName }}"
+        timeBasedRetention:
+          retentionPeriod: "{{ retentionPeriod }}"
+        backupWindow: "{{ backupWindow }}"
+        weeklySchedule:
+          startTimes:
+            - minutes: {{ minutes }}
+              seconds: {{ seconds }}
+              hours: {{ hours }}
+              nanos: {{ nanos }}
+          daysOfWeek:
+            - "{{ daysOfWeek }}"
+        enabled: {{ enabled }}
+        quantityBasedRetention:
+          count: {{ count }}
+        location: "{{ location }}"
     - name: clusterId
-      value: string
+      value: "{{ clusterId }}"
     - name: requestId
-      value: string
+      value: "{{ requestId }}"
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -969,33 +1005,33 @@ Updates the parameters of a single Cluster.
 ```sql
 UPDATE google.alloydb.clusters
 SET 
-data__maintenanceVersionSelectionPolicy = '{{ maintenanceVersionSelectionPolicy }}',
-data__displayName = '{{ displayName }}',
-data__labels = '{{ labels }}',
-data__databaseVersion = '{{ databaseVersion }}',
-data__networkConfig = '{{ networkConfig }}',
-data__network = '{{ network }}',
-data__etag = '{{ etag }}',
-data__annotations = '{{ annotations }}',
-data__initialUser = '{{ initialUser }}',
-data__automatedBackupPolicy = '{{ automatedBackupPolicy }}',
-data__sslConfig = '{{ sslConfig }}',
-data__encryptionConfig = '{{ encryptionConfig }}',
 data__continuousBackupConfig = '{{ continuousBackupConfig }}',
-data__secondaryConfig = '{{ secondaryConfig }}',
-data__pscConfig = '{{ pscConfig }}',
+data__databaseVersion = '{{ databaseVersion }}',
+data__annotations = '{{ annotations }}',
+data__displayName = '{{ displayName }}',
 data__maintenanceUpdatePolicy = '{{ maintenanceUpdatePolicy }}',
-data__subscriptionType = '{{ subscriptionType }}',
+data__encryptionConfig = '{{ encryptionConfig }}',
+data__network = '{{ network }}',
+data__dataplexConfig = '{{ dataplexConfig }}',
+data__sslConfig = '{{ sslConfig }}',
+data__networkConfig = '{{ networkConfig }}',
 data__tags = '{{ tags }}',
-data__dataplexConfig = '{{ dataplexConfig }}'
+data__labels = '{{ labels }}',
+data__secondaryConfig = '{{ secondaryConfig }}',
+data__initialUser = '{{ initialUser }}',
+data__maintenanceVersionSelectionPolicy = '{{ maintenanceVersionSelectionPolicy }}',
+data__etag = '{{ etag }}',
+data__subscriptionType = '{{ subscriptionType }}',
+data__pscConfig = '{{ pscConfig }}',
+data__automatedBackupPolicy = '{{ automatedBackupPolicy }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND clustersId = '{{ clustersId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
 AND validateOnly = {{ validateOnly}}
 AND allowMissing = {{ allowMissing}}
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,
@@ -1025,9 +1061,9 @@ WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND clustersId = '{{ clustersId }}' --required
 AND requestId = '{{ requestId }}'
-AND etag = '{{ etag }}'
 AND validateOnly = '{{ validateOnly }}'
 AND force = '{{ force }}'
+AND etag = '{{ etag }}'
 ;
 ```
 </TabItem>
@@ -1037,30 +1073,55 @@ AND force = '{{ force }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="restore_from_cloud_sql"
+    defaultValue="import"
     values={[
-        { label: 'restore_from_cloud_sql', value: 'restore_from_cloud_sql' },
-        { label: 'export', value: 'export' },
         { label: 'import', value: 'import' },
+        { label: 'restore', value: 'restore' },
+        { label: 'export', value: 'export' },
         { label: 'upgrade', value: 'upgrade' },
+        { label: 'restore_from_cloud_sql', value: 'restore_from_cloud_sql' },
         { label: 'promote', value: 'promote' },
-        { label: 'switchover', value: 'switchover' },
-        { label: 'restore', value: 'restore' }
+        { label: 'switchover', value: 'switchover' }
     ]}
 >
-<TabItem value="restore_from_cloud_sql">
+<TabItem value="import">
 
-Restores an AlloyDB cluster from a CloudSQL resource.
+Imports data to the cluster. Imperative only.
 
 ```sql
-EXEC google.alloydb.clusters.restore_from_cloud_sql 
+EXEC google.alloydb.clusters.import 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@clustersId='{{ clustersId }}' --required 
+@@json=
+'{
+"database": "{{ database }}", 
+"gcsUri": "{{ gcsUri }}", 
+"user": "{{ user }}", 
+"sqlImportOptions": "{{ sqlImportOptions }}", 
+"csvImportOptions": "{{ csvImportOptions }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="restore">
+
+Creates a new Cluster in a given project and location, with a volume restored from the provided source, either a backup ID or a point-in-time and a source cluster.
+
+```sql
+EXEC google.alloydb.clusters.restore 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"cloudsqlBackupRunSource": "{{ cloudsqlBackupRunSource }}", 
 "clusterId": "{{ clusterId }}", 
-"cluster": "{{ cluster }}"
+"backupSource": "{{ backupSource }}", 
+"cluster": "{{ cluster }}", 
+"continuousBackupSource": "{{ continuousBackupSource }}", 
+"backupdrBackupSource": "{{ backupdrBackupSource }}", 
+"requestId": "{{ requestId }}", 
+"validateOnly": {{ validateOnly }}, 
+"backupdrPitrSource": "{{ backupdrPitrSource }}"
 }'
 ;
 ```
@@ -1076,30 +1137,10 @@ EXEC google.alloydb.clusters.export
 @clustersId='{{ clustersId }}' --required 
 @@json=
 '{
-"gcsDestination": "{{ gcsDestination }}", 
 "csvExportOptions": "{{ csvExportOptions }}", 
 "sqlExportOptions": "{{ sqlExportOptions }}", 
+"gcsDestination": "{{ gcsDestination }}", 
 "database": "{{ database }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="import">
-
-Imports data to the cluster. Imperative only.
-
-```sql
-EXEC google.alloydb.clusters.import 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@clustersId='{{ clustersId }}' --required 
-@@json=
-'{
-"sqlImportOptions": "{{ sqlImportOptions }}", 
-"csvImportOptions": "{{ csvImportOptions }}", 
-"gcsUri": "{{ gcsUri }}", 
-"database": "{{ database }}", 
-"user": "{{ user }}"
 }'
 ;
 ```
@@ -1115,10 +1156,27 @@ EXEC google.alloydb.clusters.upgrade
 @clustersId='{{ clustersId }}' --required 
 @@json=
 '{
-"version": "{{ version }}", 
 "requestId": "{{ requestId }}", 
 "validateOnly": {{ validateOnly }}, 
-"etag": "{{ etag }}"
+"etag": "{{ etag }}", 
+"version": "{{ version }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="restore_from_cloud_sql">
+
+Restores an AlloyDB cluster from a CloudSQL resource.
+
+```sql
+EXEC google.alloydb.clusters.restore_from_cloud_sql 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"clusterId": "{{ clusterId }}", 
+"cloudsqlBackupRunSource": "{{ cloudsqlBackupRunSource }}", 
+"cluster": "{{ cluster }}"
 }'
 ;
 ```
@@ -1152,28 +1210,6 @@ EXEC google.alloydb.clusters.switchover
 @clustersId='{{ clustersId }}' --required 
 @@json=
 '{
-"requestId": "{{ requestId }}", 
-"validateOnly": {{ validateOnly }}
-}'
-;
-```
-</TabItem>
-<TabItem value="restore">
-
-Creates a new Cluster in a given project and location, with a volume restored from the provided source, either a backup ID or a point-in-time and a source cluster.
-
-```sql
-EXEC google.alloydb.clusters.restore 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
-@@json=
-'{
-"backupSource": "{{ backupSource }}", 
-"continuousBackupSource": "{{ continuousBackupSource }}", 
-"backupdrBackupSource": "{{ backupdrBackupSource }}", 
-"backupdrPitrSource": "{{ backupdrPitrSource }}", 
-"clusterId": "{{ clusterId }}", 
-"cluster": "{{ cluster }}", 
 "requestId": "{{ requestId }}", 
 "validateOnly": {{ validateOnly }}
 }'

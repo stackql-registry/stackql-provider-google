@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>unit_operations</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>unit_operations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="unit_operations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.saasservicemgmt.unit_operations" /></td></tr>
 </tbody></table>
@@ -75,9 +76,14 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The timestamp when the resource was created.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="deleteTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The timestamp when the resource was marked for deletion (deletion is an asynchronous operation).</td>
+</tr>
+<tr>
     <td><CopyableCode code="deprovision" /></td>
     <td><code>object</code></td>
-    <td>Deprovision is the unit operation that deprovision the underlying resources represented by a Unit. Can only execute if the Unit is currently provisioned. (id: Deprovision)</td>
+    <td>Optional. Deprovision operation. (id: Deprovision)</td>
 </tr>
 <tr>
     <td><CopyableCode code="engineState" /></td>
@@ -87,12 +93,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="errorCategory" /></td>
     <td><code>string</code></td>
-    <td>Optional. Output only. UnitOperationErrorCategory describe the error category.</td>
+    <td>Optional. Output only. UnitOperationErrorCategory describe the error category. (UNIT_OPERATION_ERROR_CATEGORY_UNSPECIFIED, NOT_APPLICABLE, FATAL, RETRIABLE, IGNORABLE, STANDARD)</td>
 </tr>
 <tr>
     <td><CopyableCode code="etag" /></td>
     <td><code>string</code></td>
     <td>Output only. An opaque value that uniquely identifies a version or generation of a resource. It can be used to confirm that the client and server agree on the ordering of a resource being written.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="flagUpdate" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Flag update operation. (id: FlagUpdate)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -107,7 +118,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="provision" /></td>
     <td><code>object</code></td>
-    <td>Provision is the unit operation that provision the underlying resources represented by a Unit. Can only execute if the Unit is not currently provisioned. (id: Provision)</td>
+    <td>Optional. Provision operation. (id: Provision)</td>
 </tr>
 <tr>
     <td><CopyableCode code="rollout" /></td>
@@ -122,7 +133,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Optional. Output only. UnitOperationState describes the current state of the unit operation.</td>
+    <td>Optional. Output only. UnitOperationState describes the current state of the unit operation. (UNIT_OPERATION_STATE_UNKNOWN, UNIT_OPERATION_STATE_PENDING, UNIT_OPERATION_STATE_SCHEDULED, UNIT_OPERATION_STATE_RUNNING, UNIT_OPERATION_STATE_SUCCEEDED, UNIT_OPERATION_STATE_FAILED, UNIT_OPERATION_STATE_CANCELLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -142,7 +153,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="upgrade" /></td>
     <td><code>object</code></td>
-    <td>Upgrade is the unit operation that upgrades a provisioned unit, which may also include the underlying resources represented by a Unit. Can only execute if the Unit is currently provisioned. (id: Upgrade)</td>
+    <td>Optional. Upgrade operation. (id: Upgrade)</td>
 </tr>
 </tbody>
 </table>
@@ -184,9 +195,14 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The timestamp when the resource was created.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="deleteTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The timestamp when the resource was marked for deletion (deletion is an asynchronous operation).</td>
+</tr>
+<tr>
     <td><CopyableCode code="deprovision" /></td>
     <td><code>object</code></td>
-    <td>Deprovision is the unit operation that deprovision the underlying resources represented by a Unit. Can only execute if the Unit is currently provisioned. (id: Deprovision)</td>
+    <td>Optional. Deprovision operation. (id: Deprovision)</td>
 </tr>
 <tr>
     <td><CopyableCode code="engineState" /></td>
@@ -196,12 +212,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="errorCategory" /></td>
     <td><code>string</code></td>
-    <td>Optional. Output only. UnitOperationErrorCategory describe the error category.</td>
+    <td>Optional. Output only. UnitOperationErrorCategory describe the error category. (UNIT_OPERATION_ERROR_CATEGORY_UNSPECIFIED, NOT_APPLICABLE, FATAL, RETRIABLE, IGNORABLE, STANDARD)</td>
 </tr>
 <tr>
     <td><CopyableCode code="etag" /></td>
     <td><code>string</code></td>
     <td>Output only. An opaque value that uniquely identifies a version or generation of a resource. It can be used to confirm that the client and server agree on the ordering of a resource being written.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="flagUpdate" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Flag update operation. (id: FlagUpdate)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -216,7 +237,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="provision" /></td>
     <td><code>object</code></td>
-    <td>Provision is the unit operation that provision the underlying resources represented by a Unit. Can only execute if the Unit is not currently provisioned. (id: Provision)</td>
+    <td>Optional. Provision operation. (id: Provision)</td>
 </tr>
 <tr>
     <td><CopyableCode code="rollout" /></td>
@@ -231,7 +252,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Optional. Output only. UnitOperationState describes the current state of the unit operation.</td>
+    <td>Optional. Output only. UnitOperationState describes the current state of the unit operation. (UNIT_OPERATION_STATE_UNKNOWN, UNIT_OPERATION_STATE_PENDING, UNIT_OPERATION_STATE_SCHEDULED, UNIT_OPERATION_STATE_RUNNING, UNIT_OPERATION_STATE_SUCCEEDED, UNIT_OPERATION_STATE_FAILED, UNIT_OPERATION_STATE_CANCELLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -251,7 +272,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="upgrade" /></td>
     <td><code>object</code></td>
-    <td>Upgrade is the unit operation that upgrades a provisioned unit, which may also include the underlying resources represented by a Unit. Can only execute if the Unit is currently provisioned. (id: Upgrade)</td>
+    <td>Optional. Upgrade operation. (id: Upgrade)</td>
 </tr>
 </tbody>
 </table>
@@ -284,7 +305,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Retrieve a collection of unit operations.</td>
 </tr>
 <tr>
@@ -298,14 +319,14 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-unitOperationsId"><code>unitOperationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Update a single unit operation.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-unitOperationsId"><code>unitOperationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Delete a single unit operation.</td>
 </tr>
 </tbody>
@@ -407,10 +428,12 @@ annotations,
 cancel,
 conditions,
 createTime,
+deleteTime,
 deprovision,
 engineState,
 errorCategory,
 etag,
+flagUpdate,
 labels,
 parentUnitOperation,
 provision,
@@ -439,10 +462,12 @@ annotations,
 cancel,
 conditions,
 createTime,
+deleteTime,
 deprovision,
 engineState,
 errorCategory,
 etag,
+flagUpdate,
 labels,
 parentUnitOperation,
 provision,
@@ -456,9 +481,9 @@ upgrade
 FROM google.saasservicemgmt.unit_operations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 ;
 ```
@@ -481,17 +506,18 @@ Create a new unit operation.
 
 ```sql
 INSERT INTO google.saasservicemgmt.unit_operations (
-data__unit,
-data__labels,
-data__deprovision,
+data__annotations,
+data__rollout,
+data__cancel,
 data__parentUnitOperation,
 data__schedule,
-data__annotations,
-data__upgrade,
-data__rollout,
-data__provision,
+data__deprovision,
+data__labels,
 data__name,
-data__cancel,
+data__provision,
+data__upgrade,
+data__unit,
+data__flagUpdate,
 projectsId,
 locationsId,
 unitOperationId,
@@ -499,17 +525,18 @@ validateOnly,
 requestId
 )
 SELECT 
-'{{ unit }}',
-'{{ labels }}',
-'{{ deprovision }}',
+'{{ annotations }}',
+'{{ rollout }}',
+{{ cancel }},
 '{{ parentUnitOperation }}',
 '{{ schedule }}',
-'{{ annotations }}',
-'{{ upgrade }}',
-'{{ rollout }}',
-'{{ provision }}',
+'{{ deprovision }}',
+'{{ labels }}',
 '{{ name }}',
-{{ cancel }},
+'{{ provision }}',
+'{{ upgrade }}',
+'{{ unit }}',
+'{{ flagUpdate }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ unitOperationId }}',
@@ -521,10 +548,12 @@ annotations,
 cancel,
 conditions,
 createTime,
+deleteTime,
 deprovision,
 engineState,
 errorCategory,
 etag,
+flagUpdate,
 labels,
 parentUnitOperation,
 provision,
@@ -540,78 +569,83 @@ upgrade
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: unit_operations
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the unit_operations resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the unit_operations resource.
-    - name: unit
-      value: string
-      description: >
-        Required. Immutable. The Unit a given UnitOperation will act upon.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. The labels on the resource, which can be used for categorization. similar to Kubernetes resource labels.
-        
-    - name: deprovision
-      value: object
-      description: >
-        Deprovision is the unit operation that deprovision the underlying resources represented by a Unit. Can only execute if the Unit is currently provisioned.
-        
-    - name: parentUnitOperation
-      value: string
-      description: >
-        Optional. Reference to parent resource: UnitOperation. If an operation needs to create other operations as part of its workflow, each of the child operations should have this field set to the parent. This can be used for tracing. (Optional)
-        
-    - name: schedule
-      value: object
-      description: >
-        Optional. When to schedule this operation.
-        
     - name: annotations
-      value: object
-      description: >
+      value: "{{ annotations }}"
+      description: |
         Optional. Annotations is an unstructured key-value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/user-guide/annotations
-        
-    - name: upgrade
-      value: object
-      description: >
-        Upgrade is the unit operation that upgrades a provisioned unit, which may also include the underlying resources represented by a Unit. Can only execute if the Unit is currently provisioned.
-        
     - name: rollout
-      value: string
-      description: >
+      value: "{{ rollout }}"
+      description: |
         Optional. Specifies which rollout created this Unit Operation. This cannot be modified and is used for filtering purposes only. If a dependent unit and unit operation are created as part of another unit operation, they will use the same rolloutId.
-        
-    - name: provision
-      value: object
-      description: >
-        Provision is the unit operation that provision the underlying resources represented by a Unit. Can only execute if the Unit is not currently provisioned.
-        
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name (full URI of the resource) following the standard naming scheme: "projects/{project}/locations/{location}/unitOperations/{unitOperation}"
-        
     - name: cancel
-      value: boolean
-      description: >
+      value: {{ cancel }}
+      description: |
         Optional. When true, attempt to cancel the operation. Cancellation may fail if the operation is already executing. (Optional)
-        
+    - name: parentUnitOperation
+      value: "{{ parentUnitOperation }}"
+      description: |
+        Optional. Reference to parent resource: UnitOperation. If an operation needs to create other operations as part of its workflow, each of the child operations should have this field set to the parent. This can be used for tracing. (Optional)
+    - name: schedule
+      description: |
+        Optional. When to schedule this operation.
+      value:
+        startTime: "{{ startTime }}"
+    - name: deprovision
+      value: "{{ deprovision }}"
+      description: |
+        Optional. Deprovision operation.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. The labels on the resource, which can be used for categorization. similar to Kubernetes resource labels.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name (full URI of the resource) following the standard naming scheme: "projects/{project}/locations/{location}/unitOperations/{unitOperation}"
+    - name: provision
+      description: |
+        Optional. Provision operation.
+      value:
+        release: "{{ release }}"
+        inputVariables:
+          - variable: "{{ variable }}"
+            type: "{{ type }}"
+            value: "{{ value }}"
+    - name: upgrade
+      description: |
+        Optional. Upgrade operation.
+      value:
+        inputVariables:
+          - variable: "{{ variable }}"
+            type: "{{ type }}"
+            value: "{{ value }}"
+        release: "{{ release }}"
+    - name: unit
+      value: "{{ unit }}"
+      description: |
+        Required. Immutable. The Unit a given UnitOperation will act upon.
+    - name: flagUpdate
+      description: |
+        Optional. Flag update operation.
+      value:
+        flagRelease: "{{ flagRelease }}"
     - name: unitOperationId
-      value: string
+      value: "{{ unitOperationId }}"
     - name: validateOnly
-      value: boolean
+      value: {{ validateOnly }}
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -631,34 +665,37 @@ Update a single unit operation.
 ```sql
 UPDATE google.saasservicemgmt.unit_operations
 SET 
-data__unit = '{{ unit }}',
-data__labels = '{{ labels }}',
-data__deprovision = '{{ deprovision }}',
+data__annotations = '{{ annotations }}',
+data__rollout = '{{ rollout }}',
+data__cancel = {{ cancel }},
 data__parentUnitOperation = '{{ parentUnitOperation }}',
 data__schedule = '{{ schedule }}',
-data__annotations = '{{ annotations }}',
-data__upgrade = '{{ upgrade }}',
-data__rollout = '{{ rollout }}',
-data__provision = '{{ provision }}',
+data__deprovision = '{{ deprovision }}',
+data__labels = '{{ labels }}',
 data__name = '{{ name }}',
-data__cancel = {{ cancel }}
+data__provision = '{{ provision }}',
+data__upgrade = '{{ upgrade }}',
+data__unit = '{{ unit }}',
+data__flagUpdate = '{{ flagUpdate }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND unitOperationsId = '{{ unitOperationsId }}' --required
-AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
 AND validateOnly = {{ validateOnly}}
+AND requestId = '{{ requestId}}'
 RETURNING
 name,
 annotations,
 cancel,
 conditions,
 createTime,
+deleteTime,
 deprovision,
 engineState,
 errorCategory,
 etag,
+flagUpdate,
 labels,
 parentUnitOperation,
 provision,
@@ -691,9 +728,9 @@ DELETE FROM google.saasservicemgmt.unit_operations
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND unitOperationsId = '{{ unitOperationsId }}' --required
-AND requestId = '{{ requestId }}'
-AND validateOnly = '{{ validateOnly }}'
 AND etag = '{{ etag }}'
+AND validateOnly = '{{ validateOnly }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>

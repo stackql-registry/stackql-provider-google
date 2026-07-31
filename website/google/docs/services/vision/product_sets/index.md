@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>product_sets</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>product_sets</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="product_sets" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.vision.product_sets" /></td></tr>
 </tbody></table>
@@ -62,7 +63,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="indexError" /></td>
     <td><code>object</code></td>
-    <td>Output only. If there was an error with indexing the product set, the field is populated. This field is ignored when creating a ProductSet. (id: Status)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: Status)</td>
 </tr>
 <tr>
     <td><CopyableCode code="indexTime" /></td>
@@ -96,7 +97,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="indexError" /></td>
     <td><code>object</code></td>
-    <td>Output only. If there was an error with indexing the product set, the field is populated. This field is ignored when creating a ProductSet. (id: Status)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: Status)</td>
 </tr>
 <tr>
     <td><CopyableCode code="indexTime" /></td>
@@ -281,15 +282,15 @@ Creates and returns a new ProductSet resource. Possible errors: * Returns INVALI
 
 ```sql
 INSERT INTO google.vision.product_sets (
-data__displayName,
 data__name,
+data__displayName,
 projectsId,
 locationsId,
 productSetId
 )
 SELECT 
-'{{ displayName }}',
 '{{ name }}',
+'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ productSetId }}'
@@ -303,29 +304,27 @@ indexTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: product_sets
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the product_sets resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the product_sets resource.
-    - name: displayName
-      value: string
-      description: >
-        The user-provided name for this ProductSet. Must not be empty. Must be at most 4096 characters long.
-        
     - name: name
-      value: string
-      description: >
-        The resource name of the ProductSet. Format is: `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`. This field is ignored when creating a ProductSet.
-        
+      value: "{{ name }}"
+      description: |
+        The resource name of the ProductSet. Format is: \`projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID\`. This field is ignored when creating a ProductSet.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        The user-provided name for this ProductSet. Must not be empty. Must be at most 4096 characters long.
     - name: productSetId
-      value: string
-```
+      value: "{{ productSetId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -345,8 +344,8 @@ Makes changes to a ProductSet resource. Only display_name can be updated current
 ```sql
 UPDATE google.vision.product_sets
 SET 
-data__displayName = '{{ displayName }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__displayName = '{{ displayName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

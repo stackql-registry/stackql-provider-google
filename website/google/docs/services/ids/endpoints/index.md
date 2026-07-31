@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>endpoints</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>endpoints</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="endpoints" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.ids.endpoints" /></td></tr>
 </tbody></table>
@@ -97,12 +98,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="severity" /></td>
     <td><code>string</code></td>
-    <td>Required. Lowest threat severity that this endpoint will alert on.</td>
+    <td>Required. Lowest threat severity that this endpoint will alert on. (SEVERITY_UNSPECIFIED, INFORMATIONAL, LOW, MEDIUM, HIGH, CRITICAL)</td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the endpoint.</td>
+    <td>Output only. Current state of the endpoint. (STATE_UNSPECIFIED, CREATING, READY, DELETING, UPDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="threatExceptions" /></td>
@@ -181,12 +182,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="severity" /></td>
     <td><code>string</code></td>
-    <td>Required. Lowest threat severity that this endpoint will alert on.</td>
+    <td>Required. Lowest threat severity that this endpoint will alert on. (SEVERITY_UNSPECIFIED, INFORMATIONAL, LOW, MEDIUM, HIGH, CRITICAL)</td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the endpoint.</td>
+    <td>Output only. Current state of the endpoint. (STATE_UNSPECIFIED, CREATING, READY, DELETING, UPDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="threatExceptions" /></td>
@@ -234,21 +235,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Endpoints in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-endpointId"><code>endpointId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-endpointId"><code>endpointId</code></a></td>
     <td>Creates a new Endpoint in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-endpointsId"><code>endpointsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Updates the parameters of a single Endpoint.</td>
 </tr>
 <tr>
@@ -386,10 +387,10 @@ updateTime
 FROM google.ids.endpoints
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -411,28 +412,28 @@ Creates a new Endpoint in a given project and location.
 
 ```sql
 INSERT INTO google.ids.endpoints (
-data__threatExceptions,
 data__network,
-data__trafficLogs,
+data__threatExceptions,
 data__severity,
+data__trafficLogs,
 data__labels,
 data__description,
 projectsId,
 locationsId,
-endpointId,
-requestId
+requestId,
+endpointId
 )
 SELECT 
-'{{ threatExceptions }}',
 '{{ network }}',
-{{ trafficLogs }},
+'{{ threatExceptions }}',
 '{{ severity }}',
+{{ trafficLogs }},
 '{{ labels }}',
 '{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ endpointId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ endpointId }}'
 RETURNING
 name,
 done,
@@ -444,52 +445,47 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: endpoints
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the endpoints resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the endpoints resource.
-    - name: threatExceptions
-      value: array
-      description: >
-        List of threat IDs to be excepted from generating alerts.
-        
     - name: network
-      value: string
-      description: >
+      value: "{{ network }}"
+      description: |
         Required. The fully qualified URL of the network to which the IDS Endpoint is attached.
-        
-    - name: trafficLogs
-      value: boolean
-      description: >
-        Whether the endpoint should report traffic logs in addition to threat logs.
-        
+    - name: threatExceptions
+      value:
+        - "{{ threatExceptions }}"
+      description: |
+        List of threat IDs to be excepted from generating alerts.
     - name: severity
-      value: string
-      description: >
+      value: "{{ severity }}"
+      description: |
         Required. Lowest threat severity that this endpoint will alert on.
-        
       valid_values: ['SEVERITY_UNSPECIFIED', 'INFORMATIONAL', 'LOW', 'MEDIUM', 'HIGH', 'CRITICAL']
+    - name: trafficLogs
+      value: {{ trafficLogs }}
+      description: |
+        Whether the endpoint should report traffic logs in addition to threat logs.
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         The labels of the endpoint.
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         User-provided description of the endpoint
-        
-    - name: endpointId
-      value: string
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+    - name: endpointId
+      value: "{{ endpointId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -509,18 +505,18 @@ Updates the parameters of a single Endpoint.
 ```sql
 UPDATE google.ids.endpoints
 SET 
-data__threatExceptions = '{{ threatExceptions }}',
 data__network = '{{ network }}',
-data__trafficLogs = {{ trafficLogs }},
+data__threatExceptions = '{{ threatExceptions }}',
 data__severity = '{{ severity }}',
+data__trafficLogs = {{ trafficLogs }},
 data__labels = '{{ labels }}',
 data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND endpointsId = '{{ endpointsId }}' --required
-AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
+AND requestId = '{{ requestId}}'
 RETURNING
 name,
 done,

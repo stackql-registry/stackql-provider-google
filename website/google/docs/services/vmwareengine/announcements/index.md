@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>announcements</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>announcements</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="announcements" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.vmwareengine.announcements" /></td></tr>
 </tbody></table>
@@ -92,7 +93,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the resource. New values may be added to this enum when appropriate.</td>
+    <td>Output only. State of the resource. New values may be added to this enum when appropriate. (STATE_UNSPECIFIED, ACTIVE, INACTIVE, DELETING, CREATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="targetResourceType" /></td>
@@ -118,6 +119,61 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The resource name of the announcement. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-west1-a/announcements/my-announcement-id`</td>
+</tr>
+<tr>
+    <td><CopyableCode code="activityType" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Activity type of the announcement There can be only one active announcement for a given activity type and target resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="cluster" /></td>
+    <td><code>string</code></td>
+    <td>A Cluster resource name.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="code" /></td>
+    <td><code>string</code></td>
+    <td>Required. Code of the announcement. Indicates the presence of a VMware Engine related announcement and corresponds to a related message in the `description` field.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Creation time of this resource. It also serves as start time of notification.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Description of the announcement.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="metadata" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Additional structured details about this announcement.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="privateCloud" /></td>
+    <td><code>string</code></td>
+    <td>A Private Cloud resource name.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Output only. State of the resource. New values may be added to this enum when appropriate. (STATE_UNSPECIFIED, ACTIVE, INACTIVE, DELETING, CREATING)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="targetResourceType" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Target Resource Type defines the type of the target for the announcement</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Last update time of this resource.</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -149,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists `Announcements` for a given region and project</td>
 </tr>
 </tbody>
@@ -245,14 +301,24 @@ Lists `Announcements` for a given region and project
 
 ```sql
 SELECT
-*
+name,
+activityType,
+cluster,
+code,
+createTime,
+description,
+metadata,
+privateCloud,
+state,
+targetResourceType,
+updateTime
 FROM google.vmwareengine.announcements
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>

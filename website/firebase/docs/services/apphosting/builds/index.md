@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>builds</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>builds</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="builds" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.apphosting.builds" /></td></tr>
 </tbody></table>
@@ -122,7 +123,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the build.</td>
+    <td>Output only. The state of the build. (STATE_UNSPECIFIED, BUILDING, BUILT, DEPLOYING, READY, FAILED, SKIPPED, EXPIRED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -221,7 +222,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the build.</td>
+    <td>Output only. The state of the build. (STATE_UNSPECIFIED, BUILDING, BUILT, DEPLOYING, READY, FAILED, SKIPPED, EXPIRED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -264,7 +265,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backendsId"><code>backendsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
     <td>Lists builds in a given project, location, and backend.</td>
 </tr>
 <tr>
@@ -278,7 +279,7 @@ The following methods are available for this resource:
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backendsId"><code>backendsId</code></a>, <a href="#parameter-buildsId"><code>buildsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
     <td>Deletes a single build.</td>
 </tr>
 </tbody>
@@ -434,8 +435,8 @@ AND locationsId = '{{ locationsId }}' -- required
 AND backendsId = '{{ backendsId }}' -- required
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 AND showDeleted = '{{ showDeleted }}'
 ;
 ```
@@ -458,11 +459,11 @@ Creates a new build for a backend.
 
 ```sql
 INSERT INTO firebase.apphosting.builds (
+data__labels,
+data__source,
 data__name,
 data__displayName,
 data__config,
-data__source,
-data__labels,
 data__annotations,
 projectsId,
 locationsId,
@@ -472,11 +473,11 @@ requestId,
 validateOnly
 )
 SELECT 
+'{{ labels }}',
+'{{ source }}',
 '{{ name }}',
 '{{ displayName }}',
 '{{ config }}',
-'{{ source }}',
-'{{ labels }}',
 '{{ annotations }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -495,56 +496,94 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: builds
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the builds resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the builds resource.
     - name: backendsId
-      value: string
+      value: "{{ backendsId }}"
       description: Required parameter for the builds resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the build. Format: `projects/{project}/locations/{locationId}/backends/{backendId}/builds/{buildId}`.
-        
-    - name: displayName
-      value: string
-      description: >
-        Optional. Human-readable name. 63 character limit.
-        
-    - name: config
-      value: object
-      description: >
-        Optional. Additional configuration of the service.
-        
-    - name: source
-      value: object
-      description: >
-        Required. Immutable. The source for the build.
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. Unstructured key value map that can be used to organize and categorize objects.
-        
+    - name: source
+      description: |
+        Required. Immutable. The source for the build.
+      value:
+        archive:
+          externalSignedUri: "{{ externalSignedUri }}"
+          description: "{{ description }}"
+          userStorageUri: "{{ userStorageUri }}"
+          author:
+            imageUri: "{{ imageUri }}"
+            displayName: "{{ displayName }}"
+            email: "{{ email }}"
+          rootDirectory: "{{ rootDirectory }}"
+        codebase:
+          uri: "{{ uri }}"
+          author:
+            email: "{{ email }}"
+            displayName: "{{ displayName }}"
+            imageUri: "{{ imageUri }}"
+          commit: "{{ commit }}"
+          hash: "{{ hash }}"
+          commitTime: "{{ commitTime }}"
+          branch: "{{ branch }}"
+          displayName: "{{ displayName }}"
+          repository: "{{ repository }}"
+          commitMessage: "{{ commitMessage }}"
+        container:
+          image: "{{ image }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the build. Format: \`projects/{project}/locations/{locationId}/backends/{backendId}/builds/{buildId}\`.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. Human-readable name. 63 character limit.
+    - name: config
+      description: |
+        Optional. Additional configuration of the service.
+      value:
+        runConfig:
+          concurrency: {{ concurrency }}
+          maxInstances: {{ maxInstances }}
+          minInstances: {{ minInstances }}
+          cpu: {{ cpu }}
+          memoryMib: {{ memoryMib }}
+        env:
+          - value: "{{ value }}"
+            secret: "{{ secret }}"
+            originFileName: "{{ originFileName }}"
+            variable: "{{ variable }}"
+            availability: "{{ availability }}"
+            origin: "{{ origin }}"
+        effectiveEnv:
+          - value: "{{ value }}"
+            secret: "{{ secret }}"
+            originFileName: "{{ originFileName }}"
+            variable: "{{ variable }}"
+            availability: "{{ availability }}"
+            origin: "{{ origin }}"
     - name: annotations
-      value: object
-      description: >
+      value: "{{ annotations }}"
+      description: |
         Optional. Unstructured key value map that may be set by external tools to store and arbitrary metadata. They are not queryable and should be preserved when modifying objects.
-        
     - name: buildId
-      value: string
+      value: "{{ buildId }}"
     - name: requestId
-      value: string
+      value: "{{ requestId }}"
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -567,9 +606,9 @@ WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND backendsId = '{{ backendsId }}' --required
 AND buildsId = '{{ buildsId }}' --required
+AND validateOnly = '{{ validateOnly }}'
 AND requestId = '{{ requestId }}'
 AND etag = '{{ etag }}'
-AND validateOnly = '{{ validateOnly }}'
 ;
 ```
 </TabItem>

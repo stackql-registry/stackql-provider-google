@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>releases_executable</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>releases_executable</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="releases_executable" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.rules.releases_executable" /></td></tr>
 </tbody></table>
@@ -56,12 +57,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="executableVersion" /></td>
     <td><code>string</code></td>
-    <td>The Rules runtime version of the executable.</td>
+    <td>The Rules runtime version of the executable. (RELEASE_EXECUTABLE_VERSION_UNSPECIFIED, FIREBASE_RULES_EXECUTABLE_V1, FIREBASE_RULES_EXECUTABLE_V2)</td>
 </tr>
 <tr>
     <td><CopyableCode code="language" /></td>
     <td><code>string</code></td>
-    <td>`Language` used to generate the executable bytes.</td>
+    <td>`Language` used to generate the executable bytes. (LANGUAGE_UNSPECIFIED, FIREBASE_RULES, EVENT_FLOW_TRIGGERS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="rulesetName" /></td>

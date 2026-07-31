@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>groups_group_migration</code> r
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>groups_group_migration</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="groups_group_migration" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.vmmigration.groups_group_migration" /></td></tr>
 </tbody></table>
@@ -133,25 +134,24 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: groups_group_migration
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the groups_group_migration resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the groups_group_migration resource.
     - name: groupsId
-      value: string
+      value: "{{ groupsId }}"
       description: Required parameter for the groups_group_migration resource.
     - name: migratingVm
-      value: string
-      description: >
+      value: "{{ migratingVm }}"
+      description: |
         The full path name of the MigratingVm to add.
-        
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

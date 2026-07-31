@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>parameters</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>parameters</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="parameters" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.parametermanager.parameters" /></td></tr>
 </tbody></table>
@@ -62,7 +63,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="format" /></td>
     <td><code>string</code></td>
-    <td>Optional. Specifies the format of a Parameter.</td>
+    <td>Optional. Specifies the format of a Parameter. (PARAMETER_FORMAT_UNSPECIFIED, UNFORMATTED, YAML, JSON)</td>
 </tr>
 <tr>
     <td><CopyableCode code="kmsKey" /></td>
@@ -98,41 +99,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Identifier. [Output only] The resource name of the Parameter in the format `projects/*/locations/*/parameters/*`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. [Output only] Create time stamp</td>
-</tr>
-<tr>
-    <td><CopyableCode code="format" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Specifies the format of a Parameter.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="kmsKey" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Customer managed encryption key (CMEK) to use for encrypting the Parameter Versions. If not set, the default Google-managed encryption key will be used. Cloud KMS CryptoKeys must reside in the same location as the Parameter. The expected format is `projects/*/locations/*/keyRings/*/cryptoKeys/*`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Labels as key value pairs</td>
-</tr>
-<tr>
-    <td><CopyableCode code="policyMember" /></td>
-    <td><code>object</code></td>
-    <td>Output only. [Output-only] policy member strings of a Google Cloud resource. (id: ResourcePolicyMember)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. [Output only] Update time stamp</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -164,14 +130,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists Parameters in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-parameterId"><code>parameterId</code></a></td>
+    <td><a href="#parameter-parameterId"><code>parameterId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new Parameter in a given project and location.</td>
 </tr>
 <tr>
@@ -292,20 +258,14 @@ Lists Parameters in a given project and location.
 
 ```sql
 SELECT
-name,
-createTime,
-format,
-kmsKey,
-labels,
-policyMember,
-updateTime
+*
 FROM google.parametermanager.parameters
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -327,24 +287,24 @@ Creates a new Parameter in a given project and location.
 
 ```sql
 INSERT INTO google.parametermanager.parameters (
-data__labels,
-data__name,
 data__format,
 data__kmsKey,
+data__labels,
+data__name,
 projectsId,
 locationsId,
-requestId,
-parameterId
+parameterId,
+requestId
 )
 SELECT 
-'{{ labels }}',
-'{{ name }}',
 '{{ format }}',
 '{{ kmsKey }}',
+'{{ labels }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ parameterId }}'
+'{{ parameterId }}',
+'{{ requestId }}'
 RETURNING
 name,
 createTime,
@@ -358,42 +318,38 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: parameters
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the parameters resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the parameters resource.
-    - name: labels
-      value: object
-      description: >
-        Optional. Labels as key value pairs
-        
-    - name: name
-      value: string
-      description: >
-        Identifier. [Output only] The resource name of the Parameter in the format `projects/*/locations/*/parameters/*`.
-        
     - name: format
-      value: string
-      description: >
+      value: "{{ format }}"
+      description: |
         Optional. Specifies the format of a Parameter.
-        
       valid_values: ['PARAMETER_FORMAT_UNSPECIFIED', 'UNFORMATTED', 'YAML', 'JSON']
     - name: kmsKey
-      value: string
-      description: >
-        Optional. Customer managed encryption key (CMEK) to use for encrypting the Parameter Versions. If not set, the default Google-managed encryption key will be used. Cloud KMS CryptoKeys must reside in the same location as the Parameter. The expected format is `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
-        
-    - name: requestId
-      value: string
+      value: "{{ kmsKey }}"
+      description: |
+        Optional. Customer managed encryption key (CMEK) to use for encrypting the Parameter Versions. If not set, the default Google-managed encryption key will be used. Cloud KMS CryptoKeys must reside in the same location as the Parameter. The expected format is \`projects/*/locations/*/keyRings/*/cryptoKeys/*\`.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Labels as key value pairs
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. [Output only] The resource name of the Parameter in the format \`projects/*/locations/*/parameters/*\`.
     - name: parameterId
-      value: string
-```
+      value: "{{ parameterId }}"
+    - name: requestId
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -413,10 +369,10 @@ Updates a single Parameter.
 ```sql
 UPDATE google.parametermanager.parameters
 SET 
-data__labels = '{{ labels }}',
-data__name = '{{ name }}',
 data__format = '{{ format }}',
-data__kmsKey = '{{ kmsKey }}'
+data__kmsKey = '{{ kmsKey }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>qa_scorecards</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>qa_scorecards</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="qa_scorecards" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.contactcenterinsights.qa_scorecards" /></td></tr>
 </tbody></table>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="source" /></td>
     <td><code>string</code></td>
-    <td>Output only. The source of the scorecard.</td>
+    <td>Output only. The source of the scorecard. (QA_SCORECARD_SOURCE_UNSPECIFIED, QA_SCORECARD_SOURCE_CUSTOMER_DEFINED, QA_SCORECARD_SOURCE_DISCOVERY_ENGINE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -126,7 +127,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="source" /></td>
     <td><code>string</code></td>
-    <td>Output only. The source of the scorecard.</td>
+    <td>Output only. The source of the scorecard. (QA_SCORECARD_SOURCE_UNSPECIFIED, QA_SCORECARD_SOURCE_CUSTOMER_DEFINED, QA_SCORECARD_SOURCE_DISCOVERY_ENGINE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -164,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-qaScorecardSources"><code>qaScorecardSources</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-qaScorecardSources"><code>qaScorecardSources</code></a></td>
     <td>Lists QaScorecards.</td>
 </tr>
 <tr>
@@ -297,8 +298,8 @@ updateTime
 FROM google.contactcenterinsights.qa_scorecards
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 AND qaScorecardSources = '{{ qaScorecardSources }}'
 ;
 ```
@@ -321,19 +322,19 @@ Create a QaScorecard.
 
 ```sql
 INSERT INTO google.contactcenterinsights.qa_scorecards (
-data__name,
 data__isDefault,
 data__displayName,
 data__description,
+data__name,
 projectsId,
 locationsId,
 qaScorecardId
 )
 SELECT 
-'{{ name }}',
 {{ isDefault }},
 '{{ displayName }}',
 '{{ description }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ qaScorecardId }}'
@@ -350,39 +351,35 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: qa_scorecards
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the qa_scorecards resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the qa_scorecards resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The scorecard name. Format: projects/{project}/locations/{location}/qaScorecards/{qa_scorecard}
-        
     - name: isDefault
-      value: boolean
-      description: >
+      value: {{ isDefault }}
+      description: |
         Whether the scorecard is the default one for the project. A default scorecard cannot be deleted and will always appear first in scorecard selector.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         The user-specified display name of the scorecard.
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         A text description explaining the intent of the scorecard.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The scorecard name. Format: projects/{project}/locations/{location}/qaScorecards/{qa_scorecard}
     - name: qaScorecardId
-      value: string
-```
+      value: "{{ qaScorecardId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -402,10 +399,10 @@ Updates a QaScorecard.
 ```sql
 UPDATE google.contactcenterinsights.qa_scorecards
 SET 
-data__name = '{{ name }}',
 data__isDefault = {{ isDefault }},
 data__displayName = '{{ displayName }}',
-data__description = '{{ description }}'
+data__description = '{{ description }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

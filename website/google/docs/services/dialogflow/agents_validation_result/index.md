@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>agents_validation_result</code
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>agents_validation_result</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="agents_validation_result" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dialogflow.agents_validation_result" /></td></tr>
 </tbody></table>
@@ -51,12 +52,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The unique identifier of the agent validation result. Format: `projects//locations//agents//validationResult`.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="flowValidationResults" /></td>
     <td><code>array</code></td>
-    <td>Contains all flow validation results.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -83,7 +84,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
     <td><a href="#parameter-languageCode"><code>languageCode</code></a></td>
-    <td>Gets the latest agent validation result. Agent validation is performed when ValidateAgent is called.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -134,7 +135,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="projects_locations_agents_get_validation_result">
 
-Gets the latest agent validation result. Agent validation is performed when ValidateAgent is called.
+Successful response
 
 ```sql
 SELECT

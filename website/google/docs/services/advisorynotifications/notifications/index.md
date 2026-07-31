@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>notifications</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>notifications</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="notifications" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.advisorynotifications.notifications" /></td></tr>
 </tbody></table>
@@ -67,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="notificationType" /></td>
     <td><code>string</code></td>
-    <td>Type of notification</td>
+    <td>Type of notification (NOTIFICATION_TYPE_UNSPECIFIED, NOTIFICATION_TYPE_SECURITY_PRIVACY_ADVISORY, NOTIFICATION_TYPE_SENSITIVE_ACTIONS, NOTIFICATION_TYPE_SECURITY_MSA, NOTIFICATION_TYPE_THREAT_HORIZONS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="subject" /></td>
@@ -106,7 +107,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="notificationType" /></td>
     <td><code>string</code></td>
-    <td>Type of notification</td>
+    <td>Type of notification (NOTIFICATION_TYPE_UNSPECIFIED, NOTIFICATION_TYPE_SECURITY_PRIVACY_ADVISORY, NOTIFICATION_TYPE_SENSITIVE_ACTIONS, NOTIFICATION_TYPE_SECURITY_MSA, NOTIFICATION_TYPE_THREAT_HORIZONS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="subject" /></td>
@@ -136,15 +137,15 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-notificationsId"><code>notificationsId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-notificationsId"><code>notificationsId</code></a></td>
     <td><a href="#parameter-languageCode"><code>languageCode</code></a></td>
     <td>Gets a notification.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Lists notifications under a given parent.</td>
 </tr>
 </tbody>
@@ -173,8 +174,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
-<tr id="parameter-projectsId">
-    <td><CopyableCode code="projectsId" /></td>
+<tr id="parameter-organizationsId">
+    <td><CopyableCode code="organizationsId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -222,7 +223,7 @@ messages,
 notificationType,
 subject
 FROM google.advisorynotifications.notifications
-WHERE projectsId = '{{ projectsId }}' -- required
+WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND notificationsId = '{{ notificationsId }}' -- required
 AND languageCode = '{{ languageCode }}'
@@ -241,12 +242,12 @@ messages,
 notificationType,
 subject
 FROM google.advisorynotifications.notifications
-WHERE projectsId = '{{ projectsId }}' -- required
+WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND view = '{{ view }}'
 AND pageToken = '{{ pageToken }}'
 AND languageCode = '{{ languageCode }}'
+AND view = '{{ view }}'
 ;
 ```
 </TabItem>

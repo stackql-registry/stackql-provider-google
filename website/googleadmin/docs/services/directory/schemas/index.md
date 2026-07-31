@@ -15,6 +15,7 @@ image: /img/stackql-googleadmin-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>schemas</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>schemas</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="schemas" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleadmin.directory.schemas" /></td></tr>
 </tbody></table>
@@ -259,18 +260,18 @@ Creates a schema.
 ```sql
 INSERT INTO googleadmin.directory.schemas (
 data__schemaId,
-data__schemaName,
 data__fields,
 data__displayName,
+data__schemaName,
 data__kind,
 data__etag,
 customerId
 )
 SELECT 
 '{{ schemaId }}',
-'{{ schemaName }}',
 '{{ fields }}',
 '{{ displayName }}',
+'{{ schemaName }}',
 '{{ kind }}',
 '{{ etag }}',
 '{{ customerId }}'
@@ -286,45 +287,51 @@ schemaName
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: schemas
   props:
     - name: customerId
-      value: string
+      value: "{{ customerId }}"
       description: Required parameter for the schemas resource.
     - name: schemaId
-      value: string
-      description: >
+      value: "{{ schemaId }}"
+      description: |
         The unique identifier of the schema (Read-only)
-        
-    - name: schemaName
-      value: string
-      description: >
-        The schema's name. Each `schema_name` must be unique within a customer. Reusing a name results in a `409: Entity already exists` error.
-        
     - name: fields
-      value: array
-      description: >
+      description: |
         A list of fields in the schema.
-        
+      value:
+        - kind: "{{ kind }}"
+          fieldId: "{{ fieldId }}"
+          etag: "{{ etag }}"
+          numericIndexingSpec:
+            minValue: {{ minValue }}
+            maxValue: {{ maxValue }}
+          readAccessType: "{{ readAccessType }}"
+          multiValued: {{ multiValued }}
+          indexed: {{ indexed }}
+          fieldName: "{{ fieldName }}"
+          fieldType: "{{ fieldType }}"
+          displayName: "{{ displayName }}"
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Display name for the schema.
-        
+    - name: schemaName
+      value: "{{ schemaName }}"
+      description: |
+        The schema's name. Each \`schema_name\` must be unique within a customer. Reusing a name results in a \`409: Entity already exists\` error.
     - name: kind
-      value: string
-      description: >
+      value: "{{ kind }}"
+      description: |
         Kind of resource this is.
-        
       default: admin#directory#schema
     - name: etag
-      value: string
-      description: >
+      value: "{{ etag }}"
+      description: |
         The ETag of the resource.
-        
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -345,9 +352,9 @@ Patches a schema.
 UPDATE googleadmin.directory.schemas
 SET 
 data__schemaId = '{{ schemaId }}',
-data__schemaName = '{{ schemaName }}',
 data__fields = '{{ fields }}',
 data__displayName = '{{ displayName }}',
+data__schemaName = '{{ schemaName }}',
 data__kind = '{{ kind }}',
 data__etag = '{{ etag }}'
 WHERE 
@@ -381,9 +388,9 @@ Updates a schema.
 REPLACE googleadmin.directory.schemas
 SET 
 data__schemaId = '{{ schemaId }}',
-data__schemaName = '{{ schemaName }}',
 data__fields = '{{ fields }}',
 data__displayName = '{{ displayName }}',
+data__schemaName = '{{ schemaName }}',
 data__kind = '{{ kind }}',
 data__etag = '{{ etag }}'
 WHERE 

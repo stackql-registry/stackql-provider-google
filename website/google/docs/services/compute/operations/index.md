@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>operations</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>operations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="operations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.operations" /></td></tr>
 </tbody></table>
@@ -77,12 +78,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="endTime" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The time that this operation was completed. This value is in RFC3339 text format.</td>
+    <td>[Output Only] The time that this operation was completed. This value is inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
     <td>[Output Only] If errors are generated during processing of the operation, this field will be populated.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="getVersionOperationMetadata" /></td>
+    <td><code>object</code></td>
+    <td> (id: GetVersionOperationMetadata)</td>
 </tr>
 <tr>
     <td><CopyableCode code="httpErrorMessage" /></td>
@@ -97,7 +103,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="insertTime" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The time that this operation was requested. This value is in RFC3339 text format.</td>
+    <td>[Output Only] The time that this operation was requested. This value is inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="instancesBulkInsertOperationMetadata" /></td>
@@ -107,12 +113,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of the resource. Always `compute#operation` for Operation resources. (default: compute#operation)</td>
+    <td>Output only. [Output Only] Type of the resource. Always `compute#operation` for Operation resources. (default: compute#operation)</td>
 </tr>
 <tr>
     <td><CopyableCode code="operationGroupId" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] An ID that represents a group of operations, such as when a group of operations results from a `bulkInsert` API request.</td>
+    <td>Output only. [Output Only] An ID that represents a group of operations, such as when a group of operations results from a `bulkInsert` API request.</td>
 </tr>
 <tr>
     <td><CopyableCode code="operationType" /></td>
@@ -137,17 +143,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="setCommonInstanceMetadataOperationMetadata" /></td>
     <td><code>object</code></td>
-    <td>[Output Only] If the operation is for projects.setCommonInstanceMetadata, this field will contain information on all underlying zonal actions and their state. (id: SetCommonInstanceMetadataOperationMetadata)</td>
+    <td>Output only. [Output Only] If the operation is for projects.setCommonInstanceMetadata, this field will contain information on all underlying zonal actions and their state. (id: SetCommonInstanceMetadataOperationMetadata)</td>
 </tr>
 <tr>
     <td><CopyableCode code="startTime" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The time that this operation was started by the server. This value is in RFC3339 text format.</td>
+    <td>[Output Only] The time that this operation was started by the server. This value is inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The status of the operation, which can be one of the following: `PENDING`, `RUNNING`, or `DONE`.</td>
+    <td>[Output Only] The status of the operation, which can be one of the following: `PENDING`, `RUNNING`, or `DONE`. (DONE, PENDING, RUNNING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="statusMessage" /></td>
@@ -206,7 +212,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of resource. Always `compute#operations` for Operations resource. (default: compute#operationList)</td>
+    <td>Output only. [Output Only] Type of resource. Always `compute#operations` for Operations resource. (default: compute#operationList)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextPageToken" /></td>
@@ -254,8 +260,8 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
-    <td>Retrieves a list of Operation resources contained within the specified region.</td>
+    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td>Retrieves a list of Operation resources contained within<br />the specified region.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
@@ -269,7 +275,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-operation"><code>operation</code></a></td>
     <td></td>
-    <td>Waits for the specified Operation resource to return as `DONE` or for the request to approach the 2 minute deadline, and retrieves the specified Operation resource. This method differs from the `GET` method in that it waits for no more than the default deadline (2 minutes) and then returns the current state of the operation, which might be `DONE` or still in progress. This method is called on a best-effort basis. Specifically: - In uncommon cases, when the server is overloaded, the request might return before the default deadline is reached, or might return after zero seconds. - If the default deadline is reached, there is no guarantee that the operation is actually done when the method returns. Be prepared to retry if the operation is not `DONE`. </td>
+    <td>Waits for the specified Operation resource to return as `DONE`<br />or for the request to approach the 2 minute deadline, and retrieves the<br />specified Operation resource. This method differs from the<br />`GET` method in that it waits for no more than the default<br />deadline (2 minutes) and then returns the current state of the operation,<br />which might be `DONE` or still in progress.<br /><br />This method is called on a best-effort basis. Specifically:<br />   <br />   <br />    - In uncommon cases, when the server is overloaded, the request might<br />    return before the default deadline is reached, or might return after zero<br />    seconds.<br />   - If the default deadline is reached, there is no guarantee that the<br />    operation is actually done when the method returns. Be prepared to retry<br />    if the operation is not `DONE`.</td>
 </tr>
 </tbody>
 </table>
@@ -352,6 +358,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -380,7 +387,7 @@ AND operation = '{{ operation }}' -- required
 </TabItem>
 <TabItem value="list">
 
-Retrieves a list of Operation resources contained within the specified region.
+Retrieves a list of Operation resources contained within<br />the specified region.
 
 ```sql
 SELECT
@@ -393,11 +400,11 @@ warning
 FROM google.compute.operations
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
-AND filter = '{{ filter }}'
-AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND maxResults = '{{ maxResults }}'
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -437,7 +444,7 @@ AND operation = '{{ operation }}' --required
 >
 <TabItem value="wait">
 
-Waits for the specified Operation resource to return as `DONE` or for the request to approach the 2 minute deadline, and retrieves the specified Operation resource. This method differs from the `GET` method in that it waits for no more than the default deadline (2 minutes) and then returns the current state of the operation, which might be `DONE` or still in progress. This method is called on a best-effort basis. Specifically: - In uncommon cases, when the server is overloaded, the request might return before the default deadline is reached, or might return after zero seconds. - If the default deadline is reached, there is no guarantee that the operation is actually done when the method returns. Be prepared to retry if the operation is not `DONE`. 
+Waits for the specified Operation resource to return as `DONE`<br />or for the request to approach the 2 minute deadline, and retrieves the<br />specified Operation resource. This method differs from the<br />`GET` method in that it waits for no more than the default<br />deadline (2 minutes) and then returns the current state of the operation,<br />which might be `DONE` or still in progress.<br /><br />This method is called on a best-effort basis. Specifically:<br />   <br />   <br />    - In uncommon cases, when the server is overloaded, the request might<br />    return before the default deadline is reached, or might return after zero<br />    seconds.<br />   - If the default deadline is reached, there is no guarantee that the<br />    operation is actually done when the method returns. Be prepared to retry<br />    if the operation is not `DONE`.
 
 ```sql
 EXEC google.compute.operations.wait 

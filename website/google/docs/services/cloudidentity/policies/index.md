@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>policies</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudidentity.policies" /></td></tr>
 </tbody></table>
@@ -72,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Output only. The type of the policy.</td>
+    <td>Output only. The type of the policy. (POLICY_TYPE_UNSPECIFIED, SYSTEM, ADMIN)</td>
 </tr>
 </tbody>
 </table>
@@ -111,7 +112,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Output only. The type of the policy.</td>
+    <td>Output only. The type of the policy. (POLICY_TYPE_UNSPECIFIED, SYSTEM, ADMIN)</td>
 </tr>
 </tbody>
 </table>
@@ -144,8 +145,29 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>List policies.</td>
+</tr>
+<tr>
+    <td><a href="#create"><CopyableCode code="create" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td></td>
+    <td></td>
+    <td>Create a policy.</td>
+</tr>
+<tr>
+    <td><a href="#patch"><CopyableCode code="patch" /></a></td>
+    <td><CopyableCode code="update" /></td>
+    <td><a href="#parameter-policiesId"><code>policiesId</code></a></td>
+    <td></td>
+    <td>Update a policy.</td>
+</tr>
+<tr>
+    <td><a href="#delete"><CopyableCode code="delete" /></a></td>
+    <td><CopyableCode code="delete" /></td>
+    <td><a href="#parameter-policiesId"><code>policiesId</code></a></td>
+    <td></td>
+    <td>Delete a policy.</td>
 </tr>
 </tbody>
 </table>
@@ -223,9 +245,122 @@ policyQuery,
 setting,
 type
 FROM google.cloudidentity.policies
-WHERE filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
+WHERE pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
+;
+```
+</TabItem>
+</Tabs>
+
+
+## `INSERT` examples
+
+<Tabs
+    defaultValue="create"
+    values={[
+        { label: 'create', value: 'create' },
+        { label: 'Manifest', value: 'manifest' }
+    ]}
+>
+<TabItem value="create">
+
+Create a policy.
+
+```sql
+INSERT INTO google.cloudidentity.policies (
+data__customer,
+data__policyQuery,
+data__setting
+)
+SELECT 
+'{{ customer }}',
+'{{ policyQuery }}',
+'{{ setting }}'
+RETURNING
+name,
+done,
+error,
+metadata,
+response
+;
+```
+</TabItem>
+<TabItem value="manifest">
+
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
+- name: policies
+  props:
+    - name: customer
+      value: "{{ customer }}"
+      description: |
+        Immutable. Customer that the Policy belongs to. The value is in the format 'customers/{customerId}'. The \`customerId\` must begin with "C" To find your customer ID in Admin Console see https://support.google.com/a/answer/10070793.
+    - name: policyQuery
+      description: |
+        Required. The PolicyQuery the Setting applies to.
+      value:
+        orgUnit: "{{ orgUnit }}"
+        sortOrder: {{ sortOrder }}
+        query: "{{ query }}"
+        group: "{{ group }}"
+    - name: setting
+      description: |
+        Required. The Setting configured by this Policy.
+      value:
+        type: "{{ type }}"
+        value: "{{ value }}"
+`}</CodeBlock>
+
+</TabItem>
+</Tabs>
+
+
+## `UPDATE` examples
+
+<Tabs
+    defaultValue="patch"
+    values={[
+        { label: 'patch', value: 'patch' }
+    ]}
+>
+<TabItem value="patch">
+
+Update a policy.
+
+```sql
+UPDATE google.cloudidentity.policies
+SET 
+data__customer = '{{ customer }}',
+data__policyQuery = '{{ policyQuery }}',
+data__setting = '{{ setting }}'
+WHERE 
+policiesId = '{{ policiesId }}' --required
+RETURNING
+name,
+done,
+error,
+metadata,
+response;
+```
+</TabItem>
+</Tabs>
+
+
+## `DELETE` examples
+
+<Tabs
+    defaultValue="delete"
+    values={[
+        { label: 'delete', value: 'delete' }
+    ]}
+>
+<TabItem value="delete">
+
+Delete a policy.
+
+```sql
+DELETE FROM google.cloudidentity.policies
+WHERE policiesId = '{{ policiesId }}' --required
 ;
 ```
 </TabItem>

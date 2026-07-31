@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>secrets</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>secrets</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="secrets" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.secretmanager.secrets" /></td></tr>
 </tbody></table>
@@ -85,6 +86,11 @@ The following fields are returned by `SELECT` queries:
     <td>The labels assigned to this Secret. Label keys must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: `\p&#123;Ll&#125;\p&#123;Lo&#125;&#123;0,62&#125;` Label values must be between 0 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: `[\p&#123;Ll&#125;\p&#123;Lo&#125;\p&#123;N&#125;_-]&#123;0,63&#125;` No more than 64 labels can be assigned to a given resource.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="policyMember" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Defines the policy member for the secret. This will be used to check if the caller has the permission to perform certain operations on the typed secret. (id: ResourcePolicyMember)</td>
+</tr>
+<tr>
     <td><CopyableCode code="replication" /></td>
     <td><code>object</code></td>
     <td>Optional. Immutable. The replication policy of the secret data attached to the Secret. The replication policy cannot be changed after the Secret has been created. (id: Replication)</td>
@@ -93,6 +99,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="rotation" /></td>
     <td><code>object</code></td>
     <td>Optional. Rotation policy attached to the Secret. May be excluded if there is no rotation policy. (id: Rotation)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="secretType" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Immutable. This defines the type of the secret. Enforces certain structural requirements on the SecretVersions. For secret of type UNSPECIFIED, the SecretVersions can be of any type. (SECRET_TYPE_UNSPECIFIED, CLOUD_SQL_DB_CREDENTIALS, ACCESS_KEY, CERTIFICATE, OTHER_DB_CREDENTIALS, OTHER)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tags" /></td>
@@ -169,6 +180,11 @@ The following fields are returned by `SELECT` queries:
     <td>The labels assigned to this Secret. Label keys must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: `\p&#123;Ll&#125;\p&#123;Lo&#125;&#123;0,62&#125;` Label values must be between 0 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: `[\p&#123;Ll&#125;\p&#123;Lo&#125;\p&#123;N&#125;_-]&#123;0,63&#125;` No more than 64 labels can be assigned to a given resource.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="policyMember" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Defines the policy member for the secret. This will be used to check if the caller has the permission to perform certain operations on the typed secret. (id: ResourcePolicyMember)</td>
+</tr>
+<tr>
     <td><CopyableCode code="replication" /></td>
     <td><code>object</code></td>
     <td>Optional. Immutable. The replication policy of the secret data attached to the Secret. The replication policy cannot be changed after the Secret has been created. (id: Replication)</td>
@@ -177,6 +193,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="rotation" /></td>
     <td><code>object</code></td>
     <td>Optional. Rotation policy attached to the Secret. May be excluded if there is no rotation policy. (id: Rotation)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="secretType" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Immutable. This defines the type of the secret. Enforces certain structural requirements on the SecretVersions. For secret of type UNSPECIFIED, the SecretVersions can be of any type. (SECRET_TYPE_UNSPECIFIED, CLOUD_SQL_DB_CREDENTIALS, ACCESS_KEY, CERTIFICATE, OTHER_DB_CREDENTIALS, OTHER)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tags" /></td>
@@ -234,7 +255,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Secrets.</td>
 </tr>
 <tr>
@@ -257,6 +278,20 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-secretsId"><code>secretsId</code></a></td>
     <td><a href="#parameter-etag"><code>etag</code></a></td>
     <td>Deletes a Secret.</td>
+</tr>
+<tr>
+    <td><a href="#enable_managed_rotation"><CopyableCode code="enable_managed_rotation" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-secretsId"><code>secretsId</code></a></td>
+    <td></td>
+    <td>Enables the managed rotation feature for a Secret. This method can only be triggered once for a secret. In order to do further rotations, RotateSecret should be used. This method will add a secret version and update the password in Cloud SQL.</td>
+</tr>
+<tr>
+    <td><a href="#rotate_secret"><CopyableCode code="rotate_secret" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-secretsId"><code>secretsId</code></a></td>
+    <td></td>
+    <td>Do a managed rotation for a Secret. This can only be triggered after Managed rotation has been enabled. This method will add a secret version and update the password in Cloud SQL.</td>
 </tr>
 </tbody>
 </table>
@@ -339,8 +374,10 @@ customerManagedEncryption,
 etag,
 expireTime,
 labels,
+policyMember,
 replication,
 rotation,
+secretType,
 tags,
 topics,
 ttl,
@@ -365,8 +402,10 @@ customerManagedEncryption,
 etag,
 expireTime,
 labels,
+policyMember,
 replication,
 rotation,
+secretType,
 tags,
 topics,
 ttl,
@@ -375,8 +414,8 @@ versionDestroyTtl
 FROM google.secretmanager.secrets
 WHERE projectsId = '{{ projectsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -398,34 +437,36 @@ Creates a new Secret containing no SecretVersions.
 
 ```sql
 INSERT INTO google.secretmanager.secrets (
-data__replication,
 data__labels,
-data__topics,
-data__expireTime,
-data__ttl,
-data__etag,
-data__rotation,
-data__versionAliases,
-data__annotations,
-data__versionDestroyTtl,
-data__customerManagedEncryption,
 data__tags,
+data__etag,
+data__annotations,
+data__customerManagedEncryption,
+data__versionAliases,
+data__versionDestroyTtl,
+data__secretType,
+data__expireTime,
+data__topics,
+data__ttl,
+data__replication,
+data__rotation,
 projectsId,
 secretId
 )
 SELECT 
-'{{ replication }}',
 '{{ labels }}',
-'{{ topics }}',
-'{{ expireTime }}',
-'{{ ttl }}',
-'{{ etag }}',
-'{{ rotation }}',
-'{{ versionAliases }}',
-'{{ annotations }}',
-'{{ versionDestroyTtl }}',
-'{{ customerManagedEncryption }}',
 '{{ tags }}',
+'{{ etag }}',
+'{{ annotations }}',
+'{{ customerManagedEncryption }}',
+'{{ versionAliases }}',
+'{{ versionDestroyTtl }}',
+'{{ secretType }}',
+'{{ expireTime }}',
+'{{ topics }}',
+'{{ ttl }}',
+'{{ replication }}',
+'{{ rotation }}',
 '{{ projectsId }}',
 '{{ secretId }}'
 RETURNING
@@ -436,8 +477,10 @@ customerManagedEncryption,
 etag,
 expireTime,
 labels,
+policyMember,
 replication,
 rotation,
+secretType,
 tags,
 topics,
 ttl,
@@ -448,76 +491,87 @@ versionDestroyTtl
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: secrets
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the secrets resource.
-    - name: replication
-      value: object
-      description: >
-        Optional. Immutable. The replication policy of the secret data attached to the Secret. The replication policy cannot be changed after the Secret has been created.
-        
     - name: labels
-      value: object
-      description: >
-        The labels assigned to this Secret. Label keys must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: `\p{Ll}\p{Lo}{0,62}` Label values must be between 0 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: `[\p{Ll}\p{Lo}\p{N}_-]{0,63}` No more than 64 labels can be assigned to a given resource.
-        
-    - name: topics
-      value: array
-      description: >
-        Optional. A list of up to 10 Pub/Sub topics to which messages are published when control plane operations are called on the secret or its versions.
-        
-    - name: expireTime
-      value: string
-      description: >
-        Optional. Timestamp in UTC when the Secret is scheduled to expire. This is always provided on output, regardless of what was sent on input.
-        
-    - name: ttl
-      value: string
-      description: >
-        Input only. The TTL for the Secret.
-        
-    - name: etag
-      value: string
-      description: >
-        Optional. Etag of the currently stored Secret.
-        
-    - name: rotation
-      value: object
-      description: >
-        Optional. Rotation policy attached to the Secret. May be excluded if there is no rotation policy.
-        
-    - name: versionAliases
-      value: object
-      description: >
-        Optional. Mapping from version alias to version name. A version alias is a string with a maximum length of 63 characters and can contain uppercase and lowercase letters, numerals, and the hyphen (`-`) and underscore ('_') characters. An alias string must start with a letter and cannot be the string 'latest' or 'NEW'. No more than 50 aliases can be assigned to a given secret. Version-Alias pairs will be viewable via GetSecret and modifiable via UpdateSecret. Access by alias is only be supported on GetSecretVersion and AccessSecretVersion.
-        
-    - name: annotations
-      value: object
-      description: >
-        Optional. Custom metadata about the secret. Annotations are distinct from various forms of labels. Annotations exist to allow client tools to store their own state information without requiring a database. Annotation keys must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, begin and end with an alphanumeric character ([a-z0-9A-Z]), and may have dashes (-), underscores (_), dots (.), and alphanumerics in between these symbols. The total size of annotation keys and values must be less than 16KiB.
-        
-    - name: versionDestroyTtl
-      value: string
-      description: >
-        Optional. Secret Version TTL after destruction request This is a part of the Delayed secret version destroy feature. For secret with TTL>0, version destruction doesn't happen immediately on calling destroy instead the version goes to a disabled state and destruction happens after the TTL expires.
-        
-    - name: customerManagedEncryption
-      value: object
-      description: >
-        Optional. The customer-managed encryption configuration of the regionalized secrets. If no configuration is provided, Google-managed default encryption is used. Updates to the Secret encryption configuration only apply to SecretVersions added afterwards. They do not apply retroactively to existing SecretVersions.
-        
+      value: "{{ labels }}"
+      description: |
+        The labels assigned to this Secret. Label keys must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: \`p{Ll}p{Lo}{0,62}\` Label values must be between 0 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: \`[p{Ll}p{Lo}p{N}_-]{0,63}\` No more than 64 labels can be assigned to a given resource.
     - name: tags
-      value: object
-      description: >
+      value: "{{ tags }}"
+      description: |
         Optional. Input only. Immutable. Mapping of Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing" Tags are used to organize and group resources. Tags can be used to control policy evaluation for the resource.
-        
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. Etag of the currently stored Secret.
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Optional. Custom metadata about the secret. Annotations are distinct from various forms of labels. Annotations exist to allow client tools to store their own state information without requiring a database. Annotation keys must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, begin and end with an alphanumeric character ([a-z0-9A-Z]), and may have dashes (-), underscores (_), dots (.), and alphanumerics in between these symbols. The total size of annotation keys and values must be less than 16KiB.
+    - name: customerManagedEncryption
+      description: |
+        Optional. The customer-managed encryption configuration of the regionalized secrets. If no configuration is provided, Google-managed default encryption is used. Updates to the Secret encryption configuration only apply to SecretVersions added afterwards. They do not apply retroactively to existing SecretVersions.
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
+    - name: versionAliases
+      value: "{{ versionAliases }}"
+      description: |
+        Optional. Mapping from version alias to version name. A version alias is a string with a maximum length of 63 characters and can contain uppercase and lowercase letters, numerals, and the hyphen (\`-\`) and underscore ('_') characters. An alias string must start with a letter and cannot be the string 'latest' or 'NEW'. No more than 50 aliases can be assigned to a given secret. Version-Alias pairs will be viewable via GetSecret and modifiable via UpdateSecret. Access by alias is only be supported on GetSecretVersion and AccessSecretVersion.
+    - name: versionDestroyTtl
+      value: "{{ versionDestroyTtl }}"
+      description: |
+        Optional. Secret Version TTL after destruction request This is a part of the Delayed secret version destroy feature. For secret with TTL>0, version destruction doesn't happen immediately on calling destroy instead the version goes to a disabled state and destruction happens after the TTL expires.
+    - name: secretType
+      value: "{{ secretType }}"
+      description: |
+        Optional. Immutable. This defines the type of the secret. Enforces certain structural requirements on the SecretVersions. For secret of type UNSPECIFIED, the SecretVersions can be of any type.
+      valid_values: ['SECRET_TYPE_UNSPECIFIED', 'CLOUD_SQL_DB_CREDENTIALS', 'ACCESS_KEY', 'CERTIFICATE', 'OTHER_DB_CREDENTIALS', 'OTHER']
+    - name: expireTime
+      value: "{{ expireTime }}"
+      description: |
+        Optional. Timestamp in UTC when the Secret is scheduled to expire. This is always provided on output, regardless of what was sent on input.
+    - name: topics
+      description: |
+        Optional. A list of up to 10 Pub/Sub topics to which messages are published when control plane operations are called on the secret or its versions.
+      value:
+        - name: "{{ name }}"
+    - name: ttl
+      value: "{{ ttl }}"
+      description: |
+        Input only. The TTL for the Secret.
+    - name: replication
+      description: |
+        Optional. Immutable. The replication policy of the secret data attached to the Secret. The replication policy cannot be changed after the Secret has been created.
+      value:
+        automatic:
+          customerManagedEncryption:
+            kmsKeyName: "{{ kmsKeyName }}"
+        userManaged:
+          replicas:
+            - location: "{{ location }}"
+              customerManagedEncryption:
+                kmsKeyName: "{{ kmsKeyName }}"
+    - name: rotation
+      description: |
+        Optional. Rotation policy attached to the Secret. May be excluded if there is no rotation policy.
+      value:
+        nextRotationTime: "{{ nextRotationTime }}"
+        managedRotationStatus:
+          state: "{{ state }}"
+          error:
+            details: "{{ details }}"
+            code: {{ code }}
+            message: "{{ message }}"
+        rotationPeriod: "{{ rotationPeriod }}"
     - name: secretId
-      value: string
-```
+      value: "{{ secretId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -537,18 +591,19 @@ Updates metadata of an existing Secret.
 ```sql
 UPDATE google.secretmanager.secrets
 SET 
-data__replication = '{{ replication }}',
 data__labels = '{{ labels }}',
-data__topics = '{{ topics }}',
-data__expireTime = '{{ expireTime }}',
-data__ttl = '{{ ttl }}',
+data__tags = '{{ tags }}',
 data__etag = '{{ etag }}',
-data__rotation = '{{ rotation }}',
-data__versionAliases = '{{ versionAliases }}',
 data__annotations = '{{ annotations }}',
-data__versionDestroyTtl = '{{ versionDestroyTtl }}',
 data__customerManagedEncryption = '{{ customerManagedEncryption }}',
-data__tags = '{{ tags }}'
+data__versionAliases = '{{ versionAliases }}',
+data__versionDestroyTtl = '{{ versionDestroyTtl }}',
+data__secretType = '{{ secretType }}',
+data__expireTime = '{{ expireTime }}',
+data__topics = '{{ topics }}',
+data__ttl = '{{ ttl }}',
+data__replication = '{{ replication }}',
+data__rotation = '{{ rotation }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND secretsId = '{{ secretsId }}' --required
@@ -561,8 +616,10 @@ customerManagedEncryption,
 etag,
 expireTime,
 labels,
+policyMember,
 replication,
 rotation,
+secretType,
 tags,
 topics,
 ttl,
@@ -590,6 +647,44 @@ DELETE FROM google.secretmanager.secrets
 WHERE projectsId = '{{ projectsId }}' --required
 AND secretsId = '{{ secretsId }}' --required
 AND etag = '{{ etag }}'
+;
+```
+</TabItem>
+</Tabs>
+
+
+## Lifecycle Methods
+
+<Tabs
+    defaultValue="enable_managed_rotation"
+    values={[
+        { label: 'enable_managed_rotation', value: 'enable_managed_rotation' },
+        { label: 'rotate_secret', value: 'rotate_secret' }
+    ]}
+>
+<TabItem value="enable_managed_rotation">
+
+Enables the managed rotation feature for a Secret. This method can only be triggered once for a secret. In order to do further rotations, RotateSecret should be used. This method will add a secret version and update the password in Cloud SQL.
+
+```sql
+EXEC google.secretmanager.secrets.enable_managed_rotation 
+@projectsId='{{ projectsId }}' --required, 
+@secretsId='{{ secretsId }}' --required 
+@@json=
+'{
+"cloudSqlSingleUserCredentials": "{{ cloudSqlSingleUserCredentials }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="rotate_secret">
+
+Do a managed rotation for a Secret. This can only be triggered after Managed rotation has been enabled. This method will add a secret version and update the password in Cloud SQL.
+
+```sql
+EXEC google.secretmanager.secrets.rotate_secret 
+@projectsId='{{ projectsId }}' --required, 
+@secretsId='{{ secretsId }}' --required
 ;
 ```
 </TabItem>

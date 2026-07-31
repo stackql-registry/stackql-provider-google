@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>user_creds</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>user_creds</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="user_creds" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.firestore.user_creds" /></td></tr>
 </tbody></table>
@@ -72,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Whether the user creds are enabled or disabled. Defaults to ENABLED on creation.</td>
+    <td>Output only. Whether the user creds are enabled or disabled. Defaults to ENABLED on creation. (STATE_UNSPECIFIED, ENABLED, DISABLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -147,11 +148,11 @@ The following methods are available for this resource:
     <td>Deletes a user creds.</td>
 </tr>
 <tr>
-    <td><a href="#reset_password"><CopyableCode code="reset_password" /></a></td>
+    <td><a href="#enable"><CopyableCode code="enable" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a>, <a href="#parameter-userCredsId"><code>userCredsId</code></a></td>
     <td></td>
-    <td>Resets the password of a user creds.</td>
+    <td>Enables a user creds. No-op if the user creds are already enabled.</td>
 </tr>
 <tr>
     <td><a href="#disable"><CopyableCode code="disable" /></a></td>
@@ -161,11 +162,11 @@ The following methods are available for this resource:
     <td>Disables a user creds. No-op if the user creds are already disabled.</td>
 </tr>
 <tr>
-    <td><a href="#enable"><CopyableCode code="enable" /></a></td>
+    <td><a href="#reset_password"><CopyableCode code="reset_password" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a>, <a href="#parameter-userCredsId"><code>userCredsId</code></a></td>
     <td></td>
-    <td>Enables a user creds. No-op if the user creds are already enabled.</td>
+    <td>Resets the password of a user creds.</td>
 </tr>
 </tbody>
 </table>
@@ -289,29 +290,28 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: user_creds
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the user_creds resource.
     - name: databasesId
-      value: string
+      value: "{{ databasesId }}"
       description: Required parameter for the user_creds resource.
     - name: resourceIdentity
-      value: object
-      description: >
+      description: |
         Resource Identity descriptor.
-        
+      value:
+        principal: "{{ principal }}"
     - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the UserCreds. Format: `projects/{project}/databases/{database}/userCreds/{user_creds}`
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the UserCreds. Format: \`projects/{project}/databases/{database}/userCreds/{user_creds}\`
     - name: userCredsId
-      value: string
-```
+      value: "{{ userCredsId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -342,19 +342,19 @@ AND userCredsId = '{{ userCredsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="reset_password"
+    defaultValue="enable"
     values={[
-        { label: 'reset_password', value: 'reset_password' },
+        { label: 'enable', value: 'enable' },
         { label: 'disable', value: 'disable' },
-        { label: 'enable', value: 'enable' }
+        { label: 'reset_password', value: 'reset_password' }
     ]}
 >
-<TabItem value="reset_password">
+<TabItem value="enable">
 
-Resets the password of a user creds.
+Enables a user creds. No-op if the user creds are already enabled.
 
 ```sql
-EXEC google.firestore.user_creds.reset_password 
+EXEC google.firestore.user_creds.enable 
 @projectsId='{{ projectsId }}' --required, 
 @databasesId='{{ databasesId }}' --required, 
 @userCredsId='{{ userCredsId }}' --required
@@ -373,12 +373,12 @@ EXEC google.firestore.user_creds.disable
 ;
 ```
 </TabItem>
-<TabItem value="enable">
+<TabItem value="reset_password">
 
-Enables a user creds. No-op if the user creds are already enabled.
+Resets the password of a user creds.
 
 ```sql
-EXEC google.firestore.user_creds.enable 
+EXEC google.firestore.user_creds.reset_password 
 @projectsId='{{ projectsId }}' --required, 
 @databasesId='{{ databasesId }}' --required, 
 @userCredsId='{{ userCredsId }}' --required

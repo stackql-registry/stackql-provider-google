@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>customers</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>customers</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="customers" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.sasportal.customers" /></td></tr>
 </tbody></table>
@@ -142,18 +143,18 @@ The following methods are available for this resource:
     <td>Setups the a GCP Project to receive SAS Analytics messages via GCP Pub/Sub with a subscription to BigQuery. All the Pub/Sub topics and BigQuery tables are created automatically as part of this service.</td>
 </tr>
 <tr>
-    <td><a href="#customers_provision_deployment"><CopyableCode code="customers_provision_deployment" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td></td>
-    <td></td>
-    <td>Creates a new SAS deployment through the GCP workflow. Creates a SAS organization if an organization match is not found.</td>
-</tr>
-<tr>
     <td><a href="#customers_migrate_organization"><CopyableCode code="customers_migrate_organization" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
     <td></td>
     <td>Migrates a SAS organization to the cloud. This will create GCP projects for each deployment and associate them. The SAS Organization is linked to the gcp project that called the command. go/sas-legacy-customer-migration</td>
+</tr>
+<tr>
+    <td><a href="#customers_provision_deployment"><CopyableCode code="customers_provision_deployment" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td></td>
+    <td></td>
+    <td>Creates a new SAS deployment through the GCP workflow. Creates a SAS organization if an organization match is not found.</td>
 </tr>
 </tbody>
 </table>
@@ -250,9 +251,9 @@ Updates an existing customer.
 ```sql
 UPDATE google.sasportal.customers
 SET 
-data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
-data__sasUserIds = '{{ sasUserIds }}'
+data__sasUserIds = '{{ sasUserIds }}',
+data__name = '{{ name }}'
 WHERE 
 customersId = '{{ customersId }}' --required
 AND updateMask = '{{ updateMask}}'
@@ -271,8 +272,8 @@ sasUserIds;
     defaultValue="customers_setup_sas_analytics"
     values={[
         { label: 'customers_setup_sas_analytics', value: 'customers_setup_sas_analytics' },
-        { label: 'customers_provision_deployment', value: 'customers_provision_deployment' },
-        { label: 'customers_migrate_organization', value: 'customers_migrate_organization' }
+        { label: 'customers_migrate_organization', value: 'customers_migrate_organization' },
+        { label: 'customers_provision_deployment', value: 'customers_provision_deployment' }
     ]}
 >
 <TabItem value="customers_setup_sas_analytics">
@@ -288,21 +289,6 @@ EXEC google.sasportal.customers.customers_setup_sas_analytics
 ;
 ```
 </TabItem>
-<TabItem value="customers_provision_deployment">
-
-Creates a new SAS deployment through the GCP workflow. Creates a SAS organization if an organization match is not found.
-
-```sql
-EXEC google.sasportal.customers.customers_provision_deployment 
-@@json=
-'{
-"newDeploymentDisplayName": "{{ newDeploymentDisplayName }}", 
-"newOrganizationDisplayName": "{{ newOrganizationDisplayName }}", 
-"organizationId": "{{ organizationId }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="customers_migrate_organization">
 
 Migrates a SAS organization to the cloud. This will create GCP projects for each deployment and associate them. The SAS Organization is linked to the gcp project that called the command. go/sas-legacy-customer-migration
@@ -311,6 +297,21 @@ Migrates a SAS organization to the cloud. This will create GCP projects for each
 EXEC google.sasportal.customers.customers_migrate_organization 
 @@json=
 '{
+"organizationId": "{{ organizationId }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="customers_provision_deployment">
+
+Creates a new SAS deployment through the GCP workflow. Creates a SAS organization if an organization match is not found.
+
+```sql
+EXEC google.sasportal.customers.customers_provision_deployment 
+@@json=
+'{
+"newOrganizationDisplayName": "{{ newOrganizationDisplayName }}", 
+"newDeploymentDisplayName": "{{ newDeploymentDisplayName }}", 
 "organizationId": "{{ organizationId }}"
 }'
 ;

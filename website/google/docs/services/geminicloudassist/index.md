@@ -18,18 +18,19 @@ geminicloudassist service documentation.
 
 :::info[Service Summary]
 
-total resources: __5__  
+total resources: __6__  
 
 :::
 
 ## Resources
 <div class="row">
 <div class="providerDocColumn">
+<a href="/services/geminicloudassist/internal/">internal</a><br />
 <a href="/services/geminicloudassist/investigations/">investigations</a><br />
-<a href="/services/geminicloudassist/investigations_iam_policies/">investigations_iam_policies</a><br />
-<a href="/services/geminicloudassist/locations/">locations</a>
+<a href="/services/geminicloudassist/investigations_iam_policies/">investigations_iam_policies</a>
 </div>
 <div class="providerDocColumn">
+<a href="/services/geminicloudassist/locations/">locations</a><br />
 <a href="/services/geminicloudassist/operations/">operations</a><br />
 <a href="/services/geminicloudassist/revisions/">revisions</a>
 </div>

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>violations</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>violations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="violations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.assuredworkloads.violations" /></td></tr>
 </tbody></table>
@@ -137,7 +138,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the violation</td>
+    <td>Output only. State of the violation (STATE_UNSPECIFIED, RESOLVED, UNRESOLVED, EXCEPTION)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -147,7 +148,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="violationType" /></td>
     <td><code>string</code></td>
-    <td>Output only. Type of the violation</td>
+    <td>Output only. Type of the violation (VIOLATION_TYPE_UNSPECIFIED, ORG_POLICY, RESOURCE)</td>
 </tr>
 </tbody>
 </table>
@@ -251,7 +252,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the violation</td>
+    <td>Output only. State of the violation (STATE_UNSPECIFIED, RESOLVED, UNRESOLVED, EXCEPTION)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -261,7 +262,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="violationType" /></td>
     <td><code>string</code></td>
-    <td>Output only. Type of the violation</td>
+    <td>Output only. Type of the violation (VIOLATION_TYPE_UNSPECIFIED, ORG_POLICY, RESOURCE)</td>
 </tr>
 </tbody>
 </table>
@@ -294,7 +295,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workloadsId"><code>workloadsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-interval.endTime"><code>interval.endTime</code></a>, <a href="#parameter-interval.startTime"><code>interval.startTime</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-interval.endTime"><code>interval.endTime</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-interval.startTime"><code>interval.startTime</code></a></td>
     <td>Lists the Violations in the AssuredWorkload Environment. Callers may also choose to read across multiple Workloads as per [AIP-159](https://google.aip.dev/159) by using '-' (the hyphen or dash character) as a wildcard character instead of workload-id in the parent. Format `organizations/&#123;org_id&#125;/locations/&#123;location&#125;/workloads/-`</td>
 </tr>
 <tr>
@@ -303,6 +304,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workloadsId"><code>workloadsId</code></a>, <a href="#parameter-violationsId"><code>violationsId</code></a></td>
     <td></td>
     <td>Acknowledges an existing violation. By acknowledging a violation, users acknowledge the existence of a compliance violation in their workload and decide to ignore it due to a valid business justification. Acknowledgement is a permanent operation and it cannot be reverted.</td>
+</tr>
+<tr>
+    <td><a href="#batch_acknowledge_violations"><CopyableCode code="batch_acknowledge_violations" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workloadsId"><code>workloadsId</code></a></td>
+    <td></td>
+    <td>Acknowledges multiple existing violations. By acknowledging violations, users acknowledge the existence of compliance violations in their workload and decide to ignore them due to a valid business justification. Acknowledgement is a permanent operation and it cannot be reverted. This is a batch version of AcknowledgeViolation.</td>
 </tr>
 </tbody>
 </table>
@@ -353,6 +361,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-interval.startTime">
     <td><CopyableCode code="interval.startTime" /></td>
     <td><code>string (google-datetime)</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-orderBy">
+    <td><CopyableCode code="orderBy" /></td>
+    <td><code>string</code></td>
     <td></td>
 </tr>
 <tr id="parameter-pageSize">
@@ -441,11 +454,12 @@ FROM google.assuredworkloads.violations
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND workloadsId = '{{ workloadsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND interval.endTime = '{{ interval.endTime }}'
-AND interval.startTime = '{{ interval.startTime }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND interval.startTime = '{{ interval.startTime }}'
 ;
 ```
 </TabItem>
@@ -457,7 +471,8 @@ AND filter = '{{ filter }}'
 <Tabs
     defaultValue="acknowledge"
     values={[
-        { label: 'acknowledge', value: 'acknowledge' }
+        { label: 'acknowledge', value: 'acknowledge' },
+        { label: 'batch_acknowledge_violations', value: 'batch_acknowledge_violations' }
     ]}
 >
 <TabItem value="acknowledge">
@@ -472,9 +487,27 @@ EXEC google.assuredworkloads.violations.acknowledge
 @violationsId='{{ violationsId }}' --required 
 @@json=
 '{
-"comment": "{{ comment }}", 
 "acknowledgeType": "{{ acknowledgeType }}", 
+"comment": "{{ comment }}", 
 "nonCompliantOrgPolicy": "{{ nonCompliantOrgPolicy }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="batch_acknowledge_violations">
+
+Acknowledges multiple existing violations. By acknowledging violations, users acknowledge the existence of compliance violations in their workload and decide to ignore them due to a valid business justification. Acknowledgement is a permanent operation and it cannot be reverted. This is a batch version of AcknowledgeViolation.
+
+```sql
+EXEC google.assuredworkloads.violations.batch_acknowledge_violations 
+@organizationsId='{{ organizationsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@workloadsId='{{ workloadsId }}' --required 
+@@json=
+'{
+"acknowledgeType": "{{ acknowledgeType }}", 
+"names": "{{ names }}", 
+"comment": "{{ comment }}"
 }'
 ;
 ```

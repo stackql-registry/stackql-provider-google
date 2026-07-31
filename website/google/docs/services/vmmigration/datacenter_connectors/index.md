@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>datacenter_connectors</code> re
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>datacenter_connectors</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="datacenter_connectors" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.vmmigration.datacenter_connectors" /></td></tr>
 </tbody></table>
@@ -97,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the DatacenterConnector, as determined by the health checks.</td>
+    <td>Output only. State of the DatacenterConnector, as determined by the health checks. (STATE_UNSPECIFIED, PENDING, OFFLINE, FAILED, ACTIVE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateTime" /></td>
@@ -181,7 +182,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the DatacenterConnector, as determined by the health checks.</td>
+    <td>Output only. State of the DatacenterConnector, as determined by the health checks. (STATE_UNSPECIFIED, PENDING, OFFLINE, FAILED, ACTIVE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateTime" /></td>
@@ -234,7 +235,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists DatacenterConnectors in a given Source.</td>
 </tr>
 <tr>
@@ -390,8 +391,8 @@ AND locationsId = '{{ locationsId }}' -- required
 AND sourcesId = '{{ sourcesId }}' -- required
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -413,9 +414,9 @@ Creates a new DatacenterConnector in a given Source.
 
 ```sql
 INSERT INTO google.vmmigration.datacenter_connectors (
+data__version,
 data__registrationId,
 data__serviceAccount,
-data__version,
 projectsId,
 locationsId,
 sourcesId,
@@ -423,9 +424,9 @@ datacenterConnectorId,
 requestId
 )
 SELECT 
+'{{ version }}',
 '{{ registrationId }}',
 '{{ serviceAccount }}',
-'{{ version }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ sourcesId }}',
@@ -442,39 +443,36 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: datacenter_connectors
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the datacenter_connectors resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the datacenter_connectors resource.
     - name: sourcesId
-      value: string
+      value: "{{ sourcesId }}"
       description: Required parameter for the datacenter_connectors resource.
-    - name: registrationId
-      value: string
-      description: >
-        Immutable. A unique key for this connector. This key is internal to the OVA connector and is supplied with its creation during the registration process and can not be modified.
-        
-    - name: serviceAccount
-      value: string
-      description: >
-        The service account to use in the connector when communicating with the cloud.
-        
     - name: version
-      value: string
-      description: >
+      value: "{{ version }}"
+      description: |
         The version running in the DatacenterConnector. This is supplied by the OVA connector during the registration process and can not be modified.
-        
+    - name: registrationId
+      value: "{{ registrationId }}"
+      description: |
+        Immutable. A unique key for this connector. This key is internal to the OVA connector and is supplied with its creation during the registration process and can not be modified.
+    - name: serviceAccount
+      value: "{{ serviceAccount }}"
+      description: |
+        The service account to use in the connector when communicating with the cloud.
     - name: datacenterConnectorId
-      value: string
+      value: "{{ datacenterConnectorId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

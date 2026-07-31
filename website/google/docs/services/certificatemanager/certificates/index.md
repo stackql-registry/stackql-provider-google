@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>certificates</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>certificates</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="certificates" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.certificatemanager.certificates" /></td></tr>
 </tbody></table>
@@ -97,12 +98,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="scope" /></td>
     <td><code>string</code></td>
-    <td>Optional. Immutable. The scope of the certificate.</td>
+    <td>Optional. Immutable. The scope of the certificate. (DEFAULT, EDGE_CACHE, ALL_REGIONS, CLIENT_AUTH)</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfManaged" /></td>
     <td><code>object</code></td>
     <td>If set, defines data of a self-managed certificate. (id: SelfManagedCertificate)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="tags" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -176,12 +182,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="scope" /></td>
     <td><code>string</code></td>
-    <td>Optional. Immutable. The scope of the certificate.</td>
+    <td>Optional. Immutable. The scope of the certificate. (DEFAULT, EDGE_CACHE, ALL_REGIONS, CLIENT_AUTH)</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfManaged" /></td>
     <td><code>object</code></td>
     <td>If set, defines data of a self-managed certificate. (id: SelfManagedCertificate)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="tags" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -224,7 +235,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists Certificates in a given project and location.</td>
 </tr>
 <tr>
@@ -338,6 +349,7 @@ pemCertificate,
 sanDnsnames,
 scope,
 selfManaged,
+tags,
 updateTime,
 usedBy
 FROM google.certificatemanager.certificates
@@ -364,14 +376,15 @@ pemCertificate,
 sanDnsnames,
 scope,
 selfManaged,
+tags,
 updateTime,
 usedBy
 FROM google.certificatemanager.certificates
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -394,11 +407,12 @@ Creates a new Certificate in a given project and location.
 
 ```sql
 INSERT INTO google.certificatemanager.certificates (
-data__name,
-data__description,
-data__labels,
 data__selfManaged,
+data__tags,
+data__description,
 data__managed,
+data__labels,
+data__name,
 data__managedIdentity,
 data__scope,
 projectsId,
@@ -406,11 +420,12 @@ locationsId,
 certificateId
 )
 SELECT 
-'{{ name }}',
-'{{ description }}',
-'{{ labels }}',
 '{{ selfManaged }}',
+'{{ tags }}',
+'{{ description }}',
 '{{ managed }}',
+'{{ labels }}',
+'{{ name }}',
 '{{ managedIdentity }}',
 '{{ scope }}',
 '{{ projectsId }}',
@@ -427,55 +442,89 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: certificates
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the certificates resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the certificates resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. A user-defined name of the certificate. Certificate names must be unique globally and match pattern `projects/*/locations/*/certificates/*`.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. One or more paragraphs of text description of a certificate.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Set of labels associated with a Certificate.
-        
     - name: selfManaged
-      value: object
-      description: >
+      description: |
         If set, defines data of a self-managed certificate.
-        
+      value:
+        pemCertificate: "{{ pemCertificate }}"
+        pemPrivateKey: "{{ pemPrivateKey }}"
+    - name: tags
+      value: "{{ tags }}"
+      description: |
+        Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. One or more paragraphs of text description of a certificate.
     - name: managed
-      value: object
-      description: >
+      description: |
         If set, contains configuration and state of a managed certificate.
-        
+      value:
+        dnsAuthorizations:
+          - "{{ dnsAuthorizations }}"
+        state: "{{ state }}"
+        authorizationAttemptInfo:
+          - state: "{{ state }}"
+            troubleshooting:
+              issues:
+                - "{{ issues }}"
+              cname:
+                name: "{{ name }}"
+                resolvedData:
+                  - "{{ resolvedData }}"
+                expectedData: "{{ expectedData }}"
+              ips:
+                serving:
+                  - "{{ serving }}"
+                servingOnAltPorts:
+                  - "{{ servingOnAltPorts }}"
+                resolved:
+                  - "{{ resolved }}"
+            details: "{{ details }}"
+            domain: "{{ domain }}"
+            attemptTime: "{{ attemptTime }}"
+            failureReason: "{{ failureReason }}"
+        issuanceConfig: "{{ issuanceConfig }}"
+        domains:
+          - "{{ domains }}"
+        provisioningIssue:
+          reason: "{{ reason }}"
+          details: "{{ details }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Set of labels associated with a Certificate.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. A user-defined name of the certificate. Certificate names must be unique globally and match pattern \`projects/*/locations/*/certificates/*\`.
     - name: managedIdentity
-      value: object
-      description: >
+      description: |
         If set, contains configuration and state of a managed identity certificate.
-        
+      value:
+        state: "{{ state }}"
+        identity: "{{ identity }}"
+        provisioningIssue:
+          reason: "{{ reason }}"
+          details: "{{ details }}"
     - name: scope
-      value: string
-      description: >
+      value: "{{ scope }}"
+      description: |
         Optional. Immutable. The scope of the certificate.
-        
       valid_values: ['DEFAULT', 'EDGE_CACHE', 'ALL_REGIONS', 'CLIENT_AUTH']
     - name: certificateId
-      value: string
-```
+      value: "{{ certificateId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -495,11 +544,12 @@ Updates a Certificate.
 ```sql
 UPDATE google.certificatemanager.certificates
 SET 
-data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__labels = '{{ labels }}',
 data__selfManaged = '{{ selfManaged }}',
+data__tags = '{{ tags }}',
+data__description = '{{ description }}',
 data__managed = '{{ managed }}',
+data__labels = '{{ labels }}',
+data__name = '{{ name }}',
 data__managedIdentity = '{{ managedIdentity }}',
 data__scope = '{{ scope }}'
 WHERE 

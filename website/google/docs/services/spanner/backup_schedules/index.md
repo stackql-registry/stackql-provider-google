@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>backup_schedules</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>backup_schedules</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="backup_schedules" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.spanner.backup_schedules" /></td></tr>
 </tbody></table>
@@ -164,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#projects_instances_databases_backup_schedules_list"><CopyableCode code="projects_instances_databases_backup_schedules_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all the backup schedules for the database.</td>
 </tr>
 <tr>
@@ -294,8 +295,8 @@ FROM google.spanner.backup_schedules
 WHERE projectsId = '{{ projectsId }}' -- required
 AND instancesId = '{{ instancesId }}' -- required
 AND databasesId = '{{ databasesId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -317,11 +318,11 @@ Creates a new backup schedule.
 
 ```sql
 INSERT INTO google.spanner.backup_schedules (
-data__retentionDuration,
-data__fullBackupSpec,
-data__spec,
 data__name,
+data__spec,
+data__retentionDuration,
 data__encryptionConfig,
+data__fullBackupSpec,
 data__incrementalBackupSpec,
 projectsId,
 instancesId,
@@ -329,11 +330,11 @@ databasesId,
 backupScheduleId
 )
 SELECT 
-'{{ retentionDuration }}',
-'{{ fullBackupSpec }}',
-'{{ spec }}',
 '{{ name }}',
+'{{ spec }}',
+'{{ retentionDuration }}',
 '{{ encryptionConfig }}',
+'{{ fullBackupSpec }}',
 '{{ incrementalBackupSpec }}',
 '{{ projectsId }}',
 '{{ instancesId }}',
@@ -352,52 +353,54 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: backup_schedules
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the backup_schedules resource.
     - name: instancesId
-      value: string
+      value: "{{ instancesId }}"
       description: Required parameter for the backup_schedules resource.
     - name: databasesId
-      value: string
+      value: "{{ databasesId }}"
       description: Required parameter for the backup_schedules resource.
-    - name: retentionDuration
-      value: string
-      description: >
-        Optional. The retention duration of a backup that must be at least 6 hours and at most 366 days. The backup is eligible to be automatically deleted once the retention period has elapsed.
-        
-    - name: fullBackupSpec
-      value: object
-      description: >
-        The schedule creates only full backups.
-        
-    - name: spec
-      value: object
-      description: >
-        Optional. The schedule specification based on which the backup creations are triggered.
-        
     - name: name
-      value: string
-      description: >
-        Identifier. Output only for the CreateBackupSchedule operation. Required for the UpdateBackupSchedule operation. A globally unique identifier for the backup schedule which cannot be changed. Values are of the form `projects//instances//databases//backupSchedules/a-z*[a-z0-9]` The final segment of the name must be between 2 and 60 characters in length.
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. Output only for the CreateBackupSchedule operation. Required for the UpdateBackupSchedule operation. A globally unique identifier for the backup schedule which cannot be changed. Values are of the form \`projects//instances//databases//backupSchedules/a-z*[a-z0-9]\` The final segment of the name must be between 2 and 60 characters in length.
+    - name: spec
+      description: |
+        Optional. The schedule specification based on which the backup creations are triggered.
+      value:
+        cronSpec:
+          text: "{{ text }}"
+          timeZone: "{{ timeZone }}"
+          creationWindow: "{{ creationWindow }}"
+    - name: retentionDuration
+      value: "{{ retentionDuration }}"
+      description: |
+        Optional. The retention duration of a backup that must be at least 6 hours and at most 366 days. The backup is eligible to be automatically deleted once the retention period has elapsed.
     - name: encryptionConfig
-      value: object
-      description: >
+      description: |
         Optional. The encryption configuration that is used to encrypt the backup. If this field is not specified, the backup uses the same encryption configuration as the database.
-        
+      value:
+        encryptionType: "{{ encryptionType }}"
+        kmsKeyName: "{{ kmsKeyName }}"
+        kmsKeyNames:
+          - "{{ kmsKeyNames }}"
+    - name: fullBackupSpec
+      value: "{{ fullBackupSpec }}"
+      description: |
+        The schedule creates only full backups.
     - name: incrementalBackupSpec
-      value: object
-      description: >
+      value: "{{ incrementalBackupSpec }}"
+      description: |
         The schedule creates incremental backup chains.
-        
     - name: backupScheduleId
-      value: string
-```
+      value: "{{ backupScheduleId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -417,11 +420,11 @@ Updates a backup schedule.
 ```sql
 UPDATE google.spanner.backup_schedules
 SET 
-data__retentionDuration = '{{ retentionDuration }}',
-data__fullBackupSpec = '{{ fullBackupSpec }}',
-data__spec = '{{ spec }}',
 data__name = '{{ name }}',
+data__spec = '{{ spec }}',
+data__retentionDuration = '{{ retentionDuration }}',
 data__encryptionConfig = '{{ encryptionConfig }}',
+data__fullBackupSpec = '{{ fullBackupSpec }}',
 data__incrementalBackupSpec = '{{ incrementalBackupSpec }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

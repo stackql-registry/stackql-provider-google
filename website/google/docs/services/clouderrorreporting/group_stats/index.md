@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>group_stats</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>group_stats</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="group_stats" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.clouderrorreporting.group_stats" /></td></tr>
 </tbody></table>
@@ -117,7 +118,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-alignmentTime"><code>alignmentTime</code></a>, <a href="#parameter-timedCountDuration"><code>timedCountDuration</code></a>, <a href="#parameter-serviceFilter.resourceType"><code>serviceFilter.resourceType</code></a>, <a href="#parameter-groupId"><code>groupId</code></a>, <a href="#parameter-alignment"><code>alignment</code></a>, <a href="#parameter-timeRange.period"><code>timeRange.period</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-serviceFilter.version"><code>serviceFilter.version</code></a>, <a href="#parameter-serviceFilter.service"><code>serviceFilter.service</code></a>, <a href="#parameter-order"><code>order</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-timeRange.period"><code>timeRange.period</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-alignment"><code>alignment</code></a>, <a href="#parameter-order"><code>order</code></a>, <a href="#parameter-alignmentTime"><code>alignmentTime</code></a>, <a href="#parameter-groupId"><code>groupId</code></a>, <a href="#parameter-serviceFilter.service"><code>serviceFilter.service</code></a>, <a href="#parameter-serviceFilter.resourceType"><code>serviceFilter.resourceType</code></a>, <a href="#parameter-serviceFilter.version"><code>serviceFilter.version</code></a>, <a href="#parameter-timedCountDuration"><code>timedCountDuration</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the specified groups.</td>
 </tr>
 </tbody>
@@ -224,17 +225,17 @@ representative,
 timedCounts
 FROM google.clouderrorreporting.group_stats
 WHERE projectsId = '{{ projectsId }}' -- required
-AND alignmentTime = '{{ alignmentTime }}'
-AND timedCountDuration = '{{ timedCountDuration }}'
-AND serviceFilter.resourceType = '{{ serviceFilter.resourceType }}'
-AND groupId = '{{ groupId }}'
-AND alignment = '{{ alignment }}'
 AND timeRange.period = '{{ timeRange.period }}'
-AND pageToken = '{{ pageToken }}'
-AND serviceFilter.version = '{{ serviceFilter.version }}'
-AND serviceFilter.service = '{{ serviceFilter.service }}'
-AND order = '{{ order }}'
 AND pageSize = '{{ pageSize }}'
+AND alignment = '{{ alignment }}'
+AND order = '{{ order }}'
+AND alignmentTime = '{{ alignmentTime }}'
+AND groupId = '{{ groupId }}'
+AND serviceFilter.service = '{{ serviceFilter.service }}'
+AND serviceFilter.resourceType = '{{ serviceFilter.resourceType }}'
+AND serviceFilter.version = '{{ serviceFilter.version }}'
+AND timedCountDuration = '{{ timedCountDuration }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

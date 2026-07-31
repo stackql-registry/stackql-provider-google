@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>processors</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>processors</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="processors" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.documentai.processors" /></td></tr>
 </tbody></table>
@@ -57,7 +58,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="activeSchemaVersion" /></td>
     <td><code>string</code></td>
-    <td>Optional. SchemaVersion used by the Processor. It is the same as Processor's DatasetSchema.schema_version Format is `projects/&#123;project&#125;/locations/&#123;location&#125;/schemas/&#123;schema&#125;/schemaVersions/&#123;schema_version&#125;</td>
+    <td>Optional. SchemaVersion used by the Processor. It is the same as Processor's DatasetSchema.schema_version Format is `projects/&#123;project&#125;/locations/&#123;location&#125;/schemas/&#123;schema&#125;/schemaVersions/&#123;schema_version&#125;.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -102,7 +103,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the processor.</td>
+    <td>Output only. The state of the processor. (STATE_UNSPECIFIED, ENABLED, DISABLED, ENABLING, DISABLING, CREATING, FAILED, DELETING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
@@ -131,7 +132,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="activeSchemaVersion" /></td>
     <td><code>string</code></td>
-    <td>Optional. SchemaVersion used by the Processor. It is the same as Processor's DatasetSchema.schema_version Format is `projects/&#123;project&#125;/locations/&#123;location&#125;/schemas/&#123;schema&#125;/schemaVersions/&#123;schema_version&#125;</td>
+    <td>Optional. SchemaVersion used by the Processor. It is the same as Processor's DatasetSchema.schema_version Format is `projects/&#123;project&#125;/locations/&#123;location&#125;/schemas/&#123;schema&#125;/schemaVersions/&#123;schema_version&#125;.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -176,7 +177,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the processor.</td>
+    <td>Output only. The state of the processor. (STATE_UNSPECIFIED, ENABLED, DISABLED, ENABLING, DISABLING, CREATING, FAILED, DELETING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
@@ -214,7 +215,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_processors_list"><CopyableCode code="projects_locations_processors_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists all processors which belong to this project.</td>
 </tr>
 <tr>
@@ -232,18 +233,25 @@ The following methods are available for this resource:
     <td>Deletes the processor, unloads all deployed model artifacts if it was enabled and then deletes all artifacts associated with this processor.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_processors_process"><CopyableCode code="projects_locations_processors_process" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-processorsId"><code>processorsId</code></a></td>
-    <td></td>
-    <td>Processes a single document.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_processors_batch_process"><CopyableCode code="projects_locations_processors_batch_process" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-processorsId"><code>processorsId</code></a></td>
     <td></td>
     <td>LRO endpoint to batch process many documents. The output is written to Cloud Storage as JSON in the [Document] format.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_processors_set_default_processor_version"><CopyableCode code="projects_locations_processors_set_default_processor_version" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-processorsId"><code>processorsId</code></a></td>
+    <td></td>
+    <td>Set the default (active) version of a Processor that will be used in ProcessDocument and BatchProcessDocuments.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_processors_process"><CopyableCode code="projects_locations_processors_process" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-processorsId"><code>processorsId</code></a></td>
+    <td></td>
+    <td>Processes a single document.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_processors_enable"><CopyableCode code="projects_locations_processors_enable" /></a></td>
@@ -258,13 +266,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-processorsId"><code>processorsId</code></a></td>
     <td></td>
     <td>Disables a processor</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_processors_set_default_processor_version"><CopyableCode code="projects_locations_processors_set_default_processor_version" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-processorsId"><code>processorsId</code></a></td>
-    <td></td>
-    <td>Set the default (active) version of a Processor that will be used in ProcessDocument and BatchProcessDocuments.</td>
 </tr>
 </tbody>
 </table>
@@ -365,8 +366,8 @@ type
 FROM google.documentai.processors
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -388,20 +389,20 @@ Creates a processor from the ProcessorType provided. The processor will be at `E
 
 ```sql
 INSERT INTO google.documentai.processors (
-data__type,
-data__displayName,
 data__defaultProcessorVersion,
+data__displayName,
 data__kmsKeyName,
 data__activeSchemaVersion,
+data__type,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ type }}',
-'{{ displayName }}',
 '{{ defaultProcessorVersion }}',
+'{{ displayName }}',
 '{{ kmsKeyName }}',
 '{{ activeSchemaVersion }}',
+'{{ type }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -422,42 +423,37 @@ type
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: processors
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the processors resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the processors resource.
-    - name: type
-      value: string
-      description: >
-        The processor type, such as: `OCR_PROCESSOR`, `INVOICE_PROCESSOR`. To get a list of processor types, see FetchProcessorTypes.
-        
-    - name: displayName
-      value: string
-      description: >
-        The display name of the processor.
-        
     - name: defaultProcessorVersion
-      value: string
-      description: >
+      value: "{{ defaultProcessorVersion }}"
+      description: |
         The default processor version.
-        
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        The display name of the processor.
     - name: kmsKeyName
-      value: string
-      description: >
+      value: "{{ kmsKeyName }}"
+      description: |
         The [KMS key](https://cloud.google.com/security-key-management) used for encryption and decryption in CMEK scenarios.
-        
     - name: activeSchemaVersion
-      value: string
-      description: >
-        Optional. SchemaVersion used by the Processor. It is the same as Processor's DatasetSchema.schema_version Format is `projects/{project}/locations/{location}/schemas/{schema}/schemaVersions/{schema_version}
-        
-```
+      value: "{{ activeSchemaVersion }}"
+      description: |
+        Optional. SchemaVersion used by the Processor. It is the same as Processor's DatasetSchema.schema_version Format is \`projects/{project}/locations/{location}/schemas/{schema}/schemaVersions/{schema_version}.
+    - name: type
+      value: "{{ type }}"
+      description: |
+        The processor type, such as: \`OCR_PROCESSOR\`, \`INVOICE_PROCESSOR\`. To get a list of processor types, see FetchProcessorTypes.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -488,38 +484,15 @@ AND processorsId = '{{ processorsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_processors_process"
+    defaultValue="projects_locations_processors_batch_process"
     values={[
-        { label: 'projects_locations_processors_process', value: 'projects_locations_processors_process' },
         { label: 'projects_locations_processors_batch_process', value: 'projects_locations_processors_batch_process' },
+        { label: 'projects_locations_processors_set_default_processor_version', value: 'projects_locations_processors_set_default_processor_version' },
+        { label: 'projects_locations_processors_process', value: 'projects_locations_processors_process' },
         { label: 'projects_locations_processors_enable', value: 'projects_locations_processors_enable' },
-        { label: 'projects_locations_processors_disable', value: 'projects_locations_processors_disable' },
-        { label: 'projects_locations_processors_set_default_processor_version', value: 'projects_locations_processors_set_default_processor_version' }
+        { label: 'projects_locations_processors_disable', value: 'projects_locations_processors_disable' }
     ]}
 >
-<TabItem value="projects_locations_processors_process">
-
-Processes a single document.
-
-```sql
-EXEC google.documentai.processors.projects_locations_processors_process 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@processorsId='{{ processorsId }}' --required 
-@@json=
-'{
-"inlineDocument": "{{ inlineDocument }}", 
-"rawDocument": "{{ rawDocument }}", 
-"gcsDocument": "{{ gcsDocument }}", 
-"skipHumanReview": {{ skipHumanReview }}, 
-"fieldMask": "{{ fieldMask }}", 
-"processOptions": "{{ processOptions }}", 
-"labels": "{{ labels }}", 
-"imagelessMode": {{ imagelessMode }}
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_processors_batch_process">
 
 LRO endpoint to batch process many documents. The output is written to Cloud Storage as JSON in the [Document] format.
@@ -532,10 +505,49 @@ EXEC google.documentai.processors.projects_locations_processors_batch_process
 @@json=
 '{
 "inputDocuments": "{{ inputDocuments }}", 
-"documentOutputConfig": "{{ documentOutputConfig }}", 
 "skipHumanReview": {{ skipHumanReview }}, 
 "processOptions": "{{ processOptions }}", 
-"labels": "{{ labels }}"
+"labels": "{{ labels }}", 
+"documentOutputConfig": "{{ documentOutputConfig }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_processors_set_default_processor_version">
+
+Set the default (active) version of a Processor that will be used in ProcessDocument and BatchProcessDocuments.
+
+```sql
+EXEC google.documentai.processors.projects_locations_processors_set_default_processor_version 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@processorsId='{{ processorsId }}' --required 
+@@json=
+'{
+"defaultProcessorVersion": "{{ defaultProcessorVersion }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_processors_process">
+
+Processes a single document.
+
+```sql
+EXEC google.documentai.processors.projects_locations_processors_process 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@processorsId='{{ processorsId }}' --required 
+@@json=
+'{
+"inlineDocument": "{{ inlineDocument }}", 
+"labels": "{{ labels }}", 
+"fieldMask": "{{ fieldMask }}", 
+"skipHumanReview": {{ skipHumanReview }}, 
+"processOptions": "{{ processOptions }}", 
+"imagelessMode": {{ imagelessMode }}, 
+"rawDocument": "{{ rawDocument }}", 
+"gcsDocument": "{{ gcsDocument }}"
 }'
 ;
 ```
@@ -561,22 +573,6 @@ EXEC google.documentai.processors.projects_locations_processors_disable
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @processorsId='{{ processorsId }}' --required
-;
-```
-</TabItem>
-<TabItem value="projects_locations_processors_set_default_processor_version">
-
-Set the default (active) version of a Processor that will be used in ProcessDocument and BatchProcessDocuments.
-
-```sql
-EXEC google.documentai.processors.projects_locations_processors_set_default_processor_version 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@processorsId='{{ processorsId }}' --required 
-@@json=
-'{
-"defaultProcessorVersion": "{{ defaultProcessorVersion }}"
-}'
 ;
 ```
 </TabItem>

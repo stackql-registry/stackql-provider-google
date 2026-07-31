@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>row_access_policies</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>row_access_policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="row_access_policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.bigquery.row_access_policies" /></td></tr>
 </tbody></table>
@@ -148,35 +149,35 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+datasetId"><code>+datasetId</code></a>, <a href="#parameter-+tableId"><code>+tableId</code></a>, <a href="#parameter-+policyId"><code>+policyId</code></a></td>
     <td></td>
-    <td>Gets the specified row access policy by policy ID.</td>
+    <td>Gets the specified row access policy by policy ID. # IAM Permissions Requires the `bigquery.rowAccessPolicies.get` permission on the table.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+datasetId"><code>+datasetId</code></a>, <a href="#parameter-+tableId"><code>+tableId</code></a></td>
     <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Lists all row access policies on the specified table.</td>
+    <td>Lists all row access policies on the specified table. # IAM Permissions Requires the `bigquery.rowAccessPolicies.list` permission on the table.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+datasetId"><code>+datasetId</code></a>, <a href="#parameter-+tableId"><code>+tableId</code></a></td>
     <td></td>
-    <td>Creates a row access policy.</td>
+    <td>Creates a row access policy. # IAM Permissions Requires the following IAM permission(s) on the table: - `bigquery.rowAccessPolicies.create` - `bigquery.rowAccessPolicies.setIamPolicy` - `bigquery.tables.getData`</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="replace" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+datasetId"><code>+datasetId</code></a>, <a href="#parameter-+tableId"><code>+tableId</code></a>, <a href="#parameter-+policyId"><code>+policyId</code></a></td>
     <td></td>
-    <td>Updates a row access policy.</td>
+    <td>Updates a row access policy. # IAM Permissions Requires the following IAM permission(s) on the table: - `bigquery.rowAccessPolicies.update` - `bigquery.rowAccessPolicies.setIamPolicy` - `bigquery.tables.getData`</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-+datasetId"><code>+datasetId</code></a>, <a href="#parameter-+tableId"><code>+tableId</code></a>, <a href="#parameter-+policyId"><code>+policyId</code></a></td>
     <td><a href="#parameter-force"><code>force</code></a></td>
-    <td>Deletes a row access policy.</td>
+    <td>Deletes a row access policy. # IAM Permissions Requires the following IAM permission(s) on the table: - `bigquery.rowAccessPolicies.delete` - `bigquery.rowAccessPolicies.setIamPolicy`</td>
 </tr>
 </tbody>
 </table>
@@ -243,7 +244,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get">
 
-Gets the specified row access policy by policy ID.
+Gets the specified row access policy by policy ID. # IAM Permissions Requires the `bigquery.rowAccessPolicies.get` permission on the table.
 
 ```sql
 SELECT
@@ -263,7 +264,7 @@ AND +policyId = '{{ +policyId }}' -- required
 </TabItem>
 <TabItem value="list">
 
-Lists all row access policies on the specified table.
+Lists all row access policies on the specified table. # IAM Permissions Requires the `bigquery.rowAccessPolicies.list` permission on the table.
 
 ```sql
 SELECT
@@ -296,20 +297,20 @@ AND pageSize = '{{ pageSize }}'
 >
 <TabItem value="insert">
 
-Creates a row access policy.
+Creates a row access policy. # IAM Permissions Requires the following IAM permission(s) on the table: - `bigquery.rowAccessPolicies.create` - `bigquery.rowAccessPolicies.setIamPolicy` - `bigquery.tables.getData`
 
 ```sql
 INSERT INTO google.bigquery.row_access_policies (
-data__rowAccessPolicyReference,
 data__grantees,
+data__rowAccessPolicyReference,
 data__filterPredicate,
 projectId,
 +datasetId,
 +tableId
 )
 SELECT 
-'{{ rowAccessPolicyReference }}',
 '{{ grantees }}',
+'{{ rowAccessPolicyReference }}',
 '{{ filterPredicate }}',
 '{{ projectId }}',
 '{{ +datasetId }}',
@@ -326,35 +327,37 @@ rowAccessPolicyReference
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: row_access_policies
   props:
     - name: projectId
-      value: string
+      value: "{{ projectId }}"
       description: Required parameter for the row_access_policies resource.
     - name: +datasetId
-      value: string
+      value: "{{ +datasetId }}"
       description: Required parameter for the row_access_policies resource.
     - name: +tableId
-      value: string
+      value: "{{ +tableId }}"
       description: Required parameter for the row_access_policies resource.
-    - name: rowAccessPolicyReference
-      value: object
-      description: >
-        Required. Reference describing the ID of this row access policy.
-        
     - name: grantees
-      value: array
-      description: >
+      value:
+        - "{{ grantees }}"
+      description: |
         Optional. Input only. The optional list of iam_member users or groups that specifies the initial members that the row-level access policy should be created with. grantees types: - "user:alice@example.com": An email address that represents a specific Google account. - "serviceAccount:my-other-app@appspot.gserviceaccount.com": An email address that represents a service account. - "group:admins@example.com": An email address that represents a Google group. - "domain:example.com":The Google Workspace domain (primary) that represents all the users of that domain. - "allAuthenticatedUsers": A special identifier that represents all service accounts and all users on the internet who have authenticated with a Google Account. This identifier includes accounts that aren't connected to a Google Workspace or Cloud Identity domain, such as personal Gmail accounts. Users who aren't authenticated, such as anonymous visitors, aren't included. - "allUsers":A special identifier that represents anyone who is on the internet, including authenticated and unauthenticated users. Because BigQuery requires authentication before a user can access the service, allUsers includes only authenticated users.
-        
+    - name: rowAccessPolicyReference
+      description: |
+        Required. Reference describing the ID of this row access policy.
+      value:
+        projectId: "{{ projectId }}"
+        datasetId: "{{ datasetId }}"
+        policyId: "{{ policyId }}"
+        tableId: "{{ tableId }}"
     - name: filterPredicate
-      value: string
-      description: >
+      value: "{{ filterPredicate }}"
+      description: |
         Required. A SQL boolean expression that represents the rows defined by this row access policy, similar to the boolean expression in a WHERE clause of a SELECT query on a table. References to other tables, routines, and temporary functions are not supported. Examples: region="EU" date_field = CAST('2019-9-27' as DATE) nullable_field is not NULL numeric_field BETWEEN 1.0 AND 5.0
-        
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -369,13 +372,13 @@ rowAccessPolicyReference
 >
 <TabItem value="update">
 
-Updates a row access policy.
+Updates a row access policy. # IAM Permissions Requires the following IAM permission(s) on the table: - `bigquery.rowAccessPolicies.update` - `bigquery.rowAccessPolicies.setIamPolicy` - `bigquery.tables.getData`
 
 ```sql
 REPLACE google.bigquery.row_access_policies
 SET 
-data__rowAccessPolicyReference = '{{ rowAccessPolicyReference }}',
 data__grantees = '{{ grantees }}',
+data__rowAccessPolicyReference = '{{ rowAccessPolicyReference }}',
 data__filterPredicate = '{{ filterPredicate }}'
 WHERE 
 projectId = '{{ projectId }}' --required
@@ -404,7 +407,7 @@ rowAccessPolicyReference;
 >
 <TabItem value="delete">
 
-Deletes a row access policy.
+Deletes a row access policy. # IAM Permissions Requires the following IAM permission(s) on the table: - `bigquery.rowAccessPolicies.delete` - `bigquery.rowAccessPolicies.setIamPolicy`
 
 ```sql
 DELETE FROM google.bigquery.row_access_policies

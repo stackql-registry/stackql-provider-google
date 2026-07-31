@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>histories</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>histories</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="histories" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.toolresults.histories" /></td></tr>
 </tbody></table>
@@ -67,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="testPlatform" /></td>
     <td><code>string</code></td>
-    <td>The platform of the test history. - In response: always set. Returns the platform of the last execution if unknown.</td>
+    <td>The platform of the test history. - In response: always set. Returns the platform of the last execution if unknown. (unknownPlatform, android, ios)</td>
 </tr>
 </tbody>
 </table>
@@ -101,7 +102,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="testPlatform" /></td>
     <td><code>string</code></td>
-    <td>The platform of the test history. - In response: always set. Returns the platform of the last execution if unknown.</td>
+    <td>The platform of the test history. - In response: always set. Returns the platform of the last execution if unknown. (unknownPlatform, android, ios)</td>
 </tr>
 </tbody>
 </table>
@@ -254,17 +255,17 @@ Creates a History. The returned History will have the id set. May return any of 
 
 ```sql
 INSERT INTO firebase.toolresults.histories (
+data__displayName,
 data__historyId,
 data__name,
-data__displayName,
 data__testPlatform,
 projectId,
 requestId
 )
 SELECT 
+'{{ displayName }}',
 '{{ historyId }}',
 '{{ name }}',
-'{{ displayName }}',
 '{{ testPlatform }}',
 '{{ projectId }}',
 '{{ requestId }}'
@@ -278,36 +279,32 @@ testPlatform
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: histories
   props:
     - name: projectId
-      value: string
+      value: "{{ projectId }}"
       description: Required parameter for the histories resource.
-    - name: historyId
-      value: string
-      description: >
-        A unique identifier within a project for this History. Returns INVALID_ARGUMENT if this field is set or overwritten by the caller. - In response always set - In create request: never set
-        
-    - name: name
-      value: string
-      description: >
-        A name to uniquely identify a history within a project. Maximum of 200 characters. - In response always set - In create request: always set
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         A short human-readable (plain text) name to display in the UI. Maximum of 100 characters. - In response: present if set during create. - In create request: optional
-        
+    - name: historyId
+      value: "{{ historyId }}"
+      description: |
+        A unique identifier within a project for this History. Returns INVALID_ARGUMENT if this field is set or overwritten by the caller. - In response always set - In create request: never set
+    - name: name
+      value: "{{ name }}"
+      description: |
+        A name to uniquely identify a history within a project. Maximum of 200 characters. - In response always set - In create request: always set
     - name: testPlatform
-      value: string
-      description: >
+      value: "{{ testPlatform }}"
+      description: |
         The platform of the test history. - In response: always set. Returns the platform of the last execution if unknown.
-        
       valid_values: ['unknownPlatform', 'android', 'ios']
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

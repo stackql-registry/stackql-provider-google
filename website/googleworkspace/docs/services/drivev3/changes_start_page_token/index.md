@@ -15,6 +15,7 @@ image: /img/stackql-googleworkspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>changes_start_page_token</code>
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>changes_start_page_token</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="changes_start_page_token" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleworkspace.drivev3.changes_start_page_token" /></td></tr>
 </tbody></table>
@@ -82,7 +83,7 @@ The following methods are available for this resource:
     <td><a href="#get_start_page_token"><CopyableCode code="get_start_page_token" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-driveId"><code>driveId</code></a>, <a href="#parameter-supportsAllDrives"><code>supportsAllDrives</code></a>, <a href="#parameter-supportsTeamDrives"><code>supportsTeamDrives</code></a>, <a href="#parameter-teamDriveId"><code>teamDriveId</code></a></td>
+    <td><a href="#parameter-supportsTeamDrives"><code>supportsTeamDrives</code></a>, <a href="#parameter-teamDriveId"><code>teamDriveId</code></a>, <a href="#parameter-driveId"><code>driveId</code></a>, <a href="#parameter-supportsAllDrives"><code>supportsAllDrives</code></a></td>
     <td>Gets the starting pageToken for listing future changes. For more information, see [Retrieve changes](https://developers.google.com/workspace/drive/api/guides/manage-changes).</td>
 </tr>
 </tbody>
@@ -141,10 +142,10 @@ SELECT
 kind,
 startPageToken
 FROM googleworkspace.drivev3.changes_start_page_token
-WHERE driveId = '{{ driveId }}'
-AND supportsAllDrives = '{{ supportsAllDrives }}'
-AND supportsTeamDrives = '{{ supportsTeamDrives }}'
+WHERE supportsTeamDrives = '{{ supportsTeamDrives }}'
 AND teamDriveId = '{{ teamDriveId }}'
+AND driveId = '{{ driveId }}'
+AND supportsAllDrives = '{{ supportsAllDrives }}'
 ;
 ```
 </TabItem>

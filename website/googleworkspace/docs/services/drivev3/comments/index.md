@@ -15,6 +15,7 @@ image: /img/stackql-googleworkspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>comments</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>comments</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="comments" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleworkspace.drivev3.comments" /></td></tr>
 </tbody></table>
@@ -60,6 +61,11 @@ The following fields are returned by `SELECT` queries:
     <td>A region of the document represented as a JSON string. For details on defining anchor properties, refer to [Manage comments and replies](https://developers.google.com/workspace/drive/api/v3/manage-comments).</td>
 </tr>
 <tr>
+    <td><CopyableCode code="assigneeEmailAddress" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The email address of the user assigned to this comment. If no user is assigned, the field is unset.</td>
+</tr>
+<tr>
     <td><CopyableCode code="author" /></td>
     <td><code>object</code></td>
     <td>Information about a Drive user. (id: User)</td>
@@ -88,6 +94,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
     <td>Output only. Identifies what kind of resource this is. Value: the fixed string `"drive#comment"`. (default: drive#comment)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="mentionedEmailAddresses" /></td>
+    <td><code>array</code></td>
+    <td>Output only. A list of email addresses for users mentioned in this comment. If no users are mentioned, the list is empty.</td>
 </tr>
 <tr>
     <td><CopyableCode code="modifiedTime" /></td>
@@ -134,6 +145,11 @@ The following fields are returned by `SELECT` queries:
     <td>A region of the document represented as a JSON string. For details on defining anchor properties, refer to [Manage comments and replies](https://developers.google.com/workspace/drive/api/v3/manage-comments).</td>
 </tr>
 <tr>
+    <td><CopyableCode code="assigneeEmailAddress" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The email address of the user assigned to this comment. If no user is assigned, the field is unset.</td>
+</tr>
+<tr>
     <td><CopyableCode code="author" /></td>
     <td><code>object</code></td>
     <td>Information about a Drive user. (id: User)</td>
@@ -162,6 +178,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
     <td>Output only. Identifies what kind of resource this is. Value: the fixed string `"drive#comment"`. (default: drive#comment)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="mentionedEmailAddresses" /></td>
+    <td><code>array</code></td>
+    <td>Output only. A list of email addresses for users mentioned in this comment. If no users are mentioned, the list is empty.</td>
 </tr>
 <tr>
     <td><CopyableCode code="modifiedTime" /></td>
@@ -214,7 +235,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-fileId"><code>fileId</code></a></td>
-    <td><a href="#parameter-includeDeleted"><code>includeDeleted</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-startModifiedTime"><code>startModifiedTime</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-includeDeleted"><code>includeDeleted</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-startModifiedTime"><code>startModifiedTime</code></a></td>
     <td>Lists a file's comments. For more information, see [Manage comments and replies](https://developers.google.com/workspace/drive/api/guides/manage-comments). Required: The `fields` parameter must be set. To return the exact fields you need, see [Return specific fields](https://developers.google.com/workspace/drive/api/guides/fields-parameter).</td>
 </tr>
 <tr>
@@ -304,12 +325,14 @@ Gets a comment by ID. For more information, see [Manage comments and replies](ht
 SELECT
 id,
 anchor,
+assigneeEmailAddress,
 author,
 content,
 createdTime,
 deleted,
 htmlContent,
 kind,
+mentionedEmailAddresses,
 modifiedTime,
 quotedFileContent,
 replies,
@@ -329,20 +352,22 @@ Lists a file's comments. For more information, see [Manage comments and replies]
 SELECT
 id,
 anchor,
+assigneeEmailAddress,
 author,
 content,
 createdTime,
 deleted,
 htmlContent,
 kind,
+mentionedEmailAddresses,
 modifiedTime,
 quotedFileContent,
 replies,
 resolved
 FROM googleworkspace.drivev3.comments
 WHERE fileId = '{{ fileId }}' -- required
-AND includeDeleted = '{{ includeDeleted }}'
 AND pageSize = '{{ pageSize }}'
+AND includeDeleted = '{{ includeDeleted }}'
 AND pageToken = '{{ pageToken }}'
 AND startModifiedTime = '{{ startModifiedTime }}'
 ;
@@ -366,43 +391,45 @@ Creates a comment on a file. For more information, see [Manage comments and repl
 
 ```sql
 INSERT INTO googleworkspace.drivev3.comments (
-data__id,
-data__kind,
+data__quotedFileContent,
 data__createdTime,
+data__replies,
+data__deleted,
+data__kind,
+data__htmlContent,
+data__anchor,
 data__modifiedTime,
 data__resolved,
-data__anchor,
-data__replies,
-data__author,
-data__deleted,
-data__htmlContent,
 data__content,
-data__quotedFileContent,
+data__id,
+data__author,
 fileId
 )
 SELECT 
-'{{ id }}',
-'{{ kind }}',
+'{{ quotedFileContent }}',
 '{{ createdTime }}',
+'{{ replies }}',
+{{ deleted }},
+'{{ kind }}',
+'{{ htmlContent }}',
+'{{ anchor }}',
 '{{ modifiedTime }}',
 {{ resolved }},
-'{{ anchor }}',
-'{{ replies }}',
-'{{ author }}',
-{{ deleted }},
-'{{ htmlContent }}',
 '{{ content }}',
-'{{ quotedFileContent }}',
+'{{ id }}',
+'{{ author }}',
 '{{ fileId }}'
 RETURNING
 id,
 anchor,
+assigneeEmailAddress,
 author,
 content,
 createdTime,
 deleted,
 htmlContent,
 kind,
+mentionedEmailAddresses,
 modifiedTime,
 quotedFileContent,
 replies,
@@ -412,75 +439,88 @@ resolved
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: comments
   props:
     - name: fileId
-      value: string
+      value: "{{ fileId }}"
       description: Required parameter for the comments resource.
-    - name: id
-      value: string
-      description: >
-        Output only. The ID of the comment.
-        
-    - name: kind
-      value: string
-      description: >
-        Output only. Identifies what kind of resource this is. Value: the fixed string `"drive#comment"`.
-        
-      default: drive#comment
-    - name: createdTime
-      value: string
-      description: >
-        The time at which the comment was created (RFC 3339 date-time).
-        
-    - name: modifiedTime
-      value: string
-      description: >
-        The last time the comment or any of its replies was modified (RFC 3339 date-time).
-        
-    - name: resolved
-      value: boolean
-      description: >
-        Output only. Whether the comment has been resolved by one of its replies.
-        
-    - name: anchor
-      value: string
-      description: >
-        A region of the document represented as a JSON string. For details on defining anchor properties, refer to [Manage comments and replies](https://developers.google.com/workspace/drive/api/v3/manage-comments).
-        
-    - name: replies
-      value: array
-      description: >
-        Output only. The full list of replies to the comment in chronological order.
-        
-    - name: author
-      value: object
-      description: >
-        Information about a Drive user.
-        
-    - name: deleted
-      value: boolean
-      description: >
-        Output only. Whether the comment has been deleted. A deleted comment has no content.
-        
-    - name: htmlContent
-      value: string
-      description: >
-        Output only. The content of the comment with HTML formatting.
-        
-    - name: content
-      value: string
-      description: >
-        The plain text content of the comment. This field is used for setting the content, while `htmlContent` should be displayed.
-        
     - name: quotedFileContent
-      value: object
-      description: >
+      description: |
         The file content to which the comment refers, typically within the anchor region. For a text file, for example, this would be the text at the location of the comment.
-        
-```
+      value:
+        mimeType: "{{ mimeType }}"
+        value: "{{ value }}"
+    - name: createdTime
+      value: "{{ createdTime }}"
+      description: |
+        The time at which the comment was created (RFC 3339 date-time).
+    - name: replies
+      description: |
+        Output only. The full list of replies to the comment in chronological order.
+      value:
+        - modifiedTime: "{{ modifiedTime }}"
+          htmlContent: "{{ htmlContent }}"
+          createdTime: "{{ createdTime }}"
+          assigneeEmailAddress: "{{ assigneeEmailAddress }}"
+          content: "{{ content }}"
+          author:
+            emailAddress: "{{ emailAddress }}"
+            permissionId: "{{ permissionId }}"
+            photoLink: "{{ photoLink }}"
+            displayName: "{{ displayName }}"
+            kind: "{{ kind }}"
+            me: {{ me }}
+          action: "{{ action }}"
+          id: "{{ id }}"
+          kind: "{{ kind }}"
+          deleted: {{ deleted }}
+          mentionedEmailAddresses: "{{ mentionedEmailAddresses }}"
+    - name: deleted
+      value: {{ deleted }}
+      description: |
+        Output only. Whether the comment has been deleted. A deleted comment has no content.
+    - name: kind
+      value: "{{ kind }}"
+      description: |
+        Output only. Identifies what kind of resource this is. Value: the fixed string \`"drive#comment"\`.
+      default: drive#comment
+    - name: htmlContent
+      value: "{{ htmlContent }}"
+      description: |
+        Output only. The content of the comment with HTML formatting.
+    - name: anchor
+      value: "{{ anchor }}"
+      description: |
+        A region of the document represented as a JSON string. For details on defining anchor properties, refer to [Manage comments and replies](https://developers.google.com/workspace/drive/api/v3/manage-comments).
+    - name: modifiedTime
+      value: "{{ modifiedTime }}"
+      description: |
+        The last time the comment or any of its replies was modified (RFC 3339 date-time).
+    - name: resolved
+      value: {{ resolved }}
+      description: |
+        Output only. Whether the comment has been resolved by one of its replies.
+    - name: content
+      value: "{{ content }}"
+      description: |
+        The plain text content of the comment. This field is used for setting the content, while \`htmlContent\` should be displayed.
+    - name: id
+      value: "{{ id }}"
+      description: |
+        Output only. The ID of the comment.
+    - name: author
+      description: |
+        Information about a Drive user.
+      value:
+        emailAddress: "{{ emailAddress }}"
+        permissionId: "{{ permissionId }}"
+        photoLink: "{{ photoLink }}"
+        displayName: "{{ displayName }}"
+        kind: "{{ kind }}"
+        me: {{ me }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -500,30 +540,32 @@ Updates a comment with patch semantics. For more information, see [Manage commen
 ```sql
 UPDATE googleworkspace.drivev3.comments
 SET 
-data__id = '{{ id }}',
-data__kind = '{{ kind }}',
+data__quotedFileContent = '{{ quotedFileContent }}',
 data__createdTime = '{{ createdTime }}',
+data__replies = '{{ replies }}',
+data__deleted = {{ deleted }},
+data__kind = '{{ kind }}',
+data__htmlContent = '{{ htmlContent }}',
+data__anchor = '{{ anchor }}',
 data__modifiedTime = '{{ modifiedTime }}',
 data__resolved = {{ resolved }},
-data__anchor = '{{ anchor }}',
-data__replies = '{{ replies }}',
-data__author = '{{ author }}',
-data__deleted = {{ deleted }},
-data__htmlContent = '{{ htmlContent }}',
 data__content = '{{ content }}',
-data__quotedFileContent = '{{ quotedFileContent }}'
+data__id = '{{ id }}',
+data__author = '{{ author }}'
 WHERE 
 fileId = '{{ fileId }}' --required
 AND commentId = '{{ commentId }}' --required
 RETURNING
 id,
 anchor,
+assigneeEmailAddress,
 author,
 content,
 createdTime,
 deleted,
 htmlContent,
 kind,
+mentionedEmailAddresses,
 modifiedTime,
 quotedFileContent,
 replies,

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>sharedflows</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>sharedflows</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="sharedflows" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.sharedflows" /></td></tr>
 </tbody></table>
@@ -124,14 +125,14 @@ The following methods are available for this resource:
     <td><a href="#organizations_sharedflows_list"><CopyableCode code="organizations_sharedflows_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-includeMetaData"><code>includeMetaData</code></a>, <a href="#parameter-includeRevisions"><code>includeRevisions</code></a>, <a href="#parameter-space"><code>space</code></a></td>
+    <td><a href="#parameter-includeRevisions"><code>includeRevisions</code></a>, <a href="#parameter-space"><code>space</code></a>, <a href="#parameter-includeMetaData"><code>includeMetaData</code></a></td>
     <td>Lists all shared flows in the organization. If the resource has the `space` attribute set, the response may not return all resources. To learn more, read the [Apigee Spaces Overview](https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).</td>
 </tr>
 <tr>
     <td><a href="#organizations_sharedflows_create"><CopyableCode code="organizations_sharedflows_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-space"><code>space</code></a>, <a href="#parameter-action"><code>action</code></a>, <a href="#parameter-name"><code>name</code></a></td>
+    <td><a href="#parameter-action"><code>action</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-space"><code>space</code></a></td>
     <td>Uploads a ZIP-formatted shared flow configuration bundle to an organization. If the shared flow already exists, this creates a new revision of it. If the shared flow does not exist, this creates it. Once imported, the shared flow revision must be deployed before it can be accessed at runtime. The size limit of a shared flow bundle is 15 MB.</td>
 </tr>
 <tr>
@@ -237,9 +238,9 @@ SELECT
 sharedFlows
 FROM google.apigee.sharedflows
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND includeMetaData = '{{ includeMetaData }}'
 AND includeRevisions = '{{ includeRevisions }}'
 AND space = '{{ space }}'
+AND includeMetaData = '{{ includeMetaData }}'
 ;
 ```
 </TabItem>
@@ -261,22 +262,22 @@ Uploads a ZIP-formatted shared flow configuration bundle to an organization. If 
 
 ```sql
 INSERT INTO google.apigee.sharedflows (
-data__data,
-data__extensions,
 data__contentType,
+data__extensions,
+data__data,
 organizationsId,
-space,
 action,
-name
+name,
+space
 )
 SELECT 
-'{{ data }}',
-'{{ extensions }}',
 '{{ contentType }}',
+'{{ extensions }}',
+'{{ data }}',
 '{{ organizationsId }}',
-'{{ space }}',
 '{{ action }}',
-'{{ name }}'
+'{{ name }}',
+'{{ space }}'
 RETURNING
 name,
 configurationVersion,
@@ -297,35 +298,32 @@ type
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: sharedflows
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the sharedflows resource.
-    - name: data
-      value: string
-      description: >
-        The HTTP request/response body as raw binary.
-        
-    - name: extensions
-      value: array
-      description: >
-        Application specific response metadata. Must be set in the first response for streaming APIs.
-        
     - name: contentType
-      value: string
-      description: >
+      value: "{{ contentType }}"
+      description: |
         The HTTP Content-Type header value specifying the content type of the body.
-        
-    - name: space
-      value: string
+    - name: extensions
+      value: "{{ extensions }}"
+      description: |
+        Application specific response metadata. Must be set in the first response for streaming APIs.
+    - name: data
+      value: "{{ data }}"
+      description: |
+        The HTTP request/response body as raw binary.
     - name: action
-      value: string
+      value: "{{ action }}"
     - name: name
-      value: string
-```
+      value: "{{ name }}"
+    - name: space
+      value: "{{ space }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

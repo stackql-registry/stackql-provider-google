@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>brands</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>brands</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="brands" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.iap.brands" /></td></tr>
 </tbody></table>
@@ -231,23 +232,21 @@ supportEmail
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: brands
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the brands resource.
     - name: applicationTitle
-      value: string
-      description: >
+      value: "{{ applicationTitle }}"
+      description: |
         Application name displayed on OAuth consent screen.
-        
     - name: supportEmail
-      value: string
-      description: >
+      value: "{{ supportEmail }}"
+      description: |
         Support email displayed on the OAuth consent screen.
-        
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

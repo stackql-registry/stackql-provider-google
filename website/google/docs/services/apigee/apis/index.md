@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>apis</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>apis</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="apis" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.apis" /></td></tr>
 </tbody></table>
@@ -57,7 +58,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="apiProxyType" /></td>
     <td><code>string</code></td>
-    <td>Output only. The type of the API proxy.</td>
+    <td>Output only. The type of the API proxy. (API_PROXY_TYPE_UNSPECIFIED, PROGRAMMABLE, CONFIGURABLE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -139,14 +140,14 @@ The following methods are available for this resource:
     <td><a href="#organizations_apis_list"><CopyableCode code="organizations_apis_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-includeMetaData"><code>includeMetaData</code></a>, <a href="#parameter-space"><code>space</code></a>, <a href="#parameter-includeRevisions"><code>includeRevisions</code></a></td>
+    <td><a href="#parameter-includeMetaData"><code>includeMetaData</code></a>, <a href="#parameter-includeRevisions"><code>includeRevisions</code></a>, <a href="#parameter-space"><code>space</code></a></td>
     <td>Lists the names of all API proxies in an organization. The names returned correspond to the names defined in the configuration files for each API proxy. If the resource has the `space` attribute set, the response may not return all resources. To learn more, read the [Apigee Spaces Overview](https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).</td>
 </tr>
 <tr>
     <td><a href="#organizations_apis_create"><CopyableCode code="organizations_apis_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-action"><code>action</code></a>, <a href="#parameter-validate"><code>validate</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-space"><code>space</code></a></td>
+    <td><a href="#parameter-name"><code>name</code></a>, <a href="#parameter-space"><code>space</code></a>, <a href="#parameter-action"><code>action</code></a>, <a href="#parameter-validate"><code>validate</code></a></td>
     <td>Creates an API proxy. The API proxy created will not be accessible at runtime until it is deployed to an environment. Create a new API proxy by setting the `name` query parameter to the name of the API proxy. Import an API proxy configuration bundle stored in zip format on your local machine to your organization by doing the following: * Set the `name` query parameter to the name of the API proxy. * Set the `action` query parameter to `import`. * Set the `Content-Type` header to `multipart/form-data`. * Pass as a file the name of API proxy configuration bundle stored in zip format on your local machine using the `file` form field. **Note**: To validate the API proxy configuration bundle only without importing it, set the `action` query parameter to `validate`. When importing an API proxy configuration bundle, if the API proxy does not exist, it will be created. If the API proxy exists, then a new revision is created. Invalid API proxy configurations are rejected, and a list of validation errors is returned to the client.</td>
 </tr>
 <tr>
@@ -273,8 +274,8 @@ proxies
 FROM google.apigee.apis
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND includeMetaData = '{{ includeMetaData }}'
-AND space = '{{ space }}'
 AND includeRevisions = '{{ includeRevisions }}'
+AND space = '{{ space }}'
 ;
 ```
 </TabItem>
@@ -296,24 +297,24 @@ Creates an API proxy. The API proxy created will not be accessible at runtime un
 
 ```sql
 INSERT INTO google.apigee.apis (
-data__data,
-data__extensions,
 data__contentType,
+data__extensions,
+data__data,
 organizationsId,
-action,
-validate,
 name,
-space
+space,
+action,
+validate
 )
 SELECT 
-'{{ data }}',
-'{{ extensions }}',
 '{{ contentType }}',
+'{{ extensions }}',
+'{{ data }}',
 '{{ organizationsId }}',
-'{{ action }}',
-'{{ validate }}',
 '{{ name }}',
-'{{ space }}'
+'{{ space }}',
+'{{ action }}',
+'{{ validate }}'
 RETURNING
 name,
 archive,
@@ -327,6 +328,7 @@ entityMetaDataAsProperties,
 hasExtensiblePolicy,
 integrationEndpoints,
 lastModifiedAt,
+mcp,
 policies,
 proxies,
 proxyEndpoints,
@@ -345,37 +347,34 @@ type
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: apis
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the apis resource.
-    - name: data
-      value: string
-      description: >
-        The HTTP request/response body as raw binary.
-        
-    - name: extensions
-      value: array
-      description: >
-        Application specific response metadata. Must be set in the first response for streaming APIs.
-        
     - name: contentType
-      value: string
-      description: >
+      value: "{{ contentType }}"
+      description: |
         The HTTP Content-Type header value specifying the content type of the body.
-        
-    - name: action
-      value: string
-    - name: validate
-      value: boolean
+    - name: extensions
+      value: "{{ extensions }}"
+      description: |
+        Application specific response metadata. Must be set in the first response for streaming APIs.
+    - name: data
+      value: "{{ data }}"
+      description: |
+        The HTTP request/response body as raw binary.
     - name: name
-      value: string
+      value: "{{ name }}"
     - name: space
-      value: string
-```
+      value: "{{ space }}"
+    - name: action
+      value: "{{ action }}"
+    - name: validate
+      value: {{ validate }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -395,8 +394,8 @@ Updates an existing API proxy.
 ```sql
 UPDATE google.apigee.apis
 SET 
-data__space = '{{ space }}',
-data__labels = '{{ labels }}'
+data__labels = '{{ labels }}',
+data__space = '{{ space }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND apisId = '{{ apisId }}' --required

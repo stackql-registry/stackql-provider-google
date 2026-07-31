@@ -15,6 +15,7 @@ image: /img/stackql-googleworkspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>changes</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>changes</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="changes" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleworkspace.drivev3.changes" /></td></tr>
 </tbody></table>
@@ -86,7 +87,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="teamDrive" /></td>
     <td><code>object</code></td>
-    <td>Deprecated: Use `drive` instead. (id: TeamDrive)</td>
+    <td>Deprecated: use the drive collection instead. Next ID: 33 (id: TeamDrive)</td>
 </tr>
 <tr>
     <td><CopyableCode code="teamDriveId" /></td>
@@ -127,14 +128,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td><a href="#parameter-driveId"><code>driveId</code></a>, <a href="#parameter-includeCorpusRemovals"><code>includeCorpusRemovals</code></a>, <a href="#parameter-includeItemsFromAllDrives"><code>includeItemsFromAllDrives</code></a>, <a href="#parameter-includeRemoved"><code>includeRemoved</code></a>, <a href="#parameter-includeTeamDriveItems"><code>includeTeamDriveItems</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-restrictToMyDrive"><code>restrictToMyDrive</code></a>, <a href="#parameter-spaces"><code>spaces</code></a>, <a href="#parameter-supportsAllDrives"><code>supportsAllDrives</code></a>, <a href="#parameter-supportsTeamDrives"><code>supportsTeamDrives</code></a>, <a href="#parameter-teamDriveId"><code>teamDriveId</code></a>, <a href="#parameter-includePermissionsForView"><code>includePermissionsForView</code></a>, <a href="#parameter-includeLabels"><code>includeLabels</code></a></td>
+    <td><a href="#parameter-supportsAllDrives"><code>supportsAllDrives</code></a>, <a href="#parameter-teamDriveId"><code>teamDriveId</code></a>, <a href="#parameter-includeLabels"><code>includeLabels</code></a>, <a href="#parameter-spaces"><code>spaces</code></a>, <a href="#parameter-restrictToMyDrive"><code>restrictToMyDrive</code></a>, <a href="#parameter-includeCorpusRemovals"><code>includeCorpusRemovals</code></a>, <a href="#parameter-includeItemsFromAllDrives"><code>includeItemsFromAllDrives</code></a>, <a href="#parameter-supportsTeamDrives"><code>supportsTeamDrives</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-includeTeamDriveItems"><code>includeTeamDriveItems</code></a>, <a href="#parameter-driveId"><code>driveId</code></a>, <a href="#parameter-includeRemoved"><code>includeRemoved</code></a>, <a href="#parameter-includePermissionsForView"><code>includePermissionsForView</code></a></td>
     <td>Lists the changes for a user or shared drive. For more information, see [Retrieve changes](https://developers.google.com/workspace/drive/api/guides/manage-changes).</td>
 </tr>
 <tr>
     <td><a href="#watch"><CopyableCode code="watch" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td><a href="#parameter-driveId"><code>driveId</code></a>, <a href="#parameter-includeCorpusRemovals"><code>includeCorpusRemovals</code></a>, <a href="#parameter-includeItemsFromAllDrives"><code>includeItemsFromAllDrives</code></a>, <a href="#parameter-includeRemoved"><code>includeRemoved</code></a>, <a href="#parameter-includeTeamDriveItems"><code>includeTeamDriveItems</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-restrictToMyDrive"><code>restrictToMyDrive</code></a>, <a href="#parameter-spaces"><code>spaces</code></a>, <a href="#parameter-supportsAllDrives"><code>supportsAllDrives</code></a>, <a href="#parameter-supportsTeamDrives"><code>supportsTeamDrives</code></a>, <a href="#parameter-teamDriveId"><code>teamDriveId</code></a>, <a href="#parameter-includePermissionsForView"><code>includePermissionsForView</code></a>, <a href="#parameter-includeLabels"><code>includeLabels</code></a></td>
+    <td><a href="#parameter-includeTeamDriveItems"><code>includeTeamDriveItems</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-supportsTeamDrives"><code>supportsTeamDrives</code></a>, <a href="#parameter-includeRemoved"><code>includeRemoved</code></a>, <a href="#parameter-includePermissionsForView"><code>includePermissionsForView</code></a>, <a href="#parameter-driveId"><code>driveId</code></a>, <a href="#parameter-includeLabels"><code>includeLabels</code></a>, <a href="#parameter-supportsAllDrives"><code>supportsAllDrives</code></a>, <a href="#parameter-teamDriveId"><code>teamDriveId</code></a>, <a href="#parameter-includeCorpusRemovals"><code>includeCorpusRemovals</code></a>, <a href="#parameter-restrictToMyDrive"><code>restrictToMyDrive</code></a>, <a href="#parameter-includeItemsFromAllDrives"><code>includeItemsFromAllDrives</code></a>, <a href="#parameter-spaces"><code>spaces</code></a></td>
     <td>Subscribes to changes for a user. For more information, see [Notifications for resource changes](https://developers.google.com/workspace/drive/api/guides/push).</td>
 </tr>
 </tbody>
@@ -253,19 +254,19 @@ time,
 type
 FROM googleworkspace.drivev3.changes
 WHERE pageToken = '{{ pageToken }}' -- required
-AND driveId = '{{ driveId }}'
+AND supportsAllDrives = '{{ supportsAllDrives }}'
+AND teamDriveId = '{{ teamDriveId }}'
+AND includeLabels = '{{ includeLabels }}'
+AND spaces = '{{ spaces }}'
+AND restrictToMyDrive = '{{ restrictToMyDrive }}'
 AND includeCorpusRemovals = '{{ includeCorpusRemovals }}'
 AND includeItemsFromAllDrives = '{{ includeItemsFromAllDrives }}'
-AND includeRemoved = '{{ includeRemoved }}'
-AND includeTeamDriveItems = '{{ includeTeamDriveItems }}'
-AND pageSize = '{{ pageSize }}'
-AND restrictToMyDrive = '{{ restrictToMyDrive }}'
-AND spaces = '{{ spaces }}'
-AND supportsAllDrives = '{{ supportsAllDrives }}'
 AND supportsTeamDrives = '{{ supportsTeamDrives }}'
-AND teamDriveId = '{{ teamDriveId }}'
+AND pageSize = '{{ pageSize }}'
+AND includeTeamDriveItems = '{{ includeTeamDriveItems }}'
+AND driveId = '{{ driveId }}'
+AND includeRemoved = '{{ includeRemoved }}'
 AND includePermissionsForView = '{{ includePermissionsForView }}'
-AND includeLabels = '{{ includeLabels }}'
 ;
 ```
 </TabItem>
@@ -287,31 +288,31 @@ Subscribes to changes for a user. For more information, see [Notifications for r
 ```sql
 EXEC googleworkspace.drivev3.changes.watch 
 @pageToken='{{ pageToken }}' --required, 
-@driveId='{{ driveId }}', 
-@includeCorpusRemovals={{ includeCorpusRemovals }}, 
-@includeItemsFromAllDrives={{ includeItemsFromAllDrives }}, 
-@includeRemoved={{ includeRemoved }}, 
 @includeTeamDriveItems={{ includeTeamDriveItems }}, 
 @pageSize='{{ pageSize }}', 
-@restrictToMyDrive={{ restrictToMyDrive }}, 
-@spaces='{{ spaces }}', 
-@supportsAllDrives={{ supportsAllDrives }}, 
 @supportsTeamDrives={{ supportsTeamDrives }}, 
-@teamDriveId='{{ teamDriveId }}', 
+@includeRemoved={{ includeRemoved }}, 
 @includePermissionsForView='{{ includePermissionsForView }}', 
-@includeLabels='{{ includeLabels }}' 
+@driveId='{{ driveId }}', 
+@includeLabels='{{ includeLabels }}', 
+@supportsAllDrives={{ supportsAllDrives }}, 
+@teamDriveId='{{ teamDriveId }}', 
+@includeCorpusRemovals={{ includeCorpusRemovals }}, 
+@restrictToMyDrive={{ restrictToMyDrive }}, 
+@includeItemsFromAllDrives={{ includeItemsFromAllDrives }}, 
+@spaces='{{ spaces }}' 
 @@json=
 '{
-"payload": {{ payload }}, 
-"id": "{{ id }}", 
-"resourceId": "{{ resourceId }}", 
-"resourceUri": "{{ resourceUri }}", 
 "token": "{{ token }}", 
-"expiration": "{{ expiration }}", 
-"type": "{{ type }}", 
-"address": "{{ address }}", 
 "params": "{{ params }}", 
-"kind": "{{ kind }}"
+"address": "{{ address }}", 
+"payload": {{ payload }}, 
+"resourceId": "{{ resourceId }}", 
+"id": "{{ id }}", 
+"kind": "{{ kind }}", 
+"type": "{{ type }}", 
+"resourceUri": "{{ resourceUri }}", 
+"expiration": "{{ expiration }}"
 }'
 ;
 ```

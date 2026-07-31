@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>target_pools</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>target_pools</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="target_pools" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.target_pools" /></td></tr>
 </tbody></table>
@@ -58,17 +59,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>[a-z](?:[-a-z0-9]&#123;0,61&#125;[a-z0-9])?</code>)</td>
+    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply withRFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>&#91;a-z&#93;(?:&#91;-a-z0-9&#93;&#123;0,61&#125;&#91;a-z0-9&#93;)?</code>)</td>
 </tr>
 <tr>
     <td><CopyableCode code="backupPool" /></td>
     <td><code>string</code></td>
-    <td>The server-defined URL for the resource. This field is applicable only when the containing target pool is serving a forwarding rule as the primary pool, and its failoverRatio field is properly set to a value between [0, 1]. backupPool and failoverRatio together define the fallback behavior of the primary target pool: if the ratio of the healthy instances in the primary pool is at or below failoverRatio, traffic arriving at the load-balanced IP will be directed to the backup pool. In case where failoverRatio and backupPool are not set, or all the instances in the backup pool are unhealthy, the traffic will be directed back to the primary pool in the "force" mode, where traffic will be spread to the healthy instances with the best effort, or to all instances when no instance is healthy.</td>
+    <td>The server-defined URL for the resource. This field is applicable only when the containing target pool is serving a forwarding rule as the primary pool, and its failoverRatio field is properly set to a value between [0, 1].backupPool and failoverRatio together define the fallback behavior of the primary target pool: if the ratio of the healthy instances in the primary pool is at or belowfailoverRatio, traffic arriving at the load-balanced IP will be directed to the backup pool.  In case where failoverRatio and backupPool are not set, or all the instances in the backup pool are unhealthy, the traffic will be directed back to the primary pool in the "force" mode, where traffic will be spread to the healthy instances with the best effort, or to all instances when no instance is healthy.</td>
 </tr>
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Creation timestamp in RFC3339 text format.</td>
+    <td>Output only. [Output Only] Creation timestamp inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -78,7 +79,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="failoverRatio" /></td>
     <td><code>number (float)</code></td>
-    <td>This field is applicable only when the containing target pool is serving a forwarding rule as the primary pool (i.e., not as a backup pool to some other target pool). The value of the field must be in [0, 1]. If set, backupPool must also be set. They together define the fallback behavior of the primary target pool: if the ratio of the healthy instances in the primary pool is at or below this number, traffic arriving at the load-balanced IP will be directed to the backup pool. In case where failoverRatio is not set or all the instances in the backup pool are unhealthy, the traffic will be directed back to the primary pool in the "force" mode, where traffic will be spread to the healthy instances with the best effort, or to all instances when no instance is healthy.</td>
+    <td>This field is applicable only when the containing target pool is serving a forwarding rule as the primary pool (i.e., not as a backup pool to some other target pool). The value of the field must be in [0, 1].  If set, backupPool must also be set. They together define the fallback behavior of the primary target pool: if the ratio of the healthy instances in the primary pool is at or below this number, traffic arriving at the load-balanced IP will be directed to the backup pool.  In case where failoverRatio is not set or all the instances in the backup pool are unhealthy, the traffic will be directed back to the primary pool in the "force" mode, where traffic will be spread to the healthy instances with the best effort, or to all instances when no instance is healthy.</td>
 </tr>
 <tr>
     <td><CopyableCode code="healthChecks" /></td>
@@ -93,12 +94,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of the resource. Always compute#targetPool for target pools. (default: compute#targetPool)</td>
+    <td>Output only. [Output Only] Type of the resource. Always compute#targetPool for target pools. (default: compute#targetPool)</td>
 </tr>
 <tr>
     <td><CopyableCode code="region" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] URL of the region where the target pool resides.</td>
+    <td>Output only. [Output Only] URL of the region where the target pool resides.</td>
 </tr>
 <tr>
     <td><CopyableCode code="securityPolicy" /></td>
@@ -113,7 +114,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="sessionAffinity" /></td>
     <td><code>string</code></td>
-    <td>Session affinity option, must be one of the following values: NONE: Connections from the same client IP may go to any instance in the pool. CLIENT_IP: Connections from the same client IP will go to the same instance in the pool while that instance remains healthy. CLIENT_IP_PROTO: Connections from the same client IP with the same IP protocol will go to the same instance in the pool while that instance remains healthy.</td>
+    <td>Session affinity option, must be one of the following values:  NONE: Connections from the same client IP may go to any     instance in the pool.  CLIENT_IP: Connections from the same client IP will go     to the same instance in     the pool while that instance remains healthy.  CLIENT_IP_PROTO: Connections from the same client IP     with the same IP protocol will go to the same instance in the     pool while that instance remains healthy. (CLIENT_IP, CLIENT_IP_NO_DESTINATION, CLIENT_IP_PORT_PROTO, CLIENT_IP_PROTO, GENERATED_COOKIE, HEADER_FIELD, HTTP_COOKIE, NONE, STRONG_COOKIE_AFFINITY)</td>
 </tr>
 </tbody>
 </table>
@@ -142,17 +143,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of resource. Always compute#targetPoolList for lists of target pools. (default: compute#targetPoolList)</td>
+    <td>Output only. [Output Only] Type of resource. Always compute#targetPoolList for lists of target pools. (default: compute#targetPoolList)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextPageToken" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
+    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger thanmaxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for this resource.</td>
+    <td>Output only. [Output Only] Server-defined URL for this resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="warning" /></td>
@@ -181,17 +182,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>[a-z](?:[-a-z0-9]&#123;0,61&#125;[a-z0-9])?</code>)</td>
+    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply withRFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>&#91;a-z&#93;(?:&#91;-a-z0-9&#93;&#123;0,61&#125;&#91;a-z0-9&#93;)?</code>)</td>
 </tr>
 <tr>
     <td><CopyableCode code="backupPool" /></td>
     <td><code>string</code></td>
-    <td>The server-defined URL for the resource. This field is applicable only when the containing target pool is serving a forwarding rule as the primary pool, and its failoverRatio field is properly set to a value between [0, 1]. backupPool and failoverRatio together define the fallback behavior of the primary target pool: if the ratio of the healthy instances in the primary pool is at or below failoverRatio, traffic arriving at the load-balanced IP will be directed to the backup pool. In case where failoverRatio and backupPool are not set, or all the instances in the backup pool are unhealthy, the traffic will be directed back to the primary pool in the "force" mode, where traffic will be spread to the healthy instances with the best effort, or to all instances when no instance is healthy.</td>
+    <td>The server-defined URL for the resource. This field is applicable only when the containing target pool is serving a forwarding rule as the primary pool, and its failoverRatio field is properly set to a value between [0, 1].backupPool and failoverRatio together define the fallback behavior of the primary target pool: if the ratio of the healthy instances in the primary pool is at or belowfailoverRatio, traffic arriving at the load-balanced IP will be directed to the backup pool.  In case where failoverRatio and backupPool are not set, or all the instances in the backup pool are unhealthy, the traffic will be directed back to the primary pool in the "force" mode, where traffic will be spread to the healthy instances with the best effort, or to all instances when no instance is healthy.</td>
 </tr>
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Creation timestamp in RFC3339 text format.</td>
+    <td>Output only. [Output Only] Creation timestamp inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -201,7 +202,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="failoverRatio" /></td>
     <td><code>number (float)</code></td>
-    <td>This field is applicable only when the containing target pool is serving a forwarding rule as the primary pool (i.e., not as a backup pool to some other target pool). The value of the field must be in [0, 1]. If set, backupPool must also be set. They together define the fallback behavior of the primary target pool: if the ratio of the healthy instances in the primary pool is at or below this number, traffic arriving at the load-balanced IP will be directed to the backup pool. In case where failoverRatio is not set or all the instances in the backup pool are unhealthy, the traffic will be directed back to the primary pool in the "force" mode, where traffic will be spread to the healthy instances with the best effort, or to all instances when no instance is healthy.</td>
+    <td>This field is applicable only when the containing target pool is serving a forwarding rule as the primary pool (i.e., not as a backup pool to some other target pool). The value of the field must be in [0, 1].  If set, backupPool must also be set. They together define the fallback behavior of the primary target pool: if the ratio of the healthy instances in the primary pool is at or below this number, traffic arriving at the load-balanced IP will be directed to the backup pool.  In case where failoverRatio is not set or all the instances in the backup pool are unhealthy, the traffic will be directed back to the primary pool in the "force" mode, where traffic will be spread to the healthy instances with the best effort, or to all instances when no instance is healthy.</td>
 </tr>
 <tr>
     <td><CopyableCode code="healthChecks" /></td>
@@ -216,12 +217,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of the resource. Always compute#targetPool for target pools. (default: compute#targetPool)</td>
+    <td>Output only. [Output Only] Type of the resource. Always compute#targetPool for target pools. (default: compute#targetPool)</td>
 </tr>
 <tr>
     <td><CopyableCode code="region" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] URL of the region where the target pool resides.</td>
+    <td>Output only. [Output Only] URL of the region where the target pool resides.</td>
 </tr>
 <tr>
     <td><CopyableCode code="securityPolicy" /></td>
@@ -236,7 +237,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="sessionAffinity" /></td>
     <td><code>string</code></td>
-    <td>Session affinity option, must be one of the following values: NONE: Connections from the same client IP may go to any instance in the pool. CLIENT_IP: Connections from the same client IP will go to the same instance in the pool while that instance remains healthy. CLIENT_IP_PROTO: Connections from the same client IP with the same IP protocol will go to the same instance in the pool while that instance remains healthy.</td>
+    <td>Session affinity option, must be one of the following values:  NONE: Connections from the same client IP may go to any     instance in the pool.  CLIENT_IP: Connections from the same client IP will go     to the same instance in     the pool while that instance remains healthy.  CLIENT_IP_PROTO: Connections from the same client IP     with the same IP protocol will go to the same instance in the     pool while that instance remains healthy. (CLIENT_IP, CLIENT_IP_NO_DESTINATION, CLIENT_IP_PORT_PROTO, CLIENT_IP_PROTO, GENERATED_COOKIE, HEADER_FIELD, HTTP_COOKIE, NONE, STRONG_COOKIE_AFFINITY)</td>
 </tr>
 </tbody>
 </table>
@@ -269,22 +270,22 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
-    <td>Retrieves a list of target pools available to the specified project and region.</td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Retrieves a list of target pools available to the specified<br />project and region.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
-    <td>Retrieves an aggregated list of target pools. To prevent failure, Google recommends that you set the `returnPartialSuccess` parameter to `true`.</td>
+    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Retrieves an aggregated list of target pools.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Creates a target pool in the specified project and region using the data included in the request.</td>
+    <td>Creates a target pool in the specified project and region using<br />the data included in the request.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
@@ -305,7 +306,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-targetPool"><code>targetPool</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Sets the Google Cloud Armor security policy for the specified target pool. For more information, see Google Cloud Armor Overview</td>
+    <td>Sets the Google Cloud Armor security policy for the specified target pool.<br />For more information, seeGoogle<br />Cloud Armor Overview</td>
 </tr>
 </tbody>
 </table>
@@ -424,7 +425,7 @@ AND targetPool = '{{ targetPool }}' -- required
 </TabItem>
 <TabItem value="list">
 
-Retrieves a list of target pools available to the specified project and region.
+Retrieves a list of target pools available to the specified<br />project and region.
 
 ```sql
 SELECT
@@ -437,9 +438,9 @@ warning
 FROM google.compute.target_pools
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
+AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
@@ -447,7 +448,7 @@ AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 </TabItem>
 <TabItem value="aggregated_list">
 
-Retrieves an aggregated list of target pools. To prevent failure, Google recommends that you set the `returnPartialSuccess` parameter to `true`.
+Retrieves an aggregated list of target pools.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.
 
 ```sql
 SELECT
@@ -466,13 +467,13 @@ selfLink,
 sessionAffinity
 FROM google.compute.target_pools
 WHERE project = '{{ project }}' -- required
-AND filter = '{{ filter }}'
-AND includeAllScopes = '{{ includeAllScopes }}'
-AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND includeAllScopes = '{{ includeAllScopes }}'
+AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 AND serviceProjectNumber = '{{ serviceProjectNumber }}'
+AND maxResults = '{{ maxResults }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -490,41 +491,35 @@ AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 >
 <TabItem value="insert">
 
-Creates a target pool in the specified project and region using the data included in the request.
+Creates a target pool in the specified project and region using<br />the data included in the request.
 
 ```sql
 INSERT INTO google.compute.target_pools (
-data__kind,
-data__id,
-data__creationTimestamp,
-data__name,
-data__description,
-data__region,
+data__backupPool,
 data__healthChecks,
+data__description,
+data__failoverRatio,
+data__selfLink,
+data__id,
+data__securityPolicy,
+data__name,
 data__instances,
 data__sessionAffinity,
-data__failoverRatio,
-data__backupPool,
-data__selfLink,
-data__securityPolicy,
 project,
 region,
 requestId
 )
 SELECT 
-'{{ kind }}',
-'{{ id }}',
-'{{ creationTimestamp }}',
-'{{ name }}',
-'{{ description }}',
-'{{ region }}',
+'{{ backupPool }}',
 '{{ healthChecks }}',
+'{{ description }}',
+{{ failoverRatio }},
+'{{ selfLink }}',
+'{{ id }}',
+'{{ securityPolicy }}',
+'{{ name }}',
 '{{ instances }}',
 '{{ sessionAffinity }}',
-{{ failoverRatio }},
-'{{ backupPool }}',
-'{{ selfLink }}',
-'{{ securityPolicy }}',
 '{{ project }}',
 '{{ region }}',
 '{{ requestId }}'
@@ -536,6 +531,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -560,86 +556,106 @@ zone
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: target_pools
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the target_pools resource.
     - name: region
-      value: string
+      value: "{{ region }}"
       description: Required parameter for the target_pools resource.
-    - name: kind
-      value: string
-      description: >
-        [Output Only] Type of the resource. Always compute#targetPool for target pools.
-        
-      default: compute#targetPool
-    - name: id
-      value: string
-      description: >
-        [Output Only] The unique identifier for the resource. This identifier is defined by the server.
-        
-    - name: creationTimestamp
-      value: string
-      description: >
-        [Output Only] Creation timestamp in RFC3339 text format.
-        
-    - name: name
-      value: string
-      description: >
-        Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
-        
-    - name: description
-      value: string
-      description: >
-        An optional description of this resource. Provide this property when you create the resource.
-        
-    - name: region
-      value: string
-      description: >
-        [Output Only] URL of the region where the target pool resides.
-        
-    - name: healthChecks
-      value: array
-      description: >
-        The URL of the HttpHealthCheck resource. A member instance in this pool is considered healthy if and only if the health checks pass. Only legacy HttpHealthChecks are supported. Only one health check may be specified.
-        
-    - name: instances
-      value: array
-      description: >
-        A list of resource URLs to the virtual machine instances serving this pool. They must live in zones contained in the same region as this pool.
-        
-    - name: sessionAffinity
-      value: string
-      description: >
-        Session affinity option, must be one of the following values: NONE: Connections from the same client IP may go to any instance in the pool. CLIENT_IP: Connections from the same client IP will go to the same instance in the pool while that instance remains healthy. CLIENT_IP_PROTO: Connections from the same client IP with the same IP protocol will go to the same instance in the pool while that instance remains healthy.
-        
-      valid_values: ['CLIENT_IP', 'CLIENT_IP_NO_DESTINATION', 'CLIENT_IP_PORT_PROTO', 'CLIENT_IP_PROTO', 'GENERATED_COOKIE', 'HEADER_FIELD', 'HTTP_COOKIE', 'NONE', 'STRONG_COOKIE_AFFINITY']
-    - name: failoverRatio
-      value: number
-      description: >
-        This field is applicable only when the containing target pool is serving a forwarding rule as the primary pool (i.e., not as a backup pool to some other target pool). The value of the field must be in [0, 1]. If set, backupPool must also be set. They together define the fallback behavior of the primary target pool: if the ratio of the healthy instances in the primary pool is at or below this number, traffic arriving at the load-balanced IP will be directed to the backup pool. In case where failoverRatio is not set or all the instances in the backup pool are unhealthy, the traffic will be directed back to the primary pool in the "force" mode, where traffic will be spread to the healthy instances with the best effort, or to all instances when no instance is healthy.
-        
     - name: backupPool
-      value: string
-      description: >
-        The server-defined URL for the resource. This field is applicable only when the containing target pool is serving a forwarding rule as the primary pool, and its failoverRatio field is properly set to a value between [0, 1]. backupPool and failoverRatio together define the fallback behavior of the primary target pool: if the ratio of the healthy instances in the primary pool is at or below failoverRatio, traffic arriving at the load-balanced IP will be directed to the backup pool. In case where failoverRatio and backupPool are not set, or all the instances in the backup pool are unhealthy, the traffic will be directed back to the primary pool in the "force" mode, where traffic will be spread to the healthy instances with the best effort, or to all instances when no instance is healthy.
-        
+      value: "{{ backupPool }}"
+      description: |
+        The server-defined URL for the resource. This field is applicable only when
+        the containing target pool is serving a forwarding rule as the primary
+        pool, and its failoverRatio field is properly set to a value
+        between [0, 1].backupPool and failoverRatio together define
+        the fallback behavior of the primary target pool: if the ratio of the
+        healthy instances in the primary pool is at or belowfailoverRatio, traffic arriving at the load-balanced
+        IP will be directed to the backup pool.
+        In case where failoverRatio and backupPool
+        are not set, or all the instances in the backup pool are unhealthy,
+        the traffic will be directed back to the primary pool in the "force"
+        mode, where traffic will be spread to the healthy instances with the
+        best effort, or to all instances when no instance is healthy.
+    - name: healthChecks
+      value:
+        - "{{ healthChecks }}"
+      description: |
+        The URL of the HttpHealthCheck resource. A member instance in this
+        pool is considered healthy if and only if the health checks pass.
+        Only legacy HttpHealthChecks are supported. Only one health check may be
+        specified.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
+    - name: failoverRatio
+      value: {{ failoverRatio }}
+      description: |
+        This field is applicable only when the containing target pool is serving a
+        forwarding rule as the primary pool (i.e., not as a backup pool to some
+        other target pool). The value of the field must be in [0, 1].
+        If set, backupPool must also be set. They together define
+        the fallback behavior of the primary target pool: if the ratio of the
+        healthy instances in the primary pool is at or below this number,
+        traffic arriving at the load-balanced IP will be directed to the
+        backup pool.
+        In case where failoverRatio is not set or all the
+        instances in the backup pool are unhealthy, the traffic will be
+        directed back to the primary pool in the "force" mode, where traffic
+        will be spread to the healthy instances with the
+        best effort, or to all instances when no instance is healthy.
     - name: selfLink
-      value: string
-      description: >
+      value: "{{ selfLink }}"
+      description: |
         [Output Only] Server-defined URL for the resource.
-        
+    - name: id
+      value: "{{ id }}"
+      description: |
+        [Output Only] The unique identifier for the resource. This identifier is
+        defined by the server.
     - name: securityPolicy
-      value: string
-      description: >
-        [Output Only] The resource URL for the security policy associated with this target pool.
-        
+      value: "{{ securityPolicy }}"
+      description: |
+        [Output Only] The resource URL for the security policy associated with this
+        target pool.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the resource. Provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must
+        be a dash, lowercase letter, or digit, except the last character, which
+        cannot be a dash.
+    - name: instances
+      value:
+        - "{{ instances }}"
+      description: |
+        A list of resource URLs to the virtual machine instances serving this pool.
+        They must live in zones contained in the same region as this pool.
+    - name: sessionAffinity
+      value: "{{ sessionAffinity }}"
+      description: |
+        Session affinity option, must be one of the following values:
+        NONE: Connections from the same client IP may go to any
+        instance in the pool.
+        CLIENT_IP: Connections from the same client IP will go
+        to the same instance in
+        the pool while that instance remains healthy.
+        CLIENT_IP_PROTO: Connections from the same client IP
+        with the same IP protocol will go to the same instance in the
+        pool while that instance remains healthy.
+      valid_values: ['CLIENT_IP', 'CLIENT_IP_NO_DESTINATION', 'CLIENT_IP_PORT_PROTO', 'CLIENT_IP_PROTO', 'GENERATED_COOKIE', 'HEADER_FIELD', 'HTTP_COOKIE', 'NONE', 'STRONG_COOKIE_AFFINITY']
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -697,7 +713,7 @@ EXEC google.compute.target_pools.set_backup
 </TabItem>
 <TabItem value="set_security_policy">
 
-Sets the Google Cloud Armor security policy for the specified target pool. For more information, see Google Cloud Armor Overview
+Sets the Google Cloud Armor security policy for the specified target pool.<br />For more information, seeGoogle<br />Cloud Armor Overview
 
 ```sql
 EXEC google.compute.target_pools.set_security_policy 

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>keys</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>keys</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="keys" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.keys" /></td></tr>
 </tbody></table>
@@ -230,11 +231,11 @@ The following methods are available for this resource:
     <td>Deletes an app's consumer key and removes all API products associated with the app. After the consumer key is deleted, it cannot be used to access any APIs.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_developers_apps_keys_update_developer_app_key"><CopyableCode code="organizations_developers_apps_keys_update_developer_app_key" /></a></td>
+    <td><a href="#organizations_developers_apps_keys_apiproducts_update_developer_app_key_api_product"><CopyableCode code="organizations_developers_apps_keys_apiproducts_update_developer_app_key_api_product" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-developersId"><code>developersId</code></a>, <a href="#parameter-appsId"><code>appsId</code></a>, <a href="#parameter-keysId"><code>keysId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-developersId"><code>developersId</code></a>, <a href="#parameter-appsId"><code>appsId</code></a>, <a href="#parameter-keysId"><code>keysId</code></a>, <a href="#parameter-apiproductsId"><code>apiproductsId</code></a></td>
     <td><a href="#parameter-action"><code>action</code></a></td>
-    <td>Adds an API product to a developer app key, enabling the app that holds the key to access the API resources bundled in the API product. In addition, you can add attributes and scopes associated with the API product to the developer app key. The status of the key can be updated via "action" Query Parameter. None of the other fields can be updated via this API. This API replaces the existing attributes with those specified in the request. Include or exclude any existing attributes that you want to retain or delete, respectively. None of the other fields can be updated. You can use the same key to access all API products associated with the app.</td>
+    <td>Approves or revokes the consumer key for an API product. After a consumer key is approved, the app can use it to access APIs. A consumer key that is revoked or pending cannot be used to access an API. Any access tokens associated with a revoked consumer key will remain active. However, Apigee checks the status of the consumer key and if set to `revoked` will not allow access to the API.</td>
 </tr>
 <tr>
     <td><a href="#organizations_developers_apps_keys_create_create"><CopyableCode code="organizations_developers_apps_keys_create_create" /></a></td>
@@ -244,11 +245,11 @@ The following methods are available for this resource:
     <td>Creates a custom consumer key and secret for a developer app. This is particularly useful if you want to migrate existing consumer keys and secrets to Apigee from another system. Consumer keys and secrets can contain letters, numbers, underscores, and hyphens. No other special characters are allowed. To avoid service disruptions, a consumer key and secret should not exceed 2 KBs each. **Note**: When creating the consumer key and secret, an association to API products will not be made. Therefore, you should not specify the associated API products in your request. Instead, use the UpdateDeveloperAppKey API to make the association after the consumer key and secret are created. If a consumer key and secret already exist, you can keep them or delete them using the DeleteDeveloperAppKey API. **Note**: All keys start out with status=approved, even if status=revoked is passed when the key is created. To revoke a key, use the UpdateDeveloperAppKey API.</td>
 </tr>
 <tr>
-    <td><a href="#organizations_developers_apps_keys_apiproducts_update_developer_app_key_api_product"><CopyableCode code="organizations_developers_apps_keys_apiproducts_update_developer_app_key_api_product" /></a></td>
+    <td><a href="#organizations_developers_apps_keys_update_developer_app_key"><CopyableCode code="organizations_developers_apps_keys_update_developer_app_key" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-developersId"><code>developersId</code></a>, <a href="#parameter-appsId"><code>appsId</code></a>, <a href="#parameter-keysId"><code>keysId</code></a>, <a href="#parameter-apiproductsId"><code>apiproductsId</code></a></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-developersId"><code>developersId</code></a>, <a href="#parameter-appsId"><code>appsId</code></a>, <a href="#parameter-keysId"><code>keysId</code></a></td>
     <td><a href="#parameter-action"><code>action</code></a></td>
-    <td>Approves or revokes the consumer key for an API product. After a consumer key is approved, the app can use it to access APIs. A consumer key that is revoked or pending cannot be used to access an API. Any access tokens associated with a revoked consumer key will remain active. However, Apigee checks the status of the consumer key and if set to `revoked` will not allow access to the API.</td>
+    <td>Adds an API product to a developer app key, enabling the app that holds the key to access the API resources bundled in the API product. In addition, you can add attributes and scopes associated with the API product to the developer app key. The status of the key can be updated via "action" Query Parameter. None of the other fields can be updated via this API. This API replaces the existing attributes with those specified in the request. Include or exclude any existing attributes that you want to retain or delete, respectively. None of the other fields can be updated. You can use the same key to access all API products associated with the app.</td>
 </tr>
 <tr>
     <td><a href="#organizations_appgroups_apps_keys_update_app_group_app_key"><CopyableCode code="organizations_appgroups_apps_keys_update_app_group_app_key" /></a></td>
@@ -385,29 +386,29 @@ Creates a custom consumer key and secret for a developer app. This is particular
 
 ```sql
 INSERT INTO google.apigee.keys (
-data__scopes,
-data__status,
 data__issuedAt,
+data__status,
+data__consumerKey,
+data__consumerSecret,
+data__apiProducts,
+data__attributes,
 data__expiresInSeconds,
 data__expiresAt,
-data__apiProducts,
-data__consumerKey,
-data__attributes,
-data__consumerSecret,
+data__scopes,
 organizationsId,
 developersId,
 appsId
 )
 SELECT 
-'{{ scopes }}',
-'{{ status }}',
 '{{ issuedAt }}',
+'{{ status }}',
+'{{ consumerKey }}',
+'{{ consumerSecret }}',
+'{{ apiProducts }}',
+'{{ attributes }}',
 '{{ expiresInSeconds }}',
 '{{ expiresAt }}',
-'{{ apiProducts }}',
-'{{ consumerKey }}',
-'{{ attributes }}',
-'{{ consumerSecret }}',
+'{{ scopes }}',
 '{{ organizationsId }}',
 '{{ developersId }}',
 '{{ appsId }}'
@@ -430,22 +431,22 @@ Creates a custom consumer key and secret for a AppGroup app. This is particularl
 
 ```sql
 INSERT INTO google.apigee.keys (
-data__expiresInSeconds,
-data__status,
 data__scopes,
 data__attributes,
+data__expiresInSeconds,
 data__consumerKey,
+data__status,
 data__consumerSecret,
 organizationsId,
 appgroupsId,
 appsId
 )
 SELECT 
-'{{ expiresInSeconds }}',
-'{{ status }}',
 '{{ scopes }}',
 '{{ attributes }}',
+'{{ expiresInSeconds }}',
 '{{ consumerKey }}',
+'{{ status }}',
 '{{ consumerSecret }}',
 '{{ organizationsId }}',
 '{{ appgroupsId }}',
@@ -465,68 +466,63 @@ status
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: keys
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the keys resource.
     - name: developersId
-      value: string
+      value: "{{ developersId }}"
       description: Required parameter for the keys resource.
     - name: appsId
-      value: string
+      value: "{{ appsId }}"
       description: Required parameter for the keys resource.
     - name: appgroupsId
-      value: string
+      value: "{{ appgroupsId }}"
       description: Required parameter for the keys resource.
-    - name: scopes
-      value: array
-      description: >
-        Scopes to apply to the app. The specified scope names must already be defined for the API product that you associate with the app.
-        
-    - name: status
-      value: string
-      description: >
-        Status of the credential. Valid values include `approved` or `revoked`.
-        
     - name: issuedAt
-      value: string
-      description: >
+      value: "{{ issuedAt }}"
+      description: |
         Time the developer app was created in milliseconds since epoch.
-        
-    - name: expiresInSeconds
-      value: string
-      description: >
-        Immutable. Expiration time, in seconds, for the consumer key. If not set or left to the default value of `-1`, the API key never expires. The expiration time can't be updated after it is set.
-        
-    - name: expiresAt
-      value: string
-      description: >
-        Time the developer app expires in milliseconds since epoch.
-        
-    - name: apiProducts
-      value: array
-      description: >
-        List of API products for which the credential can be used. **Note**: Do not specify the list of API products when creating a consumer key and secret for a developer app. Instead, use the UpdateDeveloperAppKey API to make the association after the consumer key and secret are created.
-        
+    - name: status
+      value: "{{ status }}"
+      description: |
+        Status of the credential. Valid values include \`approved\` or \`revoked\`.
     - name: consumerKey
-      value: string
-      description: >
+      value: "{{ consumerKey }}"
+      description: |
         Immutable. Consumer key.
-        
-    - name: attributes
-      value: array
-      description: >
-        List of attributes associated with the credential.
-        
     - name: consumerSecret
-      value: string
-      description: >
+      value: "{{ consumerSecret }}"
+      description: |
         Secret key.
-        
-```
+    - name: apiProducts
+      value:
+        - "{{ apiProducts }}"
+      description: |
+        List of API products for which the credential can be used. **Note**: Do not specify the list of API products when creating a consumer key and secret for a developer app. Instead, use the UpdateDeveloperAppKey API to make the association after the consumer key and secret are created.
+    - name: attributes
+      description: |
+        List of attributes associated with the credential.
+      value:
+        - name: "{{ name }}"
+          value: "{{ value }}"
+    - name: expiresInSeconds
+      value: "{{ expiresInSeconds }}"
+      description: |
+        Immutable. Expiration time, in seconds, for the consumer key. If not set or left to the default value of \`-1\`, the API key never expires. The expiration time can't be updated after it is set.
+    - name: expiresAt
+      value: "{{ expiresAt }}"
+      description: |
+        Time the developer app expires in milliseconds since epoch.
+    - name: scopes
+      value:
+        - "{{ scopes }}"
+      description: |
+        Scopes to apply to the app. The specified scope names must already be defined for the API product that you associate with the app.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -546,15 +542,15 @@ Updates the scope of an app. This API replaces the existing scopes with those sp
 ```sql
 REPLACE google.apigee.keys
 SET 
-data__scopes = '{{ scopes }}',
-data__status = '{{ status }}',
 data__issuedAt = '{{ issuedAt }}',
+data__status = '{{ status }}',
+data__consumerKey = '{{ consumerKey }}',
+data__consumerSecret = '{{ consumerSecret }}',
+data__apiProducts = '{{ apiProducts }}',
+data__attributes = '{{ attributes }}',
 data__expiresInSeconds = '{{ expiresInSeconds }}',
 data__expiresAt = '{{ expiresAt }}',
-data__apiProducts = '{{ apiProducts }}',
-data__consumerKey = '{{ consumerKey }}',
-data__attributes = '{{ attributes }}',
-data__consumerSecret = '{{ consumerSecret }}'
+data__scopes = '{{ scopes }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND developersId = '{{ developersId }}' --required
@@ -631,64 +627,14 @@ AND keysId = '{{ keysId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="organizations_developers_apps_keys_update_developer_app_key"
+    defaultValue="organizations_developers_apps_keys_apiproducts_update_developer_app_key_api_product"
     values={[
-        { label: 'organizations_developers_apps_keys_update_developer_app_key', value: 'organizations_developers_apps_keys_update_developer_app_key' },
-        { label: 'organizations_developers_apps_keys_create_create', value: 'organizations_developers_apps_keys_create_create' },
         { label: 'organizations_developers_apps_keys_apiproducts_update_developer_app_key_api_product', value: 'organizations_developers_apps_keys_apiproducts_update_developer_app_key_api_product' },
+        { label: 'organizations_developers_apps_keys_create_create', value: 'organizations_developers_apps_keys_create_create' },
+        { label: 'organizations_developers_apps_keys_update_developer_app_key', value: 'organizations_developers_apps_keys_update_developer_app_key' },
         { label: 'organizations_appgroups_apps_keys_update_app_group_app_key', value: 'organizations_appgroups_apps_keys_update_app_group_app_key' }
     ]}
 >
-<TabItem value="organizations_developers_apps_keys_update_developer_app_key">
-
-Adds an API product to a developer app key, enabling the app that holds the key to access the API resources bundled in the API product. In addition, you can add attributes and scopes associated with the API product to the developer app key. The status of the key can be updated via "action" Query Parameter. None of the other fields can be updated via this API. This API replaces the existing attributes with those specified in the request. Include or exclude any existing attributes that you want to retain or delete, respectively. None of the other fields can be updated. You can use the same key to access all API products associated with the app.
-
-```sql
-EXEC google.apigee.keys.organizations_developers_apps_keys_update_developer_app_key 
-@organizationsId='{{ organizationsId }}' --required, 
-@developersId='{{ developersId }}' --required, 
-@appsId='{{ appsId }}' --required, 
-@keysId='{{ keysId }}' --required, 
-@action='{{ action }}' 
-@@json=
-'{
-"scopes": "{{ scopes }}", 
-"status": "{{ status }}", 
-"issuedAt": "{{ issuedAt }}", 
-"expiresInSeconds": "{{ expiresInSeconds }}", 
-"expiresAt": "{{ expiresAt }}", 
-"apiProducts": "{{ apiProducts }}", 
-"consumerKey": "{{ consumerKey }}", 
-"attributes": "{{ attributes }}", 
-"consumerSecret": "{{ consumerSecret }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="organizations_developers_apps_keys_create_create">
-
-Creates a custom consumer key and secret for a developer app. This is particularly useful if you want to migrate existing consumer keys and secrets to Apigee from another system. Consumer keys and secrets can contain letters, numbers, underscores, and hyphens. No other special characters are allowed. To avoid service disruptions, a consumer key and secret should not exceed 2 KBs each. **Note**: When creating the consumer key and secret, an association to API products will not be made. Therefore, you should not specify the associated API products in your request. Instead, use the UpdateDeveloperAppKey API to make the association after the consumer key and secret are created. If a consumer key and secret already exist, you can keep them or delete them using the DeleteDeveloperAppKey API. **Note**: All keys start out with status=approved, even if status=revoked is passed when the key is created. To revoke a key, use the UpdateDeveloperAppKey API.
-
-```sql
-EXEC google.apigee.keys.organizations_developers_apps_keys_create_create 
-@organizationsId='{{ organizationsId }}' --required, 
-@developersId='{{ developersId }}' --required, 
-@appsId='{{ appsId }}' --required 
-@@json=
-'{
-"scopes": "{{ scopes }}", 
-"status": "{{ status }}", 
-"issuedAt": "{{ issuedAt }}", 
-"expiresInSeconds": "{{ expiresInSeconds }}", 
-"expiresAt": "{{ expiresAt }}", 
-"apiProducts": "{{ apiProducts }}", 
-"consumerKey": "{{ consumerKey }}", 
-"attributes": "{{ attributes }}", 
-"consumerSecret": "{{ consumerSecret }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="organizations_developers_apps_keys_apiproducts_update_developer_app_key_api_product">
 
 Approves or revokes the consumer key for an API product. After a consumer key is approved, the app can use it to access APIs. A consumer key that is revoked or pending cannot be used to access an API. Any access tokens associated with a revoked consumer key will remain active. However, Apigee checks the status of the consumer key and if set to `revoked` will not allow access to the API.
@@ -704,6 +650,56 @@ EXEC google.apigee.keys.organizations_developers_apps_keys_apiproducts_update_de
 ;
 ```
 </TabItem>
+<TabItem value="organizations_developers_apps_keys_create_create">
+
+Creates a custom consumer key and secret for a developer app. This is particularly useful if you want to migrate existing consumer keys and secrets to Apigee from another system. Consumer keys and secrets can contain letters, numbers, underscores, and hyphens. No other special characters are allowed. To avoid service disruptions, a consumer key and secret should not exceed 2 KBs each. **Note**: When creating the consumer key and secret, an association to API products will not be made. Therefore, you should not specify the associated API products in your request. Instead, use the UpdateDeveloperAppKey API to make the association after the consumer key and secret are created. If a consumer key and secret already exist, you can keep them or delete them using the DeleteDeveloperAppKey API. **Note**: All keys start out with status=approved, even if status=revoked is passed when the key is created. To revoke a key, use the UpdateDeveloperAppKey API.
+
+```sql
+EXEC google.apigee.keys.organizations_developers_apps_keys_create_create 
+@organizationsId='{{ organizationsId }}' --required, 
+@developersId='{{ developersId }}' --required, 
+@appsId='{{ appsId }}' --required 
+@@json=
+'{
+"issuedAt": "{{ issuedAt }}", 
+"status": "{{ status }}", 
+"consumerKey": "{{ consumerKey }}", 
+"consumerSecret": "{{ consumerSecret }}", 
+"apiProducts": "{{ apiProducts }}", 
+"attributes": "{{ attributes }}", 
+"expiresInSeconds": "{{ expiresInSeconds }}", 
+"expiresAt": "{{ expiresAt }}", 
+"scopes": "{{ scopes }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="organizations_developers_apps_keys_update_developer_app_key">
+
+Adds an API product to a developer app key, enabling the app that holds the key to access the API resources bundled in the API product. In addition, you can add attributes and scopes associated with the API product to the developer app key. The status of the key can be updated via "action" Query Parameter. None of the other fields can be updated via this API. This API replaces the existing attributes with those specified in the request. Include or exclude any existing attributes that you want to retain or delete, respectively. None of the other fields can be updated. You can use the same key to access all API products associated with the app.
+
+```sql
+EXEC google.apigee.keys.organizations_developers_apps_keys_update_developer_app_key 
+@organizationsId='{{ organizationsId }}' --required, 
+@developersId='{{ developersId }}' --required, 
+@appsId='{{ appsId }}' --required, 
+@keysId='{{ keysId }}' --required, 
+@action='{{ action }}' 
+@@json=
+'{
+"issuedAt": "{{ issuedAt }}", 
+"status": "{{ status }}", 
+"consumerKey": "{{ consumerKey }}", 
+"consumerSecret": "{{ consumerSecret }}", 
+"apiProducts": "{{ apiProducts }}", 
+"attributes": "{{ attributes }}", 
+"expiresInSeconds": "{{ expiresInSeconds }}", 
+"expiresAt": "{{ expiresAt }}", 
+"scopes": "{{ scopes }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="organizations_appgroups_apps_keys_update_app_group_app_key">
 
 Adds an API product to an AppGroupAppKey, enabling the app that holds the key to access the API resources bundled in the API product. In addition, you can add attributes and scopes to the AppGroupAppKey. This API replaces the existing attributes with those specified in the request. Include or exclude any existing attributes that you want to retain or delete, respectively. You can use the same key to access all API products associated with the app.
@@ -716,9 +712,9 @@ EXEC google.apigee.keys.organizations_appgroups_apps_keys_update_app_group_app_k
 @keysId='{{ keysId }}' --required 
 @@json=
 '{
-"apiProducts": "{{ apiProducts }}", 
 "action": "{{ action }}", 
-"appGroupAppKey": "{{ appGroupAppKey }}"
+"appGroupAppKey": "{{ appGroupAppKey }}", 
+"apiProducts": "{{ apiProducts }}"
 }'
 ;
 ```

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>service_connection_tokens</code
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>service_connection_tokens</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="service_connection_tokens" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networkconnectivity.service_connection_tokens" /></td></tr>
 </tbody></table>
@@ -184,21 +185,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists ServiceConnectionTokens in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-serviceConnectionTokenId"><code>serviceConnectionTokenId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-serviceConnectionTokenId"><code>serviceConnectionTokenId</code></a></td>
     <td>Creates a new ServiceConnectionToken in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-serviceConnectionTokensId"><code>serviceConnectionTokensId</code></a></td>
-    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
     <td>Deletes a single ServiceConnectionToken.</td>
 </tr>
 </tbody>
@@ -319,9 +320,9 @@ updateTime
 FROM google.networkconnectivity.service_connection_tokens
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
 ;
 ```
@@ -344,26 +345,26 @@ Creates a new ServiceConnectionToken in a given project and location.
 
 ```sql
 INSERT INTO google.networkconnectivity.service_connection_tokens (
+data__etag,
+data__labels,
 data__description,
 data__name,
 data__network,
-data__etag,
-data__labels,
 projectsId,
 locationsId,
-serviceConnectionTokenId,
-requestId
+requestId,
+serviceConnectionTokenId
 )
 SELECT 
+'{{ etag }}',
+'{{ labels }}',
 '{{ description }}',
 '{{ name }}',
 '{{ network }}',
-'{{ etag }}',
-'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ serviceConnectionTokenId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ serviceConnectionTokenId }}'
 RETURNING
 name,
 done,
@@ -375,46 +376,41 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: service_connection_tokens
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the service_connection_tokens resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the service_connection_tokens resource.
-    - name: description
-      value: string
-      description: >
-        A description of this resource.
-        
-    - name: name
-      value: string
-      description: >
-        Immutable. The name of a ServiceConnectionToken. Format: projects/{project}/locations/{location}/ServiceConnectionTokens/{service_connection_token} See: https://google.aip.dev/122#fields-representing-resource-names
-        
-    - name: network
-      value: string
-      description: >
-        The resource path of the network associated with this token. Example: projects/{projectNumOrId}/global/networks/{resourceId}.
-        
     - name: etag
-      value: string
-      description: >
+      value: "{{ etag }}"
+      description: |
         Optional. The etag is computed by the server, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         User-defined labels.
-        
-    - name: serviceConnectionTokenId
-      value: string
+    - name: description
+      value: "{{ description }}"
+      description: |
+        A description of this resource.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. The name of a ServiceConnectionToken. Format: projects/{project}/locations/{location}/ServiceConnectionTokens/{service_connection_token} See: https://google.aip.dev/122#fields-representing-resource-names
+    - name: network
+      value: "{{ network }}"
+      description: |
+        The resource path of the network associated with this token. Example: projects/{projectNumOrId}/global/networks/{resourceId}.
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+    - name: serviceConnectionTokenId
+      value: "{{ serviceConnectionTokenId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -436,8 +432,8 @@ DELETE FROM google.networkconnectivity.service_connection_tokens
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND serviceConnectionTokensId = '{{ serviceConnectionTokensId }}' --required
-AND etag = '{{ etag }}'
 AND requestId = '{{ requestId }}'
+AND etag = '{{ etag }}'
 ;
 ```
 </TabItem>

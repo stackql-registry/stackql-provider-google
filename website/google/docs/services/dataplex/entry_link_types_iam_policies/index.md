@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>entry_link_types_iam_policies<
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>entry_link_types_iam_policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="entry_link_types_iam_policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataplex.entry_link_types_iam_policies" /></td></tr>
 </tbody></table>
@@ -186,8 +187,8 @@ Sets the access control policy on the specified resource. Replaces any existing 
 ```sql
 REPLACE google.dataplex.entry_link_types_iam_policies
 SET 
-data__policy = '{{ policy }}',
-data__updateMask = '{{ updateMask }}'
+data__updateMask = '{{ updateMask }}',
+data__policy = '{{ policy }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

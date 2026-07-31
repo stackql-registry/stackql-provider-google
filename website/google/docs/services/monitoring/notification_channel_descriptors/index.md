@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>notification_channel_descriptor
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>notification_channel_descriptors</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="notification_channel_descriptors" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.monitoring.notification_channel_descriptors" /></td></tr>
 </tbody></table>
@@ -72,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="launchStage" /></td>
     <td><code>string</code></td>
-    <td>The product launch stage for channels of this type.</td>
+    <td>The product launch stage for channels of this type. (LAUNCH_STAGE_UNSPECIFIED, UNIMPLEMENTED, PRELAUNCH, EARLY_ACCESS, ALPHA, BETA, GA, DEPRECATED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="supportedTiers" /></td>
@@ -121,7 +122,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="launchStage" /></td>
     <td><code>string</code></td>
-    <td>The product launch stage for channels of this type.</td>
+    <td>The product launch stage for channels of this type. (LAUNCH_STAGE_UNSPECIFIED, UNIMPLEMENTED, PRELAUNCH, EARLY_ACCESS, ALPHA, BETA, GA, DEPRECATED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="supportedTiers" /></td>

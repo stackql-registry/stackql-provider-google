@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>instance_configs</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>instance_configs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="instance_configs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.spanner.instance_configs" /></td></tr>
 </tbody></table>
@@ -62,7 +63,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="configType" /></td>
     <td><code>string</code></td>
-    <td>Output only. Whether this instance configuration is a Google-managed or user-managed configuration.</td>
+    <td>Output only. Whether this instance configuration is a Google-managed or user-managed configuration. (TYPE_UNSPECIFIED, GOOGLE_MANAGED, USER_MANAGED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="freeInstanceAvailability" /></td>
     <td><code>string</code></td>
-    <td>Output only. Describes whether free instances are available to be created in this instance configuration.</td>
+    <td>Output only. Describes whether free instances are available to be created in this instance configuration. (FREE_INSTANCE_AVAILABILITY_UNSPECIFIED, AVAILABLE, UNSUPPORTED, DISABLED, QUOTA_EXCEEDED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -97,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="quorumType" /></td>
     <td><code>string</code></td>
-    <td>Output only. The `QuorumType` of the instance configuration.</td>
+    <td>Output only. The `QuorumType` of the instance configuration. (QUORUM_TYPE_UNSPECIFIED, REGION, DUAL_REGION, MULTI_REGION)</td>
 </tr>
 <tr>
     <td><CopyableCode code="reconciling" /></td>
@@ -112,7 +113,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current instance configuration state. Applicable only for `USER_MANAGED` configurations.</td>
+    <td>Output only. The current instance configuration state. Applicable only for `USER_MANAGED` configurations. (STATE_UNSPECIFIED, CREATING, READY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="storageLimitPerProcessingUnit" /></td>
@@ -146,7 +147,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="configType" /></td>
     <td><code>string</code></td>
-    <td>Output only. Whether this instance configuration is a Google-managed or user-managed configuration.</td>
+    <td>Output only. Whether this instance configuration is a Google-managed or user-managed configuration. (TYPE_UNSPECIFIED, GOOGLE_MANAGED, USER_MANAGED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
@@ -161,7 +162,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="freeInstanceAvailability" /></td>
     <td><code>string</code></td>
-    <td>Output only. Describes whether free instances are available to be created in this instance configuration.</td>
+    <td>Output only. Describes whether free instances are available to be created in this instance configuration. (FREE_INSTANCE_AVAILABILITY_UNSPECIFIED, AVAILABLE, UNSUPPORTED, DISABLED, QUOTA_EXCEEDED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -181,7 +182,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="quorumType" /></td>
     <td><code>string</code></td>
-    <td>Output only. The `QuorumType` of the instance configuration.</td>
+    <td>Output only. The `QuorumType` of the instance configuration. (QUORUM_TYPE_UNSPECIFIED, REGION, DUAL_REGION, MULTI_REGION)</td>
 </tr>
 <tr>
     <td><CopyableCode code="reconciling" /></td>
@@ -196,7 +197,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current instance configuration state. Applicable only for `USER_MANAGED` configurations.</td>
+    <td>Output only. The current instance configuration state. Applicable only for `USER_MANAGED` configurations. (STATE_UNSPECIFIED, CREATING, READY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="storageLimitPerProcessingUnit" /></td>
@@ -234,7 +235,7 @@ The following methods are available for this resource:
     <td><a href="#projects_instance_configs_list"><CopyableCode code="projects_instance_configs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the supported instance configurations for a given project. Returns both Google-managed configurations and user-managed configurations.</td>
 </tr>
 <tr>
@@ -364,8 +365,8 @@ state,
 storageLimitPerProcessingUnit
 FROM google.spanner.instance_configs
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -408,29 +409,47 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: instance_configs
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the instance_configs resource.
     - name: instanceConfigId
-      value: string
-      description: >
-        Required. The ID of the instance configuration to create. Valid identifiers are of the form `custom-[-a-z0-9]*[a-z0-9]` and must be between 2 and 64 characters in length. The `custom-` prefix is required to avoid name conflicts with Google-managed configurations.
-        
+      value: "{{ instanceConfigId }}"
+      description: |
+        Required. The ID of the instance configuration to create. Valid identifiers are of the form \`custom-[-a-z0-9]*[a-z0-9]\` and must be between 2 and 64 characters in length. The \`custom-\` prefix is required to avoid name conflicts with Google-managed configurations.
     - name: instanceConfig
-      value: object
-      description: >
-        Required. The `InstanceConfig` proto of the configuration to create. `instance_config.name` must be `/instanceConfigs/`. `instance_config.base_config` must be a Google-managed configuration name, e.g. /instanceConfigs/us-east1, /instanceConfigs/nam3.
-        
+      description: |
+        A possible configuration for a Cloud Spanner instance. Configurations define the geographic placement of nodes and their replication.
+      value:
+        name: "{{ name }}"
+        displayName: "{{ displayName }}"
+        configType: "{{ configType }}"
+        replicas:
+          - location: "{{ location }}"
+            type: "{{ type }}"
+            defaultLeaderLocation: {{ defaultLeaderLocation }}
+        optionalReplicas:
+          - location: "{{ location }}"
+            type: "{{ type }}"
+            defaultLeaderLocation: {{ defaultLeaderLocation }}
+        baseConfig: "{{ baseConfig }}"
+        labels: "{{ labels }}"
+        etag: "{{ etag }}"
+        leaderOptions:
+          - "{{ leaderOptions }}"
+        reconciling: {{ reconciling }}
+        state: "{{ state }}"
+        freeInstanceAvailability: "{{ freeInstanceAvailability }}"
+        quorumType: "{{ quorumType }}"
+        storageLimitPerProcessingUnit: "{{ storageLimitPerProcessingUnit }}"
     - name: validateOnly
-      value: boolean
-      description: >
+      value: {{ validateOnly }}
+      description: |
         An option to validate, but not actually execute, a request, and provide the same response.
-        
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -450,9 +469,9 @@ Updates an instance configuration. The returned long-running operation can be us
 ```sql
 UPDATE google.spanner.instance_configs
 SET 
-data__validateOnly = {{ validateOnly }},
+data__instanceConfig = '{{ instanceConfig }}',
 data__updateMask = '{{ updateMask }}',
-data__instanceConfig = '{{ instanceConfig }}'
+data__validateOnly = {{ validateOnly }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instanceConfigsId = '{{ instanceConfigsId }}' --required

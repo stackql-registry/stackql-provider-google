@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>entry_links</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>entry_links</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="entry_links" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataplex.entry_links" /></td></tr>
 </tbody></table>
@@ -54,6 +55,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Immutable. Identifier. The relative resource name of the Entry Link, of the form: projects/&#123;project_id_or_number&#125;/locations/&#123;location_id&#125;/entryGroups/&#123;entry_group_id&#125;/entryLinks/&#123;entry_link_id&#125;</td>
 </tr>
 <tr>
+    <td><CopyableCode code="aspects" /></td>
+    <td><code>object</code></td>
+    <td>Optional. The aspects that are attached to the entry link. The format of the aspect key has to be the following: &#123;project_id_or_number&#125;.&#123;location_id&#125;.&#123;aspect_type_id&#125; Currently, only a single aspect of a Dataplex-owned Aspect Type is allowed.</td>
+</tr>
+<tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The time when the Entry Link was created.</td>
@@ -66,7 +72,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="entryReferences" /></td>
     <td><code>array</code></td>
-    <td>Required. Specifies the Entries referenced in the Entry Link. There should be exactly two entry references.</td>
+    <td>Required. Immutable. Specifies the Entries referenced in the Entry Link. There should be exactly two entry references.</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -106,6 +112,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-entryGroupsId"><code>entryGroupsId</code></a></td>
     <td><a href="#parameter-entryLinkId"><code>entryLinkId</code></a></td>
     <td>Creates an Entry Link.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_entry_groups_entry_links_patch"><CopyableCode code="projects_locations_entry_groups_entry_links_patch" /></a></td>
+    <td><CopyableCode code="update" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-entryGroupsId"><code>entryGroupsId</code></a>, <a href="#parameter-entryLinksId"><code>entryLinksId</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-aspectKeys"><code>aspectKeys</code></a></td>
+    <td>Updates an Entry Link.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_entry_groups_entry_links_delete"><CopyableCode code="projects_locations_entry_groups_entry_links_delete" /></a></td>
@@ -150,6 +163,16 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
+<tr id="parameter-allowMissing">
+    <td><CopyableCode code="allowMissing" /></td>
+    <td><code>boolean</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-aspectKeys">
+    <td><CopyableCode code="aspectKeys" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-entryLinkId">
     <td><CopyableCode code="entryLinkId" /></td>
     <td><code>string</code></td>
@@ -173,6 +196,7 @@ Gets an Entry Link.
 ```sql
 SELECT
 name,
+aspects,
 createTime,
 entryLinkType,
 entryReferences,
@@ -203,22 +227,25 @@ Creates an Entry Link.
 
 ```sql
 INSERT INTO google.dataplex.entry_links (
-data__entryLinkType,
 data__entryReferences,
+data__aspects,
+data__entryLinkType,
 projectsId,
 locationsId,
 entryGroupsId,
 entryLinkId
 )
 SELECT 
-'{{ entryLinkType }}',
 '{{ entryReferences }}',
+'{{ aspects }}',
+'{{ entryLinkType }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ entryGroupsId }}',
 '{{ entryLinkId }}'
 RETURNING
 name,
+aspects,
 createTime,
 entryLinkType,
 entryReferences,
@@ -228,31 +255,73 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: entry_links
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the entry_links resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the entry_links resource.
     - name: entryGroupsId
-      value: string
+      value: "{{ entryGroupsId }}"
       description: Required parameter for the entry_links resource.
-    - name: entryLinkType
-      value: string
-      description: >
-        Required. Immutable. Relative resource name of the Entry Link Type used to create this Entry Link. For example: Entry link between synonym terms in a glossary: projects/dataplex-types/locations/global/entryLinkTypes/synonym Entry link between related terms in a glossary: projects/dataplex-types/locations/global/entryLinkTypes/related Entry link between glossary terms and data assets: projects/dataplex-types/locations/global/entryLinkTypes/definition
-        
     - name: entryReferences
-      value: array
-      description: >
-        Required. Specifies the Entries referenced in the Entry Link. There should be exactly two entry references.
-        
+      description: |
+        Required. Immutable. Specifies the Entries referenced in the Entry Link. There should be exactly two entry references.
+      value:
+        - path: "{{ path }}"
+          name: "{{ name }}"
+          type: "{{ type }}"
+    - name: aspects
+      value: "{{ aspects }}"
+      description: |
+        Optional. The aspects that are attached to the entry link. The format of the aspect key has to be the following: {project_id_or_number}.{location_id}.{aspect_type_id} Currently, only a single aspect of a Dataplex-owned Aspect Type is allowed.
+    - name: entryLinkType
+      value: "{{ entryLinkType }}"
+      description: |
+        Required. Immutable. Relative resource name of the Entry Link Type used to create this Entry Link. For example: Entry link between synonym terms in a glossary: projects/dataplex-types/locations/global/entryLinkTypes/synonym Entry link between related terms in a glossary: projects/dataplex-types/locations/global/entryLinkTypes/related Entry link between glossary terms and data assets: projects/dataplex-types/locations/global/entryLinkTypes/definition
     - name: entryLinkId
-      value: string
+      value: "{{ entryLinkId }}"
+`}</CodeBlock>
+
+</TabItem>
+</Tabs>
+
+
+## `UPDATE` examples
+
+<Tabs
+    defaultValue="projects_locations_entry_groups_entry_links_patch"
+    values={[
+        { label: 'projects_locations_entry_groups_entry_links_patch', value: 'projects_locations_entry_groups_entry_links_patch' }
+    ]}
+>
+<TabItem value="projects_locations_entry_groups_entry_links_patch">
+
+Updates an Entry Link.
+
+```sql
+UPDATE google.dataplex.entry_links
+SET 
+data__entryReferences = '{{ entryReferences }}',
+data__aspects = '{{ aspects }}',
+data__entryLinkType = '{{ entryLinkType }}'
+WHERE 
+projectsId = '{{ projectsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND entryGroupsId = '{{ entryGroupsId }}' --required
+AND entryLinksId = '{{ entryLinksId }}' --required
+AND allowMissing = {{ allowMissing}}
+AND aspectKeys = '{{ aspectKeys}}'
+RETURNING
+name,
+aspects,
+createTime,
+entryLinkType,
+entryReferences,
+updateTime;
 ```
 </TabItem>
 </Tabs>

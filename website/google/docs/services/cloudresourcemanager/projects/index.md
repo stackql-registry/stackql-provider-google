@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>projects</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>projects</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="projects" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudresourcemanager.projects" /></td></tr>
 </tbody></table>
@@ -97,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The project lifecycle state.</td>
+    <td>Output only. The project lifecycle state. (STATE_UNSPECIFIED, ACTIVE, DELETE_REQUESTED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tags" /></td>
@@ -171,7 +172,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The project lifecycle state.</td>
+    <td>Output only. The project lifecycle state. (STATE_UNSPECIFIED, ACTIVE, DELETE_REQUESTED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tags" /></td>
@@ -214,7 +215,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-parent"><code>parent</code></a></td>
     <td>Lists projects that are direct children of the specified folder or organization resource. `list()` provides a strongly consistent view of the projects underneath the specified parent resource. `list()` returns projects sorted based upon the (ascending) lexical ordering of their `display_name`. The caller must have `resourcemanager.projects.list` permission on the identified parent.</td>
 </tr>
 <tr>
@@ -239,18 +240,18 @@ The following methods are available for this resource:
     <td>Marks the project identified by the specified `name` (for example, `projects/415104041262`) for deletion. This method will only affect the project if it has a lifecycle state of ACTIVE. This method changes the Project's lifecycle state from ACTIVE to DELETE_REQUESTED. The deletion starts at an unspecified time, at which point the Project is no longer accessible. Until the deletion completes, you can check the lifecycle state checked by retrieving the project with GetProject, and the project remains visible to ListProjects. However, you cannot update the project. After the deletion completes, the project is not retrievable by the GetProject, ListProjects, and SearchProjects methods. The caller must have `resourcemanager.projects.delete` permissions for this project.</td>
 </tr>
 <tr>
+    <td><a href="#search"><CopyableCode code="search" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-query"><code>query</code></a></td>
+    <td>Search for projects that the caller has the `resourcemanager.projects.get` permission on, and also satisfy the specified query. This method returns projects in an unspecified order. This method is eventually consistent with project mutations; this means that a newly created project may not appear in the results or recent updates to an existing project may not be reflected in the results. To retrieve the latest state of a project, use the GetProject method.</td>
+</tr>
+<tr>
     <td><a href="#move"><CopyableCode code="move" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
     <td>Move a project to another place in your resource hierarchy, under a new resource parent. Returns an operation which can be used to track the process of the project move workflow. Upon success, the `Operation.response` field will be populated with the moved project. The caller must have `resourcemanager.projects.move` permission on the project, on the project's current and proposed new parent. If project has no current parent, or it currently does not have an associated organization resource, you will also need the `resourcemanager.projects.setIamPolicy` permission in the project. </td>
-</tr>
-<tr>
-    <td><a href="#search"><CopyableCode code="search" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-query"><code>query</code></a></td>
-    <td>Search for projects that the caller has the `resourcemanager.projects.get` permission on, and also satisfy the specified query. This method returns projects in an unspecified order. This method is eventually consistent with project mutations; this means that a newly created project may not appear in the results or recent updates to an existing project may not be reflected in the results. To retrieve the latest state of a project, use the GetProject method.</td>
 </tr>
 <tr>
     <td><a href="#undelete"><CopyableCode code="undelete" /></a></td>
@@ -364,10 +365,10 @@ state,
 tags,
 updateTime
 FROM google.cloudresourcemanager.projects
-WHERE pageSize = '{{ pageSize }}'
-AND parent = '{{ parent }}'
-AND pageToken = '{{ pageToken }}'
+WHERE pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND showDeleted = '{{ showDeleted }}'
+AND parent = '{{ parent }}'
 ;
 ```
 </TabItem>
@@ -389,18 +390,18 @@ Request that a new project be created. The result is an `Operation` which can be
 
 ```sql
 INSERT INTO google.cloudresourcemanager.projects (
-data__projectId,
-data__labels,
+data__displayName,
 data__tags,
+data__projectId,
 data__parent,
-data__displayName
+data__labels
 )
 SELECT 
-'{{ projectId }}',
-'{{ labels }}',
+'{{ displayName }}',
 '{{ tags }}',
+'{{ projectId }}',
 '{{ parent }}',
-'{{ displayName }}'
+'{{ labels }}'
 RETURNING
 name,
 done,
@@ -412,36 +413,31 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: projects
   props:
-    - name: projectId
-      value: string
-      description: >
-        Immutable. The unique, user-assigned id of the project. It must be 6 to 30 lowercase ASCII letters, digits, or hyphens. It must start with a letter. Trailing hyphens are prohibited. Example: `tokyo-rain-123`
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. The labels associated with this project. Label keys must be between 1 and 63 characters long and must conform to the following regular expression: \[a-z\](\[-a-z0-9\]*\[a-z0-9\])?. Label values must be between 0 and 63 characters long and must conform to the regular expression (\[a-z\](\[-a-z0-9\]*\[a-z0-9\])?)?. No more than 64 labels can be associated with a given resource. Clients should store labels in a representation such as JSON that does not depend on specific characters being disallowed. Example: `"myBusinessDimension" : "businessValue"`
-        
-    - name: tags
-      value: object
-      description: >
-        Optional. Input only. Immutable. Tag keys/values directly bound to this project. Each item in the map must be expressed as " : ". For example: "123/environment" : "production", "123/costCenter" : "marketing" Note: Currently this field is in Preview.
-        
-    - name: parent
-      value: string
-      description: >
-        Optional. A reference to a parent Resource. eg., `organizations/123` or `folders/876`.
-        
     - name: displayName
-      value: string
-      description: >
-        Optional. A user-assigned display name of the project. When present it must be between 4 to 30 characters. Allowed characters are: lowercase and uppercase letters, numbers, hyphen, single-quote, double-quote, space, and exclamation point. Example: `My Project`
-        
-```
+      value: "{{ displayName }}"
+      description: |
+        Optional. A user-assigned display name of the project. When present it must be between 4 to 30 characters. Allowed characters are: lowercase and uppercase letters, numbers, hyphen, single-quote, double-quote, space, and exclamation point. Example: \`My Project\`
+    - name: tags
+      value: "{{ tags }}"
+      description: |
+        Optional. Input only. Immutable. Tag keys/values directly bound to this project. Each item in the map must be expressed as " : ". For example: "123/environment" : "production", "123/costCenter" : "marketing" Note: Currently this field is in Preview.
+    - name: projectId
+      value: "{{ projectId }}"
+      description: |
+        Immutable. The unique, user-assigned id of the project. It must be 6 to 30 lowercase ASCII letters, digits, or hyphens. It must start with a letter. Trailing hyphens are prohibited. Example: \`tokyo-rain-123\`
+    - name: parent
+      value: "{{ parent }}"
+      description: |
+        Optional. A reference to a parent Resource. eg., \`organizations/123\` or \`folders/876\`.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. The labels associated with this project. Label keys must be between 1 and 63 characters long and must conform to the following regular expression: [a-z]([-a-z0-9]*[a-z0-9])?. Label values must be between 0 and 63 characters long and must conform to the regular expression ([a-z]([-a-z0-9]*[a-z0-9])?)?. No more than 64 labels can be associated with a given resource. Clients should store labels in a representation such as JSON that does not depend on specific characters being disallowed. Example: \`"myBusinessDimension" : "businessValue"\`
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -461,11 +457,11 @@ Updates the `display_name` and labels of the project identified by the specified
 ```sql
 UPDATE google.cloudresourcemanager.projects
 SET 
-data__projectId = '{{ projectId }}',
-data__labels = '{{ labels }}',
+data__displayName = '{{ displayName }}',
 data__tags = '{{ tags }}',
+data__projectId = '{{ projectId }}',
 data__parent = '{{ parent }}',
-data__displayName = '{{ displayName }}'
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND updateMask = '{{ updateMask}}'
@@ -504,13 +500,25 @@ WHERE projectsId = '{{ projectsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="move"
+    defaultValue="search"
     values={[
-        { label: 'move', value: 'move' },
         { label: 'search', value: 'search' },
+        { label: 'move', value: 'move' },
         { label: 'undelete', value: 'undelete' }
     ]}
 >
+<TabItem value="search">
+
+Search for projects that the caller has the `resourcemanager.projects.get` permission on, and also satisfy the specified query. This method returns projects in an unspecified order. This method is eventually consistent with project mutations; this means that a newly created project may not appear in the results or recent updates to an existing project may not be reflected in the results. To retrieve the latest state of a project, use the GetProject method.
+
+```sql
+EXEC google.cloudresourcemanager.projects.search 
+@pageToken='{{ pageToken }}', 
+@pageSize='{{ pageSize }}', 
+@query='{{ query }}'
+;
+```
+</TabItem>
 <TabItem value="move">
 
 Move a project to another place in your resource hierarchy, under a new resource parent. Returns an operation which can be used to track the process of the project move workflow. Upon success, the `Operation.response` field will be populated with the moved project. The caller must have `resourcemanager.projects.move` permission on the project, on the project's current and proposed new parent. If project has no current parent, or it currently does not have an associated organization resource, you will also need the `resourcemanager.projects.setIamPolicy` permission in the project. 
@@ -522,18 +530,6 @@ EXEC google.cloudresourcemanager.projects.move
 '{
 "destinationParent": "{{ destinationParent }}"
 }'
-;
-```
-</TabItem>
-<TabItem value="search">
-
-Search for projects that the caller has the `resourcemanager.projects.get` permission on, and also satisfy the specified query. This method returns projects in an unspecified order. This method is eventually consistent with project mutations; this means that a newly created project may not appear in the results or recent updates to an existing project may not be reflected in the results. To retrieve the latest state of a project, use the GetProject method.
-
-```sql
-EXEC google.cloudresourcemanager.projects.search 
-@pageSize='{{ pageSize }}', 
-@pageToken='{{ pageToken }}', 
-@query='{{ query }}'
 ;
 ```
 </TabItem>

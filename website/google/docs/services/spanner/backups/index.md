@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>backups</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>backups</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="backups" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.spanner.backups" /></td></tr>
 </tbody></table>
@@ -52,7 +53,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Output only for the CreateBackup operation. Required for the UpdateBackup operation. A globally unique identifier for the backup which cannot be changed. Values are of the form `projects//instances//backups/a-z*[a-z0-9]` The final segment of the name must be between 2 and 60 characters in length. The backup is stored in the location(s) specified in the instance configuration of the instance containing the backup, identified by the prefix of the backup name of the form `projects//instances/`.</td>
+    <td>Output only for the CreateBackup operation. Required for the UpdateBackup operation. A globally unique identifier for the backup which cannot be changed. Values are of the form `projects/&#123;project&#125;/instances/&#123;instance&#125;/backups/a-z*[a-z0-9]` The final segment of the name must be between 2 and 60 characters in length. The backup is stored in the location(s) specified in the instance configuration of the instance containing the backup, identified by the prefix of the backup name of the form `projects/&#123;project&#125;/instances/&#123;instance&#125;`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="backupSchedules" /></td>
@@ -67,17 +68,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="database" /></td>
     <td><code>string</code></td>
-    <td>Required for the CreateBackup operation. Name of the database from which this backup was created. This needs to be in the same instance as the backup. Values are of the form `projects//instances//databases/`.</td>
+    <td>Required for the CreateBackup operation. Name of the database from which this backup was created. This needs to be in the same instance as the backup. Values are of the form `projects/&#123;project&#125;/instances/&#123;instance&#125;/databases/&#123;database&#125;`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="databaseDialect" /></td>
     <td><code>string</code></td>
-    <td>Output only. The database dialect information for the backup.</td>
+    <td>Output only. The database dialect information for the backup. (DATABASE_DIALECT_UNSPECIFIED, GOOGLE_STANDARD_SQL, POSTGRESQL)</td>
 </tr>
 <tr>
     <td><CopyableCode code="encryptionInfo" /></td>
     <td><code>object</code></td>
-    <td>Output only. The encryption information for the backup. (id: EncryptionInfo)</td>
+    <td>Encryption information for a Cloud Spanner database or backup. (id: EncryptionInfo)</td>
 </tr>
 <tr>
     <td><CopyableCode code="encryptionInformation" /></td>
@@ -115,6 +116,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The max allowed expiration time of the backup, with microseconds granularity. A backup's expiration time can be configured in multiple APIs: CreateBackup, UpdateBackup, CopyBackup. When updating or copying an existing backup, the expiration time specified must be less than `Backup.max_expire_time`.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="minimumRestorableEdition" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The minimum edition required to successfully restore the backup. Populated only if the edition is Enterprise or Enterprise Plus. (EDITION_UNSPECIFIED, STANDARD, ENTERPRISE, ENTERPRISE_PLUS)</td>
+</tr>
+<tr>
     <td><CopyableCode code="oldestVersionTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. Data deleted at a time older than this is guaranteed not to be retained in order to support this backup. For a backup in an incremental backup chain, this is the version time of the oldest backup that exists or ever existed in the chain. For all other backups, this is the version time of the backup. This field can be used to understand what data is being retained by the backup system.</td>
@@ -122,12 +128,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="referencingBackups" /></td>
     <td><code>array</code></td>
-    <td>Output only. The names of the destination backups being created by copying this source backup. The backup names are of the form `projects//instances//backups/`. Referencing backups may exist in different instances. The existence of any referencing backup prevents the backup from being deleted. When the copy operation is done (either successfully completed or cancelled or the destination backup is deleted), the reference to the backup is removed.</td>
+    <td>Output only. The names of the destination backups being created by copying this source backup. The backup names are of the form `projects/&#123;project&#125;/instances/&#123;instance&#125;/backups/&#123;backup&#125;`. Referencing backups may exist in different instances. The existence of any referencing backup prevents the backup from being deleted. When the copy operation is done (either successfully completed or cancelled or the destination backup is deleted), the reference to the backup is removed.</td>
 </tr>
 <tr>
     <td><CopyableCode code="referencingDatabases" /></td>
     <td><code>array</code></td>
-    <td>Output only. The names of the restored databases that reference the backup. The database names are of the form `projects//instances//databases/`. Referencing databases may exist in different instances. The existence of any referencing database prevents the backup from being deleted. When a restored database from the backup enters the `READY` state, the reference to the backup is removed.</td>
+    <td>Output only. The names of the restored databases that reference the backup. The database names are of the form `projects/&#123;project&#125;/instances/&#123;instance&#125;/databases/&#123;database&#125;`. Referencing databases may exist in different instances. The existence of any referencing database prevents the backup from being deleted. When a restored database from the backup enters the `READY` state, the reference to the backup is removed.</td>
 </tr>
 <tr>
     <td><CopyableCode code="sizeBytes" /></td>
@@ -137,7 +143,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the backup.</td>
+    <td>Output only. The current state of the backup. (STATE_UNSPECIFIED, CREATING, READY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="versionTime" /></td>
@@ -161,7 +167,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Output only for the CreateBackup operation. Required for the UpdateBackup operation. A globally unique identifier for the backup which cannot be changed. Values are of the form `projects//instances//backups/a-z*[a-z0-9]` The final segment of the name must be between 2 and 60 characters in length. The backup is stored in the location(s) specified in the instance configuration of the instance containing the backup, identified by the prefix of the backup name of the form `projects//instances/`.</td>
+    <td>Output only for the CreateBackup operation. Required for the UpdateBackup operation. A globally unique identifier for the backup which cannot be changed. Values are of the form `projects/&#123;project&#125;/instances/&#123;instance&#125;/backups/a-z*[a-z0-9]` The final segment of the name must be between 2 and 60 characters in length. The backup is stored in the location(s) specified in the instance configuration of the instance containing the backup, identified by the prefix of the backup name of the form `projects/&#123;project&#125;/instances/&#123;instance&#125;`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="backupSchedules" /></td>
@@ -176,17 +182,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="database" /></td>
     <td><code>string</code></td>
-    <td>Required for the CreateBackup operation. Name of the database from which this backup was created. This needs to be in the same instance as the backup. Values are of the form `projects//instances//databases/`.</td>
+    <td>Required for the CreateBackup operation. Name of the database from which this backup was created. This needs to be in the same instance as the backup. Values are of the form `projects/&#123;project&#125;/instances/&#123;instance&#125;/databases/&#123;database&#125;`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="databaseDialect" /></td>
     <td><code>string</code></td>
-    <td>Output only. The database dialect information for the backup.</td>
+    <td>Output only. The database dialect information for the backup. (DATABASE_DIALECT_UNSPECIFIED, GOOGLE_STANDARD_SQL, POSTGRESQL)</td>
 </tr>
 <tr>
     <td><CopyableCode code="encryptionInfo" /></td>
     <td><code>object</code></td>
-    <td>Output only. The encryption information for the backup. (id: EncryptionInfo)</td>
+    <td>Encryption information for a Cloud Spanner database or backup. (id: EncryptionInfo)</td>
 </tr>
 <tr>
     <td><CopyableCode code="encryptionInformation" /></td>
@@ -224,6 +230,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The max allowed expiration time of the backup, with microseconds granularity. A backup's expiration time can be configured in multiple APIs: CreateBackup, UpdateBackup, CopyBackup. When updating or copying an existing backup, the expiration time specified must be less than `Backup.max_expire_time`.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="minimumRestorableEdition" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The minimum edition required to successfully restore the backup. Populated only if the edition is Enterprise or Enterprise Plus. (EDITION_UNSPECIFIED, STANDARD, ENTERPRISE, ENTERPRISE_PLUS)</td>
+</tr>
+<tr>
     <td><CopyableCode code="oldestVersionTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. Data deleted at a time older than this is guaranteed not to be retained in order to support this backup. For a backup in an incremental backup chain, this is the version time of the oldest backup that exists or ever existed in the chain. For all other backups, this is the version time of the backup. This field can be used to understand what data is being retained by the backup system.</td>
@@ -231,12 +242,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="referencingBackups" /></td>
     <td><code>array</code></td>
-    <td>Output only. The names of the destination backups being created by copying this source backup. The backup names are of the form `projects//instances//backups/`. Referencing backups may exist in different instances. The existence of any referencing backup prevents the backup from being deleted. When the copy operation is done (either successfully completed or cancelled or the destination backup is deleted), the reference to the backup is removed.</td>
+    <td>Output only. The names of the destination backups being created by copying this source backup. The backup names are of the form `projects/&#123;project&#125;/instances/&#123;instance&#125;/backups/&#123;backup&#125;`. Referencing backups may exist in different instances. The existence of any referencing backup prevents the backup from being deleted. When the copy operation is done (either successfully completed or cancelled or the destination backup is deleted), the reference to the backup is removed.</td>
 </tr>
 <tr>
     <td><CopyableCode code="referencingDatabases" /></td>
     <td><code>array</code></td>
-    <td>Output only. The names of the restored databases that reference the backup. The database names are of the form `projects//instances//databases/`. Referencing databases may exist in different instances. The existence of any referencing database prevents the backup from being deleted. When a restored database from the backup enters the `READY` state, the reference to the backup is removed.</td>
+    <td>Output only. The names of the restored databases that reference the backup. The database names are of the form `projects/&#123;project&#125;/instances/&#123;instance&#125;/databases/&#123;database&#125;`. Referencing databases may exist in different instances. The existence of any referencing database prevents the backup from being deleted. When a restored database from the backup enters the `READY` state, the reference to the backup is removed.</td>
 </tr>
 <tr>
     <td><CopyableCode code="sizeBytes" /></td>
@@ -246,7 +257,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the backup.</td>
+    <td>Output only. The current state of the backup. (STATE_UNSPECIFIED, CREATING, READY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="versionTime" /></td>
@@ -284,14 +295,14 @@ The following methods are available for this resource:
     <td><a href="#projects_instances_backups_list"><CopyableCode code="projects_instances_backups_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists completed and pending backups. Backups returned are ordered by `create_time` in descending order, starting from the most recent `create_time`.</td>
 </tr>
 <tr>
     <td><a href="#projects_instances_backups_create"><CopyableCode code="projects_instances_backups_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td><a href="#parameter-backupId"><code>backupId</code></a>, <a href="#parameter-encryptionConfig.kmsKeyName"><code>encryptionConfig.kmsKeyName</code></a>, <a href="#parameter-encryptionConfig.kmsKeyNames"><code>encryptionConfig.kmsKeyNames</code></a>, <a href="#parameter-encryptionConfig.encryptionType"><code>encryptionConfig.encryptionType</code></a></td>
+    <td><a href="#parameter-backupId"><code>backupId</code></a>, <a href="#parameter-encryptionConfig.encryptionType"><code>encryptionConfig.encryptionType</code></a>, <a href="#parameter-encryptionConfig.kmsKeyName"><code>encryptionConfig.kmsKeyName</code></a>, <a href="#parameter-encryptionConfig.kmsKeyNames"><code>encryptionConfig.kmsKeyNames</code></a></td>
     <td>Starts creating a new Cloud Spanner Backup. The returned backup long-running operation will have a name of the format `projects//instances//backups//operations/` and can be used to track creation of the backup. The metadata field type is CreateBackupMetadata. The response field type is Backup, if successful. Cancelling the returned operation will stop the creation and delete the backup. There can be only one pending backup creation per database. Backup creation of different databases can run concurrently.</td>
 </tr>
 <tr>
@@ -417,6 +428,7 @@ freeableSizeBytes,
 incrementalBackupChainId,
 instancePartitions,
 maxExpireTime,
+minimumRestorableEdition,
 oldestVersionTime,
 referencingBackups,
 referencingDatabases,
@@ -449,6 +461,7 @@ freeableSizeBytes,
 incrementalBackupChainId,
 instancePartitions,
 maxExpireTime,
+minimumRestorableEdition,
 oldestVersionTime,
 referencingBackups,
 referencingDatabases,
@@ -459,8 +472,8 @@ FROM google.spanner.backups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND instancesId = '{{ instancesId }}' -- required
 AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -489,9 +502,9 @@ data__name,
 projectsId,
 instancesId,
 backupId,
+encryptionConfig.encryptionType,
 encryptionConfig.kmsKeyName,
-encryptionConfig.kmsKeyNames,
-encryptionConfig.encryptionType
+encryptionConfig.kmsKeyNames
 )
 SELECT 
 '{{ database }}',
@@ -501,9 +514,9 @@ SELECT
 '{{ projectsId }}',
 '{{ instancesId }}',
 '{{ backupId }}',
+'{{ encryptionConfig.encryptionType }}',
 '{{ encryptionConfig.kmsKeyName }}',
-'{{ encryptionConfig.kmsKeyNames }}',
-'{{ encryptionConfig.encryptionType }}'
+'{{ encryptionConfig.kmsKeyNames }}'
 RETURNING
 name,
 done,
@@ -515,45 +528,41 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: backups
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the backups resource.
     - name: instancesId
-      value: string
+      value: "{{ instancesId }}"
       description: Required parameter for the backups resource.
     - name: database
-      value: string
-      description: >
-        Required for the CreateBackup operation. Name of the database from which this backup was created. This needs to be in the same instance as the backup. Values are of the form `projects//instances//databases/`.
-        
+      value: "{{ database }}"
+      description: |
+        Required for the CreateBackup operation. Name of the database from which this backup was created. This needs to be in the same instance as the backup. Values are of the form \`projects/{project}/instances/{instance}/databases/{database}\`.
     - name: versionTime
-      value: string
-      description: >
-        The backup will contain an externally consistent copy of the database at the timestamp specified by `version_time`. If `version_time` is not specified, the system will set `version_time` to the `create_time` of the backup.
-        
+      value: "{{ versionTime }}"
+      description: |
+        The backup will contain an externally consistent copy of the database at the timestamp specified by \`version_time\`. If \`version_time\` is not specified, the system will set \`version_time\` to the \`create_time\` of the backup.
     - name: expireTime
-      value: string
-      description: >
-        Required for the CreateBackup operation. The expiration time of the backup, with microseconds granularity that must be at least 6 hours and at most 366 days from the time the CreateBackup request is processed. Once the `expire_time` has passed, the backup is eligible to be automatically deleted by Cloud Spanner to free the resources used by the backup.
-        
+      value: "{{ expireTime }}"
+      description: |
+        Required for the CreateBackup operation. The expiration time of the backup, with microseconds granularity that must be at least 6 hours and at most 366 days from the time the CreateBackup request is processed. Once the \`expire_time\` has passed, the backup is eligible to be automatically deleted by Cloud Spanner to free the resources used by the backup.
     - name: name
-      value: string
-      description: >
-        Output only for the CreateBackup operation. Required for the UpdateBackup operation. A globally unique identifier for the backup which cannot be changed. Values are of the form `projects//instances//backups/a-z*[a-z0-9]` The final segment of the name must be between 2 and 60 characters in length. The backup is stored in the location(s) specified in the instance configuration of the instance containing the backup, identified by the prefix of the backup name of the form `projects//instances/`.
-        
+      value: "{{ name }}"
+      description: |
+        Output only for the CreateBackup operation. Required for the UpdateBackup operation. A globally unique identifier for the backup which cannot be changed. Values are of the form \`projects/{project}/instances/{instance}/backups/a-z*[a-z0-9]\` The final segment of the name must be between 2 and 60 characters in length. The backup is stored in the location(s) specified in the instance configuration of the instance containing the backup, identified by the prefix of the backup name of the form \`projects/{project}/instances/{instance}\`.
     - name: backupId
-      value: string
-    - name: encryptionConfig.kmsKeyName
-      value: string
-    - name: encryptionConfig.kmsKeyNames
-      value: string
+      value: "{{ backupId }}"
     - name: encryptionConfig.encryptionType
-      value: string
-```
+      value: "{{ encryptionConfig.encryptionType }}"
+    - name: encryptionConfig.kmsKeyName
+      value: "{{ encryptionConfig.kmsKeyName }}"
+    - name: encryptionConfig.kmsKeyNames
+      value: "{{ encryptionConfig.kmsKeyNames }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -596,6 +605,7 @@ freeableSizeBytes,
 incrementalBackupChainId,
 instancePartitions,
 maxExpireTime,
+minimumRestorableEdition,
 oldestVersionTime,
 referencingBackups,
 referencingDatabases,
@@ -650,8 +660,8 @@ EXEC google.spanner.backups.projects_instances_backups_copy
 '{
 "backupId": "{{ backupId }}", 
 "sourceBackup": "{{ sourceBackup }}", 
-"encryptionConfig": "{{ encryptionConfig }}", 
-"expireTime": "{{ expireTime }}"
+"expireTime": "{{ expireTime }}", 
+"encryptionConfig": "{{ encryptionConfig }}"
 }'
 ;
 ```

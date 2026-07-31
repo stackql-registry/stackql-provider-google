@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>workloads</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>workloads</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="workloads" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apphub.workloads" /></td></tr>
 </tbody></table>
@@ -82,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Workload state.</td>
+    <td>Output only. Workload state. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, DETACHED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -149,21 +150,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-applicationsId"><code>applicationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists Workloads in an Application.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-applicationsId"><code>applicationsId</code></a></td>
-    <td><a href="#parameter-workloadId"><code>workloadId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-workloadId"><code>workloadId</code></a></td>
     <td>Creates a Workload in an Application.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-applicationsId"><code>applicationsId</code></a>, <a href="#parameter-workloadsId"><code>workloadsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a Workload in an Application.</td>
 </tr>
 <tr>
@@ -292,8 +293,8 @@ FROM google.apphub.workloads
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND applicationsId = '{{ applicationsId }}' -- required
-AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
 ;
@@ -317,28 +318,28 @@ Creates a Workload in an Application.
 
 ```sql
 INSERT INTO google.apphub.workloads (
-data__name,
-data__attributes,
 data__displayName,
-data__description,
+data__attributes,
+data__name,
 data__discoveredWorkload,
+data__description,
 projectsId,
 locationsId,
 applicationsId,
-workloadId,
-requestId
+requestId,
+workloadId
 )
 SELECT 
-'{{ name }}',
-'{{ attributes }}',
 '{{ displayName }}',
-'{{ description }}',
+'{{ attributes }}',
+'{{ name }}',
 '{{ discoveredWorkload }}',
+'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ applicationsId }}',
-'{{ workloadId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ workloadId }}'
 RETURNING
 name,
 done,
@@ -350,49 +351,57 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: workloads
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the workloads resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the workloads resource.
     - name: applicationsId
-      value: string
+      value: "{{ applicationsId }}"
       description: Required parameter for the workloads resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the Workload. Format: `"projects/{host-project-id}/locations/{location}/applications/{application-id}/workloads/{workload-id}"`
-        
-    - name: attributes
-      value: object
-      description: >
-        Optional. Consumer provided attributes.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Optional. User-defined name for the Workload. Can have a maximum length of 63 characters.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. User-defined description of a Workload. Can have a maximum length of 2048 characters.
-        
+    - name: attributes
+      description: |
+        Optional. Consumer provided attributes.
+      value:
+        environment:
+          type: "{{ type }}"
+        developerOwners:
+          - email: "{{ email }}"
+            displayName: "{{ displayName }}"
+        criticality:
+          type: "{{ type }}"
+        businessOwners:
+          - email: "{{ email }}"
+            displayName: "{{ displayName }}"
+        operatorOwners:
+          - email: "{{ email }}"
+            displayName: "{{ displayName }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the Workload. Format: \`"projects/{host-project-id}/locations/{location}/applications/{application-id}/workloads/{workload-id}"\`
     - name: discoveredWorkload
-      value: string
-      description: >
+      value: "{{ discoveredWorkload }}"
+      description: |
         Required. Immutable. The resource name of the original discovered workload.
-        
-    - name: workloadId
-      value: string
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. User-defined description of a Workload. Can have a maximum length of 2048 characters.
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+    - name: workloadId
+      value: "{{ workloadId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -412,18 +421,18 @@ Updates a Workload in an Application.
 ```sql
 UPDATE google.apphub.workloads
 SET 
-data__name = '{{ name }}',
-data__attributes = '{{ attributes }}',
 data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
-data__discoveredWorkload = '{{ discoveredWorkload }}'
+data__attributes = '{{ attributes }}',
+data__name = '{{ name }}',
+data__discoveredWorkload = '{{ discoveredWorkload }}',
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND applicationsId = '{{ applicationsId }}' --required
 AND workloadsId = '{{ workloadsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

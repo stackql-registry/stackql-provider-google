@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>rollouts</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>rollouts</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="rollouts" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.clouddeploy.rollouts" /></td></tr>
 </tbody></table>
@@ -67,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="approvalState" /></td>
     <td><code>string</code></td>
-    <td>Output only. Approval state of the `Rollout`.</td>
+    <td>Output only. Approval state of the `Rollout`. (APPROVAL_STATE_UNSPECIFIED, NEEDS_APPROVAL, DOES_NOT_NEED_APPROVAL, APPROVED, REJECTED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="approveTime" /></td>
@@ -92,7 +93,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="deployFailureCause" /></td>
     <td><code>string</code></td>
-    <td>Output only. The reason this rollout failed. This will always be unspecified while the rollout is in progress.</td>
+    <td>Output only. The reason this rollout failed. This will always be unspecified while the rollout is in progress. (FAILURE_CAUSE_UNSPECIFIED, CLOUD_BUILD_UNAVAILABLE, EXECUTION_FAILED, DEADLINE_EXCEEDED, RELEASE_FAILED, RELEASE_ABANDONED, VERIFICATION_CONFIG_NOT_FOUND, CLOUD_BUILD_REQUEST_FAILED, OPERATION_FEATURE_NOT_SUPPORTED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="deployStartTime" /></td>
@@ -152,7 +153,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the `Rollout`.</td>
+    <td>Output only. Current state of the `Rollout`. (STATE_UNSPECIFIED, SUCCEEDED, FAILED, IN_PROGRESS, PENDING_APPROVAL, APPROVAL_REJECTED, PENDING, PENDING_RELEASE, CANCELLING, CANCELLED, HALTED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="targetId" /></td>
@@ -196,7 +197,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="approvalState" /></td>
     <td><code>string</code></td>
-    <td>Output only. Approval state of the `Rollout`.</td>
+    <td>Output only. Approval state of the `Rollout`. (APPROVAL_STATE_UNSPECIFIED, NEEDS_APPROVAL, DOES_NOT_NEED_APPROVAL, APPROVED, REJECTED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="approveTime" /></td>
@@ -221,7 +222,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="deployFailureCause" /></td>
     <td><code>string</code></td>
-    <td>Output only. The reason this rollout failed. This will always be unspecified while the rollout is in progress.</td>
+    <td>Output only. The reason this rollout failed. This will always be unspecified while the rollout is in progress. (FAILURE_CAUSE_UNSPECIFIED, CLOUD_BUILD_UNAVAILABLE, EXECUTION_FAILED, DEADLINE_EXCEEDED, RELEASE_FAILED, RELEASE_ABANDONED, VERIFICATION_CONFIG_NOT_FOUND, CLOUD_BUILD_REQUEST_FAILED, OPERATION_FEATURE_NOT_SUPPORTED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="deployStartTime" /></td>
@@ -281,7 +282,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the `Rollout`.</td>
+    <td>Output only. Current state of the `Rollout`. (STATE_UNSPECIFIED, SUCCEEDED, FAILED, IN_PROGRESS, PENDING_APPROVAL, APPROVAL_REJECTED, PENDING, PENDING_RELEASE, CANCELLING, CANCELLED, HALTED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="targetId" /></td>
@@ -331,15 +332,15 @@ The following methods are available for this resource:
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deliveryPipelinesId"><code>deliveryPipelinesId</code></a>, <a href="#parameter-releasesId"><code>releasesId</code></a></td>
-    <td><a href="#parameter-overrideDeployPolicy"><code>overrideDeployPolicy</code></a>, <a href="#parameter-startingPhaseId"><code>startingPhaseId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-rolloutId"><code>rolloutId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-startingPhaseId"><code>startingPhaseId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-overrideDeployPolicy"><code>overrideDeployPolicy</code></a>, <a href="#parameter-rolloutId"><code>rolloutId</code></a></td>
     <td>Creates a new Rollout in a given project and location.</td>
 </tr>
 <tr>
-    <td><a href="#advance"><CopyableCode code="advance" /></a></td>
+    <td><a href="#retry_job"><CopyableCode code="retry_job" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deliveryPipelinesId"><code>deliveryPipelinesId</code></a>, <a href="#parameter-releasesId"><code>releasesId</code></a>, <a href="#parameter-rolloutsId"><code>rolloutsId</code></a></td>
     <td></td>
-    <td>Advances a Rollout in a given project and location.</td>
+    <td>Retries the specified Job in a Rollout.</td>
 </tr>
 <tr>
     <td><a href="#ignore_job"><CopyableCode code="ignore_job" /></a></td>
@@ -356,18 +357,18 @@ The following methods are available for this resource:
     <td>Approves a Rollout.</td>
 </tr>
 <tr>
+    <td><a href="#advance"><CopyableCode code="advance" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deliveryPipelinesId"><code>deliveryPipelinesId</code></a>, <a href="#parameter-releasesId"><code>releasesId</code></a>, <a href="#parameter-rolloutsId"><code>rolloutsId</code></a></td>
+    <td></td>
+    <td>Advances a Rollout in a given project and location.</td>
+</tr>
+<tr>
     <td><a href="#cancel"><CopyableCode code="cancel" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deliveryPipelinesId"><code>deliveryPipelinesId</code></a>, <a href="#parameter-releasesId"><code>releasesId</code></a>, <a href="#parameter-rolloutsId"><code>rolloutsId</code></a></td>
     <td></td>
     <td>Cancels a Rollout in a given project and location.</td>
-</tr>
-<tr>
-    <td><a href="#retry_job"><CopyableCode code="retry_job" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deliveryPipelinesId"><code>deliveryPipelinesId</code></a>, <a href="#parameter-releasesId"><code>releasesId</code></a>, <a href="#parameter-rolloutsId"><code>rolloutsId</code></a></td>
-    <td></td>
-    <td>Retries the specified Job in a Rollout.</td>
 </tr>
 </tbody>
 </table>
@@ -565,37 +566,37 @@ Creates a new Rollout in a given project and location.
 ```sql
 INSERT INTO google.clouddeploy.rollouts (
 data__etag,
-data__name,
 data__annotations,
-data__targetId,
 data__description,
+data__targetId,
 data__labels,
+data__name,
 projectsId,
 locationsId,
 deliveryPipelinesId,
 releasesId,
-overrideDeployPolicy,
 startingPhaseId,
 requestId,
-rolloutId,
-validateOnly
+validateOnly,
+overrideDeployPolicy,
+rolloutId
 )
 SELECT 
 '{{ etag }}',
-'{{ name }}',
 '{{ annotations }}',
-'{{ targetId }}',
 '{{ description }}',
+'{{ targetId }}',
 '{{ labels }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ deliveryPipelinesId }}',
 '{{ releasesId }}',
-'{{ overrideDeployPolicy }}',
 '{{ startingPhaseId }}',
 '{{ requestId }}',
-'{{ rolloutId }}',
-'{{ validateOnly }}'
+'{{ validateOnly }}',
+'{{ overrideDeployPolicy }}',
+'{{ rolloutId }}'
 RETURNING
 name,
 done,
@@ -607,63 +608,57 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: rollouts
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the rollouts resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the rollouts resource.
     - name: deliveryPipelinesId
-      value: string
+      value: "{{ deliveryPipelinesId }}"
       description: Required parameter for the rollouts resource.
     - name: releasesId
-      value: string
+      value: "{{ releasesId }}"
       description: Required parameter for the rollouts resource.
     - name: etag
-      value: string
-      description: >
+      value: "{{ etag }}"
+      description: |
         This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
-        
-    - name: name
-      value: string
-      description: >
-        Identifier. Name of the `Rollout`. Format is `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/releases/{release}/rollouts/{rollout}`. The `rollout` component must match `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`
-        
     - name: annotations
-      value: object
-      description: >
+      value: "{{ annotations }}"
+      description: |
         Optional. User annotations. These attributes can only be set and used by the user, and not by Cloud Deploy. See https://google.aip.dev/128#annotations for more details such as format and size limitations.
-        
-    - name: targetId
-      value: string
-      description: >
-        Required. The ID of Target to which this `Rollout` is deploying.
-        
     - name: description
-      value: string
-      description: >
-        Optional. Description of the `Rollout` for user purposes. Max length is 255 characters.
-        
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the \`Rollout\` for user purposes. Max length is 255 characters.
+    - name: targetId
+      value: "{{ targetId }}"
+      description: |
+        Required. The ID of Target to which this \`Rollout\` is deploying.
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Labels are attributes that can be set and used by both the user and by Cloud Deploy. Labels must meet the following constraints: * Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. * All characters must use UTF-8 encoding, and international characters are allowed. * Keys must start with a lowercase letter or international character. * Each resource is limited to a maximum of 64 labels. Both keys and values are additionally constrained to be <= 128 bytes.
-        
-    - name: overrideDeployPolicy
-      value: string
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Name of the \`Rollout\`. Format is \`projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/releases/{release}/rollouts/{rollout}\`. The \`rollout\` component must match \`[a-z]([a-z0-9-]{0,61}[a-z0-9])?\`
     - name: startingPhaseId
-      value: string
+      value: "{{ startingPhaseId }}"
     - name: requestId
-      value: string
-    - name: rolloutId
-      value: string
+      value: "{{ requestId }}"
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+    - name: overrideDeployPolicy
+      value: "{{ overrideDeployPolicy }}"
+    - name: rolloutId
+      value: "{{ rolloutId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -671,15 +666,74 @@ response
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="advance"
+    defaultValue="retry_job"
     values={[
-        { label: 'advance', value: 'advance' },
+        { label: 'retry_job', value: 'retry_job' },
         { label: 'ignore_job', value: 'ignore_job' },
         { label: 'approve', value: 'approve' },
-        { label: 'cancel', value: 'cancel' },
-        { label: 'retry_job', value: 'retry_job' }
+        { label: 'advance', value: 'advance' },
+        { label: 'cancel', value: 'cancel' }
     ]}
 >
+<TabItem value="retry_job">
+
+Retries the specified Job in a Rollout.
+
+```sql
+EXEC google.clouddeploy.rollouts.retry_job 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@deliveryPipelinesId='{{ deliveryPipelinesId }}' --required, 
+@releasesId='{{ releasesId }}' --required, 
+@rolloutsId='{{ rolloutsId }}' --required 
+@@json=
+'{
+"phaseId": "{{ phaseId }}", 
+"jobId": "{{ jobId }}", 
+"overrideDeployPolicy": "{{ overrideDeployPolicy }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="ignore_job">
+
+Ignores the specified Job in a Rollout.
+
+```sql
+EXEC google.clouddeploy.rollouts.ignore_job 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@deliveryPipelinesId='{{ deliveryPipelinesId }}' --required, 
+@releasesId='{{ releasesId }}' --required, 
+@rolloutsId='{{ rolloutsId }}' --required 
+@@json=
+'{
+"phaseId": "{{ phaseId }}", 
+"jobId": "{{ jobId }}", 
+"overrideDeployPolicy": "{{ overrideDeployPolicy }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="approve">
+
+Approves a Rollout.
+
+```sql
+EXEC google.clouddeploy.rollouts.approve 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@deliveryPipelinesId='{{ deliveryPipelinesId }}' --required, 
+@releasesId='{{ releasesId }}' --required, 
+@rolloutsId='{{ rolloutsId }}' --required 
+@@json=
+'{
+"approved": {{ approved }}, 
+"overrideDeployPolicy": "{{ overrideDeployPolicy }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="advance">
 
 Advances a Rollout in a given project and location.
@@ -699,45 +753,6 @@ EXEC google.clouddeploy.rollouts.advance
 ;
 ```
 </TabItem>
-<TabItem value="ignore_job">
-
-Ignores the specified Job in a Rollout.
-
-```sql
-EXEC google.clouddeploy.rollouts.ignore_job 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@deliveryPipelinesId='{{ deliveryPipelinesId }}' --required, 
-@releasesId='{{ releasesId }}' --required, 
-@rolloutsId='{{ rolloutsId }}' --required 
-@@json=
-'{
-"overrideDeployPolicy": "{{ overrideDeployPolicy }}", 
-"jobId": "{{ jobId }}", 
-"phaseId": "{{ phaseId }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="approve">
-
-Approves a Rollout.
-
-```sql
-EXEC google.clouddeploy.rollouts.approve 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@deliveryPipelinesId='{{ deliveryPipelinesId }}' --required, 
-@releasesId='{{ releasesId }}' --required, 
-@rolloutsId='{{ rolloutsId }}' --required 
-@@json=
-'{
-"overrideDeployPolicy": "{{ overrideDeployPolicy }}", 
-"approved": {{ approved }}
-}'
-;
-```
-</TabItem>
 <TabItem value="cancel">
 
 Cancels a Rollout in a given project and location.
@@ -752,26 +767,6 @@ EXEC google.clouddeploy.rollouts.cancel
 @@json=
 '{
 "overrideDeployPolicy": "{{ overrideDeployPolicy }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="retry_job">
-
-Retries the specified Job in a Rollout.
-
-```sql
-EXEC google.clouddeploy.rollouts.retry_job 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@deliveryPipelinesId='{{ deliveryPipelinesId }}' --required, 
-@releasesId='{{ releasesId }}' --required, 
-@rolloutsId='{{ rolloutsId }}' --required 
-@@json=
-'{
-"overrideDeployPolicy": "{{ overrideDeployPolicy }}", 
-"phaseId": "{{ phaseId }}", 
-"jobId": "{{ jobId }}"
 }'
 ;
 ```

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>instances</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>instances</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="instances" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigeeregistry.instances" /></td></tr>
 </tbody></table>
@@ -71,7 +72,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the Instance.</td>
+    <td>Output only. The current state of the Instance. (STATE_UNSPECIFIED, INACTIVE, CREATING, ACTIVE, UPDATING, DELETING, FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateMessage" /></td>
@@ -209,15 +210,15 @@ Provisions instance resources for the Registry.
 
 ```sql
 INSERT INTO google.apigeeregistry.instances (
-data__config,
 data__name,
+data__config,
 projectsId,
 locationsId,
 instanceId
 )
 SELECT 
-'{{ config }}',
 '{{ name }}',
+'{{ config }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ instanceId }}'
@@ -232,29 +233,29 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: instances
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the instances resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the instances resource.
-    - name: config
-      value: object
-      description: >
-        Required. Config of the Instance.
-        
     - name: name
-      value: string
-      description: >
-        Format: `projects/*/locations/*/instance`. Currently only `locations/global` is supported.
-        
+      value: "{{ name }}"
+      description: |
+        Format: \`projects/*/locations/*/instance\`. Currently only \`locations/global\` is supported.
+    - name: config
+      description: |
+        Required. Config of the Instance.
+      value:
+        location: "{{ location }}"
+        cmekKeyName: "{{ cmekKeyName }}"
     - name: instanceId
-      value: string
-```
+      value: "{{ instanceId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

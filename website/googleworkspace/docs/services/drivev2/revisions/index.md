@@ -15,6 +15,7 @@ image: /img/stackql-googleworkspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>revisions</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>revisions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="revisions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleworkspace.drivev2.revisions" /></td></tr>
 </tbody></table>
@@ -82,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="lastModifyingUser" /></td>
     <td><code>object</code></td>
-    <td>Information about a Drive user. (id: User)</td>
+    <td>Output only. The last user to modify this revision. This field is only populated when the last modification was performed by a signed-in user. (id: User)</td>
 </tr>
 <tr>
     <td><CopyableCode code="lastModifyingUserName" /></td>
@@ -186,7 +187,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="lastModifyingUser" /></td>
     <td><code>object</code></td>
-    <td>Information about a Drive user. (id: User)</td>
+    <td>Output only. The last user to modify this revision. This field is only populated when the last modification was performed by a signed-in user. (id: User)</td>
 </tr>
 <tr>
     <td><CopyableCode code="lastModifyingUserName" /></td>
@@ -275,7 +276,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-fileId"><code>fileId</code></a></td>
     <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists a file's revisions.</td>
+    <td>Lists a file's revisions. **Important:** The list of revisions returned by this method might be incomplete for files with a large revision history, including frequently edited Google Docs, Sheets, and Slides. Older revisions might be omitted from the response, meaning the first revision returned may not be the oldest existing revision. The revision history visible in the Workspace editor user interface might be more complete than the list returned by the API.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
@@ -378,7 +379,7 @@ AND revisionId = '{{ revisionId }}' -- required
 </TabItem>
 <TabItem value="list">
 
-Lists a file's revisions.
+Lists a file's revisions. **Important:** The list of revisions returned by this method might be incomplete for files with a large revision history, including frequently edited Google Docs, Sheets, and Slides. Older revisions might be omitted from the response, meaning the first revision returned may not be the oldest existing revision. The revision history visible in the Workspace editor user interface might be more complete than the list returned by the API.
 
 ```sql
 SELECT
@@ -425,23 +426,23 @@ Updates a revision.
 ```sql
 UPDATE googleworkspace.drivev2.revisions
 SET 
-data__id = '{{ id }}',
-data__mimeType = '{{ mimeType }}',
-data__kind = '{{ kind }}',
-data__published = {{ published }},
-data__etag = '{{ etag }}',
-data__exportLinks = '{{ exportLinks }}',
-data__pinned = {{ pinned }},
-data__md5Checksum = '{{ md5Checksum }}',
-data__modifiedDate = '{{ modifiedDate }}',
 data__lastModifyingUserName = '{{ lastModifyingUserName }}',
-data__downloadUrl = '{{ downloadUrl }}',
+data__fileSize = '{{ fileSize }}',
+data__modifiedDate = '{{ modifiedDate }}',
+data__originalFilename = '{{ originalFilename }}',
 data__publishAuto = {{ publishAuto }},
+data__published = {{ published }},
+data__pinned = {{ pinned }},
 data__publishedOutsideDomain = {{ publishedOutsideDomain }},
 data__publishedLink = '{{ publishedLink }}',
-data__fileSize = '{{ fileSize }}',
-data__originalFilename = '{{ originalFilename }}',
+data__md5Checksum = '{{ md5Checksum }}',
+data__downloadUrl = '{{ downloadUrl }}',
+data__id = '{{ id }}',
+data__exportLinks = '{{ exportLinks }}',
+data__kind = '{{ kind }}',
 data__lastModifyingUser = '{{ lastModifyingUser }}',
+data__mimeType = '{{ mimeType }}',
+data__etag = '{{ etag }}',
 data__selfLink = '{{ selfLink }}'
 WHERE 
 fileId = '{{ fileId }}' --required
@@ -485,23 +486,23 @@ Updates a revision.
 ```sql
 REPLACE googleworkspace.drivev2.revisions
 SET 
-data__id = '{{ id }}',
-data__mimeType = '{{ mimeType }}',
-data__kind = '{{ kind }}',
-data__published = {{ published }},
-data__etag = '{{ etag }}',
-data__exportLinks = '{{ exportLinks }}',
-data__pinned = {{ pinned }},
-data__md5Checksum = '{{ md5Checksum }}',
-data__modifiedDate = '{{ modifiedDate }}',
 data__lastModifyingUserName = '{{ lastModifyingUserName }}',
-data__downloadUrl = '{{ downloadUrl }}',
+data__fileSize = '{{ fileSize }}',
+data__modifiedDate = '{{ modifiedDate }}',
+data__originalFilename = '{{ originalFilename }}',
 data__publishAuto = {{ publishAuto }},
+data__published = {{ published }},
+data__pinned = {{ pinned }},
 data__publishedOutsideDomain = {{ publishedOutsideDomain }},
 data__publishedLink = '{{ publishedLink }}',
-data__fileSize = '{{ fileSize }}',
-data__originalFilename = '{{ originalFilename }}',
+data__md5Checksum = '{{ md5Checksum }}',
+data__downloadUrl = '{{ downloadUrl }}',
+data__id = '{{ id }}',
+data__exportLinks = '{{ exportLinks }}',
+data__kind = '{{ kind }}',
 data__lastModifyingUser = '{{ lastModifyingUser }}',
+data__mimeType = '{{ mimeType }}',
+data__etag = '{{ etag }}',
 data__selfLink = '{{ selfLink }}'
 WHERE 
 fileId = '{{ fileId }}' --required

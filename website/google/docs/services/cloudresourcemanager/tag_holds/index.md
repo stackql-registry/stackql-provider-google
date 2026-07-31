@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>tag_holds</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>tag_holds</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="tag_holds" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudresourcemanager.tag_holds" /></td></tr>
 </tbody></table>
@@ -97,7 +98,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-tagValuesId"><code>tagValuesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists TagHolds under a TagValue.</td>
 </tr>
 <tr>
@@ -184,9 +185,9 @@ holder,
 origin
 FROM google.cloudresourcemanager.tag_holds
 WHERE tagValuesId = '{{ tagValuesId }}' -- required
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -231,31 +232,28 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: tag_holds
   props:
     - name: tagValuesId
-      value: string
+      value: "{{ tagValuesId }}"
       description: Required parameter for the tag_holds resource.
     - name: origin
-      value: string
-      description: >
-        Optional. An optional string representing the origin of this request. This field should include human-understandable information to distinguish origins from each other. Must be less than 200 characters. E.g. `migs-35678234`
-        
+      value: "{{ origin }}"
+      description: |
+        Optional. An optional string representing the origin of this request. This field should include human-understandable information to distinguish origins from each other. Must be less than 200 characters. E.g. \`migs-35678234\`
     - name: helpLink
-      value: string
-      description: >
-        Optional. A URL where an end user can learn more about removing this hold. E.g. `https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing`
-        
+      value: "{{ helpLink }}"
+      description: |
+        Optional. A URL where an end user can learn more about removing this hold. E.g. \`https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing\`
     - name: holder
-      value: string
-      description: >
-        Required. The name of the resource where the TagValue is being used. Must be less than 200 characters. E.g. `//compute.googleapis.com/compute/projects/myproject/regions/us-east-1/instanceGroupManagers/instance-group`
-        
+      value: "{{ holder }}"
+      description: |
+        Required. The name of the resource where the TagValue is being used. Must be less than 200 characters. E.g. \`//compute.googleapis.com/compute/projects/myproject/regions/us-east-1/instanceGroupManagers/instance-group\`
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

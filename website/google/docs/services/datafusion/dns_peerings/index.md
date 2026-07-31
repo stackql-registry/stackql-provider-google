@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>dns_peerings</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>dns_peerings</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="dns_peerings" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.datafusion.dns_peerings" /></td></tr>
 </tbody></table>
@@ -215,10 +216,10 @@ Creates DNS peering on the given resource.
 ```sql
 INSERT INTO google.datafusion.dns_peerings (
 data__domain,
-data__name,
 data__targetProject,
-data__description,
+data__name,
 data__targetNetwork,
+data__description,
 projectsId,
 locationsId,
 instancesId,
@@ -226,10 +227,10 @@ dnsPeeringId
 )
 SELECT 
 '{{ domain }}',
-'{{ name }}',
 '{{ targetProject }}',
-'{{ description }}',
+'{{ name }}',
 '{{ targetNetwork }}',
+'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ instancesId }}',
@@ -245,47 +246,42 @@ targetProject
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: dns_peerings
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the dns_peerings resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the dns_peerings resource.
     - name: instancesId
-      value: string
+      value: "{{ instancesId }}"
       description: Required parameter for the dns_peerings resource.
     - name: domain
-      value: string
-      description: >
+      value: "{{ domain }}"
+      description: |
         Required. The dns name suffix of the zone.
-        
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the dns peering zone. Format: projects/{project}/locations/{location}/instances/{instance}/dnsPeerings/{dns_peering}
-        
     - name: targetProject
-      value: string
-      description: >
+      value: "{{ targetProject }}"
+      description: |
         Optional. Optional target project to which dns peering should happen.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. Optional description of the dns zone.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the dns peering zone. Format: projects/{project}/locations/{location}/instances/{instance}/dnsPeerings/{dns_peering}
     - name: targetNetwork
-      value: string
-      description: >
+      value: "{{ targetNetwork }}"
+      description: |
         Optional. Optional target network to which dns peering should happen.
-        
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Optional description of the dns zone.
     - name: dnsPeeringId
-      value: string
-```
+      value: "{{ dnsPeeringId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

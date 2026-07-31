@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>service_connection_maps</code> 
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>service_connection_maps</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="service_connection_maps" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networkconnectivity.service_connection_maps" /></td></tr>
 </tbody></table>
@@ -82,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="infrastructure" /></td>
     <td><code>string</code></td>
-    <td>Output only. The infrastructure used for connections between consumers/producers.</td>
+    <td>Output only. The infrastructure used for connections between consumers/producers. (INFRASTRUCTURE_UNSPECIFIED, PSC)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -161,7 +162,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="infrastructure" /></td>
     <td><code>string</code></td>
-    <td>Output only. The infrastructure used for connections between consumers/producers.</td>
+    <td>Output only. The infrastructure used for connections between consumers/producers. (INFRASTRUCTURE_UNSPECIFIED, PSC)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -224,7 +225,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists ServiceConnectionMaps in a given project and location.</td>
 </tr>
 <tr>
@@ -238,14 +239,14 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-serviceConnectionMapsId"><code>serviceConnectionMapsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a single ServiceConnectionMap.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-serviceConnectionMapsId"><code>serviceConnectionMapsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes a single ServiceConnectionMap.</td>
 </tr>
 </tbody>
@@ -379,10 +380,10 @@ updateTime
 FROM google.networkconnectivity.service_connection_maps
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -404,28 +405,28 @@ Creates a new ServiceConnectionMap in a given project and location.
 
 ```sql
 INSERT INTO google.networkconnectivity.service_connection_maps (
-data__labels,
 data__serviceClass,
-data__description,
+data__labels,
+data__producerPscConfigs,
 data__consumerPscConfigs,
 data__etag,
-data__producerPscConfigs,
-data__name,
 data__token,
+data__description,
+data__name,
 projectsId,
 locationsId,
 serviceConnectionMapId,
 requestId
 )
 SELECT 
-'{{ labels }}',
 '{{ serviceClass }}',
-'{{ description }}',
+'{{ labels }}',
+'{{ producerPscConfigs }}',
 '{{ consumerPscConfigs }}',
 '{{ etag }}',
-'{{ producerPscConfigs }}',
-'{{ name }}',
 '{{ token }}',
+'{{ description }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ serviceConnectionMapId }}',
@@ -441,61 +442,67 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: service_connection_maps
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the service_connection_maps resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the service_connection_maps resource.
-    - name: labels
-      value: object
-      description: >
-        User-defined labels.
-        
     - name: serviceClass
-      value: string
-      description: >
+      value: "{{ serviceClass }}"
+      description: |
         The service class identifier this ServiceConnectionMap is for. The user of ServiceConnectionMap create API needs to have networkconnectivity.serviceClasses.use IAM permission for the service class.
-        
-    - name: description
-      value: string
-      description: >
-        A description of this resource.
-        
-    - name: consumerPscConfigs
-      value: array
-      description: >
-        The PSC configurations on consumer side.
-        
-    - name: etag
-      value: string
-      description: >
-        Optional. The etag is computed by the server, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
-        
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        User-defined labels.
     - name: producerPscConfigs
-      value: array
-      description: >
+      description: |
         The PSC configurations on producer side.
-        
-    - name: name
-      value: string
-      description: >
-        Immutable. The name of a ServiceConnectionMap. Format: projects/{project}/locations/{location}/serviceConnectionMaps/{service_connection_map} See: https://google.aip.dev/122#fields-representing-resource-names
-        
+      value:
+        - serviceAttachmentUri: "{{ serviceAttachmentUri }}"
+          automatedDnsCreationSpec:
+            dnsSuffix: "{{ dnsSuffix }}"
+            ttl: "{{ ttl }}"
+            hostname: "{{ hostname }}"
+    - name: consumerPscConfigs
+      description: |
+        The PSC configurations on consumer side.
+      value:
+        - disableGlobalAccess: {{ disableGlobalAccess }}
+          project: "{{ project }}"
+          ipVersion: "{{ ipVersion }}"
+          producerInstanceMetadata: "{{ producerInstanceMetadata }}"
+          consumerInstanceProject: "{{ consumerInstanceProject }}"
+          producerInstanceId: "{{ producerInstanceId }}"
+          serviceAttachmentIpAddressMap: "{{ serviceAttachmentIpAddressMap }}"
+          state: "{{ state }}"
+          network: "{{ network }}"
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. The etag is computed by the server, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
     - name: token
-      value: string
-      description: >
+      value: "{{ token }}"
+      description: |
         The token provided by the consumer. This token authenticates that the consumer can create a connection within the specified project and network.
-        
+    - name: description
+      value: "{{ description }}"
+      description: |
+        A description of this resource.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. The name of a ServiceConnectionMap. Format: projects/{project}/locations/{location}/serviceConnectionMaps/{service_connection_map} See: https://google.aip.dev/122#fields-representing-resource-names
     - name: serviceConnectionMapId
-      value: string
+      value: "{{ serviceConnectionMapId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -515,20 +522,20 @@ Updates the parameters of a single ServiceConnectionMap.
 ```sql
 UPDATE google.networkconnectivity.service_connection_maps
 SET 
-data__labels = '{{ labels }}',
 data__serviceClass = '{{ serviceClass }}',
-data__description = '{{ description }}',
+data__labels = '{{ labels }}',
+data__producerPscConfigs = '{{ producerPscConfigs }}',
 data__consumerPscConfigs = '{{ consumerPscConfigs }}',
 data__etag = '{{ etag }}',
-data__producerPscConfigs = '{{ producerPscConfigs }}',
-data__name = '{{ name }}',
-data__token = '{{ token }}'
+data__token = '{{ token }}',
+data__description = '{{ description }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND serviceConnectionMapsId = '{{ serviceConnectionMapsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,
@@ -557,8 +564,8 @@ DELETE FROM google.networkconnectivity.service_connection_maps
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND serviceConnectionMapsId = '{{ serviceConnectionMapsId }}' --required
-AND requestId = '{{ requestId }}'
 AND etag = '{{ etag }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>

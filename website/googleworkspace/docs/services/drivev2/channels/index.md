@@ -15,6 +15,7 @@ image: /img/stackql-googleworkspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>channels</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>channels</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="channels" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleworkspace.drivev2.channels" /></td></tr>
 </tbody></table>
@@ -91,16 +92,16 @@ Stops watching resources through this channel.
 EXEC googleworkspace.drivev2.channels.stop 
 @@json=
 '{
-"payload": {{ payload }}, 
-"id": "{{ id }}", 
 "resourceId": "{{ resourceId }}", 
+"id": "{{ id }}", 
 "resourceUri": "{{ resourceUri }}", 
-"token": "{{ token }}", 
-"expiration": "{{ expiration }}", 
-"type": "{{ type }}", 
-"address": "{{ address }}", 
 "params": "{{ params }}", 
-"kind": "{{ kind }}"
+"kind": "{{ kind }}", 
+"payload": {{ payload }}, 
+"expiration": "{{ expiration }}", 
+"address": "{{ address }}", 
+"type": "{{ type }}", 
+"token": "{{ token }}"
 }'
 ;
 ```

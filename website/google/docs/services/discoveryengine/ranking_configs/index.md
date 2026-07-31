@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>ranking_configs</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>ranking_configs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="ranking_configs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.discoveryengine.ranking_configs" /></td></tr>
 </tbody></table>
@@ -109,12 +110,12 @@ EXEC google.discoveryengine.ranking_configs.projects_locations_ranking_configs_r
 @rankingConfigsId='{{ rankingConfigsId }}' --required 
 @@json=
 '{
-"topN": {{ topN }}, 
 "query": "{{ query }}", 
-"userLabels": "{{ userLabels }}", 
-"ignoreRecordDetailsInResponse": {{ ignoreRecordDetailsInResponse }}, 
 "records": "{{ records }}", 
-"model": "{{ model }}"
+"userLabels": "{{ userLabels }}", 
+"model": "{{ model }}", 
+"topN": {{ topN }}, 
+"ignoreRecordDetailsInResponse": {{ ignoreRecordDetailsInResponse }}
 }'
 ;
 ```

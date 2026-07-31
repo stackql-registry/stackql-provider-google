@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>recent_queries</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>recent_queries</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="recent_queries" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.logging.recent_queries" /></td></tr>
 </tbody></table>
@@ -32,15 +33,15 @@ Creates, updates, deletes, gets or lists a <code>recent_queries</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="organizations_locations_recent_queries_list"
+    defaultValue="billing_accounts_locations_recent_queries_list"
     values={[
-        { label: 'organizations_locations_recent_queries_list', value: 'organizations_locations_recent_queries_list' },
         { label: 'billing_accounts_locations_recent_queries_list', value: 'billing_accounts_locations_recent_queries_list' },
+        { label: 'folders_locations_recent_queries_list', value: 'folders_locations_recent_queries_list' },
         { label: 'projects_locations_recent_queries_list', value: 'projects_locations_recent_queries_list' },
-        { label: 'folders_locations_recent_queries_list', value: 'folders_locations_recent_queries_list' }
+        { label: 'organizations_locations_recent_queries_list', value: 'organizations_locations_recent_queries_list' }
     ]}
 >
-<TabItem value="organizations_locations_recent_queries_list">
+<TabItem value="billing_accounts_locations_recent_queries_list">
 
 <table>
 <thead>
@@ -54,7 +55,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="billing_accounts_locations_recent_queries_list">
+<TabItem value="folders_locations_recent_queries_list">
 
 <table>
 <thead>
@@ -82,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="folders_locations_recent_queries_list">
+<TabItem value="organizations_locations_recent_queries_list">
 
 <table>
 <thead>
@@ -114,31 +115,31 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#organizations_locations_recent_queries_list"><CopyableCode code="organizations_locations_recent_queries_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
-    <td>Lists the RecentQueries that were created by the user making the request.</td>
-</tr>
-<tr>
     <td><a href="#billing_accounts_locations_recent_queries_list"><CopyableCode code="billing_accounts_locations_recent_queries_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-billingAccountsId"><code>billingAccountsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists the RecentQueries that were created by the user making the request.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_recent_queries_list"><CopyableCode code="projects_locations_recent_queries_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists the RecentQueries that were created by the user making the request.</td>
 </tr>
 <tr>
     <td><a href="#folders_locations_recent_queries_list"><CopyableCode code="folders_locations_recent_queries_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td>Lists the RecentQueries that were created by the user making the request.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_recent_queries_list"><CopyableCode code="projects_locations_recent_queries_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td>Lists the RecentQueries that were created by the user making the request.</td>
+</tr>
+<tr>
+    <td><a href="#organizations_locations_recent_queries_list"><CopyableCode code="organizations_locations_recent_queries_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists the RecentQueries that were created by the user making the request.</td>
 </tr>
 </tbody>
@@ -203,30 +204,14 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="organizations_locations_recent_queries_list"
+    defaultValue="billing_accounts_locations_recent_queries_list"
     values={[
-        { label: 'organizations_locations_recent_queries_list', value: 'organizations_locations_recent_queries_list' },
         { label: 'billing_accounts_locations_recent_queries_list', value: 'billing_accounts_locations_recent_queries_list' },
+        { label: 'folders_locations_recent_queries_list', value: 'folders_locations_recent_queries_list' },
         { label: 'projects_locations_recent_queries_list', value: 'projects_locations_recent_queries_list' },
-        { label: 'folders_locations_recent_queries_list', value: 'folders_locations_recent_queries_list' }
+        { label: 'organizations_locations_recent_queries_list', value: 'organizations_locations_recent_queries_list' }
     ]}
 >
-<TabItem value="organizations_locations_recent_queries_list">
-
-Lists the RecentQueries that were created by the user making the request.
-
-```sql
-SELECT
-*
-FROM google.logging.recent_queries
-WHERE organizationsId = '{{ organizationsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-;
-```
-</TabItem>
 <TabItem value="billing_accounts_locations_recent_queries_list">
 
 Lists the RecentQueries that were created by the user making the request.
@@ -237,25 +222,9 @@ SELECT
 FROM google.logging.recent_queries
 WHERE billingAccountsId = '{{ billingAccountsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_recent_queries_list">
-
-Lists the RecentQueries that were created by the user making the request.
-
-```sql
-SELECT
-*
-FROM google.logging.recent_queries
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -269,9 +238,41 @@ SELECT
 FROM google.logging.recent_queries
 WHERE foldersId = '{{ foldersId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_recent_queries_list">
+
+Lists the RecentQueries that were created by the user making the request.
+
+```sql
+SELECT
+*
+FROM google.logging.recent_queries
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
+;
+```
+</TabItem>
+<TabItem value="organizations_locations_recent_queries_list">
+
+Lists the RecentQueries that were created by the user making the request.
+
+```sql
+SELECT
+*
+FROM google.logging.recent_queries
+WHERE organizationsId = '{{ organizationsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>

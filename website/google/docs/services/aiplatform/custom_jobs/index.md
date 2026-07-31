@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>custom_jobs</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>custom_jobs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="custom_jobs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.custom_jobs" /></td></tr>
 </tbody></table>
@@ -107,7 +108,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The detailed state of the job.</td>
+    <td>Output only. The detailed state of the job. (JOB_STATE_UNSPECIFIED, JOB_STATE_QUEUED, JOB_STATE_PENDING, JOB_STATE_RUNNING, JOB_STATE_SUCCEEDED, JOB_STATE_FAILED, JOB_STATE_CANCELLING, JOB_STATE_CANCELLED, JOB_STATE_PAUSED, JOB_STATE_EXPIRED, JOB_STATE_UPDATING, JOB_STATE_PARTIALLY_SUCCEEDED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -191,7 +192,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The detailed state of the job.</td>
+    <td>Output only. The detailed state of the job. (JOB_STATE_UNSPECIFIED, JOB_STATE_QUEUED, JOB_STATE_PENDING, JOB_STATE_RUNNING, JOB_STATE_SUCCEEDED, JOB_STATE_FAILED, JOB_STATE_CANCELLING, JOB_STATE_CANCELLED, JOB_STATE_PAUSED, JOB_STATE_EXPIRED, JOB_STATE_UPDATING, JOB_STATE_PARTIALLY_SUCCEEDED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -234,7 +235,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td><a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists CustomJobs in a Location.</td>
 </tr>
 <tr>
@@ -371,10 +372,10 @@ webAccessUris
 FROM google.aiplatform.custom_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND filter = '{{ filter }}'
+AND readMask = '{{ readMask }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND readMask = '{{ readMask }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -396,18 +397,18 @@ Creates a CustomJob. A created CustomJob right away will be attempted to be run.
 
 ```sql
 INSERT INTO google.aiplatform.custom_jobs (
-data__jobSpec,
+data__labels,
 data__encryptionSpec,
 data__displayName,
-data__labels,
+data__jobSpec,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ jobSpec }}',
+'{{ labels }}',
 '{{ encryptionSpec }}',
 '{{ displayName }}',
-'{{ labels }}',
+'{{ jobSpec }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -430,37 +431,98 @@ webAccessUris
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: custom_jobs
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the custom_jobs resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the custom_jobs resource.
-    - name: jobSpec
-      value: object
-      description: >
-        Required. Job spec.
-        
-    - name: encryptionSpec
-      value: object
-      description: >
-        Customer-managed encryption key options for a CustomJob. If this is set, then all resources created by the CustomJob will be encrypted with the provided encryption key.
-        
-    - name: displayName
-      value: string
-      description: >
-        Required. The display name of the CustomJob. The name can be up to 128 characters long and can consist of any UTF-8 characters.
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         The labels with user-defined metadata to organize CustomJobs. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
-        
-```
+    - name: encryptionSpec
+      description: |
+        Customer-managed encryption key options for a CustomJob. If this is set, then all resources created by the CustomJob will be encrypted with the provided encryption key.
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. The display name of the CustomJob. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+    - name: jobSpec
+      description: |
+        Required. Job spec.
+      value:
+        pscInterfaceConfig:
+          networkAttachment: "{{ networkAttachment }}"
+          dnsPeeringConfigs:
+            - targetNetwork: "{{ targetNetwork }}"
+              domain: "{{ domain }}"
+              targetProject: "{{ targetProject }}"
+        persistentResourceId: "{{ persistentResourceId }}"
+        enableWebAccess: {{ enableWebAccess }}
+        tensorboard: "{{ tensorboard }}"
+        enableDashboardAccess: {{ enableDashboardAccess }}
+        reservedIpRanges:
+          - "{{ reservedIpRanges }}"
+        models:
+          - "{{ models }}"
+        protectedArtifactLocationId: "{{ protectedArtifactLocationId }}"
+        experiment: "{{ experiment }}"
+        baseOutputDirectory:
+          outputUriPrefix: "{{ outputUriPrefix }}"
+        scheduling:
+          timeout: "{{ timeout }}"
+          restartJobOnWorkerRestart: {{ restartJobOnWorkerRestart }}
+          disableRetries: {{ disableRetries }}
+          maxWaitDuration: "{{ maxWaitDuration }}"
+          strategy: "{{ strategy }}"
+        network: "{{ network }}"
+        workerPoolSpecs:
+          - containerSpec:
+              imageUri: "{{ imageUri }}"
+              command:
+                - "{{ command }}"
+              args:
+                - "{{ args }}"
+              env:
+                - name: "{{ name }}"
+                  value: "{{ value }}"
+            lustreMounts: "{{ lustreMounts }}"
+            machineSpec:
+              machineType: "{{ machineType }}"
+              tpuTopology: "{{ tpuTopology }}"
+              reservationAffinity:
+                reservationAffinityType: "{{ reservationAffinityType }}"
+                key: "{{ key }}"
+                values:
+                  - "{{ values }}"
+              acceleratorCount: {{ acceleratorCount }}
+              acceleratorType: "{{ acceleratorType }}"
+              gpuPartitionSize: "{{ gpuPartitionSize }}"
+            nfsMounts: "{{ nfsMounts }}"
+            pythonPackageSpec:
+              executorImageUri: "{{ executorImageUri }}"
+              args:
+                - "{{ args }}"
+              env:
+                - name: "{{ name }}"
+                  value: "{{ value }}"
+              pythonModule: "{{ pythonModule }}"
+              packageUris:
+                - "{{ packageUris }}"
+            diskSpec:
+              bootDiskType: "{{ bootDiskType }}"
+              bootDiskSizeGb: {{ bootDiskSizeGb }}
+            replicaCount: "{{ replicaCount }}"
+        experimentRun: "{{ experimentRun }}"
+        serviceAccount: "{{ serviceAccount }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

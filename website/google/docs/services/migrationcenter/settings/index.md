@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>settings</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>settings</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="settings" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.migrationcenter.settings" /></td></tr>
 </tbody></table>
@@ -94,7 +95,7 @@ The following methods are available for this resource:
     <td><a href="#update_settings"><CopyableCode code="update_settings" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Updates the regional-level project settings.</td>
 </tr>
 </tbody>
@@ -177,13 +178,13 @@ Updates the regional-level project settings.
 ```sql
 UPDATE google.migrationcenter.settings
 SET 
-data__disableCloudLogging = {{ disableCloudLogging }},
-data__preferenceSet = '{{ preferenceSet }}'
+data__preferenceSet = '{{ preferenceSet }}',
+data__disableCloudLogging = {{ disableCloudLogging }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
-AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
+AND requestId = '{{ requestId}}'
 RETURNING
 name,
 done,

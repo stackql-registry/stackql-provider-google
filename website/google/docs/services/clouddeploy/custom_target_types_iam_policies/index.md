@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>custom_target_types_iam_policie
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>custom_target_types_iam_policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="custom_target_types_iam_policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.clouddeploy.custom_target_types_iam_policies" /></td></tr>
 </tbody></table>
@@ -179,8 +180,8 @@ Sets the access control policy on the specified resource. Replaces any existing 
 ```sql
 REPLACE google.clouddeploy.custom_target_types_iam_policies
 SET 
-data__updateMask = '{{ updateMask }}',
-data__policy = '{{ policy }}'
+data__policy = '{{ policy }}',
+data__updateMask = '{{ updateMask }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

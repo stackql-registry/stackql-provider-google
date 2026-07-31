@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>fields</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>fields</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="fields" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.datacatalog.fields" /></td></tr>
 </tbody></table>
@@ -180,52 +181,50 @@ type
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: fields
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the fields resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the fields resource.
     - name: tagTemplatesId
-      value: string
+      value: "{{ tagTemplatesId }}"
       description: Required parameter for the fields resource.
     - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the tag template field in URL format. Example: `projects/{PROJECT_ID}/locations/{LOCATION}/tagTemplates/{TAG_TEMPLATE}/fields/{FIELD}` Note: The tag template field itself might not be stored in the location specified in its name. The name must contain only letters (a-z, A-Z), numbers (0-9), or underscores (_), and must start with a letter or underscore. The maximum length is 64 characters.
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the tag template field in URL format. Example: \`projects/{PROJECT_ID}/locations/{LOCATION}/tagTemplates/{TAG_TEMPLATE}/fields/{FIELD}\` Note: The tag template field itself might not be stored in the location specified in its name. The name must contain only letters (a-z, A-Z), numbers (0-9), or underscores (_), and must start with a letter or underscore. The maximum length is 64 characters.
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         The display name for this field. Defaults to an empty string. The name must contain only Unicode letters, numbers (0-9), underscores (_), dashes (-), spaces ( ), and can't start or end with spaces. The maximum length is 200 characters.
-        
     - name: type
-      value: object
-      description: >
+      description: |
         Required. The type of value this tag field can contain.
-        
+      value:
+        primitiveType: "{{ primitiveType }}"
+        enumType:
+          allowedValues:
+            - displayName: "{{ displayName }}"
     - name: isRequired
-      value: boolean
-      description: >
+      value: {{ isRequired }}
+      description: |
         If true, this field is required. Defaults to false.
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         The description for this field. Defaults to an empty string.
-        
     - name: order
-      value: integer
-      description: >
+      value: {{ order }}
+      description: |
         The order of this field with respect to other fields in this tag template. For example, a higher value can indicate a more important field. The value can be negative. Multiple fields can have the same order and field orders within a tag don't have to be sequential.
-        
     - name: tagTemplateFieldId
-      value: string
-```
+      value: "{{ tagTemplateFieldId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

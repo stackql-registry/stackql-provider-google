@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>ssl_certs</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>ssl_certs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="ssl_certs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.sqladmin.ssl_certs" /></td></tr>
 </tbody></table>
@@ -281,22 +282,21 @@ serverCaCert
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: ssl_certs
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the ssl_certs resource.
     - name: instance
-      value: string
+      value: "{{ instance }}"
       description: Required parameter for the ssl_certs resource.
     - name: commonName
-      value: string
-      description: >
+      value: "{{ commonName }}"
+      description: |
         User supplied name. Must be a distinct name from the other certificates for this instance.
-        
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

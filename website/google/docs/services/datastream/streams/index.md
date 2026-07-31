@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>streams</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>streams</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="streams" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.datastream.streams" /></td></tr>
 </tbody></table>
@@ -122,7 +123,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>The state of the stream.</td>
+    <td>The state of the stream. (STATE_UNSPECIFIED, NOT_STARTED, RUNNING, PAUSED, MAINTENANCE, FAILED, FAILED_PERMANENTLY, STARTING, DRAINING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -216,7 +217,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>The state of the stream.</td>
+    <td>The state of the stream. (STATE_UNSPECIFIED, NOT_STARTED, RUNNING, PAUSED, MAINTENANCE, FAILED, FAILED_PERMANENTLY, STARTING, DRAINING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -254,21 +255,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Use this method to list streams in a project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-streamId"><code>streamId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-force"><code>force</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-streamId"><code>streamId</code></a>, <a href="#parameter-force"><code>force</code></a></td>
     <td>Use this method to create a stream.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-streamsId"><code>streamsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-force"><code>force</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-force"><code>force</code></a></td>
     <td>Use this method to update the configuration of a stream.</td>
 </tr>
 <tr>
@@ -427,9 +428,9 @@ updateTime
 FROM google.datastream.streams
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -452,37 +453,37 @@ Use this method to create a stream.
 
 ```sql
 INSERT INTO google.datastream.streams (
-data__labels,
 data__displayName,
-data__sourceConfig,
 data__destinationConfig,
-data__state,
 data__backfillAll,
-data__backfillNone,
+data__sourceConfig,
+data__labels,
 data__customerManagedEncryptionKey,
+data__backfillNone,
+data__state,
 data__ruleSets,
 projectsId,
 locationsId,
-streamId,
 requestId,
 validateOnly,
+streamId,
 force
 )
 SELECT 
-'{{ labels }}',
 '{{ displayName }}',
-'{{ sourceConfig }}',
 '{{ destinationConfig }}',
-'{{ state }}',
 '{{ backfillAll }}',
-'{{ backfillNone }}',
+'{{ sourceConfig }}',
+'{{ labels }}',
 '{{ customerManagedEncryptionKey }}',
+'{{ backfillNone }}',
+'{{ state }}',
 '{{ ruleSets }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ streamId }}',
 '{{ requestId }}',
 '{{ validateOnly }}',
+'{{ streamId }}',
 '{{ force }}'
 RETURNING
 name,
@@ -495,71 +496,279 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: streams
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the streams resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the streams resource.
-    - name: labels
-      value: object
-      description: >
-        Labels.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Required. Display name.
-        
-    - name: sourceConfig
-      value: object
-      description: >
-        Required. Source connection profile configuration.
-        
     - name: destinationConfig
-      value: object
-      description: >
+      description: |
         Required. Destination connection profile configuration.
-        
-    - name: state
-      value: string
-      description: >
-        The state of the stream.
-        
-      valid_values: ['STATE_UNSPECIFIED', 'NOT_STARTED', 'RUNNING', 'PAUSED', 'MAINTENANCE', 'FAILED', 'FAILED_PERMANENTLY', 'STARTING', 'DRAINING']
+      value:
+        bigqueryDestinationConfig:
+          appendOnly: "{{ appendOnly }}"
+          dataFreshness: "{{ dataFreshness }}"
+          singleTargetDataset:
+            datasetId: "{{ datasetId }}"
+          sourceHierarchyDatasets:
+            datasetTemplate:
+              datasetIdPrefix: "{{ datasetIdPrefix }}"
+              location: "{{ location }}"
+              kmsKeyName: "{{ kmsKeyName }}"
+            projectId: "{{ projectId }}"
+          blmtConfig:
+            rootPath: "{{ rootPath }}"
+            bucket: "{{ bucket }}"
+            tableFormat: "{{ tableFormat }}"
+            connectionName: "{{ connectionName }}"
+            fileFormat: "{{ fileFormat }}"
+          merge: "{{ merge }}"
+        gcsDestinationConfig:
+          avroFileFormat: "{{ avroFileFormat }}"
+          jsonFileFormat:
+            schemaFileFormat: "{{ schemaFileFormat }}"
+            compression: "{{ compression }}"
+          path: "{{ path }}"
+          fileRotationMb: {{ fileRotationMb }}
+          fileRotationInterval: "{{ fileRotationInterval }}"
+        destinationConnectionProfile: "{{ destinationConnectionProfile }}"
     - name: backfillAll
-      value: object
-      description: >
+      description: |
         Automatically backfill objects included in the stream source configuration. Specific objects can be excluded.
-        
-    - name: backfillNone
-      value: object
-      description: >
-        Do not automatically backfill any objects.
-        
+      value:
+        mongodbExcludedObjects:
+          databases:
+            - database: "{{ database }}"
+              collections: "{{ collections }}"
+        salesforceExcludedObjects:
+          objects:
+            - objectName: "{{ objectName }}"
+              fields: "{{ fields }}"
+        spannerExcludedObjects:
+          schemas:
+            - tables: "{{ tables }}"
+              schema: "{{ schema }}"
+        saasExcludedObjects:
+          objects:
+            - properties: "{{ properties }}"
+              objectName: "{{ objectName }}"
+        oracleExcludedObjects:
+          oracleSchemas:
+            - schema: "{{ schema }}"
+              oracleTables: "{{ oracleTables }}"
+        mysqlExcludedObjects:
+          mysqlDatabases:
+            - database: "{{ database }}"
+              mysqlTables: "{{ mysqlTables }}"
+        sqlServerExcludedObjects:
+          schemas:
+            - schema: "{{ schema }}"
+              tables: "{{ tables }}"
+        postgresqlExcludedObjects:
+          postgresqlSchemas:
+            - schema: "{{ schema }}"
+              postgresqlTables: "{{ postgresqlTables }}"
+    - name: sourceConfig
+      description: |
+        Required. Source connection profile configuration.
+      value:
+        serviceNowSourceConfig:
+          includeObjects:
+            objects:
+              - properties: "{{ properties }}"
+                objectName: "{{ objectName }}"
+          excludeObjects:
+            objects:
+              - properties: "{{ properties }}"
+                objectName: "{{ objectName }}"
+          pollingInterval: "{{ pollingInterval }}"
+        postgresqlSourceConfig:
+          includeObjects:
+            postgresqlSchemas:
+              - schema: "{{ schema }}"
+                postgresqlTables: "{{ postgresqlTables }}"
+          publication: "{{ publication }}"
+          replicationSlot: "{{ replicationSlot }}"
+          excludeObjects:
+            postgresqlSchemas:
+              - schema: "{{ schema }}"
+                postgresqlTables: "{{ postgresqlTables }}"
+          maxConcurrentBackfillTasks: {{ maxConcurrentBackfillTasks }}
+        mysqlSourceConfig:
+          excludeObjects:
+            mysqlDatabases:
+              - database: "{{ database }}"
+                mysqlTables: "{{ mysqlTables }}"
+          maxConcurrentBackfillTasks: {{ maxConcurrentBackfillTasks }}
+          binaryLogPosition: "{{ binaryLogPosition }}"
+          gtid: "{{ gtid }}"
+          maxConcurrentCdcTasks: {{ maxConcurrentCdcTasks }}
+          includeObjects:
+            mysqlDatabases:
+              - database: "{{ database }}"
+                mysqlTables: "{{ mysqlTables }}"
+        spannerSourceConfig:
+          changeStreamName: "{{ changeStreamName }}"
+          includeObjects:
+            schemas:
+              - tables: "{{ tables }}"
+                schema: "{{ schema }}"
+          fgacRole: "{{ fgacRole }}"
+          maxConcurrentCdcTasks: {{ maxConcurrentCdcTasks }}
+          backfillDataBoostEnabled: {{ backfillDataBoostEnabled }}
+          excludeObjects:
+            schemas:
+              - tables: "{{ tables }}"
+                schema: "{{ schema }}"
+          maxConcurrentBackfillTasks: {{ maxConcurrentBackfillTasks }}
+          spannerRpcPriority: "{{ spannerRpcPriority }}"
+        salesforceSourceConfig:
+          pollingInterval: "{{ pollingInterval }}"
+          includeObjects:
+            objects:
+              - objectName: "{{ objectName }}"
+                fields: "{{ fields }}"
+          excludeObjects:
+            objects:
+              - objectName: "{{ objectName }}"
+                fields: "{{ fields }}"
+        sourceConnectionProfile: "{{ sourceConnectionProfile }}"
+        oracleSourceConfig:
+          includeObjects:
+            oracleSchemas:
+              - schema: "{{ schema }}"
+                oracleTables: "{{ oracleTables }}"
+          logMiner: "{{ logMiner }}"
+          maxConcurrentCdcTasks: {{ maxConcurrentCdcTasks }}
+          maxConcurrentBackfillTasks: {{ maxConcurrentBackfillTasks }}
+          excludeObjects:
+            oracleSchemas:
+              - schema: "{{ schema }}"
+                oracleTables: "{{ oracleTables }}"
+          binaryLogParser:
+            logFileDirectories:
+              onlineLogDirectory: "{{ onlineLogDirectory }}"
+              archivedLogDirectory: "{{ archivedLogDirectory }}"
+            oracleAsmLogFileAccess: "{{ oracleAsmLogFileAccess }}"
+          dropLargeObjects: "{{ dropLargeObjects }}"
+          streamLargeObjects: "{{ streamLargeObjects }}"
+        mongodbSourceConfig:
+          includeObjects:
+            databases:
+              - database: "{{ database }}"
+                collections: "{{ collections }}"
+          excludeObjects:
+            databases:
+              - database: "{{ database }}"
+                collections: "{{ collections }}"
+          maxConcurrentBackfillTasks: {{ maxConcurrentBackfillTasks }}
+          jsonMode: "{{ jsonMode }}"
+        salesforceMarketingCloudSourceConfig:
+          includeObjects:
+            objects:
+              - properties: "{{ properties }}"
+                objectName: "{{ objectName }}"
+          excludeObjects:
+            objects:
+              - properties: "{{ properties }}"
+                objectName: "{{ objectName }}"
+          fullRefreshPollingInterval: "{{ fullRefreshPollingInterval }}"
+          pollingInterval: "{{ pollingInterval }}"
+        dataverseSourceConfig:
+          includeObjects:
+            objects:
+              - properties: "{{ properties }}"
+                objectName: "{{ objectName }}"
+          excludeObjects:
+            objects:
+              - properties: "{{ properties }}"
+                objectName: "{{ objectName }}"
+          pollingInterval: "{{ pollingInterval }}"
+        sqlServerSourceConfig:
+          includeObjects:
+            schemas:
+              - schema: "{{ schema }}"
+                tables: "{{ tables }}"
+          transactionLogs: "{{ transactionLogs }}"
+          maxConcurrentCdcTasks: {{ maxConcurrentCdcTasks }}
+          excludeObjects:
+            schemas:
+              - schema: "{{ schema }}"
+                tables: "{{ tables }}"
+          maxConcurrentBackfillTasks: {{ maxConcurrentBackfillTasks }}
+          changeTables: "{{ changeTables }}"
+        workdaySourceConfig:
+          pollingInterval: "{{ pollingInterval }}"
+          includeObjects:
+            objects:
+              - properties: "{{ properties }}"
+                objectName: "{{ objectName }}"
+          excludeObjects:
+            objects:
+              - properties: "{{ properties }}"
+                objectName: "{{ objectName }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Labels.
     - name: customerManagedEncryptionKey
-      value: string
-      description: >
+      value: "{{ customerManagedEncryptionKey }}"
+      description: |
         Immutable. A reference to a KMS encryption key. If provided, it will be used to encrypt the data. If left blank, data will be encrypted using an internal Stream-specific encryption key provisioned through KMS.
-        
+    - name: backfillNone
+      value: "{{ backfillNone }}"
+      description: |
+        Do not automatically backfill any objects.
+    - name: state
+      value: "{{ state }}"
+      description: |
+        The state of the stream.
+      valid_values: ['STATE_UNSPECIFIED', 'NOT_STARTED', 'RUNNING', 'PAUSED', 'MAINTENANCE', 'FAILED', 'FAILED_PERMANENTLY', 'STARTING', 'DRAINING']
     - name: ruleSets
-      value: array
-      description: >
+      description: |
         Optional. Rule sets to apply to the stream.
-        
-    - name: streamId
-      value: string
+      value:
+        - customizationRules: "{{ customizationRules }}"
+          objectFilter:
+            sourceObjectIdentifier:
+              mongodbIdentifier:
+                database: "{{ database }}"
+                collection: "{{ collection }}"
+              salesforceIdentifier:
+                objectName: "{{ objectName }}"
+              sqlServerIdentifier:
+                schema: "{{ schema }}"
+                table: "{{ table }}"
+              spannerIdentifier:
+                schema: "{{ schema }}"
+                table: "{{ table }}"
+              mysqlIdentifier:
+                database: "{{ database }}"
+                table: "{{ table }}"
+              oracleIdentifier:
+                schema: "{{ schema }}"
+                table: "{{ table }}"
+              postgresqlIdentifier:
+                schema: "{{ schema }}"
+                table: "{{ table }}"
     - name: requestId
-      value: string
+      value: "{{ requestId }}"
     - name: validateOnly
-      value: boolean
+      value: {{ validateOnly }}
+    - name: streamId
+      value: "{{ streamId }}"
     - name: force
-      value: boolean
-```
+      value: {{ force }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -579,21 +788,21 @@ Use this method to update the configuration of a stream.
 ```sql
 UPDATE google.datastream.streams
 SET 
-data__labels = '{{ labels }}',
 data__displayName = '{{ displayName }}',
-data__sourceConfig = '{{ sourceConfig }}',
 data__destinationConfig = '{{ destinationConfig }}',
-data__state = '{{ state }}',
 data__backfillAll = '{{ backfillAll }}',
-data__backfillNone = '{{ backfillNone }}',
+data__sourceConfig = '{{ sourceConfig }}',
+data__labels = '{{ labels }}',
 data__customerManagedEncryptionKey = '{{ customerManagedEncryptionKey }}',
+data__backfillNone = '{{ backfillNone }}',
+data__state = '{{ state }}',
 data__ruleSets = '{{ ruleSets }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND streamsId = '{{ streamsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 AND validateOnly = {{ validateOnly}}
 AND force = {{ force}}
 RETURNING

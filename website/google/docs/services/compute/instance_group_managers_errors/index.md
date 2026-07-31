@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>instance_group_managers_errors
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>instance_group_managers_errors</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="instance_group_managers_errors" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.instance_group_managers_errors" /></td></tr>
 </tbody></table>
@@ -56,7 +57,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="nextPageToken" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
+    <td>Output only. [Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger thanmaxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
 </tr>
 </tbody>
 </table>
@@ -82,8 +83,8 @@ The following methods are available for this resource:
     <td><a href="#list_errors"><CopyableCode code="list_errors" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-instanceGroupManager"><code>instanceGroupManager</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
-    <td>Lists all errors thrown by actions on instances for a given regional managed instance group. The filter and orderBy query parameters are not supported.</td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Lists all errors thrown by actions on instances for a given regional<br />managed instance group. The filter andorderBy query parameters are not supported.</td>
 </tr>
 </tbody>
 </table>
@@ -154,7 +155,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="list_errors">
 
-Lists all errors thrown by actions on instances for a given regional managed instance group. The filter and orderBy query parameters are not supported.
+Lists all errors thrown by actions on instances for a given regional<br />managed instance group. The filter andorderBy query parameters are not supported.
 
 ```sql
 SELECT
@@ -166,8 +167,8 @@ AND region = '{{ region }}' -- required
 AND instanceGroupManager = '{{ instanceGroupManager }}' -- required
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```

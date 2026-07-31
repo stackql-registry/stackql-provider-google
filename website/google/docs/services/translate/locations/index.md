@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>locations</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>locations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="locations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.translate.locations" /></td></tr>
 </tbody></table>
@@ -144,8 +145,8 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_list"><CopyableCode code="projects_locations_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a></td>
-    <td>Lists information about the supported locations for this service.</td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-extraLocationTypes"><code>extraLocationTypes</code></a></td>
+    <td>Lists information about the supported locations for this service. This method can be called in two ways: * **List all public locations:** Use the path `GET /v1/locations`. * **List project-visible locations:** Use the path `GET /v1/projects/&#123;project_id&#125;/locations`. This may include public locations as well as private or other locations specifically visible to the project.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_translate_text"><CopyableCode code="projects_locations_translate_text" /></a></td>
@@ -169,20 +170,6 @@ The following methods are available for this resource:
     <td>Detects the language of text within a request.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_translate_document"><CopyableCode code="projects_locations_translate_document" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Translates documents in synchronous mode.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_batch_translate_text"><CopyableCode code="projects_locations_batch_translate_text" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Translates a large volume of text in asynchronous batch mode. This function provides real-time output as the inputs are being processed. If caller cancels a request, the partial results (for an input file, it's all or nothing) may still be available on the specified output location. This call returns immediately and you can use google.longrunning.Operation.name to poll the status of the call.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_batch_translate_document"><CopyableCode code="projects_locations_batch_translate_document" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
@@ -195,6 +182,27 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
     <td>Translate text using Adaptive MT.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_batch_translate_text"><CopyableCode code="projects_locations_batch_translate_text" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Translates a large volume of text in asynchronous batch mode. This function provides real-time output as the inputs are being processed. If caller cancels a request, the partial results (for an input file, it's all or nothing) may still be available on the specified output location. This call returns immediately and you can use google.longrunning.Operation.name to poll the status of the call.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_refine_text"><CopyableCode code="projects_locations_refine_text" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Refines the input translated text to improve the quality.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_translate_document"><CopyableCode code="projects_locations_translate_document" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Translates documents in synchronous mode.</td>
 </tr>
 </tbody>
 </table>
@@ -273,7 +281,7 @@ AND locationsId = '{{ locationsId }}' -- required
 </TabItem>
 <TabItem value="projects_locations_list">
 
-Lists information about the supported locations for this service.
+Lists information about the supported locations for this service. This method can be called in two ways: * **List all public locations:** Use the path `GET /v1/locations`. * **List project-visible locations:** Use the path `GET /v1/projects/&#123;project_id&#125;/locations`. This may include public locations as well as private or other locations specifically visible to the project.
 
 ```sql
 SELECT
@@ -284,9 +292,9 @@ locationId,
 metadata
 FROM google.translate.locations
 WHERE projectsId = '{{ projectsId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 AND extraLocationTypes = '{{ extraLocationTypes }}'
 ;
 ```
@@ -302,10 +310,11 @@ AND extraLocationTypes = '{{ extraLocationTypes }}'
         { label: 'projects_locations_translate_text', value: 'projects_locations_translate_text' },
         { label: 'projects_locations_romanize_text', value: 'projects_locations_romanize_text' },
         { label: 'projects_locations_detect_language', value: 'projects_locations_detect_language' },
-        { label: 'projects_locations_translate_document', value: 'projects_locations_translate_document' },
-        { label: 'projects_locations_batch_translate_text', value: 'projects_locations_batch_translate_text' },
         { label: 'projects_locations_batch_translate_document', value: 'projects_locations_batch_translate_document' },
-        { label: 'projects_locations_adaptive_mt_translate', value: 'projects_locations_adaptive_mt_translate' }
+        { label: 'projects_locations_adaptive_mt_translate', value: 'projects_locations_adaptive_mt_translate' },
+        { label: 'projects_locations_batch_translate_text', value: 'projects_locations_batch_translate_text' },
+        { label: 'projects_locations_refine_text', value: 'projects_locations_refine_text' },
+        { label: 'projects_locations_translate_document', value: 'projects_locations_translate_document' }
     ]}
 >
 <TabItem value="projects_locations_translate_text">
@@ -318,14 +327,14 @@ EXEC google.translate.locations.projects_locations_translate_text
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"contents": "{{ contents }}", 
-"mimeType": "{{ mimeType }}", 
-"sourceLanguageCode": "{{ sourceLanguageCode }}", 
-"targetLanguageCode": "{{ targetLanguageCode }}", 
 "model": "{{ model }}", 
-"glossaryConfig": "{{ glossaryConfig }}", 
 "transliterationConfig": "{{ transliterationConfig }}", 
-"labels": "{{ labels }}"
+"glossaryConfig": "{{ glossaryConfig }}", 
+"mimeType": "{{ mimeType }}", 
+"labels": "{{ labels }}", 
+"sourceLanguageCode": "{{ sourceLanguageCode }}", 
+"contents": "{{ contents }}", 
+"targetLanguageCode": "{{ targetLanguageCode }}"
 }'
 ;
 ```
@@ -340,8 +349,8 @@ EXEC google.translate.locations.projects_locations_romanize_text
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"contents": "{{ contents }}", 
-"sourceLanguageCode": "{{ sourceLanguageCode }}"
+"sourceLanguageCode": "{{ sourceLanguageCode }}", 
+"contents": "{{ contents }}"
 }'
 ;
 ```
@@ -356,56 +365,11 @@ EXEC google.translate.locations.projects_locations_detect_language
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
+"mimeType": "{{ mimeType }}", 
+"labels": "{{ labels }}", 
 "model": "{{ model }}", 
 "content": "{{ content }}", 
-"mimeType": "{{ mimeType }}", 
-"labels": "{{ labels }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_translate_document">
-
-Translates documents in synchronous mode.
-
-```sql
-EXEC google.translate.locations.projects_locations_translate_document 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
-@@json=
-'{
-"sourceLanguageCode": "{{ sourceLanguageCode }}", 
-"targetLanguageCode": "{{ targetLanguageCode }}", 
-"documentInputConfig": "{{ documentInputConfig }}", 
-"documentOutputConfig": "{{ documentOutputConfig }}", 
-"model": "{{ model }}", 
-"glossaryConfig": "{{ glossaryConfig }}", 
-"labels": "{{ labels }}", 
-"customizedAttribution": "{{ customizedAttribution }}", 
-"isTranslateNativePdfOnly": {{ isTranslateNativePdfOnly }}, 
-"enableShadowRemovalNativePdf": {{ enableShadowRemovalNativePdf }}, 
-"enableRotationCorrection": {{ enableRotationCorrection }}
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_locations_batch_translate_text">
-
-Translates a large volume of text in asynchronous batch mode. This function provides real-time output as the inputs are being processed. If caller cancels a request, the partial results (for an input file, it's all or nothing) may still be available on the specified output location. This call returns immediately and you can use google.longrunning.Operation.name to poll the status of the call.
-
-```sql
-EXEC google.translate.locations.projects_locations_batch_translate_text 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
-@@json=
-'{
-"sourceLanguageCode": "{{ sourceLanguageCode }}", 
-"targetLanguageCodes": "{{ targetLanguageCodes }}", 
-"models": "{{ models }}", 
-"inputConfigs": "{{ inputConfigs }}", 
-"outputConfig": "{{ outputConfig }}", 
-"glossaries": "{{ glossaries }}", 
-"labels": "{{ labels }}"
+"documentInputConfig": "{{ documentInputConfig }}"
 }'
 ;
 ```
@@ -420,16 +384,17 @@ EXEC google.translate.locations.projects_locations_batch_translate_document
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"sourceLanguageCode": "{{ sourceLanguageCode }}", 
-"targetLanguageCodes": "{{ targetLanguageCodes }}", 
 "inputConfigs": "{{ inputConfigs }}", 
+"enableRotationCorrection": {{ enableRotationCorrection }}, 
+"enableShadowRemovalNativePdf": {{ enableShadowRemovalNativePdf }}, 
+"formatConversions": "{{ formatConversions }}", 
+"pdfNativeOnly": {{ pdfNativeOnly }}, 
+"customizedAttribution": "{{ customizedAttribution }}", 
 "outputConfig": "{{ outputConfig }}", 
 "models": "{{ models }}", 
+"targetLanguageCodes": "{{ targetLanguageCodes }}", 
 "glossaries": "{{ glossaries }}", 
-"formatConversions": "{{ formatConversions }}", 
-"customizedAttribution": "{{ customizedAttribution }}", 
-"enableShadowRemovalNativePdf": {{ enableShadowRemovalNativePdf }}, 
-"enableRotationCorrection": {{ enableRotationCorrection }}
+"sourceLanguageCode": "{{ sourceLanguageCode }}"
 }'
 ;
 ```
@@ -444,9 +409,72 @@ EXEC google.translate.locations.projects_locations_adaptive_mt_translate
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"dataset": "{{ dataset }}", 
-"content": "{{ content }}", 
 "referenceSentenceConfig": "{{ referenceSentenceConfig }}", 
+"glossaryConfig": "{{ glossaryConfig }}", 
+"dataset": "{{ dataset }}", 
+"content": "{{ content }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_batch_translate_text">
+
+Translates a large volume of text in asynchronous batch mode. This function provides real-time output as the inputs are being processed. If caller cancels a request, the partial results (for an input file, it's all or nothing) may still be available on the specified output location. This call returns immediately and you can use google.longrunning.Operation.name to poll the status of the call.
+
+```sql
+EXEC google.translate.locations.projects_locations_batch_translate_text 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"models": "{{ models }}", 
+"targetLanguageCodes": "{{ targetLanguageCodes }}", 
+"glossaries": "{{ glossaries }}", 
+"labels": "{{ labels }}", 
+"sourceLanguageCode": "{{ sourceLanguageCode }}", 
+"inputConfigs": "{{ inputConfigs }}", 
+"outputConfig": "{{ outputConfig }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_refine_text">
+
+Refines the input translated text to improve the quality.
+
+```sql
+EXEC google.translate.locations.projects_locations_refine_text 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"refinementEntries": "{{ refinementEntries }}", 
+"sourceLanguageCode": "{{ sourceLanguageCode }}", 
+"targetLanguageCode": "{{ targetLanguageCode }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_locations_translate_document">
+
+Translates documents in synchronous mode.
+
+```sql
+EXEC google.translate.locations.projects_locations_translate_document 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"enableShadowRemovalNativePdf": {{ enableShadowRemovalNativePdf }}, 
+"isTranslateNativePdfOnly": {{ isTranslateNativePdfOnly }}, 
+"enableRotationCorrection": {{ enableRotationCorrection }}, 
+"labels": "{{ labels }}", 
+"sourceLanguageCode": "{{ sourceLanguageCode }}", 
+"documentOutputConfig": "{{ documentOutputConfig }}", 
+"targetLanguageCode": "{{ targetLanguageCode }}", 
+"customizedAttribution": "{{ customizedAttribution }}", 
+"documentInputConfig": "{{ documentInputConfig }}", 
+"model": "{{ model }}", 
 "glossaryConfig": "{{ glossaryConfig }}"
 }'
 ;

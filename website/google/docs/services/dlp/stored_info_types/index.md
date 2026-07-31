@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>stored_info_types</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>stored_info_types</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="stored_info_types" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dlp.stored_info_types" /></td></tr>
 </tbody></table>
@@ -36,8 +37,8 @@ The following fields are returned by `SELECT` queries:
     values={[
         { label: 'projects_locations_stored_info_types_get', value: 'projects_locations_stored_info_types_get' },
         { label: 'organizations_locations_stored_info_types_get', value: 'organizations_locations_stored_info_types_get' },
-        { label: 'projects_stored_info_types_get', value: 'projects_stored_info_types_get' },
         { label: 'projects_locations_stored_info_types_list', value: 'projects_locations_stored_info_types_list' },
+        { label: 'projects_stored_info_types_get', value: 'projects_stored_info_types_get' },
         { label: 'organizations_locations_stored_info_types_list', value: 'organizations_locations_stored_info_types_list' },
         { label: 'organizations_stored_info_types_get', value: 'organizations_stored_info_types_get' },
         { label: 'projects_stored_info_types_list', value: 'projects_stored_info_types_list' },
@@ -58,7 +59,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Resource name.</td>
+    <td>Output only. Resource name.</td>
 </tr>
 <tr>
     <td><CopyableCode code="currentVersion" /></td>
@@ -87,36 +88,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Resource name.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="currentVersion" /></td>
-    <td><code>object</code></td>
-    <td>Current version of the stored info type. (id: GooglePrivacyDlpV2StoredInfoTypeVersion)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="pendingVersions" /></td>
-    <td><code>array</code></td>
-    <td>Pending versions of the stored info type. Empty if no versions are pending.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="projects_stored_info_types_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Resource name.</td>
+    <td>Output only. Resource name.</td>
 </tr>
 <tr>
     <td><CopyableCode code="currentVersion" /></td>
@@ -145,7 +117,36 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Resource name.</td>
+    <td>Output only. Resource name.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="currentVersion" /></td>
+    <td><code>object</code></td>
+    <td>Current version of the stored info type. (id: GooglePrivacyDlpV2StoredInfoTypeVersion)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="pendingVersions" /></td>
+    <td><code>array</code></td>
+    <td>Pending versions of the stored info type. Empty if no versions are pending.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_stored_info_types_get">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Resource name.</td>
 </tr>
 <tr>
     <td><CopyableCode code="currentVersion" /></td>
@@ -174,7 +175,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Resource name.</td>
+    <td>Output only. Resource name.</td>
 </tr>
 <tr>
     <td><CopyableCode code="currentVersion" /></td>
@@ -203,7 +204,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Resource name.</td>
+    <td>Output only. Resource name.</td>
 </tr>
 <tr>
     <td><CopyableCode code="currentVersion" /></td>
@@ -232,7 +233,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Resource name.</td>
+    <td>Output only. Resource name.</td>
 </tr>
 <tr>
     <td><CopyableCode code="currentVersion" /></td>
@@ -261,7 +262,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Resource name.</td>
+    <td>Output only. Resource name.</td>
 </tr>
 <tr>
     <td><CopyableCode code="currentVersion" /></td>
@@ -298,140 +299,140 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-storedInfoTypesId"><code>storedInfoTypesId</code></a></td>
     <td></td>
-    <td>Gets a stored infoType. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
+    <td>Gets a stored infoType. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_stored_info_types_get"><CopyableCode code="organizations_locations_stored_info_types_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-storedInfoTypesId"><code>storedInfoTypesId</code></a></td>
     <td></td>
-    <td>Gets a stored infoType. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
+    <td>Gets a stored infoType. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_stored_info_types_list"><CopyableCode code="projects_locations_stored_info_types_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists stored infoTypes. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_stored_info_types_get"><CopyableCode code="projects_stored_info_types_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-storedInfoTypesId"><code>storedInfoTypesId</code></a></td>
     <td></td>
-    <td>Gets a stored infoType. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_stored_info_types_list"><CopyableCode code="projects_locations_stored_info_types_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-locationId"><code>locationId</code></a></td>
-    <td>Lists stored infoTypes. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
+    <td>Gets a stored infoType. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_stored_info_types_list"><CopyableCode code="organizations_locations_stored_info_types_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
-    <td>Lists stored infoTypes. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists stored infoTypes. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_stored_info_types_get"><CopyableCode code="organizations_stored_info_types_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-storedInfoTypesId"><code>storedInfoTypesId</code></a></td>
     <td></td>
-    <td>Gets a stored infoType. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
+    <td>Gets a stored infoType. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_stored_info_types_list"><CopyableCode code="projects_stored_info_types_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Lists stored infoTypes. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
+    <td><a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists stored infoTypes. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_stored_info_types_list"><CopyableCode code="organizations_stored_info_types_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-locationId"><code>locationId</code></a></td>
-    <td>Lists stored infoTypes. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists stored infoTypes. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_stored_info_types_create"><CopyableCode code="projects_locations_stored_info_types_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
-    <td>Creates a pre-built stored infoType to be used for inspection. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
+    <td>Creates a pre-built stored infoType to be used for inspection. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_stored_info_types_create"><CopyableCode code="organizations_locations_stored_info_types_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
-    <td>Creates a pre-built stored infoType to be used for inspection. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
+    <td>Creates a pre-built stored infoType to be used for inspection. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_stored_info_types_create"><CopyableCode code="projects_stored_info_types_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
-    <td>Creates a pre-built stored infoType to be used for inspection. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
+    <td>Creates a pre-built stored infoType to be used for inspection. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_stored_info_types_create"><CopyableCode code="organizations_stored_info_types_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
     <td></td>
-    <td>Creates a pre-built stored infoType to be used for inspection. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
+    <td>Creates a pre-built stored infoType to be used for inspection. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_stored_info_types_patch"><CopyableCode code="projects_locations_stored_info_types_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-storedInfoTypesId"><code>storedInfoTypesId</code></a></td>
     <td></td>
-    <td>Updates the stored infoType by creating a new version. The existing version will continue to be used until the new version is ready. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
+    <td>Updates the stored infoType by creating a new version. The existing version will continue to be used until the new version is ready. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_stored_info_types_patch"><CopyableCode code="organizations_locations_stored_info_types_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-storedInfoTypesId"><code>storedInfoTypesId</code></a></td>
     <td></td>
-    <td>Updates the stored infoType by creating a new version. The existing version will continue to be used until the new version is ready. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
+    <td>Updates the stored infoType by creating a new version. The existing version will continue to be used until the new version is ready. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_stored_info_types_patch"><CopyableCode code="projects_stored_info_types_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-storedInfoTypesId"><code>storedInfoTypesId</code></a></td>
     <td></td>
-    <td>Updates the stored infoType by creating a new version. The existing version will continue to be used until the new version is ready. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
+    <td>Updates the stored infoType by creating a new version. The existing version will continue to be used until the new version is ready. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_stored_info_types_patch"><CopyableCode code="organizations_stored_info_types_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-storedInfoTypesId"><code>storedInfoTypesId</code></a></td>
     <td></td>
-    <td>Updates the stored infoType by creating a new version. The existing version will continue to be used until the new version is ready. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
+    <td>Updates the stored infoType by creating a new version. The existing version will continue to be used until the new version is ready. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_stored_info_types_delete"><CopyableCode code="projects_locations_stored_info_types_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-storedInfoTypesId"><code>storedInfoTypesId</code></a></td>
     <td></td>
-    <td>Deletes a stored infoType. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
+    <td>Deletes a stored infoType. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_stored_info_types_delete"><CopyableCode code="organizations_locations_stored_info_types_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-storedInfoTypesId"><code>storedInfoTypesId</code></a></td>
     <td></td>
-    <td>Deletes a stored infoType. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
+    <td>Deletes a stored infoType. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_stored_info_types_delete"><CopyableCode code="projects_stored_info_types_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-storedInfoTypesId"><code>storedInfoTypesId</code></a></td>
     <td></td>
-    <td>Deletes a stored infoType. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
+    <td>Deletes a stored infoType. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_stored_info_types_delete"><CopyableCode code="organizations_stored_info_types_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-storedInfoTypesId"><code>storedInfoTypesId</code></a></td>
     <td></td>
-    <td>Deletes a stored infoType. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
+    <td>Deletes a stored infoType. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.</td>
 </tr>
 </tbody>
 </table>
@@ -499,8 +500,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     values={[
         { label: 'projects_locations_stored_info_types_get', value: 'projects_locations_stored_info_types_get' },
         { label: 'organizations_locations_stored_info_types_get', value: 'organizations_locations_stored_info_types_get' },
-        { label: 'projects_stored_info_types_get', value: 'projects_stored_info_types_get' },
         { label: 'projects_locations_stored_info_types_list', value: 'projects_locations_stored_info_types_list' },
+        { label: 'projects_stored_info_types_get', value: 'projects_stored_info_types_get' },
         { label: 'organizations_locations_stored_info_types_list', value: 'organizations_locations_stored_info_types_list' },
         { label: 'organizations_stored_info_types_get', value: 'organizations_stored_info_types_get' },
         { label: 'projects_stored_info_types_list', value: 'projects_stored_info_types_list' },
@@ -509,7 +510,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="projects_locations_stored_info_types_get">
 
-Gets a stored infoType. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
+Gets a stored infoType. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
 
 ```sql
 SELECT
@@ -525,7 +526,7 @@ AND storedInfoTypesId = '{{ storedInfoTypesId }}' -- required
 </TabItem>
 <TabItem value="organizations_locations_stored_info_types_get">
 
-Gets a stored infoType. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
+Gets a stored infoType. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
 
 ```sql
 SELECT
@@ -535,28 +536,13 @@ pendingVersions
 FROM google.dlp.stored_info_types
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND storedInfoTypesId = '{{ storedInfoTypesId }}' -- required
-;
-```
-</TabItem>
-<TabItem value="projects_stored_info_types_get">
-
-Gets a stored infoType. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
-
-```sql
-SELECT
-name,
-currentVersion,
-pendingVersions
-FROM google.dlp.stored_info_types
-WHERE projectsId = '{{ projectsId }}' -- required
 AND storedInfoTypesId = '{{ storedInfoTypesId }}' -- required
 ;
 ```
 </TabItem>
 <TabItem value="projects_locations_stored_info_types_list">
 
-Lists stored infoTypes. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
+Lists stored infoTypes. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
 
 ```sql
 SELECT
@@ -566,16 +552,31 @@ pendingVersions
 FROM google.dlp.stored_info_types
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND locationId = '{{ locationId }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="projects_stored_info_types_get">
+
+Gets a stored infoType. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
+
+```sql
+SELECT
+name,
+currentVersion,
+pendingVersions
+FROM google.dlp.stored_info_types
+WHERE projectsId = '{{ projectsId }}' -- required
+AND storedInfoTypesId = '{{ storedInfoTypesId }}' -- required
 ;
 ```
 </TabItem>
 <TabItem value="organizations_locations_stored_info_types_list">
 
-Lists stored infoTypes. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
+Lists stored infoTypes. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
 
 ```sql
 SELECT
@@ -585,16 +586,16 @@ pendingVersions
 FROM google.dlp.stored_info_types
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND locationId = '{{ locationId }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND locationId = '{{ locationId }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
 <TabItem value="organizations_stored_info_types_get">
 
-Gets a stored infoType. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
+Gets a stored infoType. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
 
 ```sql
 SELECT
@@ -609,7 +610,7 @@ AND storedInfoTypesId = '{{ storedInfoTypesId }}' -- required
 </TabItem>
 <TabItem value="projects_stored_info_types_list">
 
-Lists stored infoTypes. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
+Lists stored infoTypes. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
 
 ```sql
 SELECT
@@ -619,15 +620,15 @@ pendingVersions
 FROM google.dlp.stored_info_types
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationId = '{{ locationId }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
 <TabItem value="organizations_stored_info_types_list">
 
-Lists stored infoTypes. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
+Lists stored infoTypes. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
 
 ```sql
 SELECT
@@ -638,8 +639,8 @@ FROM google.dlp.stored_info_types
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND locationId = '{{ locationId }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -660,20 +661,20 @@ AND locationId = '{{ locationId }}'
 >
 <TabItem value="projects_locations_stored_info_types_create">
 
-Creates a pre-built stored infoType to be used for inspection. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
+Creates a pre-built stored infoType to be used for inspection. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
 
 ```sql
 INSERT INTO google.dlp.stored_info_types (
+data__storedInfoTypeId,
 data__config,
 data__locationId,
-data__storedInfoTypeId,
 projectsId,
 locationsId
 )
 SELECT 
+'{{ storedInfoTypeId }}',
 '{{ config }}',
 '{{ locationId }}',
-'{{ storedInfoTypeId }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -685,20 +686,20 @@ pendingVersions
 </TabItem>
 <TabItem value="organizations_locations_stored_info_types_create">
 
-Creates a pre-built stored infoType to be used for inspection. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
+Creates a pre-built stored infoType to be used for inspection. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
 
 ```sql
 INSERT INTO google.dlp.stored_info_types (
+data__storedInfoTypeId,
 data__config,
 data__locationId,
-data__storedInfoTypeId,
 organizationsId,
 locationsId
 )
 SELECT 
+'{{ storedInfoTypeId }}',
 '{{ config }}',
 '{{ locationId }}',
-'{{ storedInfoTypeId }}',
 '{{ organizationsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -710,19 +711,19 @@ pendingVersions
 </TabItem>
 <TabItem value="projects_stored_info_types_create">
 
-Creates a pre-built stored infoType to be used for inspection. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
+Creates a pre-built stored infoType to be used for inspection. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
 
 ```sql
 INSERT INTO google.dlp.stored_info_types (
+data__storedInfoTypeId,
 data__config,
 data__locationId,
-data__storedInfoTypeId,
 projectsId
 )
 SELECT 
+'{{ storedInfoTypeId }}',
 '{{ config }}',
 '{{ locationId }}',
-'{{ storedInfoTypeId }}',
 '{{ projectsId }}'
 RETURNING
 name,
@@ -733,19 +734,19 @@ pendingVersions
 </TabItem>
 <TabItem value="organizations_stored_info_types_create">
 
-Creates a pre-built stored infoType to be used for inspection. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
+Creates a pre-built stored infoType to be used for inspection. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
 
 ```sql
 INSERT INTO google.dlp.stored_info_types (
+data__storedInfoTypeId,
 data__config,
 data__locationId,
-data__storedInfoTypeId,
 organizationsId
 )
 SELECT 
+'{{ storedInfoTypeId }}',
 '{{ config }}',
 '{{ locationId }}',
-'{{ storedInfoTypeId }}',
 '{{ organizationsId }}'
 RETURNING
 name,
@@ -756,35 +757,56 @@ pendingVersions
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: stored_info_types
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the stored_info_types resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the stored_info_types resource.
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the stored_info_types resource.
-    - name: config
-      value: object
-      description: >
-        Required. Configuration of the storedInfoType to create.
-        
-    - name: locationId
-      value: string
-      description: >
-        Deprecated. This field has no effect.
-        
     - name: storedInfoTypeId
-      value: string
-      description: >
-        The storedInfoType ID can contain uppercase and lowercase letters, numbers, and hyphens; that is, it must match the regular expression: `[a-zA-Z\d-_]+`. The maximum length is 100 characters. Can be empty to allow the system to generate one.
-        
-```
+      value: "{{ storedInfoTypeId }}"
+      description: |
+        The storedInfoType ID can contain uppercase and lowercase letters, numbers, and hyphens; that is, it must match the regular expression: \`[a-zA-Zd-_]+\`. The maximum length is 100 characters. Can be empty to allow the system to generate one.
+    - name: config
+      description: |
+        Required. Configuration of the storedInfoType to create.
+      value:
+        displayName: "{{ displayName }}"
+        description: "{{ description }}"
+        largeCustomDictionary:
+          cloudStorageFileSet:
+            url: "{{ url }}"
+          bigQueryField:
+            field:
+              name: "{{ name }}"
+            table:
+              projectId: "{{ projectId }}"
+              datasetId: "{{ datasetId }}"
+              tableId: "{{ tableId }}"
+          outputPath:
+            path: "{{ path }}"
+        dictionary:
+          wordList:
+            words:
+              - "{{ words }}"
+          cloudStoragePath:
+            path: "{{ path }}"
+        regex:
+          pattern: "{{ pattern }}"
+          groupIndexes:
+            - {{ groupIndexes }}
+    - name: locationId
+      value: "{{ locationId }}"
+      description: |
+        Deprecated. This field has no effect.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -802,7 +824,7 @@ pendingVersions
 >
 <TabItem value="projects_locations_stored_info_types_patch">
 
-Updates the stored infoType by creating a new version. The existing version will continue to be used until the new version is ready. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
+Updates the stored infoType by creating a new version. The existing version will continue to be used until the new version is ready. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
 
 ```sql
 UPDATE google.dlp.stored_info_types
@@ -821,7 +843,7 @@ pendingVersions;
 </TabItem>
 <TabItem value="organizations_locations_stored_info_types_patch">
 
-Updates the stored infoType by creating a new version. The existing version will continue to be used until the new version is ready. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
+Updates the stored infoType by creating a new version. The existing version will continue to be used until the new version is ready. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
 
 ```sql
 UPDATE google.dlp.stored_info_types
@@ -840,7 +862,7 @@ pendingVersions;
 </TabItem>
 <TabItem value="projects_stored_info_types_patch">
 
-Updates the stored infoType by creating a new version. The existing version will continue to be used until the new version is ready. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
+Updates the stored infoType by creating a new version. The existing version will continue to be used until the new version is ready. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
 
 ```sql
 UPDATE google.dlp.stored_info_types
@@ -858,7 +880,7 @@ pendingVersions;
 </TabItem>
 <TabItem value="organizations_stored_info_types_patch">
 
-Updates the stored infoType by creating a new version. The existing version will continue to be used until the new version is ready. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
+Updates the stored infoType by creating a new version. The existing version will continue to be used until the new version is ready. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
 
 ```sql
 UPDATE google.dlp.stored_info_types
@@ -890,7 +912,7 @@ pendingVersions;
 >
 <TabItem value="projects_locations_stored_info_types_delete">
 
-Deletes a stored infoType. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
+Deletes a stored infoType. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
 
 ```sql
 DELETE FROM google.dlp.stored_info_types
@@ -902,7 +924,7 @@ AND storedInfoTypesId = '{{ storedInfoTypesId }}' --required
 </TabItem>
 <TabItem value="organizations_locations_stored_info_types_delete">
 
-Deletes a stored infoType. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
+Deletes a stored infoType. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
 
 ```sql
 DELETE FROM google.dlp.stored_info_types
@@ -914,7 +936,7 @@ AND storedInfoTypesId = '{{ storedInfoTypesId }}' --required
 </TabItem>
 <TabItem value="projects_stored_info_types_delete">
 
-Deletes a stored infoType. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
+Deletes a stored infoType. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
 
 ```sql
 DELETE FROM google.dlp.stored_info_types
@@ -925,7 +947,7 @@ AND storedInfoTypesId = '{{ storedInfoTypesId }}' --required
 </TabItem>
 <TabItem value="organizations_stored_info_types_delete">
 
-Deletes a stored infoType. See https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
+Deletes a stored infoType. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes to learn more.
 
 ```sql
 DELETE FROM google.dlp.stored_info_types

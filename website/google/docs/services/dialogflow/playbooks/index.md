@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>playbooks</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>playbooks</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="playbooks" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dialogflow.playbooks" /></td></tr>
 </tbody></table>
@@ -52,87 +53,87 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The unique identifier of the playbook. Format: `projects//locations//agents//playbooks/`.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="codeBlock" /></td>
     <td><code>object</code></td>
-    <td>Optional. The playbook's scoped code block, which may implement handlers and actions. (id: GoogleCloudDialogflowCxV3CodeBlock)</td>
+    <td> (id: GoogleCloudDialogflowCxV3CodeBlock)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp of initial playbook creation.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Required. The human-readable name of the playbook, unique within an agent.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="goal" /></td>
     <td><code>string</code></td>
-    <td>Required. High level description of the goal the playbook intend to accomplish. A goal should be concise since it's visible to other playbooks that may reference this playbook.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="handlers" /></td>
     <td><code>array</code></td>
-    <td>Optional. A list of registered handlers to execuate based on the specified triggers.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="inlineActions" /></td>
     <td><code>array</code></td>
-    <td>Optional. Output only. Names of inline actions scoped to this playbook. These actions are in addition to those belonging to referenced tools, child playbooks, and flows, e.g. actions that are defined in the playbook's code block.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="inputParameterDefinitions" /></td>
     <td><code>array</code></td>
-    <td>Optional. Defined structured input parameters for this playbook.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="instruction" /></td>
     <td><code>object</code></td>
-    <td>Instruction to accomplish target goal. (id: GoogleCloudDialogflowCxV3PlaybookInstruction)</td>
+    <td> (id: GoogleCloudDialogflowCxV3PlaybookInstruction)</td>
 </tr>
 <tr>
     <td><CopyableCode code="llmModelSettings" /></td>
     <td><code>object</code></td>
-    <td>Optional. Llm model settings for the playbook. (id: GoogleCloudDialogflowCxV3LlmModelSettings)</td>
+    <td> (id: GoogleCloudDialogflowCxV3LlmModelSettings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="outputParameterDefinitions" /></td>
     <td><code>array</code></td>
-    <td>Optional. Defined structured output parameters for this playbook.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="playbookType" /></td>
     <td><code>string</code></td>
-    <td>Optional. Type of the playbook.</td>
+    <td> (PLAYBOOK_TYPE_UNSPECIFIED, TASK, ROUTINE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="referencedFlows" /></td>
     <td><code>array</code></td>
-    <td>Output only. The resource name of flows referenced by the current playbook in the instructions.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="referencedPlaybooks" /></td>
     <td><code>array</code></td>
-    <td>Output only. The resource name of other playbooks referenced by the current playbook in the instructions.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="referencedTools" /></td>
     <td><code>array</code></td>
-    <td>Optional. The resource name of tools referenced by the current playbook in the instructions. If not provided explicitly, they are will be implied using the tool being referenced in goal and steps.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="tokenCount" /></td>
     <td><code>string (int64)</code></td>
-    <td>Output only. Estimated number of tokes current playbook takes when sent to the LLM.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. Last time the playbook version was updated.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -151,87 +152,87 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The unique identifier of the playbook. Format: `projects//locations//agents//playbooks/`.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="codeBlock" /></td>
     <td><code>object</code></td>
-    <td>Optional. The playbook's scoped code block, which may implement handlers and actions. (id: GoogleCloudDialogflowCxV3CodeBlock)</td>
+    <td> (id: GoogleCloudDialogflowCxV3CodeBlock)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp of initial playbook creation.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Required. The human-readable name of the playbook, unique within an agent.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="goal" /></td>
     <td><code>string</code></td>
-    <td>Required. High level description of the goal the playbook intend to accomplish. A goal should be concise since it's visible to other playbooks that may reference this playbook.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="handlers" /></td>
     <td><code>array</code></td>
-    <td>Optional. A list of registered handlers to execuate based on the specified triggers.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="inlineActions" /></td>
     <td><code>array</code></td>
-    <td>Optional. Output only. Names of inline actions scoped to this playbook. These actions are in addition to those belonging to referenced tools, child playbooks, and flows, e.g. actions that are defined in the playbook's code block.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="inputParameterDefinitions" /></td>
     <td><code>array</code></td>
-    <td>Optional. Defined structured input parameters for this playbook.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="instruction" /></td>
     <td><code>object</code></td>
-    <td>Instruction to accomplish target goal. (id: GoogleCloudDialogflowCxV3PlaybookInstruction)</td>
+    <td> (id: GoogleCloudDialogflowCxV3PlaybookInstruction)</td>
 </tr>
 <tr>
     <td><CopyableCode code="llmModelSettings" /></td>
     <td><code>object</code></td>
-    <td>Optional. Llm model settings for the playbook. (id: GoogleCloudDialogflowCxV3LlmModelSettings)</td>
+    <td> (id: GoogleCloudDialogflowCxV3LlmModelSettings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="outputParameterDefinitions" /></td>
     <td><code>array</code></td>
-    <td>Optional. Defined structured output parameters for this playbook.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="playbookType" /></td>
     <td><code>string</code></td>
-    <td>Optional. Type of the playbook.</td>
+    <td> (PLAYBOOK_TYPE_UNSPECIFIED, TASK, ROUTINE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="referencedFlows" /></td>
     <td><code>array</code></td>
-    <td>Output only. The resource name of flows referenced by the current playbook in the instructions.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="referencedPlaybooks" /></td>
     <td><code>array</code></td>
-    <td>Output only. The resource name of other playbooks referenced by the current playbook in the instructions.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="referencedTools" /></td>
     <td><code>array</code></td>
-    <td>Optional. The resource name of tools referenced by the current playbook in the instructions. If not provided explicitly, they are will be implied using the tool being referenced in goal and steps.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="tokenCount" /></td>
     <td><code>string (int64)</code></td>
-    <td>Output only. Estimated number of tokes current playbook takes when sent to the LLM.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. Last time the playbook version was updated.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -258,49 +259,49 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-playbooksId"><code>playbooksId</code></a></td>
     <td></td>
-    <td>Retrieves the specified Playbook.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_playbooks_list"><CopyableCode code="projects_locations_agents_playbooks_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Returns a list of playbooks in the specified agent.</td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_playbooks_create"><CopyableCode code="projects_locations_agents_playbooks_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
     <td></td>
-    <td>Creates a playbook in a specified agent.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_playbooks_patch"><CopyableCode code="projects_locations_agents_playbooks_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-playbooksId"><code>playbooksId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates the specified Playbook.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_playbooks_delete"><CopyableCode code="projects_locations_agents_playbooks_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-playbooksId"><code>playbooksId</code></a></td>
     <td></td>
-    <td>Deletes a specified playbook.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_playbooks_export"><CopyableCode code="projects_locations_agents_playbooks_export" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-playbooksId"><code>playbooksId</code></a></td>
     <td></td>
-    <td>Exports the specified playbook to a binary file. Note that resources (e.g. examples, tools) that the playbook references will also be exported.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_playbooks_import"><CopyableCode code="projects_locations_agents_playbooks_import" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
     <td></td>
-    <td>Imports the specified playbook to the specified agent from a binary file.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -367,7 +368,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="projects_locations_agents_playbooks_get">
 
-Retrieves the specified Playbook.
+Successful response
 
 ```sql
 SELECT
@@ -398,7 +399,7 @@ AND playbooksId = '{{ playbooksId }}' -- required
 </TabItem>
 <TabItem value="projects_locations_agents_playbooks_list">
 
-Returns a list of playbooks in the specified agent.
+Successful response
 
 ```sql
 SELECT
@@ -423,8 +424,8 @@ FROM google.dialogflow.playbooks
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND agentsId = '{{ agentsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -442,37 +443,37 @@ AND pageToken = '{{ pageToken }}'
 >
 <TabItem value="projects_locations_agents_playbooks_create">
 
-Creates a playbook in a specified agent.
+No description available.
 
 ```sql
 INSERT INTO google.dialogflow.playbooks (
-data__name,
 data__displayName,
-data__goal,
-data__inputParameterDefinitions,
-data__outputParameterDefinitions,
-data__instruction,
-data__referencedTools,
-data__codeBlock,
 data__llmModelSettings,
-data__handlers,
+data__name,
+data__instruction,
 data__playbookType,
+data__inputParameterDefinitions,
+data__goal,
+data__outputParameterDefinitions,
+data__referencedTools,
+data__handlers,
+data__codeBlock,
 projectsId,
 locationsId,
 agentsId
 )
 SELECT 
-'{{ name }}',
 '{{ displayName }}',
-'{{ goal }}',
-'{{ inputParameterDefinitions }}',
-'{{ outputParameterDefinitions }}',
-'{{ instruction }}',
-'{{ referencedTools }}',
-'{{ codeBlock }}',
 '{{ llmModelSettings }}',
-'{{ handlers }}',
+'{{ name }}',
+'{{ instruction }}',
 '{{ playbookType }}',
+'{{ inputParameterDefinitions }}',
+'{{ goal }}',
+'{{ outputParameterDefinitions }}',
+'{{ referencedTools }}',
+'{{ handlers }}',
+'{{ codeBlock }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ agentsId }}'
@@ -499,76 +500,209 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: playbooks
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the playbooks resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the playbooks resource.
     - name: agentsId
-      value: string
+      value: "{{ agentsId }}"
       description: Required parameter for the playbooks resource.
-    - name: name
-      value: string
-      description: >
-        The unique identifier of the playbook. Format: `projects//locations//agents//playbooks/`.
-        
     - name: displayName
-      value: string
-      description: >
-        Required. The human-readable name of the playbook, unique within an agent.
-        
-    - name: goal
-      value: string
-      description: >
-        Required. High level description of the goal the playbook intend to accomplish. A goal should be concise since it's visible to other playbooks that may reference this playbook.
-        
-    - name: inputParameterDefinitions
-      value: array
-      description: >
-        Optional. Defined structured input parameters for this playbook.
-        
-    - name: outputParameterDefinitions
-      value: array
-      description: >
-        Optional. Defined structured output parameters for this playbook.
-        
-    - name: instruction
-      value: object
-      description: >
-        Instruction to accomplish target goal.
-        
-    - name: referencedTools
-      value: array
-      description: >
-        Optional. The resource name of tools referenced by the current playbook in the instructions. If not provided explicitly, they are will be implied using the tool being referenced in goal and steps.
-        
-    - name: codeBlock
-      value: object
-      description: >
-        Optional. The playbook's scoped code block, which may implement handlers and actions.
-        
+      value: "{{ displayName }}"
     - name: llmModelSettings
-      value: object
-      description: >
-        Optional. Llm model settings for the playbook.
-        
-    - name: handlers
-      value: array
-      description: >
-        Optional. A list of registered handlers to execuate based on the specified triggers.
-        
+      value:
+        model: "{{ model }}"
+        promptText: "{{ promptText }}"
+    - name: name
+      value: "{{ name }}"
+    - name: instruction
+      value:
+        guidelines: "{{ guidelines }}"
+        steps:
+          - steps: "{{ steps }}"
+            text: "{{ text }}"
     - name: playbookType
-      value: string
-      description: >
-        Optional. Type of the playbook.
-        
+      value: "{{ playbookType }}"
       valid_values: ['PLAYBOOK_TYPE_UNSPECIFIED', 'TASK', 'ROUTINE']
-```
+    - name: inputParameterDefinitions
+      value:
+        - name: "{{ name }}"
+          type: "{{ type }}"
+          typeSchema:
+            schemaReference:
+              tool: "{{ tool }}"
+              schema: "{{ schema }}"
+            inlineSchema:
+              type: "{{ type }}"
+              items:
+                schemaReference:
+                  tool: "{{ tool }}"
+                  schema: "{{ schema }}"
+                inlineSchema:
+                  type: "{{ type }}"
+                  items: "{{ items }}"
+          description: "{{ description }}"
+    - name: goal
+      value: "{{ goal }}"
+    - name: outputParameterDefinitions
+      value:
+        - name: "{{ name }}"
+          type: "{{ type }}"
+          typeSchema:
+            schemaReference:
+              tool: "{{ tool }}"
+              schema: "{{ schema }}"
+            inlineSchema:
+              type: "{{ type }}"
+              items:
+                schemaReference:
+                  tool: "{{ tool }}"
+                  schema: "{{ schema }}"
+                inlineSchema:
+                  type: "{{ type }}"
+                  items: "{{ items }}"
+          description: "{{ description }}"
+    - name: referencedTools
+      value:
+        - "{{ referencedTools }}"
+    - name: handlers
+      value:
+        - eventHandler:
+            event: "{{ event }}"
+            condition: "{{ condition }}"
+            fulfillment:
+              returnPartialResponses: {{ returnPartialResponses }}
+              generators:
+                - inputParameters: "{{ inputParameters }}"
+                  generator: "{{ generator }}"
+                  outputParameter: "{{ outputParameter }}"
+              webhook: "{{ webhook }}"
+              enableGenerativeFallback: {{ enableGenerativeFallback }}
+              setParameterActions:
+                - parameter: "{{ parameter }}"
+                  value: "{{ value }}"
+              tag: "{{ tag }}"
+              advancedSettings:
+                loggingSettings:
+                  enableInteractionLogging: {{ enableInteractionLogging }}
+                  enableConsentBasedRedaction: {{ enableConsentBasedRedaction }}
+                  enableStackdriverLogging: {{ enableStackdriverLogging }}
+                audioExportGcsDestination:
+                  uri: "{{ uri }}"
+                speechSettings:
+                  useTimeoutBasedEndpointing: {{ useTimeoutBasedEndpointing }}
+                  models: "{{ models }}"
+                  endpointerSensitivity: {{ endpointerSensitivity }}
+                  noSpeechTimeout: "{{ noSpeechTimeout }}"
+                dtmfSettings:
+                  maxDigits: {{ maxDigits }}
+                  finishDigit: "{{ finishDigit }}"
+                  interdigitTimeoutDuration: "{{ interdigitTimeoutDuration }}"
+                  enabled: {{ enabled }}
+                  endpointingTimeoutDuration: "{{ endpointingTimeoutDuration }}"
+              messages:
+                - playAudio:
+                    audioUri: "{{ audioUri }}"
+                    allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                  toolCall:
+                    tool: "{{ tool }}"
+                    action: "{{ action }}"
+                    inputParameters: "{{ inputParameters }}"
+                  knowledgeInfoCard: "{{ knowledgeInfoCard }}"
+                  endInteraction: "{{ endInteraction }}"
+                  conversationSuccess:
+                    metadata: "{{ metadata }}"
+                  channel: "{{ channel }}"
+                  text:
+                    text: "{{ text }}"
+                    allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                  telephonyTransferCall:
+                    phoneNumber: "{{ phoneNumber }}"
+                  responseType: "{{ responseType }}"
+                  payload: "{{ payload }}"
+                  outputAudioText:
+                    text: "{{ text }}"
+                    ssml: "{{ ssml }}"
+                    allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                  mixedAudio:
+                    segments: "{{ segments }}"
+                  liveAgentHandoff:
+                    metadata: "{{ metadata }}"
+              conditionalCases:
+                - cases: "{{ cases }}"
+          lifecycleHandler:
+            lifecycleStage: "{{ lifecycleStage }}"
+            condition: "{{ condition }}"
+            fulfillment:
+              returnPartialResponses: {{ returnPartialResponses }}
+              generators:
+                - inputParameters: "{{ inputParameters }}"
+                  generator: "{{ generator }}"
+                  outputParameter: "{{ outputParameter }}"
+              webhook: "{{ webhook }}"
+              enableGenerativeFallback: {{ enableGenerativeFallback }}
+              setParameterActions:
+                - parameter: "{{ parameter }}"
+                  value: "{{ value }}"
+              tag: "{{ tag }}"
+              advancedSettings:
+                loggingSettings:
+                  enableInteractionLogging: {{ enableInteractionLogging }}
+                  enableConsentBasedRedaction: {{ enableConsentBasedRedaction }}
+                  enableStackdriverLogging: {{ enableStackdriverLogging }}
+                audioExportGcsDestination:
+                  uri: "{{ uri }}"
+                speechSettings:
+                  useTimeoutBasedEndpointing: {{ useTimeoutBasedEndpointing }}
+                  models: "{{ models }}"
+                  endpointerSensitivity: {{ endpointerSensitivity }}
+                  noSpeechTimeout: "{{ noSpeechTimeout }}"
+                dtmfSettings:
+                  maxDigits: {{ maxDigits }}
+                  finishDigit: "{{ finishDigit }}"
+                  interdigitTimeoutDuration: "{{ interdigitTimeoutDuration }}"
+                  enabled: {{ enabled }}
+                  endpointingTimeoutDuration: "{{ endpointingTimeoutDuration }}"
+              messages:
+                - playAudio:
+                    audioUri: "{{ audioUri }}"
+                    allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                  toolCall:
+                    tool: "{{ tool }}"
+                    action: "{{ action }}"
+                    inputParameters: "{{ inputParameters }}"
+                  knowledgeInfoCard: "{{ knowledgeInfoCard }}"
+                  endInteraction: "{{ endInteraction }}"
+                  conversationSuccess:
+                    metadata: "{{ metadata }}"
+                  channel: "{{ channel }}"
+                  text:
+                    text: "{{ text }}"
+                    allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                  telephonyTransferCall:
+                    phoneNumber: "{{ phoneNumber }}"
+                  responseType: "{{ responseType }}"
+                  payload: "{{ payload }}"
+                  outputAudioText:
+                    text: "{{ text }}"
+                    ssml: "{{ ssml }}"
+                    allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                  mixedAudio:
+                    segments: "{{ segments }}"
+                  liveAgentHandoff:
+                    metadata: "{{ metadata }}"
+              conditionalCases:
+                - cases: "{{ cases }}"
+    - name: codeBlock
+      value:
+        code: "{{ code }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -583,22 +717,22 @@ updateTime
 >
 <TabItem value="projects_locations_agents_playbooks_patch">
 
-Updates the specified Playbook.
+No description available.
 
 ```sql
 UPDATE google.dialogflow.playbooks
 SET 
-data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
-data__goal = '{{ goal }}',
-data__inputParameterDefinitions = '{{ inputParameterDefinitions }}',
-data__outputParameterDefinitions = '{{ outputParameterDefinitions }}',
-data__instruction = '{{ instruction }}',
-data__referencedTools = '{{ referencedTools }}',
-data__codeBlock = '{{ codeBlock }}',
 data__llmModelSettings = '{{ llmModelSettings }}',
+data__name = '{{ name }}',
+data__instruction = '{{ instruction }}',
+data__playbookType = '{{ playbookType }}',
+data__inputParameterDefinitions = '{{ inputParameterDefinitions }}',
+data__goal = '{{ goal }}',
+data__outputParameterDefinitions = '{{ outputParameterDefinitions }}',
+data__referencedTools = '{{ referencedTools }}',
 data__handlers = '{{ handlers }}',
-data__playbookType = '{{ playbookType }}'
+data__codeBlock = '{{ codeBlock }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -638,7 +772,7 @@ updateTime;
 >
 <TabItem value="projects_locations_agents_playbooks_delete">
 
-Deletes a specified playbook.
+No description available.
 
 ```sql
 DELETE FROM google.dialogflow.playbooks
@@ -663,7 +797,7 @@ AND playbooksId = '{{ playbooksId }}' --required
 >
 <TabItem value="projects_locations_agents_playbooks_export">
 
-Exports the specified playbook to a binary file. Note that resources (e.g. examples, tools) that the playbook references will also be exported.
+Successful response
 
 ```sql
 EXEC google.dialogflow.playbooks.projects_locations_agents_playbooks_export 
@@ -681,7 +815,7 @@ EXEC google.dialogflow.playbooks.projects_locations_agents_playbooks_export
 </TabItem>
 <TabItem value="projects_locations_agents_playbooks_import">
 
-Imports the specified playbook to the specified agent from a binary file.
+Successful response
 
 ```sql
 EXEC google.dialogflow.playbooks.projects_locations_agents_playbooks_import 
@@ -690,9 +824,9 @@ EXEC google.dialogflow.playbooks.projects_locations_agents_playbooks_import
 @agentsId='{{ agentsId }}' --required 
 @@json=
 '{
+"importStrategy": "{{ importStrategy }}", 
 "playbookUri": "{{ playbookUri }}", 
-"playbookContent": "{{ playbookContent }}", 
-"importStrategy": "{{ importStrategy }}"
+"playbookContent": "{{ playbookContent }}"
 }'
 ;
 ```

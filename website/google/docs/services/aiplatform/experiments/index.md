@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>experiments</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>experiments</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="experiments" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.experiments" /></td></tr>
 </tbody></table>
@@ -385,22 +386,22 @@ Creates a TensorboardExperiment.
 
 ```sql
 INSERT INTO google.aiplatform.experiments (
+data__description,
 data__displayName,
 data__etag,
-data__source,
 data__labels,
-data__description,
+data__source,
 projectsId,
 locationsId,
 tensorboardsId,
 tensorboardExperimentId
 )
 SELECT 
+'{{ description }}',
 '{{ displayName }}',
 '{{ etag }}',
-'{{ source }}',
 '{{ labels }}',
-'{{ description }}',
+'{{ source }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ tensorboardsId }}',
@@ -419,55 +420,65 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: experiments
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the experiments resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the experiments resource.
     - name: tensorboardsId
-      value: string
+      value: "{{ tensorboardsId }}"
       description: Required parameter for the experiments resource.
     - name: experimentsId
-      value: string
+      value: "{{ experimentsId }}"
       description: Required parameter for the experiments resource.
     - name: requests
-      value: array
-      description: >
+      description: |
         Required. The request message specifying the TensorboardTimeSeries to create. A maximum of 1000 TensorboardTimeSeries can be created in a batch.
-        
-    - name: displayName
-      value: string
-      description: >
-        User provided name of this TensorboardExperiment.
-        
-    - name: etag
-      value: string
-      description: >
-        Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
-        
-    - name: source
-      value: string
-      description: >
-        Immutable. Source of the TensorboardExperiment. Example: a custom training job.
-        
-    - name: labels
-      value: object
-      description: >
-        The labels with user-defined metadata to organize your TensorboardExperiment. Label keys and values cannot be longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one Dataset (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with `aiplatform.googleapis.com/` and are immutable. The following system labels exist for each Dataset: * `aiplatform.googleapis.com/dataset_metadata_schema`: output only. Its value is the metadata_schema's title.
-        
+      value:
+        - parent: "{{ parent }}"
+          tensorboardTimeSeriesId: "{{ tensorboardTimeSeriesId }}"
+          tensorboardTimeSeries:
+            description: "{{ description }}"
+            name: "{{ name }}"
+            valueType: "{{ valueType }}"
+            pluginName: "{{ pluginName }}"
+            metadata:
+              maxWallTime: "{{ maxWallTime }}"
+              maxStep: "{{ maxStep }}"
+              maxBlobSequenceLength: "{{ maxBlobSequenceLength }}"
+            pluginData: "{{ pluginData }}"
+            createTime: "{{ createTime }}"
+            displayName: "{{ displayName }}"
+            etag: "{{ etag }}"
+            updateTime: "{{ updateTime }}"
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Description of this TensorboardExperiment.
-        
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        User provided name of this TensorboardExperiment.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        The labels with user-defined metadata to organize your TensorboardExperiment. Label keys and values cannot be longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one Dataset (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with \`aiplatform.googleapis.com/\` and are immutable. The following system labels exist for each Dataset: * \`aiplatform.googleapis.com/dataset_metadata_schema\`: output only. Its value is the metadata_schema's title.
+    - name: source
+      value: "{{ source }}"
+      description: |
+        Immutable. Source of the TensorboardExperiment. Example: a custom training job.
     - name: tensorboardExperimentId
-      value: string
-```
+      value: "{{ tensorboardExperimentId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -487,11 +498,11 @@ Updates a TensorboardExperiment.
 ```sql
 UPDATE google.aiplatform.experiments
 SET 
+data__description = '{{ description }}',
 data__displayName = '{{ displayName }}',
 data__etag = '{{ etag }}',
-data__source = '{{ source }}',
 data__labels = '{{ labels }}',
-data__description = '{{ description }}'
+data__source = '{{ source }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

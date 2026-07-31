@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>instances</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>instances</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="instances" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.spanner.instances" /></td></tr>
 </tbody></table>
@@ -72,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="defaultBackupScheduleType" /></td>
     <td><code>string</code></td>
-    <td>Optional. Controls the default backup schedule behavior for new databases within the instance. By default, a backup schedule is created automatically when a new database is created in a new instance. Note that the `AUTOMATIC` value isn't permitted for free instances, as backups and backup schedules aren't supported for free instances. In the `GetInstance` or `ListInstances` response, if the value of `default_backup_schedule_type` isn't set, or set to `NONE`, Spanner doesn't create a default backup schedule for new databases in the instance.</td>
+    <td>Optional. Controls the default backup schedule behavior for new databases within the instance. By default, a backup schedule is created automatically when a new database is created in a new instance. Note that the `AUTOMATIC` value isn't permitted for free instances, as backups and backup schedules aren't supported for free instances. In the `GetInstance` or `ListInstances` response, if the value of `default_backup_schedule_type` isn't set, or set to `NONE`, Spanner doesn't create a default backup schedule for new databases in the instance. (DEFAULT_BACKUP_SCHEDULE_TYPE_UNSPECIFIED, NONE, AUTOMATIC)</td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
@@ -82,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="edition" /></td>
     <td><code>string</code></td>
-    <td>Optional. The `Edition` of the current instance.</td>
+    <td>Optional. The `Edition` of the current instance. (EDITION_UNSPECIFIED, STANDARD, ENTERPRISE, ENTERPRISE_PLUS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="endpointUris" /></td>
@@ -97,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="instanceType" /></td>
     <td><code>string</code></td>
-    <td>The `InstanceType` of the current instance.</td>
+    <td>The `InstanceType` of the current instance. (INSTANCE_TYPE_UNSPECIFIED, PROVISIONED, FREE_INSTANCE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -122,7 +123,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current instance state. For CreateInstance, the state must be either omitted or set to `CREATING`. For UpdateInstance, the state must be either omitted or set to `READY`.</td>
+    <td>Output only. The current instance state. For CreateInstance, the state must be either omitted or set to `CREATING`. For UpdateInstance, the state must be either omitted or set to `READY`. (STATE_UNSPECIFIED, CREATING, READY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -166,7 +167,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="defaultBackupScheduleType" /></td>
     <td><code>string</code></td>
-    <td>Optional. Controls the default backup schedule behavior for new databases within the instance. By default, a backup schedule is created automatically when a new database is created in a new instance. Note that the `AUTOMATIC` value isn't permitted for free instances, as backups and backup schedules aren't supported for free instances. In the `GetInstance` or `ListInstances` response, if the value of `default_backup_schedule_type` isn't set, or set to `NONE`, Spanner doesn't create a default backup schedule for new databases in the instance.</td>
+    <td>Optional. Controls the default backup schedule behavior for new databases within the instance. By default, a backup schedule is created automatically when a new database is created in a new instance. Note that the `AUTOMATIC` value isn't permitted for free instances, as backups and backup schedules aren't supported for free instances. In the `GetInstance` or `ListInstances` response, if the value of `default_backup_schedule_type` isn't set, or set to `NONE`, Spanner doesn't create a default backup schedule for new databases in the instance. (DEFAULT_BACKUP_SCHEDULE_TYPE_UNSPECIFIED, NONE, AUTOMATIC)</td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
@@ -176,7 +177,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="edition" /></td>
     <td><code>string</code></td>
-    <td>Optional. The `Edition` of the current instance.</td>
+    <td>Optional. The `Edition` of the current instance. (EDITION_UNSPECIFIED, STANDARD, ENTERPRISE, ENTERPRISE_PLUS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="endpointUris" /></td>
@@ -191,7 +192,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="instanceType" /></td>
     <td><code>string</code></td>
-    <td>The `InstanceType` of the current instance.</td>
+    <td>The `InstanceType` of the current instance. (INSTANCE_TYPE_UNSPECIFIED, PROVISIONED, FREE_INSTANCE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -216,7 +217,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current instance state. For CreateInstance, the state must be either omitted or set to `CREATING`. For UpdateInstance, the state must be either omitted or set to `READY`.</td>
+    <td>Output only. The current instance state. For CreateInstance, the state must be either omitted or set to `CREATING`. For UpdateInstance, the state must be either omitted or set to `READY`. (STATE_UNSPECIFIED, CREATING, READY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -254,7 +255,7 @@ The following methods are available for this resource:
     <td><a href="#projects_instances_list"><CopyableCode code="projects_instances_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-instanceDeadline"><code>instanceDeadline</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-instanceDeadline"><code>instanceDeadline</code></a></td>
     <td>Lists all instances in the given project.</td>
 </tr>
 <tr>
@@ -401,10 +402,10 @@ state,
 updateTime
 FROM google.spanner.instances
 WHERE projectsId = '{{ projectsId }}' -- required
-AND instanceDeadline = '{{ instanceDeadline }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
+AND instanceDeadline = '{{ instanceDeadline }}'
 ;
 ```
 </TabItem>
@@ -445,24 +446,68 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: instances
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the instances resource.
     - name: instanceId
-      value: string
-      description: >
-        Required. The ID of the instance to create. Valid identifiers are of the form `a-z*[a-z0-9]` and must be between 2 and 64 characters in length.
-        
+      value: "{{ instanceId }}"
+      description: |
+        Required. The ID of the instance to create. Valid identifiers are of the form \`a-z*[a-z0-9]\` and must be between 2 and 64 characters in length.
     - name: instance
-      value: object
-      description: >
+      description: |
         An isolated set of Cloud Spanner resources on which databases can be hosted.
-        
-```
+      value:
+        name: "{{ name }}"
+        config: "{{ config }}"
+        displayName: "{{ displayName }}"
+        nodeCount: {{ nodeCount }}
+        processingUnits: {{ processingUnits }}
+        replicaComputeCapacity:
+          - replicaSelection:
+              location: "{{ location }}"
+            nodeCount: {{ nodeCount }}
+            processingUnits: {{ processingUnits }}
+        autoscalingConfig:
+          autoscalingLimits:
+            minNodes: {{ minNodes }}
+            minProcessingUnits: {{ minProcessingUnits }}
+            maxNodes: {{ maxNodes }}
+            maxProcessingUnits: {{ maxProcessingUnits }}
+          autoscalingTargets:
+            highPriorityCpuUtilizationPercent: {{ highPriorityCpuUtilizationPercent }}
+            totalCpuUtilizationPercent: {{ totalCpuUtilizationPercent }}
+            storageUtilizationPercent: {{ storageUtilizationPercent }}
+          asymmetricAutoscalingOptions:
+            - replicaSelection:
+                location: "{{ location }}"
+              overrides:
+                autoscalingLimits:
+                  minNodes: {{ minNodes }}
+                  minProcessingUnits: {{ minProcessingUnits }}
+                  maxNodes: {{ maxNodes }}
+                  maxProcessingUnits: {{ maxProcessingUnits }}
+                autoscalingTargetHighPriorityCpuUtilizationPercent: {{ autoscalingTargetHighPriorityCpuUtilizationPercent }}
+                autoscalingTargetTotalCpuUtilizationPercent: {{ autoscalingTargetTotalCpuUtilizationPercent }}
+                disableHighPriorityCpuAutoscaling: {{ disableHighPriorityCpuAutoscaling }}
+                disableTotalCpuAutoscaling: {{ disableTotalCpuAutoscaling }}
+        state: "{{ state }}"
+        labels: "{{ labels }}"
+        instanceType: "{{ instanceType }}"
+        endpointUris:
+          - "{{ endpointUris }}"
+        createTime: "{{ createTime }}"
+        updateTime: "{{ updateTime }}"
+        freeInstanceMetadata:
+          expireTime: "{{ expireTime }}"
+          upgradeTime: "{{ upgradeTime }}"
+          expireBehavior: "{{ expireBehavior }}"
+        edition: "{{ edition }}"
+        defaultBackupScheduleType: "{{ defaultBackupScheduleType }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

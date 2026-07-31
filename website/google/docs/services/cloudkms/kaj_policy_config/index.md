@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>kaj_policy_config</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>kaj_policy_config</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="kaj_policy_config" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudkms.kaj_policy_config" /></td></tr>
 </tbody></table>
@@ -51,12 +52,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Identifier. The resource name for this KeyAccessJustificationsPolicyConfig in the format of "&#123;organizations|folders|projects&#125;/*/kajPolicyConfig".</td>
+    <td>Identifier. Represents the resource name for this KeyAccessJustificationsPolicyConfig in the format of "&#123;organizations|folders|projects&#125;/*/kajPolicyConfig".</td>
 </tr>
 <tr>
     <td><CopyableCode code="defaultKeyAccessJustificationPolicy" /></td>
     <td><code>object</code></td>
-    <td>Optional. The default key access justification policy used when a CryptoKey is created in this folder. This is only used when a Key Access Justifications policy is not provided in the CreateCryptoKeyRequest. This overrides any default policies in its ancestry. (id: KeyAccessJustificationsPolicy)</td>
+    <td>Optional. Specifies the default key access justifications (KAJ) policy used when a CryptoKey is created in this folder. This is only used when a Key Access Justifications policy is not provided in the CreateCryptoKeyRequest. This overrides any default policies in its ancestry. If this field is unset, or is set but contains an empty allowed_access_reasons list, no default Key Access Justifications (KAJ) policy configuration is active. In this scenario, all newly created keys will default to an "allow-all" policy. (id: KeyAccessJustificationsPolicy)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="defaultPolicyAvailable" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. Indicates whether this parent resource is available to default policy feature. Please consult [the prerequisite of default policy feature](https://cloud.google.com/assured-workloads/key-access-justifications/docs/set-default-policy#before) for more details.</td>
 </tr>
 </tbody>
 </table>
@@ -136,7 +142,8 @@ Gets the KeyAccessJustificationsPolicyConfig for a given organization, folder, o
 ```sql
 SELECT
 name,
-defaultKeyAccessJustificationPolicy
+defaultKeyAccessJustificationPolicy,
+defaultPolicyAvailable
 FROM google.cloudkms.kaj_policy_config
 WHERE organizationsId = '{{ organizationsId }}' -- required
 ;
@@ -167,7 +174,8 @@ organizationsId = '{{ organizationsId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
-defaultKeyAccessJustificationPolicy;
+defaultKeyAccessJustificationPolicy,
+defaultPolicyAvailable;
 ```
 </TabItem>
 </Tabs>

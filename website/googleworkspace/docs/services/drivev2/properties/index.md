@@ -15,6 +15,7 @@ image: /img/stackql-googleworkspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>properties</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>properties</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="properties" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleworkspace.drivev2.properties" /></td></tr>
 </tbody></table>
@@ -270,21 +271,21 @@ Adds a property to a file, or updates it if it already exists.
 
 ```sql
 INSERT INTO googleworkspace.drivev2.properties (
-data__selfLink,
-data__value,
-data__visibility,
 data__kind,
-data__etag,
+data__selfLink,
+data__visibility,
 data__key,
+data__value,
+data__etag,
 fileId
 )
 SELECT 
-'{{ selfLink }}',
-'{{ value }}',
-'{{ visibility }}',
 '{{ kind }}',
-'{{ etag }}',
+'{{ selfLink }}',
+'{{ visibility }}',
 '{{ key }}',
+'{{ value }}',
+'{{ etag }}',
 '{{ fileId }}'
 RETURNING
 etag,
@@ -298,45 +299,39 @@ visibility
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: properties
   props:
     - name: fileId
-      value: string
+      value: "{{ fileId }}"
       description: Required parameter for the properties resource.
-    - name: selfLink
-      value: string
-      description: >
-        Output only. The link back to this property.
-        
-    - name: value
-      value: string
-      description: >
-        The value of this property.
-        
-    - name: visibility
-      value: string
-      description: >
-        The visibility of this property. Allowed values are PRIVATE (default) and PUBLIC. Private properties can only be retrieved using an authenticated request. An authenticated request uses an access token obtained with a OAuth 2 client ID. You cannot use an API key to retrieve private properties.
-        
     - name: kind
-      value: string
-      description: >
-        Output only. This is always `drive#property`.
-        
+      value: "{{ kind }}"
+      description: |
+        Output only. This is always \`drive#property\`.
       default: drive#property
-    - name: etag
-      value: string
-      description: >
-        Output only. ETag of the property.
-        
+    - name: selfLink
+      value: "{{ selfLink }}"
+      description: |
+        Output only. The link back to this property.
+    - name: visibility
+      value: "{{ visibility }}"
+      description: |
+        The visibility of this property. Allowed values are PRIVATE (default) and PUBLIC. Private properties can only be retrieved using an authenticated request. An authenticated request uses an access token obtained with a OAuth 2 client ID. You cannot use an API key to retrieve private properties.
     - name: key
-      value: string
-      description: >
+      value: "{{ key }}"
+      description: |
         The key of this property.
-        
-```
+    - name: value
+      value: "{{ value }}"
+      description: |
+        The value of this property.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Output only. ETag of the property.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -356,12 +351,12 @@ Updates a property.
 ```sql
 UPDATE googleworkspace.drivev2.properties
 SET 
-data__selfLink = '{{ selfLink }}',
-data__value = '{{ value }}',
-data__visibility = '{{ visibility }}',
 data__kind = '{{ kind }}',
-data__etag = '{{ etag }}',
-data__key = '{{ key }}'
+data__selfLink = '{{ selfLink }}',
+data__visibility = '{{ visibility }}',
+data__key = '{{ key }}',
+data__value = '{{ value }}',
+data__etag = '{{ etag }}'
 WHERE 
 fileId = '{{ fileId }}' --required
 AND propertyKey = '{{ propertyKey }}' --required
@@ -393,12 +388,12 @@ Updates a property.
 ```sql
 REPLACE googleworkspace.drivev2.properties
 SET 
-data__selfLink = '{{ selfLink }}',
-data__value = '{{ value }}',
-data__visibility = '{{ visibility }}',
 data__kind = '{{ kind }}',
-data__etag = '{{ etag }}',
-data__key = '{{ key }}'
+data__selfLink = '{{ selfLink }}',
+data__visibility = '{{ visibility }}',
+data__key = '{{ key }}',
+data__value = '{{ value }}',
+data__etag = '{{ etag }}'
 WHERE 
 fileId = '{{ fileId }}' --required
 AND propertyKey = '{{ propertyKey }}' --required

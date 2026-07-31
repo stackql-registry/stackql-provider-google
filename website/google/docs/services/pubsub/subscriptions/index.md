@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>subscriptions</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>subscriptions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="subscriptions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.pubsub.subscriptions" /></td></tr>
 </tbody></table>
@@ -32,13 +33,27 @@ Creates, updates, deletes, gets or lists a <code>subscriptions</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="projects_subscriptions_get"
+    defaultValue="projects_topics_subscriptions_list"
     values={[
-        { label: 'projects_subscriptions_get', value: 'projects_subscriptions_get' },
         { label: 'projects_topics_subscriptions_list', value: 'projects_topics_subscriptions_list' },
+        { label: 'projects_subscriptions_get', value: 'projects_subscriptions_get' },
         { label: 'projects_subscriptions_list', value: 'projects_subscriptions_list' }
     ]}
 >
+<TabItem value="projects_topics_subscriptions_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</TabItem>
 <TabItem value="projects_subscriptions_get">
 
 <table>
@@ -53,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Required. The name of the subscription. It must have the format `"projects/&#123;project&#125;/subscriptions/&#123;subscription&#125;"`. `&#123;subscription&#125;` must start with a letter, and contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or percent signs (`%`). It must be between 3 and 255 characters in length, and it must not start with `"goog"`.</td>
+    <td>Required. Identifier. The name of the subscription. It must have the format `"projects/&#123;project&#125;/subscriptions/&#123;subscription&#125;"`. `&#123;subscription&#125;` must start with a letter, and contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or percent signs (`%`). It must be between 3 and 255 characters in length, and it must not start with `"goog"`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="ackDeadlineSeconds" /></td>
@@ -63,12 +78,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="analyticsHubSubscriptionInfo" /></td>
     <td><code>object</code></td>
-    <td>Output only. Information about the associated Analytics Hub subscription. Only set if the subscritpion is created by Analytics Hub. (id: AnalyticsHubSubscriptionInfo)</td>
+    <td>Output only. Information about the associated Analytics Hub subscription. Only set if the subscription is created by Analytics Hub. (id: AnalyticsHubSubscriptionInfo)</td>
 </tr>
 <tr>
     <td><CopyableCode code="bigqueryConfig" /></td>
     <td><code>object</code></td>
     <td>Optional. If delivery to BigQuery is used with this subscription, this field is used to configure it. (id: BigQueryConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="bigtableConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. If delivery to Bigtable is used with this subscription, this field is used to configure it. (id: BigtableConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="cloudStorageConfig" /></td>
@@ -138,12 +158,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. An output-only field indicating whether or not the subscription can receive messages.</td>
+    <td>Output only. An output-only field indicating whether or not the subscription can receive messages. (STATE_UNSPECIFIED, ACTIVE, RESOURCE_ERROR)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tags" /></td>
     <td><code>object</code></td>
-    <td>Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"</td>
+    <td>Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing" See https://&#123;$universe.dns_names.final_documentation_domain&#125;/pubsub/docs/tags for more information on using tags with Pub/Sub resources.</td>
 </tr>
 <tr>
     <td><CopyableCode code="topic" /></td>
@@ -155,20 +175,6 @@ The following fields are returned by `SELECT` queries:
     <td><code>string (google-duration)</code></td>
     <td>Output only. Indicates the minimum duration for which a message is retained after it is published to the subscription's topic. If this field is set, messages published to the subscription's topic in the last `topic_message_retention_duration` are always available to subscribers. See the `message_retention_duration` field in `Topic`. This field is set only in responses from the server; it is ignored if it is set in any requests.</td>
 </tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="projects_topics_subscriptions_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
 </tbody>
 </table>
 </TabItem>
@@ -186,7 +192,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Required. The name of the subscription. It must have the format `"projects/&#123;project&#125;/subscriptions/&#123;subscription&#125;"`. `&#123;subscription&#125;` must start with a letter, and contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or percent signs (`%`). It must be between 3 and 255 characters in length, and it must not start with `"goog"`.</td>
+    <td>Required. Identifier. The name of the subscription. It must have the format `"projects/&#123;project&#125;/subscriptions/&#123;subscription&#125;"`. `&#123;subscription&#125;` must start with a letter, and contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or percent signs (`%`). It must be between 3 and 255 characters in length, and it must not start with `"goog"`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="ackDeadlineSeconds" /></td>
@@ -196,12 +202,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="analyticsHubSubscriptionInfo" /></td>
     <td><code>object</code></td>
-    <td>Output only. Information about the associated Analytics Hub subscription. Only set if the subscritpion is created by Analytics Hub. (id: AnalyticsHubSubscriptionInfo)</td>
+    <td>Output only. Information about the associated Analytics Hub subscription. Only set if the subscription is created by Analytics Hub. (id: AnalyticsHubSubscriptionInfo)</td>
 </tr>
 <tr>
     <td><CopyableCode code="bigqueryConfig" /></td>
     <td><code>object</code></td>
     <td>Optional. If delivery to BigQuery is used with this subscription, this field is used to configure it. (id: BigQueryConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="bigtableConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. If delivery to Bigtable is used with this subscription, this field is used to configure it. (id: BigtableConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="cloudStorageConfig" /></td>
@@ -271,12 +282,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. An output-only field indicating whether or not the subscription can receive messages.</td>
+    <td>Output only. An output-only field indicating whether or not the subscription can receive messages. (STATE_UNSPECIFIED, ACTIVE, RESOURCE_ERROR)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tags" /></td>
     <td><code>object</code></td>
-    <td>Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"</td>
+    <td>Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing" See https://&#123;$universe.dns_names.final_documentation_domain&#125;/pubsub/docs/tags for more information on using tags with Pub/Sub resources.</td>
 </tr>
 <tr>
     <td><CopyableCode code="topic" /></td>
@@ -309,18 +320,18 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
+    <td><a href="#projects_topics_subscriptions_list"><CopyableCode code="projects_topics_subscriptions_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-topicsId"><code>topicsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists the names of the attached subscriptions on this topic.</td>
+</tr>
+<tr>
     <td><a href="#projects_subscriptions_get"><CopyableCode code="projects_subscriptions_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-subscriptionsId"><code>subscriptionsId</code></a></td>
     <td></td>
     <td>Gets the configuration details of a subscription.</td>
-</tr>
-<tr>
-    <td><a href="#projects_topics_subscriptions_list"><CopyableCode code="projects_topics_subscriptions_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-topicsId"><code>topicsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Lists the names of the attached subscriptions on this topic.</td>
 </tr>
 <tr>
     <td><a href="#projects_subscriptions_list"><CopyableCode code="projects_subscriptions_list" /></a></td>
@@ -344,32 +355,11 @@ The following methods are available for this resource:
     <td>Deletes an existing subscription. All messages retained in the subscription are immediately dropped. Calls to `Pull` after deletion will return `NOT_FOUND`. After a subscription is deleted, a new one may be created with the same name, but the new one has no association with the old subscription or its topic unless the same topic is specified.</td>
 </tr>
 <tr>
-    <td><a href="#projects_subscriptions_modify_push_config"><CopyableCode code="projects_subscriptions_modify_push_config" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-subscriptionsId"><code>subscriptionsId</code></a></td>
-    <td></td>
-    <td>Modifies the `PushConfig` for a specified subscription. This may be used to change a push subscription to a pull one (signified by an empty `PushConfig`) or vice versa, or change the endpoint URL and other attributes of a push subscription. Messages will accumulate for delivery continuously through the call regardless of changes to the `PushConfig`.</td>
-</tr>
-<tr>
     <td><a href="#projects_subscriptions_create"><CopyableCode code="projects_subscriptions_create" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-subscriptionsId"><code>subscriptionsId</code></a></td>
     <td></td>
     <td>Creates a subscription to a given topic. See the [resource name rules] (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names). If the subscription already exists, returns `ALREADY_EXISTS`. If the corresponding topic doesn't exist, returns `NOT_FOUND`. If the name is not provided in the request, the server will assign a random name for this subscription on the same project as the topic, conforming to the [resource name format] (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names). The generated name is populated in the returned Subscription object. Note that for REST API requests, you must specify a name in the request.</td>
-</tr>
-<tr>
-    <td><a href="#projects_subscriptions_seek"><CopyableCode code="projects_subscriptions_seek" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-subscriptionsId"><code>subscriptionsId</code></a></td>
-    <td></td>
-    <td>Seeks an existing subscription to a point in time or to a given snapshot, whichever is provided in the request. Snapshots are used in [Seek] (https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot. Note that both the subscription and the snapshot must be on the same topic.</td>
-</tr>
-<tr>
-    <td><a href="#projects_subscriptions_detach"><CopyableCode code="projects_subscriptions_detach" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-subscriptionsId"><code>subscriptionsId</code></a></td>
-    <td></td>
-    <td>Detaches a subscription from this topic. All messages retained in the subscription are dropped. Subsequent `Pull` and `StreamingPull` requests will return FAILED_PRECONDITION. If the subscription is a push subscription, pushes to the endpoint will stop.</td>
 </tr>
 <tr>
     <td><a href="#projects_subscriptions_pull"><CopyableCode code="projects_subscriptions_pull" /></a></td>
@@ -379,6 +369,13 @@ The following methods are available for this resource:
     <td>Pulls messages from the server.</td>
 </tr>
 <tr>
+    <td><a href="#projects_subscriptions_seek"><CopyableCode code="projects_subscriptions_seek" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-subscriptionsId"><code>subscriptionsId</code></a></td>
+    <td></td>
+    <td>Seeks an existing subscription to a point in time or to a given snapshot, whichever is provided in the request. Snapshots are used in [Seek] (https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot. Note that both the subscription and the snapshot must be on the same topic.</td>
+</tr>
+<tr>
     <td><a href="#projects_subscriptions_modify_ack_deadline"><CopyableCode code="projects_subscriptions_modify_ack_deadline" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-subscriptionsId"><code>subscriptionsId</code></a></td>
@@ -386,11 +383,25 @@ The following methods are available for this resource:
     <td>Modifies the ack deadline for a specific message. This method is useful to indicate that more time is needed to process a message by the subscriber, or to make the message available for redelivery if the processing was interrupted. Note that this does not modify the subscription-level `ackDeadlineSeconds` used for subsequent messages.</td>
 </tr>
 <tr>
+    <td><a href="#projects_subscriptions_detach"><CopyableCode code="projects_subscriptions_detach" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-subscriptionsId"><code>subscriptionsId</code></a></td>
+    <td></td>
+    <td>Detaches a subscription from this topic. All messages retained in the subscription are dropped. Subsequent `Pull` and `StreamingPull` requests will return FAILED_PRECONDITION. If the subscription is a push subscription, pushes to the endpoint will stop.</td>
+</tr>
+<tr>
     <td><a href="#projects_subscriptions_acknowledge"><CopyableCode code="projects_subscriptions_acknowledge" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-subscriptionsId"><code>subscriptionsId</code></a></td>
     <td></td>
     <td>Acknowledges the messages associated with the `ack_ids` in the `AcknowledgeRequest`. The Pub/Sub system can remove the relevant messages from the subscription. Acknowledging a message whose ack deadline has expired may succeed, but such a message may be redelivered later. Acknowledging a message more than once will not result in an error.</td>
+</tr>
+<tr>
+    <td><a href="#projects_subscriptions_modify_push_config"><CopyableCode code="projects_subscriptions_modify_push_config" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-subscriptionsId"><code>subscriptionsId</code></a></td>
+    <td></td>
+    <td>Modifies the `PushConfig` for a specified subscription. This may be used to change a push subscription to a pull one (signified by an empty `PushConfig`) or vice versa, or change the endpoint URL and other attributes of a push subscription. Messages will accumulate for delivery continuously through the call regardless of changes to the `PushConfig`.</td>
 </tr>
 </tbody>
 </table>
@@ -439,13 +450,28 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="projects_subscriptions_get"
+    defaultValue="projects_topics_subscriptions_list"
     values={[
-        { label: 'projects_subscriptions_get', value: 'projects_subscriptions_get' },
         { label: 'projects_topics_subscriptions_list', value: 'projects_topics_subscriptions_list' },
+        { label: 'projects_subscriptions_get', value: 'projects_subscriptions_get' },
         { label: 'projects_subscriptions_list', value: 'projects_subscriptions_list' }
     ]}
 >
+<TabItem value="projects_topics_subscriptions_list">
+
+Lists the names of the attached subscriptions on this topic.
+
+```sql
+SELECT
+*
+FROM google.pubsub.subscriptions
+WHERE projectsId = '{{ projectsId }}' -- required
+AND topicsId = '{{ topicsId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
 <TabItem value="projects_subscriptions_get">
 
 Gets the configuration details of a subscription.
@@ -456,6 +482,7 @@ name,
 ackDeadlineSeconds,
 analyticsHubSubscriptionInfo,
 bigqueryConfig,
+bigtableConfig,
 cloudStorageConfig,
 deadLetterPolicy,
 detached,
@@ -479,21 +506,6 @@ AND subscriptionsId = '{{ subscriptionsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_topics_subscriptions_list">
-
-Lists the names of the attached subscriptions on this topic.
-
-```sql
-SELECT
-*
-FROM google.pubsub.subscriptions
-WHERE projectsId = '{{ projectsId }}' -- required
-AND topicsId = '{{ topicsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
-;
-```
-</TabItem>
 <TabItem value="projects_subscriptions_list">
 
 Lists matching subscriptions.
@@ -504,6 +516,7 @@ name,
 ackDeadlineSeconds,
 analyticsHubSubscriptionInfo,
 bigqueryConfig,
+bigtableConfig,
 cloudStorageConfig,
 deadLetterPolicy,
 detached,
@@ -556,6 +569,7 @@ name,
 ackDeadlineSeconds,
 analyticsHubSubscriptionInfo,
 bigqueryConfig,
+bigtableConfig,
 cloudStorageConfig,
 deadLetterPolicy,
 detached,
@@ -603,32 +617,17 @@ AND subscriptionsId = '{{ subscriptionsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_subscriptions_modify_push_config"
+    defaultValue="projects_subscriptions_create"
     values={[
-        { label: 'projects_subscriptions_modify_push_config', value: 'projects_subscriptions_modify_push_config' },
         { label: 'projects_subscriptions_create', value: 'projects_subscriptions_create' },
-        { label: 'projects_subscriptions_seek', value: 'projects_subscriptions_seek' },
-        { label: 'projects_subscriptions_detach', value: 'projects_subscriptions_detach' },
         { label: 'projects_subscriptions_pull', value: 'projects_subscriptions_pull' },
+        { label: 'projects_subscriptions_seek', value: 'projects_subscriptions_seek' },
         { label: 'projects_subscriptions_modify_ack_deadline', value: 'projects_subscriptions_modify_ack_deadline' },
-        { label: 'projects_subscriptions_acknowledge', value: 'projects_subscriptions_acknowledge' }
+        { label: 'projects_subscriptions_detach', value: 'projects_subscriptions_detach' },
+        { label: 'projects_subscriptions_acknowledge', value: 'projects_subscriptions_acknowledge' },
+        { label: 'projects_subscriptions_modify_push_config', value: 'projects_subscriptions_modify_push_config' }
     ]}
 >
-<TabItem value="projects_subscriptions_modify_push_config">
-
-Modifies the `PushConfig` for a specified subscription. This may be used to change a push subscription to a pull one (signified by an empty `PushConfig`) or vice versa, or change the endpoint URL and other attributes of a push subscription. Messages will accumulate for delivery continuously through the call regardless of changes to the `PushConfig`.
-
-```sql
-EXEC google.pubsub.subscriptions.projects_subscriptions_modify_push_config 
-@projectsId='{{ projectsId }}' --required, 
-@subscriptionsId='{{ subscriptionsId }}' --required 
-@@json=
-'{
-"pushConfig": "{{ pushConfig }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_subscriptions_create">
 
 Creates a subscription to a given topic. See the [resource name rules] (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names). If the subscription already exists, returns `ALREADY_EXISTS`. If the corresponding topic doesn't exist, returns `NOT_FOUND`. If the name is not provided in the request, the server will assign a random name for this subscription on the same project as the topic, conforming to the [resource name format] (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names). The generated name is populated in the returned Subscription object. Note that for REST API requests, you must specify a name in the request.
@@ -639,24 +638,41 @@ EXEC google.pubsub.subscriptions.projects_subscriptions_create
 @subscriptionsId='{{ subscriptionsId }}' --required 
 @@json=
 '{
-"messageRetentionDuration": "{{ messageRetentionDuration }}", 
-"labels": "{{ labels }}", 
-"ackDeadlineSeconds": {{ ackDeadlineSeconds }}, 
-"messageTransforms": "{{ messageTransforms }}", 
-"pushConfig": "{{ pushConfig }}", 
-"detached": {{ detached }}, 
-"tags": "{{ tags }}", 
-"retainAckedMessages": {{ retainAckedMessages }}, 
-"name": "{{ name }}", 
+"retryPolicy": "{{ retryPolicy }}", 
+"filter": "{{ filter }}", 
 "enableExactlyOnceDelivery": {{ enableExactlyOnceDelivery }}, 
-"expirationPolicy": "{{ expirationPolicy }}", 
+"messageRetentionDuration": "{{ messageRetentionDuration }}", 
+"detached": {{ detached }}, 
+"bigtableConfig": "{{ bigtableConfig }}", 
+"labels": "{{ labels }}", 
+"name": "{{ name }}", 
+"retainAckedMessages": {{ retainAckedMessages }}, 
+"pushConfig": "{{ pushConfig }}", 
+"cloudStorageConfig": "{{ cloudStorageConfig }}", 
+"enableMessageOrdering": {{ enableMessageOrdering }}, 
+"ackDeadlineSeconds": {{ ackDeadlineSeconds }}, 
 "topic": "{{ topic }}", 
 "bigqueryConfig": "{{ bigqueryConfig }}", 
-"enableMessageOrdering": {{ enableMessageOrdering }}, 
-"retryPolicy": "{{ retryPolicy }}", 
-"cloudStorageConfig": "{{ cloudStorageConfig }}", 
-"filter": "{{ filter }}", 
-"deadLetterPolicy": "{{ deadLetterPolicy }}"
+"expirationPolicy": "{{ expirationPolicy }}", 
+"deadLetterPolicy": "{{ deadLetterPolicy }}", 
+"tags": "{{ tags }}", 
+"messageTransforms": "{{ messageTransforms }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_subscriptions_pull">
+
+Pulls messages from the server.
+
+```sql
+EXEC google.pubsub.subscriptions.projects_subscriptions_pull 
+@projectsId='{{ projectsId }}' --required, 
+@subscriptionsId='{{ subscriptionsId }}' --required 
+@@json=
+'{
+"maxMessages": {{ maxMessages }}, 
+"returnImmediately": {{ returnImmediately }}
 }'
 ;
 ```
@@ -677,33 +693,6 @@ EXEC google.pubsub.subscriptions.projects_subscriptions_seek
 ;
 ```
 </TabItem>
-<TabItem value="projects_subscriptions_detach">
-
-Detaches a subscription from this topic. All messages retained in the subscription are dropped. Subsequent `Pull` and `StreamingPull` requests will return FAILED_PRECONDITION. If the subscription is a push subscription, pushes to the endpoint will stop.
-
-```sql
-EXEC google.pubsub.subscriptions.projects_subscriptions_detach 
-@projectsId='{{ projectsId }}' --required, 
-@subscriptionsId='{{ subscriptionsId }}' --required
-;
-```
-</TabItem>
-<TabItem value="projects_subscriptions_pull">
-
-Pulls messages from the server.
-
-```sql
-EXEC google.pubsub.subscriptions.projects_subscriptions_pull 
-@projectsId='{{ projectsId }}' --required, 
-@subscriptionsId='{{ subscriptionsId }}' --required 
-@@json=
-'{
-"returnImmediately": {{ returnImmediately }}, 
-"maxMessages": {{ maxMessages }}
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_subscriptions_modify_ack_deadline">
 
 Modifies the ack deadline for a specific message. This method is useful to indicate that more time is needed to process a message by the subscriber, or to make the message available for redelivery if the processing was interrupted. Note that this does not modify the subscription-level `ackDeadlineSeconds` used for subsequent messages.
@@ -720,6 +709,17 @@ EXEC google.pubsub.subscriptions.projects_subscriptions_modify_ack_deadline
 ;
 ```
 </TabItem>
+<TabItem value="projects_subscriptions_detach">
+
+Detaches a subscription from this topic. All messages retained in the subscription are dropped. Subsequent `Pull` and `StreamingPull` requests will return FAILED_PRECONDITION. If the subscription is a push subscription, pushes to the endpoint will stop.
+
+```sql
+EXEC google.pubsub.subscriptions.projects_subscriptions_detach 
+@projectsId='{{ projectsId }}' --required, 
+@subscriptionsId='{{ subscriptionsId }}' --required
+;
+```
+</TabItem>
 <TabItem value="projects_subscriptions_acknowledge">
 
 Acknowledges the messages associated with the `ack_ids` in the `AcknowledgeRequest`. The Pub/Sub system can remove the relevant messages from the subscription. Acknowledging a message whose ack deadline has expired may succeed, but such a message may be redelivered later. Acknowledging a message more than once will not result in an error.
@@ -731,6 +731,21 @@ EXEC google.pubsub.subscriptions.projects_subscriptions_acknowledge
 @@json=
 '{
 "ackIds": "{{ ackIds }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_subscriptions_modify_push_config">
+
+Modifies the `PushConfig` for a specified subscription. This may be used to change a push subscription to a pull one (signified by an empty `PushConfig`) or vice versa, or change the endpoint URL and other attributes of a push subscription. Messages will accumulate for delivery continuously through the call regardless of changes to the `PushConfig`.
+
+```sql
+EXEC google.pubsub.subscriptions.projects_subscriptions_modify_push_config 
+@projectsId='{{ projectsId }}' --required, 
+@subscriptionsId='{{ subscriptionsId }}' --required 
+@@json=
+'{
+"pushConfig": "{{ pushConfig }}"
 }'
 ;
 ```

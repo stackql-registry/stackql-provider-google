@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>time_series_service</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>time_series_service</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="time_series_service" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.monitoring.time_series_service" /></td></tr>
 </tbody></table>
@@ -106,18 +107,31 @@ SELECT
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: time_series_service
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the time_series_service resource.
     - name: timeSeries
-      value: array
-      description: >
+      description: |
         Required. The new data to be added to a list of time series. Adds at most one data point to each of several time series. The new data point must be more recent than any other point in its time series. Each TimeSeries value must fully specify a unique time series by supplying all label values for the metric and the monitored resource.The maximum number of TimeSeries objects per Create request is 200.
-        
-```
+      value:
+        - metadata:
+            systemLabels: "{{ systemLabels }}"
+            userLabels: "{{ userLabels }}"
+          description: "{{ description }}"
+          metric:
+            type: "{{ type }}"
+            labels: "{{ labels }}"
+          metricKind: "{{ metricKind }}"
+          unit: "{{ unit }}"
+          valueType: "{{ valueType }}"
+          resource:
+            labels: "{{ labels }}"
+            type: "{{ type }}"
+          points: "{{ points }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

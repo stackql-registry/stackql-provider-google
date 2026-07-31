@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>backups</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>backups</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="backups" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.sqladmin.backups" /></td></tr>
 </tbody></table>
@@ -50,6 +51,20 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
+    <td><a href="#create_backup"><CopyableCode code="create_backup" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td></td>
+    <td>Creates a backup for a Cloud SQL instance. This API can be used only to create on-demand backups.</td>
+</tr>
+<tr>
+    <td><a href="#list_backups"><CopyableCode code="list_backups" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td>Lists all backups associated with the project.</td>
+</tr>
+<tr>
     <td><a href="#delete_backup"><CopyableCode code="delete_backup" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-backupsId"><code>backupsId</code></a></td>
@@ -69,20 +84,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-backupsId"><code>backupsId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the retention period and description of the backup. You can use this API to update final backups only.</td>
-</tr>
-<tr>
-    <td><a href="#list_backups"><CopyableCode code="list_backups" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Lists all backups associated with the project.</td>
-</tr>
-<tr>
-    <td><a href="#create_backup"><CopyableCode code="create_backup" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td></td>
-    <td>Creates a backup for a Cloud SQL instance. This API can be used only to create on-demand backups.</td>
 </tr>
 </tbody>
 </table>
@@ -136,15 +137,46 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="delete_backup"
+    defaultValue="create_backup"
     values={[
+        { label: 'create_backup', value: 'create_backup' },
+        { label: 'list_backups', value: 'list_backups' },
         { label: 'delete_backup', value: 'delete_backup' },
         { label: 'get_backup', value: 'get_backup' },
-        { label: 'update_backup', value: 'update_backup' },
-        { label: 'list_backups', value: 'list_backups' },
-        { label: 'create_backup', value: 'create_backup' }
+        { label: 'update_backup', value: 'update_backup' }
     ]}
 >
+<TabItem value="create_backup">
+
+Creates a backup for a Cloud SQL instance. This API can be used only to create on-demand backups.
+
+```sql
+EXEC google.sqladmin.backups.create_backup 
+@projectsId='{{ projectsId }}' --required 
+@@json=
+'{
+"expiryTime": "{{ expiryTime }}", 
+"description": "{{ description }}", 
+"location": "{{ location }}", 
+"ttlDays": "{{ ttlDays }}", 
+"instance": "{{ instance }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="list_backups">
+
+Lists all backups associated with the project.
+
+```sql
+EXEC google.sqladmin.backups.list_backups 
+@projectsId='{{ projectsId }}' --required, 
+@pageSize='{{ pageSize }}', 
+@pageToken='{{ pageToken }}', 
+@filter='{{ filter }}'
+;
+```
+</TabItem>
 <TabItem value="delete_backup">
 
 Deletes the backup.
@@ -180,40 +212,9 @@ EXEC google.sqladmin.backups.update_backup
 '{
 "expiryTime": "{{ expiryTime }}", 
 "description": "{{ description }}", 
-"instance": "{{ instance }}", 
 "location": "{{ location }}", 
-"ttlDays": "{{ ttlDays }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="list_backups">
-
-Lists all backups associated with the project.
-
-```sql
-EXEC google.sqladmin.backups.list_backups 
-@projectsId='{{ projectsId }}' --required, 
-@pageToken='{{ pageToken }}', 
-@filter='{{ filter }}', 
-@pageSize='{{ pageSize }}'
-;
-```
-</TabItem>
-<TabItem value="create_backup">
-
-Creates a backup for a Cloud SQL instance. This API can be used only to create on-demand backups.
-
-```sql
-EXEC google.sqladmin.backups.create_backup 
-@projectsId='{{ projectsId }}' --required 
-@@json=
-'{
-"expiryTime": "{{ expiryTime }}", 
-"description": "{{ description }}", 
-"instance": "{{ instance }}", 
-"location": "{{ location }}", 
-"ttlDays": "{{ ttlDays }}"
+"ttlDays": "{{ ttlDays }}", 
+"instance": "{{ instance }}"
 }'
 ;
 ```

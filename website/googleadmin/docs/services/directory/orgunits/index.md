@@ -15,6 +15,7 @@ image: /img/stackql-googleadmin-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>orgunits</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>orgunits</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="orgunits" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleadmin.directory.orgunits" /></td></tr>
 </tbody></table>
@@ -289,26 +290,26 @@ Adds an organizational unit.
 ```sql
 INSERT INTO googleadmin.directory.orgunits (
 data__kind,
-data__name,
-data__description,
 data__etag,
 data__blockInheritance,
 data__orgUnitId,
-data__orgUnitPath,
+data__name,
+data__description,
 data__parentOrgUnitId,
 data__parentOrgUnitPath,
+data__orgUnitPath,
 customerId
 )
 SELECT 
 '{{ kind }}',
-'{{ name }}',
-'{{ description }}',
 '{{ etag }}',
 {{ blockInheritance }},
 '{{ orgUnitId }}',
-'{{ orgUnitPath }}',
+'{{ name }}',
+'{{ description }}',
 '{{ parentOrgUnitId }}',
 '{{ parentOrgUnitPath }}',
+'{{ orgUnitPath }}',
 '{{ customerId }}'
 RETURNING
 name,
@@ -325,60 +326,51 @@ parentOrgUnitPath
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: orgunits
   props:
     - name: customerId
-      value: string
+      value: "{{ customerId }}"
       description: Required parameter for the orgunits resource.
     - name: kind
-      value: string
-      description: >
-        The type of the API resource. For Orgunits resources, the value is `admin#directory#orgUnit`.
-        
+      value: "{{ kind }}"
+      description: |
+        The type of the API resource. For Orgunits resources, the value is \`admin#directory#orgUnit\`.
       default: admin#directory#orgUnit
-    - name: name
-      value: string
-      description: >
-        The organizational unit's path name. For example, an organizational unit's name within the /corp/support/sales_support parent path is sales_support. Required.
-        
-    - name: description
-      value: string
-      description: >
-        Description of the organizational unit.
-        
     - name: etag
-      value: string
-      description: >
+      value: "{{ etag }}"
+      description: |
         ETag of the resource.
-        
     - name: blockInheritance
-      value: boolean
-      description: >
+      value: {{ blockInheritance }}
+      description: |
         This field is deprecated and setting its value has no effect.
-        
     - name: orgUnitId
-      value: string
-      description: >
+      value: "{{ orgUnitId }}"
+      description: |
         The unique ID of the organizational unit.
-        
-    - name: orgUnitPath
-      value: string
-      description: >
-        The full path to the organizational unit. The `orgUnitPath` is a derived property. When listed, it is derived from `parentOrgunitPath` and organizational unit's `name`. For example, for an organizational unit named 'apps' under parent organization '/engineering', the orgUnitPath is '/engineering/apps'. In order to edit an `orgUnitPath`, either update the name of the organization or the `parentOrgunitPath`. A user's organizational unit determines which Google Workspace services the user has access to. If the user is moved to a new organization, the user's access changes. For more information about organization structures, see the [administration help center](https://support.google.com/a/answer/4352075). For more information about moving a user to a different organization, see [Update a user](https://developers.google.com/workspace/admin/directory/v1/guides/manage-users.html#update_user).
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The organizational unit's path name. For example, an organizational unit's name within the /corp/support/sales_support parent path is sales_support. Required.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Description of the organizational unit.
     - name: parentOrgUnitId
-      value: string
-      description: >
-        The unique ID of the parent organizational unit. Required, unless `parentOrgUnitPath` is set.
-        
+      value: "{{ parentOrgUnitId }}"
+      description: |
+        The unique ID of the parent organizational unit. Required, unless \`parentOrgUnitPath\` is set.
     - name: parentOrgUnitPath
-      value: string
-      description: >
-        The organizational unit's parent path. For example, /corp/sales is the parent path for /corp/sales/sales_support organizational unit. Required, unless `parentOrgUnitId` is set.
-        
-```
+      value: "{{ parentOrgUnitPath }}"
+      description: |
+        The organizational unit's parent path. For example, /corp/sales is the parent path for /corp/sales/sales_support organizational unit. Required, unless \`parentOrgUnitId\` is set.
+    - name: orgUnitPath
+      value: "{{ orgUnitPath }}"
+      description: |
+        The full path to the organizational unit. The \`orgUnitPath\` is a derived property. When listed, it is derived from \`parentOrgunitPath\` and organizational unit's \`name\`. For example, for an organizational unit named 'apps' under parent organization '/engineering', the orgUnitPath is '/engineering/apps'. In order to edit an \`orgUnitPath\`, either update the name of the organization or the \`parentOrgunitPath\`. A user's organizational unit determines which Google Workspace services the user has access to. If the user is moved to a new organization, the user's access changes. For more information about organization structures, see the [administration help center](https://support.google.com/a/answer/4352075). For more information about moving a user to a different organization, see [Update a user](https://developers.google.com/workspace/admin/directory/v1/guides/manage-users.html#update_user).
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -399,14 +391,14 @@ Updates an organizational unit. This method supports [patch semantics](https://d
 UPDATE googleadmin.directory.orgunits
 SET 
 data__kind = '{{ kind }}',
-data__name = '{{ name }}',
-data__description = '{{ description }}',
 data__etag = '{{ etag }}',
 data__blockInheritance = {{ blockInheritance }},
 data__orgUnitId = '{{ orgUnitId }}',
-data__orgUnitPath = '{{ orgUnitPath }}',
+data__name = '{{ name }}',
+data__description = '{{ description }}',
 data__parentOrgUnitId = '{{ parentOrgUnitId }}',
-data__parentOrgUnitPath = '{{ parentOrgUnitPath }}'
+data__parentOrgUnitPath = '{{ parentOrgUnitPath }}',
+data__orgUnitPath = '{{ orgUnitPath }}'
 WHERE 
 customerId = '{{ customerId }}' --required
 AND orgunitsId = '{{ orgunitsId }}' --required
@@ -441,14 +433,14 @@ Updates an organizational unit.
 REPLACE googleadmin.directory.orgunits
 SET 
 data__kind = '{{ kind }}',
-data__name = '{{ name }}',
-data__description = '{{ description }}',
 data__etag = '{{ etag }}',
 data__blockInheritance = {{ blockInheritance }},
 data__orgUnitId = '{{ orgUnitId }}',
-data__orgUnitPath = '{{ orgUnitPath }}',
+data__name = '{{ name }}',
+data__description = '{{ description }}',
 data__parentOrgUnitId = '{{ parentOrgUnitId }}',
-data__parentOrgUnitPath = '{{ parentOrgUnitPath }}'
+data__parentOrgUnitPath = '{{ parentOrgUnitPath }}',
+data__orgUnitPath = '{{ orgUnitPath }}'
 WHERE 
 customerId = '{{ customerId }}' --required
 AND orgunitsId = '{{ orgunitsId }}' --required

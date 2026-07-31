@@ -15,6 +15,7 @@ image: /img/stackql-googleworkspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>parents</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>parents</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="parents" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleworkspace.drivev2.parents" /></td></tr>
 </tbody></table>
@@ -146,7 +147,7 @@ The following methods are available for this resource:
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-fileId"><code>fileId</code></a></td>
-    <td><a href="#parameter-enforceSingleParent"><code>enforceSingleParent</code></a>, <a href="#parameter-supportsAllDrives"><code>supportsAllDrives</code></a>, <a href="#parameter-supportsTeamDrives"><code>supportsTeamDrives</code></a></td>
+    <td><a href="#parameter-supportsAllDrives"><code>supportsAllDrives</code></a>, <a href="#parameter-supportsTeamDrives"><code>supportsTeamDrives</code></a>, <a href="#parameter-enforceSingleParent"><code>enforceSingleParent</code></a></td>
     <td>Adds a parent folder for a file.</td>
 </tr>
 <tr>
@@ -259,26 +260,26 @@ Adds a parent folder for a file.
 
 ```sql
 INSERT INTO googleworkspace.drivev2.parents (
+data__kind,
+data__parentLink,
 data__selfLink,
 data__id,
 data__isRoot,
-data__kind,
-data__parentLink,
 fileId,
-enforceSingleParent,
 supportsAllDrives,
-supportsTeamDrives
+supportsTeamDrives,
+enforceSingleParent
 )
 SELECT 
+'{{ kind }}',
+'{{ parentLink }}',
 '{{ selfLink }}',
 '{{ id }}',
 {{ isRoot }},
-'{{ kind }}',
-'{{ parentLink }}',
 '{{ fileId }}',
-'{{ enforceSingleParent }}',
 '{{ supportsAllDrives }}',
-'{{ supportsTeamDrives }}'
+'{{ supportsTeamDrives }}',
+'{{ enforceSingleParent }}'
 RETURNING
 id,
 isRoot,
@@ -290,46 +291,41 @@ selfLink
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: parents
   props:
     - name: fileId
-      value: string
+      value: "{{ fileId }}"
       description: Required parameter for the parents resource.
-    - name: selfLink
-      value: string
-      description: >
-        Output only. A link back to this reference.
-        
-    - name: id
-      value: string
-      description: >
-        The ID of the parent.
-        
-    - name: isRoot
-      value: boolean
-      description: >
-        Output only. Whether or not the parent is the root folder.
-        
     - name: kind
-      value: string
-      description: >
-        Output only. This is always `drive#parentReference`.
-        
+      value: "{{ kind }}"
+      description: |
+        Output only. This is always \`drive#parentReference\`.
       default: drive#parentReference
     - name: parentLink
-      value: string
-      description: >
+      value: "{{ parentLink }}"
+      description: |
         Output only. A link to the parent.
-        
-    - name: enforceSingleParent
-      value: boolean
+    - name: selfLink
+      value: "{{ selfLink }}"
+      description: |
+        Output only. A link back to this reference.
+    - name: id
+      value: "{{ id }}"
+      description: |
+        The ID of the parent.
+    - name: isRoot
+      value: {{ isRoot }}
+      description: |
+        Output only. Whether or not the parent is the root folder.
     - name: supportsAllDrives
-      value: boolean
+      value: {{ supportsAllDrives }}
     - name: supportsTeamDrives
-      value: boolean
-```
+      value: {{ supportsTeamDrives }}
+    - name: enforceSingleParent
+      value: {{ enforceSingleParent }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

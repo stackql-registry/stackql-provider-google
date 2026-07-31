@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>authorization_policies</code> 
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>authorization_policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="authorization_policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networksecurity.authorization_policies" /></td></tr>
 </tbody></table>
@@ -57,7 +58,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="action" /></td>
     <td><code>string</code></td>
-    <td>Required. The action to take when a rule match is found. Possible values are "ALLOW" or "DENY".</td>
+    <td>Required. The action to take when a rule match is found. Possible values are "ALLOW" or "DENY". (ACTION_UNSPECIFIED, ALLOW, DENY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -106,7 +107,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="action" /></td>
     <td><code>string</code></td>
-    <td>Required. The action to take when a rule match is found. Possible values are "ALLOW" or "DENY".</td>
+    <td>Required. The action to take when a rule match is found. Possible values are "ALLOW" or "DENY". (ACTION_UNSPECIFIED, ALLOW, DENY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -164,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_authorization_policies_list"><CopyableCode code="projects_locations_authorization_policies_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists AuthorizationPolicies in a given project and location.</td>
 </tr>
 <tr>
@@ -287,8 +288,8 @@ updateTime
 FROM google.networksecurity.authorization_policies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -310,21 +311,21 @@ Creates a new AuthorizationPolicy in a given project and location.
 
 ```sql
 INSERT INTO google.networksecurity.authorization_policies (
-data__action,
-data__rules,
 data__labels,
-data__name,
+data__rules,
+data__action,
 data__description,
+data__name,
 projectsId,
 locationsId,
 authorizationPolicyId
 )
 SELECT 
-'{{ action }}',
-'{{ rules }}',
 '{{ labels }}',
-'{{ name }}',
+'{{ rules }}',
+'{{ action }}',
 '{{ description }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ authorizationPolicyId }}'
@@ -339,45 +340,42 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: authorization_policies
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the authorization_policies resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the authorization_policies resource.
-    - name: action
-      value: string
-      description: >
-        Required. The action to take when a rule match is found. Possible values are "ALLOW" or "DENY".
-        
-      valid_values: ['ACTION_UNSPECIFIED', 'ALLOW', 'DENY']
-    - name: rules
-      value: array
-      description: >
-        Optional. List of rules to match. Note that at least one of the rules must match in order for the action specified in the 'action' field to be taken. A rule is a match if there is a matching source and destination. If left blank, the action specified in the `action` field will be applied on every request.
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. Set of label tags associated with the AuthorizationPolicy resource.
-        
-    - name: name
-      value: string
-      description: >
-        Required. Name of the AuthorizationPolicy resource. It matches pattern `projects/{project}/locations/{location}/authorizationPolicies/`.
-        
+    - name: rules
+      description: |
+        Optional. List of rules to match. Note that at least one of the rules must match in order for the action specified in the 'action' field to be taken. A rule is a match if there is a matching source and destination. If left blank, the action specified in the \`action\` field will be applied on every request.
+      value:
+        - sources: "{{ sources }}"
+          destinations: "{{ destinations }}"
+    - name: action
+      value: "{{ action }}"
+      description: |
+        Required. The action to take when a rule match is found. Possible values are "ALLOW" or "DENY".
+      valid_values: ['ACTION_UNSPECIFIED', 'ALLOW', 'DENY']
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. Free-text description of the resource.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. Name of the AuthorizationPolicy resource. It matches pattern \`projects/{project}/locations/{location}/authorizationPolicies/\`.
     - name: authorizationPolicyId
-      value: string
-```
+      value: "{{ authorizationPolicyId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -397,11 +395,11 @@ Updates the parameters of a single AuthorizationPolicy.
 ```sql
 UPDATE google.networksecurity.authorization_policies
 SET 
-data__action = '{{ action }}',
-data__rules = '{{ rules }}',
 data__labels = '{{ labels }}',
-data__name = '{{ name }}',
-data__description = '{{ description }}'
+data__rules = '{{ rules }}',
+data__action = '{{ action }}',
+data__description = '{{ description }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

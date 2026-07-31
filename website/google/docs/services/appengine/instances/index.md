@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>instances</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>instances</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="instances" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.appengine.instances" /></td></tr>
 </tbody></table>
@@ -67,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="availability" /></td>
     <td><code>string</code></td>
-    <td>Output only. Availability of the instance.</td>
+    <td>Output only. Availability of the instance. (UNSPECIFIED, RESIDENT, DYNAMIC)</td>
 </tr>
 <tr>
     <td><CopyableCode code="averageLatency" /></td>
@@ -117,7 +118,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="vmLiveness" /></td>
     <td><code>string</code></td>
-    <td>Output only. The liveness health check of this instance. Only applicable for instances in App Engine flexible environment.</td>
+    <td>Output only. The liveness health check of this instance. Only applicable for instances in App Engine flexible environment. (LIVENESS_STATE_UNSPECIFIED, UNKNOWN, HEALTHY, UNHEALTHY, DRAINING, TIMEOUT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="vmName" /></td>
@@ -166,7 +167,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="availability" /></td>
     <td><code>string</code></td>
-    <td>Output only. Availability of the instance.</td>
+    <td>Output only. Availability of the instance. (UNSPECIFIED, RESIDENT, DYNAMIC)</td>
 </tr>
 <tr>
     <td><CopyableCode code="averageLatency" /></td>
@@ -216,7 +217,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="vmLiveness" /></td>
     <td><code>string</code></td>
-    <td>Output only. The liveness health check of this instance. Only applicable for instances in App Engine flexible environment.</td>
+    <td>Output only. The liveness health check of this instance. Only applicable for instances in App Engine flexible environment. (LIVENESS_STATE_UNSPECIFIED, UNKNOWN, HEALTHY, UNHEALTHY, DRAINING, TIMEOUT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="vmName" /></td>
@@ -270,14 +271,14 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-appsId"><code>appsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-applicationsId"><code>applicationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
     <td></td>
     <td>Stops a running instance.The instance might be automatically recreated based on the scaling settings of the version. For more information, see "How Instances are Managed" (standard environment (https://cloud.google.com/appengine/docs/standard/python/how-instances-are-managed) | flexible environment (https://cloud.google.com/appengine/docs/flexible/python/how-instances-are-managed)).To ensure that instances are not re-created and avoid getting billed, you can stop all instances within the target version by changing the serving status of the version to STOPPED with the apps.services.versions.patch (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions/patch) method.</td>
 </tr>
 <tr>
     <td><a href="#debug"><CopyableCode code="debug" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-appsId"><code>appsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-applicationsId"><code>applicationsId</code></a>, <a href="#parameter-servicesId"><code>servicesId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
     <td></td>
     <td>Enables debugging on a VM instance. This allows you to use the SSH command to connect to the virtual machine where the instance lives. While in "debug mode", the instance continues to serve live traffic. You should delete the instance when you are done debugging and then allow the system to take over and determine if another instance should be started.Only applicable for instances in App Engine flexible environment.</td>
 </tr>
@@ -297,6 +298,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
+<tr id="parameter-applicationsId">
+    <td><CopyableCode code="applicationsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-appsId">
     <td><CopyableCode code="appsId" /></td>
     <td><code>string</code></td>
@@ -304,6 +310,16 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-instancesId">
     <td><CopyableCode code="instancesId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-locationsId">
+    <td><CopyableCode code="locationsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-projectsId">
+    <td><CopyableCode code="projectsId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -419,7 +435,9 @@ Stops a running instance.The instance might be automatically recreated based on 
 
 ```sql
 DELETE FROM google.appengine.instances
-WHERE appsId = '{{ appsId }}' --required
+WHERE projectsId = '{{ projectsId }}' --required
+AND locationsId = '{{ locationsId }}' --required
+AND applicationsId = '{{ applicationsId }}' --required
 AND servicesId = '{{ servicesId }}' --required
 AND versionsId = '{{ versionsId }}' --required
 AND instancesId = '{{ instancesId }}' --required
@@ -443,7 +461,9 @@ Enables debugging on a VM instance. This allows you to use the SSH command to co
 
 ```sql
 EXEC google.appengine.instances.debug 
-@appsId='{{ appsId }}' --required, 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@applicationsId='{{ applicationsId }}' --required, 
 @servicesId='{{ servicesId }}' --required, 
 @versionsId='{{ versionsId }}' --required, 
 @instancesId='{{ instancesId }}' --required 

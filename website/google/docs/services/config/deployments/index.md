@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>deployments</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>deployments</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="deployments" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.config.deployments" /></td></tr>
 </tbody></table>
@@ -62,7 +63,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="artifactsGcsBucket" /></td>
     <td><code>string</code></td>
-    <td>Optional. User-defined location of Cloud Build logs and artifacts in Google Cloud Storage. Format: `gs://&#123;bucket&#125;/&#123;folder&#125;` A default bucket will be bootstrapped if the field is not set or empty. Default bucket format: `gs://--blueprint-config` Constraints: - The bucket needs to be in the same project as the deployment - The path cannot be within the path of `gcs_source` - The field cannot be updated, including changing its presence</td>
+    <td>User-defined location of Cloud Build logs and artifacts in Google Cloud Storage. Format: `gs://&#123;bucket&#125;/&#123;folder&#125;` A default bucket will be bootstrapped if the field is not set or empty. Default bucket format: `gs://--blueprint-config` Constraints: - The bucket needs to be in the same project as the deployment - The path cannot be within the path of `gcs_source` - The field cannot be updated, including changing its presence</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -87,7 +88,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="errorCode" /></td>
     <td><code>string</code></td>
-    <td>Output only. Error code describing errors that may have occurred.</td>
+    <td>Output only. Error code describing errors that may have occurred. (ERROR_CODE_UNSPECIFIED, REVISION_FAILED, CLOUD_BUILD_PERMISSION_DENIED, DELETE_BUILD_API_FAILED, DELETE_BUILD_RUN_FAILED, BUCKET_CREATION_PERMISSION_DENIED, BUCKET_CREATION_FAILED, EXTERNAL_VALUE_SOURCE_IMPORT_FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="errorLogs" /></td>
@@ -112,7 +113,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="lockState" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current lock state of the deployment.</td>
+    <td>Output only. Current lock state of the deployment. (LOCK_STATE_UNSPECIFIED, LOCKED, UNLOCKED, LOCKING, UNLOCKING, LOCK_FAILED, UNLOCK_FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="providerConfig" /></td>
@@ -122,7 +123,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="quotaValidation" /></td>
     <td><code>string</code></td>
-    <td>Optional. Input to control quota checks for resources in terraform configuration files. There are limited resources on which quota validation applies.</td>
+    <td>Optional. Input to control quota checks for resources in terraform configuration files. There are limited resources on which quota validation applies. (QUOTA_VALIDATION_UNSPECIFIED, ENABLED, ENFORCED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="serviceAccount" /></td>
@@ -132,7 +133,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the deployment.</td>
+    <td>Output only. Current state of the deployment. (STATE_UNSPECIFIED, CREATING, ACTIVE, UPDATING, DELETING, FAILED, SUSPENDED, DELETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateDetail" /></td>
@@ -157,7 +158,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="tfVersionConstraint" /></td>
     <td><code>string</code></td>
-    <td>Optional. The user-specified Terraform version constraint. Example: "=1.3.10".</td>
+    <td>The user-specified Terraform version constraint. Example: "=1.3.10".</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -167,7 +168,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="workerPool" /></td>
     <td><code>string</code></td>
-    <td>Optional. The user-specified Cloud Build worker pool resource in which the Cloud Build job will execute. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/workerPools/&#123;workerPoolId&#125;`. If this field is unspecified, the default Cloud Build worker pool will be used.</td>
+    <td>The user-specified Cloud Build worker pool resource in which the Cloud Build job will execute. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/workerPools/&#123;workerPoolId&#125;`. If this field is unspecified, the default Cloud Build worker pool will be used.</td>
 </tr>
 </tbody>
 </table>
@@ -183,126 +184,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Identifier. Resource name of the deployment. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/deployments/&#123;deployment&#125;`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="annotations" /></td>
-    <td><code>object</code></td>
-    <td>Optional. Arbitrary key-value metadata storage e.g. to help client tools identify deployments during automation. See https://google.aip.dev/148#annotations for details on format and size limitations.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="artifactsGcsBucket" /></td>
-    <td><code>string</code></td>
-    <td>Optional. User-defined location of Cloud Build logs and artifacts in Google Cloud Storage. Format: `gs://&#123;bucket&#125;/&#123;folder&#125;` A default bucket will be bootstrapped if the field is not set or empty. Default bucket format: `gs://--blueprint-config` Constraints: - The bucket needs to be in the same project as the deployment - The path cannot be within the path of `gcs_source` - The field cannot be updated, including changing its presence</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Time when the deployment was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="deleteBuild" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Cloud Build instance UUID associated with deleting this deployment.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="deleteLogs" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Location of Cloud Build logs in Google Cloud Storage, populated when deleting this deployment. Format: `gs://&#123;bucket&#125;/&#123;object&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="deleteResults" /></td>
-    <td><code>object</code></td>
-    <td>Output only. Location of artifacts from a DeleteDeployment operation. (id: ApplyResults)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="errorCode" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Error code describing errors that may have occurred.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="errorLogs" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Location of Terraform error logs in Google Cloud Storage. Format: `gs://&#123;bucket&#125;/&#123;object&#125;`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="importExistingResources" /></td>
-    <td><code>boolean</code></td>
-    <td>By default, Infra Manager will return a failure when Terraform encounters a 409 code (resource conflict error) during actuation. If this flag is set to true, Infra Manager will instead attempt to automatically import the resource into the Terraform state (for supported resource types) and continue actuation. Not all resource types are supported, refer to documentation.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Optional. User-defined metadata for the deployment.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="latestRevision" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Revision name that was most recently applied. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/deployments/&#123;deployment&#125;/ revisions/&#123;revision&#125;`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="lockState" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Current lock state of the deployment.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="providerConfig" /></td>
-    <td><code>object</code></td>
-    <td>Optional. This field specifies the provider configurations. (id: ProviderConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="quotaValidation" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Input to control quota checks for resources in terraform configuration files. There are limited resources on which quota validation applies.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="serviceAccount" /></td>
-    <td><code>string</code></td>
-    <td>Required. User-specified Service Account (SA) credentials to be used when actuating resources. Format: `projects/&#123;projectID&#125;/serviceAccounts/&#123;serviceAccount&#125;`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="state" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Current state of the deployment.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="stateDetail" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Additional information regarding the current state.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="terraformBlueprint" /></td>
-    <td><code>object</code></td>
-    <td>A blueprint described using Terraform's HashiCorp Configuration Language as a root module. (id: TerraformBlueprint)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="tfErrors" /></td>
-    <td><code>array</code></td>
-    <td>Output only. Errors encountered when deleting this deployment. Errors are truncated to 10 entries, see `delete_results` and `error_logs` for full details.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="tfVersion" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The current Terraform version set on the deployment. It is in the format of "Major.Minor.Patch", for example, "1.3.10".</td>
-</tr>
-<tr>
-    <td><CopyableCode code="tfVersionConstraint" /></td>
-    <td><code>string</code></td>
-    <td>Optional. The user-specified Terraform version constraint. Example: "=1.3.10".</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Time when the deployment was last modified.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="workerPool" /></td>
-    <td><code>string</code></td>
-    <td>Optional. The user-specified Cloud Build worker pool resource in which the Cloud Build job will execute. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/workerPools/&#123;workerPoolId&#125;`. If this field is unspecified, the default Cloud Build worker pool will be used.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -334,7 +215,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists Deployments in a given project and location.</td>
 </tr>
 <tr>
@@ -348,14 +229,14 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deploymentsId"><code>deploymentsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a Deployment.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deploymentsId"><code>deploymentsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-force"><code>force</code></a>, <a href="#parameter-deletePolicy"><code>deletePolicy</code></a></td>
+    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-deletePolicy"><code>deletePolicy</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes a Deployment.</td>
 </tr>
 <tr>
@@ -371,13 +252,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deploymentsId"><code>deploymentsId</code></a></td>
     <td></td>
     <td>Imports Terraform state file in a given deployment. The state file does not take effect until the Deployment has been unlocked.</td>
-</tr>
-<tr>
-    <td><a href="#delete_state"><CopyableCode code="delete_state" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deploymentsId"><code>deploymentsId</code></a></td>
-    <td></td>
-    <td>Deletes Terraform state file in a given deployment.</td>
 </tr>
 <tr>
     <td><a href="#lock"><CopyableCode code="lock" /></a></td>
@@ -399,6 +273,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deploymentsId"><code>deploymentsId</code></a></td>
     <td></td>
     <td>Exports the lock info on a locked deployment.</td>
+</tr>
+<tr>
+    <td><a href="#delete_state"><CopyableCode code="delete_state" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deploymentsId"><code>deploymentsId</code></a></td>
+    <td></td>
+    <td>Deletes Terraform state file in a given deployment.</td>
 </tr>
 </tbody>
 </table>
@@ -531,37 +412,14 @@ Lists Deployments in a given project and location.
 
 ```sql
 SELECT
-name,
-annotations,
-artifactsGcsBucket,
-createTime,
-deleteBuild,
-deleteLogs,
-deleteResults,
-errorCode,
-errorLogs,
-importExistingResources,
-labels,
-latestRevision,
-lockState,
-providerConfig,
-quotaValidation,
-serviceAccount,
-state,
-stateDetail,
-terraformBlueprint,
-tfErrors,
-tfVersion,
-tfVersionConstraint,
-updateTime,
-workerPool
+*
 FROM google.config.deployments
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -583,34 +441,34 @@ Creates a Deployment.
 
 ```sql
 INSERT INTO google.config.deployments (
-data__terraformBlueprint,
-data__name,
 data__labels,
-data__artifactsGcsBucket,
-data__serviceAccount,
 data__importExistingResources,
 data__workerPool,
-data__tfVersionConstraint,
-data__quotaValidation,
+data__serviceAccount,
 data__annotations,
+data__tfVersionConstraint,
 data__providerConfig,
+data__artifactsGcsBucket,
+data__name,
+data__terraformBlueprint,
+data__quotaValidation,
 projectsId,
 locationsId,
 deploymentId,
 requestId
 )
 SELECT 
-'{{ terraformBlueprint }}',
-'{{ name }}',
 '{{ labels }}',
-'{{ artifactsGcsBucket }}',
-'{{ serviceAccount }}',
 {{ importExistingResources }},
 '{{ workerPool }}',
-'{{ tfVersionConstraint }}',
-'{{ quotaValidation }}',
+'{{ serviceAccount }}',
 '{{ annotations }}',
+'{{ tfVersionConstraint }}',
 '{{ providerConfig }}',
+'{{ artifactsGcsBucket }}',
+'{{ name }}',
+'{{ terraformBlueprint }}',
+'{{ quotaValidation }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ deploymentId }}',
@@ -626,77 +484,74 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: deployments
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the deployments resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the deployments resource.
-    - name: terraformBlueprint
-      value: object
-      description: >
-        A blueprint described using Terraform's HashiCorp Configuration Language as a root module.
-        
-    - name: name
-      value: string
-      description: >
-        Identifier. Resource name of the deployment. Format: `projects/{project}/locations/{location}/deployments/{deployment}`
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. User-defined metadata for the deployment.
-        
-    - name: artifactsGcsBucket
-      value: string
-      description: >
-        Optional. User-defined location of Cloud Build logs and artifacts in Google Cloud Storage. Format: `gs://{bucket}/{folder}` A default bucket will be bootstrapped if the field is not set or empty. Default bucket format: `gs://--blueprint-config` Constraints: - The bucket needs to be in the same project as the deployment - The path cannot be within the path of `gcs_source` - The field cannot be updated, including changing its presence
-        
-    - name: serviceAccount
-      value: string
-      description: >
-        Required. User-specified Service Account (SA) credentials to be used when actuating resources. Format: `projects/{projectID}/serviceAccounts/{serviceAccount}`
-        
     - name: importExistingResources
-      value: boolean
-      description: >
+      value: {{ importExistingResources }}
+      description: |
         By default, Infra Manager will return a failure when Terraform encounters a 409 code (resource conflict error) during actuation. If this flag is set to true, Infra Manager will instead attempt to automatically import the resource into the Terraform state (for supported resource types) and continue actuation. Not all resource types are supported, refer to documentation.
-        
     - name: workerPool
-      value: string
-      description: >
-        Optional. The user-specified Cloud Build worker pool resource in which the Cloud Build job will execute. Format: `projects/{project}/locations/{location}/workerPools/{workerPoolId}`. If this field is unspecified, the default Cloud Build worker pool will be used.
-        
-    - name: tfVersionConstraint
-      value: string
-      description: >
-        Optional. The user-specified Terraform version constraint. Example: "=1.3.10".
-        
-    - name: quotaValidation
-      value: string
-      description: >
-        Optional. Input to control quota checks for resources in terraform configuration files. There are limited resources on which quota validation applies.
-        
-      valid_values: ['QUOTA_VALIDATION_UNSPECIFIED', 'ENABLED', 'ENFORCED']
+      value: "{{ workerPool }}"
+      description: |
+        The user-specified Cloud Build worker pool resource in which the Cloud Build job will execute. Format: \`projects/{project}/locations/{location}/workerPools/{workerPoolId}\`. If this field is unspecified, the default Cloud Build worker pool will be used.
+    - name: serviceAccount
+      value: "{{ serviceAccount }}"
+      description: |
+        Required. User-specified Service Account (SA) credentials to be used when actuating resources. Format: \`projects/{projectID}/serviceAccounts/{serviceAccount}\`
     - name: annotations
-      value: object
-      description: >
+      value: "{{ annotations }}"
+      description: |
         Optional. Arbitrary key-value metadata storage e.g. to help client tools identify deployments during automation. See https://google.aip.dev/148#annotations for details on format and size limitations.
-        
+    - name: tfVersionConstraint
+      value: "{{ tfVersionConstraint }}"
+      description: |
+        The user-specified Terraform version constraint. Example: "=1.3.10".
     - name: providerConfig
-      value: object
-      description: >
+      description: |
         Optional. This field specifies the provider configurations.
-        
+      value:
+        sourceType: "{{ sourceType }}"
+    - name: artifactsGcsBucket
+      value: "{{ artifactsGcsBucket }}"
+      description: |
+        User-defined location of Cloud Build logs and artifacts in Google Cloud Storage. Format: \`gs://{bucket}/{folder}\` A default bucket will be bootstrapped if the field is not set or empty. Default bucket format: \`gs://--blueprint-config\` Constraints: - The bucket needs to be in the same project as the deployment - The path cannot be within the path of \`gcs_source\` - The field cannot be updated, including changing its presence
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Resource name of the deployment. Format: \`projects/{project}/locations/{location}/deployments/{deployment}\`
+    - name: terraformBlueprint
+      description: |
+        A blueprint described using Terraform's HashiCorp Configuration Language as a root module.
+      value:
+        gitSource:
+          ref: "{{ ref }}"
+          repo: "{{ repo }}"
+          directory: "{{ directory }}"
+        gcsSource: "{{ gcsSource }}"
+        externalValues: "{{ externalValues }}"
+        inputValues: "{{ inputValues }}"
+    - name: quotaValidation
+      value: "{{ quotaValidation }}"
+      description: |
+        Optional. Input to control quota checks for resources in terraform configuration files. There are limited resources on which quota validation applies.
+      valid_values: ['QUOTA_VALIDATION_UNSPECIFIED', 'ENABLED', 'ENFORCED']
     - name: deploymentId
-      value: string
+      value: "{{ deploymentId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -716,23 +571,23 @@ Updates a Deployment.
 ```sql
 UPDATE google.config.deployments
 SET 
-data__terraformBlueprint = '{{ terraformBlueprint }}',
-data__name = '{{ name }}',
 data__labels = '{{ labels }}',
-data__artifactsGcsBucket = '{{ artifactsGcsBucket }}',
-data__serviceAccount = '{{ serviceAccount }}',
 data__importExistingResources = {{ importExistingResources }},
 data__workerPool = '{{ workerPool }}',
-data__tfVersionConstraint = '{{ tfVersionConstraint }}',
-data__quotaValidation = '{{ quotaValidation }}',
+data__serviceAccount = '{{ serviceAccount }}',
 data__annotations = '{{ annotations }}',
-data__providerConfig = '{{ providerConfig }}'
+data__tfVersionConstraint = '{{ tfVersionConstraint }}',
+data__providerConfig = '{{ providerConfig }}',
+data__artifactsGcsBucket = '{{ artifactsGcsBucket }}',
+data__name = '{{ name }}',
+data__terraformBlueprint = '{{ terraformBlueprint }}',
+data__quotaValidation = '{{ quotaValidation }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND deploymentsId = '{{ deploymentsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,
@@ -761,9 +616,9 @@ DELETE FROM google.config.deployments
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND deploymentsId = '{{ deploymentsId }}' --required
-AND requestId = '{{ requestId }}'
 AND force = '{{ force }}'
 AND deletePolicy = '{{ deletePolicy }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>
@@ -777,10 +632,10 @@ AND deletePolicy = '{{ deletePolicy }}'
     values={[
         { label: 'export_state', value: 'export_state' },
         { label: 'import_state', value: 'import_state' },
-        { label: 'delete_state', value: 'delete_state' },
         { label: 'lock', value: 'lock' },
         { label: 'unlock', value: 'unlock' },
-        { label: 'export_lock', value: 'export_lock' }
+        { label: 'export_lock', value: 'export_lock' },
+        { label: 'delete_state', value: 'delete_state' }
     ]}
 >
 <TabItem value="export_state">
@@ -805,22 +660,6 @@ Imports Terraform state file in a given deployment. The state file does not take
 
 ```sql
 EXEC google.config.deployments.import_state 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@deploymentsId='{{ deploymentsId }}' --required 
-@@json=
-'{
-"lockId": "{{ lockId }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="delete_state">
-
-Deletes Terraform state file in a given deployment.
-
-```sql
-EXEC google.config.deployments.delete_state 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @deploymentsId='{{ deploymentsId }}' --required 
@@ -868,6 +707,22 @@ EXEC google.config.deployments.export_lock
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @deploymentsId='{{ deploymentsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="delete_state">
+
+Deletes Terraform state file in a given deployment.
+
+```sql
+EXEC google.config.deployments.delete_state 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@deploymentsId='{{ deploymentsId }}' --required 
+@@json=
+'{
+"lockId": "{{ lockId }}"
+}'
 ;
 ```
 </TabItem>

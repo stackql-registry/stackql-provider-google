@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>intercept_endpoint_groups</cod
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>intercept_endpoint_groups</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="intercept_endpoint_groups" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networksecurity.intercept_endpoint_groups" /></td></tr>
 </tbody></table>
@@ -92,7 +93,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the endpoint group. See https://google.aip.dev/216.</td>
+    <td>Output only. The current state of the endpoint group. See https://google.aip.dev/216. (STATE_UNSPECIFIED, ACTIVE, CLOSED, CREATING, DELETING, OUT_OF_SYNC, DELETE_FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -156,7 +157,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the endpoint group. See https://google.aip.dev/216.</td>
+    <td>Output only. The current state of the endpoint group. See https://google.aip.dev/216. (STATE_UNSPECIFIED, ACTIVE, CLOSED, CREATING, DELETING, OUT_OF_SYNC, DELETE_FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -194,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_intercept_endpoint_groups_list"><CopyableCode code="projects_locations_intercept_endpoint_groups_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists endpoint groups in a given project and location. See https://google.aip.dev/132.</td>
 </tr>
 <tr>
@@ -338,10 +339,10 @@ updateTime
 FROM google.networksecurity.intercept_endpoint_groups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -363,9 +364,9 @@ Creates an endpoint group in a given project and location. See https://google.ai
 
 ```sql
 INSERT INTO google.networksecurity.intercept_endpoint_groups (
-data__labels,
 data__name,
 data__description,
+data__labels,
 data__interceptDeploymentGroup,
 projectsId,
 locationsId,
@@ -373,9 +374,9 @@ requestId,
 interceptEndpointGroupId
 )
 SELECT 
-'{{ labels }}',
 '{{ name }}',
 '{{ description }}',
+'{{ labels }}',
 '{{ interceptDeploymentGroup }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -392,41 +393,37 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: intercept_endpoint_groups
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the intercept_endpoint_groups resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the intercept_endpoint_groups resource.
-    - name: labels
-      value: object
-      description: >
-        Optional. Labels are key/value pairs that help to organize and filter resources.
-        
     - name: name
-      value: string
-      description: >
-        Immutable. Identifier. The resource name of this endpoint group, for example: `projects/123456789/locations/global/interceptEndpointGroups/my-eg`. See https://google.aip.dev/122 for more details.
-        
+      value: "{{ name }}"
+      description: |
+        Immutable. Identifier. The resource name of this endpoint group, for example: \`projects/123456789/locations/global/interceptEndpointGroups/my-eg\`. See https://google.aip.dev/122 for more details.
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. User-provided description of the endpoint group. Used as additional context for the endpoint group.
-        
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Labels are key/value pairs that help to organize and filter resources.
     - name: interceptDeploymentGroup
-      value: string
-      description: >
-        Required. Immutable. The deployment group that this endpoint group is connected to, for example: `projects/123456789/locations/global/interceptDeploymentGroups/my-dg`. See https://google.aip.dev/124.
-        
+      value: "{{ interceptDeploymentGroup }}"
+      description: |
+        Required. Immutable. The deployment group that this endpoint group is connected to, for example: \`projects/123456789/locations/global/interceptDeploymentGroups/my-dg\`. See https://google.aip.dev/124.
     - name: requestId
-      value: string
+      value: "{{ requestId }}"
     - name: interceptEndpointGroupId
-      value: string
-```
+      value: "{{ interceptEndpointGroupId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -446,9 +443,9 @@ Updates an endpoint group. See https://google.aip.dev/134.
 ```sql
 UPDATE google.networksecurity.intercept_endpoint_groups
 SET 
-data__labels = '{{ labels }}',
 data__name = '{{ name }}',
 data__description = '{{ description }}',
+data__labels = '{{ labels }}',
 data__interceptDeploymentGroup = '{{ interceptDeploymentGroup }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

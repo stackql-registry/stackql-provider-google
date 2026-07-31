@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>policies</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.iamv2beta.policies" /></td></tr>
 </tbody></table>
@@ -347,22 +348,22 @@ Creates a policy.
 ```sql
 INSERT INTO google.iamv2beta.policies (
 data__name,
-data__uid,
-data__displayName,
-data__annotations,
-data__etag,
 data__rules,
+data__etag,
+data__uid,
+data__annotations,
+data__displayName,
 policiesId,
 policiesId1,
 policyId
 )
 SELECT 
 '{{ name }}',
-'{{ uid }}',
-'{{ displayName }}',
-'{{ annotations }}',
-'{{ etag }}',
 '{{ rules }}',
+'{{ etag }}',
+'{{ uid }}',
+'{{ annotations }}',
+'{{ displayName }}',
 '{{ policiesId }}',
 '{{ policiesId1 }}',
 '{{ policyId }}'
@@ -377,49 +378,58 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: policies
   props:
     - name: policiesId
-      value: string
+      value: "{{ policiesId }}"
       description: Required parameter for the policies resource.
     - name: policiesId1
-      value: string
+      value: "{{ policiesId1 }}"
       description: Required parameter for the policies resource.
     - name: name
-      value: string
-      description: >
-        Immutable. The resource name of the `Policy`, which must be unique. Format: `policies/{attachment_point}/denypolicies/{policy_id}` The attachment point is identified by its URL-encoded full resource name, which means that the forward-slash character, `/`, must be written as `%2F`. For example, `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-deny-policy`. For organizations and folders, use the numeric ID in the full resource name. For projects, requests can use the alphanumeric or the numeric ID. Responses always contain the numeric ID.
-        
-    - name: uid
-      value: string
-      description: >
-        Immutable. The globally unique ID of the `Policy`. Assigned automatically when the `Policy` is created.
-        
-    - name: displayName
-      value: string
-      description: >
-        A user-specified description of the `Policy`. This value can be up to 63 characters.
-        
-    - name: annotations
-      value: object
-      description: >
-        A key-value map to store arbitrary metadata for the `Policy`. Keys can be up to 63 characters. Values can be up to 255 characters.
-        
-    - name: etag
-      value: string
-      description: >
-        An opaque tag that identifies the current version of the `Policy`. IAM uses this value to help manage concurrent updates, so they do not cause one update to be overwritten by another. If this field is present in a CreatePolicyRequest, the value is ignored.
-        
+      value: "{{ name }}"
+      description: |
+        Immutable. The resource name of the \`Policy\`, which must be unique. Format: \`policies/{attachment_point}/denypolicies/{policy_id}\` The attachment point is identified by its URL-encoded full resource name, which means that the forward-slash character, \`/\`, must be written as \`%2F\`. For example, \`policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-deny-policy\`. For organizations and folders, use the numeric ID in the full resource name. For projects, requests can use the alphanumeric or the numeric ID. Responses always contain the numeric ID.
     - name: rules
-      value: array
-      description: >
-        A list of rules that specify the behavior of the `Policy`. All of the rules should be of the `kind` specified in the `Policy`.
-        
+      description: |
+        A list of rules that specify the behavior of the \`Policy\`. All of the rules should be of the \`kind\` specified in the \`Policy\`.
+      value:
+        - denyRule:
+            deniedPermissions:
+              - "{{ deniedPermissions }}"
+            exceptionPrincipals:
+              - "{{ exceptionPrincipals }}"
+            exceptionPermissions:
+              - "{{ exceptionPermissions }}"
+            denialCondition:
+              expression: "{{ expression }}"
+              title: "{{ title }}"
+              description: "{{ description }}"
+              location: "{{ location }}"
+            deniedPrincipals:
+              - "{{ deniedPrincipals }}"
+          description: "{{ description }}"
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        An opaque tag that identifies the current version of the \`Policy\`. IAM uses this value to help manage concurrent updates, so they do not cause one update to be overwritten by another. If this field is present in a CreatePolicyRequest, the value is ignored.
+    - name: uid
+      value: "{{ uid }}"
+      description: |
+        Immutable. The globally unique ID of the \`Policy\`. Assigned automatically when the \`Policy\` is created.
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        A key-value map to store arbitrary metadata for the \`Policy\`. Keys can be up to 63 characters. Values can be up to 255 characters.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        A user-specified description of the \`Policy\`. This value can be up to 63 characters.
     - name: policyId
-      value: string
-```
+      value: "{{ policyId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -440,11 +450,11 @@ Updates the specified policy. You can update only the rules and the display name
 REPLACE google.iamv2beta.policies
 SET 
 data__name = '{{ name }}',
-data__uid = '{{ uid }}',
-data__displayName = '{{ displayName }}',
-data__annotations = '{{ annotations }}',
+data__rules = '{{ rules }}',
 data__etag = '{{ etag }}',
-data__rules = '{{ rules }}'
+data__uid = '{{ uid }}',
+data__annotations = '{{ annotations }}',
+data__displayName = '{{ displayName }}'
 WHERE 
 policiesId = '{{ policiesId }}' --required
 AND policiesId1 = '{{ policiesId1 }}' --required

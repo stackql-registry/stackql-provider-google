@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>spans</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>spans</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="spans" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudtrace.spans" /></td></tr>
 </tbody></table>
@@ -106,38 +107,38 @@ Creates a new span. If a span ID already exists, an additional copy of the span 
 ```sql
 INSERT INTO google.cloudtrace.spans (
 data__name,
-data__spanId,
 data__parentSpanId,
-data__displayName,
-data__startTime,
 data__endTime,
 data__attributes,
 data__stackTrace,
-data__timeEvents,
 data__links,
 data__status,
-data__sameProcessAsParentSpan,
-data__childSpanCount,
+data__spanId,
 data__spanKind,
+data__displayName,
+data__startTime,
+data__childSpanCount,
+data__timeEvents,
+data__sameProcessAsParentSpan,
 projectsId,
 tracesId,
 spansId
 )
 SELECT 
 '{{ name }}',
-'{{ spanId }}',
 '{{ parentSpanId }}',
-'{{ displayName }}',
-'{{ startTime }}',
 '{{ endTime }}',
 '{{ attributes }}',
 '{{ stackTrace }}',
-'{{ timeEvents }}',
 '{{ links }}',
 '{{ status }}',
-{{ sameProcessAsParentSpan }},
-{{ childSpanCount }},
+'{{ spanId }}',
 '{{ spanKind }}',
+'{{ displayName }}',
+'{{ startTime }}',
+{{ childSpanCount }},
+'{{ timeEvents }}',
+{{ sameProcessAsParentSpan }},
 '{{ projectsId }}',
 '{{ tracesId }}',
 '{{ spansId }}'
@@ -161,90 +162,132 @@ timeEvents
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: spans
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the spans resource.
     - name: tracesId
-      value: string
+      value: "{{ tracesId }}"
       description: Required parameter for the spans resource.
     - name: spansId
-      value: string
+      value: "{{ spansId }}"
       description: Required parameter for the spans resource.
     - name: name
-      value: string
-      description: >
-        Required. The resource name of the span in the following format: * `projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/[SPAN_ID]` `[TRACE_ID]` is a unique identifier for a trace within a project; it is a 32-character hexadecimal encoding of a 16-byte array. It should not be zero. `[SPAN_ID]` is a unique identifier for a span within a trace; it is a 16-character hexadecimal encoding of an 8-byte array. It should not be zero. .
-        
-    - name: spanId
-      value: string
-      description: >
-        Required. The `[SPAN_ID]` portion of the span's resource name.
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the span in the following format: * \`projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/[SPAN_ID]\` \`[TRACE_ID]\` is a unique identifier for a trace within a project; it is a 32-character hexadecimal encoding of a 16-byte array. It should not be zero. \`[SPAN_ID]\` is a unique identifier for a span within a trace; it is a 16-character hexadecimal encoding of an 8-byte array. It should not be zero. .
     - name: parentSpanId
-      value: string
-      description: >
-        The `[SPAN_ID]` of this span's parent span. If this is a root span, then this field must be empty.
-        
-    - name: displayName
-      value: object
-      description: >
-        Required. A description of the span's operation (up to 128 bytes). Cloud Trace displays the description in the Cloud console. For example, the display name can be a qualified method name or a file name and a line number where the operation is called. A best practice is to use the same display name within an application and at the same call point. This makes it easier to correlate spans in different traces.
-        
-    - name: startTime
-      value: string
-      description: >
-        Required. The start time of the span. On the client side, this is the time kept by the local machine where the span execution starts. On the server side, this is the time when the server's application handler starts running.
-        
+      value: "{{ parentSpanId }}"
+      description: |
+        Optional. The \`[SPAN_ID]\` of this span's parent span. If this is a root span, then this field must be empty.
     - name: endTime
-      value: string
-      description: >
+      value: "{{ endTime }}"
+      description: |
         Required. The end time of the span. On the client side, this is the time kept by the local machine where the span execution ends. On the server side, this is the time when the server application handler stops running.
-        
     - name: attributes
-      value: object
-      description: >
-        A set of attributes on the span. You can have up to 32 attributes per span.
-        
+      description: |
+        Optional. A set of attributes on the span. You can have up to 32 attributes per span.
+      value:
+        droppedAttributesCount: {{ droppedAttributesCount }}
+        attributeMap: "{{ attributeMap }}"
     - name: stackTrace
-      value: object
-      description: >
-        Stack trace captured at the start of the span.
-        
-    - name: timeEvents
-      value: object
-      description: >
-        A set of time events. You can have up to 32 annotations and 128 message events per span.
-        
+      description: |
+        Optional. Stack trace captured at the start of the span.
+      value:
+        stackFrames:
+          frame:
+            - originalFunctionName:
+                value: "{{ value }}"
+                truncatedByteCount: {{ truncatedByteCount }}
+              fileName:
+                value: "{{ value }}"
+                truncatedByteCount: {{ truncatedByteCount }}
+              functionName:
+                value: "{{ value }}"
+                truncatedByteCount: {{ truncatedByteCount }}
+              lineNumber: "{{ lineNumber }}"
+              columnNumber: "{{ columnNumber }}"
+              loadModule:
+                buildId:
+                  value: "{{ value }}"
+                  truncatedByteCount: {{ truncatedByteCount }}
+                module:
+                  value: "{{ value }}"
+                  truncatedByteCount: {{ truncatedByteCount }}
+              sourceVersion:
+                value: "{{ value }}"
+                truncatedByteCount: {{ truncatedByteCount }}
+          droppedFramesCount: {{ droppedFramesCount }}
+        stackTraceHashId: "{{ stackTraceHashId }}"
     - name: links
-      value: object
-      description: >
-        Links associated with the span. You can have up to 128 links per Span.
-        
+      description: |
+        Optional. Links associated with the span. You can have up to 128 links per Span.
+      value:
+        link:
+          - traceId: "{{ traceId }}"
+            spanId: "{{ spanId }}"
+            attributes:
+              droppedAttributesCount: {{ droppedAttributesCount }}
+              attributeMap: "{{ attributeMap }}"
+            type: "{{ type }}"
+        droppedLinksCount: {{ droppedLinksCount }}
     - name: status
-      value: object
-      description: >
+      description: |
         Optional. The final status for this span.
-        
-    - name: sameProcessAsParentSpan
-      value: boolean
-      description: >
-        Optional. Set this parameter to indicate whether this span is in the same process as its parent. If you do not set this parameter, Trace is unable to take advantage of this helpful information.
-        
-    - name: childSpanCount
-      value: integer
-      description: >
-        Optional. The number of child spans that were generated while this span was active. If set, allows implementation to detect missing child spans.
-        
+      value:
+        code: {{ code }}
+        message: "{{ message }}"
+        details: "{{ details }}"
+    - name: spanId
+      value: "{{ spanId }}"
+      description: |
+        Required. The \`[SPAN_ID]\` portion of the span's resource name.
     - name: spanKind
-      value: string
-      description: >
-        Optional. Distinguishes between spans generated in a particular context. For example, two spans with the same name may be distinguished using `CLIENT` (caller) and `SERVER` (callee) to identify an RPC call.
-        
+      value: "{{ spanKind }}"
+      description: |
+        Optional. Distinguishes between spans generated in a particular context. For example, two spans with the same name may be distinguished using \`CLIENT\` (caller) and \`SERVER\` (callee) to identify an RPC call.
       valid_values: ['SPAN_KIND_UNSPECIFIED', 'INTERNAL', 'SERVER', 'CLIENT', 'PRODUCER', 'CONSUMER']
-```
+    - name: displayName
+      description: |
+        Required. A description of the span's operation (up to 128 bytes). Cloud Trace displays the description in the Cloud console. For example, the display name can be a qualified method name or a file name and a line number where the operation is called. A best practice is to use the same display name within an application and at the same call point. This makes it easier to correlate spans in different traces.
+      value:
+        value: "{{ value }}"
+        truncatedByteCount: {{ truncatedByteCount }}
+    - name: startTime
+      value: "{{ startTime }}"
+      description: |
+        Required. The start time of the span. On the client side, this is the time kept by the local machine where the span execution starts. On the server side, this is the time when the server's application handler starts running.
+    - name: childSpanCount
+      value: {{ childSpanCount }}
+      description: |
+        Optional. The number of child spans that were generated while this span was active. If set, allows implementation to detect missing child spans.
+    - name: timeEvents
+      description: |
+        Optional. A set of time events. You can have up to 32 annotations and 128 message events per span.
+      value:
+        droppedMessageEventsCount: {{ droppedMessageEventsCount }}
+        timeEvent:
+          - messageEvent:
+              type: "{{ type }}"
+              id: "{{ id }}"
+              compressedSizeBytes: "{{ compressedSizeBytes }}"
+              uncompressedSizeBytes: "{{ uncompressedSizeBytes }}"
+            time: "{{ time }}"
+            annotation:
+              description:
+                value: "{{ value }}"
+                truncatedByteCount: {{ truncatedByteCount }}
+              attributes:
+                droppedAttributesCount: {{ droppedAttributesCount }}
+                attributeMap: "{{ attributeMap }}"
+        droppedAnnotationsCount: {{ droppedAnnotationsCount }}
+    - name: sameProcessAsParentSpan
+      value: {{ sameProcessAsParentSpan }}
+      description: |
+        Optional. Set this parameter to indicate whether this span is in the same process as its parent. If you do not set this parameter, Trace is unable to take advantage of this helpful information.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

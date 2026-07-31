@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>notification_endpoints</code> r
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>notification_endpoints</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="notification_endpoints" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.notification_endpoints" /></td></tr>
 </tbody></table>
@@ -52,17 +53,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="id" /></td>
     <td><code>string (uint64)</code></td>
-    <td>[Output Only] A unique identifier for this resource type. The server generates this identifier.</td>
+    <td>Output only. [Output Only] A unique identifier for this resource type. The server generates this identifier.</td>
 </tr>
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>[a-z](?:[-a-z0-9]&#123;0,61&#125;[a-z0-9])?</code>)</td>
+    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply withRFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>&#91;a-z&#93;(?:&#91;-a-z0-9&#93;&#123;0,61&#125;&#91;a-z0-9&#93;)?</code>)</td>
 </tr>
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Creation timestamp in RFC3339 text format.</td>
+    <td>Output only. [Output Only] Creation timestamp inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -77,17 +78,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of the resource. Always compute#notificationEndpoint for notification endpoints. (default: compute#notificationEndpoint)</td>
+    <td>Output only. [Output Only] Type of the resource. Alwayscompute#notificationEndpoint for notification endpoints. (default: compute#notificationEndpoint)</td>
 </tr>
 <tr>
     <td><CopyableCode code="region" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] URL of the region where the notification endpoint resides. This field applies only to the regional resource. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body.</td>
+    <td>Output only. [Output Only] URL of the region where the notification endpoint resides. This field applies only to the regional resource. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for the resource.</td>
+    <td>Output only. [Output Only] Server-defined URL for the resource.</td>
 </tr>
 </tbody>
 </table>
@@ -116,12 +117,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of the resource. Always compute#notificationEndpoint for notification endpoints. (default: compute#notificationEndpointList)</td>
+    <td>Output only. [Output Only] Type of the resource. Alwayscompute#notificationEndpoint for notification endpoints. (default: compute#notificationEndpointList)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextPageToken" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
+    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger thanmaxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
@@ -164,7 +165,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists the NotificationEndpoints for a project in the given region.</td>
 </tr>
 <tr>
@@ -172,7 +173,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Create a NotificationEndpoint in the specified project in the given region using the parameters that are included in the request.</td>
+    <td>Create a NotificationEndpoint in the specified project in the given region<br />using the parameters that are included in the request.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
@@ -290,9 +291,9 @@ warning
 FROM google.compute.notification_endpoints
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
+AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
@@ -312,31 +313,21 @@ AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 >
 <TabItem value="insert">
 
-Create a NotificationEndpoint in the specified project in the given region using the parameters that are included in the request.
+Create a NotificationEndpoint in the specified project in the given region<br />using the parameters that are included in the request.
 
 ```sql
 INSERT INTO google.compute.notification_endpoints (
-data__kind,
-data__id,
-data__creationTimestamp,
 data__name,
-data__description,
-data__selfLink,
-data__region,
 data__grpcSettings,
+data__description,
 project,
 region,
 requestId
 )
 SELECT 
-'{{ kind }}',
-'{{ id }}',
-'{{ creationTimestamp }}',
 '{{ name }}',
-'{{ description }}',
-'{{ selfLink }}',
-'{{ region }}',
 '{{ grpcSettings }}',
+'{{ description }}',
 '{{ project }}',
 '{{ region }}',
 '{{ requestId }}'
@@ -348,6 +339,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -372,60 +364,46 @@ zone
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: notification_endpoints
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the notification_endpoints resource.
     - name: region
-      value: string
+      value: "{{ region }}"
       description: Required parameter for the notification_endpoints resource.
-    - name: kind
-      value: string
-      description: >
-        [Output Only] Type of the resource. Always compute#notificationEndpoint for notification endpoints.
-        
-      default: compute#notificationEndpoint
-    - name: id
-      value: string
-      description: >
-        [Output Only] A unique identifier for this resource type. The server generates this identifier.
-        
-    - name: creationTimestamp
-      value: string
-      description: >
-        [Output Only] Creation timestamp in RFC3339 text format.
-        
     - name: name
-      value: string
-      description: >
-        Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
-        
-    - name: description
-      value: string
-      description: >
-        An optional description of this resource. Provide this property when you create the resource.
-        
-    - name: selfLink
-      value: string
-      description: >
-        [Output Only] Server-defined URL for the resource.
-        
-    - name: region
-      value: string
-      description: >
-        [Output Only] URL of the region where the notification endpoint resides. This field applies only to the regional resource. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body.
-        
+      value: "{{ name }}"
+      description: |
+        Name of the resource. Provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must
+        be a dash, lowercase letter, or digit, except the last character, which
+        cannot be a dash.
     - name: grpcSettings
-      value: object
-      description: >
-        Settings of the gRPC notification endpoint including the endpoint URL and the retry duration.
-        
+      description: |
+        Settings of the gRPC notification endpoint including the endpoint URL and
+        the retry duration.
+      value:
+        authority: "{{ authority }}"
+        endpoint: "{{ endpoint }}"
+        retryDurationSec: {{ retryDurationSec }}
+        payloadName: "{{ payloadName }}"
+        resendInterval:
+          nanos: {{ nanos }}
+          seconds: "{{ seconds }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

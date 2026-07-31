@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>tenancy_units_project</code> re
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>tenancy_units_project</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="tenancy_units_project" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.serviceconsumermanagement.tenancy_units_project" /></td></tr>
 </tbody></table>
@@ -57,18 +58,18 @@ The following methods are available for this resource:
     <td>Add a new tenant project to the tenancy unit. There can be a maximum of 1024 tenant projects in a tenancy unit. If there are previously failed `AddTenantProject` calls, you might need to call `RemoveTenantProject` first to resolve them before you can make another call to `AddTenantProject` with the same tag. Operation.</td>
 </tr>
 <tr>
-    <td><a href="#remove_project"><CopyableCode code="remove_project" /></a></td>
-    <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-servicesId"><code>servicesId</code></a>, <a href="#parameter-servicesId1"><code>servicesId1</code></a>, <a href="#parameter-servicesId2"><code>servicesId2</code></a>, <a href="#parameter-tenancyUnitsId"><code>tenancyUnitsId</code></a></td>
-    <td></td>
-    <td>Removes the specified project resource identified by a tenant resource tag. The method removes the project lien with 'TenantManager' origin if that was added. It then attempts to delete the project. If that operation fails, this method also fails. Calls to remove already removed or non-existent tenant project succeed. After the project has been deleted, or if was already in a DELETED state, resource metadata is permanently removed from the tenancy unit. Operation.</td>
-</tr>
-<tr>
     <td><a href="#delete_project"><CopyableCode code="delete_project" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-servicesId"><code>servicesId</code></a>, <a href="#parameter-servicesId1"><code>servicesId1</code></a>, <a href="#parameter-servicesId2"><code>servicesId2</code></a>, <a href="#parameter-tenancyUnitsId"><code>tenancyUnitsId</code></a></td>
     <td></td>
     <td>Deletes the specified project resource identified by a tenant resource tag. The mothod removes a project lien with a 'TenantManager' origin if that was added. It will then attempt to delete the project. If that operation fails, this method also fails. After the project has been deleted, the tenant resource state is set to DELETED. To permanently remove resource metadata, call the `RemoveTenantProject` method. New resources with the same tag can't be added if there are existing resources in a DELETED state. Operation.</td>
+</tr>
+<tr>
+    <td><a href="#remove_project"><CopyableCode code="remove_project" /></a></td>
+    <td><CopyableCode code="delete" /></td>
+    <td><a href="#parameter-servicesId"><code>servicesId</code></a>, <a href="#parameter-servicesId1"><code>servicesId1</code></a>, <a href="#parameter-servicesId2"><code>servicesId2</code></a>, <a href="#parameter-tenancyUnitsId"><code>tenancyUnitsId</code></a></td>
+    <td></td>
+    <td>Removes the specified project resource identified by a tenant resource tag. The method removes the project lien with 'TenantManager' origin if that was added. It then attempts to delete the project. If that operation fails, this method also fails. Calls to remove already removed or non-existent tenant project succeed. After the project has been deleted, or if was already in a DELETED state, resource metadata is permanently removed from the tenancy unit. Operation.</td>
 </tr>
 </tbody>
 </table>
@@ -124,16 +125,16 @@ Add a new tenant project to the tenancy unit. There can be a maximum of 1024 ten
 
 ```sql
 INSERT INTO google.serviceconsumermanagement.tenancy_units_project (
-data__projectConfig,
 data__tag,
+data__projectConfig,
 servicesId,
 servicesId1,
 servicesId2,
 tenancyUnitsId
 )
 SELECT 
-'{{ projectConfig }}',
 '{{ tag }}',
+'{{ projectConfig }}',
 '{{ servicesId }}',
 '{{ servicesId1 }}',
 '{{ servicesId2 }}',
@@ -149,33 +150,45 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: tenancy_units_project
   props:
     - name: servicesId
-      value: string
+      value: "{{ servicesId }}"
       description: Required parameter for the tenancy_units_project resource.
     - name: servicesId1
-      value: string
+      value: "{{ servicesId1 }}"
       description: Required parameter for the tenancy_units_project resource.
     - name: servicesId2
-      value: string
+      value: "{{ servicesId2 }}"
       description: Required parameter for the tenancy_units_project resource.
     - name: tenancyUnitsId
-      value: string
+      value: "{{ tenancyUnitsId }}"
       description: Required parameter for the tenancy_units_project resource.
-    - name: projectConfig
-      value: object
-      description: >
-        Configuration of the new tenant project to be added to tenancy unit resources.
-        
     - name: tag
-      value: string
-      description: >
+      value: "{{ tag }}"
+      description: |
         Required. Tag of the added project. Must be less than 128 characters. Required.
-        
-```
+    - name: projectConfig
+      description: |
+        Configuration of the new tenant project to be added to tenancy unit resources.
+      value:
+        folder: "{{ folder }}"
+        billingConfig:
+          billingAccount: "{{ billingAccount }}"
+        serviceAccountConfig:
+          tenantProjectRoles:
+            - "{{ tenantProjectRoles }}"
+          accountId: "{{ accountId }}"
+        services:
+          - "{{ services }}"
+        tenantProjectPolicy:
+          policyBindings:
+            - members: "{{ members }}"
+              role: "{{ role }}"
+        labels: "{{ labels }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -183,15 +196,15 @@ response
 ## `DELETE` examples
 
 <Tabs
-    defaultValue="remove_project"
+    defaultValue="delete_project"
     values={[
-        { label: 'remove_project', value: 'remove_project' },
-        { label: 'delete_project', value: 'delete_project' }
+        { label: 'delete_project', value: 'delete_project' },
+        { label: 'remove_project', value: 'remove_project' }
     ]}
 >
-<TabItem value="remove_project">
+<TabItem value="delete_project">
 
-Removes the specified project resource identified by a tenant resource tag. The method removes the project lien with 'TenantManager' origin if that was added. It then attempts to delete the project. If that operation fails, this method also fails. Calls to remove already removed or non-existent tenant project succeed. After the project has been deleted, or if was already in a DELETED state, resource metadata is permanently removed from the tenancy unit. Operation.
+Deletes the specified project resource identified by a tenant resource tag. The mothod removes a project lien with a 'TenantManager' origin if that was added. It will then attempt to delete the project. If that operation fails, this method also fails. After the project has been deleted, the tenant resource state is set to DELETED. To permanently remove resource metadata, call the `RemoveTenantProject` method. New resources with the same tag can't be added if there are existing resources in a DELETED state. Operation.
 
 ```sql
 DELETE FROM google.serviceconsumermanagement.tenancy_units_project
@@ -202,9 +215,9 @@ AND tenancyUnitsId = '{{ tenancyUnitsId }}' --required
 ;
 ```
 </TabItem>
-<TabItem value="delete_project">
+<TabItem value="remove_project">
 
-Deletes the specified project resource identified by a tenant resource tag. The mothod removes a project lien with a 'TenantManager' origin if that was added. It will then attempt to delete the project. If that operation fails, this method also fails. After the project has been deleted, the tenant resource state is set to DELETED. To permanently remove resource metadata, call the `RemoveTenantProject` method. New resources with the same tag can't be added if there are existing resources in a DELETED state. Operation.
+Removes the specified project resource identified by a tenant resource tag. The method removes the project lien with 'TenantManager' origin if that was added. It then attempts to delete the project. If that operation fails, this method also fails. Calls to remove already removed or non-existent tenant project succeed. After the project has been deleted, or if was already in a DELETED state, resource metadata is permanently removed from the tenancy unit. Operation.
 
 ```sql
 DELETE FROM google.serviceconsumermanagement.tenancy_units_project

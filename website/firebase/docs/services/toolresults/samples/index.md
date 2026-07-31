@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>samples</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>samples</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="samples" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.toolresults.samples" /></td></tr>
 </tbody></table>
@@ -212,30 +213,33 @@ perfSamples
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: samples
   props:
     - name: projectId
-      value: string
+      value: "{{ projectId }}"
       description: Required parameter for the samples resource.
     - name: historyId
-      value: string
+      value: "{{ historyId }}"
       description: Required parameter for the samples resource.
     - name: executionId
-      value: string
+      value: "{{ executionId }}"
       description: Required parameter for the samples resource.
     - name: stepId
-      value: string
+      value: "{{ stepId }}"
       description: Required parameter for the samples resource.
     - name: sampleSeriesId
-      value: string
+      value: "{{ sampleSeriesId }}"
       description: Required parameter for the samples resource.
     - name: perfSamples
-      value: array
-      description: >
+      description: |
         The set of PerfSamples to create should not include existing timestamps
-        
-```
+      value:
+        - sampleTime:
+            seconds: "{{ seconds }}"
+            nanos: {{ nanos }}
+          value: {{ value }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>networks</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>networks</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="networks" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.servicenetworking.networks" /></td></tr>
 </tbody></table>
@@ -72,6 +73,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="consumerImportSubnetRoutesWithPublicIp" /></td>
     <td><code>boolean</code></td>
     <td>Import subnet routes with public ip flag value for peering from consumer to producer.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="consumerPeeringActive" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. If this is true, consumer peering is active.</td>
 </tr>
 <tr>
     <td><CopyableCode code="producerExportCustomRoutes" /></td>
@@ -198,6 +204,7 @@ consumerExportCustomRoutes,
 consumerExportSubnetRoutesWithPublicIp,
 consumerImportCustomRoutes,
 consumerImportSubnetRoutesWithPublicIp,
+consumerPeeringActive,
 producerExportCustomRoutes,
 producerExportSubnetRoutesWithPublicIp,
 producerImportCustomRoutes,

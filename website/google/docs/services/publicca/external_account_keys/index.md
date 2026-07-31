@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>external_account_keys</code> r
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>external_account_keys</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="external_account_keys" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.publicca.external_account_keys" /></td></tr>
 </tbody></table>
@@ -115,16 +116,16 @@ keyId
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: external_account_keys
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the external_account_keys resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the external_account_keys resource.
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

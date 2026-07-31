@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>policies</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.orgpolicy.policies" /></td></tr>
 </tbody></table>
@@ -56,7 +57,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The resource name of the policy. Must be one of the following forms, where `constraint_name` is the name of the constraint which this policy configures: * `projects/&#123;project_number&#125;/policies/&#123;constraint_name&#125;` * `folders/&#123;folder_id&#125;/policies/&#123;constraint_name&#125;` * `organizations/&#123;organization_id&#125;/policies/&#123;constraint_name&#125;` For example, `projects/123/policies/compute.disableSerialPortAccess`. Note: `projects/&#123;project_id&#125;/policies/&#123;constraint_name&#125;` is also an acceptable name for API requests, but responses will return the name using the equivalent project number.</td>
+    <td>Immutable. The resource name of the policy. Must be one of the following forms, where `constraint_name` is the name of the constraint that this policy configures: * `projects/&#123;project_number&#125;/policies/&#123;constraint_name&#125;` * `folders/&#123;folder_number&#125;/policies/&#123;constraint_name&#125;` * `organizations/&#123;organization_number&#125;/policies/&#123;constraint_name&#125;` For example, `projects/123/policies/compute.disableSerialPortAccess`. Note: `projects/&#123;project_id&#125;/policies/&#123;constraint_name&#125;` is also an acceptable name for API requests, but responses will return the name using the equivalent project number.</td>
 </tr>
 <tr>
     <td><CopyableCode code="alternate" /></td>
@@ -71,7 +72,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="etag" /></td>
     <td><code>string</code></td>
-    <td>Optional. An opaque tag indicating the current state of the policy, used for concurrency control. This 'etag' is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.</td>
+    <td>Optional. An opaque tag indicating the current state of the policy, used for concurrency control. This entity tag (ETag) is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.</td>
 </tr>
 <tr>
     <td><CopyableCode code="spec" /></td>
@@ -95,7 +96,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The resource name of the policy. Must be one of the following forms, where `constraint_name` is the name of the constraint which this policy configures: * `projects/&#123;project_number&#125;/policies/&#123;constraint_name&#125;` * `folders/&#123;folder_id&#125;/policies/&#123;constraint_name&#125;` * `organizations/&#123;organization_id&#125;/policies/&#123;constraint_name&#125;` For example, `projects/123/policies/compute.disableSerialPortAccess`. Note: `projects/&#123;project_id&#125;/policies/&#123;constraint_name&#125;` is also an acceptable name for API requests, but responses will return the name using the equivalent project number.</td>
+    <td>Immutable. The resource name of the policy. Must be one of the following forms, where `constraint_name` is the name of the constraint that this policy configures: * `projects/&#123;project_number&#125;/policies/&#123;constraint_name&#125;` * `folders/&#123;folder_number&#125;/policies/&#123;constraint_name&#125;` * `organizations/&#123;organization_number&#125;/policies/&#123;constraint_name&#125;` For example, `projects/123/policies/compute.disableSerialPortAccess`. Note: `projects/&#123;project_id&#125;/policies/&#123;constraint_name&#125;` is also an acceptable name for API requests, but responses will return the name using the equivalent project number.</td>
 </tr>
 <tr>
     <td><CopyableCode code="alternate" /></td>
@@ -110,7 +111,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="etag" /></td>
     <td><code>string</code></td>
-    <td>Optional. An opaque tag indicating the current state of the policy, used for concurrency control. This 'etag' is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.</td>
+    <td>Optional. An opaque tag indicating the current state of the policy, used for concurrency control. This entity tag (ETag) is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.</td>
 </tr>
 <tr>
     <td><CopyableCode code="spec" /></td>
@@ -134,7 +135,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The resource name of the policy. Must be one of the following forms, where `constraint_name` is the name of the constraint which this policy configures: * `projects/&#123;project_number&#125;/policies/&#123;constraint_name&#125;` * `folders/&#123;folder_id&#125;/policies/&#123;constraint_name&#125;` * `organizations/&#123;organization_id&#125;/policies/&#123;constraint_name&#125;` For example, `projects/123/policies/compute.disableSerialPortAccess`. Note: `projects/&#123;project_id&#125;/policies/&#123;constraint_name&#125;` is also an acceptable name for API requests, but responses will return the name using the equivalent project number.</td>
+    <td>Immutable. The resource name of the policy. Must be one of the following forms, where `constraint_name` is the name of the constraint that this policy configures: * `projects/&#123;project_number&#125;/policies/&#123;constraint_name&#125;` * `folders/&#123;folder_number&#125;/policies/&#123;constraint_name&#125;` * `organizations/&#123;organization_number&#125;/policies/&#123;constraint_name&#125;` For example, `projects/123/policies/compute.disableSerialPortAccess`. Note: `projects/&#123;project_id&#125;/policies/&#123;constraint_name&#125;` is also an acceptable name for API requests, but responses will return the name using the equivalent project number.</td>
 </tr>
 <tr>
     <td><CopyableCode code="alternate" /></td>
@@ -149,7 +150,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="etag" /></td>
     <td><code>string</code></td>
-    <td>Optional. An opaque tag indicating the current state of the policy, used for concurrency control. This 'etag' is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.</td>
+    <td>Optional. An opaque tag indicating the current state of the policy, used for concurrency control. This entity tag (ETag) is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.</td>
 </tr>
 <tr>
     <td><CopyableCode code="spec" /></td>
@@ -173,7 +174,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The resource name of the policy. Must be one of the following forms, where `constraint_name` is the name of the constraint which this policy configures: * `projects/&#123;project_number&#125;/policies/&#123;constraint_name&#125;` * `folders/&#123;folder_id&#125;/policies/&#123;constraint_name&#125;` * `organizations/&#123;organization_id&#125;/policies/&#123;constraint_name&#125;` For example, `projects/123/policies/compute.disableSerialPortAccess`. Note: `projects/&#123;project_id&#125;/policies/&#123;constraint_name&#125;` is also an acceptable name for API requests, but responses will return the name using the equivalent project number.</td>
+    <td>Immutable. The resource name of the policy. Must be one of the following forms, where `constraint_name` is the name of the constraint that this policy configures: * `projects/&#123;project_number&#125;/policies/&#123;constraint_name&#125;` * `folders/&#123;folder_number&#125;/policies/&#123;constraint_name&#125;` * `organizations/&#123;organization_number&#125;/policies/&#123;constraint_name&#125;` For example, `projects/123/policies/compute.disableSerialPortAccess`. Note: `projects/&#123;project_id&#125;/policies/&#123;constraint_name&#125;` is also an acceptable name for API requests, but responses will return the name using the equivalent project number.</td>
 </tr>
 <tr>
     <td><CopyableCode code="alternate" /></td>
@@ -188,7 +189,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="etag" /></td>
     <td><code>string</code></td>
-    <td>Optional. An opaque tag indicating the current state of the policy, used for concurrency control. This 'etag' is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.</td>
+    <td>Optional. An opaque tag indicating the current state of the policy, used for concurrency control. This entity tag (ETag) is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.</td>
 </tr>
 <tr>
     <td><CopyableCode code="spec" /></td>
@@ -212,7 +213,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The resource name of the policy. Must be one of the following forms, where `constraint_name` is the name of the constraint which this policy configures: * `projects/&#123;project_number&#125;/policies/&#123;constraint_name&#125;` * `folders/&#123;folder_id&#125;/policies/&#123;constraint_name&#125;` * `organizations/&#123;organization_id&#125;/policies/&#123;constraint_name&#125;` For example, `projects/123/policies/compute.disableSerialPortAccess`. Note: `projects/&#123;project_id&#125;/policies/&#123;constraint_name&#125;` is also an acceptable name for API requests, but responses will return the name using the equivalent project number.</td>
+    <td>Immutable. The resource name of the policy. Must be one of the following forms, where `constraint_name` is the name of the constraint that this policy configures: * `projects/&#123;project_number&#125;/policies/&#123;constraint_name&#125;` * `folders/&#123;folder_number&#125;/policies/&#123;constraint_name&#125;` * `organizations/&#123;organization_number&#125;/policies/&#123;constraint_name&#125;` For example, `projects/123/policies/compute.disableSerialPortAccess`. Note: `projects/&#123;project_id&#125;/policies/&#123;constraint_name&#125;` is also an acceptable name for API requests, but responses will return the name using the equivalent project number.</td>
 </tr>
 <tr>
     <td><CopyableCode code="alternate" /></td>
@@ -227,7 +228,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="etag" /></td>
     <td><code>string</code></td>
-    <td>Optional. An opaque tag indicating the current state of the policy, used for concurrency control. This 'etag' is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.</td>
+    <td>Optional. An opaque tag indicating the current state of the policy, used for concurrency control. This entity tag (ETag) is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.</td>
 </tr>
 <tr>
     <td><CopyableCode code="spec" /></td>
@@ -251,7 +252,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The resource name of the policy. Must be one of the following forms, where `constraint_name` is the name of the constraint which this policy configures: * `projects/&#123;project_number&#125;/policies/&#123;constraint_name&#125;` * `folders/&#123;folder_id&#125;/policies/&#123;constraint_name&#125;` * `organizations/&#123;organization_id&#125;/policies/&#123;constraint_name&#125;` For example, `projects/123/policies/compute.disableSerialPortAccess`. Note: `projects/&#123;project_id&#125;/policies/&#123;constraint_name&#125;` is also an acceptable name for API requests, but responses will return the name using the equivalent project number.</td>
+    <td>Immutable. The resource name of the policy. Must be one of the following forms, where `constraint_name` is the name of the constraint that this policy configures: * `projects/&#123;project_number&#125;/policies/&#123;constraint_name&#125;` * `folders/&#123;folder_number&#125;/policies/&#123;constraint_name&#125;` * `organizations/&#123;organization_number&#125;/policies/&#123;constraint_name&#125;` For example, `projects/123/policies/compute.disableSerialPortAccess`. Note: `projects/&#123;project_id&#125;/policies/&#123;constraint_name&#125;` is also an acceptable name for API requests, but responses will return the name using the equivalent project number.</td>
 </tr>
 <tr>
     <td><CopyableCode code="alternate" /></td>
@@ -266,7 +267,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="etag" /></td>
     <td><code>string</code></td>
-    <td>Optional. An opaque tag indicating the current state of the policy, used for concurrency control. This 'etag' is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.</td>
+    <td>Optional. An opaque tag indicating the current state of the policy, used for concurrency control. This entity tag (ETag) is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.</td>
 </tr>
 <tr>
     <td><CopyableCode code="spec" /></td>
@@ -298,21 +299,21 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-policiesId"><code>policiesId</code></a></td>
     <td></td>
-    <td>Gets a policy on a resource. If no policy is set on the resource, `NOT_FOUND` is returned. The `etag` value can be used with `UpdatePolicy()` to update a policy during read-modify-write.</td>
+    <td>Gets a policy on a resource. If no policy is set on the resource, `NOT_FOUND` is returned. The entity tag (ETag) can be used with `UpdatePolicy()` to update a policy during read-modify-write.</td>
 </tr>
 <tr>
     <td><a href="#folders_policies_get"><CopyableCode code="folders_policies_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-policiesId"><code>policiesId</code></a></td>
     <td></td>
-    <td>Gets a policy on a resource. If no policy is set on the resource, `NOT_FOUND` is returned. The `etag` value can be used with `UpdatePolicy()` to update a policy during read-modify-write.</td>
+    <td>Gets a policy on a resource. If no policy is set on the resource, `NOT_FOUND` is returned. The entity tag (ETag) can be used with `UpdatePolicy()` to update a policy during read-modify-write.</td>
 </tr>
 <tr>
     <td><a href="#organizations_policies_get"><CopyableCode code="organizations_policies_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-policiesId"><code>policiesId</code></a></td>
     <td></td>
-    <td>Gets a policy on a resource. If no policy is set on the resource, `NOT_FOUND` is returned. The `etag` value can be used with `UpdatePolicy()` to update a policy during read-modify-write.</td>
+    <td>Gets a policy on a resource. If no policy is set on the resource, `NOT_FOUND` is returned. The entity tag (ETag) can be used with `UpdatePolicy()` to update a policy during read-modify-write.</td>
 </tr>
 <tr>
     <td><a href="#projects_policies_list"><CopyableCode code="projects_policies_list" /></a></td>
@@ -361,21 +362,21 @@ The following methods are available for this resource:
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-policiesId"><code>policiesId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates a policy. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the constraint or the policy do not exist. Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED` if the etag supplied in the request does not match the persisted etag of the policy Note: the supplied policy will perform a full overwrite of all fields.</td>
+    <td>Updates a policy. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the constraint or the policy doesn't exist. Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED` if the ETag supplied in the request doesn't match the persisted ETag of the policy. Note: the supplied policy will perform a full overwrite of all fields.</td>
 </tr>
 <tr>
     <td><a href="#folders_policies_patch"><CopyableCode code="folders_policies_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-policiesId"><code>policiesId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates a policy. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the constraint or the policy do not exist. Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED` if the etag supplied in the request does not match the persisted etag of the policy Note: the supplied policy will perform a full overwrite of all fields.</td>
+    <td>Updates a policy. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the constraint or the policy doesn't exist. Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED` if the ETag supplied in the request doesn't match the persisted ETag of the policy. Note: the supplied policy will perform a full overwrite of all fields.</td>
 </tr>
 <tr>
     <td><a href="#organizations_policies_patch"><CopyableCode code="organizations_policies_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-policiesId"><code>policiesId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates a policy. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the constraint or the policy do not exist. Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED` if the etag supplied in the request does not match the persisted etag of the policy Note: the supplied policy will perform a full overwrite of all fields.</td>
+    <td>Updates a policy. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the constraint or the policy doesn't exist. Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED` if the ETag supplied in the request doesn't match the persisted ETag of the policy. Note: the supplied policy will perform a full overwrite of all fields.</td>
 </tr>
 <tr>
     <td><a href="#projects_policies_delete"><CopyableCode code="projects_policies_delete" /></a></td>
@@ -472,7 +473,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="projects_policies_get">
 
-Gets a policy on a resource. If no policy is set on the resource, `NOT_FOUND` is returned. The `etag` value can be used with `UpdatePolicy()` to update a policy during read-modify-write.
+Gets a policy on a resource. If no policy is set on the resource, `NOT_FOUND` is returned. The entity tag (ETag) can be used with `UpdatePolicy()` to update a policy during read-modify-write.
 
 ```sql
 SELECT
@@ -489,7 +490,7 @@ AND policiesId = '{{ policiesId }}' -- required
 </TabItem>
 <TabItem value="folders_policies_get">
 
-Gets a policy on a resource. If no policy is set on the resource, `NOT_FOUND` is returned. The `etag` value can be used with `UpdatePolicy()` to update a policy during read-modify-write.
+Gets a policy on a resource. If no policy is set on the resource, `NOT_FOUND` is returned. The entity tag (ETag) can be used with `UpdatePolicy()` to update a policy during read-modify-write.
 
 ```sql
 SELECT
@@ -506,7 +507,7 @@ AND policiesId = '{{ policiesId }}' -- required
 </TabItem>
 <TabItem value="organizations_policies_get">
 
-Gets a policy on a resource. If no policy is set on the resource, `NOT_FOUND` is returned. The `etag` value can be used with `UpdatePolicy()` to update a policy during read-modify-write.
+Gets a policy on a resource. If no policy is set on the resource, `NOT_FOUND` is returned. The entity tag (ETag) can be used with `UpdatePolicy()` to update a policy during read-modify-write.
 
 ```sql
 SELECT
@@ -678,45 +679,99 @@ spec
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: policies
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the policies resource.
     - name: foldersId
-      value: string
+      value: "{{ foldersId }}"
       description: Required parameter for the policies resource.
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the policies resource.
     - name: name
-      value: string
-      description: >
-        Immutable. The resource name of the policy. Must be one of the following forms, where `constraint_name` is the name of the constraint which this policy configures: * `projects/{project_number}/policies/{constraint_name}` * `folders/{folder_id}/policies/{constraint_name}` * `organizations/{organization_id}/policies/{constraint_name}` For example, `projects/123/policies/compute.disableSerialPortAccess`. Note: `projects/{project_id}/policies/{constraint_name}` is also an acceptable name for API requests, but responses will return the name using the equivalent project number.
-        
+      value: "{{ name }}"
+      description: |
+        Immutable. The resource name of the policy. Must be one of the following forms, where \`constraint_name\` is the name of the constraint that this policy configures: * \`projects/{project_number}/policies/{constraint_name}\` * \`folders/{folder_number}/policies/{constraint_name}\` * \`organizations/{organization_number}/policies/{constraint_name}\` For example, \`projects/123/policies/compute.disableSerialPortAccess\`. Note: \`projects/{project_id}/policies/{constraint_name}\` is also an acceptable name for API requests, but responses will return the name using the equivalent project number.
     - name: spec
-      value: object
-      description: >
+      description: |
         Basic information about the organization policy.
-        
+      value:
+        updateTime: "{{ updateTime }}"
+        rules:
+          - values:
+              deniedValues:
+                - "{{ deniedValues }}"
+              allowedValues:
+                - "{{ allowedValues }}"
+            parameters: "{{ parameters }}"
+            denyAll: {{ denyAll }}
+            condition:
+              expression: "{{ expression }}"
+              title: "{{ title }}"
+              description: "{{ description }}"
+              location: "{{ location }}"
+            enforce: {{ enforce }}
+            allowAll: {{ allowAll }}
+        inheritFromParent: {{ inheritFromParent }}
+        etag: "{{ etag }}"
+        reset: {{ reset }}
     - name: alternate
-      value: object
-      description: >
+      description: |
         Deprecated.
-        
+      value:
+        launch: "{{ launch }}"
+        spec:
+          updateTime: "{{ updateTime }}"
+          rules:
+            - values:
+                deniedValues:
+                  - "{{ deniedValues }}"
+                allowedValues:
+                  - "{{ allowedValues }}"
+              parameters: "{{ parameters }}"
+              denyAll: {{ denyAll }}
+              condition:
+                expression: "{{ expression }}"
+                title: "{{ title }}"
+                description: "{{ description }}"
+                location: "{{ location }}"
+              enforce: {{ enforce }}
+              allowAll: {{ allowAll }}
+          inheritFromParent: {{ inheritFromParent }}
+          etag: "{{ etag }}"
+          reset: {{ reset }}
     - name: dryRunSpec
-      value: object
-      description: >
+      description: |
         Dry-run policy. Audit-only policy, can be used to monitor how the policy would have impacted the existing and future resources if it's enforced.
-        
+      value:
+        updateTime: "{{ updateTime }}"
+        rules:
+          - values:
+              deniedValues:
+                - "{{ deniedValues }}"
+              allowedValues:
+                - "{{ allowedValues }}"
+            parameters: "{{ parameters }}"
+            denyAll: {{ denyAll }}
+            condition:
+              expression: "{{ expression }}"
+              title: "{{ title }}"
+              description: "{{ description }}"
+              location: "{{ location }}"
+            enforce: {{ enforce }}
+            allowAll: {{ allowAll }}
+        inheritFromParent: {{ inheritFromParent }}
+        etag: "{{ etag }}"
+        reset: {{ reset }}
     - name: etag
-      value: string
-      description: >
-        Optional. An opaque tag indicating the current state of the policy, used for concurrency control. This 'etag' is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
-        
-```
+      value: "{{ etag }}"
+      description: |
+        Optional. An opaque tag indicating the current state of the policy, used for concurrency control. This entity tag (ETag) is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -733,7 +788,7 @@ spec
 >
 <TabItem value="projects_policies_patch">
 
-Updates a policy. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the constraint or the policy do not exist. Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED` if the etag supplied in the request does not match the persisted etag of the policy Note: the supplied policy will perform a full overwrite of all fields.
+Updates a policy. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the constraint or the policy doesn't exist. Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED` if the ETag supplied in the request doesn't match the persisted ETag of the policy. Note: the supplied policy will perform a full overwrite of all fields.
 
 ```sql
 UPDATE google.orgpolicy.policies
@@ -757,7 +812,7 @@ spec;
 </TabItem>
 <TabItem value="folders_policies_patch">
 
-Updates a policy. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the constraint or the policy do not exist. Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED` if the etag supplied in the request does not match the persisted etag of the policy Note: the supplied policy will perform a full overwrite of all fields.
+Updates a policy. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the constraint or the policy doesn't exist. Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED` if the ETag supplied in the request doesn't match the persisted ETag of the policy. Note: the supplied policy will perform a full overwrite of all fields.
 
 ```sql
 UPDATE google.orgpolicy.policies
@@ -781,7 +836,7 @@ spec;
 </TabItem>
 <TabItem value="organizations_policies_patch">
 
-Updates a policy. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the constraint or the policy do not exist. Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED` if the etag supplied in the request does not match the persisted etag of the policy Note: the supplied policy will perform a full overwrite of all fields.
+Updates a policy. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the constraint or the policy doesn't exist. Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED` if the ETag supplied in the request doesn't match the persisted ETag of the policy. Note: the supplied policy will perform a full overwrite of all fields.
 
 ```sql
 UPDATE google.orgpolicy.policies

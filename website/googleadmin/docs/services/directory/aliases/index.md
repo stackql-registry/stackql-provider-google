@@ -15,6 +15,7 @@ image: /img/stackql-googleadmin-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>aliases</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>aliases</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="aliases" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleadmin.directory.aliases" /></td></tr>
 </tbody></table>
@@ -186,19 +187,19 @@ Adds an alias.
 
 ```sql
 INSERT INTO googleadmin.directory.aliases (
-data__alias,
-data__etag,
 data__id,
-data__kind,
+data__alias,
 data__primaryEmail,
+data__kind,
+data__etag,
 userKey
 )
 SELECT 
-'{{ alias }}',
-'{{ etag }}',
 '{{ id }}',
-'{{ kind }}',
+'{{ alias }}',
 '{{ primaryEmail }}',
+'{{ kind }}',
+'{{ etag }}',
 '{{ userKey }}'
 RETURNING
 id,
@@ -211,25 +212,25 @@ primaryEmail
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: aliases
   props:
     - name: userKey
-      value: string
+      value: "{{ userKey }}"
       description: Required parameter for the aliases resource.
-    - name: alias
-      value: string
-    - name: etag
-      value: string
     - name: id
-      value: string
-    - name: kind
-      value: string
-      default: admin#directory#alias
+      value: "{{ id }}"
+    - name: alias
+      value: "{{ alias }}"
     - name: primaryEmail
-      value: string
-```
+      value: "{{ primaryEmail }}"
+    - name: kind
+      value: "{{ kind }}"
+      default: admin#directory#alias
+    - name: etag
+      value: "{{ etag }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -274,16 +275,16 @@ EXEC googleadmin.directory.aliases.watch
 @event='{{ event }}' 
 @@json=
 '{
-"id": "{{ id }}", 
-"token": "{{ token }}", 
-"expiration": "{{ expiration }}", 
-"type": "{{ type }}", 
 "address": "{{ address }}", 
-"payload": {{ payload }}, 
-"params": "{{ params }}", 
+"token": "{{ token }}", 
 "resourceId": "{{ resourceId }}", 
+"params": "{{ params }}", 
+"type": "{{ type }}", 
+"kind": "{{ kind }}", 
+"id": "{{ id }}", 
 "resourceUri": "{{ resourceUri }}", 
-"kind": "{{ kind }}"
+"payload": {{ payload }}, 
+"expiration": "{{ expiration }}"
 }'
 ;
 ```

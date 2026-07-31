@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>dns_authorizations</code> resou
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>dns_authorizations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="dns_authorizations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.certificatemanager.dns_authorizations" /></td></tr>
 </tbody></table>
@@ -80,9 +81,14 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Set of labels associated with a DnsAuthorization.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="tags" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"</td>
+</tr>
+<tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Optional. Immutable. Type of DnsAuthorization. If unset during resource creation the following default will be used: - in location `global`: FIXED_RECORD, - in other locations: PER_PROJECT_RECORD.</td>
+    <td>Optional. Immutable. Type of DnsAuthorization. If unset during resource creation the following default will be used: - in location `global`: FIXED_RECORD, - in other locations: PER_PROJECT_RECORD. (TYPE_UNSPECIFIED, FIXED_RECORD, PER_PROJECT_RECORD)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -134,9 +140,14 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. Set of labels associated with a DnsAuthorization.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="tags" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"</td>
+</tr>
+<tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Optional. Immutable. Type of DnsAuthorization. If unset during resource creation the following default will be used: - in location `global`: FIXED_RECORD, - in other locations: PER_PROJECT_RECORD.</td>
+    <td>Optional. Immutable. Type of DnsAuthorization. If unset during resource creation the following default will be used: - in location `global`: FIXED_RECORD, - in other locations: PER_PROJECT_RECORD. (TYPE_UNSPECIFIED, FIXED_RECORD, PER_PROJECT_RECORD)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -174,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists DnsAuthorizations in a given project and location.</td>
 </tr>
 <tr>
@@ -283,6 +294,7 @@ description,
 dnsResourceRecord,
 domain,
 labels,
+tags,
 type,
 updateTime
 FROM google.certificatemanager.dns_authorizations
@@ -304,14 +316,15 @@ description,
 dnsResourceRecord,
 domain,
 labels,
+tags,
 type,
 updateTime
 FROM google.certificatemanager.dns_authorizations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -335,9 +348,10 @@ Creates a new DnsAuthorization in a given project and location.
 ```sql
 INSERT INTO google.certificatemanager.dns_authorizations (
 data__name,
+data__tags,
+data__domain,
 data__labels,
 data__description,
-data__domain,
 data__type,
 projectsId,
 locationsId,
@@ -345,9 +359,10 @@ dnsAuthorizationId
 )
 SELECT 
 '{{ name }}',
+'{{ tags }}',
+'{{ domain }}',
 '{{ labels }}',
 '{{ description }}',
-'{{ domain }}',
 '{{ type }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -363,45 +378,44 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: dns_authorizations
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the dns_authorizations resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the dns_authorizations resource.
     - name: name
-      value: string
-      description: >
-        Identifier. A user-defined name of the dns authorization. DnsAuthorization names must be unique globally and match pattern `projects/*/locations/*/dnsAuthorizations/*`.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Set of labels associated with a DnsAuthorization.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. One or more paragraphs of text description of a DnsAuthorization.
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. A user-defined name of the dns authorization. DnsAuthorization names must be unique globally and match pattern \`projects/*/locations/*/dnsAuthorizations/*\`.
+    - name: tags
+      value: "{{ tags }}"
+      description: |
+        Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"
     - name: domain
-      value: string
-      description: >
-        Required. Immutable. A domain that is being authorized. A DnsAuthorization resource covers a single domain and its wildcard, e.g. authorization for `example.com` can be used to issue certificates for `example.com` and `*.example.com`.
-        
+      value: "{{ domain }}"
+      description: |
+        Required. Immutable. A domain that is being authorized. A DnsAuthorization resource covers a single domain and its wildcard, e.g. authorization for \`example.com\` can be used to issue certificates for \`example.com\` and \`*.example.com\`.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Set of labels associated with a DnsAuthorization.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. One or more paragraphs of text description of a DnsAuthorization.
     - name: type
-      value: string
-      description: >
-        Optional. Immutable. Type of DnsAuthorization. If unset during resource creation the following default will be used: - in location `global`: FIXED_RECORD, - in other locations: PER_PROJECT_RECORD.
-        
+      value: "{{ type }}"
+      description: |
+        Optional. Immutable. Type of DnsAuthorization. If unset during resource creation the following default will be used: - in location \`global\`: FIXED_RECORD, - in other locations: PER_PROJECT_RECORD.
       valid_values: ['TYPE_UNSPECIFIED', 'FIXED_RECORD', 'PER_PROJECT_RECORD']
     - name: dnsAuthorizationId
-      value: string
-```
+      value: "{{ dnsAuthorizationId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -422,9 +436,10 @@ Updates a DnsAuthorization.
 UPDATE google.certificatemanager.dns_authorizations
 SET 
 data__name = '{{ name }}',
+data__tags = '{{ tags }}',
+data__domain = '{{ domain }}',
 data__labels = '{{ labels }}',
 data__description = '{{ description }}',
-data__domain = '{{ domain }}',
 data__type = '{{ type }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

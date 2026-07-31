@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>runs</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>runs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="runs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.datalineage.runs" /></td></tr>
 </tbody></table>
@@ -62,7 +63,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Optional. A human-readable name you can set to display in a user interface. Must be not longer than 1024 characters and only contain UTF-8 letters or numbers, spaces or characters like `_-:&.`</td>
+    <td>Optional. A human-readable name you can set to display in a user interface. Must be not longer than 200 characters and only contain UTF-8 letters or numbers, spaces or characters like `_-:&.`</td>
 </tr>
 <tr>
     <td><CopyableCode code="endTime" /></td>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Required. The state of the run.</td>
+    <td>Required. The state of the run. (UNKNOWN, STARTED, COMPLETED, FAILED, ABORTED)</td>
 </tr>
 </tbody>
 </table>
@@ -106,7 +107,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Optional. A human-readable name you can set to display in a user interface. Must be not longer than 1024 characters and only contain UTF-8 letters or numbers, spaces or characters like `_-:&.`</td>
+    <td>Optional. A human-readable name you can set to display in a user interface. Must be not longer than 200 characters and only contain UTF-8 letters or numbers, spaces or characters like `_-:&.`</td>
 </tr>
 <tr>
     <td><CopyableCode code="endTime" /></td>
@@ -121,7 +122,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Required. The state of the run.</td>
+    <td>Required. The state of the run. (UNKNOWN, STARTED, COMPLETED, FAILED, ABORTED)</td>
 </tr>
 </tbody>
 </table>
@@ -154,7 +155,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-processesId"><code>processesId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists runs in the given project and location. List order is descending by `start_time`.</td>
 </tr>
 <tr>
@@ -168,7 +169,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-processesId"><code>processesId</code></a>, <a href="#parameter-runsId"><code>runsId</code></a></td>
-    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
     <td>Updates a run.</td>
 </tr>
 <tr>
@@ -287,8 +288,8 @@ FROM google.datalineage.runs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND processesId = '{{ processesId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -310,24 +311,24 @@ Creates a new run.
 
 ```sql
 INSERT INTO google.datalineage.runs (
-data__displayName,
-data__startTime,
 data__state,
-data__endTime,
+data__startTime,
 data__name,
 data__attributes,
+data__displayName,
+data__endTime,
 projectsId,
 locationsId,
 processesId,
 requestId
 )
 SELECT 
-'{{ displayName }}',
-'{{ startTime }}',
 '{{ state }}',
-'{{ endTime }}',
+'{{ startTime }}',
 '{{ name }}',
 '{{ attributes }}',
+'{{ displayName }}',
+'{{ endTime }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ processesId }}',
@@ -344,53 +345,47 @@ state
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: runs
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the runs resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the runs resource.
     - name: processesId
-      value: string
+      value: "{{ processesId }}"
       description: Required parameter for the runs resource.
-    - name: displayName
-      value: string
-      description: >
-        Optional. A human-readable name you can set to display in a user interface. Must be not longer than 1024 characters and only contain UTF-8 letters or numbers, spaces or characters like `_-:&.`
-        
-    - name: startTime
-      value: string
-      description: >
-        Required. The timestamp of the start of the run.
-        
     - name: state
-      value: string
-      description: >
+      value: "{{ state }}"
+      description: |
         Required. The state of the run.
-        
       valid_values: ['UNKNOWN', 'STARTED', 'COMPLETED', 'FAILED', 'ABORTED']
-    - name: endTime
-      value: string
-      description: >
-        Optional. The timestamp of the end of the run.
-        
+    - name: startTime
+      value: "{{ startTime }}"
+      description: |
+        Required. The timestamp of the start of the run.
     - name: name
-      value: string
-      description: >
-        Immutable. The resource name of the run. Format: `projects/{project}/locations/{location}/processes/{process}/runs/{run}`. Can be specified or auto-assigned. {run} must be not longer than 200 characters and only contain characters in a set: `a-zA-Z0-9_-:.`
-        
+      value: "{{ name }}"
+      description: |
+        Immutable. The resource name of the run. Format: \`projects/{project}/locations/{location}/processes/{process}/runs/{run}\`. Can be specified or auto-assigned. {run} must be not longer than 200 characters and only contain characters in a set: \`a-zA-Z0-9_-:.\`
     - name: attributes
-      value: object
-      description: >
+      value: "{{ attributes }}"
+      description: |
         Optional. The attributes of the run. Should only be used for the purpose of non-semantic management (classifying, describing or labeling the run). Up to 100 attributes are allowed.
-        
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. A human-readable name you can set to display in a user interface. Must be not longer than 200 characters and only contain UTF-8 letters or numbers, spaces or characters like \`_-:&.\`
+    - name: endTime
+      value: "{{ endTime }}"
+      description: |
+        Optional. The timestamp of the end of the run.
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -410,19 +405,19 @@ Updates a run.
 ```sql
 UPDATE google.datalineage.runs
 SET 
-data__displayName = '{{ displayName }}',
-data__startTime = '{{ startTime }}',
 data__state = '{{ state }}',
-data__endTime = '{{ endTime }}',
+data__startTime = '{{ startTime }}',
 data__name = '{{ name }}',
-data__attributes = '{{ attributes }}'
+data__attributes = '{{ attributes }}',
+data__displayName = '{{ displayName }}',
+data__endTime = '{{ endTime }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND processesId = '{{ processesId }}' --required
 AND runsId = '{{ runsId }}' --required
-AND allowMissing = {{ allowMissing}}
 AND updateMask = '{{ updateMask}}'
+AND allowMissing = {{ allowMissing}}
 RETURNING
 name,
 attributes,

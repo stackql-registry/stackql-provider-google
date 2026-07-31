@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>revisions</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>revisions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="revisions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.contactcenterinsights.revisions" /></td></tr>
 </tbody></table>
@@ -67,12 +68,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="snapshot" /></td>
     <td><code>object</code></td>
-    <td>The snapshot of the scorecard at the time of this revision's creation. (id: GoogleCloudContactcenterinsightsV1QaScorecard)</td>
+    <td>A QaScorecard represents a collection of questions to be scored during analysis. (id: GoogleCloudContactcenterinsightsV1QaScorecard)</td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the scorecard revision, indicating whether it's ready to be used in analysis.</td>
+    <td>Output only. State of the scorecard revision, indicating whether it's ready to be used in analysis. (STATE_UNSPECIFIED, EDITABLE, TRAINING, TRAINING_FAILED, READY, DELETING, TRAINING_CANCELLED)</td>
 </tr>
 </tbody>
 </table>
@@ -106,12 +107,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="snapshot" /></td>
     <td><code>object</code></td>
-    <td>The snapshot of the scorecard at the time of this revision's creation. (id: GoogleCloudContactcenterinsightsV1QaScorecard)</td>
+    <td>A QaScorecard represents a collection of questions to be scored during analysis. (id: GoogleCloudContactcenterinsightsV1QaScorecard)</td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the scorecard revision, indicating whether it's ready to be used in analysis.</td>
+    <td>Output only. State of the scorecard revision, indicating whether it's ready to be used in analysis. (STATE_UNSPECIFIED, EDITABLE, TRAINING, TRAINING_FAILED, READY, DELETING, TRAINING_CANCELLED)</td>
 </tr>
 </tbody>
 </table>
@@ -144,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-qaScorecardsId"><code>qaScorecardsId</code></a></td>
-    <td><a href="#parameter-qaScorecardSources"><code>qaScorecardSources</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-qaScorecardSources"><code>qaScorecardSources</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists all revisions under the parent QaScorecard.</td>
 </tr>
 <tr>
@@ -162,6 +163,13 @@ The following methods are available for this resource:
     <td>Deletes a QaScorecardRevision.</td>
 </tr>
 <tr>
+    <td><a href="#tune_qa_scorecard_revision"><CopyableCode code="tune_qa_scorecard_revision" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-qaScorecardsId"><code>qaScorecardsId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
+    <td></td>
+    <td>Fine tune one or more QaModels.</td>
+</tr>
+<tr>
     <td><a href="#deploy"><CopyableCode code="deploy" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-qaScorecardsId"><code>qaScorecardsId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
@@ -174,13 +182,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-qaScorecardsId"><code>qaScorecardsId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
     <td></td>
     <td>Undeploy a QaScorecardRevision.</td>
-</tr>
-<tr>
-    <td><a href="#tune_qa_scorecard_revision"><CopyableCode code="tune_qa_scorecard_revision" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-qaScorecardsId"><code>qaScorecardsId</code></a>, <a href="#parameter-revisionsId"><code>revisionsId</code></a></td>
-    <td></td>
-    <td>Fine tune one or more QaModels.</td>
 </tr>
 </tbody>
 </table>
@@ -294,10 +295,10 @@ FROM google.contactcenterinsights.revisions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND qaScorecardsId = '{{ qaScorecardsId }}' -- required
-AND qaScorecardSources = '{{ qaScorecardSources }}'
-AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
+AND qaScorecardSources = '{{ qaScorecardSources }}'
 AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -319,16 +320,16 @@ Creates a QaScorecardRevision.
 
 ```sql
 INSERT INTO google.contactcenterinsights.revisions (
-data__snapshot,
 data__name,
+data__snapshot,
 projectsId,
 locationsId,
 qaScorecardsId,
 qaScorecardRevisionId
 )
 SELECT 
-'{{ snapshot }}',
 '{{ name }}',
+'{{ snapshot }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ qaScorecardsId }}',
@@ -344,32 +345,37 @@ state
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: revisions
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the revisions resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the revisions resource.
     - name: qaScorecardsId
-      value: string
+      value: "{{ qaScorecardsId }}"
       description: Required parameter for the revisions resource.
-    - name: snapshot
-      value: object
-      description: >
-        The snapshot of the scorecard at the time of this revision's creation.
-        
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Identifier. The name of the scorecard revision. Format: projects/{project}/locations/{location}/qaScorecards/{qa_scorecard}/revisions/{revision}
-        
+    - name: snapshot
+      description: |
+        A QaScorecard represents a collection of questions to be scored during analysis.
+      value:
+        isDefault: {{ isDefault }}
+        displayName: "{{ displayName }}"
+        createTime: "{{ createTime }}"
+        updateTime: "{{ updateTime }}"
+        source: "{{ source }}"
+        description: "{{ description }}"
+        name: "{{ name }}"
     - name: qaScorecardRevisionId
-      value: string
-```
+      value: "{{ qaScorecardRevisionId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -402,13 +408,31 @@ AND force = '{{ force }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="deploy"
+    defaultValue="tune_qa_scorecard_revision"
     values={[
+        { label: 'tune_qa_scorecard_revision', value: 'tune_qa_scorecard_revision' },
         { label: 'deploy', value: 'deploy' },
-        { label: 'undeploy', value: 'undeploy' },
-        { label: 'tune_qa_scorecard_revision', value: 'tune_qa_scorecard_revision' }
+        { label: 'undeploy', value: 'undeploy' }
     ]}
 >
+<TabItem value="tune_qa_scorecard_revision">
+
+Fine tune one or more QaModels.
+
+```sql
+EXEC google.contactcenterinsights.revisions.tune_qa_scorecard_revision 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@qaScorecardsId='{{ qaScorecardsId }}' --required, 
+@revisionsId='{{ revisionsId }}' --required 
+@@json=
+'{
+"validateOnly": {{ validateOnly }}, 
+"filter": "{{ filter }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="deploy">
 
 Deploy a QaScorecardRevision.
@@ -432,24 +456,6 @@ EXEC google.contactcenterinsights.revisions.undeploy
 @locationsId='{{ locationsId }}' --required, 
 @qaScorecardsId='{{ qaScorecardsId }}' --required, 
 @revisionsId='{{ revisionsId }}' --required
-;
-```
-</TabItem>
-<TabItem value="tune_qa_scorecard_revision">
-
-Fine tune one or more QaModels.
-
-```sql
-EXEC google.contactcenterinsights.revisions.tune_qa_scorecard_revision 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@qaScorecardsId='{{ qaScorecardsId }}' --required, 
-@revisionsId='{{ revisionsId }}' --required 
-@@json=
-'{
-"filter": "{{ filter }}", 
-"validateOnly": {{ validateOnly }}
-}'
 ;
 ```
 </TabItem>

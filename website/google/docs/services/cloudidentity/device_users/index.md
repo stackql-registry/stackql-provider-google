@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>device_users</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>device_users</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="device_users" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudidentity.device_users" /></td></tr>
 </tbody></table>
@@ -57,7 +58,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="compromisedState" /></td>
     <td><code>string</code></td>
-    <td>Compromised State of the DeviceUser object</td>
+    <td>Compromised State of the DeviceUser object (COMPROMISED_STATE_UNSPECIFIED, COMPROMISED, NOT_COMPROMISED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -82,12 +83,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="managementState" /></td>
     <td><code>string</code></td>
-    <td>Output only. Management state of the user on the device.</td>
+    <td>Output only. Management state of the user on the device. (MANAGEMENT_STATE_UNSPECIFIED, WIPING, WIPED, APPROVED, BLOCKED, PENDING_APPROVAL, UNENROLLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="passwordState" /></td>
     <td><code>string</code></td>
-    <td>Password state of the DeviceUser object</td>
+    <td>Password state of the DeviceUser object (PASSWORD_STATE_UNSPECIFIED, PASSWORD_SET, PASSWORD_NOT_SET)</td>
 </tr>
 <tr>
     <td><CopyableCode code="userAgent" /></td>
@@ -121,7 +122,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="compromisedState" /></td>
     <td><code>string</code></td>
-    <td>Compromised State of the DeviceUser object</td>
+    <td>Compromised State of the DeviceUser object (COMPROMISED_STATE_UNSPECIFIED, COMPROMISED, NOT_COMPROMISED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -146,12 +147,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="managementState" /></td>
     <td><code>string</code></td>
-    <td>Output only. Management state of the user on the device.</td>
+    <td>Output only. Management state of the user on the device. (MANAGEMENT_STATE_UNSPECIFIED, WIPING, WIPED, APPROVED, BLOCKED, PENDING_APPROVAL, UNENROLLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="passwordState" /></td>
     <td><code>string</code></td>
-    <td>Password state of the DeviceUser object</td>
+    <td>Password state of the DeviceUser object (PASSWORD_STATE_UNSPECIFIED, PASSWORD_SET, PASSWORD_NOT_SET)</td>
 </tr>
 <tr>
     <td><CopyableCode code="userAgent" /></td>
@@ -194,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-devicesId"><code>devicesId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-customer"><code>customer</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-customer"><code>customer</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists/Searches DeviceUsers.</td>
 </tr>
 <tr>
@@ -203,6 +204,20 @@ The following methods are available for this resource:
     <td><a href="#parameter-devicesId"><code>devicesId</code></a>, <a href="#parameter-deviceUsersId"><code>deviceUsersId</code></a></td>
     <td><a href="#parameter-customer"><code>customer</code></a></td>
     <td>Deletes the specified DeviceUser. This also revokes the user's access to device data.</td>
+</tr>
+<tr>
+    <td><a href="#lookup"><CopyableCode code="lookup" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-devicesId"><code>devicesId</code></a></td>
+    <td><a href="#parameter-rawResourceId"><code>rawResourceId</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-userId"><code>userId</code></a>, <a href="#parameter-iosDeviceId"><code>iosDeviceId</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-androidId"><code>androidId</code></a>, <a href="#parameter-partner"><code>partner</code></a></td>
+    <td>Looks up resource names of the DeviceUsers associated with the caller's credentials, as well as the properties provided in the request. This method must be called with end-user credentials with the scope: https://www.googleapis.com/auth/cloud-identity.devices.lookup If multiple properties are provided, only DeviceUsers having all of these properties are considered as matches - i.e. the query behaves like an AND. Different platforms require different amounts of information from the caller to ensure that the DeviceUser is uniquely identified. - iOS: If either the `partner` or `ios_device_id` field is provided, then both fields are required. - Android: Specifying the `android_id` field is required. - Desktop: Specifying the `raw_resource_id` field is required.</td>
+</tr>
+<tr>
+    <td><a href="#block"><CopyableCode code="block" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-devicesId"><code>devicesId</code></a>, <a href="#parameter-deviceUsersId"><code>deviceUsersId</code></a></td>
+    <td></td>
+    <td>Blocks device from accessing user data</td>
 </tr>
 <tr>
     <td><a href="#wipe"><CopyableCode code="wipe" /></a></td>
@@ -217,20 +232,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-devicesId"><code>devicesId</code></a>, <a href="#parameter-deviceUsersId"><code>deviceUsersId</code></a></td>
     <td></td>
     <td>Cancels an unfinished user account wipe. This operation can be used to cancel device wipe in the gap between the wipe operation returning success and the device being wiped.</td>
-</tr>
-<tr>
-    <td><a href="#block"><CopyableCode code="block" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-devicesId"><code>devicesId</code></a>, <a href="#parameter-deviceUsersId"><code>deviceUsersId</code></a></td>
-    <td></td>
-    <td>Blocks device from accessing user data</td>
-</tr>
-<tr>
-    <td><a href="#lookup"><CopyableCode code="lookup" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-devicesId"><code>devicesId</code></a></td>
-    <td><a href="#parameter-rawResourceId"><code>rawResourceId</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-userId"><code>userId</code></a>, <a href="#parameter-iosDeviceId"><code>iosDeviceId</code></a>, <a href="#parameter-partner"><code>partner</code></a>, <a href="#parameter-androidId"><code>androidId</code></a></td>
-    <td>Looks up resource names of the DeviceUsers associated with the caller's credentials, as well as the properties provided in the request. This method must be called with end-user credentials with the scope: https://www.googleapis.com/auth/cloud-identity.devices.lookup If multiple properties are provided, only DeviceUsers having all of these properties are considered as matches - i.e. the query behaves like an AND. Different platforms require different amounts of information from the caller to ensure that the DeviceUser is uniquely identified. - iOS: Specifying the 'partner' and 'ios_device_id' fields is required. - Android: Specifying the 'android_id' field is required. - Desktop: Specifying the 'raw_resource_id' field is required.</td>
 </tr>
 <tr>
     <td><a href="#approve"><CopyableCode code="approve" /></a></td>
@@ -368,11 +369,11 @@ userAgent,
 userEmail
 FROM google.cloudidentity.device_users
 WHERE devicesId = '{{ devicesId }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
 AND customer = '{{ customer }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -405,15 +406,47 @@ AND customer = '{{ customer }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="wipe"
+    defaultValue="lookup"
     values={[
+        { label: 'lookup', value: 'lookup' },
+        { label: 'block', value: 'block' },
         { label: 'wipe', value: 'wipe' },
         { label: 'cancel_wipe', value: 'cancel_wipe' },
-        { label: 'block', value: 'block' },
-        { label: 'lookup', value: 'lookup' },
         { label: 'approve', value: 'approve' }
     ]}
 >
+<TabItem value="lookup">
+
+Looks up resource names of the DeviceUsers associated with the caller's credentials, as well as the properties provided in the request. This method must be called with end-user credentials with the scope: https://www.googleapis.com/auth/cloud-identity.devices.lookup If multiple properties are provided, only DeviceUsers having all of these properties are considered as matches - i.e. the query behaves like an AND. Different platforms require different amounts of information from the caller to ensure that the DeviceUser is uniquely identified. - iOS: If either the `partner` or `ios_device_id` field is provided, then both fields are required. - Android: Specifying the `android_id` field is required. - Desktop: Specifying the `raw_resource_id` field is required.
+
+```sql
+EXEC google.cloudidentity.device_users.lookup 
+@devicesId='{{ devicesId }}' --required, 
+@rawResourceId='{{ rawResourceId }}', 
+@pageToken='{{ pageToken }}', 
+@userId='{{ userId }}', 
+@iosDeviceId='{{ iosDeviceId }}', 
+@pageSize='{{ pageSize }}', 
+@androidId='{{ androidId }}', 
+@partner='{{ partner }}'
+;
+```
+</TabItem>
+<TabItem value="block">
+
+Blocks device from accessing user data
+
+```sql
+EXEC google.cloudidentity.device_users.block 
+@devicesId='{{ devicesId }}' --required, 
+@deviceUsersId='{{ deviceUsersId }}' --required 
+@@json=
+'{
+"customer": "{{ customer }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="wipe">
 
 Wipes the user's account on a device. Other data on the device that is not associated with the user's work account is not affected. For example, if a Gmail app is installed on a device that is used for personal and work purposes, and the user is logged in to the Gmail app with their personal account as well as their work account, wiping the "deviceUser" by their work administrator will not affect their personal account within Gmail or other apps such as Photos.
@@ -441,38 +474,6 @@ EXEC google.cloudidentity.device_users.cancel_wipe
 '{
 "customer": "{{ customer }}"
 }'
-;
-```
-</TabItem>
-<TabItem value="block">
-
-Blocks device from accessing user data
-
-```sql
-EXEC google.cloudidentity.device_users.block 
-@devicesId='{{ devicesId }}' --required, 
-@deviceUsersId='{{ deviceUsersId }}' --required 
-@@json=
-'{
-"customer": "{{ customer }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="lookup">
-
-Looks up resource names of the DeviceUsers associated with the caller's credentials, as well as the properties provided in the request. This method must be called with end-user credentials with the scope: https://www.googleapis.com/auth/cloud-identity.devices.lookup If multiple properties are provided, only DeviceUsers having all of these properties are considered as matches - i.e. the query behaves like an AND. Different platforms require different amounts of information from the caller to ensure that the DeviceUser is uniquely identified. - iOS: Specifying the 'partner' and 'ios_device_id' fields is required. - Android: Specifying the 'android_id' field is required. - Desktop: Specifying the 'raw_resource_id' field is required.
-
-```sql
-EXEC google.cloudidentity.device_users.lookup 
-@devicesId='{{ devicesId }}' --required, 
-@rawResourceId='{{ rawResourceId }}', 
-@pageToken='{{ pageToken }}', 
-@pageSize='{{ pageSize }}', 
-@userId='{{ userId }}', 
-@iosDeviceId='{{ iosDeviceId }}', 
-@partner='{{ partner }}', 
-@androidId='{{ androidId }}'
 ;
 ```
 </TabItem>

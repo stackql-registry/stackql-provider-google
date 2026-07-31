@@ -15,6 +15,7 @@ image: /img/stackql-googleworkspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>changes</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>changes</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="changes" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleworkspace.drivev2.changes" /></td></tr>
 </tbody></table>
@@ -217,21 +218,21 @@ The following methods are available for this resource:
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-changeId"><code>changeId</code></a></td>
-    <td><a href="#parameter-driveId"><code>driveId</code></a>, <a href="#parameter-supportsAllDrives"><code>supportsAllDrives</code></a>, <a href="#parameter-supportsTeamDrives"><code>supportsTeamDrives</code></a>, <a href="#parameter-teamDriveId"><code>teamDriveId</code></a></td>
+    <td><a href="#parameter-driveId"><code>driveId</code></a>, <a href="#parameter-supportsTeamDrives"><code>supportsTeamDrives</code></a>, <a href="#parameter-supportsAllDrives"><code>supportsAllDrives</code></a>, <a href="#parameter-teamDriveId"><code>teamDriveId</code></a></td>
     <td>Deprecated: Use `changes.getStartPageToken` and `changes.list` to retrieve recent changes.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-driveId"><code>driveId</code></a>, <a href="#parameter-includeCorpusRemovals"><code>includeCorpusRemovals</code></a>, <a href="#parameter-includeDeleted"><code>includeDeleted</code></a>, <a href="#parameter-includeItemsFromAllDrives"><code>includeItemsFromAllDrives</code></a>, <a href="#parameter-includeSubscribed"><code>includeSubscribed</code></a>, <a href="#parameter-includeTeamDriveItems"><code>includeTeamDriveItems</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-spaces"><code>spaces</code></a>, <a href="#parameter-startChangeId"><code>startChangeId</code></a>, <a href="#parameter-supportsAllDrives"><code>supportsAllDrives</code></a>, <a href="#parameter-supportsTeamDrives"><code>supportsTeamDrives</code></a>, <a href="#parameter-teamDriveId"><code>teamDriveId</code></a>, <a href="#parameter-includePermissionsForView"><code>includePermissionsForView</code></a>, <a href="#parameter-includeLabels"><code>includeLabels</code></a></td>
+    <td><a href="#parameter-includeSubscribed"><code>includeSubscribed</code></a>, <a href="#parameter-supportsTeamDrives"><code>supportsTeamDrives</code></a>, <a href="#parameter-includePermissionsForView"><code>includePermissionsForView</code></a>, <a href="#parameter-teamDriveId"><code>teamDriveId</code></a>, <a href="#parameter-includeItemsFromAllDrives"><code>includeItemsFromAllDrives</code></a>, <a href="#parameter-startChangeId"><code>startChangeId</code></a>, <a href="#parameter-includeLabels"><code>includeLabels</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-spaces"><code>spaces</code></a>, <a href="#parameter-supportsAllDrives"><code>supportsAllDrives</code></a>, <a href="#parameter-driveId"><code>driveId</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-includeTeamDriveItems"><code>includeTeamDriveItems</code></a>, <a href="#parameter-includeCorpusRemovals"><code>includeCorpusRemovals</code></a>, <a href="#parameter-includeDeleted"><code>includeDeleted</code></a></td>
     <td>Lists the changes for a user or shared drive.</td>
 </tr>
 <tr>
     <td><a href="#watch"><CopyableCode code="watch" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
-    <td><a href="#parameter-driveId"><code>driveId</code></a>, <a href="#parameter-includeCorpusRemovals"><code>includeCorpusRemovals</code></a>, <a href="#parameter-includeDeleted"><code>includeDeleted</code></a>, <a href="#parameter-includeItemsFromAllDrives"><code>includeItemsFromAllDrives</code></a>, <a href="#parameter-includeSubscribed"><code>includeSubscribed</code></a>, <a href="#parameter-includeTeamDriveItems"><code>includeTeamDriveItems</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-spaces"><code>spaces</code></a>, <a href="#parameter-startChangeId"><code>startChangeId</code></a>, <a href="#parameter-supportsAllDrives"><code>supportsAllDrives</code></a>, <a href="#parameter-supportsTeamDrives"><code>supportsTeamDrives</code></a>, <a href="#parameter-teamDriveId"><code>teamDriveId</code></a>, <a href="#parameter-includePermissionsForView"><code>includePermissionsForView</code></a>, <a href="#parameter-includeLabels"><code>includeLabels</code></a></td>
+    <td><a href="#parameter-spaces"><code>spaces</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-supportsAllDrives"><code>supportsAllDrives</code></a>, <a href="#parameter-includeSubscribed"><code>includeSubscribed</code></a>, <a href="#parameter-supportsTeamDrives"><code>supportsTeamDrives</code></a>, <a href="#parameter-includePermissionsForView"><code>includePermissionsForView</code></a>, <a href="#parameter-includeLabels"><code>includeLabels</code></a>, <a href="#parameter-teamDriveId"><code>teamDriveId</code></a>, <a href="#parameter-includeItemsFromAllDrives"><code>includeItemsFromAllDrives</code></a>, <a href="#parameter-startChangeId"><code>startChangeId</code></a>, <a href="#parameter-includeCorpusRemovals"><code>includeCorpusRemovals</code></a>, <a href="#parameter-includeTeamDriveItems"><code>includeTeamDriveItems</code></a>, <a href="#parameter-includeDeleted"><code>includeDeleted</code></a>, <a href="#parameter-driveId"><code>driveId</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Subscribe to changes for a user.</td>
 </tr>
 </tbody>
@@ -364,8 +365,8 @@ type
 FROM googleworkspace.drivev2.changes
 WHERE changeId = '{{ changeId }}' -- required
 AND driveId = '{{ driveId }}'
-AND supportsAllDrives = '{{ supportsAllDrives }}'
 AND supportsTeamDrives = '{{ supportsTeamDrives }}'
+AND supportsAllDrives = '{{ supportsAllDrives }}'
 AND teamDriveId = '{{ teamDriveId }}'
 ;
 ```
@@ -390,21 +391,21 @@ teamDrive,
 teamDriveId,
 type
 FROM googleworkspace.drivev2.changes
-WHERE driveId = '{{ driveId }}'
+WHERE includeSubscribed = '{{ includeSubscribed }}'
+AND supportsTeamDrives = '{{ supportsTeamDrives }}'
+AND includePermissionsForView = '{{ includePermissionsForView }}'
+AND teamDriveId = '{{ teamDriveId }}'
+AND includeItemsFromAllDrives = '{{ includeItemsFromAllDrives }}'
+AND startChangeId = '{{ startChangeId }}'
+AND includeLabels = '{{ includeLabels }}'
+AND maxResults = '{{ maxResults }}'
+AND spaces = '{{ spaces }}'
+AND supportsAllDrives = '{{ supportsAllDrives }}'
+AND driveId = '{{ driveId }}'
+AND pageToken = '{{ pageToken }}'
+AND includeTeamDriveItems = '{{ includeTeamDriveItems }}'
 AND includeCorpusRemovals = '{{ includeCorpusRemovals }}'
 AND includeDeleted = '{{ includeDeleted }}'
-AND includeItemsFromAllDrives = '{{ includeItemsFromAllDrives }}'
-AND includeSubscribed = '{{ includeSubscribed }}'
-AND includeTeamDriveItems = '{{ includeTeamDriveItems }}'
-AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
-AND spaces = '{{ spaces }}'
-AND startChangeId = '{{ startChangeId }}'
-AND supportsAllDrives = '{{ supportsAllDrives }}'
-AND supportsTeamDrives = '{{ supportsTeamDrives }}'
-AND teamDriveId = '{{ teamDriveId }}'
-AND includePermissionsForView = '{{ includePermissionsForView }}'
-AND includeLabels = '{{ includeLabels }}'
 ;
 ```
 </TabItem>
@@ -425,33 +426,33 @@ Subscribe to changes for a user.
 
 ```sql
 EXEC googleworkspace.drivev2.changes.watch 
-@driveId='{{ driveId }}', 
-@includeCorpusRemovals={{ includeCorpusRemovals }}, 
-@includeDeleted={{ includeDeleted }}, 
-@includeItemsFromAllDrives={{ includeItemsFromAllDrives }}, 
-@includeSubscribed={{ includeSubscribed }}, 
-@includeTeamDriveItems={{ includeTeamDriveItems }}, 
-@maxResults='{{ maxResults }}', 
-@pageToken='{{ pageToken }}', 
 @spaces='{{ spaces }}', 
-@startChangeId='{{ startChangeId }}', 
+@maxResults='{{ maxResults }}', 
 @supportsAllDrives={{ supportsAllDrives }}, 
+@includeSubscribed={{ includeSubscribed }}, 
 @supportsTeamDrives={{ supportsTeamDrives }}, 
-@teamDriveId='{{ teamDriveId }}', 
 @includePermissionsForView='{{ includePermissionsForView }}', 
-@includeLabels='{{ includeLabels }}' 
+@includeLabels='{{ includeLabels }}', 
+@teamDriveId='{{ teamDriveId }}', 
+@includeItemsFromAllDrives={{ includeItemsFromAllDrives }}, 
+@startChangeId='{{ startChangeId }}', 
+@includeCorpusRemovals={{ includeCorpusRemovals }}, 
+@includeTeamDriveItems={{ includeTeamDriveItems }}, 
+@includeDeleted={{ includeDeleted }}, 
+@driveId='{{ driveId }}', 
+@pageToken='{{ pageToken }}' 
 @@json=
 '{
-"payload": {{ payload }}, 
-"id": "{{ id }}", 
 "resourceId": "{{ resourceId }}", 
+"id": "{{ id }}", 
 "resourceUri": "{{ resourceUri }}", 
-"token": "{{ token }}", 
-"expiration": "{{ expiration }}", 
-"type": "{{ type }}", 
-"address": "{{ address }}", 
 "params": "{{ params }}", 
-"kind": "{{ kind }}"
+"kind": "{{ kind }}", 
+"payload": {{ payload }}, 
+"expiration": "{{ expiration }}", 
+"address": "{{ address }}", 
+"type": "{{ type }}", 
+"token": "{{ token }}"
 }'
 ;
 ```

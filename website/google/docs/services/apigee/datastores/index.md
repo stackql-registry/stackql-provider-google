@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>datastores</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>datastores</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="datastores" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.datastores" /></td></tr>
 </tbody></table>
@@ -281,29 +282,31 @@ targetType
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: datastores
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the datastores resource.
     - name: targetType
-      value: string
-      description: >
-        Destination storage type. Supported types `gcs` or `bigquery`.
-        
+      value: "{{ targetType }}"
+      description: |
+        Destination storage type. Supported types \`gcs\` or \`bigquery\`.
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Required. Display name in UI
-        
     - name: datastoreConfig
-      value: object
-      description: >
+      description: |
         Datastore Configurations.
-        
-```
+      value:
+        path: "{{ path }}"
+        projectId: "{{ projectId }}"
+        bucketName: "{{ bucketName }}"
+        datasetName: "{{ datasetName }}"
+        tablePrefix: "{{ tablePrefix }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

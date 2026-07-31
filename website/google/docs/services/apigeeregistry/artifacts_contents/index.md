@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>artifacts_contents</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>artifacts_contents</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="artifacts_contents" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigeeregistry.artifacts_contents" /></td></tr>
 </tbody></table>
@@ -35,8 +36,8 @@ The following fields are returned by `SELECT` queries:
     defaultValue="projects_locations_apis_versions_specs_artifacts_get_contents"
     values={[
         { label: 'projects_locations_apis_versions_specs_artifacts_get_contents', value: 'projects_locations_apis_versions_specs_artifacts_get_contents' },
-        { label: 'projects_locations_apis_versions_artifacts_get_contents', value: 'projects_locations_apis_versions_artifacts_get_contents' },
         { label: 'projects_locations_apis_deployments_artifacts_get_contents', value: 'projects_locations_apis_deployments_artifacts_get_contents' },
+        { label: 'projects_locations_apis_versions_artifacts_get_contents', value: 'projects_locations_apis_versions_artifacts_get_contents' },
         { label: 'projects_locations_apis_artifacts_get_contents', value: 'projects_locations_apis_artifacts_get_contents' },
         { label: 'projects_locations_artifacts_get_contents', value: 'projects_locations_artifacts_get_contents' }
     ]}
@@ -70,7 +71,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_apis_versions_artifacts_get_contents">
+<TabItem value="projects_locations_apis_deployments_artifacts_get_contents">
 
 <table>
 <thead>
@@ -99,7 +100,7 @@ The following fields are returned by `SELECT` queries:
 </tbody>
 </table>
 </TabItem>
-<TabItem value="projects_locations_apis_deployments_artifacts_get_contents">
+<TabItem value="projects_locations_apis_versions_artifacts_get_contents">
 
 <table>
 <thead>
@@ -211,16 +212,16 @@ The following methods are available for this resource:
     <td>Returns the contents of a specified artifact. If artifacts are stored with GZip compression, the default behavior is to return the artifact uncompressed (the mime_type response field indicates the exact format returned).</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_apis_versions_artifacts_get_contents"><CopyableCode code="projects_locations_apis_versions_artifacts_get_contents" /></a></td>
+    <td><a href="#projects_locations_apis_deployments_artifacts_get_contents"><CopyableCode code="projects_locations_apis_deployments_artifacts_get_contents" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a>, <a href="#parameter-artifactsId"><code>artifactsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-deploymentsId"><code>deploymentsId</code></a>, <a href="#parameter-artifactsId"><code>artifactsId</code></a></td>
     <td></td>
     <td>Returns the contents of a specified artifact. If artifacts are stored with GZip compression, the default behavior is to return the artifact uncompressed (the mime_type response field indicates the exact format returned).</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_apis_deployments_artifacts_get_contents"><CopyableCode code="projects_locations_apis_deployments_artifacts_get_contents" /></a></td>
+    <td><a href="#projects_locations_apis_versions_artifacts_get_contents"><CopyableCode code="projects_locations_apis_versions_artifacts_get_contents" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-deploymentsId"><code>deploymentsId</code></a>, <a href="#parameter-artifactsId"><code>artifactsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-apisId"><code>apisId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a>, <a href="#parameter-artifactsId"><code>artifactsId</code></a></td>
     <td></td>
     <td>Returns the contents of a specified artifact. If artifacts are stored with GZip compression, the default behavior is to return the artifact uncompressed (the mime_type response field indicates the exact format returned).</td>
 </tr>
@@ -298,8 +299,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="projects_locations_apis_versions_specs_artifacts_get_contents"
     values={[
         { label: 'projects_locations_apis_versions_specs_artifacts_get_contents', value: 'projects_locations_apis_versions_specs_artifacts_get_contents' },
-        { label: 'projects_locations_apis_versions_artifacts_get_contents', value: 'projects_locations_apis_versions_artifacts_get_contents' },
         { label: 'projects_locations_apis_deployments_artifacts_get_contents', value: 'projects_locations_apis_deployments_artifacts_get_contents' },
+        { label: 'projects_locations_apis_versions_artifacts_get_contents', value: 'projects_locations_apis_versions_artifacts_get_contents' },
         { label: 'projects_locations_apis_artifacts_get_contents', value: 'projects_locations_apis_artifacts_get_contents' },
         { label: 'projects_locations_artifacts_get_contents', value: 'projects_locations_artifacts_get_contents' }
     ]}
@@ -323,24 +324,6 @@ AND artifactsId = '{{ artifactsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_apis_versions_artifacts_get_contents">
-
-Returns the contents of a specified artifact. If artifacts are stored with GZip compression, the default behavior is to return the artifact uncompressed (the mime_type response field indicates the exact format returned).
-
-```sql
-SELECT
-contentType,
-data,
-extensions
-FROM google.apigeeregistry.artifacts_contents
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND apisId = '{{ apisId }}' -- required
-AND versionsId = '{{ versionsId }}' -- required
-AND artifactsId = '{{ artifactsId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="projects_locations_apis_deployments_artifacts_get_contents">
 
 Returns the contents of a specified artifact. If artifacts are stored with GZip compression, the default behavior is to return the artifact uncompressed (the mime_type response field indicates the exact format returned).
@@ -355,6 +338,24 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND apisId = '{{ apisId }}' -- required
 AND deploymentsId = '{{ deploymentsId }}' -- required
+AND artifactsId = '{{ artifactsId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="projects_locations_apis_versions_artifacts_get_contents">
+
+Returns the contents of a specified artifact. If artifacts are stored with GZip compression, the default behavior is to return the artifact uncompressed (the mime_type response field indicates the exact format returned).
+
+```sql
+SELECT
+contentType,
+data,
+extensions
+FROM google.apigeeregistry.artifacts_contents
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND apisId = '{{ apisId }}' -- required
+AND versionsId = '{{ versionsId }}' -- required
 AND artifactsId = '{{ artifactsId }}' -- required
 ;
 ```

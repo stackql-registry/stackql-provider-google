@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>repositories</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>repositories</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="repositories" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.artifactregistry.repositories" /></td></tr>
 </tbody></table>
@@ -87,7 +88,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="format" /></td>
     <td><code>string</code></td>
-    <td>Optional. The format of packages that are stored in the repository.</td>
+    <td>Optional. The format of packages that are stored in the repository. (FORMAT_UNSPECIFIED, DOCKER, MAVEN, NPM, APT, YUM, GOOGET, PYTHON, KFP, GO, GENERIC, RUBY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="kmsKeyName" /></td>
@@ -107,7 +108,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="mode" /></td>
     <td><code>string</code></td>
-    <td>Optional. The mode of the repository.</td>
+    <td>Optional. The mode of the repository. (MODE_UNSPECIFIED, STANDARD_REPOSITORY, VIRTUAL_REPOSITORY, REMOTE_REPOSITORY, AOSS_REPOSITORY, ASSURED_OSS_REPOSITORY)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="platformLogsConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Configuration for platform logs. (id: PlatformLogsConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="registryUri" /></td>
@@ -201,7 +207,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="format" /></td>
     <td><code>string</code></td>
-    <td>Optional. The format of packages that are stored in the repository.</td>
+    <td>Optional. The format of packages that are stored in the repository. (FORMAT_UNSPECIFIED, DOCKER, MAVEN, NPM, APT, YUM, GOOGET, PYTHON, KFP, GO, GENERIC, RUBY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="kmsKeyName" /></td>
@@ -221,7 +227,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="mode" /></td>
     <td><code>string</code></td>
-    <td>Optional. The mode of the repository.</td>
+    <td>Optional. The mode of the repository. (MODE_UNSPECIFIED, STANDARD_REPOSITORY, VIRTUAL_REPOSITORY, REMOTE_REPOSITORY, AOSS_REPOSITORY, ASSURED_OSS_REPOSITORY)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="platformLogsConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Configuration for platform logs. (id: PlatformLogsConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="registryUri" /></td>
@@ -294,7 +305,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists repositories.</td>
 </tr>
 <tr>
@@ -319,11 +330,25 @@ The following methods are available for this resource:
     <td>Deletes a repository and all of its contents. The returned Operation will finish once the repository has been deleted. It will not have any Operation metadata and will return a google.protobuf.Empty response.</td>
 </tr>
 <tr>
+    <td><a href="#prewarm_artifact"><CopyableCode code="prewarm_artifact" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
+    <td></td>
+    <td>Prewarms an artifact for streaming.</td>
+</tr>
+<tr>
     <td><a href="#export_artifact"><CopyableCode code="export_artifact" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
     <td></td>
-    <td>Exports an artifact.</td>
+    <td>Exports an artifact to a Cloud Storage bucket.</td>
+</tr>
+<tr>
+    <td><a href="#check_prewarmed_artifact"><CopyableCode code="check_prewarmed_artifact" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
+    <td></td>
+    <td>Checks an artifact streaming.</td>
 </tr>
 </tbody>
 </table>
@@ -416,6 +441,7 @@ kmsKeyName,
 labels,
 mavenConfig,
 mode,
+platformLogsConfig,
 registryUri,
 remoteRepositoryConfig,
 satisfiesPzi,
@@ -449,6 +475,7 @@ kmsKeyName,
 labels,
 mavenConfig,
 mode,
+platformLogsConfig,
 registryUri,
 remoteRepositoryConfig,
 satisfiesPzi,
@@ -460,10 +487,10 @@ vulnerabilityScanningConfig
 FROM google.artifactregistry.repositories
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -485,39 +512,41 @@ Creates a repository. The returned Operation will finish once the repository has
 
 ```sql
 INSERT INTO google.artifactregistry.repositories (
-data__kmsKeyName,
 data__mavenConfig,
-data__name,
-data__disallowUnspecifiedMode,
-data__cleanupPolicyDryRun,
-data__remoteRepositoryConfig,
-data__description,
-data__labels,
-data__dockerConfig,
 data__format,
-data__vulnerabilityScanningConfig,
-data__virtualRepositoryConfig,
-data__cleanupPolicies,
+data__labels,
 data__mode,
+data__disallowUnspecifiedMode,
+data__description,
+data__virtualRepositoryConfig,
+data__platformLogsConfig,
+data__remoteRepositoryConfig,
+data__name,
+data__kmsKeyName,
+data__cleanupPolicyDryRun,
+data__dockerConfig,
+data__cleanupPolicies,
+data__vulnerabilityScanningConfig,
 projectsId,
 locationsId,
 repositoryId
 )
 SELECT 
-'{{ kmsKeyName }}',
 '{{ mavenConfig }}',
-'{{ name }}',
-{{ disallowUnspecifiedMode }},
-{{ cleanupPolicyDryRun }},
-'{{ remoteRepositoryConfig }}',
-'{{ description }}',
-'{{ labels }}',
-'{{ dockerConfig }}',
 '{{ format }}',
-'{{ vulnerabilityScanningConfig }}',
-'{{ virtualRepositoryConfig }}',
-'{{ cleanupPolicies }}',
+'{{ labels }}',
 '{{ mode }}',
+{{ disallowUnspecifiedMode }},
+'{{ description }}',
+'{{ virtualRepositoryConfig }}',
+'{{ platformLogsConfig }}',
+'{{ remoteRepositoryConfig }}',
+'{{ name }}',
+'{{ kmsKeyName }}',
+{{ cleanupPolicyDryRun }},
+'{{ dockerConfig }}',
+'{{ cleanupPolicies }}',
+'{{ vulnerabilityScanningConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ repositoryId }}'
@@ -532,91 +561,131 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: repositories
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the repositories resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the repositories resource.
-    - name: kmsKeyName
-      value: string
-      description: >
-        The Cloud KMS resource name of the customer managed encryption key that's used to encrypt the contents of the Repository. Has the form: `projects/my-project/locations/my-region/keyRings/my-kr/cryptoKeys/my-key`. This value may not be changed after the Repository has been created.
-        
     - name: mavenConfig
-      value: object
-      description: >
+      description: |
         Maven repository config contains repository level configuration for the repositories of maven type.
-        
-    - name: name
-      value: string
-      description: >
-        The name of the repository, for example: `projects/p1/locations/us-central1/repositories/repo1`. For each location in a project, repository names must be unique.
-        
-    - name: disallowUnspecifiedMode
-      value: boolean
-      description: >
-        Optional. If this is true, an unspecified repo type will be treated as error rather than defaulting to standard.
-        
-    - name: cleanupPolicyDryRun
-      value: boolean
-      description: >
-        Optional. If true, the cleanup pipeline is prevented from deleting versions in this repository.
-        
-    - name: remoteRepositoryConfig
-      value: object
-      description: >
-        Configuration specific for a Remote Repository.
-        
-    - name: description
-      value: string
-      description: >
-        The user-provided description of the repository.
-        
-    - name: labels
-      value: object
-      description: >
-        Labels with user-defined metadata. This field may contain up to 64 entries. Label keys and values may be no longer than 63 characters. Label keys must begin with a lowercase letter and may only contain lowercase letters, numeric characters, underscores, and dashes.
-        
-    - name: dockerConfig
-      value: object
-      description: >
-        Docker repository config contains repository level configuration for the repositories of docker type.
-        
+      value:
+        allowSnapshotOverwrites: {{ allowSnapshotOverwrites }}
+        versionPolicy: "{{ versionPolicy }}"
     - name: format
-      value: string
-      description: >
+      value: "{{ format }}"
+      description: |
         Optional. The format of packages that are stored in the repository.
-        
       valid_values: ['FORMAT_UNSPECIFIED', 'DOCKER', 'MAVEN', 'NPM', 'APT', 'YUM', 'GOOGET', 'PYTHON', 'KFP', 'GO', 'GENERIC', 'RUBY']
-    - name: vulnerabilityScanningConfig
-      value: object
-      description: >
-        Optional. Config and state for vulnerability scanning of resources within this Repository.
-        
-    - name: virtualRepositoryConfig
-      value: object
-      description: >
-        Configuration specific for a Virtual Repository.
-        
-    - name: cleanupPolicies
-      value: object
-      description: >
-        Optional. Cleanup policies for this repository. Cleanup policies indicate when certain package versions can be automatically deleted. Map keys are policy IDs supplied by users during policy creation. They must unique within a repository and be under 128 characters in length.
-        
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Labels with user-defined metadata. This field may contain up to 64 entries. Label keys and values may be no longer than 63 characters. Label keys must begin with a lowercase letter and may only contain lowercase letters, numeric characters, underscores, and dashes.
     - name: mode
-      value: string
-      description: >
+      value: "{{ mode }}"
+      description: |
         Optional. The mode of the repository.
-        
       valid_values: ['MODE_UNSPECIFIED', 'STANDARD_REPOSITORY', 'VIRTUAL_REPOSITORY', 'REMOTE_REPOSITORY', 'AOSS_REPOSITORY', 'ASSURED_OSS_REPOSITORY']
+    - name: disallowUnspecifiedMode
+      value: {{ disallowUnspecifiedMode }}
+      description: |
+        Optional. If this is true, an unspecified repo type will be treated as error rather than defaulting to standard.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        The user-provided description of the repository.
+    - name: virtualRepositoryConfig
+      description: |
+        Configuration specific for a Virtual Repository.
+      value:
+        upstreamPolicies:
+          - id: "{{ id }}"
+            priority: {{ priority }}
+            repository: "{{ repository }}"
+    - name: platformLogsConfig
+      description: |
+        Optional. Configuration for platform logs.
+      value:
+        loggingState: "{{ loggingState }}"
+        severityLevel: "{{ severityLevel }}"
+    - name: remoteRepositoryConfig
+      description: |
+        Configuration specific for a Remote Repository.
+      value:
+        description: "{{ description }}"
+        npmRepository:
+          publicRepository: "{{ publicRepository }}"
+          customRepository:
+            uri: "{{ uri }}"
+        mavenRepository:
+          publicRepository: "{{ publicRepository }}"
+          customRepository:
+            uri: "{{ uri }}"
+        commonRepository:
+          uri: "{{ uri }}"
+        disableUpstreamValidation: {{ disableUpstreamValidation }}
+        upstreamCredentials:
+          usernamePasswordCredentials:
+            passwordSecretVersion: "{{ passwordSecretVersion }}"
+            username: "{{ username }}"
+        pythonRepository:
+          publicRepository: "{{ publicRepository }}"
+          customRepository:
+            uri: "{{ uri }}"
+        noCache: "{{ noCache }}"
+        dockerRepository:
+          publicRepository: "{{ publicRepository }}"
+          customRepository:
+            uri: "{{ uri }}"
+        aptRepository:
+          publicRepository:
+            repositoryBase: "{{ repositoryBase }}"
+            repositoryPath: "{{ repositoryPath }}"
+          customRepository:
+            uri: "{{ uri }}"
+        yumRepository:
+          publicRepository:
+            repositoryBase: "{{ repositoryBase }}"
+            repositoryPath: "{{ repositoryPath }}"
+          customRepository:
+            uri: "{{ uri }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The name of the repository, for example: \`projects/p1/locations/us-central1/repositories/repo1\`. For each location in a project, repository names must be unique.
+    - name: kmsKeyName
+      value: "{{ kmsKeyName }}"
+      description: |
+        The Cloud KMS resource name of the customer managed encryption key that's used to encrypt the contents of the Repository. Has the form: \`projects/my-project/locations/my-region/keyRings/my-kr/cryptoKeys/my-key\`. This value may not be changed after the Repository has been created.
+    - name: cleanupPolicyDryRun
+      value: {{ cleanupPolicyDryRun }}
+      description: |
+        Optional. If true, the cleanup pipeline is prevented from deleting versions in this repository.
+    - name: dockerConfig
+      description: |
+        Docker repository config contains repository level configuration for the repositories of docker type.
+      value:
+        immutableTags: {{ immutableTags }}
+    - name: cleanupPolicies
+      value: "{{ cleanupPolicies }}"
+      description: |
+        Optional. Cleanup policies for this repository. Cleanup policies indicate when certain package versions can be automatically deleted. Map keys are policy IDs supplied by users during policy creation. They must unique within a repository and be under 128 characters in length.
+    - name: vulnerabilityScanningConfig
+      description: |
+        Optional. Config and state for vulnerability scanning of resources within this Repository.
+      value:
+        enablementConfig: "{{ enablementConfig }}"
+        enablementState: "{{ enablementState }}"
+        lastEnableTime: "{{ lastEnableTime }}"
+        enablementStateReason: "{{ enablementStateReason }}"
     - name: repositoryId
-      value: string
-```
+      value: "{{ repositoryId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -636,20 +705,21 @@ Updates a repository.
 ```sql
 UPDATE google.artifactregistry.repositories
 SET 
-data__kmsKeyName = '{{ kmsKeyName }}',
 data__mavenConfig = '{{ mavenConfig }}',
-data__name = '{{ name }}',
-data__disallowUnspecifiedMode = {{ disallowUnspecifiedMode }},
-data__cleanupPolicyDryRun = {{ cleanupPolicyDryRun }},
-data__remoteRepositoryConfig = '{{ remoteRepositoryConfig }}',
-data__description = '{{ description }}',
-data__labels = '{{ labels }}',
-data__dockerConfig = '{{ dockerConfig }}',
 data__format = '{{ format }}',
-data__vulnerabilityScanningConfig = '{{ vulnerabilityScanningConfig }}',
+data__labels = '{{ labels }}',
+data__mode = '{{ mode }}',
+data__disallowUnspecifiedMode = {{ disallowUnspecifiedMode }},
+data__description = '{{ description }}',
 data__virtualRepositoryConfig = '{{ virtualRepositoryConfig }}',
+data__platformLogsConfig = '{{ platformLogsConfig }}',
+data__remoteRepositoryConfig = '{{ remoteRepositoryConfig }}',
+data__name = '{{ name }}',
+data__kmsKeyName = '{{ kmsKeyName }}',
+data__cleanupPolicyDryRun = {{ cleanupPolicyDryRun }},
+data__dockerConfig = '{{ dockerConfig }}',
 data__cleanupPolicies = '{{ cleanupPolicies }}',
-data__mode = '{{ mode }}'
+data__vulnerabilityScanningConfig = '{{ vulnerabilityScanningConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -668,6 +738,7 @@ kmsKeyName,
 labels,
 mavenConfig,
 mode,
+platformLogsConfig,
 registryUri,
 remoteRepositoryConfig,
 satisfiesPzi,
@@ -707,14 +778,37 @@ AND repositoriesId = '{{ repositoriesId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="export_artifact"
+    defaultValue="prewarm_artifact"
     values={[
-        { label: 'export_artifact', value: 'export_artifact' }
+        { label: 'prewarm_artifact', value: 'prewarm_artifact' },
+        { label: 'export_artifact', value: 'export_artifact' },
+        { label: 'check_prewarmed_artifact', value: 'check_prewarmed_artifact' }
     ]}
 >
+<TabItem value="prewarm_artifact">
+
+Prewarms an artifact for streaming.
+
+```sql
+EXEC google.artifactregistry.repositories.prewarm_artifact 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@repositoriesId='{{ repositoriesId }}' --required 
+@@json=
+'{
+"platform": "{{ platform }}", 
+"retentionDays": "{{ retentionDays }}", 
+"tag": "{{ tag }}", 
+"streamLocation": "{{ streamLocation }}", 
+"version": "{{ version }}", 
+"force": {{ force }}
+}'
+;
+```
+</TabItem>
 <TabItem value="export_artifact">
 
-Exports an artifact.
+Exports an artifact to a Cloud Storage bucket.
 
 ```sql
 EXEC google.artifactregistry.repositories.export_artifact 
@@ -723,9 +817,27 @@ EXEC google.artifactregistry.repositories.export_artifact
 @repositoriesId='{{ repositoriesId }}' --required 
 @@json=
 '{
-"gcsPath": "{{ gcsPath }}", 
+"sourceVersion": "{{ sourceVersion }}", 
 "sourceTag": "{{ sourceTag }}", 
-"sourceVersion": "{{ sourceVersion }}"
+"gcsPath": "{{ gcsPath }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="check_prewarmed_artifact">
+
+Checks an artifact streaming.
+
+```sql
+EXEC google.artifactregistry.repositories.check_prewarmed_artifact 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@repositoriesId='{{ repositoriesId }}' --required 
+@@json=
+'{
+"streamLocation": "{{ streamLocation }}", 
+"version": "{{ version }}", 
+"tag": "{{ tag }}"
 }'
 ;
 ```

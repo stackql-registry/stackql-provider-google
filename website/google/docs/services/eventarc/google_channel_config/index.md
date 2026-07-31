@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>google_channel_config</code> re
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>google_channel_config</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="google_channel_config" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.eventarc.google_channel_config" /></td></tr>
 </tbody></table>
@@ -178,9 +179,9 @@ Update a single GoogleChannelConfig
 ```sql
 UPDATE google.eventarc.google_channel_config
 SET 
+data__labels = '{{ labels }}',
 data__name = '{{ name }}',
-data__cryptoKeyName = '{{ cryptoKeyName }}',
-data__labels = '{{ labels }}'
+data__cryptoKeyName = '{{ cryptoKeyName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

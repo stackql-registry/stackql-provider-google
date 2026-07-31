@@ -18,7 +18,7 @@ accesscontextmanager service documentation.
 
 :::info[Service Summary]
 
-total resources: __10__  
+total resources: __11__  
 
 :::
 
@@ -29,11 +29,12 @@ total resources: __10__
 <a href="/services/accesscontextmanager/access_levels_iam_policies/">access_levels_iam_policies</a><br />
 <a href="/services/accesscontextmanager/access_policies/">access_policies</a><br />
 <a href="/services/accesscontextmanager/access_policies_iam_policies/">access_policies_iam_policies</a><br />
-<a href="/services/accesscontextmanager/authorized_orgs_descs/">authorized_orgs_descs</a>
+<a href="/services/accesscontextmanager/authorized_orgs_descs/">authorized_orgs_descs</a><br />
+<a href="/services/accesscontextmanager/gcp_user_access_bindings/">gcp_user_access_bindings</a>
 </div>
 <div class="providerDocColumn">
-<a href="/services/accesscontextmanager/gcp_user_access_bindings/">gcp_user_access_bindings</a><br />
 <a href="/services/accesscontextmanager/operations/">operations</a><br />
+<a href="/services/accesscontextmanager/permissions/">permissions</a><br />
 <a href="/services/accesscontextmanager/service_perimeters/">service_perimeters</a><br />
 <a href="/services/accesscontextmanager/service_perimeters_iam_policies/">service_perimeters_iam_policies</a><br />
 <a href="/services/accesscontextmanager/services/">services</a>

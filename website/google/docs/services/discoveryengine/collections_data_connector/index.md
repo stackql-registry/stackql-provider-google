@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>collections_data_connector</cod
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>collections_data_connector</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="collections_data_connector" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.discoveryengine.collections_data_connector" /></td></tr>
 </tbody></table>
@@ -51,7 +52,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Output only. The full resource name of the Data Connector. Format: `projects/*/locations/*/collections/*/dataConnector`.</td>
+    <td>Identifier. The full resource name of the Data Connector. Format: `projects/*/locations/*/collections/*/dataConnector`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="aclEnabled" /></td>
@@ -66,7 +67,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="actionState" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the action connector. This reflects whether the action connector is initializing, active or has encountered errors.</td>
+    <td>Output only. State of the action connector. This reflects whether the action connector is initializing, active or has encountered errors. (STATE_UNSPECIFIED, CREATING, ACTIVE, FAILED, RUNNING, WARNING, INITIALIZATION_FAILED, UPDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="alertPolicyConfigs" /></td>
@@ -89,14 +90,24 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. User actions that must be completed before the connector can start syncing data.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="cliConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. The configuration for establishing a CLI connection. (id: GoogleCloudDiscoveryengineV1CliConfig)</td>
+</tr>
+<tr>
     <td><CopyableCode code="connectorModes" /></td>
     <td><code>array</code></td>
     <td>Optional. The modes enabled for this connector. Default state is CONNECTOR_MODE_UNSPECIFIED.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="connectorSourceId" /></td>
+    <td><code>string</code></td>
+    <td>Optional. If set, this value instead of `data_source` is used to fetch the corresponding connector source.</td>
+</tr>
+<tr>
     <td><CopyableCode code="connectorType" /></td>
     <td><code>string</code></td>
-    <td>Output only. The type of connector. Each source can only map to one type. For example, salesforce, confluence and jira have THIRD_PARTY connector type. It is not mutable once set by system.</td>
+    <td>Output only. The type of connector. Each source can only map to one type. For example, salesforce, confluence and jira have THIRD_PARTY connector type. It is not mutable once set by system. (CONNECTOR_TYPE_UNSPECIFIED, THIRD_PARTY, GCP_FHIR, BIG_QUERY, GCS, GOOGLE_MAIL, GOOGLE_CALENDAR, GOOGLE_DRIVE, NATIVE_CLOUD_IDENTITY, THIRD_PARTY_FEDERATED, THIRD_PARTY_EUA, GCNV, GOOGLE_CHAT, GOOGLE_SITES, REMOTE_MCP, GOOGLE_WORKSPACE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createEuaSaas" /></td>
@@ -111,12 +122,22 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="dataSource" /></td>
     <td><code>string</code></td>
-    <td>Required. The name of the data source. Supported values: `salesforce`, `jira`, `confluence`, `bigquery`.</td>
+    <td>Required. The identifier for the data source. For the full, up-to-date list of supported connectors and their values, see [Connect a third-party data source](https://docs.cloud.google.com/gemini/enterprise/docs/connectors/connect-third-party-data-source#sources-by-launch-stage).</td>
 </tr>
 <tr>
     <td><CopyableCode code="destinationConfigs" /></td>
     <td><code>array</code></td>
     <td>Optional. Any target destinations used to connect to third-party services.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="dynamicTools" /></td>
+    <td><code>array</code></td>
+    <td>Output only. The dynamic tools fetched for this connector.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="egressFqdns" /></td>
+    <td><code>array</code></td>
+    <td>Output only. The list of FQDNs of the data connector can egress to. This includes both FQDN derived from the customer provided instance URL and default per connector type FQDNs.</td>
 </tr>
 <tr>
     <td><CopyableCode code="endUserConfig" /></td>
@@ -184,9 +205,19 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The most recent timestamp when this DataConnector was paused, affecting all functionalities such as data synchronization. Pausing a connector has the following effects: - All functionalities, including data synchronization, are halted. - Any ongoing data synchronization job will be canceled. - No future data synchronization runs will be scheduled nor can be triggered.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="metadata" /></td>
+    <td><code>object</code></td>
+    <td>Optional. User-facing metadata for the connector. Populated from the connector's generated metadata / registry `ConnectorSource`. (id: GoogleCloudDiscoveryengineV1DataConnectorConnectorMetadata)</td>
+</tr>
+<tr>
     <td><CopyableCode code="nextSyncTime" /></td>
     <td><code>object</code></td>
     <td>Defines the scheduled time for the next data synchronization. This field requires hour , minute, and time_zone from the [IANA Time Zone Database](https://www.iana.org/time-zones). This is utilized when the data connector has a refresh interval greater than 1 day. When the hours or minutes are not specified, we will assume a sync time of 0:00. The user must provide a time zone to avoid ambiguity. (id: GoogleTypeDateTime)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="oauthStaticIpAddresses" /></td>
+    <td><code>array</code></td>
+    <td>Output only. The static IP addresses used by this connector for OAuth APIs (e.g. end user authentication). These are surfaced separately from `static_ip_addresses` so that customers can apply granular firewall settings for OAuth endpoints. Only populated for connectors that have static IP enabled and are used for actions and/or federated search.</td>
 </tr>
 <tr>
     <td><CopyableCode code="params" /></td>
@@ -201,7 +232,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="realtimeState" /></td>
     <td><code>string</code></td>
-    <td>Output only. real-time sync state</td>
+    <td>Output only. real-time sync state (STATE_UNSPECIFIED, CREATING, ACTIVE, FAILED, RUNNING, WARNING, INITIALIZATION_FAILED, UPDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="realtimeSyncConfig" /></td>
@@ -221,7 +252,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the connector.</td>
+    <td>Output only. State of the connector. (STATE_UNSPECIFIED, CREATING, ACTIVE, FAILED, RUNNING, WARNING, INITIALIZATION_FAILED, UPDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="staticIpAddresses" /></td>
@@ -236,12 +267,22 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="syncMode" /></td>
     <td><code>string</code></td>
-    <td>The data synchronization mode supported by the data connector.</td>
+    <td>The data synchronization mode supported by the data connector. (PERIODIC, STREAMING, UNSPECIFIED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="tag" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Immutable. User-facing, version-independent label for this connector. May be shared by multiple connectors under the same (project, location, collection, data_source); tag-based lookup returns the one with the greatest create_time. Optional at Create time. Agent Designer resolves connectors via (data_source, tag) when set, falling back to the legacy resource-name lookup when unset, so connectors created before the tag-write launch continue to work without a backfill.</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. Timestamp the DataConnector was last updated.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="vpcscEnabled" /></td>
+    <td><code>boolean</code></td>
+    <td>Output only. Whether the connector is created with VPC-SC enabled.</td>
 </tr>
 </tbody>
 </table>
@@ -338,12 +379,16 @@ alertPolicyConfigs,
 autoRunDisabled,
 bapConfig,
 blockingReasons,
+cliConfig,
 connectorModes,
+connectorSourceId,
 connectorType,
 createEuaSaas,
 createTime,
 dataSource,
 destinationConfigs,
+dynamicTools,
+egressFqdns,
 endUserConfig,
 entities,
 errors,
@@ -357,7 +402,9 @@ jsonParams,
 kmsKeyName,
 lastSyncTime,
 latestPauseTime,
+metadata,
 nextSyncTime,
+oauthStaticIpAddresses,
 params,
 privateConnectivityProjectId,
 realtimeState,
@@ -368,7 +415,9 @@ state,
 staticIpAddresses,
 staticIpEnabled,
 syncMode,
-updateTime
+tag,
+updateTime,
+vpcscEnabled
 FROM google.discoveryengine.collections_data_connector
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
@@ -394,32 +443,37 @@ Updates a DataConnector.
 ```sql
 UPDATE google.discoveryengine.collections_data_connector
 SET 
+data__jsonParams = '{{ jsonParams }}',
+data__syncMode = '{{ syncMode }}',
+data__actionConfig = '{{ actionConfig }}',
+data__tag = '{{ tag }}',
+data__identityRefreshInterval = '{{ identityRefreshInterval }}',
 data__incrementalSyncDisabled = {{ incrementalSyncDisabled }},
+data__realtimeSyncConfig = '{{ realtimeSyncConfig }}',
+data__metadata = '{{ metadata }}',
+data__autoRunDisabled = {{ autoRunDisabled }},
+data__bapConfig = '{{ bapConfig }}',
+data__hybridIngestionDisabled = {{ hybridIngestionDisabled }},
+data__cliConfig = '{{ cliConfig }}',
 data__kmsKeyName = '{{ kmsKeyName }}',
-data__staticIpEnabled = {{ staticIpEnabled }},
+data__federatedConfig = '{{ federatedConfig }}',
 data__endUserConfig = '{{ endUserConfig }}',
 data__aclEnabled = {{ aclEnabled }},
-data__incrementalRefreshInterval = '{{ incrementalRefreshInterval }}',
-data__connectorModes = '{{ connectorModes }}',
-data__syncMode = '{{ syncMode }}',
-data__nextSyncTime = '{{ nextSyncTime }}',
 data__alertPolicyConfigs = '{{ alertPolicyConfigs }}',
-data__realtimeSyncConfig = '{{ realtimeSyncConfig }}',
-data__identityRefreshInterval = '{{ identityRefreshInterval }}',
-data__dataSource = '{{ dataSource }}',
-data__entities = '{{ entities }}',
-data__jsonParams = '{{ jsonParams }}',
-data__hybridIngestionDisabled = {{ hybridIngestionDisabled }},
-data__bapConfig = '{{ bapConfig }}',
-data__autoRunDisabled = {{ autoRunDisabled }},
 data__destinationConfigs = '{{ destinationConfigs }}',
-data__removeParamKeys = '{{ removeParamKeys }}',
-data__createEuaSaas = {{ createEuaSaas }},
-data__federatedConfig = '{{ federatedConfig }}',
+data__staticIpEnabled = {{ staticIpEnabled }},
+data__dataSource = '{{ dataSource }}',
+data__nextSyncTime = '{{ nextSyncTime }}',
+data__entities = '{{ entities }}',
 data__refreshInterval = '{{ refreshInterval }}',
+data__identityScheduleConfig = '{{ identityScheduleConfig }}',
+data__createEuaSaas = {{ createEuaSaas }},
+data__connectorSourceId = '{{ connectorSourceId }}',
+data__connectorModes = '{{ connectorModes }}',
 data__params = '{{ params }}',
-data__actionConfig = '{{ actionConfig }}',
-data__identityScheduleConfig = '{{ identityScheduleConfig }}'
+data__incrementalRefreshInterval = '{{ incrementalRefreshInterval }}',
+data__removeParamKeys = '{{ removeParamKeys }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -434,12 +488,16 @@ alertPolicyConfigs,
 autoRunDisabled,
 bapConfig,
 blockingReasons,
+cliConfig,
 connectorModes,
+connectorSourceId,
 connectorType,
 createEuaSaas,
 createTime,
 dataSource,
 destinationConfigs,
+dynamicTools,
+egressFqdns,
 endUserConfig,
 entities,
 errors,
@@ -453,7 +511,9 @@ jsonParams,
 kmsKeyName,
 lastSyncTime,
 latestPauseTime,
+metadata,
 nextSyncTime,
+oauthStaticIpAddresses,
 params,
 privateConnectivityProjectId,
 realtimeState,
@@ -464,7 +524,9 @@ state,
 staticIpAddresses,
 staticIpEnabled,
 syncMode,
-updateTime;
+tag,
+updateTime,
+vpcscEnabled;
 ```
 </TabItem>
 </Tabs>

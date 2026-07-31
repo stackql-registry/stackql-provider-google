@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>job_templates</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>job_templates</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="job_templates" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.transcoder.job_templates" /></td></tr>
 </tbody></table>
@@ -124,7 +125,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists job templates in the specified region.</td>
 </tr>
 <tr>
@@ -242,10 +243,10 @@ labels
 FROM google.transcoder.job_templates
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -290,34 +291,225 @@ labels
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: job_templates
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the job_templates resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the job_templates resource.
     - name: name
-      value: string
-      description: >
-        The resource name of the job template. Format: `projects/{project_number}/locations/{location}/jobTemplates/{job_template}`
-        
+      value: "{{ name }}"
+      description: |
+        The resource name of the job template. Format: \`projects/{project_number}/locations/{location}/jobTemplates/{job_template}\`
     - name: config
-      value: object
-      description: >
+      description: |
         The configuration for this template.
-        
+      value:
+        muxStreams:
+          - fileName: "{{ fileName }}"
+            container: "{{ container }}"
+            fmp4:
+              codecTag: "{{ codecTag }}"
+            segmentSettings:
+              segmentDuration: "{{ segmentDuration }}"
+              individualSegments: {{ individualSegments }}
+            key: "{{ key }}"
+            encryptionId: "{{ encryptionId }}"
+            elementaryStreams: "{{ elementaryStreams }}"
+        overlays:
+          - image:
+              uri: "{{ uri }}"
+              resolution:
+                x: {{ x }}
+                y: {{ y }}
+              alpha: {{ alpha }}
+            animations: "{{ animations }}"
+        manifests:
+          - fileName: "{{ fileName }}"
+            muxStreams: "{{ muxStreams }}"
+            type: "{{ type }}"
+            dash:
+              segmentReferenceScheme: "{{ segmentReferenceScheme }}"
+        spriteSheets:
+          - columnCount: {{ columnCount }}
+            startTimeOffset: "{{ startTimeOffset }}"
+            spriteWidthPixels: {{ spriteWidthPixels }}
+            rowCount: {{ rowCount }}
+            endTimeOffset: "{{ endTimeOffset }}"
+            totalCount: {{ totalCount }}
+            format: "{{ format }}"
+            interval: "{{ interval }}"
+            filePrefix: "{{ filePrefix }}"
+            spriteHeightPixels: {{ spriteHeightPixels }}
+            quality: {{ quality }}
+        output:
+          uri: "{{ uri }}"
+        encryptions:
+          - drmSystems:
+              fairplay: "{{ fairplay }}"
+              widevine: "{{ widevine }}"
+              playready: "{{ playready }}"
+              clearkey: "{{ clearkey }}"
+            aes128: "{{ aes128 }}"
+            secretManagerKeySource:
+              secretVersion: "{{ secretVersion }}"
+            id: "{{ id }}"
+            sampleAes: "{{ sampleAes }}"
+            mpegCenc:
+              scheme: "{{ scheme }}"
+        adBreaks:
+          - startTimeOffset: "{{ startTimeOffset }}"
+        inputs:
+          - uri: "{{ uri }}"
+            preprocessingConfig:
+              audio:
+                highBoost: {{ highBoost }}
+                lufs: {{ lufs }}
+                lowBoost: {{ lowBoost }}
+              deinterlace:
+                yadif:
+                  mode: "{{ mode }}"
+                  disableSpatialInterlacing: {{ disableSpatialInterlacing }}
+                  parity: "{{ parity }}"
+                  deinterlaceAllFrames: {{ deinterlaceAllFrames }}
+                bwdif:
+                  mode: "{{ mode }}"
+                  parity: "{{ parity }}"
+                  deinterlaceAllFrames: {{ deinterlaceAllFrames }}
+              color:
+                contrast: {{ contrast }}
+                brightness: {{ brightness }}
+                saturation: {{ saturation }}
+              denoise:
+                strength: {{ strength }}
+                tune: "{{ tune }}"
+              deblock:
+                enabled: {{ enabled }}
+                strength: {{ strength }}
+              crop:
+                topPixels: {{ topPixels }}
+                bottomPixels: {{ bottomPixels }}
+                leftPixels: {{ leftPixels }}
+                rightPixels: {{ rightPixels }}
+              pad:
+                leftPixels: {{ leftPixels }}
+                rightPixels: {{ rightPixels }}
+                topPixels: {{ topPixels }}
+                bottomPixels: {{ bottomPixels }}
+            key: "{{ key }}"
+            attributes:
+              trackDefinitions:
+                - languages: "{{ languages }}"
+                  detectedLanguages: "{{ detectedLanguages }}"
+                  inputTrack: {{ inputTrack }}
+                  detectLanguages: {{ detectLanguages }}
+        elementaryStreams:
+          - key: "{{ key }}"
+            textStream:
+              codec: "{{ codec }}"
+              mapping:
+                - atomKey: "{{ atomKey }}"
+                  inputKey: "{{ inputKey }}"
+                  inputTrack: {{ inputTrack }}
+              displayName: "{{ displayName }}"
+              languageCode: "{{ languageCode }}"
+            videoStream:
+              h264:
+                bitrateBps: {{ bitrateBps }}
+                vbvFullnessBits: {{ vbvFullnessBits }}
+                aqStrength: {{ aqStrength }}
+                entropyCoder: "{{ entropyCoder }}"
+                widthPixels: {{ widthPixels }}
+                pixelFormat: "{{ pixelFormat }}"
+                bPyramid: {{ bPyramid }}
+                bFrameCount: {{ bFrameCount }}
+                rateControlMode: "{{ rateControlMode }}"
+                hlg: "{{ hlg }}"
+                heightPixels: {{ heightPixels }}
+                gopFrameCount: {{ gopFrameCount }}
+                profile: "{{ profile }}"
+                sdr: "{{ sdr }}"
+                vbvSizeBits: {{ vbvSizeBits }}
+                frameRateConversionStrategy: "{{ frameRateConversionStrategy }}"
+                tune: "{{ tune }}"
+                allowOpenGop: {{ allowOpenGop }}
+                frameRate: {{ frameRate }}
+                gopDuration: "{{ gopDuration }}"
+                enableTwoPass: {{ enableTwoPass }}
+                crfLevel: {{ crfLevel }}
+                preset: "{{ preset }}"
+              h265:
+                frameRateConversionStrategy: "{{ frameRateConversionStrategy }}"
+                hdr10: "{{ hdr10 }}"
+                tune: "{{ tune }}"
+                allowOpenGop: {{ allowOpenGop }}
+                frameRate: {{ frameRate }}
+                gopDuration: "{{ gopDuration }}"
+                enableTwoPass: {{ enableTwoPass }}
+                crfLevel: {{ crfLevel }}
+                preset: "{{ preset }}"
+                bitrateBps: {{ bitrateBps }}
+                vbvFullnessBits: {{ vbvFullnessBits }}
+                aqStrength: {{ aqStrength }}
+                widthPixels: {{ widthPixels }}
+                pixelFormat: "{{ pixelFormat }}"
+                bPyramid: {{ bPyramid }}
+                bFrameCount: {{ bFrameCount }}
+                heightPixels: {{ heightPixels }}
+                rateControlMode: "{{ rateControlMode }}"
+                hlg: "{{ hlg }}"
+                profile: "{{ profile }}"
+                gopFrameCount: {{ gopFrameCount }}
+                vbvSizeBits: {{ vbvSizeBits }}
+                sdr: "{{ sdr }}"
+              vp9:
+                frameRate: {{ frameRate }}
+                gopDuration: "{{ gopDuration }}"
+                crfLevel: {{ crfLevel }}
+                frameRateConversionStrategy: "{{ frameRateConversionStrategy }}"
+                rateControlMode: "{{ rateControlMode }}"
+                hlg: "{{ hlg }}"
+                heightPixels: {{ heightPixels }}
+                gopFrameCount: {{ gopFrameCount }}
+                profile: "{{ profile }}"
+                sdr: "{{ sdr }}"
+                bitrateBps: {{ bitrateBps }}
+                widthPixels: {{ widthPixels }}
+                pixelFormat: "{{ pixelFormat }}"
+            audioStream:
+              codec: "{{ codec }}"
+              mapping:
+                - inputTrack: {{ inputTrack }}
+                  inputChannel: {{ inputChannel }}
+                  gainDb: {{ gainDb }}
+                  inputKey: "{{ inputKey }}"
+                  atomKey: "{{ atomKey }}"
+                  outputChannel: {{ outputChannel }}
+              displayName: "{{ displayName }}"
+              channelCount: {{ channelCount }}
+              channelLayout:
+                - "{{ channelLayout }}"
+              languageCode: "{{ languageCode }}"
+              bitrateBps: {{ bitrateBps }}
+              sampleRateHertz: {{ sampleRateHertz }}
+        pubsubDestination:
+          topic: "{{ topic }}"
+        editList:
+          - startTimeOffset: "{{ startTimeOffset }}"
+            endTimeOffset: "{{ endTimeOffset }}"
+            key: "{{ key }}"
+            inputs: "{{ inputs }}"
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         The labels associated with this job template. You can use these to organize and group your job templates.
-        
     - name: jobTemplateId
-      value: string
-```
+      value: "{{ jobTemplateId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

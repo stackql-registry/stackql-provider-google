@@ -22,8 +22,8 @@ Cloud services from Google.
 
 :::info[Provider Summary] 
 
-total services: __179__  
-total resources: __2145__  
+total services: __187__  
+total resources: __2370__  
 
 :::
 
@@ -91,6 +91,123 @@ or using PowerShell:
 $Auth = "{ 'google': { 'type': 'interactive' }}"
 stackql.exe shell --auth=$Auth
 ```
+## Compute inventory
+
+All virtual machines in a project across every zone, with their state:
+
+```sql
+SELECT
+  name,
+  status,
+  machineType,
+  zone
+FROM google.compute.instances
+WHERE project = 'my-project';
+```
+
+Instance counts by status - a one-line capacity/spend sanity check:
+
+```sql
+SELECT status, count(*) AS instances
+FROM google.compute.instances
+WHERE project = 'my-project'
+GROUP BY status;
+```
+
+## Open firewall audit
+
+Ingress rules open to the entire internet, and what they allow:
+
+```sql
+SELECT
+  name,
+  direction,
+  sourceRanges,
+  allowed
+FROM google.compute.firewalls
+WHERE project = 'my-project'
+AND sourceRanges LIKE '%0.0.0.0/0%';
+```
+
+## Storage bucket estate
+
+Buckets by age, with location and storage class:
+
+```sql
+SELECT
+  name,
+  location,
+  storageClass,
+  timeCreated
+FROM google.storage.buckets
+WHERE project = 'my-project'
+ORDER BY timeCreated DESC;
+```
+
+## Service accounts
+
+Every service account in the project - review this list regularly:
+
+```sql
+SELECT
+  email,
+  displayName,
+  disabled
+FROM google.iam.service_accounts
+WHERE projectsId = 'my-project';
+```
+
+## Enabled APIs
+
+Which services are switched on in the project (filtered server-side):
+
+```sql
+SELECT
+  json_extract(config, '$.name') AS api,
+  state
+FROM google.serviceusage.services
+WHERE parent = 'my-project'
+AND parentType = 'projects'
+AND filter = 'state:ENABLED';
+```
+
+## Project metadata
+
+```sql
+SELECT projectId, displayName, state
+FROM google.cloudresourcemanager.projects
+WHERE projectsId = 'my-project';
+```
+
+## Provision, mutate and tear down
+
+Mutations use the same SQL grammar - `INSERT` creates a resource, `UPDATE` patches it, `EXEC` invokes lifecycle methods and `DELETE` removes it. A bucket end to end:
+
+```sql
+-- create
+INSERT INTO google.storage.buckets (project, data__name, data__location, data__storageClass)
+SELECT 'my-project', 'my-unique-bucket-name', 'US', 'STANDARD';
+
+-- label it
+UPDATE google.storage.buckets
+SET data__labels = '{"env": "dev", "provisioner": "stackql"}'
+WHERE bucket = 'my-unique-bucket-name';
+
+-- remove it
+DELETE FROM google.storage.buckets
+WHERE bucket = 'my-unique-bucket-name';
+```
+
+Lifecycle operations, like stopping and starting a VM, are invoked with `EXEC`:
+
+```sql
+EXEC google.compute.instances.stop
+  @instance = 'my-vm', @project = 'my-project', @zone = 'us-central1-a';
+
+EXEC google.compute.instances.start
+  @instance = 'my-vm', @project = 'my-project', @zone = 'us-central1-a';
+```
+
 
 ## Services
 <div class="row">
@@ -99,6 +216,9 @@ stackql.exe shell --auth=$Auth
 <a href="/services/accesscontextmanager/">accesscontextmanager</a><br />
 <a href="/services/addressvalidation/">addressvalidation</a><br />
 <a href="/services/advisorynotifications/">advisorynotifications</a><br />
+<a href="/services/agentidentity/">agentidentity</a><br />
+<a href="/services/agentidentitycredentials/">agentidentitycredentials</a><br />
+<a href="/services/agentregistry/">agentregistry</a><br />
 <a href="/services/aiplatform/">aiplatform</a><br />
 <a href="/services/airquality/">airquality</a><br />
 <a href="/services/alloydb/">alloydb</a><br />
@@ -129,6 +249,7 @@ stackql.exe shell --auth=$Auth
 <a href="/services/binaryauthorization/">binaryauthorization</a><br />
 <a href="/services/blockchainnodeengine/">blockchainnodeengine</a><br />
 <a href="/services/certificatemanager/">certificatemanager</a><br />
+<a href="/services/ces/">ces</a><br />
 <a href="/services/cloudasset/">cloudasset</a><br />
 <a href="/services/cloudbilling/">cloudbilling</a><br />
 <a href="/services/cloudbuild/">cloudbuild</a><br />
@@ -140,6 +261,7 @@ stackql.exe shell --auth=$Auth
 <a href="/services/cloudidentity/">cloudidentity</a><br />
 <a href="/services/cloudkms/">cloudkms</a><br />
 <a href="/services/cloudlocationfinder/">cloudlocationfinder</a><br />
+<a href="/services/cloudnumberregistry/">cloudnumberregistry</a><br />
 <a href="/services/cloudprofiler/">cloudprofiler</a><br />
 <a href="/services/cloudresourcemanager/">cloudresourcemanager</a><br />
 <a href="/services/cloudscheduler/">cloudscheduler</a><br />
@@ -156,11 +278,11 @@ stackql.exe shell --auth=$Auth
 <a href="/services/container/">container</a><br />
 <a href="/services/containeranalysis/">containeranalysis</a><br />
 <a href="/services/contentwarehouse/">contentwarehouse</a><br />
+<a href="/services/databasecenter/">databasecenter</a><br />
 <a href="/services/datacatalog/">datacatalog</a><br />
 <a href="/services/dataflow/">dataflow</a><br />
 <a href="/services/dataform/">dataform</a><br />
 <a href="/services/datafusion/">datafusion</a><br />
-<a href="/services/datalabeling/">datalabeling</a><br />
 <a href="/services/datalineage/">datalineage</a><br />
 <a href="/services/datamigration/">datamigration</a><br />
 <a href="/services/datapipelines/">datapipelines</a><br />
@@ -170,6 +292,7 @@ stackql.exe shell --auth=$Auth
 <a href="/services/datastream/">datastream</a><br />
 <a href="/services/deploymentmanager/">deploymentmanager</a><br />
 <a href="/services/developerconnect/">developerconnect</a><br />
+<a href="/services/developerknowledge/">developerknowledge</a><br />
 <a href="/services/dialogflow/">dialogflow</a><br />
 <a href="/services/discoveryengine/">discoveryengine</a><br />
 <a href="/services/dlp/">dlp</a><br />
@@ -183,10 +306,12 @@ stackql.exe shell --auth=$Auth
 <a href="/services/geminicloudassist/">geminicloudassist</a><br />
 <a href="/services/gkebackup/">gkebackup</a><br />
 <a href="/services/gkehub/">gkehub</a><br />
-<a href="/services/gkeonprem/">gkeonprem</a><br />
-<a href="/services/healthcare/">healthcare</a><br />
 </div>
 <div class="providerDocColumn">
+<a href="/services/gkeonprem/">gkeonprem</a><br />
+<a href="/services/health/">health</a><br />
+<a href="/services/healthcare/">healthcare</a><br />
+<a href="/services/hypercomputecluster/">hypercomputecluster</a><br />
 <a href="/services/iam/">iam</a><br />
 <a href="/services/iamcredentials/">iamcredentials</a><br />
 <a href="/services/iamv2/">iamv2</a><br />
@@ -194,17 +319,16 @@ stackql.exe shell --auth=$Auth
 <a href="/services/iap/">iap</a><br />
 <a href="/services/identitytoolkit/">identitytoolkit</a><br />
 <a href="/services/ids/">ids</a><br />
-<a href="/services/integrations/">integrations</a><br />
 <a href="/services/jobs/">jobs</a><br />
 <a href="/services/kmsinventory/">kmsinventory</a><br />
 <a href="/services/language/">language</a><br />
 <a href="/services/libraryagent/">libraryagent</a><br />
-<a href="/services/lifesciences/">lifesciences</a><br />
 <a href="/services/logging/">logging</a><br />
 <a href="/services/looker/">looker</a><br />
 <a href="/services/managedidentities/">managedidentities</a><br />
 <a href="/services/managedkafka/">managedkafka</a><br />
 <a href="/services/memcache/">memcache</a><br />
+<a href="/services/metastore/">metastore</a><br />
 <a href="/services/migrationcenter/">migrationcenter</a><br />
 <a href="/services/ml/">ml</a><br />
 <a href="/services/monitoring/">monitoring</a><br />
@@ -261,6 +385,7 @@ stackql.exe shell --auth=$Auth
 <a href="/services/storagebatchoperations/">storagebatchoperations</a><br />
 <a href="/services/storagetransfer/">storagetransfer</a><br />
 <a href="/services/texttospeech/">texttospeech</a><br />
+<a href="/services/threatintelligence/">threatintelligence</a><br />
 <a href="/services/tpu/">tpu</a><br />
 <a href="/services/trafficdirector/">trafficdirector</a><br />
 <a href="/services/transcoder/">transcoder</a><br />

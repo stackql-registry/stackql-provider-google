@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>data_sources</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>data_sources</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="data_sources" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.bigquerydatatransfer.data_sources" /></td></tr>
 </tbody></table>
@@ -59,7 +60,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="authorizationType" /></td>
     <td><code>string</code></td>
-    <td>Indicates the type of authorization.</td>
+    <td>Indicates the type of authorization. (AUTHORIZATION_TYPE_UNSPECIFIED, AUTHORIZATION_CODE, GOOGLE_PLUS_AUTHORIZATION_CODE, FIRST_PARTY_OAUTH)</td>
 </tr>
 <tr>
     <td><CopyableCode code="clientId" /></td>
@@ -69,7 +70,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="dataRefreshType" /></td>
     <td><code>string</code></td>
-    <td>Specifies whether the data source supports automatic data refresh for the past few days, and how it's supported. For some data sources, data might not be complete until a few days later, so it's useful to refresh data automatically.</td>
+    <td>Specifies whether the data source supports automatic data refresh for the past few days, and how it's supported. For some data sources, data might not be complete until a few days later, so it's useful to refresh data automatically. (DATA_REFRESH_TYPE_UNSPECIFIED, SLIDING_WINDOW, CUSTOM_SLIDING_WINDOW)</td>
 </tr>
 <tr>
     <td><CopyableCode code="dataSourceId" /></td>
@@ -134,7 +135,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="transferType" /></td>
     <td><code>string</code></td>
-    <td>Deprecated. This field has no effect.</td>
+    <td>Deprecated. This field has no effect. (TRANSFER_TYPE_UNSPECIFIED, BATCH, STREAMING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateDeadlineSeconds" /></td>
@@ -163,7 +164,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="authorizationType" /></td>
     <td><code>string</code></td>
-    <td>Indicates the type of authorization.</td>
+    <td>Indicates the type of authorization. (AUTHORIZATION_TYPE_UNSPECIFIED, AUTHORIZATION_CODE, GOOGLE_PLUS_AUTHORIZATION_CODE, FIRST_PARTY_OAUTH)</td>
 </tr>
 <tr>
     <td><CopyableCode code="clientId" /></td>
@@ -173,7 +174,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="dataRefreshType" /></td>
     <td><code>string</code></td>
-    <td>Specifies whether the data source supports automatic data refresh for the past few days, and how it's supported. For some data sources, data might not be complete until a few days later, so it's useful to refresh data automatically.</td>
+    <td>Specifies whether the data source supports automatic data refresh for the past few days, and how it's supported. For some data sources, data might not be complete until a few days later, so it's useful to refresh data automatically. (DATA_REFRESH_TYPE_UNSPECIFIED, SLIDING_WINDOW, CUSTOM_SLIDING_WINDOW)</td>
 </tr>
 <tr>
     <td><CopyableCode code="dataSourceId" /></td>
@@ -238,7 +239,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="transferType" /></td>
     <td><code>string</code></td>
-    <td>Deprecated. This field has no effect.</td>
+    <td>Deprecated. This field has no effect. (TRANSFER_TYPE_UNSPECIFIED, BATCH, STREAMING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateDeadlineSeconds" /></td>
@@ -267,7 +268,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="authorizationType" /></td>
     <td><code>string</code></td>
-    <td>Indicates the type of authorization.</td>
+    <td>Indicates the type of authorization. (AUTHORIZATION_TYPE_UNSPECIFIED, AUTHORIZATION_CODE, GOOGLE_PLUS_AUTHORIZATION_CODE, FIRST_PARTY_OAUTH)</td>
 </tr>
 <tr>
     <td><CopyableCode code="clientId" /></td>
@@ -277,7 +278,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="dataRefreshType" /></td>
     <td><code>string</code></td>
-    <td>Specifies whether the data source supports automatic data refresh for the past few days, and how it's supported. For some data sources, data might not be complete until a few days later, so it's useful to refresh data automatically.</td>
+    <td>Specifies whether the data source supports automatic data refresh for the past few days, and how it's supported. For some data sources, data might not be complete until a few days later, so it's useful to refresh data automatically. (DATA_REFRESH_TYPE_UNSPECIFIED, SLIDING_WINDOW, CUSTOM_SLIDING_WINDOW)</td>
 </tr>
 <tr>
     <td><CopyableCode code="dataSourceId" /></td>
@@ -342,7 +343,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="transferType" /></td>
     <td><code>string</code></td>
-    <td>Deprecated. This field has no effect.</td>
+    <td>Deprecated. This field has no effect. (TRANSFER_TYPE_UNSPECIFIED, BATCH, STREAMING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateDeadlineSeconds" /></td>
@@ -371,7 +372,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="authorizationType" /></td>
     <td><code>string</code></td>
-    <td>Indicates the type of authorization.</td>
+    <td>Indicates the type of authorization. (AUTHORIZATION_TYPE_UNSPECIFIED, AUTHORIZATION_CODE, GOOGLE_PLUS_AUTHORIZATION_CODE, FIRST_PARTY_OAUTH)</td>
 </tr>
 <tr>
     <td><CopyableCode code="clientId" /></td>
@@ -381,7 +382,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="dataRefreshType" /></td>
     <td><code>string</code></td>
-    <td>Specifies whether the data source supports automatic data refresh for the past few days, and how it's supported. For some data sources, data might not be complete until a few days later, so it's useful to refresh data automatically.</td>
+    <td>Specifies whether the data source supports automatic data refresh for the past few days, and how it's supported. For some data sources, data might not be complete until a few days later, so it's useful to refresh data automatically. (DATA_REFRESH_TYPE_UNSPECIFIED, SLIDING_WINDOW, CUSTOM_SLIDING_WINDOW)</td>
 </tr>
 <tr>
     <td><CopyableCode code="dataSourceId" /></td>
@@ -446,7 +447,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="transferType" /></td>
     <td><code>string</code></td>
-    <td>Deprecated. This field has no effect.</td>
+    <td>Deprecated. This field has no effect. (TRANSFER_TYPE_UNSPECIFIED, BATCH, STREAMING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateDeadlineSeconds" /></td>
@@ -502,13 +503,6 @@ The following methods are available for this resource:
     <td>Lists supported data sources and returns their settings.</td>
 </tr>
 <tr>
-    <td><a href="#projects_enroll_data_sources"><CopyableCode code="projects_enroll_data_sources" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td></td>
-    <td>Enroll data sources in a user project. This allows users to create transfer configurations for these data sources. They will also appear in the ListDataSources RPC and as such, will appear in the [BigQuery UI](https://console.cloud.google.com/bigquery), and the documents can be found in the public guide for [BigQuery Web UI](https://cloud.google.com/bigquery/bigquery-web-ui) and [Data Transfer Service](https://cloud.google.com/bigquery/docs/working-with-transfers).</td>
-</tr>
-<tr>
     <td><a href="#projects_data_sources_check_valid_creds"><CopyableCode code="projects_data_sources_check_valid_creds" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-dataSourcesId"><code>dataSourcesId</code></a></td>
@@ -521,6 +515,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dataSourcesId"><code>dataSourcesId</code></a></td>
     <td></td>
     <td>Returns true if valid credentials exist for the given data source and requesting user.</td>
+</tr>
+<tr>
+    <td><a href="#projects_enroll_data_sources"><CopyableCode code="projects_enroll_data_sources" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td></td>
+    <td>Enroll data sources in a user project. This allows users to create transfer configurations for these data sources. They will also appear in the ListDataSources RPC and as such, will appear in the [BigQuery UI](https://console.cloud.google.com/bigquery), and the documents can be found in the public guide for [BigQuery Web UI](https://cloud.google.com/bigquery/bigquery-web-ui) and [Data Transfer Service](https://cloud.google.com/bigquery/docs/working-with-transfers).</td>
 </tr>
 </tbody>
 </table>
@@ -707,27 +708,13 @@ AND pageSize = '{{ pageSize }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_enroll_data_sources"
+    defaultValue="projects_data_sources_check_valid_creds"
     values={[
-        { label: 'projects_enroll_data_sources', value: 'projects_enroll_data_sources' },
         { label: 'projects_data_sources_check_valid_creds', value: 'projects_data_sources_check_valid_creds' },
-        { label: 'projects_locations_data_sources_check_valid_creds', value: 'projects_locations_data_sources_check_valid_creds' }
+        { label: 'projects_locations_data_sources_check_valid_creds', value: 'projects_locations_data_sources_check_valid_creds' },
+        { label: 'projects_enroll_data_sources', value: 'projects_enroll_data_sources' }
     ]}
 >
-<TabItem value="projects_enroll_data_sources">
-
-Enroll data sources in a user project. This allows users to create transfer configurations for these data sources. They will also appear in the ListDataSources RPC and as such, will appear in the [BigQuery UI](https://console.cloud.google.com/bigquery), and the documents can be found in the public guide for [BigQuery Web UI](https://cloud.google.com/bigquery/bigquery-web-ui) and [Data Transfer Service](https://cloud.google.com/bigquery/docs/working-with-transfers).
-
-```sql
-EXEC google.bigquerydatatransfer.data_sources.projects_enroll_data_sources 
-@projectsId='{{ projectsId }}' --required 
-@@json=
-'{
-"dataSourceIds": "{{ dataSourceIds }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_data_sources_check_valid_creds">
 
 Returns true if valid credentials exist for the given data source and requesting user.
@@ -748,6 +735,20 @@ EXEC google.bigquerydatatransfer.data_sources.projects_locations_data_sources_ch
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @dataSourcesId='{{ dataSourcesId }}' --required
+;
+```
+</TabItem>
+<TabItem value="projects_enroll_data_sources">
+
+Enroll data sources in a user project. This allows users to create transfer configurations for these data sources. They will also appear in the ListDataSources RPC and as such, will appear in the [BigQuery UI](https://console.cloud.google.com/bigquery), and the documents can be found in the public guide for [BigQuery Web UI](https://cloud.google.com/bigquery/bigquery-web-ui) and [Data Transfer Service](https://cloud.google.com/bigquery/docs/working-with-transfers).
+
+```sql
+EXEC google.bigquerydatatransfer.data_sources.projects_enroll_data_sources 
+@projectsId='{{ projectsId }}' --required 
+@@json=
+'{
+"dataSourceIds": "{{ dataSourceIds }}"
+}'
 ;
 ```
 </TabItem>

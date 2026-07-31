@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>web_apps_config</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>web_apps_config</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="web_apps_config" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.firebase.web_apps_config" /></td></tr>
 </tbody></table>
@@ -97,6 +98,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="realtimeDatabaseUrl" /></td>
     <td><code>string</code></td>
     <td>Optional. Duplicate field for the URL of the default Realtime Database instances (if the default instance has been provisioned). If the request asks for the V2 config format, this field will be populated instead of `realtime_database_instance_uri`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="recaptchaSiteKey" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Recaptcha Enterprise site key associated with the Firebase App.</td>
 </tr>
 <tr>
     <td><CopyableCode code="storageBucket" /></td>
@@ -188,6 +194,7 @@ messagingSenderId,
 projectId,
 projectNumber,
 realtimeDatabaseUrl,
+recaptchaSiteKey,
 storageBucket,
 version
 FROM firebase.firebase.web_apps_config

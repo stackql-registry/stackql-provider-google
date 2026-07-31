@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>packet_mirroring_rule</code> re
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>packet_mirroring_rule</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="packet_mirroring_rule" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.packet_mirroring_rule" /></td></tr>
 </tbody></table>
@@ -51,7 +52,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="action" /></td>
     <td><code>string</code></td>
-    <td>The Action to perform when the client connection triggers the rule. Valid actions for firewall rules are: "allow", "deny", "apply_security_profile_group" and "goto_next". Valid actions for packet mirroring rules are: "mirror", "do_not_mirror" and "goto_next".</td>
+    <td>The Action to perform when the client connection triggers the rule. Valid actions for firewall rules are: "allow", "deny", "apply_security_profile_group" and "goto_next" ( "apply_security_profile_group" can be specified only for global network firewall policies or hierarchical firewall policies). Valid actions for packet mirroring rules are: "mirror", "do_not_mirror" and "goto_next".</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -61,7 +62,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="direction" /></td>
     <td><code>string</code></td>
-    <td>The direction in which this rule applies.</td>
+    <td>The direction in which this rule applies. (EGRESS, INGRESS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="disabled" /></td>
@@ -76,7 +77,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output only] Type of the resource. Returns compute#firewallPolicyRule for firewall rules and compute#packetMirroringRule for packet mirroring rules. (default: compute#firewallPolicyRule)</td>
+    <td>Output only. [Output only] Type of the resource. Returnscompute#firewallPolicyRule for firewall rules andcompute#packetMirroringRule for packet mirroring rules. (default: compute#firewallPolicyRule)</td>
 </tr>
 <tr>
     <td><CopyableCode code="match" /></td>
@@ -96,27 +97,37 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="ruleTupleCount" /></td>
     <td><code>integer (int32)</code></td>
-    <td>[Output Only] Calculation of the complexity of a single firewall policy rule.</td>
+    <td>Output only. [Output Only] Calculation of the complexity of a single firewall policy rule.</td>
 </tr>
 <tr>
     <td><CopyableCode code="securityProfileGroup" /></td>
     <td><code>string</code></td>
-    <td>A fully-qualified URL of a SecurityProfile resource instance. Example: https://networksecurity.googleapis.com/v1/projects/&#123;project&#125;/locations/&#123;location&#125;/securityProfileGroups/my-security-profile-group Must be specified if action is one of 'apply_security_profile_group' or 'mirror'. Cannot be specified for other actions.</td>
+    <td>A fully-qualified URL of a SecurityProfileGroup resource instance. Example: https://networksecurity.googleapis.com/v1/projects/&#123;project&#125;/locations/&#123;location&#125;/securityProfileGroups/my-security-profile-group Must be specified if action is one of 'apply_security_profile_group' or 'mirror'. Cannot be specified for other actions. Can be specified only for global network firewall policies or hierarchical firewall policies.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="targetForwardingRules" /></td>
+    <td><code>array</code></td>
+    <td>A list of forwarding rules to which this rule applies. This field allows you to control which load balancers get this rule. For example, the following are valid values:              - https://www.googleapis.com/compute/v1/projects/project/global/forwardingRules/forwardingRule      - https://www.googleapis.com/compute/v1/projects/project/regions/region/forwardingRules/forwardingRule      - projects/project/global/      forwardingRules/forwardingRule      - projects/project/regions/region/forwardingRules/      forwardingRule</td>
 </tr>
 <tr>
     <td><CopyableCode code="targetResources" /></td>
     <td><code>array</code></td>
-    <td>A list of network resource URLs to which this rule applies. This field allows you to control which network's VMs get this rule. If this field is left blank, all VMs within the organization will receive the rule.</td>
+    <td>A list of network resource URLs to which this rule applies.  This field allows you to control which network's VMs get this rule.  If this field is left blank, all VMs within the organization will receive the rule.</td>
 </tr>
 <tr>
     <td><CopyableCode code="targetSecureTags" /></td>
     <td><code>array</code></td>
-    <td>A list of secure tags that controls which instances the firewall rule applies to. If targetSecureTag are specified, then the firewall rule applies only to instances in the VPC network that have one of those EFFECTIVE secure tags, if all the target_secure_tag are in INEFFECTIVE state, then this rule will be ignored. targetSecureTag may not be set at the same time as targetServiceAccounts. If neither targetServiceAccounts nor targetSecureTag are specified, the firewall rule applies to all instances on the specified network. Maximum number of target label tags allowed is 256.</td>
+    <td>A list of secure tags that controls which instances the firewall rule applies to. If targetSecureTag are specified, then the firewall rule applies only to instances in the VPC network that have one of those EFFECTIVE secure tags, if all the target_secure_tag are in INEFFECTIVE state, then this rule will be ignored.targetSecureTag may not be set at the same time astargetServiceAccounts. If neither targetServiceAccounts nortargetSecureTag are specified, the firewall rule applies to all instances on the specified network. Maximum number of target label tags allowed is 256.</td>
 </tr>
 <tr>
     <td><CopyableCode code="targetServiceAccounts" /></td>
     <td><code>array</code></td>
     <td>A list of service accounts indicating the sets of instances that are applied with this rule.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="targetType" /></td>
+    <td><code>string</code></td>
+    <td>Target types of the firewall policy rule. Default value is INSTANCES. (INSTANCES, INTERNAL_MANAGED_LB)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tlsInspect" /></td>
@@ -245,9 +256,11 @@ priority,
 ruleName,
 ruleTupleCount,
 securityProfileGroup,
+targetForwardingRules,
 targetResources,
 targetSecureTags,
 targetServiceAccounts,
+targetType,
 tlsInspect
 FROM google.compute.packet_mirroring_rule
 WHERE project = '{{ project }}' -- required
@@ -274,21 +287,21 @@ Inserts a packet mirroring rule into a firewall policy.
 
 ```sql
 INSERT INTO google.compute.packet_mirroring_rule (
-data__kind,
-data__ruleName,
 data__description,
-data__priority,
 data__match,
-data__action,
-data__securityProfileGroup,
-data__tlsInspect,
-data__direction,
-data__targetResources,
-data__enableLogging,
-data__ruleTupleCount,
+data__priority,
 data__targetServiceAccounts,
+data__targetForwardingRules,
+data__targetResources,
+data__action,
+data__ruleName,
 data__targetSecureTags,
+data__enableLogging,
+data__targetType,
+data__direction,
+data__securityProfileGroup,
 data__disabled,
+data__tlsInspect,
 project,
 firewallPolicy,
 maxPriority,
@@ -296,21 +309,21 @@ minPriority,
 requestId
 )
 SELECT 
-'{{ kind }}',
-'{{ ruleName }}',
 '{{ description }}',
-{{ priority }},
 '{{ match }}',
-'{{ action }}',
-'{{ securityProfileGroup }}',
-{{ tlsInspect }},
-'{{ direction }}',
-'{{ targetResources }}',
-{{ enableLogging }},
-{{ ruleTupleCount }},
+{{ priority }},
 '{{ targetServiceAccounts }}',
+'{{ targetForwardingRules }}',
+'{{ targetResources }}',
+'{{ action }}',
+'{{ ruleName }}',
 '{{ targetSecureTags }}',
+{{ enableLogging }},
+'{{ targetType }}',
+'{{ direction }}',
+'{{ securityProfileGroup }}',
 {{ disabled }},
+{{ tlsInspect }},
 '{{ project }}',
 '{{ firewallPolicy }}',
 '{{ maxPriority }}',
@@ -324,6 +337,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -348,100 +362,165 @@ zone
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: packet_mirroring_rule
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the packet_mirroring_rule resource.
     - name: firewallPolicy
-      value: string
+      value: "{{ firewallPolicy }}"
       description: Required parameter for the packet_mirroring_rule resource.
-    - name: kind
-      value: string
-      description: >
-        [Output only] Type of the resource. Returns compute#firewallPolicyRule for firewall rules and compute#packetMirroringRule for packet mirroring rules.
-        
-      default: compute#firewallPolicyRule
-    - name: ruleName
-      value: string
-      description: >
-        An optional name for the rule. This field is not a unique identifier and can be updated.
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         An optional description for this resource.
-        
-    - name: priority
-      value: integer
-      description: >
-        An integer indicating the priority of a rule in the list. The priority must be a positive value between 0 and 2147483647. Rules are evaluated from highest to lowest priority where 0 is the highest priority and 2147483647 is the lowest priority.
-        
     - name: match
-      value: object
-      description: >
-        A match condition that incoming traffic is evaluated against. If it evaluates to true, the corresponding 'action' is enforced.
-        
-    - name: action
-      value: string
-      description: >
-        The Action to perform when the client connection triggers the rule. Valid actions for firewall rules are: "allow", "deny", "apply_security_profile_group" and "goto_next". Valid actions for packet mirroring rules are: "mirror", "do_not_mirror" and "goto_next".
-        
-    - name: securityProfileGroup
-      value: string
-      description: >
-        A fully-qualified URL of a SecurityProfile resource instance. Example: https://networksecurity.googleapis.com/v1/projects/{project}/locations/{location}/securityProfileGroups/my-security-profile-group Must be specified if action is one of 'apply_security_profile_group' or 'mirror'. Cannot be specified for other actions.
-        
-    - name: tlsInspect
-      value: boolean
-      description: >
-        Boolean flag indicating if the traffic should be TLS decrypted. Can be set only if action = 'apply_security_profile_group' and cannot be set for other actions.
-        
-    - name: direction
-      value: string
-      description: >
-        The direction in which this rule applies.
-        
-      valid_values: ['EGRESS', 'INGRESS']
-    - name: targetResources
-      value: array
-      description: >
-        A list of network resource URLs to which this rule applies. This field allows you to control which network's VMs get this rule. If this field is left blank, all VMs within the organization will receive the rule.
-        
-    - name: enableLogging
-      value: boolean
-      description: >
-        Denotes whether to enable logging for a particular rule. If logging is enabled, logs will be exported to the configured export destination in Stackdriver. Logs may be exported to BigQuery or Pub/Sub. Note: you cannot enable logging on "goto_next" rules.
-        
-    - name: ruleTupleCount
-      value: integer
-      description: >
-        [Output Only] Calculation of the complexity of a single firewall policy rule.
-        
+      description: |
+        A match condition that incoming traffic is evaluated against.
+        If it evaluates to true, the corresponding 'action' is enforced.
+      value:
+        destIpRanges:
+          - "{{ destIpRanges }}"
+        destRegionCodes:
+          - "{{ destRegionCodes }}"
+        destFqdns:
+          - "{{ destFqdns }}"
+        destNetworkContext: "{{ destNetworkContext }}"
+        layer4Configs:
+          - ipProtocol: "{{ ipProtocol }}"
+            ports: "{{ ports }}"
+        srcNetworkContext: "{{ srcNetworkContext }}"
+        srcAddressGroups:
+          - "{{ srcAddressGroups }}"
+        srcRegionCodes:
+          - "{{ srcRegionCodes }}"
+        destThreatIntelligences:
+          - "{{ destThreatIntelligences }}"
+        srcSecureTags:
+          - name: "{{ name }}"
+            state: "{{ state }}"
+        destNetworkType: "{{ destNetworkType }}"
+        srcFqdns:
+          - "{{ srcFqdns }}"
+        srcNetworkType: "{{ srcNetworkType }}"
+        srcIpRanges:
+          - "{{ srcIpRanges }}"
+        srcThreatIntelligences:
+          - "{{ srcThreatIntelligences }}"
+        srcNetworks:
+          - "{{ srcNetworks }}"
+        destAddressGroups:
+          - "{{ destAddressGroups }}"
+    - name: priority
+      value: {{ priority }}
+      description: |
+        An integer indicating the priority of a rule in the list. The priority
+        must be a positive value between 0 and 2147483647.
+        Rules are evaluated from highest to lowest priority where 0 is the
+        highest priority and 2147483647 is the lowest priority.
     - name: targetServiceAccounts
-      value: array
-      description: >
-        A list of service accounts indicating the sets of instances that are applied with this rule.
-        
+      value:
+        - "{{ targetServiceAccounts }}"
+      description: |
+        A list of service accounts indicating the sets of instances that are
+        applied with this rule.
+    - name: targetForwardingRules
+      value:
+        - "{{ targetForwardingRules }}"
+      description: |
+        A list of forwarding rules to which this rule applies.
+        This field allows you to control which load balancers get this rule.
+        For example, the following are valid values:
+        - https://www.googleapis.com/compute/v1/projects/project/global/forwardingRules/forwardingRule
+        - https://www.googleapis.com/compute/v1/projects/project/regions/region/forwardingRules/forwardingRule
+        - projects/project/global/
+        forwardingRules/forwardingRule
+        - projects/project/regions/region/forwardingRules/
+        forwardingRule
+    - name: targetResources
+      value:
+        - "{{ targetResources }}"
+      description: |
+        A list of network resource URLs to which this rule applies.  This field
+        allows you to control which network's VMs get this rule.  If this field
+        is left blank, all VMs within the organization will receive the rule.
+    - name: action
+      value: "{{ action }}"
+      description: |
+        The Action to perform when the client connection triggers the rule.
+        Valid actions for firewall rules are: "allow", "deny",
+        "apply_security_profile_group" and "goto_next" (
+        "apply_security_profile_group" can be specified only for global
+        network firewall policies or hierarchical firewall policies).
+        Valid actions for packet mirroring rules are: "mirror", "do_not_mirror"
+        and "goto_next".
+    - name: ruleName
+      value: "{{ ruleName }}"
+      description: |
+        An optional name for the rule. This field is not a unique identifier
+        and can be updated.
     - name: targetSecureTags
-      value: array
-      description: >
-        A list of secure tags that controls which instances the firewall rule applies to. If targetSecureTag are specified, then the firewall rule applies only to instances in the VPC network that have one of those EFFECTIVE secure tags, if all the target_secure_tag are in INEFFECTIVE state, then this rule will be ignored. targetSecureTag may not be set at the same time as targetServiceAccounts. If neither targetServiceAccounts nor targetSecureTag are specified, the firewall rule applies to all instances on the specified network. Maximum number of target label tags allowed is 256.
-        
+      description: |
+        A list of secure tags that controls which instances the firewall rule
+        applies to. If targetSecureTag are specified, then the
+        firewall rule applies only to instances in the VPC network that have one
+        of those EFFECTIVE secure tags, if all the target_secure_tag are in
+        INEFFECTIVE state, then this rule will be ignored.targetSecureTag may not be set at the same time astargetServiceAccounts.
+        If neither targetServiceAccounts nortargetSecureTag are specified, the firewall rule applies
+        to all instances on the specified network.
+        Maximum number of target label tags allowed is 256.
+      value:
+        - name: "{{ name }}"
+          state: "{{ state }}"
+    - name: enableLogging
+      value: {{ enableLogging }}
+      description: |
+        Denotes whether to enable logging for a particular rule. If logging is
+        enabled, logs will be exported to the configured export destination in
+        Stackdriver. Logs may be exported to BigQuery or Pub/Sub. Note: you
+        cannot enable logging on "goto_next" rules.
+    - name: targetType
+      value: "{{ targetType }}"
+      description: |
+        Target types of the firewall policy rule.
+        Default value is INSTANCES.
+      valid_values: ['INSTANCES', 'INTERNAL_MANAGED_LB']
+    - name: direction
+      value: "{{ direction }}"
+      description: |
+        The direction in which this rule applies.
+      valid_values: ['EGRESS', 'INGRESS']
+    - name: securityProfileGroup
+      value: "{{ securityProfileGroup }}"
+      description: |
+        A fully-qualified URL of a SecurityProfileGroup resource instance.
+        Example:
+        https://networksecurity.googleapis.com/v1/projects/{project}/locations/{location}/securityProfileGroups/my-security-profile-group
+        Must be specified if action is one of 'apply_security_profile_group' or
+        'mirror'. Cannot be specified for other actions. Can be specified only
+        for global network firewall policies or hierarchical firewall policies.
     - name: disabled
-      value: boolean
-      description: >
-        Denotes whether the firewall policy rule is disabled. When set to true, the firewall policy rule is not enforced and traffic behaves as if it did not exist. If this is unspecified, the firewall policy rule will be enabled.
-        
+      value: {{ disabled }}
+      description: |
+        Denotes whether the firewall policy rule is disabled. When set to true,
+        the firewall policy rule is not enforced and traffic behaves as if it did
+        not exist. If this is unspecified, the firewall policy rule will be
+        enabled.
+    - name: tlsInspect
+      value: {{ tlsInspect }}
+      description: |
+        Boolean flag indicating if the traffic should be TLS decrypted.
+        Can be set only if action = 'apply_security_profile_group' and cannot
+        be set for other actions.
     - name: maxPriority
-      value: integer (int32)
+      value: "{{ maxPriority }}"
     - name: minPriority
-      value: integer (int32)
+      value: "{{ minPriority }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -461,21 +540,21 @@ Patches a packet mirroring rule of the specified priority.
 ```sql
 UPDATE google.compute.packet_mirroring_rule
 SET 
-data__kind = '{{ kind }}',
-data__ruleName = '{{ ruleName }}',
 data__description = '{{ description }}',
-data__priority = {{ priority }},
 data__match = '{{ match }}',
-data__action = '{{ action }}',
-data__securityProfileGroup = '{{ securityProfileGroup }}',
-data__tlsInspect = {{ tlsInspect }},
-data__direction = '{{ direction }}',
-data__targetResources = '{{ targetResources }}',
-data__enableLogging = {{ enableLogging }},
-data__ruleTupleCount = {{ ruleTupleCount }},
+data__priority = {{ priority }},
 data__targetServiceAccounts = '{{ targetServiceAccounts }}',
+data__targetForwardingRules = '{{ targetForwardingRules }}',
+data__targetResources = '{{ targetResources }}',
+data__action = '{{ action }}',
+data__ruleName = '{{ ruleName }}',
 data__targetSecureTags = '{{ targetSecureTags }}',
-data__disabled = {{ disabled }}
+data__enableLogging = {{ enableLogging }},
+data__targetType = '{{ targetType }}',
+data__direction = '{{ direction }}',
+data__securityProfileGroup = '{{ securityProfileGroup }}',
+data__disabled = {{ disabled }},
+data__tlsInspect = {{ tlsInspect }}
 WHERE 
 project = '{{ project }}' --required
 AND firewallPolicy = '{{ firewallPolicy }}' --required
@@ -489,6 +568,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>simulations</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>simulations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="simulations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.securitycenter.simulations" /></td></tr>
 </tbody></table>
@@ -51,22 +52,22 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Full resource name of the Simulation: `organizations/123/simulations/456`</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="cloudProvider" /></td>
     <td><code>string</code></td>
-    <td>Indicates which cloud provider was used in this simulation.</td>
+    <td> (CLOUD_PROVIDER_UNSPECIFIED, GOOGLE_CLOUD_PLATFORM, AMAZON_WEB_SERVICES, MICROSOFT_AZURE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. Time simulation was created</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceValueConfigsMetadata" /></td>
     <td><code>array</code></td>
-    <td>Resource value configurations' metadata used in this simulation. Maximum of 100.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -93,7 +94,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-simulationsId"><code>simulationsId</code></a></td>
     <td></td>
-    <td>Get the simulation by name or the latest simulation for the given organization.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -134,7 +135,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="organizations_simulations_get">
 
-Get the simulation by name or the latest simulation for the given organization.
+Successful response
 
 ```sql
 SELECT

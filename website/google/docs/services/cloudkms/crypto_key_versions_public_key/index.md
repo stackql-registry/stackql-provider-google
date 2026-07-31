@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>crypto_key_versions_public_key<
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>crypto_key_versions_public_key</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="crypto_key_versions_public_key" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudkms.crypto_key_versions_public_key" /></td></tr>
 </tbody></table>
@@ -56,7 +57,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="algorithm" /></td>
     <td><code>string</code></td>
-    <td>The Algorithm associated with this key.</td>
+    <td>The Algorithm associated with this key. (CRYPTO_KEY_VERSION_ALGORITHM_UNSPECIFIED, GOOGLE_SYMMETRIC_ENCRYPTION, AES_128_GCM, AES_256_GCM, AES_128_CBC, AES_256_CBC, AES_128_CTR, AES_256_CTR, RSA_SIGN_PSS_2048_SHA256, RSA_SIGN_PSS_3072_SHA256, RSA_SIGN_PSS_4096_SHA256, RSA_SIGN_PSS_4096_SHA512, RSA_SIGN_PKCS1_2048_SHA256, RSA_SIGN_PKCS1_3072_SHA256, RSA_SIGN_PKCS1_4096_SHA256, RSA_SIGN_PKCS1_4096_SHA512, RSA_SIGN_RAW_PKCS1_2048, RSA_SIGN_RAW_PKCS1_3072, RSA_SIGN_RAW_PKCS1_4096, RSA_DECRYPT_OAEP_2048_SHA256, RSA_DECRYPT_OAEP_3072_SHA256, RSA_DECRYPT_OAEP_4096_SHA256, RSA_DECRYPT_OAEP_4096_SHA512, RSA_DECRYPT_OAEP_2048_SHA1, RSA_DECRYPT_OAEP_3072_SHA1, RSA_DECRYPT_OAEP_4096_SHA1, EC_SIGN_P256_SHA256, EC_SIGN_P384_SHA384, EC_SIGN_SECP256K1_SHA256, EC_SIGN_ED25519, HMAC_SHA256, HMAC_SHA1, HMAC_SHA384, HMAC_SHA512, HMAC_SHA224, EXTERNAL_SYMMETRIC_ENCRYPTION, ML_KEM_768, ML_KEM_1024, KEM_XWING, PQ_SIGN_ML_DSA_44, PQ_SIGN_ML_DSA_65, PQ_SIGN_ML_DSA_87, PQ_SIGN_SLH_DSA_SHA2_128S, PQ_SIGN_HASH_SLH_DSA_SHA2_128S_SHA256, PQ_SIGN_ML_DSA_44_EXTERNAL_MU, PQ_SIGN_ML_DSA_65_EXTERNAL_MU, PQ_SIGN_ML_DSA_87_EXTERNAL_MU, AES_256_KWP)</td>
 </tr>
 <tr>
     <td><CopyableCode code="pem" /></td>
@@ -71,7 +72,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="protectionLevel" /></td>
     <td><code>string</code></td>
-    <td>The ProtectionLevel of the CryptoKeyVersion public key.</td>
+    <td>The ProtectionLevel of the CryptoKeyVersion public key. (PROTECTION_LEVEL_UNSPECIFIED, SOFTWARE, HSM, EXTERNAL, EXTERNAL_VPC, HSM_SINGLE_TENANT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="publicKey" /></td>
@@ -81,7 +82,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="publicKeyFormat" /></td>
     <td><code>string</code></td>
-    <td>The PublicKey format specified by the customer through the public_key_format field.</td>
+    <td>The PublicKey format specified by the customer through the public_key_format field. (PUBLIC_KEY_FORMAT_UNSPECIFIED, PEM, DER, NIST_PQC, XWING_RAW_BYTES)</td>
 </tr>
 </tbody>
 </table>

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>sessions</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>sessions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="sessions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataproc.sessions" /></td></tr>
 </tbody></table>
@@ -102,7 +103,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. A state of the session.</td>
+    <td>Output only. A state of the session. (STATE_UNSPECIFIED, CREATING, ACTIVE, TERMINATING, TERMINATED, FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateHistory" /></td>
@@ -196,7 +197,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. A state of the session.</td>
+    <td>Output only. A state of the session. (STATE_UNSPECIFIED, CREATING, ACTIVE, TERMINATING, TERMINATED, FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateHistory" /></td>
@@ -254,14 +255,14 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_sessions_list"><CopyableCode code="projects_locations_sessions_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists interactive sessions.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_sessions_create"><CopyableCode code="projects_locations_sessions_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-sessionId"><code>sessionId</code></a></td>
+    <td><a href="#parameter-sessionId"><code>sessionId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Create an interactive session asynchronously.</td>
 </tr>
 <tr>
@@ -400,9 +401,9 @@ uuid
 FROM google.dataproc.sessions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -424,32 +425,32 @@ Create an interactive session asynchronously.
 
 ```sql
 INSERT INTO google.dataproc.sessions (
-data__sparkConnectSession,
-data__labels,
 data__user,
-data__runtimeConfig,
 data__jupyterSession,
-data__sessionTemplate,
-data__environmentConfig,
 data__name,
+data__runtimeConfig,
+data__environmentConfig,
+data__sparkConnectSession,
+data__sessionTemplate,
+data__labels,
 projectsId,
 locationsId,
-requestId,
-sessionId
+sessionId,
+requestId
 )
 SELECT 
-'{{ sparkConnectSession }}',
-'{{ labels }}',
 '{{ user }}',
-'{{ runtimeConfig }}',
 '{{ jupyterSession }}',
-'{{ sessionTemplate }}',
-'{{ environmentConfig }}',
 '{{ name }}',
+'{{ runtimeConfig }}',
+'{{ environmentConfig }}',
+'{{ sparkConnectSession }}',
+'{{ sessionTemplate }}',
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ sessionId }}'
+'{{ sessionId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -461,61 +462,82 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: sessions
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the sessions resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the sessions resource.
-    - name: sparkConnectSession
-      value: object
-      description: >
-        Optional. Spark connect session config.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. The labels to associate with the session. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty, but, if present, must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with a session.
-        
     - name: user
-      value: string
-      description: >
+      value: "{{ user }}"
+      description: |
         Optional. The email address of the user who owns the session.
-        
-    - name: runtimeConfig
-      value: object
-      description: >
-        Optional. Runtime configuration for the session execution.
-        
     - name: jupyterSession
-      value: object
-      description: >
+      description: |
         Optional. Jupyter session config.
-        
-    - name: sessionTemplate
-      value: string
-      description: >
-        Optional. The session template used by the session.Only resource names, including project ID and location, are valid.Example: * https://www.googleapis.com/compute/v1/projects/[project_id]/locations/[dataproc_region]/sessionTemplates/[template_id] * projects/[project_id]/locations/[dataproc_region]/sessionTemplates/[template_id]The template must be in the same project and Dataproc region as the session.
-        
-    - name: environmentConfig
-      value: object
-      description: >
-        Optional. Environment configuration for the session execution.
-        
+      value:
+        displayName: "{{ displayName }}"
+        kernel: "{{ kernel }}"
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Identifier. The resource name of the session.
-        
-    - name: requestId
-      value: string
+    - name: runtimeConfig
+      description: |
+        Optional. Runtime configuration for the session execution.
+      value:
+        properties: "{{ properties }}"
+        version: "{{ version }}"
+        repositoryConfig:
+          pypiRepositoryConfig:
+            pypiRepository: "{{ pypiRepository }}"
+        autotuningConfig:
+          scenarios:
+            - "{{ scenarios }}"
+        containerImage: "{{ containerImage }}"
+        cohort: "{{ cohort }}"
+    - name: environmentConfig
+      description: |
+        Optional. Environment configuration for the session execution.
+      value:
+        peripheralsConfig:
+          metastoreService: "{{ metastoreService }}"
+          sparkHistoryServerConfig:
+            dataprocCluster: "{{ dataprocCluster }}"
+        executionConfig:
+          idleTtl: "{{ idleTtl }}"
+          authenticationConfig:
+            userWorkloadAuthenticationType: "{{ userWorkloadAuthenticationType }}"
+          subnetworkUri: "{{ subnetworkUri }}"
+          kmsKey: "{{ kmsKey }}"
+          networkTags:
+            - "{{ networkTags }}"
+          ttl: "{{ ttl }}"
+          serviceAccount: "{{ serviceAccount }}"
+          networkUri: "{{ networkUri }}"
+          resourceManagerTags: "{{ resourceManagerTags }}"
+          stagingBucket: "{{ stagingBucket }}"
+    - name: sparkConnectSession
+      value: "{{ sparkConnectSession }}"
+      description: |
+        Optional. Spark connect session config.
+    - name: sessionTemplate
+      value: "{{ sessionTemplate }}"
+      description: |
+        Optional. The session template used by the session.Only resource names, including project ID and location, are valid.Example: * https://www.googleapis.com/compute/v1/projects/[project_id]/locations/[dataproc_region]/sessionTemplates/[template_id] * projects/[project_id]/locations/[dataproc_region]/sessionTemplates/[template_id]The template must be in the same project and Dataproc region as the session.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. The labels to associate with the session. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty, but, if present, must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with a session.
     - name: sessionId
-      value: string
-```
+      value: "{{ sessionId }}"
+    - name: requestId
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

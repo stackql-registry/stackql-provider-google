@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>processes</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>processes</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="processes" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.datalineage.processes" /></td></tr>
 </tbody></table>
@@ -148,7 +149,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-processesId"><code>processesId</code></a></td>
-    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
     <td>Updates a process.</td>
 </tr>
 <tr>
@@ -279,18 +280,18 @@ Creates a new process.
 
 ```sql
 INSERT INTO google.datalineage.processes (
+data__name,
 data__attributes,
 data__origin,
-data__name,
 data__displayName,
 projectsId,
 locationsId,
 requestId
 )
 SELECT 
+'{{ name }}',
 '{{ attributes }}',
 '{{ origin }}',
-'{{ name }}',
 '{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -305,39 +306,37 @@ origin
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: processes
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the processes resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the processes resource.
-    - name: attributes
-      value: object
-      description: >
-        Optional. The attributes of the process. Should only be used for the purpose of non-semantic management (classifying, describing or labeling the process). Up to 100 attributes are allowed.
-        
-    - name: origin
-      value: object
-      description: >
-        Optional. The origin of this process and its runs and lineage events.
-        
     - name: name
-      value: string
-      description: >
-        Immutable. The resource name of the lineage process. Format: `projects/{project}/locations/{location}/processes/{process}`. Can be specified or auto-assigned. {process} must be not longer than 200 characters and only contain characters in a set: `a-zA-Z0-9_-:.`
-        
+      value: "{{ name }}"
+      description: |
+        Immutable. The resource name of the lineage process. Format: \`projects/{project}/locations/{location}/processes/{process}\`. Can be specified or auto-assigned. {process} must be not longer than 200 characters and only contain characters in a set: \`a-zA-Z0-9_-:.\`
+    - name: attributes
+      value: "{{ attributes }}"
+      description: |
+        Optional. The attributes of the process. Should only be used for the purpose of non-semantic management (classifying, describing or labeling the process). Up to 100 attributes are allowed.
+    - name: origin
+      description: |
+        Optional. The origin of this process and its runs and lineage events.
+      value:
+        sourceType: "{{ sourceType }}"
+        name: "{{ name }}"
     - name: displayName
-      value: string
-      description: >
-        Optional. A human-readable name you can set to display in a user interface. Must be not longer than 200 characters and only contain UTF-8 letters or numbers, spaces or characters like `_-:&.`
-        
+      value: "{{ displayName }}"
+      description: |
+        Optional. A human-readable name you can set to display in a user interface. Must be not longer than 200 characters and only contain UTF-8 letters or numbers, spaces or characters like \`_-:&.\`
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -357,17 +356,17 @@ Updates a process.
 ```sql
 UPDATE google.datalineage.processes
 SET 
+data__name = '{{ name }}',
 data__attributes = '{{ attributes }}',
 data__origin = '{{ origin }}',
-data__name = '{{ name }}',
 data__displayName = '{{ displayName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND processesId = '{{ processesId }}' --required
-AND allowMissing = {{ allowMissing}}
 AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
+AND allowMissing = {{ allowMissing}}
 RETURNING
 name,
 attributes,

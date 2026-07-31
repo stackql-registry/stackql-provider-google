@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>groups</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>groups</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="groups" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.monitoring.groups" /></td></tr>
 </tbody></table>
@@ -144,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#projects_groups_list"><CopyableCode code="projects_groups_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-childrenOfGroup"><code>childrenOfGroup</code></a>, <a href="#parameter-ancestorsOfGroup"><code>ancestorsOfGroup</code></a>, <a href="#parameter-descendantsOfGroup"><code>descendantsOfGroup</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-childrenOfGroup"><code>childrenOfGroup</code></a>, <a href="#parameter-descendantsOfGroup"><code>descendantsOfGroup</code></a>, <a href="#parameter-ancestorsOfGroup"><code>ancestorsOfGroup</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the existing groups.</td>
 </tr>
 <tr>
@@ -271,10 +272,10 @@ isCluster,
 parentName
 FROM google.monitoring.groups
 WHERE projectsId = '{{ projectsId }}' -- required
-AND childrenOfGroup = '{{ childrenOfGroup }}'
-AND ancestorsOfGroup = '{{ ancestorsOfGroup }}'
-AND descendantsOfGroup = '{{ descendantsOfGroup }}'
 AND pageSize = '{{ pageSize }}'
+AND childrenOfGroup = '{{ childrenOfGroup }}'
+AND descendantsOfGroup = '{{ descendantsOfGroup }}'
+AND ancestorsOfGroup = '{{ ancestorsOfGroup }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -297,20 +298,20 @@ Creates a new group.
 
 ```sql
 INSERT INTO google.monitoring.groups (
-data__name,
-data__displayName,
 data__parentName,
-data__filter,
+data__displayName,
 data__isCluster,
+data__filter,
+data__name,
 projectsId,
 validateOnly
 )
 SELECT 
-'{{ name }}',
-'{{ displayName }}',
 '{{ parentName }}',
-'{{ filter }}',
+'{{ displayName }}',
 {{ isCluster }},
+'{{ filter }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ validateOnly }}'
 RETURNING
@@ -324,41 +325,36 @@ parentName
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: groups
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the groups resource.
-    - name: name
-      value: string
-      description: >
-        Output only. The name of this group. The format is: projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID] When creating a group, this field is ignored and a new name is created consisting of the project specified in the call to CreateGroup and a unique [GROUP_ID] that is generated automatically.
-        
-    - name: displayName
-      value: string
-      description: >
-        A user-assigned name for this group, used only for display purposes.
-        
     - name: parentName
-      value: string
-      description: >
+      value: "{{ parentName }}"
+      description: |
         The name of the group's parent, if it has one. The format is: projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID] For groups with no parent, parent_name is the empty string, "".
-        
-    - name: filter
-      value: string
-      description: >
-        The filter used to determine which monitored resources belong to this group.
-        
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        A user-assigned name for this group, used only for display purposes.
     - name: isCluster
-      value: boolean
-      description: >
+      value: {{ isCluster }}
+      description: |
         If true, the members of this group are considered to be a cluster. The system can perform additional analysis on groups that are clusters.
-        
+    - name: filter
+      value: "{{ filter }}"
+      description: |
+        The filter used to determine which monitored resources belong to this group.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Output only. The name of this group. The format is: projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID] When creating a group, this field is ignored and a new name is created consisting of the project specified in the call to CreateGroup and a unique [GROUP_ID] that is generated automatically.
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -378,11 +374,11 @@ Updates an existing group. You can change any group attributes except name.
 ```sql
 REPLACE google.monitoring.groups
 SET 
-data__name = '{{ name }}',
-data__displayName = '{{ displayName }}',
 data__parentName = '{{ parentName }}',
+data__displayName = '{{ displayName }}',
+data__isCluster = {{ isCluster }},
 data__filter = '{{ filter }}',
-data__isCluster = {{ isCluster }}
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND groupsId = '{{ groupsId }}' --required

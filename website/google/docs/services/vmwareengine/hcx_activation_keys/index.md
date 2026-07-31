@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>hcx_activation_keys</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>hcx_activation_keys</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="hcx_activation_keys" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.vmwareengine.hcx_activation_keys" /></td></tr>
 </tbody></table>
@@ -67,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of HCX activation key.</td>
+    <td>Output only. State of HCX activation key. (STATE_UNSPECIFIED, AVAILABLE, CONSUMED, CREATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -106,7 +107,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of HCX activation key.</td>
+    <td>Output only. State of HCX activation key. (STATE_UNSPECIFIED, AVAILABLE, CONSUMED, CREATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -144,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists `HcxActivationKey` resources in a given private cloud.</td>
 </tr>
 <tr>
@@ -256,8 +257,8 @@ FROM google.vmwareengine.hcx_activation_keys
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND privateCloudsId = '{{ privateCloudsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -302,23 +303,23 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: hcx_activation_keys
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the hcx_activation_keys resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the hcx_activation_keys resource.
     - name: privateCloudsId
-      value: string
+      value: "{{ privateCloudsId }}"
       description: Required parameter for the hcx_activation_keys resource.
     - name: requestId
-      value: string
+      value: "{{ requestId }}"
     - name: hcxActivationKeyId
-      value: string
-```
+      value: "{{ hcxActivationKeyId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

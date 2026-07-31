@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>tag_templates</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>tag_templates</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="tag_templates" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.datacatalog.tag_templates" /></td></tr>
 </tbody></table>
@@ -56,7 +57,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="dataplexTransferStatus" /></td>
     <td><code>string</code></td>
-    <td>Optional. Transfer status of the TagTemplate</td>
+    <td>Optional. Transfer status of the TagTemplate (DATAPLEX_TRANSFER_STATUS_UNSPECIFIED, MIGRATED, TRANSFERRED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
@@ -243,45 +244,40 @@ isPubliclyReadable
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: tag_templates
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the tag_templates resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the tag_templates resource.
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Identifier. The resource name of the tag template in URL format. Note: The tag template itself and its child resources might not be stored in the location specified in its name.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Display name for this template. Defaults to an empty string. The name must contain only Unicode letters, numbers (0-9), underscores (_), dashes (-), spaces ( ), and can't start or end with spaces. The maximum length is 200 characters.
-        
     - name: isPubliclyReadable
-      value: boolean
-      description: >
-        Indicates whether tags created with this template are public. Public tags do not require tag template access to appear in ListTags API response. Additionally, you can search for a public tag by value with a simple search query in addition to using a ``tag:`` predicate.
-        
+      value: {{ isPubliclyReadable }}
+      description: |
+        Indicates whether tags created with this template are public. Public tags do not require tag template access to appear in ListTags API response. Additionally, you can search for a public tag by value with a simple search query in addition to using a \`\`tag:\`\` predicate.
     - name: fields
-      value: object
-      description: >
+      value: "{{ fields }}"
+      description: |
         Required. Map of tag template field IDs to the settings for the field. This map is an exhaustive list of the allowed fields. The map must contain at least one field and at most 500 fields. The keys to this map are tag template field IDs. The IDs have the following limitations: * Can contain uppercase and lowercase letters, numbers (0-9) and underscores (_). * Must be at least 1 character and at most 64 characters long. * Must start with a letter or underscore.
-        
     - name: dataplexTransferStatus
-      value: string
-      description: >
+      value: "{{ dataplexTransferStatus }}"
+      description: |
         Optional. Transfer status of the TagTemplate
-        
       valid_values: ['DATAPLEX_TRANSFER_STATUS_UNSPECIFIED', 'MIGRATED', 'TRANSFERRED']
     - name: tagTemplateId
-      value: string
-```
+      value: "{{ tagTemplateId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

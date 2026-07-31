@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>enrollments</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>enrollments</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="enrollments" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.eventarc.enrollments" /></td></tr>
 </tbody></table>
@@ -204,21 +205,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>List Enrollments.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-enrollmentId"><code>enrollmentId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-enrollmentId"><code>enrollmentId</code></a></td>
     <td>Create a new Enrollment in a particular project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-enrollmentsId"><code>enrollmentsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
     <td>Update a single Enrollment.</td>
 </tr>
 <tr>
@@ -360,10 +361,10 @@ updateTime
 FROM google.eventarc.enrollments
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -385,30 +386,30 @@ Create a new Enrollment in a particular project and location.
 
 ```sql
 INSERT INTO google.eventarc.enrollments (
-data__name,
 data__labels,
 data__annotations,
-data__displayName,
-data__celMatch,
-data__messageBus,
 data__destination,
+data__celMatch,
+data__displayName,
+data__name,
+data__messageBus,
 projectsId,
 locationsId,
-enrollmentId,
-validateOnly
+validateOnly,
+enrollmentId
 )
 SELECT 
-'{{ name }}',
 '{{ labels }}',
 '{{ annotations }}',
-'{{ displayName }}',
-'{{ celMatch }}',
-'{{ messageBus }}',
 '{{ destination }}',
+'{{ celMatch }}',
+'{{ displayName }}',
+'{{ name }}',
+'{{ messageBus }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ enrollmentId }}',
-'{{ validateOnly }}'
+'{{ validateOnly }}',
+'{{ enrollmentId }}'
 RETURNING
 name,
 done,
@@ -420,56 +421,49 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: enrollments
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the enrollments resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the enrollments resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. Resource name of the form projects/{project}/locations/{location}/enrollments/{enrollment}
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. Resource labels.
-        
     - name: annotations
-      value: object
-      description: >
+      value: "{{ annotations }}"
+      description: |
         Optional. Resource annotations.
-        
-    - name: displayName
-      value: string
-      description: >
-        Optional. Resource display name.
-        
-    - name: celMatch
-      value: string
-      description: >
-        Required. A CEL expression identifying which messages this enrollment applies to.
-        
-    - name: messageBus
-      value: string
-      description: >
-        Required. Immutable. Resource name of the message bus identifying the source of the messages. It matches the form projects/{project}/locations/{location}/messageBuses/{messageBus}.
-        
     - name: destination
-      value: string
-      description: >
+      value: "{{ destination }}"
+      description: |
         Required. Destination is the Pipeline that the Enrollment is delivering to. It must point to the full resource name of a Pipeline. Format: "projects/{PROJECT_ID}/locations/{region}/pipelines/{PIPELINE_ID)"
-        
-    - name: enrollmentId
-      value: string
+    - name: celMatch
+      value: "{{ celMatch }}"
+      description: |
+        Required. A CEL expression identifying which messages this enrollment applies to.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. Resource display name.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Resource name of the form projects/{project}/locations/{location}/enrollments/{enrollment}
+    - name: messageBus
+      value: "{{ messageBus }}"
+      description: |
+        Required. Immutable. Resource name of the message bus identifying the source of the messages. It matches the form projects/{project}/locations/{location}/messageBuses/{messageBus}.
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+    - name: enrollmentId
+      value: "{{ enrollmentId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -489,20 +483,20 @@ Update a single Enrollment.
 ```sql
 UPDATE google.eventarc.enrollments
 SET 
-data__name = '{{ name }}',
 data__labels = '{{ labels }}',
 data__annotations = '{{ annotations }}',
-data__displayName = '{{ displayName }}',
+data__destination = '{{ destination }}',
 data__celMatch = '{{ celMatch }}',
-data__messageBus = '{{ messageBus }}',
-data__destination = '{{ destination }}'
+data__displayName = '{{ displayName }}',
+data__name = '{{ name }}',
+data__messageBus = '{{ messageBus }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND enrollmentsId = '{{ enrollmentsId }}' --required
 AND updateMask = '{{ updateMask}}'
-AND allowMissing = {{ allowMissing}}
 AND validateOnly = {{ validateOnly}}
+AND allowMissing = {{ allowMissing}}
 RETURNING
 name,
 done,

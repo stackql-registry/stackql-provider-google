@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>attachments</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>attachments</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="attachments" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.artifactregistry.attachments" /></td></tr>
 </tbody></table>
@@ -184,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists attachments.</td>
 </tr>
 <tr>
@@ -311,9 +312,9 @@ FROM google.artifactregistry.attachments
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND repositoriesId = '{{ repositoriesId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -335,11 +336,11 @@ Creates an attachment. The returned Operation will finish once the attachment ha
 
 ```sql
 INSERT INTO google.artifactregistry.attachments (
+data__files,
+data__attachmentNamespace,
 data__target,
 data__name,
-data__files,
 data__type,
-data__attachmentNamespace,
 data__annotations,
 projectsId,
 locationsId,
@@ -347,11 +348,11 @@ repositoriesId,
 attachmentId
 )
 SELECT 
+'{{ files }}',
+'{{ attachmentNamespace }}',
 '{{ target }}',
 '{{ name }}',
-'{{ files }}',
 '{{ type }}',
-'{{ attachmentNamespace }}',
 '{{ annotations }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -368,52 +369,47 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: attachments
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the attachments resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the attachments resource.
     - name: repositoriesId
-      value: string
+      value: "{{ repositoriesId }}"
       description: Required parameter for the attachments resource.
-    - name: target
-      value: string
-      description: >
-        Required. The target the attachment is for, can be a Version, Package or Repository. E.g. `projects/p1/locations/us-central1/repositories/repo1/packages/p1/versions/v1`.
-        
-    - name: name
-      value: string
-      description: >
-        The name of the attachment. E.g. `projects/p1/locations/us/repositories/repo/attachments/sbom`.
-        
     - name: files
-      value: array
-      description: >
-        Required. The files that belong to this attachment. If the file ID part contains slashes, they are escaped. E.g. `projects/p1/locations/us-central1/repositories/repo1/files/sha:`.
-        
-    - name: type
-      value: string
-      description: >
-        Type of attachment. E.g. `application/vnd.spdx+json`
-        
+      value:
+        - "{{ files }}"
+      description: |
+        Required. The files that belong to this attachment. If the file ID part contains slashes, they are escaped. E.g. \`projects/p1/locations/us-central1/repositories/repo1/files/sha:\`.
     - name: attachmentNamespace
-      value: string
-      description: >
-        The namespace this attachment belongs to. E.g. If an attachment is created by artifact analysis, namespace is set to `artifactanalysis.googleapis.com`.
-        
+      value: "{{ attachmentNamespace }}"
+      description: |
+        The namespace this attachment belongs to. E.g. If an attachment is created by artifact analysis, namespace is set to \`artifactanalysis.googleapis.com\`.
+    - name: target
+      value: "{{ target }}"
+      description: |
+        Required. The target the attachment is for, can be a Version, Package or Repository. E.g. \`projects/p1/locations/us-central1/repositories/repo1/packages/p1/versions/v1\`.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The name of the attachment. E.g. \`projects/p1/locations/us/repositories/repo/attachments/sbom\`.
+    - name: type
+      value: "{{ type }}"
+      description: |
+        Type of attachment. E.g. \`application/vnd.spdx+json\`
     - name: annotations
-      value: object
-      description: >
+      value: "{{ annotations }}"
+      description: |
         Optional. User annotations. These attributes can only be set and used by the user, and not by Artifact Registry. See https://google.aip.dev/128#annotations for more details such as format and size limitations.
-        
     - name: attachmentId
-      value: string
-```
+      value: "{{ attachmentId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

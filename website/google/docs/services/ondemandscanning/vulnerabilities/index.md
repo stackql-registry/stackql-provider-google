@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>vulnerabilities</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>vulnerabilities</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="vulnerabilities" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.ondemandscanning.vulnerabilities" /></td></tr>
 </tbody></table>
@@ -52,6 +53,16 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
     <td>Output only. The name of the occurrence in the form of `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="advisoryPublishTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>The time this advisory was published by the source.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="aiSkillAnalysis" /></td>
+    <td><code>object</code></td>
+    <td>Describes an AI skill analysis. (id: AISkillAnalysisOccurrence)</td>
 </tr>
 <tr>
     <td><CopyableCode code="attestation" /></td>
@@ -101,7 +112,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>Output only. This explicitly denotes which of the occurrence details are specified. This field can be used as a filter in list requests.</td>
+    <td>Output only. This explicitly denotes which of the occurrence details are specified. This field can be used as a filter in list requests. (NOTE_KIND_UNSPECIFIED, VULNERABILITY, BUILD, IMAGE, PACKAGE, DEPLOYMENT, DISCOVERY, ATTESTATION, UPGRADE, COMPLIANCE, DSSE_ATTESTATION, VULNERABILITY_ASSESSMENT, SBOM_REFERENCE, SECRET, AI_SKILL_ANALYSIS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="noteName" /></td>
@@ -172,7 +183,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-scansId"><code>scansId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists vulnerabilities resulting from a successfully completed scan.</td>
 </tr>
 </tbody>
@@ -234,6 +245,8 @@ Lists vulnerabilities resulting from a successfully completed scan.
 ```sql
 SELECT
 name,
+advisoryPublishTime,
+aiSkillAnalysis,
 attestation,
 build,
 compliance,
@@ -257,8 +270,8 @@ FROM google.ondemandscanning.vulnerabilities
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND scansId = '{{ scansId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

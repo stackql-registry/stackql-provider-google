@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>available_projects</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>available_projects</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="available_projects" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.firebase.available_projects" /></td></tr>
 </tbody></table>

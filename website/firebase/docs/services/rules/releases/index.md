@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>releases</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>releases</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="releases" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.rules.releases" /></td></tr>
 </tbody></table>
@@ -134,7 +135,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List the `Release` values for a project. This list may optionally be filtered by `Release` name, `Ruleset` name, `TestSuite` name, or any combination thereof.</td>
 </tr>
 <tr>
@@ -239,8 +240,8 @@ rulesetName,
 updateTime
 FROM firebase.rules.releases
 WHERE projectsId = '{{ projectsId }}' -- required
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -263,13 +264,13 @@ Create a `Release`. Release names should reflect the developer's deployment prac
 
 ```sql
 INSERT INTO firebase.rules.releases (
-data__name,
 data__rulesetName,
+data__name,
 projectsId
 )
 SELECT 
-'{{ name }}',
 '{{ rulesetName }}',
+'{{ name }}',
 '{{ projectsId }}'
 RETURNING
 name,
@@ -281,24 +282,22 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: releases
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the releases resource.
-    - name: name
-      value: string
-      description: >
-        Required. Format: `projects/{project_id}/releases/{release_id}`
-        
     - name: rulesetName
-      value: string
-      description: >
-        Required. Name of the `Ruleset` referred to by this `Release`. The `Ruleset` must exist for the `Release` to be created.
-        
-```
+      value: "{{ rulesetName }}"
+      description: |
+        Required. Name of the \`Ruleset\` referred to by this \`Release\`. The \`Ruleset\` must exist for the \`Release\` to be created.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. Format: \`projects/{project_id}/releases/{release_id}\`
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>replications</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>replications</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="replications" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.netapp.replications" /></td></tr>
 </tbody></table>
@@ -92,7 +93,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="hybridReplicationType" /></td>
     <td><code>string</code></td>
-    <td>Output only. Type of the hybrid replication.</td>
+    <td>Output only. Type of the hybrid replication. (HYBRID_REPLICATION_TYPE_UNSPECIFIED, MIGRATION, CONTINUOUS_REPLICATION, ONPREM_REPLICATION, REVERSE_ONPREM_REPLICATION)</td>
 </tr>
 <tr>
     <td><CopyableCode code="hybridReplicationUserCommands" /></td>
@@ -107,17 +108,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="mirrorState" /></td>
     <td><code>string</code></td>
-    <td>Output only. Indicates the state of mirroring.</td>
+    <td>Output only. Indicates the state of mirroring. (MIRROR_STATE_UNSPECIFIED, PREPARING, MIRRORED, STOPPED, TRANSFERRING, BASELINE_TRANSFERRING, ABORTED, EXTERNALLY_MANAGED, PENDING_PEERING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="replicationSchedule" /></td>
     <td><code>string</code></td>
-    <td>Required. Indicates the schedule for replication.</td>
+    <td>Required. Indicates the schedule for replication. (REPLICATION_SCHEDULE_UNSPECIFIED, EVERY_10_MINUTES, HOURLY, DAILY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="role" /></td>
     <td><code>string</code></td>
-    <td>Output only. Indicates whether this points to source or destination.</td>
+    <td>Output only. Indicates whether this points to source or destination. (REPLICATION_ROLE_UNSPECIFIED, SOURCE, DESTINATION)</td>
 </tr>
 <tr>
     <td><CopyableCode code="sourceVolume" /></td>
@@ -127,7 +128,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the replication.</td>
+    <td>Output only. State of the replication. (STATE_UNSPECIFIED, CREATING, READY, UPDATING, DELETING, ERROR, PENDING_CLUSTER_PEERING, PENDING_SVM_PEERING, PENDING_REMOTE_RESYNC, EXTERNALLY_MANAGED_REPLICATION)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateDetails" /></td>
@@ -196,7 +197,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="hybridReplicationType" /></td>
     <td><code>string</code></td>
-    <td>Output only. Type of the hybrid replication.</td>
+    <td>Output only. Type of the hybrid replication. (HYBRID_REPLICATION_TYPE_UNSPECIFIED, MIGRATION, CONTINUOUS_REPLICATION, ONPREM_REPLICATION, REVERSE_ONPREM_REPLICATION)</td>
 </tr>
 <tr>
     <td><CopyableCode code="hybridReplicationUserCommands" /></td>
@@ -211,17 +212,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="mirrorState" /></td>
     <td><code>string</code></td>
-    <td>Output only. Indicates the state of mirroring.</td>
+    <td>Output only. Indicates the state of mirroring. (MIRROR_STATE_UNSPECIFIED, PREPARING, MIRRORED, STOPPED, TRANSFERRING, BASELINE_TRANSFERRING, ABORTED, EXTERNALLY_MANAGED, PENDING_PEERING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="replicationSchedule" /></td>
     <td><code>string</code></td>
-    <td>Required. Indicates the schedule for replication.</td>
+    <td>Required. Indicates the schedule for replication. (REPLICATION_SCHEDULE_UNSPECIFIED, EVERY_10_MINUTES, HOURLY, DAILY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="role" /></td>
     <td><code>string</code></td>
-    <td>Output only. Indicates whether this points to source or destination.</td>
+    <td>Output only. Indicates whether this points to source or destination. (REPLICATION_ROLE_UNSPECIFIED, SOURCE, DESTINATION)</td>
 </tr>
 <tr>
     <td><CopyableCode code="sourceVolume" /></td>
@@ -231,7 +232,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the replication.</td>
+    <td>Output only. State of the replication. (STATE_UNSPECIFIED, CREATING, READY, UPDATING, DELETING, ERROR, PENDING_CLUSTER_PEERING, PENDING_SVM_PEERING, PENDING_REMOTE_RESYNC, EXTERNALLY_MANAGED_REPLICATION)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateDetails" /></td>
@@ -274,7 +275,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Returns descriptions of all replications for a volume.</td>
 </tr>
 <tr>
@@ -299,18 +300,11 @@ The following methods are available for this resource:
     <td>Deletes a replication.</td>
 </tr>
 <tr>
-    <td><a href="#reverse_direction"><CopyableCode code="reverse_direction" /></a></td>
+    <td><a href="#resume"><CopyableCode code="resume" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a>, <a href="#parameter-replicationsId"><code>replicationsId</code></a></td>
     <td></td>
-    <td>Reverses direction of replication. Source becomes destination and destination becomes source.</td>
-</tr>
-<tr>
-    <td><a href="#establish_peering"><CopyableCode code="establish_peering" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a>, <a href="#parameter-replicationsId"><code>replicationsId</code></a></td>
-    <td></td>
-    <td>Establish replication peering.</td>
+    <td>Resume Cross Region Replication.</td>
 </tr>
 <tr>
     <td><a href="#stop"><CopyableCode code="stop" /></a></td>
@@ -320,11 +314,18 @@ The following methods are available for this resource:
     <td>Stop Cross Region Replication.</td>
 </tr>
 <tr>
-    <td><a href="#resume"><CopyableCode code="resume" /></a></td>
+    <td><a href="#establish_peering"><CopyableCode code="establish_peering" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a>, <a href="#parameter-replicationsId"><code>replicationsId</code></a></td>
     <td></td>
-    <td>Resume Cross Region Replication.</td>
+    <td>Establish replication peering.</td>
+</tr>
+<tr>
+    <td><a href="#reverse_direction"><CopyableCode code="reverse_direction" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-volumesId"><code>volumesId</code></a>, <a href="#parameter-replicationsId"><code>replicationsId</code></a></td>
+    <td></td>
+    <td>Reverses direction of replication. Source becomes destination and destination becomes source.</td>
 </tr>
 <tr>
     <td><a href="#sync"><CopyableCode code="sync" /></a></td>
@@ -472,8 +473,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND volumesId = '{{ volumesId }}' -- required
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -496,11 +497,11 @@ Create a new replication for a volume.
 
 ```sql
 INSERT INTO google.netapp.replications (
+data__destinationVolumeParameters,
 data__name,
+data__clusterLocation,
 data__labels,
 data__replicationSchedule,
-data__destinationVolumeParameters,
-data__clusterLocation,
 data__description,
 projectsId,
 locationsId,
@@ -508,11 +509,11 @@ volumesId,
 replicationId
 )
 SELECT 
+'{{ destinationVolumeParameters }}',
 '{{ name }}',
+'{{ clusterLocation }}',
 '{{ labels }}',
 '{{ replicationSchedule }}',
-'{{ destinationVolumeParameters }}',
-'{{ clusterLocation }}',
 '{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -529,53 +530,55 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: replications
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the replications resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the replications resource.
     - name: volumesId
-      value: string
+      value: "{{ volumesId }}"
       description: Required parameter for the replications resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the Replication. Format: `projects/{project_id}/locations/{location}/volumes/{volume_id}/replications/{replication_id}`.
-        
-    - name: labels
-      value: object
-      description: >
-        Resource labels to represent user provided metadata.
-        
-    - name: replicationSchedule
-      value: string
-      description: >
-        Required. Indicates the schedule for replication.
-        
-      valid_values: ['REPLICATION_SCHEDULE_UNSPECIFIED', 'EVERY_10_MINUTES', 'HOURLY', 'DAILY']
     - name: destinationVolumeParameters
-      value: object
-      description: >
+      description: |
         Required. Input only. Destination volume parameters
-        
+      value:
+        volumeId: "{{ volumeId }}"
+        shareName: "{{ shareName }}"
+        storagePool: "{{ storagePool }}"
+        description: "{{ description }}"
+        tieringPolicy:
+          tierAction: "{{ tierAction }}"
+          coolingThresholdDays: {{ coolingThresholdDays }}
+          hotTierBypassModeEnabled: {{ hotTierBypassModeEnabled }}
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the Replication. Format: \`projects/{project_id}/locations/{location}/volumes/{volume_id}/replications/{replication_id}\`.
     - name: clusterLocation
-      value: string
-      description: >
+      value: "{{ clusterLocation }}"
+      description: |
         Optional. Location of the user cluster.
-        
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Resource labels to represent user provided metadata.
+    - name: replicationSchedule
+      value: "{{ replicationSchedule }}"
+      description: |
+        Required. Indicates the schedule for replication.
+      valid_values: ['REPLICATION_SCHEDULE_UNSPECIFIED', 'EVERY_10_MINUTES', 'HOURLY', 'DAILY']
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         A description about this replication relationship.
-        
     - name: replicationId
-      value: string
-```
+      value: "{{ replicationId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -595,11 +598,11 @@ Updates the settings of a specific replication.
 ```sql
 UPDATE google.netapp.replications
 SET 
+data__destinationVolumeParameters = '{{ destinationVolumeParameters }}',
 data__name = '{{ name }}',
+data__clusterLocation = '{{ clusterLocation }}',
 data__labels = '{{ labels }}',
 data__replicationSchedule = '{{ replicationSchedule }}',
-data__destinationVolumeParameters = '{{ destinationVolumeParameters }}',
-data__clusterLocation = '{{ clusterLocation }}',
 data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
@@ -645,45 +648,25 @@ AND replicationsId = '{{ replicationsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="reverse_direction"
+    defaultValue="resume"
     values={[
-        { label: 'reverse_direction', value: 'reverse_direction' },
-        { label: 'establish_peering', value: 'establish_peering' },
-        { label: 'stop', value: 'stop' },
         { label: 'resume', value: 'resume' },
+        { label: 'stop', value: 'stop' },
+        { label: 'establish_peering', value: 'establish_peering' },
+        { label: 'reverse_direction', value: 'reverse_direction' },
         { label: 'sync', value: 'sync' }
     ]}
 >
-<TabItem value="reverse_direction">
+<TabItem value="resume">
 
-Reverses direction of replication. Source becomes destination and destination becomes source.
+Resume Cross Region Replication.
 
 ```sql
-EXEC google.netapp.replications.reverse_direction 
+EXEC google.netapp.replications.resume 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @volumesId='{{ volumesId }}' --required, 
 @replicationsId='{{ replicationsId }}' --required
-;
-```
-</TabItem>
-<TabItem value="establish_peering">
-
-Establish replication peering.
-
-```sql
-EXEC google.netapp.replications.establish_peering 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@volumesId='{{ volumesId }}' --required, 
-@replicationsId='{{ replicationsId }}' --required 
-@@json=
-'{
-"peerVolumeName": "{{ peerVolumeName }}", 
-"peerIpAddresses": "{{ peerIpAddresses }}", 
-"peerSvmName": "{{ peerSvmName }}", 
-"peerClusterName": "{{ peerClusterName }}"
-}'
 ;
 ```
 </TabItem>
@@ -704,12 +687,32 @@ EXEC google.netapp.replications.stop
 ;
 ```
 </TabItem>
-<TabItem value="resume">
+<TabItem value="establish_peering">
 
-Resume Cross Region Replication.
+Establish replication peering.
 
 ```sql
-EXEC google.netapp.replications.resume 
+EXEC google.netapp.replications.establish_peering 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@volumesId='{{ volumesId }}' --required, 
+@replicationsId='{{ replicationsId }}' --required 
+@@json=
+'{
+"peerSvmName": "{{ peerSvmName }}", 
+"peerIpAddresses": "{{ peerIpAddresses }}", 
+"peerVolumeName": "{{ peerVolumeName }}", 
+"peerClusterName": "{{ peerClusterName }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="reverse_direction">
+
+Reverses direction of replication. Source becomes destination and destination becomes source.
+
+```sql
+EXEC google.netapp.replications.reverse_direction 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @volumesId='{{ volumesId }}' --required, 

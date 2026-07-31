@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>workforce_pools</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>workforce_pools</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="workforce_pools" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.iam.workforce_pools" /></td></tr>
 </tbody></table>
@@ -92,7 +93,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the pool.</td>
+    <td>Output only. The state of the pool. (STATE_UNSPECIFIED, ACTIVE, DELETED)</td>
 </tr>
 </tbody>
 </table>
@@ -151,7 +152,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the pool.</td>
+    <td>Output only. The state of the pool. (STATE_UNSPECIFIED, ACTIVE, DELETED)</td>
 </tr>
 </tbody>
 </table>
@@ -184,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
     <td>Lists all non-deleted WorkforcePools under the specified parent. If `show_deleted` is set to `true`, then deleted pools are also listed.</td>
 </tr>
 <tr>
@@ -321,9 +322,9 @@ sessionDuration,
 state
 FROM google.iam.workforce_pools
 WHERE locationsId = '{{ locationsId }}' -- required
-AND parent = '{{ parent }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND parent = '{{ parent }}'
 AND showDeleted = '{{ showDeleted }}'
 ;
 ```
@@ -347,23 +348,23 @@ Creates a new WorkforcePool. You cannot reuse the name of a deleted pool until 3
 ```sql
 INSERT INTO google.iam.workforce_pools (
 data__name,
-data__parent,
 data__displayName,
-data__description,
-data__disabled,
 data__sessionDuration,
+data__parent,
+data__description,
 data__accessRestrictions,
+data__disabled,
 locationsId,
 workforcePoolId
 )
 SELECT 
 '{{ name }}',
-'{{ parent }}',
 '{{ displayName }}',
-'{{ description }}',
-{{ disabled }},
 '{{ sessionDuration }}',
+'{{ parent }}',
+'{{ description }}',
 '{{ accessRestrictions }}',
+{{ disabled }},
 '{{ locationsId }}',
 '{{ workforcePoolId }}'
 RETURNING
@@ -377,51 +378,47 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: workforce_pools
   props:
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the workforce_pools resource.
     - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the pool. Format: `locations/{location}/workforcePools/{workforce_pool_id}`
-        
-    - name: parent
-      value: string
-      description: >
-        Immutable. The resource name of the parent. Format: `organizations/{org-id}`.
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the pool. Format: \`locations/{location}/workforcePools/{workforce_pool_id}\`
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Optional. A display name for the pool. Cannot exceed 32 characters.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. A description of the pool. Cannot exceed 256 characters.
-        
-    - name: disabled
-      value: boolean
-      description: >
-        Optional. Disables the workforce pool. You cannot use a disabled pool to exchange tokens, or use existing tokens to access resources. If the pool is re-enabled, existing tokens grant access again.
-        
     - name: sessionDuration
-      value: string
-      description: >
-        Optional. Duration that the Google Cloud access tokens, console sign-in sessions, and `gcloud` sign-in sessions from this pool are valid. Must be greater than 15 minutes (900s) and less than 12 hours (43200s). If `session_duration` is not configured, minted credentials have a default duration of one hour (3600s). For SAML providers, the lifetime of the token is the minimum of the `session_duration` and the `SessionNotOnOrAfter` claim in the SAML assertion.
-        
+      value: "{{ sessionDuration }}"
+      description: |
+        Optional. Duration that the Google Cloud access tokens, console sign-in sessions, and \`gcloud\` sign-in sessions from this pool are valid. Must be greater than 15 minutes (900s) and less than 12 hours (43200s). If \`session_duration\` is not configured, minted credentials have a default duration of one hour (3600s). For SAML providers, the lifetime of the token is the minimum of the \`session_duration\` and the \`SessionNotOnOrAfter\` claim in the SAML assertion.
+    - name: parent
+      value: "{{ parent }}"
+      description: |
+        Immutable. The resource name of the parent. Format: \`organizations/{org-id}\`.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. A description of the pool. Cannot exceed 256 characters.
     - name: accessRestrictions
-      value: object
-      description: >
+      description: |
         Optional. Configure access restrictions on the workforce pool users. This is an optional field. If specified web sign-in can be restricted to given set of services or programmatic sign-in can be disabled for pool users.
-        
+      value:
+        disableProgrammaticSignin: {{ disableProgrammaticSignin }}
+        allowedServices:
+          - domain: "{{ domain }}"
+    - name: disabled
+      value: {{ disabled }}
+      description: |
+        Optional. Disables the workforce pool. You cannot use a disabled pool to exchange tokens, or use existing tokens to access resources. If the pool is re-enabled, existing tokens grant access again.
     - name: workforcePoolId
-      value: string
-```
+      value: "{{ workforcePoolId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -442,12 +439,12 @@ Updates an existing WorkforcePool.
 UPDATE google.iam.workforce_pools
 SET 
 data__name = '{{ name }}',
-data__parent = '{{ parent }}',
 data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
-data__disabled = {{ disabled }},
 data__sessionDuration = '{{ sessionDuration }}',
-data__accessRestrictions = '{{ accessRestrictions }}'
+data__parent = '{{ parent }}',
+data__description = '{{ description }}',
+data__accessRestrictions = '{{ accessRestrictions }}',
+data__disabled = {{ disabled }}
 WHERE 
 locationsId = '{{ locationsId }}' --required
 AND workforcePoolsId = '{{ workforcePoolsId }}' --required

@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>steps_perf_metrics_summary</cod
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>steps_perf_metrics_summary</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="steps_perf_metrics_summary" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.toolresults.steps_perf_metrics_summary" /></td></tr>
 </tbody></table>

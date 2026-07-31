@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>backups</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>backups</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="backups" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.file.backups" /></td></tr>
 </tbody></table>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="fileSystemProtocol" /></td>
     <td><code>string</code></td>
-    <td>Output only. The file system protocol of the source Filestore instance that this backup is created from.</td>
+    <td>Output only. The file system protocol of the source Filestore instance that this backup is created from. (FILE_PROTOCOL_UNSPECIFIED, NFS_V3, NFS_V4_1)</td>
 </tr>
 <tr>
     <td><CopyableCode code="kmsKey" /></td>
@@ -112,12 +113,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="sourceInstanceTier" /></td>
     <td><code>string</code></td>
-    <td>Output only. The service tier of the source Filestore instance that this backup is created from.</td>
+    <td>Output only. The service tier of the source Filestore instance that this backup is created from. (TIER_UNSPECIFIED, STANDARD, PREMIUM, BASIC_HDD, BASIC_SSD, HIGH_SCALE_SSD, ENTERPRISE, ZONAL, REGIONAL)</td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The backup state.</td>
+    <td>Output only. The backup state. (STATE_UNSPECIFIED, CREATING, FINALIZING, READY, DELETING, INVALID)</td>
 </tr>
 <tr>
     <td><CopyableCode code="storageBytes" /></td>
@@ -171,7 +172,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="fileSystemProtocol" /></td>
     <td><code>string</code></td>
-    <td>Output only. The file system protocol of the source Filestore instance that this backup is created from.</td>
+    <td>Output only. The file system protocol of the source Filestore instance that this backup is created from. (FILE_PROTOCOL_UNSPECIFIED, NFS_V3, NFS_V4_1)</td>
 </tr>
 <tr>
     <td><CopyableCode code="kmsKey" /></td>
@@ -206,12 +207,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="sourceInstanceTier" /></td>
     <td><code>string</code></td>
-    <td>Output only. The service tier of the source Filestore instance that this backup is created from.</td>
+    <td>Output only. The service tier of the source Filestore instance that this backup is created from. (TIER_UNSPECIFIED, STANDARD, PREMIUM, BASIC_HDD, BASIC_SSD, HIGH_SCALE_SSD, ENTERPRISE, ZONAL, REGIONAL)</td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The backup state.</td>
+    <td>Output only. The backup state. (STATE_UNSPECIFIED, CREATING, FINALIZING, READY, DELETING, INVALID)</td>
 </tr>
 <tr>
     <td><CopyableCode code="storageBytes" /></td>
@@ -254,7 +255,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all backups in a project for either a specified location or for all locations.</td>
 </tr>
 <tr>
@@ -405,10 +406,10 @@ tags
 FROM google.file.backups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -430,23 +431,23 @@ Creates a backup.
 
 ```sql
 INSERT INTO google.file.backups (
-data__description,
-data__labels,
-data__sourceInstance,
-data__sourceFileShare,
 data__kmsKey,
 data__tags,
+data__labels,
+data__sourceFileShare,
+data__sourceInstance,
+data__description,
 projectsId,
 locationsId,
 backupId
 )
 SELECT 
-'{{ description }}',
-'{{ labels }}',
-'{{ sourceInstance }}',
-'{{ sourceFileShare }}',
 '{{ kmsKey }}',
 '{{ tags }}',
+'{{ labels }}',
+'{{ sourceFileShare }}',
+'{{ sourceInstance }}',
+'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ backupId }}'
@@ -461,49 +462,43 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: backups
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the backups resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the backups resource.
-    - name: description
-      value: string
-      description: >
-        A description of the backup with 2048 characters or less. Requests with longer descriptions will be rejected.
-        
-    - name: labels
-      value: object
-      description: >
-        Resource labels to represent user provided metadata.
-        
-    - name: sourceInstance
-      value: string
-      description: >
-        The resource name of the source Filestore instance, in the format `projects/{project_number}/locations/{location_id}/instances/{instance_id}`, used to create this backup.
-        
-    - name: sourceFileShare
-      value: string
-      description: >
-        Name of the file share in the source Filestore instance that the backup is created from.
-        
     - name: kmsKey
-      value: string
-      description: >
+      value: "{{ kmsKey }}"
+      description: |
         Immutable. KMS key name used for data encryption.
-        
     - name: tags
-      value: object
-      description: >
+      value: "{{ tags }}"
+      description: |
         Optional. Input only. Immutable. Tag key-value pairs bound to this resource. Each key must be a namespaced name and each value a short name. Example: "123456789012/environment" : "production", "123456789013/costCenter" : "marketing" See the documentation for more information: - Namespaced name: https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing#retrieving_tag_key - Short name: https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing#retrieving_tag_value
-        
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Resource labels to represent user provided metadata.
+    - name: sourceFileShare
+      value: "{{ sourceFileShare }}"
+      description: |
+        Name of the file share in the source Filestore instance that the backup is created from.
+    - name: sourceInstance
+      value: "{{ sourceInstance }}"
+      description: |
+        The resource name of the source Filestore instance, in the format \`projects/{project_number}/locations/{location_id}/instances/{instance_id}\`, used to create this backup.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        A description of the backup with 2048 characters or less. Requests with longer descriptions will be rejected.
     - name: backupId
-      value: string
-```
+      value: "{{ backupId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -523,12 +518,12 @@ Updates the settings of a specific backup.
 ```sql
 UPDATE google.file.backups
 SET 
-data__description = '{{ description }}',
-data__labels = '{{ labels }}',
-data__sourceInstance = '{{ sourceInstance }}',
-data__sourceFileShare = '{{ sourceFileShare }}',
 data__kmsKey = '{{ kmsKey }}',
-data__tags = '{{ tags }}'
+data__tags = '{{ tags }}',
+data__labels = '{{ labels }}',
+data__sourceFileShare = '{{ sourceFileShare }}',
+data__sourceInstance = '{{ sourceInstance }}',
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

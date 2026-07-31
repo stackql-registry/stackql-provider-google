@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>cached_contents</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>cached_contents</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="cached_contents" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.cached_contents" /></td></tr>
 </tbody></table>
@@ -377,30 +378,30 @@ Creates cached content, this call will initialize the cached content in the data
 
 ```sql
 INSERT INTO google.aiplatform.cached_contents (
-data__toolConfig,
 data__tools,
-data__model,
-data__displayName,
-data__encryptionSpec,
 data__systemInstruction,
-data__contents,
+data__encryptionSpec,
 data__name,
 data__expireTime,
 data__ttl,
+data__displayName,
+data__toolConfig,
+data__model,
+data__contents,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ toolConfig }}',
 '{{ tools }}',
-'{{ model }}',
-'{{ displayName }}',
-'{{ encryptionSpec }}',
 '{{ systemInstruction }}',
-'{{ contents }}',
+'{{ encryptionSpec }}',
 '{{ name }}',
 '{{ expireTime }}',
 '{{ ttl }}',
+'{{ displayName }}',
+'{{ toolConfig }}',
+'{{ model }}',
+'{{ contents }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -422,67 +423,220 @@ usageMetadata
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: cached_contents
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the cached_contents resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the cached_contents resource.
-    - name: toolConfig
-      value: object
-      description: >
-        Optional. Input only. Immutable. Tool config. This config is shared for all tools
-        
     - name: tools
-      value: array
-      description: >
-        Optional. Input only. Immutable. A list of `Tools` the model may use to generate the next response
-        
-    - name: model
-      value: string
-      description: >
-        Immutable. The name of the `Model` to use for cached content. Currently, only the published Gemini base models are supported, in form of projects/{PROJECT}/locations/{LOCATION}/publishers/google/models/{MODEL}
-        
-    - name: displayName
-      value: string
-      description: >
-        Optional. Immutable. The user-generated meaningful display name of the cached content.
-        
-    - name: encryptionSpec
-      value: object
-      description: >
-        Input only. Immutable. Customer-managed encryption key spec for a `CachedContent`. If set, this `CachedContent` and all its sub-resources will be secured by this key.
-        
+      description: |
+        Optional. Input only. Immutable. A list of \`Tools\` the model may use to generate the next response
+      value:
+        - exaAiSearch:
+            apiKey: "{{ apiKey }}"
+            customConfigs: "{{ customConfigs }}"
+          computerUse:
+            excludedPredefinedFunctions:
+              - "{{ excludedPredefinedFunctions }}"
+            environment: "{{ environment }}"
+            enablePromptInjectionDetection: {{ enablePromptInjectionDetection }}
+          googleSearchRetrieval:
+            dynamicRetrievalConfig:
+              mode: "{{ mode }}"
+              dynamicThreshold: {{ dynamicThreshold }}
+          googleSearch:
+            excludeDomains:
+              - "{{ excludeDomains }}"
+            searchTypes:
+              imageSearch: "{{ imageSearch }}"
+              webSearch: "{{ webSearch }}"
+            blockingConfidence: "{{ blockingConfidence }}"
+          parallelAiSearch:
+            enableDataRetention: {{ enableDataRetention }}
+            enableZeroDataRetention: {{ enableZeroDataRetention }}
+            apiKey: "{{ apiKey }}"
+            customConfigs: "{{ customConfigs }}"
+          googleMaps:
+            enableWidget: {{ enableWidget }}
+            groundingTypes:
+              places: "{{ places }}"
+              routing: "{{ routing }}"
+          retrieval:
+            vertexAiSearch:
+              filter: "{{ filter }}"
+              dataStoreSpecs:
+                - dataStore: "{{ dataStore }}"
+                  filter: "{{ filter }}"
+              datastore: "{{ datastore }}"
+              engine: "{{ engine }}"
+              maxResults: {{ maxResults }}
+            vertexRagStore:
+              ragRetrievalConfig:
+                topK: {{ topK }}
+                ranking:
+                  llmRanker: "{{ llmRanker }}"
+                  rankService: "{{ rankService }}"
+                filter:
+                  vectorDistanceThreshold: {{ vectorDistanceThreshold }}
+                  metadataFilter: "{{ metadataFilter }}"
+                  vectorSimilarityThreshold: {{ vectorSimilarityThreshold }}
+              ragResources:
+                - ragCorpus: "{{ ragCorpus }}"
+                  ragFileIds: "{{ ragFileIds }}"
+              similarityTopK: {{ similarityTopK }}
+              vectorDistanceThreshold: {{ vectorDistanceThreshold }}
+            externalApi:
+              apiSpec: "{{ apiSpec }}"
+              elasticSearchParams:
+                searchTemplate: "{{ searchTemplate }}"
+                numHits: {{ numHits }}
+                index: "{{ index }}"
+              authConfig:
+                googleServiceAccountConfig:
+                  serviceAccount: "{{ serviceAccount }}"
+                apiKeyConfig:
+                  name: "{{ name }}"
+                  apiKeySecret: "{{ apiKeySecret }}"
+                  apiKeyString: "{{ apiKeyString }}"
+                  httpElementLocation: "{{ httpElementLocation }}"
+                oidcConfig:
+                  idToken: "{{ idToken }}"
+                  serviceAccount: "{{ serviceAccount }}"
+                oauthConfig:
+                  accessToken: "{{ accessToken }}"
+                  serviceAccount: "{{ serviceAccount }}"
+                authType: "{{ authType }}"
+                httpBasicAuthConfig:
+                  credentialSecret: "{{ credentialSecret }}"
+              endpoint: "{{ endpoint }}"
+              apiAuth:
+                apiKeyConfig:
+                  apiKeySecretVersion: "{{ apiKeySecretVersion }}"
+                  apiKeyString: "{{ apiKeyString }}"
+              simpleSearchParams: "{{ simpleSearchParams }}"
+            disableAttribution: {{ disableAttribution }}
+          functionDeclarations: "{{ functionDeclarations }}"
+          urlContext: "{{ urlContext }}"
+          enterpriseWebSearch:
+            blockingConfidence: "{{ blockingConfidence }}"
+            excludeDomains:
+              - "{{ excludeDomains }}"
+          codeExecution: "{{ codeExecution }}"
     - name: systemInstruction
-      value: object
-      description: >
-        The structured data content of a message. A Content message contains a `role` field, which indicates the producer of the content, and a `parts` field, which contains the multi-part data of the message.
-        
-    - name: contents
-      value: array
-      description: >
-        Optional. Input only. Immutable. The content to cache
-        
+      description: |
+        The structured data content of a message. A Content message contains a \`role\` field, which indicates the producer of the content, and a \`parts\` field, which contains the multi-part data of the message.
+      value:
+        role: "{{ role }}"
+        parts:
+          - videoMetadata:
+              startOffset: "{{ startOffset }}"
+              endOffset: "{{ endOffset }}"
+              fps: {{ fps }}
+            thought: {{ thought }}
+            fileData:
+              fileUri: "{{ fileUri }}"
+              mimeType: "{{ mimeType }}"
+              displayName: "{{ displayName }}"
+            text: "{{ text }}"
+            executableCode:
+              language: "{{ language }}"
+              code: "{{ code }}"
+              id: "{{ id }}"
+            functionResponse:
+              name: "{{ name }}"
+              response: "{{ response }}"
+              parts:
+                - inlineData:
+                    mimeType: "{{ mimeType }}"
+                    displayName: "{{ displayName }}"
+                    data: "{{ data }}"
+                  fileData:
+                    fileUri: "{{ fileUri }}"
+                    mimeType: "{{ mimeType }}"
+                    displayName: "{{ displayName }}"
+              id: "{{ id }}"
+              scheduling: "{{ scheduling }}"
+            codeExecutionResult:
+              id: "{{ id }}"
+              outcome: "{{ outcome }}"
+              output: "{{ output }}"
+            audioTranscription:
+              text: "{{ text }}"
+              speakerLabel: "{{ speakerLabel }}"
+              words:
+                - word: "{{ word }}"
+                  startOffset: "{{ startOffset }}"
+                  endOffset: "{{ endOffset }}"
+            inlineData:
+              mimeType: "{{ mimeType }}"
+              displayName: "{{ displayName }}"
+              data: "{{ data }}"
+            functionCall:
+              willContinue: {{ willContinue }}
+              args: "{{ args }}"
+              id: "{{ id }}"
+              partialArgs:
+                - jsonPath: "{{ jsonPath }}"
+                  numberValue: {{ numberValue }}
+                  boolValue: {{ boolValue }}
+                  nullValue: "{{ nullValue }}"
+                  stringValue: "{{ stringValue }}"
+                  willContinue: {{ willContinue }}
+              name: "{{ name }}"
+            mediaResolution:
+              level: "{{ level }}"
+            thoughtSignature: "{{ thoughtSignature }}"
+    - name: encryptionSpec
+      description: |
+        Input only. Immutable. Customer-managed encryption key spec for a \`CachedContent\`. If set, this \`CachedContent\` and all its sub-resources will be secured by this key.
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Immutable. Identifier. The server-generated resource name of the cached content Format: projects/{project}/locations/{location}/cachedContents/{cached_content}
-        
     - name: expireTime
-      value: string
-      description: >
+      value: "{{ expireTime }}"
+      description: |
         Timestamp of when this resource is considered expired. This is *always* provided on output, regardless of what was sent on input.
-        
     - name: ttl
-      value: string
-      description: >
+      value: "{{ ttl }}"
+      description: |
         Input only. The TTL for this resource. The expiration time is computed: now + TTL.
-        
-```
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. Immutable. The user-generated meaningful display name of the cached content.
+    - name: toolConfig
+      description: |
+        Optional. Input only. Immutable. Tool config. This config is shared for all tools
+      value:
+        functionCallingConfig:
+          allowedFunctionNames:
+            - "{{ allowedFunctionNames }}"
+          mode: "{{ mode }}"
+          streamFunctionCallArguments: {{ streamFunctionCallArguments }}
+        retrievalConfig:
+          latLng:
+            longitude: {{ longitude }}
+            latitude: {{ latitude }}
+          languageCode: "{{ languageCode }}"
+    - name: model
+      value: "{{ model }}"
+      description: |
+        Immutable. The name of the \`Model\` to use for cached content. Currently, only the published Gemini base models are supported, in form of projects/{PROJECT}/locations/{LOCATION}/publishers/google/models/{MODEL}
+    - name: contents
+      description: |
+        Optional. Input only. Immutable. The content to cache
+      value:
+        - role: "{{ role }}"
+          parts: "{{ parts }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -502,16 +656,16 @@ Updates cached content configurations
 ```sql
 UPDATE google.aiplatform.cached_contents
 SET 
-data__toolConfig = '{{ toolConfig }}',
 data__tools = '{{ tools }}',
-data__model = '{{ model }}',
-data__displayName = '{{ displayName }}',
-data__encryptionSpec = '{{ encryptionSpec }}',
 data__systemInstruction = '{{ systemInstruction }}',
-data__contents = '{{ contents }}',
+data__encryptionSpec = '{{ encryptionSpec }}',
 data__name = '{{ name }}',
 data__expireTime = '{{ expireTime }}',
-data__ttl = '{{ ttl }}'
+data__ttl = '{{ ttl }}',
+data__displayName = '{{ displayName }}',
+data__toolConfig = '{{ toolConfig }}',
+data__model = '{{ model }}',
+data__contents = '{{ contents }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

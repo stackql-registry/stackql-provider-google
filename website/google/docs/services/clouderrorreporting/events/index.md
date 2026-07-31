@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>events</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>events</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="events" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.clouderrorreporting.events" /></td></tr>
 </tbody></table>
@@ -92,7 +93,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-serviceFilter.resourceType"><code>serviceFilter.resourceType</code></a>, <a href="#parameter-groupId"><code>groupId</code></a>, <a href="#parameter-serviceFilter.service"><code>serviceFilter.service</code></a>, <a href="#parameter-serviceFilter.version"><code>serviceFilter.version</code></a>, <a href="#parameter-timeRange.period"><code>timeRange.period</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-timeRange.period"><code>timeRange.period</code></a>, <a href="#parameter-serviceFilter.version"><code>serviceFilter.version</code></a>, <a href="#parameter-serviceFilter.service"><code>serviceFilter.service</code></a>, <a href="#parameter-serviceFilter.resourceType"><code>serviceFilter.resourceType</code></a>, <a href="#parameter-groupId"><code>groupId</code></a></td>
     <td>Lists the specified events.</td>
 </tr>
 <tr>
@@ -195,12 +196,12 @@ FROM google.clouderrorreporting.events
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND timeRange.period = '{{ timeRange.period }}'
+AND serviceFilter.version = '{{ serviceFilter.version }}'
+AND serviceFilter.service = '{{ serviceFilter.service }}'
 AND serviceFilter.resourceType = '{{ serviceFilter.resourceType }}'
 AND groupId = '{{ groupId }}'
-AND serviceFilter.service = '{{ serviceFilter.service }}'
-AND serviceFilter.version = '{{ serviceFilter.version }}'
-AND timeRange.period = '{{ timeRange.period }}'
-AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -246,10 +247,10 @@ EXEC google.clouderrorreporting.events.report
 @projectsId='{{ projectsId }}' --required 
 @@json=
 '{
-"serviceContext": "{{ serviceContext }}", 
-"context": "{{ context }}", 
 "eventTime": "{{ eventTime }}", 
-"message": "{{ message }}"
+"message": "{{ message }}", 
+"context": "{{ context }}", 
+"serviceContext": "{{ serviceContext }}"
 }'
 ;
 ```

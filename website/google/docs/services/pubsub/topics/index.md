@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>topics</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>topics</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="topics" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.pubsub.topics" /></td></tr>
 </tbody></table>
@@ -52,7 +53,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Required. The name of the topic. It must have the format `"projects/&#123;project&#125;/topics/&#123;topic&#125;"`. `&#123;topic&#125;` must start with a letter, and contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or percent signs (`%`). It must be between 3 and 255 characters in length, and it must not start with `"goog"`.</td>
+    <td>Required. Identifier. The name of the topic. It must have the format `"projects/&#123;project&#125;/topics/&#123;topic&#125;"`. `&#123;topic&#125;` must start with a letter, and contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or percent signs (`%`). It must be between 3 and 255 characters in length, and it must not start with `"goog"`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="ingestionDataSourceSettings" /></td>
@@ -97,12 +98,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. An output-only field indicating the state of the topic.</td>
+    <td>Output only. An output-only field indicating the state of the topic. (STATE_UNSPECIFIED, ACTIVE, INGESTION_RESOURCE_ERROR)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tags" /></td>
     <td><code>object</code></td>
-    <td>Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"</td>
+    <td>Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing" See https://&#123;$universe.dns_names.final_documentation_domain&#125;/pubsub/docs/tags for more information on using tags with Pub/Sub resources.</td>
 </tr>
 </tbody>
 </table>
@@ -121,7 +122,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Required. The name of the topic. It must have the format `"projects/&#123;project&#125;/topics/&#123;topic&#125;"`. `&#123;topic&#125;` must start with a letter, and contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or percent signs (`%`). It must be between 3 and 255 characters in length, and it must not start with `"goog"`.</td>
+    <td>Required. Identifier. The name of the topic. It must have the format `"projects/&#123;project&#125;/topics/&#123;topic&#125;"`. `&#123;topic&#125;` must start with a letter, and contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or percent signs (`%`). It must be between 3 and 255 characters in length, and it must not start with `"goog"`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="ingestionDataSourceSettings" /></td>
@@ -166,12 +167,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. An output-only field indicating the state of the topic.</td>
+    <td>Output only. An output-only field indicating the state of the topic. (STATE_UNSPECIFIED, ACTIVE, INGESTION_RESOURCE_ERROR)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tags" /></td>
     <td><code>object</code></td>
-    <td>Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"</td>
+    <td>Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing" See https://&#123;$universe.dns_names.final_documentation_domain&#125;/pubsub/docs/tags for more information on using tags with Pub/Sub resources.</td>
 </tr>
 </tbody>
 </table>
@@ -222,18 +223,18 @@ The following methods are available for this resource:
     <td>Deletes the topic with the given name. Returns `NOT_FOUND` if the topic does not exist. After a topic is deleted, a new topic may be created with the same name; this is an entirely new topic with none of the old configuration or subscriptions. Existing subscriptions to this topic are not deleted, but their `topic` field is set to `_deleted-topic_`.</td>
 </tr>
 <tr>
-    <td><a href="#projects_topics_create"><CopyableCode code="projects_topics_create" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-topicsId"><code>topicsId</code></a></td>
-    <td></td>
-    <td>Creates the given topic with the given name. See the [resource name rules] (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names).</td>
-</tr>
-<tr>
     <td><a href="#projects_topics_publish"><CopyableCode code="projects_topics_publish" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-topicsId"><code>topicsId</code></a></td>
     <td></td>
     <td>Adds one or more messages to the topic. Returns `NOT_FOUND` if the topic does not exist.</td>
+</tr>
+<tr>
+    <td><a href="#projects_topics_create"><CopyableCode code="projects_topics_create" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-topicsId"><code>topicsId</code></a></td>
+    <td></td>
+    <td>Creates the given topic with the given name. See the [resource name rules] (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names).</td>
 </tr>
 </tbody>
 </table>
@@ -348,8 +349,8 @@ Updates an existing topic by updating the fields specified in the update mask. N
 ```sql
 UPDATE google.pubsub.topics
 SET 
-data__updateMask = '{{ updateMask }}',
-data__topic = '{{ topic }}'
+data__topic = '{{ topic }}',
+data__updateMask = '{{ updateMask }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND topicsId = '{{ topicsId }}' --required
@@ -395,36 +396,12 @@ AND topicsId = '{{ topicsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_topics_create"
+    defaultValue="projects_topics_publish"
     values={[
-        { label: 'projects_topics_create', value: 'projects_topics_create' },
-        { label: 'projects_topics_publish', value: 'projects_topics_publish' }
+        { label: 'projects_topics_publish', value: 'projects_topics_publish' },
+        { label: 'projects_topics_create', value: 'projects_topics_create' }
     ]}
 >
-<TabItem value="projects_topics_create">
-
-Creates the given topic with the given name. See the [resource name rules] (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names).
-
-```sql
-EXEC google.pubsub.topics.projects_topics_create 
-@projectsId='{{ projectsId }}' --required, 
-@topicsId='{{ topicsId }}' --required 
-@@json=
-'{
-"messageStoragePolicy": "{{ messageStoragePolicy }}", 
-"name": "{{ name }}", 
-"labels": "{{ labels }}", 
-"satisfiesPzs": {{ satisfiesPzs }}, 
-"kmsKeyName": "{{ kmsKeyName }}", 
-"tags": "{{ tags }}", 
-"messageRetentionDuration": "{{ messageRetentionDuration }}", 
-"ingestionDataSourceSettings": "{{ ingestionDataSourceSettings }}", 
-"schemaSettings": "{{ schemaSettings }}", 
-"messageTransforms": "{{ messageTransforms }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_topics_publish">
 
 Adds one or more messages to the topic. Returns `NOT_FOUND` if the topic does not exist.
@@ -436,6 +413,30 @@ EXEC google.pubsub.topics.projects_topics_publish
 @@json=
 '{
 "messages": "{{ messages }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_topics_create">
+
+Creates the given topic with the given name. See the [resource name rules] (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names).
+
+```sql
+EXEC google.pubsub.topics.projects_topics_create 
+@projectsId='{{ projectsId }}' --required, 
+@topicsId='{{ topicsId }}' --required 
+@@json=
+'{
+"kmsKeyName": "{{ kmsKeyName }}", 
+"ingestionDataSourceSettings": "{{ ingestionDataSourceSettings }}", 
+"name": "{{ name }}", 
+"satisfiesPzs": {{ satisfiesPzs }}, 
+"tags": "{{ tags }}", 
+"messageTransforms": "{{ messageTransforms }}", 
+"messageStoragePolicy": "{{ messageStoragePolicy }}", 
+"labels": "{{ labels }}", 
+"schemaSettings": "{{ schemaSettings }}", 
+"messageRetentionDuration": "{{ messageRetentionDuration }}"
 }'
 ;
 ```

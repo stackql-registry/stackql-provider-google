@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>indexes</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>indexes</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="indexes" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.datastore.indexes" /></td></tr>
 </tbody></table>
@@ -52,7 +53,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="ancestor" /></td>
     <td><code>string</code></td>
-    <td>Required. The index's ancestor mode. Must not be ANCESTOR_MODE_UNSPECIFIED.</td>
+    <td>Required. The index's ancestor mode. Must not be ANCESTOR_MODE_UNSPECIFIED. (ANCESTOR_MODE_UNSPECIFIED, NONE, ALL_ANCESTORS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="indexId" /></td>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the index.</td>
+    <td>Output only. The state of the index. (STATE_UNSPECIFIED, CREATING, READY, DELETING, ERROR)</td>
 </tr>
 </tbody>
 </table>
@@ -96,7 +97,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="ancestor" /></td>
     <td><code>string</code></td>
-    <td>Required. The index's ancestor mode. Must not be ANCESTOR_MODE_UNSPECIFIED.</td>
+    <td>Required. The index's ancestor mode. Must not be ANCESTOR_MODE_UNSPECIFIED. (ANCESTOR_MODE_UNSPECIFIED, NONE, ALL_ANCESTORS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="indexId" /></td>
@@ -121,7 +122,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the index.</td>
+    <td>Output only. The state of the index. (STATE_UNSPECIFIED, CREATING, READY, DELETING, ERROR)</td>
 </tr>
 </tbody>
 </table>
@@ -154,7 +155,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists the indexes that match the specified filters. Datastore uses an eventually consistent query to fetch the list of indexes and may occasionally return stale results.</td>
 </tr>
 <tr>
@@ -256,9 +257,9 @@ properties,
 state
 FROM google.datastore.indexes
 WHERE projectId = '{{ projectId }}' -- required
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -280,15 +281,15 @@ Creates the specified index. A newly created index's initial state is `CREATING`
 
 ```sql
 INSERT INTO google.datastore.indexes (
-data__properties,
 data__kind,
 data__ancestor,
+data__properties,
 projectId
 )
 SELECT 
-'{{ properties }}',
 '{{ kind }}',
 '{{ ancestor }}',
+'{{ properties }}',
 '{{ projectId }}'
 RETURNING
 name,
@@ -301,30 +302,29 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: indexes
   props:
     - name: projectId
-      value: string
+      value: "{{ projectId }}"
       description: Required parameter for the indexes resource.
-    - name: properties
-      value: array
-      description: >
-        Required. An ordered sequence of property names and their index attributes. Requires: * A maximum of 100 properties.
-        
     - name: kind
-      value: string
-      description: >
+      value: "{{ kind }}"
+      description: |
         Required. The entity kind to which this index applies.
-        
     - name: ancestor
-      value: string
-      description: >
+      value: "{{ ancestor }}"
+      description: |
         Required. The index's ancestor mode. Must not be ANCESTOR_MODE_UNSPECIFIED.
-        
       valid_values: ['ANCESTOR_MODE_UNSPECIFIED', 'NONE', 'ALL_ANCESTORS']
-```
+    - name: properties
+      description: |
+        Required. An ordered sequence of property names and their index attributes. Requires: * A maximum of 100 properties.
+      value:
+        - name: "{{ name }}"
+          direction: "{{ direction }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

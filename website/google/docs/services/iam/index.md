@@ -18,7 +18,7 @@ iam service documentation.
 
 :::info[Service Summary]
 
-total resources: __23__  
+total resources: __25__  
 
 :::
 
@@ -36,10 +36,10 @@ total resources: __23__
 <a href="/services/iam/roles/">roles</a><br />
 <a href="/services/iam/scim_tenants/">scim_tenants</a><br />
 <a href="/services/iam/service_account_keys/">service_account_keys</a><br />
-<a href="/services/iam/service_accounts/">service_accounts</a>
+<a href="/services/iam/service_accounts/">service_accounts</a><br />
+<a href="/services/iam/service_accounts_iam_policies/">service_accounts_iam_policies</a>
 </div>
 <div class="providerDocColumn">
-<a href="/services/iam/service_accounts_iam_policies/">service_accounts_iam_policies</a><br />
 <a href="/services/iam/tokens/">tokens</a><br />
 <a href="/services/iam/workforce_pool_provider_keys/">workforce_pool_provider_keys</a><br />
 <a href="/services/iam/workforce_pool_providers/">workforce_pool_providers</a><br />
@@ -49,6 +49,8 @@ total resources: __23__
 <a href="/services/iam/workload_identity_pool_provider_keys/">workload_identity_pool_provider_keys</a><br />
 <a href="/services/iam/workload_identity_pool_providers/">workload_identity_pool_providers</a><br />
 <a href="/services/iam/workload_identity_pools/">workload_identity_pools</a><br />
+<a href="/services/iam/workload_identity_pools_attestation_rule/">workload_identity_pools_attestation_rule</a><br />
+<a href="/services/iam/workload_identity_pools_attestation_rules/">workload_identity_pools_attestation_rules</a><br />
 <a href="/services/iam/workload_identity_pools_iam_policies/">workload_identity_pools_iam_policies</a>
 </div>
 </div>

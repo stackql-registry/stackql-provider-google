@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>runs</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>runs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="runs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.bigquerydatatransfer.runs" /></td></tr>
 </tbody></table>
@@ -114,7 +115,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Data transfer run state. Ignored for input requests.</td>
+    <td>Data transfer run state. Ignored for input requests. (TRANSFER_STATE_UNSPECIFIED, PENDING, RUNNING, SUCCEEDED, FAILED, CANCELLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -203,7 +204,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Data transfer run state. Ignored for input requests.</td>
+    <td>Data transfer run state. Ignored for input requests. (TRANSFER_STATE_UNSPECIFIED, PENDING, RUNNING, SUCCEEDED, FAILED, CANCELLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -292,7 +293,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Data transfer run state. Ignored for input requests.</td>
+    <td>Data transfer run state. Ignored for input requests. (TRANSFER_STATE_UNSPECIFIED, PENDING, RUNNING, SUCCEEDED, FAILED, CANCELLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -381,7 +382,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Data transfer run state. Ignored for input requests.</td>
+    <td>Data transfer run state. Ignored for input requests. (TRANSFER_STATE_UNSPECIFIED, PENDING, RUNNING, SUCCEEDED, FAILED, CANCELLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -431,14 +432,14 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_transfer_configs_runs_list"><CopyableCode code="projects_locations_transfer_configs_runs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-transferConfigsId"><code>transferConfigsId</code></a></td>
-    <td><a href="#parameter-states"><code>states</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-runAttempt"><code>runAttempt</code></a></td>
+    <td><a href="#parameter-runAttempt"><code>runAttempt</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-states"><code>states</code></a></td>
     <td>Returns information about running and completed transfer runs.</td>
 </tr>
 <tr>
     <td><a href="#projects_transfer_configs_runs_list"><CopyableCode code="projects_transfer_configs_runs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-transferConfigsId"><code>transferConfigsId</code></a></td>
-    <td><a href="#parameter-states"><code>states</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-runAttempt"><code>runAttempt</code></a></td>
+    <td><a href="#parameter-states"><code>states</code></a>, <a href="#parameter-runAttempt"><code>runAttempt</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Returns information about running and completed transfer runs.</td>
 </tr>
 <tr>
@@ -607,10 +608,10 @@ FROM google.bigquerydatatransfer.runs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND transferConfigsId = '{{ transferConfigsId }}' -- required
-AND states = '{{ states }}'
+AND runAttempt = '{{ runAttempt }}'
 AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
-AND runAttempt = '{{ runAttempt }}'
+AND states = '{{ states }}'
 ;
 ```
 </TabItem>
@@ -639,9 +640,9 @@ FROM google.bigquerydatatransfer.runs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND transferConfigsId = '{{ transferConfigsId }}' -- required
 AND states = '{{ states }}'
+AND runAttempt = '{{ runAttempt }}'
 AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
-AND runAttempt = '{{ runAttempt }}'
 ;
 ```
 </TabItem>

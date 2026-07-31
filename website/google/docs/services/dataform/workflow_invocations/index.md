@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>workflow_invocations</code> res
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>workflow_invocations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="workflow_invocations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataform.workflow_invocations" /></td></tr>
 </tbody></table>
@@ -93,7 +94,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. This workflow invocation's current state.</td>
+    <td>Output only. This workflow invocation's current state. (STATE_UNSPECIFIED, RUNNING, SUCCEEDED, CANCELLED, FAILED, CANCELING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="workflowConfig" /></td>
@@ -181,7 +182,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. This workflow invocation's current state.</td>
+    <td>Output only. This workflow invocation's current state. (STATE_UNSPECIFIED, RUNNING, SUCCEEDED, CANCELLED, FAILED, CANCELING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="workflowConfig" /></td>
@@ -226,7 +227,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists WorkflowInvocations in a given Repository.</td>
 </tr>
 <tr>
@@ -381,10 +382,10 @@ FROM google.dataform.workflow_invocations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND repositoriesId = '{{ repositoriesId }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -406,17 +407,17 @@ Creates a new WorkflowInvocation in a given Repository.
 
 ```sql
 INSERT INTO google.dataform.workflow_invocations (
+data__invocationConfig,
 data__workflowConfig,
 data__compilationResult,
-data__invocationConfig,
 projectsId,
 locationsId,
 repositoriesId
 )
 SELECT 
+'{{ invocationConfig }}',
 '{{ workflowConfig }}',
 '{{ compilationResult }}',
-'{{ invocationConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ repositoriesId }}'
@@ -436,35 +437,43 @@ workflowConfig
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: workflow_invocations
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the workflow_invocations resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the workflow_invocations resource.
     - name: repositoriesId
-      value: string
+      value: "{{ repositoriesId }}"
       description: Required parameter for the workflow_invocations resource.
-    - name: workflowConfig
-      value: string
-      description: >
-        Immutable. The name of the workflow config to invoke. Must be in the format `projects/*/locations/*/repositories/*/workflowConfigs/*`.
-        
-    - name: compilationResult
-      value: string
-      description: >
-        Immutable. The name of the compilation result to use for this invocation. Must be in the format `projects/*/locations/*/repositories/*/compilationResults/*`.
-        
     - name: invocationConfig
-      value: object
-      description: >
+      description: |
         Immutable. If left unset, a default InvocationConfig will be used.
-        
-```
+      value:
+        includedTags:
+          - "{{ includedTags }}"
+        transitiveDependentsIncluded: {{ transitiveDependentsIncluded }}
+        queryPriority: "{{ queryPriority }}"
+        includedTargets:
+          - database: "{{ database }}"
+            name: "{{ name }}"
+            schema: "{{ schema }}"
+        fullyRefreshIncrementalTablesEnabled: {{ fullyRefreshIncrementalTablesEnabled }}
+        transitiveDependenciesIncluded: {{ transitiveDependenciesIncluded }}
+        serviceAccount: "{{ serviceAccount }}"
+    - name: workflowConfig
+      value: "{{ workflowConfig }}"
+      description: |
+        Immutable. The name of the workflow config to invoke. Must be in the format \`projects/*/locations/*/repositories/*/workflowConfigs/*\`.
+    - name: compilationResult
+      value: "{{ compilationResult }}"
+      description: |
+        Immutable. The name of the compilation result to use for this invocation. Must be in the format \`projects/*/locations/*/repositories/*/compilationResults/*\`.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

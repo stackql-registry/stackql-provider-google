@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>evaluations</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>evaluations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="evaluations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.workloadmanager.evaluations" /></td></tr>
 </tbody></table>
@@ -52,17 +53,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>name of resource names have the form 'projects/&#123;project_id&#125;/locations/&#123;location_id&#125;/evaluations/&#123;evaluation_id&#125;'</td>
+    <td>Name of resource that has the form `projects/&#123;project_id&#125;/locations/&#123;location_id&#125;/evaluations/&#123;evaluation_id&#125;`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="bigQueryDestination" /></td>
     <td><code>object</code></td>
-    <td>Optional. BigQuery destination (id: BigQueryDestination)</td>
+    <td>Optional. The BigQuery destination for detailed evaluation results. If this field is specified, the results of each evaluation execution are exported to BigQuery. (id: BigQueryDestination)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. [Output only] Create time stamp</td>
+    <td>Output only. [Output only] Create time stamp.</td>
 </tr>
 <tr>
     <td><CopyableCode code="customRulesBucket" /></td>
@@ -72,52 +73,47 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
-    <td>Description of the Evaluation</td>
+    <td>Description of the Evaluation.</td>
 </tr>
 <tr>
     <td><CopyableCode code="evaluationType" /></td>
     <td><code>string</code></td>
-    <td>Evaluation type</td>
+    <td>Evaluation type. (EVALUATION_TYPE_UNSPECIFIED, SAP, SQL_SERVER, OTHER)</td>
 </tr>
 <tr>
     <td><CopyableCode code="kmsKey" /></td>
     <td><code>string</code></td>
-    <td>Optional. Immutable. Customer-managed encryption key name, in the format projects/*/locations/*/keyRings/*/cryptoKeys/*.</td>
+    <td>Optional. Immutable. Customer-managed encryption key name, in the format projects/*/locations/*/keyRings/*/cryptoKeys/*. The key will be used for CMEK encryption of the evaluation resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
     <td><code>object</code></td>
-    <td>Labels as key value pairs</td>
+    <td>Labels as key value pairs.</td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceFilter" /></td>
     <td><code>object</code></td>
-    <td>annotations as key value pairs (id: ResourceFilter)</td>
+    <td>Resource filter for an evaluation defining the scope of resources to be evaluated. (id: ResourceFilter)</td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceStatus" /></td>
     <td><code>object</code></td>
-    <td>Output only. [Output only] The updated rule ids if exist. (id: ResourceStatus)</td>
+    <td>Output only. [Output only] The current lifecycle state of the evaluation resource. (id: ResourceStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="ruleNames" /></td>
     <td><code>array</code></td>
-    <td>the name of the rule</td>
-</tr>
-<tr>
-    <td><CopyableCode code="ruleVersions" /></td>
-    <td><code>array</code></td>
-    <td>Output only. [Output only] The updated rule ids if exist.</td>
+    <td>The names of the rules used for this evaluation.</td>
 </tr>
 <tr>
     <td><CopyableCode code="schedule" /></td>
     <td><code>string</code></td>
-    <td>crontab format schedule for scheduled evaluation, currently only support the following schedule: "0 */1 * * *", "0 */6 * * *", "0 */12 * * *", "0 0 */1 * *", "0 0 */7 * *",</td>
+    <td>Crontab format schedule for scheduled evaluation, currently only supports the following fixed schedules: * `0 */1 * * *` # Hourly * `0 */6 * * *` # Every 6 hours * `0 */12 * * *` # Every 12 hours * `0 0 */1 * *` # Daily * `0 0 */7 * *` # Weekly * `0 0 */14 * *` # Every 14 days * `0 0 1 */1 *` # Monthly</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. [Output only] Update time stamp</td>
+    <td>Output only. [Output only] Update time stamp.</td>
 </tr>
 </tbody>
 </table>
@@ -136,17 +132,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>name of resource names have the form 'projects/&#123;project_id&#125;/locations/&#123;location_id&#125;/evaluations/&#123;evaluation_id&#125;'</td>
+    <td>Name of resource that has the form `projects/&#123;project_id&#125;/locations/&#123;location_id&#125;/evaluations/&#123;evaluation_id&#125;`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="bigQueryDestination" /></td>
     <td><code>object</code></td>
-    <td>Optional. BigQuery destination (id: BigQueryDestination)</td>
+    <td>Optional. The BigQuery destination for detailed evaluation results. If this field is specified, the results of each evaluation execution are exported to BigQuery. (id: BigQueryDestination)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. [Output only] Create time stamp</td>
+    <td>Output only. [Output only] Create time stamp.</td>
 </tr>
 <tr>
     <td><CopyableCode code="customRulesBucket" /></td>
@@ -156,52 +152,47 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
-    <td>Description of the Evaluation</td>
+    <td>Description of the Evaluation.</td>
 </tr>
 <tr>
     <td><CopyableCode code="evaluationType" /></td>
     <td><code>string</code></td>
-    <td>Evaluation type</td>
+    <td>Evaluation type. (EVALUATION_TYPE_UNSPECIFIED, SAP, SQL_SERVER, OTHER)</td>
 </tr>
 <tr>
     <td><CopyableCode code="kmsKey" /></td>
     <td><code>string</code></td>
-    <td>Optional. Immutable. Customer-managed encryption key name, in the format projects/*/locations/*/keyRings/*/cryptoKeys/*.</td>
+    <td>Optional. Immutable. Customer-managed encryption key name, in the format projects/*/locations/*/keyRings/*/cryptoKeys/*. The key will be used for CMEK encryption of the evaluation resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
     <td><code>object</code></td>
-    <td>Labels as key value pairs</td>
+    <td>Labels as key value pairs.</td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceFilter" /></td>
     <td><code>object</code></td>
-    <td>annotations as key value pairs (id: ResourceFilter)</td>
+    <td>Resource filter for an evaluation defining the scope of resources to be evaluated. (id: ResourceFilter)</td>
 </tr>
 <tr>
     <td><CopyableCode code="resourceStatus" /></td>
     <td><code>object</code></td>
-    <td>Output only. [Output only] The updated rule ids if exist. (id: ResourceStatus)</td>
+    <td>Output only. [Output only] The current lifecycle state of the evaluation resource. (id: ResourceStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="ruleNames" /></td>
     <td><code>array</code></td>
-    <td>the name of the rule</td>
-</tr>
-<tr>
-    <td><CopyableCode code="ruleVersions" /></td>
-    <td><code>array</code></td>
-    <td>Output only. [Output only] The updated rule ids if exist.</td>
+    <td>The names of the rules used for this evaluation.</td>
 </tr>
 <tr>
     <td><CopyableCode code="schedule" /></td>
     <td><code>string</code></td>
-    <td>crontab format schedule for scheduled evaluation, currently only support the following schedule: "0 */1 * * *", "0 */6 * * *", "0 */12 * * *", "0 0 */1 * *", "0 0 */7 * *",</td>
+    <td>Crontab format schedule for scheduled evaluation, currently only supports the following fixed schedules: * `0 */1 * * *` # Hourly * `0 */6 * * *` # Every 6 hours * `0 */12 * * *` # Every 12 hours * `0 0 */1 * *` # Daily * `0 0 */7 * *` # Weekly * `0 0 */14 * *` # Every 14 days * `0 0 1 */1 *` # Monthly</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. [Output only] Update time stamp</td>
+    <td>Output only. [Output only] Update time stamp.</td>
 </tr>
 </tbody>
 </table>
@@ -234,14 +225,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists Evaluations in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-evaluationId"><code>evaluationId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-evaluationId"><code>evaluationId</code></a></td>
     <td>Creates a new Evaluation in a given project and location.</td>
 </tr>
 <tr>
@@ -255,7 +246,7 @@ The following methods are available for this resource:
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-evaluationsId"><code>evaluationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-force"><code>force</code></a></td>
+    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes a single Evaluation.</td>
 </tr>
 </tbody>
@@ -358,7 +349,6 @@ labels,
 resourceFilter,
 resourceStatus,
 ruleNames,
-ruleVersions,
 schedule,
 updateTime
 FROM google.workloadmanager.evaluations
@@ -385,16 +375,15 @@ labels,
 resourceFilter,
 resourceStatus,
 ruleNames,
-ruleVersions,
 schedule,
 updateTime
 FROM google.workloadmanager.evaluations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -416,36 +405,36 @@ Creates a new Evaluation in a given project and location.
 
 ```sql
 INSERT INTO google.workloadmanager.evaluations (
-data__kmsKey,
-data__schedule,
-data__ruleNames,
 data__resourceFilter,
 data__labels,
-data__bigQueryDestination,
+data__schedule,
+data__customRulesBucket,
 data__description,
 data__name,
-data__customRulesBucket,
+data__bigQueryDestination,
+data__kmsKey,
 data__evaluationType,
+data__ruleNames,
 projectsId,
 locationsId,
-evaluationId,
-requestId
+requestId,
+evaluationId
 )
 SELECT 
-'{{ kmsKey }}',
-'{{ schedule }}',
-'{{ ruleNames }}',
 '{{ resourceFilter }}',
 '{{ labels }}',
-'{{ bigQueryDestination }}',
+'{{ schedule }}',
+'{{ customRulesBucket }}',
 '{{ description }}',
 '{{ name }}',
-'{{ customRulesBucket }}',
+'{{ bigQueryDestination }}',
+'{{ kmsKey }}',
 '{{ evaluationType }}',
+'{{ ruleNames }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ evaluationId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ evaluationId }}'
 RETURNING
 name,
 done,
@@ -457,72 +446,73 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: evaluations
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the evaluations resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the evaluations resource.
-    - name: kmsKey
-      value: string
-      description: >
-        Optional. Immutable. Customer-managed encryption key name, in the format projects/*/locations/*/keyRings/*/cryptoKeys/*.
-        
-    - name: schedule
-      value: string
-      description: >
-        crontab format schedule for scheduled evaluation, currently only support the following schedule: "0 */1 * * *", "0 */6 * * *", "0 */12 * * *", "0 0 */1 * *", "0 0 */7 * *",
-        
-    - name: ruleNames
-      value: array
-      description: >
-        the name of the rule
-        
     - name: resourceFilter
-      value: object
-      description: >
-        annotations as key value pairs
-        
+      description: |
+        Resource filter for an evaluation defining the scope of resources to be evaluated.
+      value:
+        resourceIdPatterns:
+          - "{{ resourceIdPatterns }}"
+        gceInstanceFilter:
+          serviceAccounts:
+            - "{{ serviceAccounts }}"
+        scopes:
+          - "{{ scopes }}"
+        inclusionLabels: "{{ inclusionLabels }}"
     - name: labels
-      value: object
-      description: >
-        Labels as key value pairs
-        
-    - name: bigQueryDestination
-      value: object
-      description: >
-        Optional. BigQuery destination
-        
-    - name: description
-      value: string
-      description: >
-        Description of the Evaluation
-        
-    - name: name
-      value: string
-      description: >
-        name of resource names have the form 'projects/{project_id}/locations/{location_id}/evaluations/{evaluation_id}'
-        
+      value: "{{ labels }}"
+      description: |
+        Labels as key value pairs.
+    - name: schedule
+      value: "{{ schedule }}"
+      description: |
+        Crontab format schedule for scheduled evaluation, currently only supports the following fixed schedules: * \`0 */1 * * *\` # Hourly * \`0 */6 * * *\` # Every 6 hours * \`0 */12 * * *\` # Every 12 hours * \`0 0 */1 * *\` # Daily * \`0 0 */7 * *\` # Weekly * \`0 0 */14 * *\` # Every 14 days * \`0 0 1 */1 *\` # Monthly
     - name: customRulesBucket
-      value: string
-      description: >
+      value: "{{ customRulesBucket }}"
+      description: |
         The Cloud Storage bucket name for custom rules.
-        
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Description of the Evaluation.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of resource that has the form \`projects/{project_id}/locations/{location_id}/evaluations/{evaluation_id}\`.
+    - name: bigQueryDestination
+      description: |
+        Optional. The BigQuery destination for detailed evaluation results. If this field is specified, the results of each evaluation execution are exported to BigQuery.
+      value:
+        destinationDataset: "{{ destinationDataset }}"
+        createNewResultsTable: {{ createNewResultsTable }}
+    - name: kmsKey
+      value: "{{ kmsKey }}"
+      description: |
+        Optional. Immutable. Customer-managed encryption key name, in the format projects/*/locations/*/keyRings/*/cryptoKeys/*. The key will be used for CMEK encryption of the evaluation resource.
     - name: evaluationType
-      value: string
-      description: >
-        Evaluation type
-        
-      valid_values: ['EVALUATION_TYPE_UNSPECIFIED', 'SAP', 'SQL_SERVER', 'OTHER', 'SCC_IAC']
-    - name: evaluationId
-      value: string
+      value: "{{ evaluationType }}"
+      description: |
+        Evaluation type.
+      valid_values: ['EVALUATION_TYPE_UNSPECIFIED', 'SAP', 'SQL_SERVER', 'OTHER']
+    - name: ruleNames
+      value:
+        - "{{ ruleNames }}"
+      description: |
+        The names of the rules used for this evaluation.
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+    - name: evaluationId
+      value: "{{ evaluationId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -542,16 +532,16 @@ Updates the parameters of a single Evaluation.
 ```sql
 UPDATE google.workloadmanager.evaluations
 SET 
-data__kmsKey = '{{ kmsKey }}',
-data__schedule = '{{ schedule }}',
-data__ruleNames = '{{ ruleNames }}',
 data__resourceFilter = '{{ resourceFilter }}',
 data__labels = '{{ labels }}',
-data__bigQueryDestination = '{{ bigQueryDestination }}',
+data__schedule = '{{ schedule }}',
+data__customRulesBucket = '{{ customRulesBucket }}',
 data__description = '{{ description }}',
 data__name = '{{ name }}',
-data__customRulesBucket = '{{ customRulesBucket }}',
-data__evaluationType = '{{ evaluationType }}'
+data__bigQueryDestination = '{{ bigQueryDestination }}',
+data__kmsKey = '{{ kmsKey }}',
+data__evaluationType = '{{ evaluationType }}',
+data__ruleNames = '{{ ruleNames }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -586,8 +576,8 @@ DELETE FROM google.workloadmanager.evaluations
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND evaluationsId = '{{ evaluationsId }}' --required
-AND requestId = '{{ requestId }}'
 AND force = '{{ force }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>

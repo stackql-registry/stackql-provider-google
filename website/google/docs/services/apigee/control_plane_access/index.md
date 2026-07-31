@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>control_plane_access</code> res
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>control_plane_access</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="control_plane_access" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.control_plane_access" /></td></tr>
 </tbody></table>
@@ -166,8 +167,8 @@ Updates the permissions required to allow Apigee runtime-plane components access
 ```sql
 UPDATE google.apigee.control_plane_access
 SET 
-data__name = '{{ name }}',
 data__synchronizerIdentities = '{{ synchronizerIdentities }}',
+data__name = '{{ name }}',
 data__analyticsPublisherIdentities = '{{ analyticsPublisherIdentities }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required

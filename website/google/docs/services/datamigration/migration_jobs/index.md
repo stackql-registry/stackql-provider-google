@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>migration_jobs</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>migration_jobs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="migration_jobs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.datamigration.migration_jobs" /></td></tr>
 </tbody></table>
@@ -97,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="dumpType" /></td>
     <td><code>string</code></td>
-    <td>Optional. The type of the data dump. Supported for MySQL to CloudSQL for MySQL migrations only.</td>
+    <td>Optional. The type of the data dump. Supported for MySQL to CloudSQL for MySQL migrations only. (DUMP_TYPE_UNSPECIFIED, LOGICAL, PHYSICAL)</td>
 </tr>
 <tr>
     <td><CopyableCode code="duration" /></td>
@@ -125,6 +126,11 @@ The following fields are returned by `SELECT` queries:
     <td>The resource labels for migration job to use to annotate any related underlying resources such as Compute Engine VMs. An object containing a list of "key": "value" pairs. Example: `&#123; "name": "wrench", "mass": "1.3kg", "count": "3" &#125;`.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="mysqlHomogeneousConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Configuration for MySQL homogeneous migration. (id: MySqlHomogeneousConfig)</td>
+</tr>
+<tr>
     <td><CopyableCode code="objectsConfig" /></td>
     <td><code>object</code></td>
     <td>Optional. The objects that need to be migrated. (id: MigrationJobObjectsConfig)</td>
@@ -135,6 +141,11 @@ The following fields are returned by `SELECT` queries:
     <td>Configuration for heterogeneous **Oracle to Cloud SQL for PostgreSQL** and **Oracle to AlloyDB for PostgreSQL** migrations. (id: OracleToPostgresConfig)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="originalMigrationName" /></td>
+    <td><code>string</code></td>
+    <td>Optional. A failback replication pointer to the resource name (URI) of the original migration job.</td>
+</tr>
+<tr>
     <td><CopyableCode code="performanceConfig" /></td>
     <td><code>object</code></td>
     <td>Optional. Data dump parallelism settings used by the migration. (id: PerformanceConfig)</td>
@@ -142,7 +153,22 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="phase" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current migration job phase.</td>
+    <td>Output only. The current migration job phase. (PHASE_UNSPECIFIED, FULL_DUMP, CDC, PROMOTE_IN_PROGRESS, WAITING_FOR_SOURCE_WRITES_TO_STOP, PREPARING_THE_DUMP, READY_FOR_PROMOTE)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="postgresHomogeneousConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Configuration for PostgreSQL homogeneous migration. (id: PostgresHomogeneousConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="postgresToSqlserverConfig" /></td>
+    <td><code>object</code></td>
+    <td>Configuration for heterogeneous failback migrations from **PostgreSQL to SQL Server**. (id: PostgresToSqlServerConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="purpose" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Migration job mode. Migration jobs can be standard forward jobs or failback migration jobs. (PURPOSE_UNSPECIFIED, MIGRATE, FAILBACK)</td>
 </tr>
 <tr>
     <td><CopyableCode code="reverseSshConnectivity" /></td>
@@ -182,7 +208,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>The current migration job state.</td>
+    <td>The current migration job state. (STATE_UNSPECIFIED, MAINTENANCE, DRAFT, CREATING, NOT_STARTED, RUNNING, FAILED, COMPLETED, DELETING, STOPPING, STOPPED, DELETED, UPDATING, STARTING, RESTARTING, RESUMING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="staticIpConnectivity" /></td>
@@ -192,7 +218,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Required. The migration job type.</td>
+    <td>Required. The migration job type. (TYPE_UNSPECIFIED, ONE_TIME, CONTINUOUS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -266,7 +292,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="dumpType" /></td>
     <td><code>string</code></td>
-    <td>Optional. The type of the data dump. Supported for MySQL to CloudSQL for MySQL migrations only.</td>
+    <td>Optional. The type of the data dump. Supported for MySQL to CloudSQL for MySQL migrations only. (DUMP_TYPE_UNSPECIFIED, LOGICAL, PHYSICAL)</td>
 </tr>
 <tr>
     <td><CopyableCode code="duration" /></td>
@@ -294,6 +320,11 @@ The following fields are returned by `SELECT` queries:
     <td>The resource labels for migration job to use to annotate any related underlying resources such as Compute Engine VMs. An object containing a list of "key": "value" pairs. Example: `&#123; "name": "wrench", "mass": "1.3kg", "count": "3" &#125;`.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="mysqlHomogeneousConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Configuration for MySQL homogeneous migration. (id: MySqlHomogeneousConfig)</td>
+</tr>
+<tr>
     <td><CopyableCode code="objectsConfig" /></td>
     <td><code>object</code></td>
     <td>Optional. The objects that need to be migrated. (id: MigrationJobObjectsConfig)</td>
@@ -304,6 +335,11 @@ The following fields are returned by `SELECT` queries:
     <td>Configuration for heterogeneous **Oracle to Cloud SQL for PostgreSQL** and **Oracle to AlloyDB for PostgreSQL** migrations. (id: OracleToPostgresConfig)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="originalMigrationName" /></td>
+    <td><code>string</code></td>
+    <td>Optional. A failback replication pointer to the resource name (URI) of the original migration job.</td>
+</tr>
+<tr>
     <td><CopyableCode code="performanceConfig" /></td>
     <td><code>object</code></td>
     <td>Optional. Data dump parallelism settings used by the migration. (id: PerformanceConfig)</td>
@@ -311,7 +347,22 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="phase" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current migration job phase.</td>
+    <td>Output only. The current migration job phase. (PHASE_UNSPECIFIED, FULL_DUMP, CDC, PROMOTE_IN_PROGRESS, WAITING_FOR_SOURCE_WRITES_TO_STOP, PREPARING_THE_DUMP, READY_FOR_PROMOTE)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="postgresHomogeneousConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Configuration for PostgreSQL homogeneous migration. (id: PostgresHomogeneousConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="postgresToSqlserverConfig" /></td>
+    <td><code>object</code></td>
+    <td>Configuration for heterogeneous failback migrations from **PostgreSQL to SQL Server**. (id: PostgresToSqlServerConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="purpose" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Migration job mode. Migration jobs can be standard forward jobs or failback migration jobs. (PURPOSE_UNSPECIFIED, MIGRATE, FAILBACK)</td>
 </tr>
 <tr>
     <td><CopyableCode code="reverseSshConnectivity" /></td>
@@ -351,7 +402,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>The current migration job state.</td>
+    <td>The current migration job state. (STATE_UNSPECIFIED, MAINTENANCE, DRAFT, CREATING, NOT_STARTED, RUNNING, FAILED, COMPLETED, DELETING, STOPPING, STOPPED, DELETED, UPDATING, STARTING, RESTARTING, RESUMING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="staticIpConnectivity" /></td>
@@ -361,7 +412,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Required. The migration job type.</td>
+    <td>Required. The migration job type. (TYPE_UNSPECIFIED, ONE_TIME, CONTINUOUS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -404,7 +455,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists migration jobs in a given project and location.</td>
 </tr>
 <tr>
@@ -425,22 +476,15 @@ The following methods are available for this resource:
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-migrationJobsId"><code>migrationJobsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-force"><code>force</code></a></td>
+    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes a single migration job.</td>
 </tr>
 <tr>
-    <td><a href="#start"><CopyableCode code="start" /></a></td>
+    <td><a href="#verify"><CopyableCode code="verify" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-migrationJobsId"><code>migrationJobsId</code></a></td>
     <td></td>
-    <td>Start an already created migration job.</td>
-</tr>
-<tr>
-    <td><a href="#stop"><CopyableCode code="stop" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-migrationJobsId"><code>migrationJobsId</code></a></td>
-    <td></td>
-    <td>Stops a running migration job.</td>
+    <td>Verify a migration job, making sure the destination can reach the source and that all configuration and prerequisites are met.</td>
 </tr>
 <tr>
     <td><a href="#resume"><CopyableCode code="resume" /></a></td>
@@ -450,11 +494,18 @@ The following methods are available for this resource:
     <td>Resume a migration job that is currently stopped and is resumable (was stopped during CDC phase).</td>
 </tr>
 <tr>
-    <td><a href="#promote"><CopyableCode code="promote" /></a></td>
+    <td><a href="#fetch_source_objects"><CopyableCode code="fetch_source_objects" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-migrationJobsId"><code>migrationJobsId</code></a></td>
     <td></td>
-    <td>Promote a migration job, stopping replication to the destination and promoting the destination to be a standalone database.</td>
+    <td>Retrieves objects from the source database that can be selected for data migration. This is applicable for the following migrations: 1. PostgreSQL to Cloud SQL for PostgreSQL 2. PostgreSQL to AlloyDB for PostgreSQL.</td>
+</tr>
+<tr>
+    <td><a href="#stop"><CopyableCode code="stop" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-migrationJobsId"><code>migrationJobsId</code></a></td>
+    <td></td>
+    <td>Stops a running migration job.</td>
 </tr>
 <tr>
     <td><a href="#demote_destination"><CopyableCode code="demote_destination" /></a></td>
@@ -464,11 +515,25 @@ The following methods are available for this resource:
     <td>Demotes the destination database to become a read replica of the source. This is applicable for the following migrations: 1. MySQL to Cloud SQL for MySQL 2. PostgreSQL to Cloud SQL for PostgreSQL 3. PostgreSQL to AlloyDB for PostgreSQL.</td>
 </tr>
 <tr>
-    <td><a href="#verify"><CopyableCode code="verify" /></a></td>
+    <td><a href="#promote"><CopyableCode code="promote" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-migrationJobsId"><code>migrationJobsId</code></a></td>
     <td></td>
-    <td>Verify a migration job, making sure the destination can reach the source and that all configuration and prerequisites are met.</td>
+    <td>Promote a migration job, stopping replication to the destination and promoting the destination to be a standalone database.</td>
+</tr>
+<tr>
+    <td><a href="#generate_tcp_proxy_script"><CopyableCode code="generate_tcp_proxy_script" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-migrationJobsId"><code>migrationJobsId</code></a></td>
+    <td></td>
+    <td>Generate a TCP Proxy configuration script to configure a cloud-hosted VM running a TCP Proxy.</td>
+</tr>
+<tr>
+    <td><a href="#start"><CopyableCode code="start" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-migrationJobsId"><code>migrationJobsId</code></a></td>
+    <td></td>
+    <td>Start an already created migration job.</td>
 </tr>
 <tr>
     <td><a href="#restart"><CopyableCode code="restart" /></a></td>
@@ -483,20 +548,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-migrationJobsId"><code>migrationJobsId</code></a></td>
     <td></td>
     <td>Generate a SSH configuration script to configure the reverse SSH connectivity.</td>
-</tr>
-<tr>
-    <td><a href="#generate_tcp_proxy_script"><CopyableCode code="generate_tcp_proxy_script" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-migrationJobsId"><code>migrationJobsId</code></a></td>
-    <td></td>
-    <td>Generate a TCP Proxy configuration script to configure a cloud-hosted VM running a TCP Proxy.</td>
-</tr>
-<tr>
-    <td><a href="#fetch_source_objects"><CopyableCode code="fetch_source_objects" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-migrationJobsId"><code>migrationJobsId</code></a></td>
-    <td></td>
-    <td>Retrieves objects from the source database that can be selected for data migration. This is applicable for the following migrations: 1. PostgreSQL to Cloud SQL for PostgreSQL 2. PostgreSQL to AlloyDB for PostgreSQL.</td>
 </tr>
 </tbody>
 </table>
@@ -602,10 +653,15 @@ endTime,
 error,
 filter,
 labels,
+mysqlHomogeneousConfig,
 objectsConfig,
 oracleToPostgresConfig,
+originalMigrationName,
 performanceConfig,
 phase,
+postgresHomogeneousConfig,
+postgresToSqlserverConfig,
+purpose,
 reverseSshConnectivity,
 satisfiesPzi,
 satisfiesPzs,
@@ -646,10 +702,15 @@ endTime,
 error,
 filter,
 labels,
+mysqlHomogeneousConfig,
 objectsConfig,
 oracleToPostgresConfig,
+originalMigrationName,
 performanceConfig,
 phase,
+postgresHomogeneousConfig,
+postgresToSqlserverConfig,
+purpose,
 reverseSshConnectivity,
 satisfiesPzi,
 satisfiesPzs,
@@ -665,10 +726,10 @@ vpcPeeringConnectivity
 FROM google.datamigration.migration_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -690,58 +751,66 @@ Creates a new migration job in a given project and location.
 
 ```sql
 INSERT INTO google.datamigration.migration_jobs (
-data__name,
-data__labels,
-data__displayName,
-data__state,
-data__type,
-data__dumpPath,
-data__dumpFlags,
-data__source,
-data__destination,
 data__reverseSshConnectivity,
-data__vpcPeeringConnectivity,
-data__staticIpConnectivity,
+data__type,
 data__sourceDatabase,
+data__dumpPath,
+data__name,
+data__vpcPeeringConnectivity,
+data__mysqlHomogeneousConfig,
+data__postgresToSqlserverConfig,
+data__performanceConfig,
+data__sqlserverHomogeneousMigrationJobConfig,
+data__cmekKeyName,
 data__destinationDatabase,
 data__conversionWorkspace,
 data__filter,
-data__cmekKeyName,
-data__performanceConfig,
-data__sqlserverHomogeneousMigrationJobConfig,
-data__dumpType,
 data__oracleToPostgresConfig,
+data__destination,
+data__originalMigrationName,
 data__sqlserverToPostgresConfig,
+data__state,
+data__source,
 data__objectsConfig,
+data__labels,
+data__postgresHomogeneousConfig,
+data__dumpType,
+data__displayName,
+data__dumpFlags,
+data__staticIpConnectivity,
 projectsId,
 locationsId,
 migrationJobId,
 requestId
 )
 SELECT 
-'{{ name }}',
-'{{ labels }}',
-'{{ displayName }}',
-'{{ state }}',
-'{{ type }}',
-'{{ dumpPath }}',
-'{{ dumpFlags }}',
-'{{ source }}',
-'{{ destination }}',
 '{{ reverseSshConnectivity }}',
-'{{ vpcPeeringConnectivity }}',
-'{{ staticIpConnectivity }}',
+'{{ type }}',
 '{{ sourceDatabase }}',
+'{{ dumpPath }}',
+'{{ name }}',
+'{{ vpcPeeringConnectivity }}',
+'{{ mysqlHomogeneousConfig }}',
+'{{ postgresToSqlserverConfig }}',
+'{{ performanceConfig }}',
+'{{ sqlserverHomogeneousMigrationJobConfig }}',
+'{{ cmekKeyName }}',
 '{{ destinationDatabase }}',
 '{{ conversionWorkspace }}',
 '{{ filter }}',
-'{{ cmekKeyName }}',
-'{{ performanceConfig }}',
-'{{ sqlserverHomogeneousMigrationJobConfig }}',
-'{{ dumpType }}',
 '{{ oracleToPostgresConfig }}',
+'{{ destination }}',
+'{{ originalMigrationName }}',
 '{{ sqlserverToPostgresConfig }}',
+'{{ state }}',
+'{{ source }}',
 '{{ objectsConfig }}',
+'{{ labels }}',
+'{{ postgresHomogeneousConfig }}',
+'{{ dumpType }}',
+'{{ displayName }}',
+'{{ dumpFlags }}',
+'{{ staticIpConnectivity }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ migrationJobId }}',
@@ -757,139 +826,197 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: migration_jobs
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the migration_jobs resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the migration_jobs resource.
-    - name: name
-      value: string
-      description: >
-        The name (URI) of this migration job resource, in the form of: projects/{project}/locations/{location}/migrationJobs/{migrationJob}.
-        
-    - name: labels
-      value: object
-      description: >
-        The resource labels for migration job to use to annotate any related underlying resources such as Compute Engine VMs. An object containing a list of "key": "value" pairs. Example: `{ "name": "wrench", "mass": "1.3kg", "count": "3" }`.
-        
-    - name: displayName
-      value: string
-      description: >
-        The migration job display name.
-        
-    - name: state
-      value: string
-      description: >
-        The current migration job state.
-        
-      valid_values: ['STATE_UNSPECIFIED', 'MAINTENANCE', 'DRAFT', 'CREATING', 'NOT_STARTED', 'RUNNING', 'FAILED', 'COMPLETED', 'DELETING', 'STOPPING', 'STOPPED', 'DELETED', 'UPDATING', 'STARTING', 'RESTARTING', 'RESUMING']
-    - name: type
-      value: string
-      description: >
-        Required. The migration job type.
-        
-      valid_values: ['TYPE_UNSPECIFIED', 'ONE_TIME', 'CONTINUOUS']
-    - name: dumpPath
-      value: string
-      description: >
-        The path to the dump file in Google Cloud Storage, in the format: (gs://[BUCKET_NAME]/[OBJECT_NAME]). This field and the "dump_flags" field are mutually exclusive.
-        
-    - name: dumpFlags
-      value: object
-      description: >
-        The initial dump flags. This field and the "dump_path" field are mutually exclusive.
-        
-    - name: source
-      value: string
-      description: >
-        Required. The resource name (URI) of the source connection profile.
-        
-    - name: destination
-      value: string
-      description: >
-        Required. The resource name (URI) of the destination connection profile.
-        
     - name: reverseSshConnectivity
-      value: object
-      description: >
+      description: |
         The details needed to communicate to the source over Reverse SSH tunnel connectivity.
-        
-    - name: vpcPeeringConnectivity
-      value: object
-      description: >
-        The details of the VPC network that the source database is located in.
-        
-    - name: staticIpConnectivity
-      value: object
-      description: >
-        static ip connectivity data (default, no additional details needed).
-        
+      value:
+        vmIp: "{{ vmIp }}"
+        vpc: "{{ vpc }}"
+        vmPort: {{ vmPort }}
+        vm: "{{ vm }}"
+    - name: type
+      value: "{{ type }}"
+      description: |
+        Required. The migration job type.
+      valid_values: ['TYPE_UNSPECIFIED', 'ONE_TIME', 'CONTINUOUS']
     - name: sourceDatabase
-      value: object
-      description: >
+      description: |
         The database engine type and provider of the source.
-        
-    - name: destinationDatabase
-      value: object
-      description: >
-        The database engine type and provider of the destination.
-        
-    - name: conversionWorkspace
-      value: object
-      description: >
-        The conversion workspace used by the migration.
-        
-    - name: filter
-      value: string
-      description: >
-        This field can be used to select the entities to migrate as part of the migration job. It uses AIP-160 notation to select a subset of the entities configured on the associated conversion-workspace. This field should not be set on migration-jobs that are not associated with a conversion workspace.
-        
-    - name: cmekKeyName
-      value: string
-      description: >
-        The CMEK (customer-managed encryption key) fully qualified key name used for the migration job. This field supports all migration jobs types except for: * Mysql to Mysql (use the cmek field in the cloudsql connection profile instead). * PostrgeSQL to PostgreSQL (use the cmek field in the cloudsql connection profile instead). * PostgreSQL to AlloyDB (use the kms_key_name field in the alloydb connection profile instead). Each Cloud CMEK key has the following format: projects/[PROJECT]/locations/[REGION]/keyRings/[RING]/cryptoKeys/[KEY_NAME]
-        
+      value:
+        provider: "{{ provider }}"
+        engine: "{{ engine }}"
+    - name: dumpPath
+      value: "{{ dumpPath }}"
+      description: |
+        The path to the dump file in Google Cloud Storage, in the format: (gs://[BUCKET_NAME]/[OBJECT_NAME]). This field and the "dump_flags" field are mutually exclusive.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The name (URI) of this migration job resource, in the form of: projects/{project}/locations/{location}/migrationJobs/{migrationJob}.
+    - name: vpcPeeringConnectivity
+      description: |
+        The details of the VPC network that the source database is located in.
+      value:
+        vpc: "{{ vpc }}"
+    - name: mysqlHomogeneousConfig
+      description: |
+        Optional. Configuration for MySQL homogeneous migration.
+      value:
+        isPrimaryDestination: {{ isPrimaryDestination }}
+    - name: postgresToSqlserverConfig
+      description: |
+        Configuration for heterogeneous failback migrations from **PostgreSQL to SQL Server**.
+      value:
+        postgresSourceConfig:
+          skipFullDump: {{ skipFullDump }}
+        sqlserverDestinationConfig:
+          maxConcurrentConnections: {{ maxConcurrentConnections }}
+          transactionTimeout: "{{ transactionTimeout }}"
     - name: performanceConfig
-      value: object
-      description: >
+      description: |
         Optional. Data dump parallelism settings used by the migration.
-        
+      value:
+        dumpParallelLevel: "{{ dumpParallelLevel }}"
     - name: sqlserverHomogeneousMigrationJobConfig
-      value: object
-      description: >
+      description: |
         Optional. Configuration for SQL Server homogeneous migration.
-        
-    - name: dumpType
-      value: string
-      description: >
-        Optional. The type of the data dump. Supported for MySQL to CloudSQL for MySQL migrations only.
-        
-      valid_values: ['DUMP_TYPE_UNSPECIFIED', 'LOGICAL', 'PHYSICAL']
+      value:
+        databaseBackups:
+          - encryptionOptions:
+              pvkPath: "{{ pvkPath }}"
+              pvkPassword: "{{ pvkPassword }}"
+              certPath: "{{ certPath }}"
+            database: "{{ database }}"
+        promoteWhenReady: {{ promoteWhenReady }}
+        dagConfig:
+          linkedServer: "{{ linkedServer }}"
+          sourceAg: "{{ sourceAg }}"
+        backupFilePattern: "{{ backupFilePattern }}"
+        useDiffBackup: {{ useDiffBackup }}
+    - name: cmekKeyName
+      value: "{{ cmekKeyName }}"
+      description: |
+        The CMEK (customer-managed encryption key) fully qualified key name used for the migration job. This field supports all migration jobs types except for: * Mysql to Mysql (use the cmek field in the cloudsql connection profile instead). * PostrgeSQL to PostgreSQL (use the cmek field in the cloudsql connection profile instead). * PostgreSQL to AlloyDB (use the kms_key_name field in the alloydb connection profile instead). Each Cloud CMEK key has the following format: projects/[PROJECT]/locations/[REGION]/keyRings/[RING]/cryptoKeys/[KEY_NAME]
+    - name: destinationDatabase
+      description: |
+        The database engine type and provider of the destination.
+      value:
+        provider: "{{ provider }}"
+        engine: "{{ engine }}"
+    - name: conversionWorkspace
+      description: |
+        The conversion workspace used by the migration.
+      value:
+        name: "{{ name }}"
+        commitId: "{{ commitId }}"
+    - name: filter
+      value: "{{ filter }}"
+      description: |
+        This field can be used to select the entities to migrate as part of the migration job. It uses AIP-160 notation to select a subset of the entities configured on the associated conversion-workspace. This field should not be set on migration-jobs that are not associated with a conversion workspace.
     - name: oracleToPostgresConfig
-      value: object
-      description: >
+      description: |
         Configuration for heterogeneous **Oracle to Cloud SQL for PostgreSQL** and **Oracle to AlloyDB for PostgreSQL** migrations.
-        
+      value:
+        oracleSourceConfig:
+          maxConcurrentFullDumpConnections: {{ maxConcurrentFullDumpConnections }}
+          cdcStartPosition: "{{ cdcStartPosition }}"
+          skipFullDump: {{ skipFullDump }}
+          maxConcurrentCdcConnections: {{ maxConcurrentCdcConnections }}
+          logMiner: "{{ logMiner }}"
+          binaryLogParser:
+            logFileDirectories:
+              archivedLogDirectory: "{{ archivedLogDirectory }}"
+              onlineLogDirectory: "{{ onlineLogDirectory }}"
+            oracleAsmLogFileAccess: "{{ oracleAsmLogFileAccess }}"
+        postgresDestinationConfig:
+          maxConcurrentConnections: {{ maxConcurrentConnections }}
+          transactionTimeout: "{{ transactionTimeout }}"
+    - name: destination
+      value: "{{ destination }}"
+      description: |
+        Required. The resource name (URI) of the destination connection profile.
+    - name: originalMigrationName
+      value: "{{ originalMigrationName }}"
+      description: |
+        Optional. A failback replication pointer to the resource name (URI) of the original migration job.
     - name: sqlserverToPostgresConfig
-      value: object
-      description: >
+      description: |
         Configuration for heterogeneous **SQL Server to Cloud SQL for PostgreSQL** migrations.
-        
+      value:
+        sqlserverSourceConfig:
+          cdcStartPosition: "{{ cdcStartPosition }}"
+          maxConcurrentFullDumpConnections: {{ maxConcurrentFullDumpConnections }}
+          maxConcurrentCdcConnections: {{ maxConcurrentCdcConnections }}
+          skipFullDump: {{ skipFullDump }}
+        postgresDestinationConfig:
+          maxConcurrentConnections: {{ maxConcurrentConnections }}
+          transactionTimeout: "{{ transactionTimeout }}"
+    - name: state
+      value: "{{ state }}"
+      description: |
+        The current migration job state.
+      valid_values: ['STATE_UNSPECIFIED', 'MAINTENANCE', 'DRAFT', 'CREATING', 'NOT_STARTED', 'RUNNING', 'FAILED', 'COMPLETED', 'DELETING', 'STOPPING', 'STOPPED', 'DELETED', 'UPDATING', 'STARTING', 'RESTARTING', 'RESUMING']
+    - name: source
+      value: "{{ source }}"
+      description: |
+        Required. The resource name (URI) of the source connection profile.
     - name: objectsConfig
-      value: object
-      description: >
+      description: |
         Optional. The objects that need to be migrated.
-        
+      value:
+        sourceObjectsConfig:
+          objectConfigs:
+            - objectIdentifier:
+                database: "{{ database }}"
+                type: "{{ type }}"
+                schema: "{{ schema }}"
+                table: "{{ table }}"
+          objectsSelectionType: "{{ objectsSelectionType }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        The resource labels for migration job to use to annotate any related underlying resources such as Compute Engine VMs. An object containing a list of "key": "value" pairs. Example: \`{ "name": "wrench", "mass": "1.3kg", "count": "3" }\`.
+    - name: postgresHomogeneousConfig
+      description: |
+        Optional. Configuration for PostgreSQL homogeneous migration.
+      value:
+        maxAdditionalSubscriptions: {{ maxAdditionalSubscriptions }}
+        isNativeLogical: {{ isNativeLogical }}
+    - name: dumpType
+      value: "{{ dumpType }}"
+      description: |
+        Optional. The type of the data dump. Supported for MySQL to CloudSQL for MySQL migrations only.
+      valid_values: ['DUMP_TYPE_UNSPECIFIED', 'LOGICAL', 'PHYSICAL']
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        The migration job display name.
+    - name: dumpFlags
+      description: |
+        The initial dump flags. This field and the "dump_path" field are mutually exclusive.
+      value:
+        dumpFlags:
+          - name: "{{ name }}"
+            value: "{{ value }}"
+    - name: staticIpConnectivity
+      value: "{{ staticIpConnectivity }}"
+      description: |
+        static ip connectivity data (default, no additional details needed).
     - name: migrationJobId
-      value: string
+      value: "{{ migrationJobId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -909,29 +1036,33 @@ Updates the parameters of a single migration job.
 ```sql
 UPDATE google.datamigration.migration_jobs
 SET 
-data__name = '{{ name }}',
-data__labels = '{{ labels }}',
-data__displayName = '{{ displayName }}',
-data__state = '{{ state }}',
-data__type = '{{ type }}',
-data__dumpPath = '{{ dumpPath }}',
-data__dumpFlags = '{{ dumpFlags }}',
-data__source = '{{ source }}',
-data__destination = '{{ destination }}',
 data__reverseSshConnectivity = '{{ reverseSshConnectivity }}',
-data__vpcPeeringConnectivity = '{{ vpcPeeringConnectivity }}',
-data__staticIpConnectivity = '{{ staticIpConnectivity }}',
+data__type = '{{ type }}',
 data__sourceDatabase = '{{ sourceDatabase }}',
+data__dumpPath = '{{ dumpPath }}',
+data__name = '{{ name }}',
+data__vpcPeeringConnectivity = '{{ vpcPeeringConnectivity }}',
+data__mysqlHomogeneousConfig = '{{ mysqlHomogeneousConfig }}',
+data__postgresToSqlserverConfig = '{{ postgresToSqlserverConfig }}',
+data__performanceConfig = '{{ performanceConfig }}',
+data__sqlserverHomogeneousMigrationJobConfig = '{{ sqlserverHomogeneousMigrationJobConfig }}',
+data__cmekKeyName = '{{ cmekKeyName }}',
 data__destinationDatabase = '{{ destinationDatabase }}',
 data__conversionWorkspace = '{{ conversionWorkspace }}',
 data__filter = '{{ filter }}',
-data__cmekKeyName = '{{ cmekKeyName }}',
-data__performanceConfig = '{{ performanceConfig }}',
-data__sqlserverHomogeneousMigrationJobConfig = '{{ sqlserverHomogeneousMigrationJobConfig }}',
-data__dumpType = '{{ dumpType }}',
 data__oracleToPostgresConfig = '{{ oracleToPostgresConfig }}',
+data__destination = '{{ destination }}',
+data__originalMigrationName = '{{ originalMigrationName }}',
 data__sqlserverToPostgresConfig = '{{ sqlserverToPostgresConfig }}',
-data__objectsConfig = '{{ objectsConfig }}'
+data__state = '{{ state }}',
+data__source = '{{ source }}',
+data__objectsConfig = '{{ objectsConfig }}',
+data__labels = '{{ labels }}',
+data__postgresHomogeneousConfig = '{{ postgresHomogeneousConfig }}',
+data__dumpType = '{{ dumpType }}',
+data__displayName = '{{ displayName }}',
+data__dumpFlags = '{{ dumpFlags }}',
+data__staticIpConnectivity = '{{ staticIpConnectivity }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -966,8 +1097,8 @@ DELETE FROM google.datamigration.migration_jobs
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND migrationJobsId = '{{ migrationJobsId }}' --required
-AND requestId = '{{ requestId }}'
 AND force = '{{ force }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>
@@ -977,45 +1108,34 @@ AND force = '{{ force }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="start"
+    defaultValue="verify"
     values={[
-        { label: 'start', value: 'start' },
-        { label: 'stop', value: 'stop' },
-        { label: 'resume', value: 'resume' },
-        { label: 'promote', value: 'promote' },
-        { label: 'demote_destination', value: 'demote_destination' },
         { label: 'verify', value: 'verify' },
-        { label: 'restart', value: 'restart' },
-        { label: 'generate_ssh_script', value: 'generate_ssh_script' },
+        { label: 'resume', value: 'resume' },
+        { label: 'fetch_source_objects', value: 'fetch_source_objects' },
+        { label: 'stop', value: 'stop' },
+        { label: 'demote_destination', value: 'demote_destination' },
+        { label: 'promote', value: 'promote' },
         { label: 'generate_tcp_proxy_script', value: 'generate_tcp_proxy_script' },
-        { label: 'fetch_source_objects', value: 'fetch_source_objects' }
+        { label: 'start', value: 'start' },
+        { label: 'restart', value: 'restart' },
+        { label: 'generate_ssh_script', value: 'generate_ssh_script' }
     ]}
 >
-<TabItem value="start">
+<TabItem value="verify">
 
-Start an already created migration job.
+Verify a migration job, making sure the destination can reach the source and that all configuration and prerequisites are met.
 
 ```sql
-EXEC google.datamigration.migration_jobs.start 
+EXEC google.datamigration.migration_jobs.verify 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @migrationJobsId='{{ migrationJobsId }}' --required 
 @@json=
 '{
-"skipValidation": {{ skipValidation }}
+"updateMask": "{{ updateMask }}", 
+"migrationJob": "{{ migrationJob }}"
 }'
-;
-```
-</TabItem>
-<TabItem value="stop">
-
-Stops a running migration job.
-
-```sql
-EXEC google.datamigration.migration_jobs.stop 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@migrationJobsId='{{ migrationJobsId }}' --required
 ;
 ```
 </TabItem>
@@ -1035,6 +1155,42 @@ EXEC google.datamigration.migration_jobs.resume
 ;
 ```
 </TabItem>
+<TabItem value="fetch_source_objects">
+
+Retrieves objects from the source database that can be selected for data migration. This is applicable for the following migrations: 1. PostgreSQL to Cloud SQL for PostgreSQL 2. PostgreSQL to AlloyDB for PostgreSQL.
+
+```sql
+EXEC google.datamigration.migration_jobs.fetch_source_objects 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@migrationJobsId='{{ migrationJobsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="stop">
+
+Stops a running migration job.
+
+```sql
+EXEC google.datamigration.migration_jobs.stop 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@migrationJobsId='{{ migrationJobsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="demote_destination">
+
+Demotes the destination database to become a read replica of the source. This is applicable for the following migrations: 1. MySQL to Cloud SQL for MySQL 2. PostgreSQL to Cloud SQL for PostgreSQL 3. PostgreSQL to AlloyDB for PostgreSQL.
+
+```sql
+EXEC google.datamigration.migration_jobs.demote_destination 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@migrationJobsId='{{ migrationJobsId }}' --required
+;
+```
+</TabItem>
 <TabItem value="promote">
 
 Promote a migration job, stopping replication to the destination and promoting the destination to be a standalone database.
@@ -1051,31 +1207,37 @@ EXEC google.datamigration.migration_jobs.promote
 ;
 ```
 </TabItem>
-<TabItem value="demote_destination">
+<TabItem value="generate_tcp_proxy_script">
 
-Demotes the destination database to become a read replica of the source. This is applicable for the following migrations: 1. MySQL to Cloud SQL for MySQL 2. PostgreSQL to Cloud SQL for PostgreSQL 3. PostgreSQL to AlloyDB for PostgreSQL.
-
-```sql
-EXEC google.datamigration.migration_jobs.demote_destination 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@migrationJobsId='{{ migrationJobsId }}' --required
-;
-```
-</TabItem>
-<TabItem value="verify">
-
-Verify a migration job, making sure the destination can reach the source and that all configuration and prerequisites are met.
+Generate a TCP Proxy configuration script to configure a cloud-hosted VM running a TCP Proxy.
 
 ```sql
-EXEC google.datamigration.migration_jobs.verify 
+EXEC google.datamigration.migration_jobs.generate_tcp_proxy_script 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @migrationJobsId='{{ migrationJobsId }}' --required 
 @@json=
 '{
-"updateMask": "{{ updateMask }}", 
-"migrationJob": "{{ migrationJob }}"
+"vmName": "{{ vmName }}", 
+"vmMachineType": "{{ vmMachineType }}", 
+"vmSubnet": "{{ vmSubnet }}", 
+"vmZone": "{{ vmZone }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="start">
+
+Start an already created migration job.
+
+```sql
+EXEC google.datamigration.migration_jobs.start 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@migrationJobsId='{{ migrationJobsId }}' --required 
+@@json=
+'{
+"skipValidation": {{ skipValidation }}
 }'
 ;
 ```
@@ -1114,37 +1276,6 @@ EXEC google.datamigration.migration_jobs.generate_ssh_script
 "vmSelectionConfig": "{{ vmSelectionConfig }}", 
 "vmPort": {{ vmPort }}
 }'
-;
-```
-</TabItem>
-<TabItem value="generate_tcp_proxy_script">
-
-Generate a TCP Proxy configuration script to configure a cloud-hosted VM running a TCP Proxy.
-
-```sql
-EXEC google.datamigration.migration_jobs.generate_tcp_proxy_script 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@migrationJobsId='{{ migrationJobsId }}' --required 
-@@json=
-'{
-"vmName": "{{ vmName }}", 
-"vmMachineType": "{{ vmMachineType }}", 
-"vmZone": "{{ vmZone }}", 
-"vmSubnet": "{{ vmSubnet }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="fetch_source_objects">
-
-Retrieves objects from the source database that can be selected for data migration. This is applicable for the following migrations: 1. PostgreSQL to Cloud SQL for PostgreSQL 2. PostgreSQL to AlloyDB for PostgreSQL.
-
-```sql
-EXEC google.datamigration.migration_jobs.fetch_source_objects 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@migrationJobsId='{{ migrationJobsId }}' --required
 ;
 ```
 </TabItem>

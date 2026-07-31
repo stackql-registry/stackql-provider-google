@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>perf_metrics_summary</code> res
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>perf_metrics_summary</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="perf_metrics_summary" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.toolresults.perf_metrics_summary" /></td></tr>
 </tbody></table>
@@ -110,28 +111,28 @@ Creates a PerfMetricsSummary resource. Returns the existing one if it has alread
 
 ```sql
 INSERT INTO firebase.toolresults.perf_metrics_summary (
+data__graphicsStats,
+data__perfEnvironment,
+data__stepId,
+data__executionId,
+data__perfMetrics,
 data__projectId,
 data__historyId,
-data__executionId,
-data__stepId,
-data__perfMetrics,
-data__perfEnvironment,
 data__appStartTime,
-data__graphicsStats,
 projectId,
 historyId,
 executionId,
 stepId
 )
 SELECT 
+'{{ graphicsStats }}',
+'{{ perfEnvironment }}',
+'{{ stepId }}',
+'{{ executionId }}',
+'{{ perfMetrics }}',
 '{{ projectId }}',
 '{{ historyId }}',
-'{{ executionId }}',
-'{{ stepId }}',
-'{{ perfMetrics }}',
-'{{ perfEnvironment }}',
 '{{ appStartTime }}',
-'{{ graphicsStats }}',
 '{{ projectId }}',
 '{{ historyId }}',
 '{{ executionId }}',
@@ -150,59 +151,80 @@ stepId
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: perf_metrics_summary
   props:
     - name: projectId
-      value: string
+      value: "{{ projectId }}"
       description: Required parameter for the perf_metrics_summary resource.
     - name: historyId
-      value: string
+      value: "{{ historyId }}"
       description: Required parameter for the perf_metrics_summary resource.
     - name: executionId
-      value: string
+      value: "{{ executionId }}"
       description: Required parameter for the perf_metrics_summary resource.
     - name: stepId
-      value: string
+      value: "{{ stepId }}"
       description: Required parameter for the perf_metrics_summary resource.
-    - name: projectId
-      value: string
-      description: >
-        The cloud project @OutputOnly
-        
-    - name: historyId
-      value: string
-      description: >
-        A tool results history ID. @OutputOnly
-        
-    - name: executionId
-      value: string
-      description: >
-        A tool results execution ID. @OutputOnly
-        
-    - name: stepId
-      value: string
-      description: >
-        A tool results step ID. @OutputOnly
-        
-    - name: perfMetrics
-      value: array
-      description: >
-        Set of resource collected
-        
-    - name: perfEnvironment
-      value: object
-      description: >
-        Describes the environment in which the performance metrics were collected
-        
-    - name: appStartTime
-      value: object
     - name: graphicsStats
-      value: object
-      description: >
+      description: |
         Graphics statistics for the entire run. Statistics are reset at the beginning of the run and collected at the end of the run.
-        
-```
+      value:
+        p95Millis: "{{ p95Millis }}"
+        slowDrawCount: "{{ slowDrawCount }}"
+        p50Millis: "{{ p50Millis }}"
+        highInputLatencyCount: "{{ highInputLatencyCount }}"
+        p90Millis: "{{ p90Millis }}"
+        slowBitmapUploadCount: "{{ slowBitmapUploadCount }}"
+        buckets:
+          - renderMillis: "{{ renderMillis }}"
+            frameCount: "{{ frameCount }}"
+        slowUiThreadCount: "{{ slowUiThreadCount }}"
+        jankyFrames: "{{ jankyFrames }}"
+        p99Millis: "{{ p99Millis }}"
+        missedVsyncCount: "{{ missedVsyncCount }}"
+        totalFrames: "{{ totalFrames }}"
+    - name: perfEnvironment
+      description: |
+        Describes the environment in which the performance metrics were collected
+      value:
+        cpuInfo:
+          cpuSpeedInGhz: {{ cpuSpeedInGhz }}
+          cpuProcessor: "{{ cpuProcessor }}"
+          numberOfCores: {{ numberOfCores }}
+        memoryInfo:
+          memoryTotalInKibibyte: "{{ memoryTotalInKibibyte }}"
+          memoryCapInKibibyte: "{{ memoryCapInKibibyte }}"
+    - name: stepId
+      value: "{{ stepId }}"
+      description: |
+        A tool results step ID. @OutputOnly
+    - name: executionId
+      value: "{{ executionId }}"
+      description: |
+        A tool results execution ID. @OutputOnly
+    - name: perfMetrics
+      value:
+        - "{{ perfMetrics }}"
+      description: |
+        Set of resource collected
+    - name: projectId
+      value: "{{ projectId }}"
+      description: |
+        The cloud project @OutputOnly
+    - name: historyId
+      value: "{{ historyId }}"
+      description: |
+        A tool results history ID. @OutputOnly
+    - name: appStartTime
+      value:
+        initialDisplayTime:
+          seconds: "{{ seconds }}"
+          nanos: {{ nanos }}
+        fullyDrawnTime:
+          seconds: "{{ seconds }}"
+          nanos: {{ nanos }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

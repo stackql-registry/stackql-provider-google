@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>definitions</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>definitions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="definitions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apihub.definitions" /></td></tr>
 </tbody></table>
@@ -76,7 +77,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Output only. The type of the definition.</td>
+    <td>Output only. The type of the definition. (TYPE_UNSPECIFIED, SCHEMA)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>

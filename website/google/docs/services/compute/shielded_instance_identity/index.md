@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>shielded_instance_identity</cod
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>shielded_instance_identity</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="shielded_instance_identity" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.shielded_instance_identity" /></td></tr>
 </tbody></table>
@@ -49,6 +50,16 @@ The following fields are returned by `SELECT` queries:
 </thead>
 <tbody>
 <tr>
+    <td><CopyableCode code="eccP256EncryptionKey" /></td>
+    <td><code>object</code></td>
+    <td>An Endorsement Key (EK) made by the ECC P256 algorithm issued to the Shielded Instance's vTPM. (id: ShieldedInstanceIdentityEntry)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="eccP256SigningKey" /></td>
+    <td><code>object</code></td>
+    <td>An Attestation Key (AK) made by the ECC P256 algorithm issued to the Shielded Instance's vTPM. (id: ShieldedInstanceIdentityEntry)</td>
+</tr>
+<tr>
     <td><CopyableCode code="encryptionKey" /></td>
     <td><code>object</code></td>
     <td>An Endorsement Key (EK) made by the RSA 2048 algorithm issued to the Shielded Instance's vTPM. (id: ShieldedInstanceIdentityEntry)</td>
@@ -56,7 +67,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of the resource. Always compute#shieldedInstanceIdentity for shielded Instance identity entry. (default: compute#shieldedInstanceIdentity)</td>
+    <td>Output only. [Output Only] Type of the resource. Alwayscompute#shieldedInstanceIdentity for shielded Instance identity entry. (default: compute#shieldedInstanceIdentity)</td>
 </tr>
 <tr>
     <td><CopyableCode code="signingKey" /></td>
@@ -138,6 +149,8 @@ Returns the Shielded Instance Identity of an instance
 
 ```sql
 SELECT
+eccP256EncryptionKey,
+eccP256SigningKey,
 encryptionKey,
 kind,
 signingKey

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>workflow_configs</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>workflow_configs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="workflow_configs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataform.workflow_configs" /></td></tr>
 </tbody></table>
@@ -353,24 +354,24 @@ Creates a new WorkflowConfig in a given Repository.
 
 ```sql
 INSERT INTO google.dataform.workflow_configs (
-data__disabled,
-data__name,
-data__releaseConfig,
-data__cronSchedule,
 data__invocationConfig,
+data__cronSchedule,
+data__disabled,
 data__timeZone,
+data__releaseConfig,
+data__name,
 projectsId,
 locationsId,
 repositoriesId,
 workflowConfigId
 )
 SELECT 
-{{ disabled }},
-'{{ name }}',
-'{{ releaseConfig }}',
-'{{ cronSchedule }}',
 '{{ invocationConfig }}',
+'{{ cronSchedule }}',
+{{ disabled }},
 '{{ timeZone }}',
+'{{ releaseConfig }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ repositoriesId }}',
@@ -391,52 +392,57 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: workflow_configs
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the workflow_configs resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the workflow_configs resource.
     - name: repositoriesId
-      value: string
+      value: "{{ repositoriesId }}"
       description: Required parameter for the workflow_configs resource.
-    - name: disabled
-      value: boolean
-      description: >
-        Optional. Disables automatic creation of workflow invocations.
-        
-    - name: name
-      value: string
-      description: >
-        Identifier. The workflow config's name.
-        
-    - name: releaseConfig
-      value: string
-      description: >
-        Required. The name of the release config whose release_compilation_result should be executed. Must be in the format `projects/*/locations/*/repositories/*/releaseConfigs/*`.
-        
-    - name: cronSchedule
-      value: string
-      description: >
-        Optional. Optional schedule (in cron format) for automatic execution of this workflow config.
-        
     - name: invocationConfig
-      value: object
-      description: >
+      description: |
         Optional. If left unset, a default InvocationConfig will be used.
-        
+      value:
+        includedTags:
+          - "{{ includedTags }}"
+        transitiveDependentsIncluded: {{ transitiveDependentsIncluded }}
+        queryPriority: "{{ queryPriority }}"
+        includedTargets:
+          - database: "{{ database }}"
+            name: "{{ name }}"
+            schema: "{{ schema }}"
+        fullyRefreshIncrementalTablesEnabled: {{ fullyRefreshIncrementalTablesEnabled }}
+        transitiveDependenciesIncluded: {{ transitiveDependenciesIncluded }}
+        serviceAccount: "{{ serviceAccount }}"
+    - name: cronSchedule
+      value: "{{ cronSchedule }}"
+      description: |
+        Optional. Optional schedule (in cron format) for automatic execution of this workflow config.
+    - name: disabled
+      value: {{ disabled }}
+      description: |
+        Optional. Disables automatic creation of workflow invocations.
     - name: timeZone
-      value: string
-      description: >
+      value: "{{ timeZone }}"
+      description: |
         Optional. Specifies the time zone to be used when interpreting cron_schedule. Must be a time zone name from the time zone database (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). If left unspecified, the default is UTC.
-        
+    - name: releaseConfig
+      value: "{{ releaseConfig }}"
+      description: |
+        Required. The name of the release config whose release_compilation_result should be executed. Must be in the format \`projects/*/locations/*/repositories/*/releaseConfigs/*\`.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The workflow config's name.
     - name: workflowConfigId
-      value: string
-```
+      value: "{{ workflowConfigId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -456,12 +462,12 @@ Updates a single WorkflowConfig. **Note:** *This method does not fully implement
 ```sql
 UPDATE google.dataform.workflow_configs
 SET 
-data__disabled = {{ disabled }},
-data__name = '{{ name }}',
-data__releaseConfig = '{{ releaseConfig }}',
-data__cronSchedule = '{{ cronSchedule }}',
 data__invocationConfig = '{{ invocationConfig }}',
-data__timeZone = '{{ timeZone }}'
+data__cronSchedule = '{{ cronSchedule }}',
+data__disabled = {{ disabled }},
+data__timeZone = '{{ timeZone }}',
+data__releaseConfig = '{{ releaseConfig }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

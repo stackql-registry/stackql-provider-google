@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>files</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>files</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="files" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.vision.files" /></td></tr>
 </tbody></table>
@@ -64,18 +65,18 @@ The following methods are available for this resource:
     <td>Run asynchronous image detection and annotation for a list of generic files, such as PDF files, which may contain multiple pages and multiple images per page. Progress and results can be retrieved through the `google.longrunning.Operations` interface. `Operation.metadata` contains `OperationMetadata` (metadata). `Operation.response` contains `AsyncBatchAnnotateFilesResponse` (results).</td>
 </tr>
 <tr>
-    <td><a href="#projects_files_async_batch_annotate"><CopyableCode code="projects_files_async_batch_annotate" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td></td>
-    <td>Run asynchronous image detection and annotation for a list of generic files, such as PDF files, which may contain multiple pages and multiple images per page. Progress and results can be retrieved through the `google.longrunning.Operations` interface. `Operation.metadata` contains `OperationMetadata` (metadata). `Operation.response` contains `AsyncBatchAnnotateFilesResponse` (results).</td>
-</tr>
-<tr>
     <td><a href="#projects_files_annotate"><CopyableCode code="projects_files_annotate" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
     <td>Service that performs image detection and annotation for a batch of files. Now only "application/pdf", "image/tiff" and "image/gif" are supported. This service will extract at most 5 (customers can specify which 5 in AnnotateFileRequest.pages) frames (gif) or pages (pdf or tiff) from each file provided and perform detection and annotation for each image extracted.</td>
+</tr>
+<tr>
+    <td><a href="#projects_files_async_batch_annotate"><CopyableCode code="projects_files_async_batch_annotate" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
+    <td></td>
+    <td>Run asynchronous image detection and annotation for a list of generic files, such as PDF files, which may contain multiple pages and multiple images per page. Progress and results can be retrieved through the `google.longrunning.Operations` interface. `Operation.metadata` contains `OperationMetadata` (metadata). `Operation.response` contains `AsyncBatchAnnotateFilesResponse` (results).</td>
 </tr>
 <tr>
     <td><a href="#files_annotate"><CopyableCode code="files_annotate" /></a></td>
@@ -127,8 +128,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     values={[
         { label: 'projects_locations_files_annotate', value: 'projects_locations_files_annotate' },
         { label: 'projects_locations_files_async_batch_annotate', value: 'projects_locations_files_async_batch_annotate' },
-        { label: 'projects_files_async_batch_annotate', value: 'projects_files_async_batch_annotate' },
         { label: 'projects_files_annotate', value: 'projects_files_annotate' },
+        { label: 'projects_files_async_batch_annotate', value: 'projects_files_async_batch_annotate' },
         { label: 'files_annotate', value: 'files_annotate' },
         { label: 'files_async_batch_annotate', value: 'files_async_batch_annotate' }
     ]}
@@ -143,8 +144,8 @@ EXEC google.vision.files.projects_locations_files_annotate
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
-"labels": "{{ labels }}", 
 "requests": "{{ requests }}", 
+"labels": "{{ labels }}", 
 "parent": "{{ parent }}"
 }'
 ;
@@ -161,8 +162,24 @@ EXEC google.vision.files.projects_locations_files_async_batch_annotate
 @@json=
 '{
 "parent": "{{ parent }}", 
+"requests": "{{ requests }}", 
+"labels": "{{ labels }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_files_annotate">
+
+Service that performs image detection and annotation for a batch of files. Now only "application/pdf", "image/tiff" and "image/gif" are supported. This service will extract at most 5 (customers can specify which 5 in AnnotateFileRequest.pages) frames (gif) or pages (pdf or tiff) from each file provided and perform detection and annotation for each image extracted.
+
+```sql
+EXEC google.vision.files.projects_files_annotate 
+@projectsId='{{ projectsId }}' --required 
+@@json=
+'{
+"requests": "{{ requests }}", 
 "labels": "{{ labels }}", 
-"requests": "{{ requests }}"
+"parent": "{{ parent }}"
 }'
 ;
 ```
@@ -177,24 +194,8 @@ EXEC google.vision.files.projects_files_async_batch_annotate
 @@json=
 '{
 "parent": "{{ parent }}", 
-"labels": "{{ labels }}", 
-"requests": "{{ requests }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="projects_files_annotate">
-
-Service that performs image detection and annotation for a batch of files. Now only "application/pdf", "image/tiff" and "image/gif" are supported. This service will extract at most 5 (customers can specify which 5 in AnnotateFileRequest.pages) frames (gif) or pages (pdf or tiff) from each file provided and perform detection and annotation for each image extracted.
-
-```sql
-EXEC google.vision.files.projects_files_annotate 
-@projectsId='{{ projectsId }}' --required 
-@@json=
-'{
-"labels": "{{ labels }}", 
 "requests": "{{ requests }}", 
-"parent": "{{ parent }}"
+"labels": "{{ labels }}"
 }'
 ;
 ```
@@ -207,8 +208,8 @@ Service that performs image detection and annotation for a batch of files. Now o
 EXEC google.vision.files.files_annotate 
 @@json=
 '{
-"labels": "{{ labels }}", 
 "requests": "{{ requests }}", 
+"labels": "{{ labels }}", 
 "parent": "{{ parent }}"
 }'
 ;
@@ -223,8 +224,8 @@ EXEC google.vision.files.files_async_batch_annotate
 @@json=
 '{
 "parent": "{{ parent }}", 
-"labels": "{{ labels }}", 
-"requests": "{{ requests }}"
+"requests": "{{ requests }}", 
+"labels": "{{ labels }}"
 }'
 ;
 ```

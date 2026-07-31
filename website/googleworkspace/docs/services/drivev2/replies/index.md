@@ -15,6 +15,7 @@ image: /img/stackql-googleworkspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>replies</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>replies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="replies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleworkspace.drivev2.replies" /></td></tr>
 </tbody></table>
@@ -68,11 +69,6 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="deleted" /></td>
     <td><code>boolean</code></td>
     <td>Whether this reply has been deleted. If a reply has been deleted the content will be cleared and this will only represent a reply that once existed.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="genoaAuthor" /></td>
-    <td><code>object</code></td>
-    <td>The user who wrote this reply as a GenoaUser. (id: GenoaUser)</td>
 </tr>
 <tr>
     <td><CopyableCode code="htmlContent" /></td>
@@ -134,11 +130,6 @@ The following fields are returned by `SELECT` queries:
     <td>Whether this reply has been deleted. If a reply has been deleted the content will be cleared and this will only represent a reply that once existed.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="genoaAuthor" /></td>
-    <td><code>object</code></td>
-    <td>The user who wrote this reply as a GenoaUser. (id: GenoaUser)</td>
-</tr>
-<tr>
     <td><CopyableCode code="htmlContent" /></td>
     <td><code>string</code></td>
     <td>HTML formatted content for this reply.</td>
@@ -194,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-fileId"><code>fileId</code></a>, <a href="#parameter-commentId"><code>commentId</code></a></td>
-    <td><a href="#parameter-includeDeleted"><code>includeDeleted</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-includeDeleted"><code>includeDeleted</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a></td>
     <td>Lists all of the replies to a comment.</td>
 </tr>
 <tr>
@@ -293,7 +284,6 @@ author,
 content,
 createdDate,
 deleted,
-genoaAuthor,
 htmlContent,
 kind,
 modifiedDate,
@@ -317,7 +307,6 @@ author,
 content,
 createdDate,
 deleted,
-genoaAuthor,
 htmlContent,
 kind,
 modifiedDate,
@@ -326,9 +315,9 @@ verb
 FROM googleworkspace.drivev2.replies
 WHERE fileId = '{{ fileId }}' -- required
 AND commentId = '{{ commentId }}' -- required
+AND pageToken = '{{ pageToken }}'
 AND includeDeleted = '{{ includeDeleted }}'
 AND maxResults = '{{ maxResults }}'
-AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -350,30 +339,28 @@ Creates a new reply to the given comment.
 
 ```sql
 INSERT INTO googleworkspace.drivev2.replies (
-data__replyId,
-data__kind,
 data__createdDate,
-data__modifiedDate,
-data__verb,
 data__author,
+data__replyId,
 data__deleted,
+data__kind,
 data__htmlContent,
 data__content,
-data__genoaAuthor,
+data__modifiedDate,
+data__verb,
 fileId,
 commentId
 )
 SELECT 
-'{{ replyId }}',
-'{{ kind }}',
 '{{ createdDate }}',
-'{{ modifiedDate }}',
-'{{ verb }}',
 '{{ author }}',
+'{{ replyId }}',
 {{ deleted }},
+'{{ kind }}',
 '{{ htmlContent }}',
 '{{ content }}',
-'{{ genoaAuthor }}',
+'{{ modifiedDate }}',
+'{{ verb }}',
 '{{ fileId }}',
 '{{ commentId }}'
 RETURNING
@@ -381,7 +368,6 @@ author,
 content,
 createdDate,
 deleted,
-genoaAuthor,
 htmlContent,
 kind,
 modifiedDate,
@@ -392,68 +378,61 @@ verb
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: replies
   props:
     - name: fileId
-      value: string
+      value: "{{ fileId }}"
       description: Required parameter for the replies resource.
     - name: commentId
-      value: string
+      value: "{{ commentId }}"
       description: Required parameter for the replies resource.
-    - name: replyId
-      value: string
-      description: >
-        The ID of the reply.
-        
-    - name: kind
-      value: string
-      description: >
-        This is always drive#commentReply.
-        
-      default: drive#commentReply
     - name: createdDate
-      value: string
-      description: >
+      value: "{{ createdDate }}"
+      description: |
         The date when this reply was first created.
-        
-    - name: modifiedDate
-      value: string
-      description: >
-        The date when this reply was last modified.
-        
-    - name: verb
-      value: string
-      description: >
-        The action this reply performed to the parent comment. When creating a new reply this is the action to be perform tSo the parent comment. Possible values are: * `resolve` - To resolve a comment. * `reopen` - To reopen (un-resolve) a comment.
-        
     - name: author
-      value: object
-      description: >
+      description: |
         Information about a Drive user.
-        
+      value:
+        permissionId: "{{ permissionId }}"
+        picture:
+          url: "{{ url }}"
+        kind: "{{ kind }}"
+        emailAddress: "{{ emailAddress }}"
+        displayName: "{{ displayName }}"
+        isAuthenticatedUser: {{ isAuthenticatedUser }}
+    - name: replyId
+      value: "{{ replyId }}"
+      description: |
+        The ID of the reply.
     - name: deleted
-      value: boolean
-      description: >
+      value: {{ deleted }}
+      description: |
         Whether this reply has been deleted. If a reply has been deleted the content will be cleared and this will only represent a reply that once existed.
-        
+    - name: kind
+      value: "{{ kind }}"
+      description: |
+        This is always drive#commentReply.
+      default: drive#commentReply
     - name: htmlContent
-      value: string
-      description: >
+      value: "{{ htmlContent }}"
+      description: |
         HTML formatted content for this reply.
-        
     - name: content
-      value: string
-      description: >
+      value: "{{ content }}"
+      description: |
         The plain text content used to create this reply. This is not HTML safe and should only be used as a starting point to make edits to a reply's content. This field is required on inserts if no verb is specified (resolve/reopen).
-        
-    - name: genoaAuthor
-      value: object
-      description: >
-        The user who wrote this reply as a GenoaUser.
-        
-```
+    - name: modifiedDate
+      value: "{{ modifiedDate }}"
+      description: |
+        The date when this reply was last modified.
+    - name: verb
+      value: "{{ verb }}"
+      description: |
+        The action this reply performed to the parent comment. When creating a new reply this is the action to be perform tSo the parent comment. Possible values are: * \`resolve\` - To resolve a comment. * \`reopen\` - To reopen (un-resolve) a comment.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -473,16 +452,15 @@ Updates an existing reply.
 ```sql
 UPDATE googleworkspace.drivev2.replies
 SET 
-data__replyId = '{{ replyId }}',
-data__kind = '{{ kind }}',
 data__createdDate = '{{ createdDate }}',
-data__modifiedDate = '{{ modifiedDate }}',
-data__verb = '{{ verb }}',
 data__author = '{{ author }}',
+data__replyId = '{{ replyId }}',
 data__deleted = {{ deleted }},
+data__kind = '{{ kind }}',
 data__htmlContent = '{{ htmlContent }}',
 data__content = '{{ content }}',
-data__genoaAuthor = '{{ genoaAuthor }}'
+data__modifiedDate = '{{ modifiedDate }}',
+data__verb = '{{ verb }}'
 WHERE 
 fileId = '{{ fileId }}' --required
 AND commentId = '{{ commentId }}' --required
@@ -492,7 +470,6 @@ author,
 content,
 createdDate,
 deleted,
-genoaAuthor,
 htmlContent,
 kind,
 modifiedDate,
@@ -518,16 +495,15 @@ Updates an existing reply.
 ```sql
 REPLACE googleworkspace.drivev2.replies
 SET 
-data__replyId = '{{ replyId }}',
-data__kind = '{{ kind }}',
 data__createdDate = '{{ createdDate }}',
-data__modifiedDate = '{{ modifiedDate }}',
-data__verb = '{{ verb }}',
 data__author = '{{ author }}',
+data__replyId = '{{ replyId }}',
 data__deleted = {{ deleted }},
+data__kind = '{{ kind }}',
 data__htmlContent = '{{ htmlContent }}',
 data__content = '{{ content }}',
-data__genoaAuthor = '{{ genoaAuthor }}'
+data__modifiedDate = '{{ modifiedDate }}',
+data__verb = '{{ verb }}'
 WHERE 
 fileId = '{{ fileId }}' --required
 AND commentId = '{{ commentId }}' --required
@@ -537,7 +513,6 @@ author,
 content,
 createdDate,
 deleted,
-genoaAuthor,
 htmlContent,
 kind,
 modifiedDate,

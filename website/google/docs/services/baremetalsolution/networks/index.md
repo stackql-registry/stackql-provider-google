@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>networks</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>networks</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="networks" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.baremetalsolution.networks" /></td></tr>
 </tbody></table>
@@ -112,12 +113,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>The Network state.</td>
+    <td>The Network state. (STATE_UNSPECIFIED, PROVISIONING, PROVISIONED, DEPROVISIONING, UPDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>The type of this network.</td>
+    <td>The type of this network. (TYPE_UNSPECIFIED, CLIENT, PRIVATE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="vlanId" /></td>
@@ -211,12 +212,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>The Network state.</td>
+    <td>The Network state. (STATE_UNSPECIFIED, PROVISIONING, PROVISIONED, DEPROVISIONING, UPDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>The type of this network.</td>
+    <td>The type of this network. (TYPE_UNSPECIFIED, CLIENT, PRIVATE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="vlanId" /></td>
@@ -425,20 +426,20 @@ Update details of a single network.
 UPDATE google.baremetalsolution.networks
 SET 
 data__mountPoints = '{{ mountPoints }}',
-data__pod = '{{ pod }}',
-data__vrfAttachment = '{{ vrfAttachment }}',
-data__macAddress = '{{ macAddress }}',
-data__labels = '{{ labels }}',
-data__jumboFramesEnabled = {{ jumboFramesEnabled }},
-data__type = '{{ type }}',
-data__servicesCidr = '{{ servicesCidr }}',
-data__state = '{{ state }}',
 data__id = '{{ id }}',
+data__state = '{{ state }}',
+data__vlanId = '{{ vlanId }}',
+data__vrfAttachment = '{{ vrfAttachment }}',
+data__jumboFramesEnabled = {{ jumboFramesEnabled }},
+data__pod = '{{ pod }}',
 data__cidr = '{{ cidr }}',
 data__ipAddress = '{{ ipAddress }}',
-data__vrf = '{{ vrf }}',
 data__reservations = '{{ reservations }}',
-data__vlanId = '{{ vlanId }}'
+data__type = '{{ type }}',
+data__vrf = '{{ vrf }}',
+data__servicesCidr = '{{ servicesCidr }}',
+data__macAddress = '{{ macAddress }}',
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

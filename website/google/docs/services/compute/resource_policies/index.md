@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>resource_policies</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>resource_policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="resource_policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.resource_policies" /></td></tr>
 </tbody></table>
@@ -53,17 +54,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="id" /></td>
     <td><code>string (uint64)</code></td>
-    <td>[Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
+    <td>Output only. [Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
 </tr>
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>[a-z](?:[-a-z0-9]&#123;0,61&#125;[a-z0-9])?</code>)</td>
+    <td>The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply withRFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>&#91;a-z&#93;(?:&#91;-a-z0-9&#93;&#123;0,61&#125;&#91;a-z0-9&#93;)?</code>)</td>
 </tr>
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Creation timestamp in RFC3339 text format.</td>
+    <td>Output only. [Output Only] Creation timestamp inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -88,7 +89,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of the resource. Always compute#resource_policies for resource policies. (default: compute#resourcePolicy)</td>
+    <td>Output only. [Output Only] Type of the resource. Alwayscompute#resource_policies for resource policies. (default: compute#resourcePolicy)</td>
 </tr>
 <tr>
     <td><CopyableCode code="region" /></td>
@@ -98,12 +99,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="resourceStatus" /></td>
     <td><code>object</code></td>
-    <td>[Output Only] The system status of the resource policy. (id: ResourcePolicyResourceStatus)</td>
+    <td>Output only. [Output Only] The system status of the resource policy. (id: ResourcePolicyResourceStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined fully-qualified URL for this resource.</td>
+    <td>Output only. [Output Only] Server-defined fully-qualified URL for this resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="snapshotSchedulePolicy" /></td>
@@ -113,7 +114,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The status of resource policy creation.</td>
+    <td>Output only. [Output Only] The status of resource policy creation. (CREATING, DELETING, EXPIRED, INVALID, READY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="workloadPolicy" /></td>
@@ -152,17 +153,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of resource.Always compute#resourcePoliciesList for listsof resourcePolicies (default: compute#resourcePolicyList)</td>
+    <td>Output only. [Output Only] Type of resource.Alwayscompute#resourcePoliciesList for listsof resourcePolicies (default: compute#resourcePolicyList)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextPageToken" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
+    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger thanmaxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for this resource.</td>
+    <td>Output only. [Output Only] Server-defined URL for this resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="warning" /></td>
@@ -186,17 +187,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="id" /></td>
     <td><code>string (uint64)</code></td>
-    <td>[Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
+    <td>Output only. [Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
 </tr>
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>[a-z](?:[-a-z0-9]&#123;0,61&#125;[a-z0-9])?</code>)</td>
+    <td>The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply withRFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>&#91;a-z&#93;(?:&#91;-a-z0-9&#93;&#123;0,61&#125;&#91;a-z0-9&#93;)?</code>)</td>
 </tr>
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Creation timestamp in RFC3339 text format.</td>
+    <td>Output only. [Output Only] Creation timestamp inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -221,7 +222,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of the resource. Always compute#resource_policies for resource policies. (default: compute#resourcePolicy)</td>
+    <td>Output only. [Output Only] Type of the resource. Alwayscompute#resource_policies for resource policies. (default: compute#resourcePolicy)</td>
 </tr>
 <tr>
     <td><CopyableCode code="region" /></td>
@@ -231,12 +232,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="resourceStatus" /></td>
     <td><code>object</code></td>
-    <td>[Output Only] The system status of the resource policy. (id: ResourcePolicyResourceStatus)</td>
+    <td>Output only. [Output Only] The system status of the resource policy. (id: ResourcePolicyResourceStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined fully-qualified URL for this resource.</td>
+    <td>Output only. [Output Only] Server-defined fully-qualified URL for this resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="snapshotSchedulePolicy" /></td>
@@ -246,7 +247,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The status of resource policy creation.</td>
+    <td>Output only. [Output Only] The status of resource policy creation. (CREATING, DELETING, EXPIRED, INVALID, READY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="workloadPolicy" /></td>
@@ -284,15 +285,15 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
-    <td>A list all the resource policies that have been configured for the specified project in specified region.</td>
+    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td>A list all the resource policies that have been configured for the<br />specified project in specified region.</td>
 </tr>
 <tr>
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
-    <td>Retrieves an aggregated list of resource policies. To prevent failure, Google recommends that you set the `returnPartialSuccess` parameter to `true`.</td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Retrieves an aggregated list of resource policies.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
@@ -433,7 +434,7 @@ AND resourcePolicy = '{{ resourcePolicy }}' -- required
 </TabItem>
 <TabItem value="list">
 
-A list all the resource policies that have been configured for the specified project in specified region.
+A list all the resource policies that have been configured for the<br />specified project in specified region.
 
 ```sql
 SELECT
@@ -447,17 +448,17 @@ warning
 FROM google.compute.resource_policies
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
-AND filter = '{{ filter }}'
-AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND maxResults = '{{ maxResults }}'
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
 <TabItem value="aggregated_list">
 
-Retrieves an aggregated list of resource policies. To prevent failure, Google recommends that you set the `returnPartialSuccess` parameter to `true`.
+Retrieves an aggregated list of resource policies.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.
 
 ```sql
 SELECT
@@ -478,12 +479,12 @@ workloadPolicy
 FROM google.compute.resource_policies
 WHERE project = '{{ project }}' -- required
 AND filter = '{{ filter }}'
-AND includeAllScopes = '{{ includeAllScopes }}'
-AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND serviceProjectNumber = '{{ serviceProjectNumber }}'
+AND maxResults = '{{ maxResults }}'
+AND pageToken = '{{ pageToken }}'
+AND includeAllScopes = '{{ includeAllScopes }}'
+AND orderBy = '{{ orderBy }}'
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>
@@ -505,39 +506,25 @@ Creates a new resource policy.
 
 ```sql
 INSERT INTO google.compute.resource_policies (
-data__snapshotSchedulePolicy,
-data__groupPlacementPolicy,
 data__instanceSchedulePolicy,
 data__diskConsistencyGroupPolicy,
-data__workloadPolicy,
-data__kind,
-data__id,
-data__creationTimestamp,
-data__selfLink,
-data__region,
+data__snapshotSchedulePolicy,
 data__description,
+data__groupPlacementPolicy,
+data__workloadPolicy,
 data__name,
-data__status,
-data__resourceStatus,
 project,
 region,
 requestId
 )
 SELECT 
-'{{ snapshotSchedulePolicy }}',
-'{{ groupPlacementPolicy }}',
 '{{ instanceSchedulePolicy }}',
 '{{ diskConsistencyGroupPolicy }}',
-'{{ workloadPolicy }}',
-'{{ kind }}',
-'{{ id }}',
-'{{ creationTimestamp }}',
-'{{ selfLink }}',
-'{{ region }}',
+'{{ snapshotSchedulePolicy }}',
 '{{ description }}',
+'{{ groupPlacementPolicy }}',
+'{{ workloadPolicy }}',
 '{{ name }}',
-'{{ status }}',
-'{{ resourceStatus }}',
 '{{ project }}',
 '{{ region }}',
 '{{ requestId }}'
@@ -549,6 +536,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -573,85 +561,91 @@ zone
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: resource_policies
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the resource_policies resource.
     - name: region
-      value: string
+      value: "{{ region }}"
       description: Required parameter for the resource_policies resource.
-    - name: snapshotSchedulePolicy
-      value: object
-      description: >
-        Resource policy for persistent disks for creating snapshots.
-        
-    - name: groupPlacementPolicy
-      value: object
-      description: >
-        Resource policy for instances for placement configuration.
-        
     - name: instanceSchedulePolicy
-      value: object
-      description: >
+      description: |
         Resource policy for scheduling instance operations.
-        
+      value:
+        timeZone: "{{ timeZone }}"
+        vmStartSchedule:
+          schedule: "{{ schedule }}"
+        startTime: "{{ startTime }}"
+        vmStopSchedule:
+          schedule: "{{ schedule }}"
+        expirationTime: "{{ expirationTime }}"
     - name: diskConsistencyGroupPolicy
-      value: object
-      description: >
+      value: "{{ diskConsistencyGroupPolicy }}"
+      description: |
         Resource policy for disk consistency groups.
-        
-    - name: workloadPolicy
-      value: object
-      description: >
-        Resource policy for defining instance placement for MIGs.
-        
-    - name: kind
-      value: string
-      description: >
-        [Output Only] Type of the resource. Always compute#resource_policies for resource policies.
-        
-      default: compute#resourcePolicy
-    - name: id
-      value: string
-      description: >
-        [Output Only] The unique identifier for the resource. This identifier is defined by the server.
-        
-    - name: creationTimestamp
-      value: string
-      description: >
-        [Output Only] Creation timestamp in RFC3339 text format.
-        
-    - name: selfLink
-      value: string
-      description: >
-        [Output Only] Server-defined fully-qualified URL for this resource.
-        
-    - name: region
-      value: string
+    - name: snapshotSchedulePolicy
+      description: |
+        Resource policy for persistent disks for creating snapshots.
+      value:
+        snapshotProperties:
+          chainName: "{{ chainName }}"
+          labels: "{{ labels }}"
+          storageLocations:
+            - "{{ storageLocations }}"
+          guestFlush: {{ guestFlush }}
+        schedule:
+          weeklySchedule:
+            dayOfWeeks:
+              - duration: "{{ duration }}"
+                day: "{{ day }}"
+                startTime: "{{ startTime }}"
+          hourlySchedule:
+            duration: "{{ duration }}"
+            hoursInCycle: {{ hoursInCycle }}
+            startTime: "{{ startTime }}"
+          dailySchedule:
+            startTime: "{{ startTime }}"
+            daysInCycle: {{ daysInCycle }}
+            duration: "{{ duration }}"
+        retentionPolicy:
+          maxRetentionDays: {{ maxRetentionDays }}
+          onSourceDiskDelete: "{{ onSourceDiskDelete }}"
     - name: description
-      value: string
+      value: "{{ description }}"
+    - name: groupPlacementPolicy
+      description: |
+        Resource policy for instances for placement configuration.
+      value:
+        acceleratorTopologyMode: "{{ acceleratorTopologyMode }}"
+        gpuTopology: "{{ gpuTopology }}"
+        availabilityDomainCount: {{ availabilityDomainCount }}
+        vmCount: {{ vmCount }}
+        collocation: "{{ collocation }}"
+    - name: workloadPolicy
+      description: |
+        Resource policy for defining instance placement for MIGs.
+      value:
+        acceleratorTopologyMode: "{{ acceleratorTopologyMode }}"
+        type: "{{ type }}"
+        maxTopologyDistance: "{{ maxTopologyDistance }}"
+        acceleratorTopology: "{{ acceleratorTopology }}"
     - name: name
-      value: string
-      description: >
-        The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
-        
-    - name: status
-      value: string
-      description: >
-        [Output Only] The status of resource policy creation.
-        
-      valid_values: ['CREATING', 'DELETING', 'EXPIRED', 'INVALID', 'READY']
-    - name: resourceStatus
-      value: object
-      description: >
-        [Output Only] The system status of the resource policy.
-        
+      value: "{{ name }}"
+      description: |
+        The name of the resource, provided by the client when initially creating
+        the resource. The resource name must be 1-63 characters long, and comply
+        withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must be
+        a dash, lowercase letter, or digit, except the last character, which cannot
+        be a dash.
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -671,20 +665,13 @@ Modify the specified resource policy.
 ```sql
 UPDATE google.compute.resource_policies
 SET 
-data__snapshotSchedulePolicy = '{{ snapshotSchedulePolicy }}',
-data__groupPlacementPolicy = '{{ groupPlacementPolicy }}',
 data__instanceSchedulePolicy = '{{ instanceSchedulePolicy }}',
 data__diskConsistencyGroupPolicy = '{{ diskConsistencyGroupPolicy }}',
-data__workloadPolicy = '{{ workloadPolicy }}',
-data__kind = '{{ kind }}',
-data__id = '{{ id }}',
-data__creationTimestamp = '{{ creationTimestamp }}',
-data__selfLink = '{{ selfLink }}',
-data__region = '{{ region }}',
+data__snapshotSchedulePolicy = '{{ snapshotSchedulePolicy }}',
 data__description = '{{ description }}',
-data__name = '{{ name }}',
-data__status = '{{ status }}',
-data__resourceStatus = '{{ resourceStatus }}'
+data__groupPlacementPolicy = '{{ groupPlacementPolicy }}',
+data__workloadPolicy = '{{ workloadPolicy }}',
+data__name = '{{ name }}'
 WHERE 
 project = '{{ project }}' --required
 AND region = '{{ region }}' --required
@@ -699,6 +686,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>deployments</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>deployments</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="deployments" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.deploymentmanager.deployments" /></td></tr>
 </tbody></table>
@@ -87,7 +88,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="operation" /></td>
     <td><code>object</code></td>
-    <td>Represents an Operation resource. Google Compute Engine has three Operation resources: * [Global](/compute/docs/reference/rest/&#123;$api_version&#125;/globalOperations) * [Regional](/compute/docs/reference/rest/&#123;$api_version&#125;/regionOperations) * [Zonal](/compute/docs/reference/rest/&#123;$api_version&#125;/zoneOperations) You can use an operation resource to manage asynchronous API requests. For more information, read Handling API responses. Operations can be global, regional or zonal. - For global operations, use the `globalOperations` resource. - For regional operations, use the `regionOperations` resource. - For zonal operations, use the `zoneOperations` resource. For more information, read Global, Regional, and Zonal Resources. Note that completed Operation resources have a limited retention period. (id: Operation)</td>
+    <td>Output only. The Operation that most recently ran, or is currently running, on this deployment. (id: Operation)</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
@@ -161,7 +162,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="operation" /></td>
     <td><code>object</code></td>
-    <td>Represents an Operation resource. Google Compute Engine has three Operation resources: * [Global](/compute/docs/reference/rest/&#123;$api_version&#125;/globalOperations) * [Regional](/compute/docs/reference/rest/&#123;$api_version&#125;/regionOperations) * [Zonal](/compute/docs/reference/rest/&#123;$api_version&#125;/zoneOperations) You can use an operation resource to manage asynchronous API requests. For more information, read Handling API responses. Operations can be global, regional or zonal. - For global operations, use the `globalOperations` resource. - For regional operations, use the `regionOperations` resource. - For zonal operations, use the `zoneOperations` resource. For more information, read Global, Regional, and Zonal Resources. Note that completed Operation resources have a limited retention period. (id: Operation)</td>
+    <td>Output only. The Operation that most recently ran, or is currently running, on this deployment. (id: Operation)</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
@@ -214,35 +215,35 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a></td>
+    <td><a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists all deployments for a given project.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-createPolicy"><code>createPolicy</code></a>, <a href="#parameter-header.bypassBillingFilter"><code>header.bypassBillingFilter</code></a>, <a href="#parameter-preview"><code>preview</code></a></td>
+    <td><a href="#parameter-preview"><code>preview</code></a>, <a href="#parameter-createPolicy"><code>createPolicy</code></a>, <a href="#parameter-header.bypassBillingFilter"><code>header.bypassBillingFilter</code></a></td>
     <td>Creates a deployment and all of the resources described by the deployment manifest.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-deployment"><code>deployment</code></a></td>
-    <td><a href="#parameter-createPolicy"><code>createPolicy</code></a>, <a href="#parameter-preview"><code>preview</code></a>, <a href="#parameter-header.bypassBillingFilter"><code>header.bypassBillingFilter</code></a>, <a href="#parameter-deletePolicy"><code>deletePolicy</code></a></td>
+    <td><a href="#parameter-createPolicy"><code>createPolicy</code></a>, <a href="#parameter-deletePolicy"><code>deletePolicy</code></a>, <a href="#parameter-preview"><code>preview</code></a>, <a href="#parameter-header.bypassBillingFilter"><code>header.bypassBillingFilter</code></a></td>
     <td>Patches a deployment and all of the resources described by the deployment manifest.</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="replace" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-deployment"><code>deployment</code></a></td>
-    <td><a href="#parameter-deletePolicy"><code>deletePolicy</code></a>, <a href="#parameter-preview"><code>preview</code></a>, <a href="#parameter-header.bypassBillingFilter"><code>header.bypassBillingFilter</code></a>, <a href="#parameter-createPolicy"><code>createPolicy</code></a></td>
+    <td><a href="#parameter-createPolicy"><code>createPolicy</code></a>, <a href="#parameter-deletePolicy"><code>deletePolicy</code></a>, <a href="#parameter-preview"><code>preview</code></a>, <a href="#parameter-header.bypassBillingFilter"><code>header.bypassBillingFilter</code></a></td>
     <td>Updates a deployment and all of the resources described by the deployment manifest.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-deployment"><code>deployment</code></a></td>
-    <td><a href="#parameter-header.bypassBillingFilter"><code>header.bypassBillingFilter</code></a>, <a href="#parameter-deletePolicy"><code>deletePolicy</code></a></td>
+    <td><a href="#parameter-deletePolicy"><code>deletePolicy</code></a>, <a href="#parameter-header.bypassBillingFilter"><code>header.bypassBillingFilter</code></a></td>
     <td>Deletes a deployment and all of the resources in the deployment.</td>
 </tr>
 <tr>
@@ -382,10 +383,10 @@ update,
 updateTime
 FROM google.deploymentmanager.deployments
 WHERE project = '{{ project }}' -- required
+AND maxResults = '{{ maxResults }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
-AND maxResults = '{{ maxResults }}'
 ;
 ```
 </TabItem>
@@ -407,40 +408,40 @@ Creates a deployment and all of the resources described by the deployment manife
 
 ```sql
 INSERT INTO google.deploymentmanager.deployments (
-data__updateTime,
-data__insertTime,
-data__manifest,
-data__description,
-data__fingerprint,
-data__name,
-data__target,
-data__selfLink,
-data__labels,
-data__operation,
-data__update,
 data__id,
+data__name,
+data__description,
+data__operation,
+data__fingerprint,
+data__manifest,
+data__update,
+data__insertTime,
+data__updateTime,
+data__target,
+data__labels,
+data__selfLink,
 project,
+preview,
 createPolicy,
-header.bypassBillingFilter,
-preview
+header.bypassBillingFilter
 )
 SELECT 
-'{{ updateTime }}',
-'{{ insertTime }}',
-'{{ manifest }}',
-'{{ description }}',
-'{{ fingerprint }}',
-'{{ name }}',
-'{{ target }}',
-'{{ selfLink }}',
-'{{ labels }}',
-'{{ operation }}',
-'{{ update }}',
 '{{ id }}',
+'{{ name }}',
+'{{ description }}',
+'{{ operation }}',
+'{{ fingerprint }}',
+'{{ manifest }}',
+'{{ update }}',
+'{{ insertTime }}',
+'{{ updateTime }}',
+'{{ target }}',
+'{{ labels }}',
+'{{ selfLink }}',
 '{{ project }}',
+'{{ preview }}',
 '{{ createPolicy }}',
-'{{ header.bypassBillingFilter }}',
-'{{ preview }}'
+'{{ header.bypassBillingFilter }}'
 RETURNING
 id,
 name,
@@ -450,6 +451,7 @@ description,
 endTime,
 error,
 firewallPolicyRuleOperationMetadata,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -476,77 +478,132 @@ zone
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: deployments
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the deployments resource.
-    - name: updateTime
-      value: string
-      description: >
-        Output only. Update timestamp in RFC3339 text format.
-        
-    - name: insertTime
-      value: string
-      description: >
-        Output only. Creation timestamp in RFC3339 text format.
-        
-    - name: manifest
-      value: string
-      description: >
-        Output only. URL of the manifest representing the last manifest that was successfully deployed. If no manifest has been successfully deployed, this field will be absent.
-        
-    - name: description
-      value: string
-      description: >
-        An optional user-provided description of the deployment.
-        
-    - name: fingerprint
-      value: string
-      description: >
-        Provides a fingerprint to use in requests to modify a deployment, such as `update()`, `stop()`, and `cancelPreview()` requests. A fingerprint is a randomly generated value that must be provided with `update()`, `stop()`, and `cancelPreview()` requests to perform optimistic locking. This ensures optimistic concurrency so that only one request happens at a time. The fingerprint is initially generated by Deployment Manager and changes after every request to modify data. To get the latest fingerprint value, perform a `get()` request to a deployment.
-        
-    - name: name
-      value: string
-      description: >
-        Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
-        
-    - name: target
-      value: object
-      description: >
-        [Input Only] The parameters that define your deployment, including the deployment configuration and relevant templates.
-        
-    - name: selfLink
-      value: string
-      description: >
-        Output only. Server defined URL for the resource.
-        
-    - name: labels
-      value: array
-      description: >
-        Map of One Platform labels; provided by the client when the resource is created or updated. Specifically: Label keys must be between 1 and 63 characters long and must conform to the following regular expression: `[a-z]([-a-z0-9]*[a-z0-9])?` Label values must be between 0 and 63 characters long and must conform to the regular expression `([a-z]([-a-z0-9]*[a-z0-9])?)?`.
-        
-    - name: operation
-      value: object
-      description: >
-        Represents an Operation resource. Google Compute Engine has three Operation resources: * [Global](/compute/docs/reference/rest/{$api_version}/globalOperations) * [Regional](/compute/docs/reference/rest/{$api_version}/regionOperations) * [Zonal](/compute/docs/reference/rest/{$api_version}/zoneOperations) You can use an operation resource to manage asynchronous API requests. For more information, read Handling API responses. Operations can be global, regional or zonal. - For global operations, use the `globalOperations` resource. - For regional operations, use the `regionOperations` resource. - For zonal operations, use the `zoneOperations` resource. For more information, read Global, Regional, and Zonal Resources. Note that completed Operation resources have a limited retention period.
-        
-    - name: update
-      value: object
-      description: >
-        Output only. If Deployment Manager is currently updating or previewing an update to this deployment, the updated configuration appears here.
-        
     - name: id
-      value: string
-    - name: createPolicy
-      value: string
-    - name: header.bypassBillingFilter
-      value: boolean
+      value: "{{ id }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional user-provided description of the deployment.
+    - name: operation
+      description: |
+        Output only. The Operation that most recently ran, or is currently running, on this deployment.
+      value:
+        kind: "{{ kind }}"
+        id: "{{ id }}"
+        creationTimestamp: "{{ creationTimestamp }}"
+        name: "{{ name }}"
+        zone: "{{ zone }}"
+        clientOperationId: "{{ clientOperationId }}"
+        operationType: "{{ operationType }}"
+        targetLink: "{{ targetLink }}"
+        targetId: "{{ targetId }}"
+        status: "{{ status }}"
+        statusMessage: "{{ statusMessage }}"
+        user: "{{ user }}"
+        progress: {{ progress }}
+        insertTime: "{{ insertTime }}"
+        startTime: "{{ startTime }}"
+        endTime: "{{ endTime }}"
+        error:
+          errors:
+            - code: "{{ code }}"
+              location: "{{ location }}"
+              message: "{{ message }}"
+              arguments: "{{ arguments }}"
+              debugInfo:
+                stackEntries:
+                  - "{{ stackEntries }}"
+                detail: "{{ detail }}"
+              errorDetails: "{{ errorDetails }}"
+        warnings:
+          - code: "{{ code }}"
+            message: "{{ message }}"
+            data: "{{ data }}"
+        httpErrorStatusCode: {{ httpErrorStatusCode }}
+        httpErrorMessage: "{{ httpErrorMessage }}"
+        selfLink: "{{ selfLink }}"
+        selfLinkWithId: "{{ selfLinkWithId }}"
+        region: "{{ region }}"
+        description: "{{ description }}"
+        operationGroupId: "{{ operationGroupId }}"
+        setCommonInstanceMetadataOperationMetadata:
+          clientOperationId: "{{ clientOperationId }}"
+          perLocationOperations: "{{ perLocationOperations }}"
+        instancesBulkInsertOperationMetadata:
+          perLocationStatus: "{{ perLocationStatus }}"
+          machineType: "{{ machineType }}"
+        getVersionOperationMetadata:
+          inlineSbomInfo:
+            currentComponentVersions: "{{ currentComponentVersions }}"
+            targetComponentVersions: "{{ targetComponentVersions }}"
+        firewallPolicyRuleOperationMetadata:
+          allocatedPriority: {{ allocatedPriority }}
+        setAutoscalerLinkOperationMetadata:
+          zonalIgmIds:
+            - "{{ zonalIgmIds }}"
+          zoneToIgmIds: "{{ zoneToIgmIds }}"
+    - name: fingerprint
+      value: "{{ fingerprint }}"
+      description: |
+        Provides a fingerprint to use in requests to modify a deployment, such as \`update()\`, \`stop()\`, and \`cancelPreview()\` requests. A fingerprint is a randomly generated value that must be provided with \`update()\`, \`stop()\`, and \`cancelPreview()\` requests to perform optimistic locking. This ensures optimistic concurrency so that only one request happens at a time. The fingerprint is initially generated by Deployment Manager and changes after every request to modify data. To get the latest fingerprint value, perform a \`get()\` request to a deployment.
+    - name: manifest
+      value: "{{ manifest }}"
+      description: |
+        Output only. URL of the manifest representing the last manifest that was successfully deployed. If no manifest has been successfully deployed, this field will be absent.
+    - name: update
+      description: |
+        Output only. If Deployment Manager is currently updating or previewing an update to this deployment, the updated configuration appears here.
+      value:
+        manifest: "{{ manifest }}"
+        labels:
+          - key: "{{ key }}"
+            value: "{{ value }}"
+        description: "{{ description }}"
+    - name: insertTime
+      value: "{{ insertTime }}"
+      description: |
+        Output only. Creation timestamp in RFC3339 text format.
+    - name: updateTime
+      value: "{{ updateTime }}"
+      description: |
+        Output only. Update timestamp in RFC3339 text format.
+    - name: target
+      description: |
+        [Input Only] The parameters that define your deployment, including the deployment configuration and relevant templates.
+      value:
+        config:
+          content: "{{ content }}"
+        imports:
+          - name: "{{ name }}"
+            content: "{{ content }}"
+    - name: labels
+      description: |
+        Map of One Platform labels; provided by the client when the resource is created or updated. Specifically: Label keys must be between 1 and 63 characters long and must conform to the following regular expression: \`[a-z]([-a-z0-9]*[a-z0-9])?\` Label values must be between 0 and 63 characters long and must conform to the regular expression \`([a-z]([-a-z0-9]*[a-z0-9])?)?\`.
+      value:
+        - key: "{{ key }}"
+          value: "{{ value }}"
+    - name: selfLink
+      value: "{{ selfLink }}"
+      description: |
+        Output only. Server defined URL for the resource.
     - name: preview
-      value: boolean
-```
+      value: {{ preview }}
+    - name: createPolicy
+      value: "{{ createPolicy }}"
+    - name: header.bypassBillingFilter
+      value: {{ header.bypassBillingFilter }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -566,25 +623,25 @@ Patches a deployment and all of the resources described by the deployment manife
 ```sql
 UPDATE google.deploymentmanager.deployments
 SET 
-data__updateTime = '{{ updateTime }}',
-data__insertTime = '{{ insertTime }}',
-data__manifest = '{{ manifest }}',
-data__description = '{{ description }}',
-data__fingerprint = '{{ fingerprint }}',
+data__id = '{{ id }}',
 data__name = '{{ name }}',
-data__target = '{{ target }}',
-data__selfLink = '{{ selfLink }}',
-data__labels = '{{ labels }}',
+data__description = '{{ description }}',
 data__operation = '{{ operation }}',
+data__fingerprint = '{{ fingerprint }}',
+data__manifest = '{{ manifest }}',
 data__update = '{{ update }}',
-data__id = '{{ id }}'
+data__insertTime = '{{ insertTime }}',
+data__updateTime = '{{ updateTime }}',
+data__target = '{{ target }}',
+data__labels = '{{ labels }}',
+data__selfLink = '{{ selfLink }}'
 WHERE 
 project = '{{ project }}' --required
 AND deployment = '{{ deployment }}' --required
 AND createPolicy = '{{ createPolicy}}'
+AND deletePolicy = '{{ deletePolicy}}'
 AND preview = {{ preview}}
 AND header.bypassBillingFilter = {{ header.bypassBillingFilter}}
-AND deletePolicy = '{{ deletePolicy}}'
 RETURNING
 id,
 name,
@@ -594,6 +651,7 @@ description,
 endTime,
 error,
 firewallPolicyRuleOperationMetadata,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -635,25 +693,25 @@ Updates a deployment and all of the resources described by the deployment manife
 ```sql
 REPLACE google.deploymentmanager.deployments
 SET 
-data__updateTime = '{{ updateTime }}',
-data__insertTime = '{{ insertTime }}',
-data__manifest = '{{ manifest }}',
-data__description = '{{ description }}',
-data__fingerprint = '{{ fingerprint }}',
+data__id = '{{ id }}',
 data__name = '{{ name }}',
-data__target = '{{ target }}',
-data__selfLink = '{{ selfLink }}',
-data__labels = '{{ labels }}',
+data__description = '{{ description }}',
 data__operation = '{{ operation }}',
+data__fingerprint = '{{ fingerprint }}',
+data__manifest = '{{ manifest }}',
 data__update = '{{ update }}',
-data__id = '{{ id }}'
+data__insertTime = '{{ insertTime }}',
+data__updateTime = '{{ updateTime }}',
+data__target = '{{ target }}',
+data__labels = '{{ labels }}',
+data__selfLink = '{{ selfLink }}'
 WHERE 
 project = '{{ project }}' --required
 AND deployment = '{{ deployment }}' --required
+AND createPolicy = '{{ createPolicy}}'
 AND deletePolicy = '{{ deletePolicy}}'
 AND preview = {{ preview}}
 AND header.bypassBillingFilter = {{ header.bypassBillingFilter}}
-AND createPolicy = '{{ createPolicy}}'
 RETURNING
 id,
 name,
@@ -663,6 +721,7 @@ description,
 endTime,
 error,
 firewallPolicyRuleOperationMetadata,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -705,8 +764,8 @@ Deletes a deployment and all of the resources in the deployment.
 DELETE FROM google.deploymentmanager.deployments
 WHERE project = '{{ project }}' --required
 AND deployment = '{{ deployment }}' --required
-AND header.bypassBillingFilter = '{{ header.bypassBillingFilter }}'
 AND deletePolicy = '{{ deletePolicy }}'
+AND header.bypassBillingFilter = '{{ header.bypassBillingFilter }}'
 ;
 ```
 </TabItem>

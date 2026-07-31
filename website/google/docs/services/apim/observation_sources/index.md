@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>observation_sources</code> res
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>observation_sources</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="observation_sources" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apim.observation_sources" /></td></tr>
 </tbody></table>
@@ -67,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The observation source state</td>
+    <td>Output only. The observation source state (STATE_UNSPECIFIED, CREATING, CREATED, DELETING, ERROR)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -106,7 +107,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The observation source state</td>
+    <td>Output only. The observation source state (STATE_UNSPECIFIED, CREATING, CREATED, DELETING, ERROR)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -151,7 +152,7 @@ The following methods are available for this resource:
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-observationSourceId"><code>observationSourceId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-observationSourceId"><code>observationSourceId</code></a></td>
     <td>CreateObservationSource creates a new ObservationSource but does not affect any deployed infrastructure. It is a configuration that can be used in an Observation Job to collect data about APIs running in user's dataplane.</td>
 </tr>
 <tr>
@@ -283,16 +284,16 @@ data__gclbObservationSource,
 data__name,
 projectsId,
 locationsId,
-observationSourceId,
-requestId
+requestId,
+observationSourceId
 )
 SELECT 
 '{{ gclbObservationSource }}',
 '{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ observationSourceId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ observationSourceId }}'
 RETURNING
 name,
 done,
@@ -304,31 +305,32 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: observation_sources
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the observation_sources resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the observation_sources resource.
     - name: gclbObservationSource
-      value: object
-      description: >
+      description: |
         The GCLB observation source
-        
+      value:
+        pscNetworkConfigs:
+          - subnetwork: "{{ subnetwork }}"
+            network: "{{ network }}"
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Identifier. name of resource For MVP, each region can only have 1 source.
-        
-    - name: observationSourceId
-      value: string
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+    - name: observationSourceId
+      value: "{{ observationSourceId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

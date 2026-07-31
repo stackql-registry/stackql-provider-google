@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>history</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>history</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="history" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.airquality.history" /></td></tr>
 </tbody></table>
@@ -91,17 +92,17 @@ Returns air quality history for a specific location for a given time range.
 EXEC google.airquality.history.lookup 
 @@json=
 '{
-"period": "{{ period }}", 
-"uaqiColorPalette": "{{ uaqiColorPalette }}", 
+"extraComputations": "{{ extraComputations }}", 
 "hours": {{ hours }}, 
+"pageSize": {{ pageSize }}, 
 "pageToken": "{{ pageToken }}", 
 "location": "{{ location }}", 
-"dateTime": "{{ dateTime }}", 
 "languageCode": "{{ languageCode }}", 
-"extraComputations": "{{ extraComputations }}", 
-"customLocalAqis": "{{ customLocalAqis }}", 
+"dateTime": "{{ dateTime }}", 
+"uaqiColorPalette": "{{ uaqiColorPalette }}", 
 "universalAqi": {{ universalAqi }}, 
-"pageSize": {{ pageSize }}
+"customLocalAqis": "{{ customLocalAqis }}", 
+"period": "{{ period }}"
 }'
 ;
 ```

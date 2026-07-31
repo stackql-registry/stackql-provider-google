@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>lakes</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>lakes</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="lakes" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataplex.lakes" /></td></tr>
 </tbody></table>
@@ -97,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the lake.</td>
+    <td>Output only. Current state of the lake. (STATE_UNSPECIFIED, ACTIVE, CREATING, DELETING, ACTION_REQUIRED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -171,7 +172,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the lake.</td>
+    <td>Output only. Current state of the lake. (STATE_UNSPECIFIED, ACTIVE, CREATING, DELETING, ACTION_REQUIRED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -214,7 +215,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_lakes_list"><CopyableCode code="projects_locations_lakes_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists lake resources in a project and location.</td>
 </tr>
 <tr>
@@ -362,9 +363,9 @@ updateTime
 FROM google.dataplex.lakes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -387,20 +388,20 @@ Creates a lake resource.
 
 ```sql
 INSERT INTO google.dataplex.lakes (
-data__displayName,
-data__labels,
 data__description,
+data__displayName,
 data__metastore,
+data__labels,
 projectsId,
 locationsId,
 lakeId,
 validateOnly
 )
 SELECT 
-'{{ displayName }}',
-'{{ labels }}',
 '{{ description }}',
+'{{ displayName }}',
 '{{ metastore }}',
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ lakeId }}',
@@ -416,41 +417,38 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: lakes
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the lakes resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the lakes resource.
-    - name: displayName
-      value: string
-      description: >
-        Optional. User friendly display name.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. User-defined labels for the lake.
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. Description of the lake.
-        
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. User friendly display name.
     - name: metastore
-      value: object
-      description: >
+      description: |
         Optional. Settings to manage lake and Dataproc Metastore service instance association.
-        
+      value:
+        service: "{{ service }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. User-defined labels for the lake.
     - name: lakeId
-      value: string
+      value: "{{ lakeId }}"
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -470,10 +468,10 @@ Updates a lake resource.
 ```sql
 UPDATE google.dataplex.lakes
 SET 
-data__displayName = '{{ displayName }}',
-data__labels = '{{ labels }}',
 data__description = '{{ description }}',
-data__metastore = '{{ metastore }}'
+data__displayName = '{{ displayName }}',
+data__metastore = '{{ metastore }}',
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

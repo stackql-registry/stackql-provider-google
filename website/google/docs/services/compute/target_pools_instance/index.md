@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>target_pools_instance</code> re
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>target_pools_instance</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="target_pools_instance" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.target_pools_instance" /></td></tr>
 </tbody></table>
@@ -137,6 +138,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -161,27 +163,31 @@ zone
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: target_pools_instance
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the target_pools_instance resource.
     - name: region
-      value: string
+      value: "{{ region }}"
       description: Required parameter for the target_pools_instance resource.
     - name: targetPool
-      value: string
+      value: "{{ targetPool }}"
       description: Required parameter for the target_pools_instance resource.
     - name: instances
-      value: array
-      description: >
-        A full or partial URL to an instance to add to this target pool. This can be a full or partial URL. For example, the following are valid URLs: - https://www.googleapis.com/compute/v1/projects/project-id/zones/zone /instances/instance-name - projects/project-id/zones/zone/instances/instance-name - zones/zone/instances/instance-name 
-        
+      description: |
+        A full or partial URL to an instance to add to this target pool. This can
+        be a full or partial URL. For example, the following are valid URLs:
+        - https://www.googleapis.com/compute/v1/projects/project-id/zones/zone/instances/instance-name
+        - projects/project-id/zones/zone/instances/instance-name
+        - zones/zone/instances/instance-name
+      value:
+        - instance: "{{ instance }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

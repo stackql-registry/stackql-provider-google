@@ -15,6 +15,7 @@ image: /img/stackql-googleworkspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>labels_label_copy_mode</code> r
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>labels_label_copy_mode</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="labels_label_copy_mode" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleworkspace.drivelabelsv2.labels_label_copy_mode" /></td></tr>
 </tbody></table>

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>cloud_locations</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>cloud_locations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="cloud_locations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudlocationfinder.cloud_locations" /></td></tr>
 </tbody></table>
@@ -62,12 +63,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="cloudLocationType" /></td>
     <td><code>string</code></td>
-    <td>Optional. The type of the cloud location.</td>
+    <td>Optional. The type of the cloud location. (CLOUD_LOCATION_TYPE_UNSPECIFIED, CLOUD_LOCATION_TYPE_REGION, CLOUD_LOCATION_TYPE_ZONE, CLOUD_LOCATION_TYPE_GDCC_ZONE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="cloudProvider" /></td>
     <td><code>string</code></td>
-    <td>Optional. The provider of the cloud location. Values can be Google Cloud or third-party providers, including AWS, Azure, or Oracle Cloud Infrastructure.</td>
+    <td>Optional. The provider of the cloud location. Values can be Google Cloud or third-party providers, including AWS, Azure, or Oracle Cloud Infrastructure. (CLOUD_PROVIDER_UNSPECIFIED, CLOUD_PROVIDER_GCP, CLOUD_PROVIDER_AWS, CLOUD_PROVIDER_AZURE, CLOUD_PROVIDER_OCI)</td>
 </tr>
 <tr>
     <td><CopyableCode code="containingCloudLocation" /></td>
@@ -111,12 +112,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="cloudLocationType" /></td>
     <td><code>string</code></td>
-    <td>Optional. The type of the cloud location.</td>
+    <td>Optional. The type of the cloud location. (CLOUD_LOCATION_TYPE_UNSPECIFIED, CLOUD_LOCATION_TYPE_REGION, CLOUD_LOCATION_TYPE_ZONE, CLOUD_LOCATION_TYPE_GDCC_ZONE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="cloudProvider" /></td>
     <td><code>string</code></td>
-    <td>Optional. The provider of the cloud location. Values can be Google Cloud or third-party providers, including AWS, Azure, or Oracle Cloud Infrastructure.</td>
+    <td>Optional. The provider of the cloud location. Values can be Google Cloud or third-party providers, including AWS, Azure, or Oracle Cloud Infrastructure. (CLOUD_PROVIDER_UNSPECIFIED, CLOUD_PROVIDER_GCP, CLOUD_PROVIDER_AWS, CLOUD_PROVIDER_AZURE, CLOUD_PROVIDER_OCI)</td>
 </tr>
 <tr>
     <td><CopyableCode code="containingCloudLocation" /></td>
@@ -164,14 +165,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists cloud locations under a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#search"><CopyableCode code="search" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-sourceCloudLocation"><code>sourceCloudLocation</code></a>, <a href="#parameter-query"><code>query</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-sourceCloudLocation"><code>sourceCloudLocation</code></a>, <a href="#parameter-query"><code>query</code></a></td>
     <td>Searches for cloud locations from a given source location.</td>
 </tr>
 </tbody>
@@ -278,8 +279,8 @@ territoryCode
 FROM google.cloudlocationfinder.cloud_locations
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -304,9 +305,9 @@ EXEC google.cloudlocationfinder.cloud_locations.search
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @pageToken='{{ pageToken }}', 
+@pageSize='{{ pageSize }}', 
 @sourceCloudLocation='{{ sourceCloudLocation }}', 
-@query='{{ query }}', 
-@pageSize='{{ pageSize }}'
+@query='{{ query }}'
 ;
 ```
 </TabItem>

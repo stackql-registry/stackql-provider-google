@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>client_tls_policies</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>client_tls_policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="client_tls_policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networksecurity.client_tls_policies" /></td></tr>
 </tbody></table>
@@ -174,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_client_tls_policies_list"><CopyableCode code="projects_locations_client_tls_policies_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists ClientTlsPolicies in a given project and location.</td>
 </tr>
 <tr>
@@ -299,8 +300,8 @@ updateTime
 FROM google.networksecurity.client_tls_policies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -322,23 +323,23 @@ Creates a new ClientTlsPolicy in a given project and location.
 
 ```sql
 INSERT INTO google.networksecurity.client_tls_policies (
+data__labels,
+data__serverValidationCa,
+data__name,
 data__sni,
 data__clientCertificate,
-data__labels,
 data__description,
-data__name,
-data__serverValidationCa,
 projectsId,
 locationsId,
 clientTlsPolicyId
 )
 SELECT 
+'{{ labels }}',
+'{{ serverValidationCa }}',
+'{{ name }}',
 '{{ sni }}',
 '{{ clientCertificate }}',
-'{{ labels }}',
 '{{ description }}',
-'{{ name }}',
-'{{ serverValidationCa }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ clientTlsPolicyId }}'
@@ -353,49 +354,51 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: client_tls_policies
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the client_tls_policies resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the client_tls_policies resource.
-    - name: sni
-      value: string
-      description: >
-        Optional. Server Name Indication string to present to the server during TLS handshake. E.g: "secure.example.com".
-        
-    - name: clientCertificate
-      value: object
-      description: >
-        Optional. Defines a mechanism to provision client identity (public and private keys) for peer to peer authentication. The presence of this dictates mTLS.
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. Set of label tags associated with the resource.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. Free-text description of the resource.
-        
-    - name: name
-      value: string
-      description: >
-        Required. Name of the ClientTlsPolicy resource. It matches the pattern `projects/{project}/locations/{location}/clientTlsPolicies/{client_tls_policy}`
-        
     - name: serverValidationCa
-      value: array
-      description: >
+      description: |
         Optional. Defines the mechanism to obtain the Certificate Authority certificate to validate the server certificate. If empty, client does not validate the server certificate.
-        
+      value:
+        - grpcEndpoint:
+            targetUri: "{{ targetUri }}"
+          certificateProviderInstance:
+            pluginInstance: "{{ pluginInstance }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. Name of the ClientTlsPolicy resource. It matches the pattern \`projects/{project}/locations/{location}/clientTlsPolicies/{client_tls_policy}\`
+    - name: sni
+      value: "{{ sni }}"
+      description: |
+        Optional. Server Name Indication string to present to the server during TLS handshake. E.g: "secure.example.com".
+    - name: clientCertificate
+      description: |
+        Optional. Defines a mechanism to provision client identity (public and private keys) for peer to peer authentication. The presence of this dictates mTLS.
+      value:
+        certificateProviderInstance:
+          pluginInstance: "{{ pluginInstance }}"
+        grpcEndpoint:
+          targetUri: "{{ targetUri }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Free-text description of the resource.
     - name: clientTlsPolicyId
-      value: string
-```
+      value: "{{ clientTlsPolicyId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -415,12 +418,12 @@ Updates the parameters of a single ClientTlsPolicy.
 ```sql
 UPDATE google.networksecurity.client_tls_policies
 SET 
+data__labels = '{{ labels }}',
+data__serverValidationCa = '{{ serverValidationCa }}',
+data__name = '{{ name }}',
 data__sni = '{{ sni }}',
 data__clientCertificate = '{{ clientCertificate }}',
-data__labels = '{{ labels }}',
-data__description = '{{ description }}',
-data__name = '{{ name }}',
-data__serverValidationCa = '{{ serverValidationCa }}'
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>network_edge_security_services<
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>network_edge_security_services</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="network_edge_security_services" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.network_edge_security_services" /></td></tr>
 </tbody></table>
@@ -52,17 +53,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="id" /></td>
     <td><code>string (uint64)</code></td>
-    <td>[Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
+    <td>Output only. [Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
 </tr>
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>[a-z](?:[-a-z0-9]&#123;0,61&#125;[a-z0-9])?</code>)</td>
+    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply withRFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>&#91;a-z&#93;(?:&#91;-a-z0-9&#93;&#123;0,61&#125;&#91;a-z0-9&#93;)?</code>)</td>
 </tr>
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Creation timestamp in RFC3339 text format.</td>
+    <td>Output only. [Output Only] Creation timestamp inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -72,17 +73,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="fingerprint" /></td>
     <td><code>string (byte)</code></td>
-    <td>Fingerprint of this resource. A hash of the contents stored in this object. This field is used in optimistic locking. This field will be ignored when inserting a NetworkEdgeSecurityService. An up-to-date fingerprint must be provided in order to update the NetworkEdgeSecurityService, otherwise the request will fail with error 412 conditionNotMet. To see the latest fingerprint, make a get() request to retrieve a NetworkEdgeSecurityService.</td>
+    <td>Fingerprint of this resource. A hash of the contents stored in this object. This field is used in optimistic locking. This field will be ignored when inserting a NetworkEdgeSecurityService. An up-to-date fingerprint must be provided in order to update the NetworkEdgeSecurityService, otherwise the request will fail with error412 conditionNotMet.  To see the latest fingerprint, make a get() request to retrieve a NetworkEdgeSecurityService.</td>
 </tr>
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output only] Type of the resource. Always compute#networkEdgeSecurityService for NetworkEdgeSecurityServices (default: compute#networkEdgeSecurityService)</td>
+    <td>Output only. [Output only] Type of the resource. Alwayscompute#networkEdgeSecurityService for NetworkEdgeSecurityServices (default: compute#networkEdgeSecurityService)</td>
 </tr>
 <tr>
     <td><CopyableCode code="region" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] URL of the region where the resource resides. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body.</td>
+    <td>Output only. [Output Only] URL of the region where the resource resides. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body.</td>
 </tr>
 <tr>
     <td><CopyableCode code="securityPolicy" /></td>
@@ -92,12 +93,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for the resource.</td>
+    <td>Output only. [Output Only] Server-defined URL for the resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLinkWithId" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for this resource with the resource id.</td>
+    <td>Output only. [Output Only] Server-defined URL for this resource with the resource id.</td>
 </tr>
 </tbody>
 </table>
@@ -116,17 +117,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="id" /></td>
     <td><code>string (uint64)</code></td>
-    <td>[Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
+    <td>Output only. [Output Only] The unique identifier for the resource. This identifier is defined by the server.</td>
 </tr>
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>[a-z](?:[-a-z0-9]&#123;0,61&#125;[a-z0-9])?</code>)</td>
+    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply withRFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>&#91;a-z&#93;(?:&#91;-a-z0-9&#93;&#123;0,61&#125;&#91;a-z0-9&#93;)?</code>)</td>
 </tr>
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Creation timestamp in RFC3339 text format.</td>
+    <td>Output only. [Output Only] Creation timestamp inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -136,17 +137,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="fingerprint" /></td>
     <td><code>string (byte)</code></td>
-    <td>Fingerprint of this resource. A hash of the contents stored in this object. This field is used in optimistic locking. This field will be ignored when inserting a NetworkEdgeSecurityService. An up-to-date fingerprint must be provided in order to update the NetworkEdgeSecurityService, otherwise the request will fail with error 412 conditionNotMet. To see the latest fingerprint, make a get() request to retrieve a NetworkEdgeSecurityService.</td>
+    <td>Fingerprint of this resource. A hash of the contents stored in this object. This field is used in optimistic locking. This field will be ignored when inserting a NetworkEdgeSecurityService. An up-to-date fingerprint must be provided in order to update the NetworkEdgeSecurityService, otherwise the request will fail with error412 conditionNotMet.  To see the latest fingerprint, make a get() request to retrieve a NetworkEdgeSecurityService.</td>
 </tr>
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output only] Type of the resource. Always compute#networkEdgeSecurityService for NetworkEdgeSecurityServices (default: compute#networkEdgeSecurityService)</td>
+    <td>Output only. [Output only] Type of the resource. Alwayscompute#networkEdgeSecurityService for NetworkEdgeSecurityServices (default: compute#networkEdgeSecurityService)</td>
 </tr>
 <tr>
     <td><CopyableCode code="region" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] URL of the region where the resource resides. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body.</td>
+    <td>Output only. [Output Only] URL of the region where the resource resides. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body.</td>
 </tr>
 <tr>
     <td><CopyableCode code="securityPolicy" /></td>
@@ -156,12 +157,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for the resource.</td>
+    <td>Output only. [Output Only] Server-defined URL for the resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLinkWithId" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for this resource with the resource id.</td>
+    <td>Output only. [Output Only] Server-defined URL for this resource with the resource id.</td>
 </tr>
 </tbody>
 </table>
@@ -194,21 +195,21 @@ The following methods are available for this resource:
     <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a></td>
-    <td>Retrieves the list of all NetworkEdgeSecurityService resources available to the specified project. To prevent failure, Google recommends that you set the `returnPartialSuccess` parameter to `true`.</td>
+    <td><a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td>Retrieves the list of all NetworkEdgeSecurityService resources available to<br />the specified project.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
-    <td>Creates a new service in the specified project using the data included in the request.</td>
+    <td>Creates a new service in the specified project using the data included in<br />the request.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-networkEdgeSecurityService"><code>networkEdgeSecurityService</code></a></td>
-    <td><a href="#parameter-paths"><code>paths</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-paths"><code>paths</code></a></td>
     <td>Patches the specified policy with the data included in the request.</td>
 </tr>
 <tr>
@@ -341,7 +342,7 @@ AND networkEdgeSecurityService = '{{ networkEdgeSecurityService }}' -- required
 </TabItem>
 <TabItem value="aggregated_list">
 
-Retrieves the list of all NetworkEdgeSecurityService resources available to the specified project. To prevent failure, Google recommends that you set the `returnPartialSuccess` parameter to `true`.
+Retrieves the list of all NetworkEdgeSecurityService resources available to<br />the specified project.<br /><br />To prevent failure, Google recommends that you set the<br />`returnPartialSuccess` parameter to `true`.
 
 ```sql
 SELECT
@@ -357,13 +358,13 @@ selfLink,
 selfLinkWithId
 FROM google.compute.network_edge_security_services
 WHERE project = '{{ project }}' -- required
-AND filter = '{{ filter }}'
 AND includeAllScopes = '{{ includeAllScopes }}'
-AND maxResults = '{{ maxResults }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
+AND maxResults = '{{ maxResults }}'
 AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
-AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 ;
 ```
 </TabItem>
@@ -381,36 +382,24 @@ AND serviceProjectNumber = '{{ serviceProjectNumber }}'
 >
 <TabItem value="insert">
 
-Creates a new service in the specified project using the data included in the request.
+Creates a new service in the specified project using the data included in<br />the request.
 
 ```sql
 INSERT INTO google.compute.network_edge_security_services (
-data__kind,
-data__id,
-data__creationTimestamp,
-data__name,
-data__description,
-data__selfLink,
-data__selfLinkWithId,
-data__region,
 data__fingerprint,
+data__name,
 data__securityPolicy,
+data__description,
 project,
 region,
 requestId,
 validateOnly
 )
 SELECT 
-'{{ kind }}',
-'{{ id }}',
-'{{ creationTimestamp }}',
-'{{ name }}',
-'{{ description }}',
-'{{ selfLink }}',
-'{{ selfLinkWithId }}',
-'{{ region }}',
 '{{ fingerprint }}',
+'{{ name }}',
 '{{ securityPolicy }}',
+'{{ description }}',
 '{{ project }}',
 '{{ region }}',
 '{{ requestId }}',
@@ -423,6 +412,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -447,72 +437,51 @@ zone
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: network_edge_security_services
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the network_edge_security_services resource.
     - name: region
-      value: string
+      value: "{{ region }}"
       description: Required parameter for the network_edge_security_services resource.
-    - name: kind
-      value: string
-      description: >
-        [Output only] Type of the resource. Always compute#networkEdgeSecurityService for NetworkEdgeSecurityServices
-        
-      default: compute#networkEdgeSecurityService
-    - name: id
-      value: string
-      description: >
-        [Output Only] The unique identifier for the resource. This identifier is defined by the server.
-        
-    - name: creationTimestamp
-      value: string
-      description: >
-        [Output Only] Creation timestamp in RFC3339 text format.
-        
-    - name: name
-      value: string
-      description: >
-        Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
-        
-    - name: description
-      value: string
-      description: >
-        An optional description of this resource. Provide this property when you create the resource.
-        
-    - name: selfLink
-      value: string
-      description: >
-        [Output Only] Server-defined URL for the resource.
-        
-    - name: selfLinkWithId
-      value: string
-      description: >
-        [Output Only] Server-defined URL for this resource with the resource id.
-        
-    - name: region
-      value: string
-      description: >
-        [Output Only] URL of the region where the resource resides. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body.
-        
     - name: fingerprint
-      value: string
-      description: >
-        Fingerprint of this resource. A hash of the contents stored in this object. This field is used in optimistic locking. This field will be ignored when inserting a NetworkEdgeSecurityService. An up-to-date fingerprint must be provided in order to update the NetworkEdgeSecurityService, otherwise the request will fail with error 412 conditionNotMet. To see the latest fingerprint, make a get() request to retrieve a NetworkEdgeSecurityService.
-        
+      value: "{{ fingerprint }}"
+      description: |
+        Fingerprint of this resource. A hash of the contents stored in this object.
+        This field is used in optimistic locking. This field will be ignored when
+        inserting a NetworkEdgeSecurityService. An up-to-date fingerprint must be
+        provided in order to update the NetworkEdgeSecurityService,
+        otherwise the request will fail with error412 conditionNotMet.
+        To see the latest fingerprint, make a get() request to
+        retrieve a NetworkEdgeSecurityService.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the resource. Provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must
+        be a dash, lowercase letter, or digit, except the last character, which
+        cannot be a dash.
     - name: securityPolicy
-      value: string
-      description: >
-        The resource URL for the network edge security service associated with this network edge security service.
-        
+      value: "{{ securityPolicy }}"
+      description: |
+        The resource URL for the network edge security service associated with this
+        network edge security service.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource. Provide this property when you
+        create the resource.
     - name: requestId
-      value: string
+      value: "{{ requestId }}"
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -532,23 +501,17 @@ Patches the specified policy with the data included in the request.
 ```sql
 UPDATE google.compute.network_edge_security_services
 SET 
-data__kind = '{{ kind }}',
-data__id = '{{ id }}',
-data__creationTimestamp = '{{ creationTimestamp }}',
-data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__selfLink = '{{ selfLink }}',
-data__selfLinkWithId = '{{ selfLinkWithId }}',
-data__region = '{{ region }}',
 data__fingerprint = '{{ fingerprint }}',
-data__securityPolicy = '{{ securityPolicy }}'
+data__name = '{{ name }}',
+data__securityPolicy = '{{ securityPolicy }}',
+data__description = '{{ description }}'
 WHERE 
 project = '{{ project }}' --required
 AND region = '{{ region }}' --required
 AND networkEdgeSecurityService = '{{ networkEdgeSecurityService }}' --required
-AND paths = '{{ paths}}'
-AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
+AND requestId = '{{ requestId}}'
+AND paths = '{{ paths}}'
 RETURNING
 id,
 name,
@@ -557,6 +520,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,

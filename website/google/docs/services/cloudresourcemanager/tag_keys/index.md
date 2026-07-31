@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>tag_keys</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>tag_keys</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="tag_keys" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudresourcemanager.tag_keys" /></td></tr>
 </tbody></table>
@@ -87,7 +88,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="purpose" /></td>
     <td><code>string</code></td>
-    <td>Optional. A purpose denotes that this Tag is intended for use in policies of a specific policy engine, and will involve that policy engine in management operations involving this Tag. A purpose does not grant a policy engine exclusive rights to the Tag, and it may be referenced by other policy engines. A purpose cannot be changed once set.</td>
+    <td>Optional. A purpose denotes that this Tag is intended for use in policies of a specific policy engine, and will involve that policy engine in management operations involving this Tag. A purpose does not grant a policy engine exclusive rights to the Tag, and it may be referenced by other policy engines. A purpose cannot be changed once set. (PURPOSE_UNSPECIFIED, GCE_FIREWALL, DATA_GOVERNANCE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="purposeData" /></td>
@@ -156,7 +157,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="purpose" /></td>
     <td><code>string</code></td>
-    <td>Optional. A purpose denotes that this Tag is intended for use in policies of a specific policy engine, and will involve that policy engine in management operations involving this Tag. A purpose does not grant a policy engine exclusive rights to the Tag, and it may be referenced by other policy engines. A purpose cannot be changed once set.</td>
+    <td>Optional. A purpose denotes that this Tag is intended for use in policies of a specific policy engine, and will involve that policy engine in management operations involving this Tag. A purpose does not grant a policy engine exclusive rights to the Tag, and it may be referenced by other policy engines. A purpose cannot be changed once set. (PURPOSE_UNSPECIFIED, GCE_FIREWALL, DATA_GOVERNANCE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="purposeData" /></td>
@@ -204,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-parent"><code>parent</code></a></td>
     <td>Lists all TagKeys for a parent resource.</td>
 </tr>
 <tr>
@@ -225,7 +226,7 @@ The following methods are available for this resource:
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-tagKeysId"><code>tagKeysId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Deletes a TagKey. The TagKey cannot be deleted if it has any child TagValues.</td>
 </tr>
 </tbody>
@@ -332,8 +333,8 @@ shortName,
 updateTime
 FROM google.cloudresourcemanager.tag_keys
 WHERE pageSize = '{{ pageSize }}'
-AND parent = '{{ parent }}'
 AND pageToken = '{{ pageToken }}'
+AND parent = '{{ parent }}'
 ;
 ```
 </TabItem>
@@ -355,25 +356,25 @@ Creates a new TagKey. If another request with the same parameters is sent while 
 
 ```sql
 INSERT INTO google.cloudresourcemanager.tag_keys (
+data__description,
+data__purposeData,
 data__shortName,
-data__purpose,
+data__parent,
 data__etag,
+data__purpose,
 data__allowedValuesRegex,
 data__name,
-data__description,
-data__parent,
-data__purposeData,
 validateOnly
 )
 SELECT 
+'{{ description }}',
+'{{ purposeData }}',
 '{{ shortName }}',
-'{{ purpose }}',
+'{{ parent }}',
 '{{ etag }}',
+'{{ purpose }}',
 '{{ allowedValuesRegex }}',
 '{{ name }}',
-'{{ description }}',
-'{{ parent }}',
-'{{ purposeData }}',
 '{{ validateOnly }}'
 RETURNING
 name,
@@ -386,54 +387,46 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: tag_keys
   props:
-    - name: shortName
-      value: string
-      description: >
-        Required. Immutable. The user friendly name for a TagKey. The short name should be unique for TagKeys within the same tag namespace. The short name must be 1-256 characters, beginning and ending with an alphanumeric character ([a-z0-9A-Z]) with dashes (-), underscores (_), dots (.), and alphanumerics between.
-        
-    - name: purpose
-      value: string
-      description: >
-        Optional. A purpose denotes that this Tag is intended for use in policies of a specific policy engine, and will involve that policy engine in management operations involving this Tag. A purpose does not grant a policy engine exclusive rights to the Tag, and it may be referenced by other policy engines. A purpose cannot be changed once set.
-        
-      valid_values: ['PURPOSE_UNSPECIFIED', 'GCE_FIREWALL', 'DATA_GOVERNANCE']
-    - name: etag
-      value: string
-      description: >
-        Optional. Entity tag which users can pass to prevent race conditions. This field is always set in server responses. See UpdateTagKeyRequest for details.
-        
-    - name: allowedValuesRegex
-      value: string
-      description: >
-        Optional. Regular expression constraint for freeform tag values. If present, it implicitly allows freeform values (constrained by the regex).
-        
-    - name: name
-      value: string
-      description: >
-        Immutable. The resource name for a TagKey. Must be in the format `tagKeys/{tag_key_id}`, where `tag_key_id` is the generated numeric id for the TagKey.
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. User-assigned description of the TagKey. Must not exceed 256 characters. Read-write.
-        
-    - name: parent
-      value: string
-      description: >
-        Immutable. The resource name of the TagKey's parent. A TagKey can be parented by an Organization or a Project. For a TagKey parented by an Organization, its parent must be in the form `organizations/{org_id}`. For a TagKey parented by a Project, its parent can be in the form `projects/{project_id}` or `projects/{project_number}`.
-        
     - name: purposeData
-      value: object
-      description: >
-        Optional. Purpose data corresponds to the policy system that the tag is intended for. See documentation for `Purpose` for formatting of this field. Purpose data cannot be changed once set.
-        
+      value: "{{ purposeData }}"
+      description: |
+        Optional. Purpose data corresponds to the policy system that the tag is intended for. See documentation for \`Purpose\` for formatting of this field. Purpose data cannot be changed once set.
+    - name: shortName
+      value: "{{ shortName }}"
+      description: |
+        Required. Immutable. The user friendly name for a TagKey. The short name should be unique for TagKeys within the same tag namespace. The short name must be 1-256 characters, beginning and ending with an alphanumeric character ([a-z0-9A-Z]) with dashes (-), underscores (_), dots (.), and alphanumerics between.
+    - name: parent
+      value: "{{ parent }}"
+      description: |
+        Immutable. The resource name of the TagKey's parent. A TagKey can be parented by an Organization or a Project. For a TagKey parented by an Organization, its parent must be in the form \`organizations/{org_id}\`. For a TagKey parented by a Project, its parent can be in the form \`projects/{project_id}\` or \`projects/{project_number}\`.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. Entity tag which users can pass to prevent race conditions. This field is always set in server responses. See UpdateTagKeyRequest for details.
+    - name: purpose
+      value: "{{ purpose }}"
+      description: |
+        Optional. A purpose denotes that this Tag is intended for use in policies of a specific policy engine, and will involve that policy engine in management operations involving this Tag. A purpose does not grant a policy engine exclusive rights to the Tag, and it may be referenced by other policy engines. A purpose cannot be changed once set.
+      valid_values: ['PURPOSE_UNSPECIFIED', 'GCE_FIREWALL', 'DATA_GOVERNANCE']
+    - name: allowedValuesRegex
+      value: "{{ allowedValuesRegex }}"
+      description: |
+        Optional. Regular expression constraint for freeform tag values. If present, it implicitly allows freeform values (constrained by the regex).
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. The resource name for a TagKey. Must be in the format \`tagKeys/{tag_key_id}\`, where \`tag_key_id\` is the generated numeric id for the TagKey.
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -453,14 +446,14 @@ Updates the attributes of the TagKey resource.
 ```sql
 UPDATE google.cloudresourcemanager.tag_keys
 SET 
-data__shortName = '{{ shortName }}',
-data__purpose = '{{ purpose }}',
-data__etag = '{{ etag }}',
-data__allowedValuesRegex = '{{ allowedValuesRegex }}',
-data__name = '{{ name }}',
 data__description = '{{ description }}',
+data__purposeData = '{{ purposeData }}',
+data__shortName = '{{ shortName }}',
 data__parent = '{{ parent }}',
-data__purposeData = '{{ purposeData }}'
+data__etag = '{{ etag }}',
+data__purpose = '{{ purpose }}',
+data__allowedValuesRegex = '{{ allowedValuesRegex }}',
+data__name = '{{ name }}'
 WHERE 
 tagKeysId = '{{ tagKeysId }}' --required
 AND validateOnly = {{ validateOnly}}
@@ -491,8 +484,8 @@ Deletes a TagKey. The TagKey cannot be deleted if it has any child TagValues.
 ```sql
 DELETE FROM google.cloudresourcemanager.tag_keys
 WHERE tagKeysId = '{{ tagKeysId }}' --required
-AND validateOnly = '{{ validateOnly }}'
 AND etag = '{{ etag }}'
+AND validateOnly = '{{ validateOnly }}'
 ;
 ```
 </TabItem>

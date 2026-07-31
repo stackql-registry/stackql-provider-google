@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>nfs_shares</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>nfs_shares</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="nfs_shares" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.baremetalsolution.nfs_shares" /></td></tr>
 </tbody></table>
@@ -87,12 +88,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the NFS share.</td>
+    <td>Output only. The state of the NFS share. (STATE_UNSPECIFIED, PROVISIONED, CREATING, UPDATING, DELETING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="storageType" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The storage type of the underlying volume.</td>
+    <td>Immutable. The storage type of the underlying volume. (STORAGE_TYPE_UNSPECIFIED, SSD, HDD)</td>
 </tr>
 <tr>
     <td><CopyableCode code="volume" /></td>
@@ -151,12 +152,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the NFS share.</td>
+    <td>Output only. The state of the NFS share. (STATE_UNSPECIFIED, PROVISIONED, CREATING, UPDATING, DELETING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="storageType" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The storage type of the underlying volume.</td>
+    <td>Immutable. The storage type of the underlying volume. (STORAGE_TYPE_UNSPECIFIED, SSD, HDD)</td>
 </tr>
 <tr>
     <td><CopyableCode code="volume" /></td>
@@ -194,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>List NFS shares.</td>
 </tr>
 <tr>
@@ -331,8 +332,8 @@ FROM google.baremetalsolution.nfs_shares
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -354,22 +355,22 @@ Create an NFS share.
 
 ```sql
 INSERT INTO google.baremetalsolution.nfs_shares (
-data__labels,
-data__requestedSizeGib,
-data__name,
 data__storageType,
-data__pod,
+data__name,
+data__requestedSizeGib,
+data__labels,
 data__allowedClients,
+data__pod,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ labels }}',
-'{{ requestedSizeGib }}',
-'{{ name }}',
 '{{ storageType }}',
-'{{ pod }}',
+'{{ name }}',
+'{{ requestedSizeGib }}',
+'{{ labels }}',
 '{{ allowedClients }}',
+'{{ pod }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -383,48 +384,50 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: nfs_shares
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the nfs_shares resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the nfs_shares resource.
-    - name: labels
-      value: object
-      description: >
-        Labels as key value pairs.
-        
-    - name: requestedSizeGib
-      value: string
-      description: >
-        The requested size, in GiB.
-        
-    - name: name
-      value: string
-      description: >
-        Immutable. The name of the NFS share.
-        
     - name: storageType
-      value: string
-      description: >
+      value: "{{ storageType }}"
+      description: |
         Immutable. The storage type of the underlying volume.
-        
       valid_values: ['STORAGE_TYPE_UNSPECIFIED', 'SSD', 'HDD']
-    - name: pod
-      value: string
-      description: >
-        Immutable. Pod name. Pod is an independent part of infrastructure. NFSShare can only be connected to the assets (networks, instances) allocated in the same pod.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. The name of the NFS share.
+    - name: requestedSizeGib
+      value: "{{ requestedSizeGib }}"
+      description: |
+        The requested size, in GiB.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Labels as key value pairs.
     - name: allowedClients
-      value: array
-      description: >
+      description: |
         List of allowed access points.
-        
-```
+      value:
+        - allowedClientsCidr: "{{ allowedClientsCidr }}"
+          mountPermissions: "{{ mountPermissions }}"
+          allowDev: {{ allowDev }}
+          noRootSquash: {{ noRootSquash }}
+          allowSuid: {{ allowSuid }}
+          nfsPath: "{{ nfsPath }}"
+          network: "{{ network }}"
+          shareIp: "{{ shareIp }}"
+    - name: pod
+      value: "{{ pod }}"
+      description: |
+        Immutable. Pod name. Pod is an independent part of infrastructure. NFSShare can only be connected to the assets (networks, instances) allocated in the same pod.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -444,12 +447,12 @@ Update details of a single NFS share.
 ```sql
 UPDATE google.baremetalsolution.nfs_shares
 SET 
-data__labels = '{{ labels }}',
-data__requestedSizeGib = '{{ requestedSizeGib }}',
-data__name = '{{ name }}',
 data__storageType = '{{ storageType }}',
-data__pod = '{{ pod }}',
-data__allowedClients = '{{ allowedClients }}'
+data__name = '{{ name }}',
+data__requestedSizeGib = '{{ requestedSizeGib }}',
+data__labels = '{{ labels }}',
+data__allowedClients = '{{ allowedClients }}',
+data__pod = '{{ pod }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

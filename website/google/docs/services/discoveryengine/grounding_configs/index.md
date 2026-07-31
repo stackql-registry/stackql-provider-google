@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>grounding_configs</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>grounding_configs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="grounding_configs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.discoveryengine.grounding_configs" /></td></tr>
 </tbody></table>
@@ -109,10 +110,10 @@ EXEC google.discoveryengine.grounding_configs.projects_locations_grounding_confi
 @groundingConfigsId='{{ groundingConfigsId }}' --required 
 @@json=
 '{
-"facts": "{{ facts }}", 
-"answerCandidate": "{{ answerCandidate }}", 
 "userLabels": "{{ userLabels }}", 
-"groundingSpec": "{{ groundingSpec }}"
+"groundingSpec": "{{ groundingSpec }}", 
+"answerCandidate": "{{ answerCandidate }}", 
+"facts": "{{ facts }}"
 }'
 ;
 ```

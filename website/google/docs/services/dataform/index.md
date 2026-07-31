@@ -18,7 +18,7 @@ dataform service documentation.
 
 :::info[Service Summary]
 
-total resources: __18__  
+total resources: __22__  
 
 :::
 
@@ -27,7 +27,9 @@ total resources: __18__
 <div class="providerDocColumn">
 <a href="/services/dataform/compilation_results/">compilation_results</a><br />
 <a href="/services/dataform/config/">config</a><br />
+<a href="/services/dataform/folders/">folders</a><br />
 <a href="/services/dataform/folders_iam_policies/">folders_iam_policies</a><br />
+<a href="/services/dataform/folders_tree/">folders_tree</a><br />
 <a href="/services/dataform/locations/">locations</a><br />
 <a href="/services/dataform/operations/">operations</a><br />
 <a href="/services/dataform/release_configs/">release_configs</a><br />
@@ -37,7 +39,9 @@ total resources: __18__
 </div>
 <div class="providerDocColumn">
 <a href="/services/dataform/repositories_remote_branches/">repositories_remote_branches</a><br />
+<a href="/services/dataform/team_folders/">team_folders</a><br />
 <a href="/services/dataform/team_folders_iam_policies/">team_folders_iam_policies</a><br />
+<a href="/services/dataform/team_folders_tree/">team_folders_tree</a><br />
 <a href="/services/dataform/workflow_configs/">workflow_configs</a><br />
 <a href="/services/dataform/workflow_invocations/">workflow_invocations</a><br />
 <a href="/services/dataform/workspaces/">workspaces</a><br />

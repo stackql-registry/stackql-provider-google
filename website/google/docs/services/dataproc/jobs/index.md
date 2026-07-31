@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>jobs</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>jobs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="jobs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataproc.jobs" /></td></tr>
 </tbody></table>
@@ -204,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#projects_regions_jobs_list"><CopyableCode code="projects_regions_jobs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-clusterName"><code>clusterName</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-jobStateMatcher"><code>jobStateMatcher</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-jobStateMatcher"><code>jobStateMatcher</code></a>, <a href="#parameter-clusterName"><code>clusterName</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists regions/&#123;region&#125;/jobs in a project.</td>
 </tr>
 <tr>
@@ -222,18 +223,18 @@ The following methods are available for this resource:
     <td>Deletes the job from the project. If the job is active, the delete fails, and the response returns FAILED_PRECONDITION.</td>
 </tr>
 <tr>
-    <td><a href="#projects_regions_jobs_cancel"><CopyableCode code="projects_regions_jobs_cancel" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-jobId"><code>jobId</code></a></td>
-    <td></td>
-    <td>Starts a job cancellation request. To access the job resource after cancellation, call regions/&#123;region&#125;/jobs.list (https://cloud.google.com/dataproc/docs/reference/rest/v1/projects.regions.jobs/list) or regions/&#123;region&#125;/jobs.get (https://cloud.google.com/dataproc/docs/reference/rest/v1/projects.regions.jobs/get).</td>
-</tr>
-<tr>
     <td><a href="#projects_regions_jobs_submit"><CopyableCode code="projects_regions_jobs_submit" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-region"><code>region</code></a></td>
     <td></td>
     <td>Submits a job to a cluster.</td>
+</tr>
+<tr>
+    <td><a href="#projects_regions_jobs_cancel"><CopyableCode code="projects_regions_jobs_cancel" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectId"><code>projectId</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-jobId"><code>jobId</code></a></td>
+    <td></td>
+    <td>Starts a job cancellation request. To access the job resource after cancellation, call regions/&#123;region&#125;/jobs.list (https://cloud.google.com/dataproc/docs/reference/rest/v1/projects.regions.jobs/list) or regions/&#123;region&#125;/jobs.get (https://cloud.google.com/dataproc/docs/reference/rest/v1/projects.regions.jobs/get).</td>
 </tr>
 <tr>
     <td><a href="#projects_regions_jobs_submit_as_operation"><CopyableCode code="projects_regions_jobs_submit_as_operation" /></a></td>
@@ -360,11 +361,11 @@ SELECT
 FROM google.dataproc.jobs
 WHERE projectId = '{{ projectId }}' -- required
 AND region = '{{ region }}' -- required
-AND clusterName = '{{ clusterName }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 AND jobStateMatcher = '{{ jobStateMatcher }}'
+AND clusterName = '{{ clusterName }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -386,21 +387,21 @@ Updates a job in a project.
 ```sql
 UPDATE google.dataproc.jobs
 SET 
-data__flinkJob = '{{ flinkJob }}',
+data__reference = '{{ reference }}',
+data__hiveJob = '{{ hiveJob }}',
 data__prestoJob = '{{ prestoJob }}',
-data__placement = '{{ placement }}',
-data__pigJob = '{{ pigJob }}',
-data__labels = '{{ labels }}',
+data__hadoopJob = '{{ hadoopJob }}',
 data__driverSchedulingConfig = '{{ driverSchedulingConfig }}',
 data__pysparkJob = '{{ pysparkJob }}',
-data__hadoopJob = '{{ hadoopJob }}',
-data__sparkRJob = '{{ sparkRJob }}',
-data__sparkJob = '{{ sparkJob }}',
 data__sparkSqlJob = '{{ sparkSqlJob }}',
+data__pigJob = '{{ pigJob }}',
+data__sparkRJob = '{{ sparkRJob }}',
+data__placement = '{{ placement }}',
+data__trinoJob = '{{ trinoJob }}',
 data__scheduling = '{{ scheduling }}',
-data__hiveJob = '{{ hiveJob }}',
-data__reference = '{{ reference }}',
-data__trinoJob = '{{ trinoJob }}'
+data__sparkJob = '{{ sparkJob }}',
+data__flinkJob = '{{ flinkJob }}',
+data__labels = '{{ labels }}'
 WHERE 
 projectId = '{{ projectId }}' --required
 AND region = '{{ region }}' --required
@@ -460,25 +461,13 @@ AND jobId = '{{ jobId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_regions_jobs_cancel"
+    defaultValue="projects_regions_jobs_submit"
     values={[
-        { label: 'projects_regions_jobs_cancel', value: 'projects_regions_jobs_cancel' },
         { label: 'projects_regions_jobs_submit', value: 'projects_regions_jobs_submit' },
+        { label: 'projects_regions_jobs_cancel', value: 'projects_regions_jobs_cancel' },
         { label: 'projects_regions_jobs_submit_as_operation', value: 'projects_regions_jobs_submit_as_operation' }
     ]}
 >
-<TabItem value="projects_regions_jobs_cancel">
-
-Starts a job cancellation request. To access the job resource after cancellation, call regions/&#123;region&#125;/jobs.list (https://cloud.google.com/dataproc/docs/reference/rest/v1/projects.regions.jobs/list) or regions/&#123;region&#125;/jobs.get (https://cloud.google.com/dataproc/docs/reference/rest/v1/projects.regions.jobs/get).
-
-```sql
-EXEC google.dataproc.jobs.projects_regions_jobs_cancel 
-@projectId='{{ projectId }}' --required, 
-@region='{{ region }}' --required, 
-@jobId='{{ jobId }}' --required
-;
-```
-</TabItem>
 <TabItem value="projects_regions_jobs_submit">
 
 Submits a job to a cluster.
@@ -489,9 +478,21 @@ EXEC google.dataproc.jobs.projects_regions_jobs_submit
 @region='{{ region }}' --required 
 @@json=
 '{
-"requestId": "{{ requestId }}", 
-"job": "{{ job }}"
+"job": "{{ job }}", 
+"requestId": "{{ requestId }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="projects_regions_jobs_cancel">
+
+Starts a job cancellation request. To access the job resource after cancellation, call regions/&#123;region&#125;/jobs.list (https://cloud.google.com/dataproc/docs/reference/rest/v1/projects.regions.jobs/list) or regions/&#123;region&#125;/jobs.get (https://cloud.google.com/dataproc/docs/reference/rest/v1/projects.regions.jobs/get).
+
+```sql
+EXEC google.dataproc.jobs.projects_regions_jobs_cancel 
+@projectId='{{ projectId }}' --required, 
+@region='{{ region }}' --required, 
+@jobId='{{ jobId }}' --required
 ;
 ```
 </TabItem>
@@ -505,8 +506,8 @@ EXEC google.dataproc.jobs.projects_regions_jobs_submit_as_operation
 @region='{{ region }}' --required 
 @@json=
 '{
-"requestId": "{{ requestId }}", 
-"job": "{{ job }}"
+"job": "{{ job }}", 
+"requestId": "{{ requestId }}"
 }'
 ;
 ```

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>security_feedback</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>security_feedback</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="security_feedback" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.security_feedback" /></td></tr>
 </tbody></table>
@@ -77,12 +78,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="feedbackType" /></td>
     <td><code>string</code></td>
-    <td>Required. The type of feedback being submitted.</td>
+    <td>Required. The type of feedback being submitted. (FEEDBACK_TYPE_UNSPECIFIED, EXCLUDED_DETECTION)</td>
 </tr>
 <tr>
     <td><CopyableCode code="reason" /></td>
     <td><code>string</code></td>
-    <td>Optional. The reason for the feedback.</td>
+    <td>Optional. The reason for the feedback. (REASON_UNSPECIFIED, INTERNAL_SYSTEM, NON_RISK_CLIENT, NAT, PENETRATION_TEST, OTHER)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -131,12 +132,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="feedbackType" /></td>
     <td><code>string</code></td>
-    <td>Required. The type of feedback being submitted.</td>
+    <td>Required. The type of feedback being submitted. (FEEDBACK_TYPE_UNSPECIFIED, EXCLUDED_DETECTION)</td>
 </tr>
 <tr>
     <td><CopyableCode code="reason" /></td>
     <td><code>string</code></td>
-    <td>Optional. The reason for the feedback.</td>
+    <td>Optional. The reason for the feedback. (REASON_UNSPECIFIED, INTERNAL_SYSTEM, NON_RISK_CLIENT, NAT, PENETRATION_TEST, OTHER)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -315,20 +316,20 @@ Creates a new report containing customer feedback.
 
 ```sql
 INSERT INTO google.apigee.security_feedback (
-data__feedbackContexts,
-data__feedbackType,
-data__reason,
 data__displayName,
 data__comment,
+data__feedbackType,
+data__reason,
+data__feedbackContexts,
 organizationsId,
 securityFeedbackId
 )
 SELECT 
-'{{ feedbackContexts }}',
-'{{ feedbackType }}',
-'{{ reason }}',
 '{{ displayName }}',
 '{{ comment }}',
+'{{ feedbackType }}',
+'{{ reason }}',
+'{{ feedbackContexts }}',
 '{{ organizationsId }}',
 '{{ securityFeedbackId }}'
 RETURNING
@@ -345,43 +346,40 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: security_feedback
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the security_feedback resource.
-    - name: feedbackContexts
-      value: array
-      description: >
-        Required. One or more attribute/value pairs for constraining the feedback.
-        
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. The display name of the feedback.
+    - name: comment
+      value: "{{ comment }}"
+      description: |
+        Optional. Optional text the user can provide for additional, unstructured context.
     - name: feedbackType
-      value: string
-      description: >
+      value: "{{ feedbackType }}"
+      description: |
         Required. The type of feedback being submitted.
-        
       valid_values: ['FEEDBACK_TYPE_UNSPECIFIED', 'EXCLUDED_DETECTION']
     - name: reason
-      value: string
-      description: >
+      value: "{{ reason }}"
+      description: |
         Optional. The reason for the feedback.
-        
       valid_values: ['REASON_UNSPECIFIED', 'INTERNAL_SYSTEM', 'NON_RISK_CLIENT', 'NAT', 'PENETRATION_TEST', 'OTHER']
-    - name: displayName
-      value: string
-      description: >
-        Optional. The display name of the feedback.
-        
-    - name: comment
-      value: string
-      description: >
-        Optional. Optional text the user can provide for additional, unstructured context.
-        
+    - name: feedbackContexts
+      description: |
+        Required. One or more attribute/value pairs for constraining the feedback.
+      value:
+        - values: "{{ values }}"
+          attribute: "{{ attribute }}"
     - name: securityFeedbackId
-      value: string
-```
+      value: "{{ securityFeedbackId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -401,11 +399,11 @@ Updates a specific feedback report.
 ```sql
 UPDATE google.apigee.security_feedback
 SET 
-data__feedbackContexts = '{{ feedbackContexts }}',
+data__displayName = '{{ displayName }}',
+data__comment = '{{ comment }}',
 data__feedbackType = '{{ feedbackType }}',
 data__reason = '{{ reason }}',
-data__displayName = '{{ displayName }}',
-data__comment = '{{ comment }}'
+data__feedbackContexts = '{{ feedbackContexts }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND securityFeedbackId = '{{ securityFeedbackId }}' --required

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>instances</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>instances</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="instances" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.bigtableadmin.instances" /></td></tr>
 </tbody></table>
@@ -65,6 +66,16 @@ The following fields are returned by `SELECT` queries:
     <td>Required. The descriptive name for this instance as it appears in UIs. Can be changed at any time, but should be kept globally unique to avoid confusion.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="edition" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The edition of the instance. See Edition for details. (EDITION_UNSPECIFIED, ENTERPRISE, ENTERPRISE_PLUS)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="knowledgeCatalogRegion" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The region where Knowledge Catalog data is synced to and stored, including user-created aspects.</td>
+</tr>
+<tr>
     <td><CopyableCode code="labels" /></td>
     <td><code>object</code></td>
     <td>Labels are a flexible and lightweight mechanism for organizing cloud resources into groups that reflect a customer's organizational needs and deployment strategies. They can be used to filter resources and aggregate metrics. * Label keys must be between 1 and 63 characters long and must conform to the regular expression: `\p&#123;Ll&#125;\p&#123;Lo&#125;&#123;0,62&#125;`. * Label values must be between 0 and 63 characters long and must conform to the regular expression: `[\p&#123;Ll&#125;\p&#123;Lo&#125;\p&#123;N&#125;_-]&#123;0,63&#125;`. * No more than 64 labels can be associated with a given resource. * Keys and values must both be under 128 bytes.</td>
@@ -82,7 +93,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the instance.</td>
+    <td>Output only. The current state of the instance. (STATE_NOT_KNOWN, READY, CREATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tags" /></td>
@@ -92,7 +103,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>The type of the instance. Defaults to `PRODUCTION`.</td>
+    <td>The type of the instance. Defaults to `PRODUCTION`. (TYPE_UNSPECIFIED, PRODUCTION, DEVELOPMENT)</td>
 </tr>
 </tbody>
 </table>
@@ -124,6 +135,16 @@ The following fields are returned by `SELECT` queries:
     <td>Required. The descriptive name for this instance as it appears in UIs. Can be changed at any time, but should be kept globally unique to avoid confusion.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="edition" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The edition of the instance. See Edition for details. (EDITION_UNSPECIFIED, ENTERPRISE, ENTERPRISE_PLUS)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="knowledgeCatalogRegion" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The region where Knowledge Catalog data is synced to and stored, including user-created aspects.</td>
+</tr>
+<tr>
     <td><CopyableCode code="labels" /></td>
     <td><code>object</code></td>
     <td>Labels are a flexible and lightweight mechanism for organizing cloud resources into groups that reflect a customer's organizational needs and deployment strategies. They can be used to filter resources and aggregate metrics. * Label keys must be between 1 and 63 characters long and must conform to the regular expression: `\p&#123;Ll&#125;\p&#123;Lo&#125;&#123;0,62&#125;`. * Label values must be between 0 and 63 characters long and must conform to the regular expression: `[\p&#123;Ll&#125;\p&#123;Lo&#125;\p&#123;N&#125;_-]&#123;0,63&#125;`. * No more than 64 labels can be associated with a given resource. * Keys and values must both be under 128 bytes.</td>
@@ -141,7 +162,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the instance.</td>
+    <td>Output only. The current state of the instance. (STATE_NOT_KNOWN, READY, CREATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tags" /></td>
@@ -151,7 +172,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>The type of the instance. Defaults to `PRODUCTION`.</td>
+    <td>The type of the instance. Defaults to `PRODUCTION`. (TYPE_UNSPECIFIED, PRODUCTION, DEVELOPMENT)</td>
 </tr>
 </tbody>
 </table>
@@ -272,6 +293,8 @@ SELECT
 name,
 createTime,
 displayName,
+edition,
+knowledgeCatalogRegion,
 labels,
 satisfiesPzi,
 satisfiesPzs,
@@ -293,6 +316,8 @@ SELECT
 name,
 createTime,
 displayName,
+edition,
+knowledgeCatalogRegion,
 labels,
 satisfiesPzi,
 satisfiesPzs,
@@ -323,17 +348,17 @@ Create an instance within a project. Note that exactly one of Cluster.serve_node
 
 ```sql
 INSERT INTO google.bigtableadmin.instances (
-data__instance,
 data__clusters,
-data__instanceId,
 data__parent,
+data__instanceId,
+data__instance,
 projectsId
 )
 SELECT 
-'{{ instance }}',
 '{{ clusters }}',
-'{{ instanceId }}',
 '{{ parent }}',
+'{{ instanceId }}',
+'{{ instance }}',
 '{{ projectsId }}'
 RETURNING
 name,
@@ -346,34 +371,41 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: instances
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the instances resource.
-    - name: instance
-      value: object
-      description: >
-        Required. The instance to create. Fields marked `OutputOnly` must be left blank.
-        
     - name: clusters
-      value: object
-      description: >
-        Required. The clusters to be created within the instance, mapped by desired cluster ID, e.g., just `mycluster` rather than `projects/myproject/instances/myinstance/clusters/mycluster`. Fields marked `OutputOnly` must be left blank.
-        
-    - name: instanceId
-      value: string
-      description: >
-        Required. The ID to be used when referring to the new instance within its project, e.g., just `myinstance` rather than `projects/myproject/instances/myinstance`.
-        
+      value: "{{ clusters }}"
+      description: |
+        Required. The clusters to be created within the instance, mapped by desired cluster ID, e.g., just \`mycluster\` rather than \`projects/myproject/instances/myinstance/clusters/mycluster\`. Fields marked \`OutputOnly\` must be left blank.
     - name: parent
-      value: string
-      description: >
-        Required. The unique name of the project in which to create the new instance. Values are of the form `projects/{project}`.
-        
-```
+      value: "{{ parent }}"
+      description: |
+        Required. The unique name of the project in which to create the new instance. Values are of the form \`projects/{project}\`.
+    - name: instanceId
+      value: "{{ instanceId }}"
+      description: |
+        Required. The ID to be used when referring to the new instance within its project, e.g., just \`myinstance\` rather than \`projects/myproject/instances/myinstance\`.
+    - name: instance
+      description: |
+        Required. The instance to create. Fields marked \`OutputOnly\` must be left blank.
+      value:
+        satisfiesPzi: {{ satisfiesPzi }}
+        tags: "{{ tags }}"
+        edition: "{{ edition }}"
+        labels: "{{ labels }}"
+        knowledgeCatalogRegion: "{{ knowledgeCatalogRegion }}"
+        type: "{{ type }}"
+        createTime: "{{ createTime }}"
+        satisfiesPzs: {{ satisfiesPzs }}
+        state: "{{ state }}"
+        name: "{{ name }}"
+        displayName: "{{ displayName }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -394,10 +426,11 @@ Updates an instance within a project. This method updates only the display name 
 REPLACE google.bigtableadmin.instances
 SET 
 data__tags = '{{ tags }}',
-data__displayName = '{{ displayName }}',
-data__type = '{{ type }}',
+data__edition = '{{ edition }}',
 data__labels = '{{ labels }}',
-data__name = '{{ name }}'
+data__type = '{{ type }}',
+data__name = '{{ name }}',
+data__displayName = '{{ displayName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instancesId = '{{ instancesId }}' --required
@@ -405,6 +438,8 @@ RETURNING
 name,
 createTime,
 displayName,
+edition,
+knowledgeCatalogRegion,
 labels,
 satisfiesPzi,
 satisfiesPzs,
@@ -458,10 +493,11 @@ EXEC google.bigtableadmin.instances.partial_update_instance
 @@json=
 '{
 "tags": "{{ tags }}", 
-"displayName": "{{ displayName }}", 
-"type": "{{ type }}", 
+"edition": "{{ edition }}", 
 "labels": "{{ labels }}", 
-"name": "{{ name }}"
+"type": "{{ type }}", 
+"name": "{{ name }}", 
+"displayName": "{{ displayName }}"
 }'
 ;
 ```

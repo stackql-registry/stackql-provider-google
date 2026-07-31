@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>migrating_vms</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>migrating_vms</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="migrating_vms" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.vmmigration.migrating_vms" /></td></tr>
 </tbody></table>
@@ -102,7 +103,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>Output only. Provides details on the state of the Migrating VM in case of an error in replication. (id: Status)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: Status)</td>
 </tr>
 <tr>
     <td><CopyableCode code="expiration" /></td>
@@ -152,7 +153,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the MigratingVm.</td>
+    <td>Output only. State of the MigratingVm. (STATE_UNSPECIFIED, PENDING, READY, FIRST_SYNC, ACTIVE, CUTTING_OVER, CUTOVER, FINAL_SYNC, PAUSED, FINALIZING, FINALIZED, ERROR, EXPIRED, FINALIZED_EXPIRED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateTime" /></td>
@@ -236,7 +237,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="error" /></td>
     <td><code>object</code></td>
-    <td>Output only. Provides details on the state of the Migrating VM in case of an error in replication. (id: Status)</td>
+    <td>The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). (id: Status)</td>
 </tr>
 <tr>
     <td><CopyableCode code="expiration" /></td>
@@ -286,7 +287,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the MigratingVm.</td>
+    <td>Output only. State of the MigratingVm. (STATE_UNSPECIFIED, PENDING, READY, FIRST_SYNC, ACTIVE, CUTTING_OVER, CUTOVER, FINAL_SYNC, PAUSED, FINALIZING, FINALIZED, ERROR, EXPIRED, FINALIZED_EXPIRED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateTime" /></td>
@@ -334,7 +335,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-view"><code>view</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>Lists MigratingVms in a given Source.</td>
 </tr>
 <tr>
@@ -359,6 +360,27 @@ The following methods are available for this resource:
     <td>Deletes a single MigratingVm.</td>
 </tr>
 <tr>
+    <td><a href="#finalize_migration"><CopyableCode code="finalize_migration" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-migratingVmsId"><code>migratingVmsId</code></a></td>
+    <td></td>
+    <td>Marks a migration as completed, deleting migration resources that are no longer being used. Only applicable after cutover is done.</td>
+</tr>
+<tr>
+    <td><a href="#pause_migration"><CopyableCode code="pause_migration" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-migratingVmsId"><code>migratingVmsId</code></a></td>
+    <td></td>
+    <td>Pauses a migration for a VM. If cycle tasks are running they will be cancelled, preserving source task data. Further replication cycles will not be triggered while the VM is paused.</td>
+</tr>
+<tr>
+    <td><a href="#extend_migration"><CopyableCode code="extend_migration" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-migratingVmsId"><code>migratingVmsId</code></a></td>
+    <td></td>
+    <td>Extend the migrating VM time to live.</td>
+</tr>
+<tr>
     <td><a href="#start_migration"><CopyableCode code="start_migration" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-migratingVmsId"><code>migratingVmsId</code></a></td>
@@ -371,27 +393,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-migratingVmsId"><code>migratingVmsId</code></a></td>
     <td></td>
     <td>Resumes a migration for a VM. When called on a paused migration, will start the process of uploading data and creating snapshots; when called on a completed cut-over migration, will update the migration to active state and start the process of uploading data and creating snapshots.</td>
-</tr>
-<tr>
-    <td><a href="#pause_migration"><CopyableCode code="pause_migration" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-migratingVmsId"><code>migratingVmsId</code></a></td>
-    <td></td>
-    <td>Pauses a migration for a VM. If cycle tasks are running they will be cancelled, preserving source task data. Further replication cycles will not be triggered while the VM is paused.</td>
-</tr>
-<tr>
-    <td><a href="#finalize_migration"><CopyableCode code="finalize_migration" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-migratingVmsId"><code>migratingVmsId</code></a></td>
-    <td></td>
-    <td>Marks a migration as completed, deleting migration resources that are no longer being used. Only applicable after cutover is done.</td>
-</tr>
-<tr>
-    <td><a href="#extend_migration"><CopyableCode code="extend_migration" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-migratingVmsId"><code>migratingVmsId</code></a></td>
-    <td></td>
-    <td>Extend the migrating VM time to live.</td>
 </tr>
 </tbody>
 </table>
@@ -554,8 +555,8 @@ FROM google.vmmigration.migrating_vms
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND sourcesId = '{{ sourcesId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND view = '{{ view }}'
@@ -580,13 +581,13 @@ Creates a new MigratingVm in a given Source.
 
 ```sql
 INSERT INTO google.vmmigration.migrating_vms (
+data__sourceVmId,
+data__labels,
+data__description,
+data__displayName,
 data__computeEngineTargetDefaults,
 data__computeEngineDisksTargetDefaults,
-data__sourceVmId,
-data__displayName,
-data__description,
 data__policy,
-data__labels,
 projectsId,
 locationsId,
 sourcesId,
@@ -594,13 +595,13 @@ migratingVmId,
 requestId
 )
 SELECT 
+'{{ sourceVmId }}',
+'{{ labels }}',
+'{{ description }}',
+'{{ displayName }}',
 '{{ computeEngineTargetDefaults }}',
 '{{ computeEngineDisksTargetDefaults }}',
-'{{ sourceVmId }}',
-'{{ displayName }}',
-'{{ description }}',
 '{{ policy }}',
-'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ sourcesId }}',
@@ -617,59 +618,159 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: migrating_vms
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the migrating_vms resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the migrating_vms resource.
     - name: sourcesId
-      value: string
+      value: "{{ sourcesId }}"
       description: Required parameter for the migrating_vms resource.
-    - name: computeEngineTargetDefaults
-      value: object
-      description: >
-        Details of the target VM in Compute Engine.
-        
-    - name: computeEngineDisksTargetDefaults
-      value: object
-      description: >
-        Details of the target Persistent Disks in Compute Engine.
-        
     - name: sourceVmId
-      value: string
-      description: >
+      value: "{{ sourceVmId }}"
+      description: |
         The unique ID of the VM in the source. The VM's name in vSphere can be changed, so this is not the VM's name but rather its moRef id. This id is of the form vm-.
-        
-    - name: displayName
-      value: string
-      description: >
-        The display name attached to the MigratingVm by the user.
-        
-    - name: description
-      value: string
-      description: >
-        The description attached to the migrating VM by the user.
-        
-    - name: policy
-      value: object
-      description: >
-        The replication schedule policy.
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         The labels of the migrating VM.
-        
+    - name: description
+      value: "{{ description }}"
+      description: |
+        The description attached to the migrating VM by the user.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        The display name attached to the MigratingVm by the user.
+    - name: computeEngineTargetDefaults
+      description: |
+        Details of the target VM in Compute Engine.
+      value:
+        bootConversion: "{{ bootConversion }}"
+        vmName: "{{ vmName }}"
+        machineType: "{{ machineType }}"
+        appliedLicense:
+          type: "{{ type }}"
+          osLicense: "{{ osLicense }}"
+        enableIntegrityMonitoring: {{ enableIntegrityMonitoring }}
+        licenseType: "{{ licenseType }}"
+        disks:
+          - diskName: "{{ diskName }}"
+            vmAttachmentDetails:
+              deviceName: "{{ deviceName }}"
+            additionalLabels: "{{ additionalLabels }}"
+            diskType: "{{ diskType }}"
+            encryption:
+              kmsKey: "{{ kmsKey }}"
+            sourceDiskNumber: {{ sourceDiskNumber }}
+        diskType: "{{ diskType }}"
+        encryption:
+          kmsKey: "{{ kmsKey }}"
+        storagePool: "{{ storagePool }}"
+        targetProject: "{{ targetProject }}"
+        adaptationModifiers:
+          - modifier: "{{ modifier }}"
+            value: "{{ value }}"
+        networkInterfaces:
+          - network: "{{ network }}"
+            subnetwork: "{{ subnetwork }}"
+            networkTier: "{{ networkTier }}"
+            internalIp: "{{ internalIp }}"
+            externalIp: "{{ externalIp }}"
+        enableVtpm: {{ enableVtpm }}
+        zone: "{{ zone }}"
+        diskReplicaZones:
+          - "{{ diskReplicaZones }}"
+        hostname: "{{ hostname }}"
+        metadata: "{{ metadata }}"
+        networkTags:
+          - "{{ networkTags }}"
+        bootOption: "{{ bootOption }}"
+        secureBoot: {{ secureBoot }}
+        serviceAccount: "{{ serviceAccount }}"
+        labels: "{{ labels }}"
+        additionalLicenses:
+          - "{{ additionalLicenses }}"
+        computeScheduling:
+          minNodeCpus: {{ minNodeCpus }}
+          onHostMaintenance: "{{ onHostMaintenance }}"
+          restartType: "{{ restartType }}"
+          nodeAffinities:
+            - key: "{{ key }}"
+              values: "{{ values }}"
+              operator: "{{ operator }}"
+        machineTypeSeries: "{{ machineTypeSeries }}"
+    - name: computeEngineDisksTargetDefaults
+      description: |
+        Details of the target Persistent Disks in Compute Engine.
+      value:
+        zone: "{{ zone }}"
+        disksTargetDefaults: "{{ disksTargetDefaults }}"
+        vmTargetDefaults:
+          computeScheduling:
+            minNodeCpus: {{ minNodeCpus }}
+            onHostMaintenance: "{{ onHostMaintenance }}"
+            restartType: "{{ restartType }}"
+            nodeAffinities:
+              - key: "{{ key }}"
+                values: "{{ values }}"
+                operator: "{{ operator }}"
+          machineTypeSeries: "{{ machineTypeSeries }}"
+          additionalLicenses:
+            - "{{ additionalLicenses }}"
+          labels: "{{ labels }}"
+          networkInterfaces:
+            - network: "{{ network }}"
+              subnetwork: "{{ subnetwork }}"
+              networkTier: "{{ networkTier }}"
+              internalIp: "{{ internalIp }}"
+              externalIp: "{{ externalIp }}"
+          enableVtpm: {{ enableVtpm }}
+          serviceAccount: "{{ serviceAccount }}"
+          enableIntegrityMonitoring: {{ enableIntegrityMonitoring }}
+          secureBoot: {{ secureBoot }}
+          bootDiskDefaults:
+            diskType: "{{ diskType }}"
+            encryption:
+              kmsKey: "{{ kmsKey }}"
+            image:
+              sourceImage: "{{ sourceImage }}"
+            deviceName: "{{ deviceName }}"
+            diskName: "{{ diskName }}"
+          encryption:
+            kmsKey: "{{ kmsKey }}"
+          metadata: "{{ metadata }}"
+          hostname: "{{ hostname }}"
+          machineType: "{{ machineType }}"
+          networkTags:
+            - "{{ networkTags }}"
+          vmName: "{{ vmName }}"
+        targetProject: "{{ targetProject }}"
+        disks:
+          - diskName: "{{ diskName }}"
+            vmAttachmentDetails:
+              deviceName: "{{ deviceName }}"
+            additionalLabels: "{{ additionalLabels }}"
+            diskType: "{{ diskType }}"
+            encryption:
+              kmsKey: "{{ kmsKey }}"
+            sourceDiskNumber: {{ sourceDiskNumber }}
+    - name: policy
+      description: |
+        The replication schedule policy.
+      value:
+        idleDuration: "{{ idleDuration }}"
+        skipOsAdaptation: {{ skipOsAdaptation }}
     - name: migratingVmId
-      value: string
+      value: "{{ migratingVmId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -689,13 +790,13 @@ Updates the parameters of a single MigratingVm.
 ```sql
 UPDATE google.vmmigration.migrating_vms
 SET 
+data__sourceVmId = '{{ sourceVmId }}',
+data__labels = '{{ labels }}',
+data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
 data__computeEngineTargetDefaults = '{{ computeEngineTargetDefaults }}',
 data__computeEngineDisksTargetDefaults = '{{ computeEngineDisksTargetDefaults }}',
-data__sourceVmId = '{{ sourceVmId }}',
-data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
-data__policy = '{{ policy }}',
-data__labels = '{{ labels }}'
+data__policy = '{{ policy }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -741,34 +842,21 @@ AND migratingVmsId = '{{ migratingVmsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="start_migration"
+    defaultValue="finalize_migration"
     values={[
-        { label: 'start_migration', value: 'start_migration' },
-        { label: 'resume_migration', value: 'resume_migration' },
-        { label: 'pause_migration', value: 'pause_migration' },
         { label: 'finalize_migration', value: 'finalize_migration' },
-        { label: 'extend_migration', value: 'extend_migration' }
+        { label: 'pause_migration', value: 'pause_migration' },
+        { label: 'extend_migration', value: 'extend_migration' },
+        { label: 'start_migration', value: 'start_migration' },
+        { label: 'resume_migration', value: 'resume_migration' }
     ]}
 >
-<TabItem value="start_migration">
+<TabItem value="finalize_migration">
 
-Starts migration for a VM. Starts the process of uploading data and creating snapshots, in replication cycles scheduled by the policy.
-
-```sql
-EXEC google.vmmigration.migrating_vms.start_migration 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@sourcesId='{{ sourcesId }}' --required, 
-@migratingVmsId='{{ migratingVmsId }}' --required
-;
-```
-</TabItem>
-<TabItem value="resume_migration">
-
-Resumes a migration for a VM. When called on a paused migration, will start the process of uploading data and creating snapshots; when called on a completed cut-over migration, will update the migration to active state and start the process of uploading data and creating snapshots.
+Marks a migration as completed, deleting migration resources that are no longer being used. Only applicable after cutover is done.
 
 ```sql
-EXEC google.vmmigration.migrating_vms.resume_migration 
+EXEC google.vmmigration.migrating_vms.finalize_migration 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @sourcesId='{{ sourcesId }}' --required, 
@@ -789,12 +877,12 @@ EXEC google.vmmigration.migrating_vms.pause_migration
 ;
 ```
 </TabItem>
-<TabItem value="finalize_migration">
+<TabItem value="extend_migration">
 
-Marks a migration as completed, deleting migration resources that are no longer being used. Only applicable after cutover is done.
+Extend the migrating VM time to live.
 
 ```sql
-EXEC google.vmmigration.migrating_vms.finalize_migration 
+EXEC google.vmmigration.migrating_vms.extend_migration 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @sourcesId='{{ sourcesId }}' --required, 
@@ -802,12 +890,25 @@ EXEC google.vmmigration.migrating_vms.finalize_migration
 ;
 ```
 </TabItem>
-<TabItem value="extend_migration">
+<TabItem value="start_migration">
 
-Extend the migrating VM time to live.
+Starts migration for a VM. Starts the process of uploading data and creating snapshots, in replication cycles scheduled by the policy.
 
 ```sql
-EXEC google.vmmigration.migrating_vms.extend_migration 
+EXEC google.vmmigration.migrating_vms.start_migration 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@sourcesId='{{ sourcesId }}' --required, 
+@migratingVmsId='{{ migratingVmsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="resume_migration">
+
+Resumes a migration for a VM. When called on a paused migration, will start the process of uploading data and creating snapshots; when called on a completed cut-over migration, will update the migration to active state and start the process of uploading data and creating snapshots.
+
+```sql
+EXEC google.vmmigration.migrating_vms.resume_migration 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @sourcesId='{{ sourcesId }}' --required, 

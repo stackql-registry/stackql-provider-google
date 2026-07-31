@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>cmek_config</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>cmek_config</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="cmek_config" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudscheduler.cmek_config" /></td></tr>
 </tbody></table>
@@ -166,8 +167,8 @@ Initializes or Updates the a scheduler config.
 ```sql
 UPDATE google.cloudscheduler.cmek_config
 SET 
-data__name = '{{ name }}',
-data__kmsKeyName = '{{ kmsKeyName }}'
+data__kmsKeyName = '{{ kmsKeyName }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

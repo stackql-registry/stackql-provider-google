@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>service_account</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>service_account</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="service_account" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.bigquery.service_account" /></td></tr>
 </tbody></table>
@@ -83,7 +84,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectId"><code>projectId</code></a></td>
     <td></td>
-    <td>RPC to get the service account for a project used for interactions with Google Cloud KMS</td>
+    <td>RPC to get the service account for a project used for interactions with Google Cloud KMS. Requires the `bigquery.jobs.create` permission on the project resource. This permission is required to authorize the retrieval of the project's service identity for technical management tasks like encryption configuration.</td>
 </tr>
 </tbody>
 </table>
@@ -119,7 +120,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get_service_account">
 
-RPC to get the service account for a project used for interactions with Google Cloud KMS
+RPC to get the service account for a project used for interactions with Google Cloud KMS. Requires the `bigquery.jobs.create` permission on the project resource. This permission is required to authorize the retrieval of the project's service identity for technical management tasks like encryption configuration.
 
 ```sql
 SELECT

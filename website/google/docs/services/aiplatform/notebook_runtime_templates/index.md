@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>notebook_runtime_templates</cod
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>notebook_runtime_templates</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="notebook_runtime_templates" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.notebook_runtime_templates" /></td></tr>
 </tbody></table>
@@ -122,7 +123,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="notebookRuntimeType" /></td>
     <td><code>string</code></td>
-    <td>Optional. Immutable. The type of the notebook runtime template.</td>
+    <td>Optional. Immutable. The type of the notebook runtime template. (NOTEBOOK_RUNTIME_TYPE_UNSPECIFIED, USER_DEFINED, ONE_CLICK)</td>
 </tr>
 <tr>
     <td><CopyableCode code="reservationAffinity" /></td>
@@ -236,7 +237,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="notebookRuntimeType" /></td>
     <td><code>string</code></td>
-    <td>Optional. Immutable. The type of the notebook runtime template.</td>
+    <td>Optional. Immutable. The type of the notebook runtime template. (NOTEBOOK_RUNTIME_TYPE_UNSPECIFIED, USER_DEFINED, ONE_CLICK)</td>
 </tr>
 <tr>
     <td><CopyableCode code="reservationAffinity" /></td>
@@ -294,7 +295,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
     <td>Lists NotebookRuntimeTemplates in a Location.</td>
 </tr>
 <tr>
@@ -458,11 +459,11 @@ updateTime
 FROM google.aiplatform.notebook_runtime_templates
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND readMask = '{{ readMask }}'
 AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND readMask = '{{ readMask }}'
 ;
 ```
 </TabItem>
@@ -484,45 +485,45 @@ Creates a NotebookRuntimeTemplate.
 
 ```sql
 INSERT INTO google.aiplatform.notebook_runtime_templates (
-data__description,
-data__notebookRuntimeType,
-data__serviceAccount,
-data__displayName,
-data__reservationAffinity,
-data__networkSpec,
-data__name,
 data__encryptionSpec,
 data__dataPersistentDiskSpec,
-data__networkTags,
-data__etag,
-data__eucConfig,
-data__labels,
-data__shieldedVmConfig,
-data__machineSpec,
-data__softwareConfig,
+data__networkSpec,
 data__idleShutdownConfig,
+data__notebookRuntimeType,
+data__name,
+data__machineSpec,
+data__labels,
+data__serviceAccount,
+data__shieldedVmConfig,
+data__description,
+data__softwareConfig,
+data__eucConfig,
+data__networkTags,
+data__reservationAffinity,
+data__displayName,
+data__etag,
 projectsId,
 locationsId,
 notebookRuntimeTemplateId
 )
 SELECT 
-'{{ description }}',
-'{{ notebookRuntimeType }}',
-'{{ serviceAccount }}',
-'{{ displayName }}',
-'{{ reservationAffinity }}',
-'{{ networkSpec }}',
-'{{ name }}',
 '{{ encryptionSpec }}',
 '{{ dataPersistentDiskSpec }}',
-'{{ networkTags }}',
-'{{ etag }}',
-'{{ eucConfig }}',
-'{{ labels }}',
-'{{ shieldedVmConfig }}',
-'{{ machineSpec }}',
-'{{ softwareConfig }}',
+'{{ networkSpec }}',
 '{{ idleShutdownConfig }}',
+'{{ notebookRuntimeType }}',
+'{{ name }}',
+'{{ machineSpec }}',
+'{{ labels }}',
+'{{ serviceAccount }}',
+'{{ shieldedVmConfig }}',
+'{{ description }}',
+'{{ softwareConfig }}',
+'{{ eucConfig }}',
+'{{ networkTags }}',
+'{{ reservationAffinity }}',
+'{{ displayName }}',
+'{{ etag }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ notebookRuntimeTemplateId }}'
@@ -537,105 +538,124 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: notebook_runtime_templates
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the notebook_runtime_templates resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the notebook_runtime_templates resource.
-    - name: description
-      value: string
-      description: >
-        The description of the NotebookRuntimeTemplate.
-        
-    - name: notebookRuntimeType
-      value: string
-      description: >
-        Optional. Immutable. The type of the notebook runtime template.
-        
-      valid_values: ['NOTEBOOK_RUNTIME_TYPE_UNSPECIFIED', 'USER_DEFINED', 'ONE_CLICK']
-    - name: serviceAccount
-      value: string
-      description: >
-        Deprecated: This field is ignored and the "Vertex AI Notebook Service Account" (service-PROJECT_NUMBER@gcp-sa-aiplatform-vm.iam.gserviceaccount.com) is used for the runtime workload identity. See https://cloud.google.com/iam/docs/service-agents#vertex-ai-notebook-service-account for more details. For NotebookExecutionJob, use NotebookExecutionJob.service_account instead. The service account that the runtime workload runs as. You can use any service account within the same project, but you must have the service account user permission to use the instance. If not specified, the [Compute Engine default service account](https://cloud.google.com/compute/docs/access/service-accounts#default_service_account) is used.
-        
-    - name: displayName
-      value: string
-      description: >
-        Required. The display name of the NotebookRuntimeTemplate. The name can be up to 128 characters long and can consist of any UTF-8 characters.
-        
-    - name: reservationAffinity
-      value: object
-      description: >
-        Optional. Reservation Affinity of the notebook runtime template.
-        
-    - name: networkSpec
-      value: object
-      description: >
-        Optional. Network spec.
-        
-    - name: name
-      value: string
-      description: >
-        The resource name of the NotebookRuntimeTemplate.
-        
     - name: encryptionSpec
-      value: object
-      description: >
+      description: |
         Customer-managed encryption key spec for the notebook runtime.
-        
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
     - name: dataPersistentDiskSpec
-      value: object
-      description: >
+      description: |
         Optional. The specification of persistent disk attached to the runtime as data disk storage.
-        
-    - name: networkTags
-      value: array
-      description: >
-        Optional. The Compute Engine tags to add to runtime (see [Tagging instances](https://cloud.google.com/vpc/docs/add-remove-network-tags)).
-        
-    - name: etag
-      value: string
-      description: >
-        Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
-        
-    - name: eucConfig
-      value: object
-      description: >
-        EUC configuration of the NotebookRuntimeTemplate.
-        
-    - name: labels
-      value: object
-      description: >
-        The labels with user-defined metadata to organize the NotebookRuntimeTemplates. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
-        
-    - name: shieldedVmConfig
-      value: object
-      description: >
-        Optional. Immutable. Runtime Shielded VM spec.
-        
-    - name: machineSpec
-      value: object
-      description: >
-        Optional. Immutable. The specification of a single machine for the template.
-        
-    - name: softwareConfig
-      value: object
-      description: >
-        Optional. The notebook software configuration of the notebook runtime.
-        
+      value:
+        diskType: "{{ diskType }}"
+        diskSizeGb: "{{ diskSizeGb }}"
+    - name: networkSpec
+      description: |
+        Optional. Network spec.
+      value:
+        network: "{{ network }}"
+        enableInternetAccess: {{ enableInternetAccess }}
+        subnetwork: "{{ subnetwork }}"
     - name: idleShutdownConfig
-      value: object
-      description: >
+      description: |
         The idle shutdown configuration of NotebookRuntimeTemplate. This config will only be set when idle shutdown is enabled.
-        
+      value:
+        idleTimeout: "{{ idleTimeout }}"
+        idleShutdownDisabled: {{ idleShutdownDisabled }}
+    - name: notebookRuntimeType
+      value: "{{ notebookRuntimeType }}"
+      description: |
+        Optional. Immutable. The type of the notebook runtime template.
+      valid_values: ['NOTEBOOK_RUNTIME_TYPE_UNSPECIFIED', 'USER_DEFINED', 'ONE_CLICK']
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The resource name of the NotebookRuntimeTemplate.
+    - name: machineSpec
+      description: |
+        Optional. Immutable. The specification of a single machine for the template.
+      value:
+        machineType: "{{ machineType }}"
+        tpuTopology: "{{ tpuTopology }}"
+        reservationAffinity:
+          reservationAffinityType: "{{ reservationAffinityType }}"
+          key: "{{ key }}"
+          values:
+            - "{{ values }}"
+        acceleratorCount: {{ acceleratorCount }}
+        acceleratorType: "{{ acceleratorType }}"
+        gpuPartitionSize: "{{ gpuPartitionSize }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        The labels with user-defined metadata to organize the NotebookRuntimeTemplates. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
+    - name: serviceAccount
+      value: "{{ serviceAccount }}"
+      description: |
+        Deprecated: This field is ignored and the "Vertex AI Notebook Service Account" (service-PROJECT_NUMBER@gcp-sa-aiplatform-vm.iam.gserviceaccount.com) is used for the runtime workload identity. See https://cloud.google.com/iam/docs/service-agents#vertex-ai-notebook-service-account for more details. For NotebookExecutionJob, use NotebookExecutionJob.service_account instead. The service account that the runtime workload runs as. You can use any service account within the same project, but you must have the service account user permission to use the instance. If not specified, the [Compute Engine default service account](https://cloud.google.com/compute/docs/access/service-accounts#default_service_account) is used.
+    - name: shieldedVmConfig
+      description: |
+        Optional. Immutable. Runtime Shielded VM spec.
+      value:
+        enableSecureBoot: {{ enableSecureBoot }}
+    - name: description
+      value: "{{ description }}"
+      description: |
+        The description of the NotebookRuntimeTemplate.
+    - name: softwareConfig
+      description: |
+        Optional. The notebook software configuration of the notebook runtime.
+      value:
+        postStartupScriptConfig:
+          postStartupScript: "{{ postStartupScript }}"
+          postStartupScriptUrl: "{{ postStartupScriptUrl }}"
+          postStartupScriptBehavior: "{{ postStartupScriptBehavior }}"
+        colabImage:
+          releaseName: "{{ releaseName }}"
+          description: "{{ description }}"
+        env:
+          - name: "{{ name }}"
+            value: "{{ value }}"
+    - name: eucConfig
+      description: |
+        EUC configuration of the NotebookRuntimeTemplate.
+      value:
+        eucDisabled: {{ eucDisabled }}
+        bypassActasCheck: {{ bypassActasCheck }}
+    - name: networkTags
+      value:
+        - "{{ networkTags }}"
+      description: |
+        Optional. The Compute Engine tags to add to runtime (see [Tagging instances](https://cloud.google.com/vpc/docs/add-remove-network-tags)).
+    - name: reservationAffinity
+      description: |
+        Optional. Reservation Affinity of the notebook runtime template.
+      value:
+        key: "{{ key }}"
+        values:
+          - "{{ values }}"
+        consumeReservationType: "{{ consumeReservationType }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Required. The display name of the NotebookRuntimeTemplate. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
     - name: notebookRuntimeTemplateId
-      value: string
-```
+      value: "{{ notebookRuntimeTemplateId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -655,23 +675,23 @@ Updates a NotebookRuntimeTemplate.
 ```sql
 UPDATE google.aiplatform.notebook_runtime_templates
 SET 
-data__description = '{{ description }}',
-data__notebookRuntimeType = '{{ notebookRuntimeType }}',
-data__serviceAccount = '{{ serviceAccount }}',
-data__displayName = '{{ displayName }}',
-data__reservationAffinity = '{{ reservationAffinity }}',
-data__networkSpec = '{{ networkSpec }}',
-data__name = '{{ name }}',
 data__encryptionSpec = '{{ encryptionSpec }}',
 data__dataPersistentDiskSpec = '{{ dataPersistentDiskSpec }}',
-data__networkTags = '{{ networkTags }}',
-data__etag = '{{ etag }}',
-data__eucConfig = '{{ eucConfig }}',
-data__labels = '{{ labels }}',
-data__shieldedVmConfig = '{{ shieldedVmConfig }}',
+data__networkSpec = '{{ networkSpec }}',
+data__idleShutdownConfig = '{{ idleShutdownConfig }}',
+data__notebookRuntimeType = '{{ notebookRuntimeType }}',
+data__name = '{{ name }}',
 data__machineSpec = '{{ machineSpec }}',
+data__labels = '{{ labels }}',
+data__serviceAccount = '{{ serviceAccount }}',
+data__shieldedVmConfig = '{{ shieldedVmConfig }}',
+data__description = '{{ description }}',
 data__softwareConfig = '{{ softwareConfig }}',
-data__idleShutdownConfig = '{{ idleShutdownConfig }}'
+data__eucConfig = '{{ eucConfig }}',
+data__networkTags = '{{ networkTags }}',
+data__reservationAffinity = '{{ reservationAffinity }}',
+data__displayName = '{{ displayName }}',
+data__etag = '{{ etag }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

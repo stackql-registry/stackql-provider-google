@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>service_lb_policies</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>service_lb_policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="service_lb_policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networkservices.service_lb_policies" /></td></tr>
 </tbody></table>
@@ -87,7 +88,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="loadBalancingAlgorithm" /></td>
     <td><code>string</code></td>
-    <td>Optional. The type of load balancing algorithm to be used. The default behavior is WATERFALL_BY_REGION.</td>
+    <td>Optional. The type of load balancing algorithm to be used. The default behavior is WATERFALL_BY_REGION. (LOAD_BALANCING_ALGORITHM_UNSPECIFIED, SPRAY_TO_WORLD, SPRAY_TO_REGION, WATERFALL_BY_REGION, WATERFALL_BY_ZONE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -146,7 +147,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="loadBalancingAlgorithm" /></td>
     <td><code>string</code></td>
-    <td>Optional. The type of load balancing algorithm to be used. The default behavior is WATERFALL_BY_REGION.</td>
+    <td>Optional. The type of load balancing algorithm to be used. The default behavior is WATERFALL_BY_REGION. (LOAD_BALANCING_ALGORITHM_UNSPECIFIED, SPRAY_TO_WORLD, SPRAY_TO_REGION, WATERFALL_BY_REGION, WATERFALL_BY_ZONE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -184,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists ServiceLbPolicies in a given project and location.</td>
 </tr>
 <tr>
@@ -311,8 +312,8 @@ updateTime
 FROM google.networkservices.service_lb_policies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -335,24 +336,24 @@ Creates a new ServiceLbPolicy in a given project and location.
 ```sql
 INSERT INTO google.networkservices.service_lb_policies (
 data__name,
-data__description,
-data__isolationConfig,
 data__labels,
+data__description,
 data__loadBalancingAlgorithm,
-data__failoverConfig,
 data__autoCapacityDrain,
+data__failoverConfig,
+data__isolationConfig,
 projectsId,
 locationsId,
 serviceLbPolicyId
 )
 SELECT 
 '{{ name }}',
-'{{ description }}',
-'{{ isolationConfig }}',
 '{{ labels }}',
+'{{ description }}',
 '{{ loadBalancingAlgorithm }}',
-'{{ failoverConfig }}',
 '{{ autoCapacityDrain }}',
+'{{ failoverConfig }}',
+'{{ isolationConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ serviceLbPolicyId }}'
@@ -367,55 +368,52 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: service_lb_policies
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the service_lb_policies resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the service_lb_policies resource.
     - name: name
-      value: string
-      description: >
-        Identifier. Name of the ServiceLbPolicy resource. It matches pattern `projects/{project}/locations/{location}/serviceLbPolicies/{service_lb_policy_name}`.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. A free-text description of the resource. Max length 1024 characters.
-        
-    - name: isolationConfig
-      value: object
-      description: >
-        Optional. Configuration to provide isolation support for the associated Backend Service.
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. Name of the ServiceLbPolicy resource. It matches pattern \`projects/{project}/locations/{location}/serviceLbPolicies/{service_lb_policy_name}\`.
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. Set of label tags associated with the ServiceLbPolicy resource.
-        
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. A free-text description of the resource. Max length 1024 characters.
     - name: loadBalancingAlgorithm
-      value: string
-      description: >
+      value: "{{ loadBalancingAlgorithm }}"
+      description: |
         Optional. The type of load balancing algorithm to be used. The default behavior is WATERFALL_BY_REGION.
-        
       valid_values: ['LOAD_BALANCING_ALGORITHM_UNSPECIFIED', 'SPRAY_TO_WORLD', 'SPRAY_TO_REGION', 'WATERFALL_BY_REGION', 'WATERFALL_BY_ZONE']
-    - name: failoverConfig
-      value: object
-      description: >
-        Optional. Configuration related to health based failover.
-        
     - name: autoCapacityDrain
-      value: object
-      description: >
+      description: |
         Optional. Configuration to automatically move traffic away for unhealthy IG/NEG for the associated Backend Service.
-        
+      value:
+        enable: {{ enable }}
+    - name: failoverConfig
+      description: |
+        Optional. Configuration related to health based failover.
+      value:
+        failoverHealthThreshold: {{ failoverHealthThreshold }}
+    - name: isolationConfig
+      description: |
+        Optional. Configuration to provide isolation support for the associated Backend Service.
+      value:
+        isolationGranularity: "{{ isolationGranularity }}"
+        isolationMode: "{{ isolationMode }}"
     - name: serviceLbPolicyId
-      value: string
-```
+      value: "{{ serviceLbPolicyId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -436,12 +434,12 @@ Updates the parameters of a single ServiceLbPolicy.
 UPDATE google.networkservices.service_lb_policies
 SET 
 data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__isolationConfig = '{{ isolationConfig }}',
 data__labels = '{{ labels }}',
+data__description = '{{ description }}',
 data__loadBalancingAlgorithm = '{{ loadBalancingAlgorithm }}',
+data__autoCapacityDrain = '{{ autoCapacityDrain }}',
 data__failoverConfig = '{{ failoverConfig }}',
-data__autoCapacityDrain = '{{ autoCapacityDrain }}'
+data__isolationConfig = '{{ isolationConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

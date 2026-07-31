@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>gateways</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>gateways</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="gateways" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigateway.gateways" /></td></tr>
 </tbody></table>
@@ -82,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the Gateway.</td>
+    <td>Output only. The current state of the Gateway. (STATE_UNSPECIFIED, CREATING, ACTIVE, FAILED, DELETING, UPDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -136,7 +137,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the Gateway.</td>
+    <td>Output only. The current state of the Gateway. (STATE_UNSPECIFIED, CREATING, ACTIVE, FAILED, DELETING, UPDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -174,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists Gateways in a given project and location.</td>
 </tr>
 <tr>
@@ -309,10 +310,10 @@ updateTime
 FROM google.apigateway.gateways
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -334,17 +335,17 @@ Creates a new Gateway in a given project and location.
 
 ```sql
 INSERT INTO google.apigateway.gateways (
-data__displayName,
-data__labels,
 data__apiConfig,
+data__labels,
+data__displayName,
 projectsId,
 locationsId,
 gatewayId
 )
 SELECT 
-'{{ displayName }}',
-'{{ labels }}',
 '{{ apiConfig }}',
+'{{ labels }}',
+'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ gatewayId }}'
@@ -359,34 +360,31 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: gateways
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the gateways resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the gateways resource.
-    - name: displayName
-      value: string
-      description: >
-        Optional. Display name.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Resource labels to represent user-provided metadata. Refer to cloud documentation on labels for more details. https://cloud.google.com/compute/docs/labeling-resources
-        
     - name: apiConfig
-      value: string
-      description: >
+      value: "{{ apiConfig }}"
+      description: |
         Required. Resource name of the API Config for this Gateway. Format: projects/{project}/locations/global/apis/{api}/configs/{apiConfig}
-        
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Resource labels to represent user-provided metadata. Refer to cloud documentation on labels for more details. https://cloud.google.com/compute/docs/labeling-resources
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. Display name.
     - name: gatewayId
-      value: string
-```
+      value: "{{ gatewayId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -406,9 +404,9 @@ Updates the parameters of a single Gateway.
 ```sql
 UPDATE google.apigateway.gateways
 SET 
-data__displayName = '{{ displayName }}',
+data__apiConfig = '{{ apiConfig }}',
 data__labels = '{{ labels }}',
-data__apiConfig = '{{ apiConfig }}'
+data__displayName = '{{ displayName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

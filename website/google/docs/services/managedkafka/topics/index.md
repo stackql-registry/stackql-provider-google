@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>topics</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>topics</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="topics" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.managedkafka.topics" /></td></tr>
 </tbody></table>
@@ -134,7 +135,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-clustersId"><code>clustersId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the topics in a given cluster.</td>
 </tr>
 <tr>
@@ -258,8 +259,8 @@ FROM google.managedkafka.topics
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND clustersId = '{{ clustersId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -281,9 +282,9 @@ Creates a new topic in a given project and location.
 
 ```sql
 INSERT INTO google.managedkafka.topics (
+data__configs,
 data__name,
 data__partitionCount,
-data__configs,
 data__replicationFactor,
 projectsId,
 locationsId,
@@ -291,9 +292,9 @@ clustersId,
 topicId
 )
 SELECT 
+'{{ configs }}',
 '{{ name }}',
 {{ partitionCount }},
-'{{ configs }}',
 {{ replicationFactor }},
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -309,42 +310,38 @@ replicationFactor
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: topics
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the topics resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the topics resource.
     - name: clustersId
-      value: string
+      value: "{{ clustersId }}"
       description: Required parameter for the topics resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The name of the topic. The `topic` segment is used when connecting directly to the cluster. Structured like: projects/{project}/locations/{location}/clusters/{cluster}/topics/{topic}
-        
-    - name: partitionCount
-      value: integer
-      description: >
-        Required. The number of partitions this topic has. The partition count can only be increased, not decreased. Please note that if partitions are increased for a topic that has a key, the partitioning logic or the ordering of the messages will be affected.
-        
     - name: configs
-      value: object
-      description: >
-        Optional. Configurations for the topic that are overridden from the cluster defaults. The key of the map is a Kafka topic property name, for example: `cleanup.policy`, `compression.type`.
-        
+      value: "{{ configs }}"
+      description: |
+        Optional. Configurations for the topic that are overridden from the cluster defaults. The key of the map is a Kafka topic property name, for example: \`cleanup.policy\`, \`compression.type\`.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of the topic. The \`topic\` segment is used when connecting directly to the cluster. Structured like: projects/{project}/locations/{location}/clusters/{cluster}/topics/{topic}
+    - name: partitionCount
+      value: {{ partitionCount }}
+      description: |
+        Required. The number of partitions this topic has. The partition count can only be increased, not decreased. Please note that if partitions are increased for a topic that has a key, the partitioning logic or the ordering of the messages will be affected.
     - name: replicationFactor
-      value: integer
-      description: >
+      value: {{ replicationFactor }}
+      description: |
         Required. Immutable. The number of replicas of each partition. A replication factor of 3 is recommended for high availability.
-        
     - name: topicId
-      value: string
-```
+      value: "{{ topicId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -364,9 +361,9 @@ Updates the properties of a single topic.
 ```sql
 UPDATE google.managedkafka.topics
 SET 
+data__configs = '{{ configs }}',
 data__name = '{{ name }}',
 data__partitionCount = {{ partitionCount }},
-data__configs = '{{ configs }}',
 data__replicationFactor = {{ replicationFactor }}
 WHERE 
 projectsId = '{{ projectsId }}' --required

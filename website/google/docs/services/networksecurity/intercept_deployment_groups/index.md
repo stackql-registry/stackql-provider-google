@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>intercept_deployment_groups</c
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>intercept_deployment_groups</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="intercept_deployment_groups" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networksecurity.intercept_deployment_groups" /></td></tr>
 </tbody></table>
@@ -97,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the deployment group. See https://google.aip.dev/216.</td>
+    <td>Output only. The current state of the deployment group. See https://google.aip.dev/216. (STATE_UNSPECIFIED, ACTIVE, CREATING, DELETING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -166,7 +167,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the deployment group. See https://google.aip.dev/216.</td>
+    <td>Output only. The current state of the deployment group. See https://google.aip.dev/216. (STATE_UNSPECIFIED, ACTIVE, CREATING, DELETING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -377,8 +378,8 @@ Creates a deployment group in a given project and location. See https://google.a
 INSERT INTO google.networksecurity.intercept_deployment_groups (
 data__network,
 data__labels,
-data__description,
 data__name,
+data__description,
 projectsId,
 locationsId,
 requestId,
@@ -387,8 +388,8 @@ interceptDeploymentGroupId
 SELECT 
 '{{ network }}',
 '{{ labels }}',
-'{{ description }}',
 '{{ name }}',
+'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ requestId }}',
@@ -404,41 +405,37 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: intercept_deployment_groups
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the intercept_deployment_groups resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the intercept_deployment_groups resource.
     - name: network
-      value: string
-      description: >
-        Required. Immutable. The network that will be used for all child deployments, for example: `projects/{project}/global/networks/{network}`. See https://google.aip.dev/124.
-        
+      value: "{{ network }}"
+      description: |
+        Required. Immutable. The network that will be used for all child deployments, for example: \`projects/{project}/global/networks/{network}\`. See https://google.aip.dev/124.
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. Labels are key/value pairs that help to organize and filter resources.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. User-provided description of the deployment group. Used as additional context for the deployment group.
-        
     - name: name
-      value: string
-      description: >
-        Immutable. Identifier. The resource name of this deployment group, for example: `projects/123456789/locations/global/interceptDeploymentGroups/my-dg`. See https://google.aip.dev/122 for more details.
-        
+      value: "{{ name }}"
+      description: |
+        Immutable. Identifier. The resource name of this deployment group, for example: \`projects/123456789/locations/global/interceptDeploymentGroups/my-dg\`. See https://google.aip.dev/122 for more details.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. User-provided description of the deployment group. Used as additional context for the deployment group.
     - name: requestId
-      value: string
+      value: "{{ requestId }}"
     - name: interceptDeploymentGroupId
-      value: string
-```
+      value: "{{ interceptDeploymentGroupId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -460,8 +457,8 @@ UPDATE google.networksecurity.intercept_deployment_groups
 SET 
 data__network = '{{ network }}',
 data__labels = '{{ labels }}',
-data__description = '{{ description }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>allowed_locations</code> resou
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>allowed_locations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="allowed_locations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.iamcredentials.allowed_locations" /></td></tr>
 </tbody></table>
@@ -81,9 +82,9 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get_allowed_locations"><CopyableCode code="get_allowed_locations" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-serviceAccountsId"><code>serviceAccountsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workloadIdentityPoolsId"><code>workloadIdentityPoolsId</code></a></td>
     <td></td>
-    <td>Returns the trust boundary info for a given service account.</td>
+    <td>Returns the trust boundary info for a given workload identity pool.</td>
 </tr>
 </tbody>
 </table>
@@ -101,13 +102,18 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
+<tr id="parameter-locationsId">
+    <td><CopyableCode code="locationsId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-projectsId">
     <td><CopyableCode code="projectsId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
-<tr id="parameter-serviceAccountsId">
-    <td><CopyableCode code="serviceAccountsId" /></td>
+<tr id="parameter-workloadIdentityPoolsId">
+    <td><CopyableCode code="workloadIdentityPoolsId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -124,7 +130,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get_allowed_locations">
 
-Returns the trust boundary info for a given service account.
+Returns the trust boundary info for a given workload identity pool.
 
 ```sql
 SELECT
@@ -132,7 +138,8 @@ encodedLocations,
 locations
 FROM google.iamcredentials.allowed_locations
 WHERE projectsId = '{{ projectsId }}' -- required
-AND serviceAccountsId = '{{ serviceAccountsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND workloadIdentityPoolsId = '{{ workloadIdentityPoolsId }}' -- required
 ;
 ```
 </TabItem>

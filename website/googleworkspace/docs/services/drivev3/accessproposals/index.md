@@ -15,6 +15,7 @@ image: /img/stackql-googleworkspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>accessproposals</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>accessproposals</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="accessproposals" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleworkspace.drivev3.accessproposals" /></td></tr>
 </tbody></table>
@@ -52,37 +53,37 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>The creation time</td>
+    <td>The creation time.</td>
 </tr>
 <tr>
     <td><CopyableCode code="fileId" /></td>
     <td><code>string</code></td>
-    <td>The file id that the proposal for access is on</td>
+    <td>The file ID that the proposal for access is on.</td>
 </tr>
 <tr>
     <td><CopyableCode code="proposalId" /></td>
     <td><code>string</code></td>
-    <td>The id of the access proposal</td>
+    <td>The ID of the access proposal.</td>
 </tr>
 <tr>
     <td><CopyableCode code="recipientEmailAddress" /></td>
     <td><code>string</code></td>
-    <td>The email address of the user that will receive permissions if accepted</td>
+    <td>The email address of the user that will receive permissions, if accepted.</td>
 </tr>
 <tr>
     <td><CopyableCode code="requestMessage" /></td>
     <td><code>string</code></td>
-    <td>The message that the requester added to the proposal</td>
+    <td>The message that the requester added to the proposal.</td>
 </tr>
 <tr>
     <td><CopyableCode code="requesterEmailAddress" /></td>
     <td><code>string</code></td>
-    <td>The email address of the requesting user</td>
+    <td>The email address of the requesting user.</td>
 </tr>
 <tr>
     <td><CopyableCode code="rolesAndViews" /></td>
     <td><code>array</code></td>
-    <td>A wrapper for the role and view of an access proposal.</td>
+    <td>A wrapper for the role and view of an access proposal. For more information, see [Roles and permissions](https://developers.google.com/workspace/drive/api/guides/ref-roles).</td>
 </tr>
 </tbody>
 </table>
@@ -101,37 +102,37 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>The creation time</td>
+    <td>The creation time.</td>
 </tr>
 <tr>
     <td><CopyableCode code="fileId" /></td>
     <td><code>string</code></td>
-    <td>The file id that the proposal for access is on</td>
+    <td>The file ID that the proposal for access is on.</td>
 </tr>
 <tr>
     <td><CopyableCode code="proposalId" /></td>
     <td><code>string</code></td>
-    <td>The id of the access proposal</td>
+    <td>The ID of the access proposal.</td>
 </tr>
 <tr>
     <td><CopyableCode code="recipientEmailAddress" /></td>
     <td><code>string</code></td>
-    <td>The email address of the user that will receive permissions if accepted</td>
+    <td>The email address of the user that will receive permissions, if accepted.</td>
 </tr>
 <tr>
     <td><CopyableCode code="requestMessage" /></td>
     <td><code>string</code></td>
-    <td>The message that the requester added to the proposal</td>
+    <td>The message that the requester added to the proposal.</td>
 </tr>
 <tr>
     <td><CopyableCode code="requesterEmailAddress" /></td>
     <td><code>string</code></td>
-    <td>The email address of the requesting user</td>
+    <td>The email address of the requesting user.</td>
 </tr>
 <tr>
     <td><CopyableCode code="rolesAndViews" /></td>
     <td><code>array</code></td>
-    <td>A wrapper for the role and view of an access proposal.</td>
+    <td>A wrapper for the role and view of an access proposal. For more information, see [Roles and permissions](https://developers.google.com/workspace/drive/api/guides/ref-roles).</td>
 </tr>
 </tbody>
 </table>
@@ -158,21 +159,21 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-fileId"><code>fileId</code></a>, <a href="#parameter-proposalId"><code>proposalId</code></a></td>
     <td></td>
-    <td>Retrieves an AccessProposal by ID.</td>
+    <td>Retrieves an access proposal by ID. For more information, see [Manage pending access proposals](https://developers.google.com/workspace/drive/api/guides/pending-access).</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-fileId"><code>fileId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>List the AccessProposals on a file. Note: Only approvers are able to list AccessProposals on a file. If the user is not an approver, returns a 403.</td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>List the access proposals on a file. For more information, see [Manage pending access proposals](https://developers.google.com/workspace/drive/api/guides/pending-access). Note: Only approvers are able to list access proposals on a file. If the user isn't an approver, a 403 error is returned.</td>
 </tr>
 <tr>
     <td><a href="#resolve"><CopyableCode code="resolve" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-fileId"><code>fileId</code></a>, <a href="#parameter-proposalId"><code>proposalId</code></a></td>
     <td></td>
-    <td>Used to approve or deny an Access Proposal.</td>
+    <td>Approves or denies an access proposal. For more information, see [Manage pending access proposals](https://developers.google.com/workspace/drive/api/guides/pending-access).</td>
 </tr>
 </tbody>
 </table>
@@ -224,7 +225,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get">
 
-Retrieves an AccessProposal by ID.
+Retrieves an access proposal by ID. For more information, see [Manage pending access proposals](https://developers.google.com/workspace/drive/api/guides/pending-access).
 
 ```sql
 SELECT
@@ -243,7 +244,7 @@ AND proposalId = '{{ proposalId }}' -- required
 </TabItem>
 <TabItem value="list">
 
-List the AccessProposals on a file. Note: Only approvers are able to list AccessProposals on a file. If the user is not an approver, returns a 403.
+List the access proposals on a file. For more information, see [Manage pending access proposals](https://developers.google.com/workspace/drive/api/guides/pending-access). Note: Only approvers are able to list access proposals on a file. If the user isn't an approver, a 403 error is returned.
 
 ```sql
 SELECT
@@ -256,8 +257,8 @@ requesterEmailAddress,
 rolesAndViews
 FROM googleworkspace.drivev3.accessproposals
 WHERE fileId = '{{ fileId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -274,7 +275,7 @@ AND pageSize = '{{ pageSize }}'
 >
 <TabItem value="resolve">
 
-Used to approve or deny an Access Proposal.
+Approves or denies an access proposal. For more information, see [Manage pending access proposals](https://developers.google.com/workspace/drive/api/guides/pending-access).
 
 ```sql
 EXEC googleworkspace.drivev3.accessproposals.resolve 

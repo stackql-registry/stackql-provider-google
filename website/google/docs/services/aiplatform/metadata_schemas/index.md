@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>metadata_schemas</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>metadata_schemas</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="metadata_schemas" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.metadata_schemas" /></td></tr>
 </tbody></table>
@@ -72,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="schemaType" /></td>
     <td><code>string</code></td>
-    <td>The type of the MetadataSchema. This is a property that identifies which metadata types will use the MetadataSchema.</td>
+    <td>The type of the MetadataSchema. This is a property that identifies which metadata types will use the MetadataSchema. (METADATA_SCHEMA_TYPE_UNSPECIFIED, ARTIFACT_TYPE, EXECUTION_TYPE, CONTEXT_TYPE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="schemaVersion" /></td>
@@ -116,7 +117,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="schemaType" /></td>
     <td><code>string</code></td>
-    <td>The type of the MetadataSchema. This is a property that identifies which metadata types will use the MetadataSchema.</td>
+    <td>The type of the MetadataSchema. This is a property that identifies which metadata types will use the MetadataSchema. (METADATA_SCHEMA_TYPE_UNSPECIFIED, ARTIFACT_TYPE, EXECUTION_TYPE, CONTEXT_TYPE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="schemaVersion" /></td>
@@ -154,7 +155,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-metadataStoresId"><code>metadataStoresId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists MetadataSchemas.</td>
 </tr>
 <tr>
@@ -268,8 +269,8 @@ FROM google.aiplatform.metadata_schemas
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND metadataStoresId = '{{ metadataStoresId }}' -- required
-AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 ;
 ```
@@ -292,20 +293,20 @@ Creates a MetadataSchema.
 
 ```sql
 INSERT INTO google.aiplatform.metadata_schemas (
+data__schemaVersion,
+data__schemaType,
 data__description,
 data__schema,
-data__schemaType,
-data__schemaVersion,
 projectsId,
 locationsId,
 metadataStoresId,
 metadataSchemaId
 )
 SELECT 
+'{{ schemaVersion }}',
+'{{ schemaType }}',
 '{{ description }}',
 '{{ schema }}',
-'{{ schemaType }}',
-'{{ schemaVersion }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ metadataStoresId }}',
@@ -322,42 +323,38 @@ schemaVersion
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: metadata_schemas
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the metadata_schemas resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the metadata_schemas resource.
     - name: metadataStoresId
-      value: string
+      value: "{{ metadataStoresId }}"
       description: Required parameter for the metadata_schemas resource.
-    - name: description
-      value: string
-      description: >
-        Description of the Metadata Schema
-        
-    - name: schema
-      value: string
-      description: >
-        Required. The raw YAML string representation of the MetadataSchema. The combination of [MetadataSchema.version] and the schema name given by `title` in [MetadataSchema.schema] must be unique within a MetadataStore. The schema is defined as an OpenAPI 3.0.2 [MetadataSchema Object](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#schemaObject)
-        
-    - name: schemaType
-      value: string
-      description: >
-        The type of the MetadataSchema. This is a property that identifies which metadata types will use the MetadataSchema.
-        
-      valid_values: ['METADATA_SCHEMA_TYPE_UNSPECIFIED', 'ARTIFACT_TYPE', 'EXECUTION_TYPE', 'CONTEXT_TYPE']
     - name: schemaVersion
-      value: string
-      description: >
-        The version of the MetadataSchema. The version's format must match the following regular expression: `^[0-9]+.+.+$`, which would allow to order/compare different versions. Example: 1.0.0, 1.0.1, etc.
-        
+      value: "{{ schemaVersion }}"
+      description: |
+        The version of the MetadataSchema. The version's format must match the following regular expression: \`^[0-9]+.+.+$\`, which would allow to order/compare different versions. Example: 1.0.0, 1.0.1, etc.
+    - name: schemaType
+      value: "{{ schemaType }}"
+      description: |
+        The type of the MetadataSchema. This is a property that identifies which metadata types will use the MetadataSchema.
+      valid_values: ['METADATA_SCHEMA_TYPE_UNSPECIFIED', 'ARTIFACT_TYPE', 'EXECUTION_TYPE', 'CONTEXT_TYPE']
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Description of the Metadata Schema
+    - name: schema
+      value: "{{ schema }}"
+      description: |
+        Required. The raw YAML string representation of the MetadataSchema. The combination of [MetadataSchema.version] and the schema name given by \`title\` in [MetadataSchema.schema] must be unique within a MetadataStore. The schema is defined as an OpenAPI 3.0.2 [MetadataSchema Object](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#schemaObject)
     - name: metadataSchemaId
-      value: string
-```
+      value: "{{ metadataSchemaId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

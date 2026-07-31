@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>ssl_policies_available_features
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>ssl_policies_available_features</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="ssl_policies_available_features" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.ssl_policies_available_features" /></td></tr>
 </tbody></table>
@@ -77,8 +78,8 @@ The following methods are available for this resource:
     <td><a href="#list_available_features"><CopyableCode code="list_available_features" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
-    <td>Lists all features that can be specified in the SSL policy when using custom profile.</td>
+    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Lists all features that can be specified in the SSL policy when using<br />custom profile.</td>
 </tr>
 </tbody>
 </table>
@@ -144,7 +145,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="list_available_features">
 
-Lists all features that can be specified in the SSL policy when using custom profile.
+Lists all features that can be specified in the SSL policy when using<br />custom profile.
 
 ```sql
 SELECT
@@ -152,11 +153,11 @@ features
 FROM google.compute.ssl_policies_available_features
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
 ```
 </TabItem>

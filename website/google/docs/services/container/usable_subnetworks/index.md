@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>usable_subnetworks</code> resou
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>usable_subnetworks</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="usable_subnetworks" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.container.usable_subnetworks" /></td></tr>
 </tbody></table>
@@ -97,7 +98,7 @@ The following methods are available for this resource:
     <td><a href="#projects_aggregated_usable_subnetworks_list"><CopyableCode code="projects_aggregated_usable_subnetworks_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists subnetworks that are usable for creating clusters in a project.</td>
 </tr>
 </tbody>
@@ -160,9 +161,9 @@ statusMessage,
 subnetwork
 FROM google.container.usable_subnetworks
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>

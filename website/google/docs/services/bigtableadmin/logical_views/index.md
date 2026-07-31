@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>logical_views</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>logical_views</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="logical_views" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.bigtableadmin.logical_views" /></td></tr>
 </tbody></table>
@@ -279,19 +280,19 @@ Creates a logical view within an instance.
 
 ```sql
 INSERT INTO google.bigtableadmin.logical_views (
-data__name,
-data__etag,
 data__query,
+data__name,
 data__deletionProtection,
+data__etag,
 projectsId,
 instancesId,
 logicalViewId
 )
 SELECT 
-'{{ name }}',
-'{{ etag }}',
 '{{ query }}',
+'{{ name }}',
 {{ deletionProtection }},
+'{{ etag }}',
 '{{ projectsId }}',
 '{{ instancesId }}',
 '{{ logicalViewId }}'
@@ -306,39 +307,35 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: logical_views
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the logical_views resource.
     - name: instancesId
-      value: string
+      value: "{{ instancesId }}"
       description: Required parameter for the logical_views resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The unique name of the logical view. Format: `projects/{project}/instances/{instance}/logicalViews/{logical_view}`
-        
-    - name: etag
-      value: string
-      description: >
-        Optional. The etag for this logical view. This may be sent on update requests to ensure that the client has an up-to-date value before proceeding. The server returns an ABORTED error on a mismatched etag.
-        
     - name: query
-      value: string
-      description: >
+      value: "{{ query }}"
+      description: |
         Required. The logical view's select query.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The unique name of the logical view. Format: \`projects/{project}/instances/{instance}/logicalViews/{logical_view}\`
     - name: deletionProtection
-      value: boolean
-      description: >
+      value: {{ deletionProtection }}
+      description: |
         Optional. Set to true to make the LogicalView protected against deletion.
-        
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. The etag for this logical view. This may be sent on update requests to ensure that the client has an up-to-date value before proceeding. The server returns an ABORTED error on a mismatched etag.
     - name: logicalViewId
-      value: string
-```
+      value: "{{ logicalViewId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -358,10 +355,10 @@ Updates a logical view within an instance.
 ```sql
 UPDATE google.bigtableadmin.logical_views
 SET 
-data__name = '{{ name }}',
-data__etag = '{{ etag }}',
 data__query = '{{ query }}',
-data__deletionProtection = {{ deletionProtection }}
+data__name = '{{ name }}',
+data__deletionProtection = {{ deletionProtection }},
+data__etag = '{{ etag }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instancesId = '{{ instancesId }}' --required

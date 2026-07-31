@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>private_connections</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>private_connections</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="private_connections" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.datamigration.private_connections" /></td></tr>
 </tbody></table>
@@ -92,7 +93,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the private connection.</td>
+    <td>Output only. The state of the private connection. (STATE_UNSPECIFIED, CREATING, CREATED, FAILED, DELETING, FAILED_TO_DELETE, DELETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -161,7 +162,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the private connection.</td>
+    <td>Output only. The state of the private connection. (STATE_UNSPECIFIED, CREATING, CREATED, FAILED, DELETING, FAILED_TO_DELETE, DELETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -204,14 +205,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Retrieves a list of private connections in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-privateConnectionId"><code>privateConnectionId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-skipValidation"><code>skipValidation</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-skipValidation"><code>skipValidation</code></a>, <a href="#parameter-privateConnectionId"><code>privateConnectionId</code></a></td>
     <td>Creates a new private connection in a given project and location.</td>
 </tr>
 <tr>
@@ -348,10 +349,10 @@ vpcPeeringConfig
 FROM google.datamigration.private_connections
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -380,10 +381,10 @@ data__vpcPeeringConfig,
 data__pscInterfaceConfig,
 projectsId,
 locationsId,
-privateConnectionId,
+validateOnly,
 requestId,
 skipValidation,
-validateOnly
+privateConnectionId
 )
 SELECT 
 '{{ name }}',
@@ -393,10 +394,10 @@ SELECT
 '{{ pscInterfaceConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ privateConnectionId }}',
+'{{ validateOnly }}',
 '{{ requestId }}',
 '{{ skipValidation }}',
-'{{ validateOnly }}'
+'{{ privateConnectionId }}'
 RETURNING
 name,
 done,
@@ -408,50 +409,48 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: private_connections
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the private_connections resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the private_connections resource.
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         The name of the resource.
-        
     - name: labels
-      value: object
-      description: >
-        The resource labels for private connections to use to annotate any related underlying resources such as Compute Engine VMs. An object containing a list of "key": "value" pairs. Example: `{ "name": "wrench", "mass": "1.3kg", "count": "3" }`.
-        
+      value: "{{ labels }}"
+      description: |
+        The resource labels for private connections to use to annotate any related underlying resources such as Compute Engine VMs. An object containing a list of "key": "value" pairs. Example: \`{ "name": "wrench", "mass": "1.3kg", "count": "3" }\`.
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         The private connection display name.
-        
     - name: vpcPeeringConfig
-      value: object
-      description: >
+      description: |
         VPC peering configuration.
-        
+      value:
+        vpcName: "{{ vpcName }}"
+        subnet: "{{ subnet }}"
     - name: pscInterfaceConfig
-      value: object
-      description: >
+      description: |
         PSC Interface configuration.
-        
-    - name: privateConnectionId
-      value: string
-    - name: requestId
-      value: string
-    - name: skipValidation
-      value: boolean
+      value:
+        networkAttachment: "{{ networkAttachment }}"
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+    - name: requestId
+      value: "{{ requestId }}"
+    - name: skipValidation
+      value: {{ skipValidation }}
+    - name: privateConnectionId
+      value: "{{ privateConnectionId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

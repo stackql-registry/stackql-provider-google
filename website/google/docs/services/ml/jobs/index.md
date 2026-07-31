@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>jobs</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>jobs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="jobs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.ml.jobs" /></td></tr>
 </tbody></table>
@@ -102,7 +103,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The detailed state of a job.</td>
+    <td>Output only. The detailed state of a job. (STATE_UNSPECIFIED, QUEUED, PREPARING, RUNNING, SUCCEEDED, FAILED, CANCELLING, CANCELLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="trainingInput" /></td>
@@ -181,7 +182,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The detailed state of a job.</td>
+    <td>Output only. The detailed state of a job. (STATE_UNSPECIFIED, QUEUED, PREPARING, RUNNING, SUCCEEDED, FAILED, CANCELLING, CANCELLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="trainingInput" /></td>
@@ -224,7 +225,7 @@ The following methods are available for this resource:
     <td><a href="#projects_jobs_list"><CopyableCode code="projects_jobs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists the jobs in the project. If there are no jobs that match the request parameters, the list request returns an empty response body: &#123;&#125;.</td>
 </tr>
 <tr>
@@ -352,9 +353,9 @@ trainingInput,
 trainingOutput
 FROM google.ml.jobs
 WHERE projectsId = '{{ projectsId }}' -- required
-AND filter = '{{ filter }}'
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -376,33 +377,33 @@ Creates a training or a batch prediction job.
 
 ```sql
 INSERT INTO google.ml.jobs (
-data__jobId,
 data__trainingInput,
-data__predictionInput,
-data__createTime,
-data__startTime,
-data__endTime,
 data__state,
 data__errorMessage,
-data__trainingOutput,
 data__predictionOutput,
-data__labels,
 data__etag,
+data__jobId,
+data__startTime,
+data__predictionInput,
+data__createTime,
+data__labels,
+data__endTime,
+data__trainingOutput,
 projectsId
 )
 SELECT 
-'{{ jobId }}',
 '{{ trainingInput }}',
-'{{ predictionInput }}',
-'{{ createTime }}',
-'{{ startTime }}',
-'{{ endTime }}',
 '{{ state }}',
 '{{ errorMessage }}',
-'{{ trainingOutput }}',
 '{{ predictionOutput }}',
-'{{ labels }}',
 '{{ etag }}',
+'{{ jobId }}',
+'{{ startTime }}',
+'{{ predictionInput }}',
+'{{ createTime }}',
+'{{ labels }}',
+'{{ endTime }}',
+'{{ trainingOutput }}',
 '{{ projectsId }}'
 RETURNING
 createTime,
@@ -423,75 +424,204 @@ trainingOutput
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: jobs
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the jobs resource.
-    - name: jobId
-      value: string
-      description: >
-        Required. The user-specified id of the job.
-        
     - name: trainingInput
-      value: object
-      description: >
+      description: |
         Input parameters to create a training job.
-        
-    - name: predictionInput
-      value: object
-      description: >
-        Input parameters to create a prediction job.
-        
-    - name: createTime
-      value: string
-      description: >
-        Output only. When the job was created.
-        
-    - name: startTime
-      value: string
-      description: >
-        Output only. When the job processing was started.
-        
-    - name: endTime
-      value: string
-      description: >
-        Output only. When the job processing was completed.
-        
+      value:
+        enableWebAccess: {{ enableWebAccess }}
+        network: "{{ network }}"
+        useChiefInTfConfig: {{ useChiefInTfConfig }}
+        scaleTier: "{{ scaleTier }}"
+        masterConfig:
+          containerCommand:
+            - "{{ containerCommand }}"
+          tpuTfVersion: "{{ tpuTfVersion }}"
+          diskConfig:
+            bootDiskType: "{{ bootDiskType }}"
+            bootDiskSizeGb: {{ bootDiskSizeGb }}
+          acceleratorConfig:
+            count: "{{ count }}"
+            type: "{{ type }}"
+          containerArgs:
+            - "{{ containerArgs }}"
+          imageUri: "{{ imageUri }}"
+        region: "{{ region }}"
+        args:
+          - "{{ args }}"
+        runtimeVersion: "{{ runtimeVersion }}"
+        encryptionConfig:
+          kmsKeyName: "{{ kmsKeyName }}"
+        hyperparameters:
+          algorithm: "{{ algorithm }}"
+          params:
+            - categoricalValues: "{{ categoricalValues }}"
+              scaleType: "{{ scaleType }}"
+              discreteValues: "{{ discreteValues }}"
+              type: "{{ type }}"
+              parameterName: "{{ parameterName }}"
+              maxValue: {{ maxValue }}
+              minValue: {{ minValue }}
+          maxParallelTrials: {{ maxParallelTrials }}
+          maxFailedTrials: {{ maxFailedTrials }}
+          goal: "{{ goal }}"
+          maxTrials: {{ maxTrials }}
+          resumePreviousJobId: "{{ resumePreviousJobId }}"
+          hyperparameterMetricTag: "{{ hyperparameterMetricTag }}"
+          enableTrialEarlyStopping: {{ enableTrialEarlyStopping }}
+        evaluatorType: "{{ evaluatorType }}"
+        pythonModule: "{{ pythonModule }}"
+        workerCount: "{{ workerCount }}"
+        evaluatorConfig:
+          containerCommand:
+            - "{{ containerCommand }}"
+          tpuTfVersion: "{{ tpuTfVersion }}"
+          diskConfig:
+            bootDiskType: "{{ bootDiskType }}"
+            bootDiskSizeGb: {{ bootDiskSizeGb }}
+          acceleratorConfig:
+            count: "{{ count }}"
+            type: "{{ type }}"
+          containerArgs:
+            - "{{ containerArgs }}"
+          imageUri: "{{ imageUri }}"
+        parameterServerConfig:
+          containerCommand:
+            - "{{ containerCommand }}"
+          tpuTfVersion: "{{ tpuTfVersion }}"
+          diskConfig:
+            bootDiskType: "{{ bootDiskType }}"
+            bootDiskSizeGb: {{ bootDiskSizeGb }}
+          acceleratorConfig:
+            count: "{{ count }}"
+            type: "{{ type }}"
+          containerArgs:
+            - "{{ containerArgs }}"
+          imageUri: "{{ imageUri }}"
+        workerType: "{{ workerType }}"
+        packageUris:
+          - "{{ packageUris }}"
+        serviceAccount: "{{ serviceAccount }}"
+        masterType: "{{ masterType }}"
+        jobDir: "{{ jobDir }}"
+        workerConfig:
+          containerCommand:
+            - "{{ containerCommand }}"
+          tpuTfVersion: "{{ tpuTfVersion }}"
+          diskConfig:
+            bootDiskType: "{{ bootDiskType }}"
+            bootDiskSizeGb: {{ bootDiskSizeGb }}
+          acceleratorConfig:
+            count: "{{ count }}"
+            type: "{{ type }}"
+          containerArgs:
+            - "{{ containerArgs }}"
+          imageUri: "{{ imageUri }}"
+        scheduling:
+          maxRunningTime: "{{ maxRunningTime }}"
+          priority: {{ priority }}
+          maxWaitTime: "{{ maxWaitTime }}"
+        pythonVersion: "{{ pythonVersion }}"
+        parameterServerCount: "{{ parameterServerCount }}"
+        evaluatorCount: "{{ evaluatorCount }}"
+        parameterServerType: "{{ parameterServerType }}"
     - name: state
-      value: string
-      description: >
+      value: "{{ state }}"
+      description: |
         Output only. The detailed state of a job.
-        
       valid_values: ['STATE_UNSPECIFIED', 'QUEUED', 'PREPARING', 'RUNNING', 'SUCCEEDED', 'FAILED', 'CANCELLING', 'CANCELLED']
     - name: errorMessage
-      value: string
-      description: >
+      value: "{{ errorMessage }}"
+      description: |
         Output only. The details of a failure or a cancellation.
-        
-    - name: trainingOutput
-      value: object
-      description: >
-        The current training job result.
-        
     - name: predictionOutput
-      value: object
-      description: >
+      description: |
         The current prediction job result.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. One or more labels that you can add, to organize your jobs. Each label is a key-value pair, where both the key and the value are arbitrary strings that you supply. For more information, see the documentation on using labels.
-        
+      value:
+        errorCount: "{{ errorCount }}"
+        nodeHours: {{ nodeHours }}
+        predictionCount: "{{ predictionCount }}"
+        outputPath: "{{ outputPath }}"
     - name: etag
-      value: string
-      description: >
-        `etag` is used for optimistic concurrency control as a way to help prevent simultaneous updates of a job from overwriting each other. It is strongly suggested that systems make use of the `etag` in the read-modify-write cycle to perform job updates in order to avoid race conditions: An `etag` is returned in the response to `GetJob`, and systems are expected to put that etag in the request to `UpdateJob` to ensure that their change will be applied to the same version of the job.
-        
-```
+      value: "{{ etag }}"
+      description: |
+        \`etag\` is used for optimistic concurrency control as a way to help prevent simultaneous updates of a job from overwriting each other. It is strongly suggested that systems make use of the \`etag\` in the read-modify-write cycle to perform job updates in order to avoid race conditions: An \`etag\` is returned in the response to \`GetJob\`, and systems are expected to put that etag in the request to \`UpdateJob\` to ensure that their change will be applied to the same version of the job.
+    - name: jobId
+      value: "{{ jobId }}"
+      description: |
+        Required. The user-specified id of the job.
+    - name: startTime
+      value: "{{ startTime }}"
+      description: |
+        Output only. When the job processing was started.
+    - name: predictionInput
+      description: |
+        Input parameters to create a prediction job.
+      value:
+        maxWorkerCount: "{{ maxWorkerCount }}"
+        outputPath: "{{ outputPath }}"
+        dataFormat: "{{ dataFormat }}"
+        signatureName: "{{ signatureName }}"
+        outputDataFormat: "{{ outputDataFormat }}"
+        inputPaths:
+          - "{{ inputPaths }}"
+        runtimeVersion: "{{ runtimeVersion }}"
+        batchSize: "{{ batchSize }}"
+        region: "{{ region }}"
+        versionName: "{{ versionName }}"
+        modelName: "{{ modelName }}"
+        uri: "{{ uri }}"
+    - name: createTime
+      value: "{{ createTime }}"
+      description: |
+        Output only. When the job was created.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. One or more labels that you can add, to organize your jobs. Each label is a key-value pair, where both the key and the value are arbitrary strings that you supply. For more information, see the documentation on using labels.
+    - name: endTime
+      value: "{{ endTime }}"
+      description: |
+        Output only. When the job processing was completed.
+    - name: trainingOutput
+      description: |
+        The current training job result.
+      value:
+        builtInAlgorithmOutput:
+          framework: "{{ framework }}"
+          runtimeVersion: "{{ runtimeVersion }}"
+          pythonVersion: "{{ pythonVersion }}"
+          modelPath: "{{ modelPath }}"
+        completedTrialCount: "{{ completedTrialCount }}"
+        isBuiltInAlgorithmJob: {{ isBuiltInAlgorithmJob }}
+        consumedMLUnits: {{ consumedMLUnits }}
+        isHyperparameterTuningJob: {{ isHyperparameterTuningJob }}
+        hyperparameterMetricTag: "{{ hyperparameterMetricTag }}"
+        trials:
+          - webAccessUris: "{{ webAccessUris }}"
+            builtInAlgorithmOutput:
+              framework: "{{ framework }}"
+              runtimeVersion: "{{ runtimeVersion }}"
+              pythonVersion: "{{ pythonVersion }}"
+              modelPath: "{{ modelPath }}"
+            isTrialStoppedEarly: {{ isTrialStoppedEarly }}
+            endTime: "{{ endTime }}"
+            trialId: "{{ trialId }}"
+            state: "{{ state }}"
+            allMetrics: "{{ allMetrics }}"
+            hyperparameters: "{{ hyperparameters }}"
+            startTime: "{{ startTime }}"
+            finalMetric:
+              objectiveValue: {{ objectiveValue }}
+              trainingStep: "{{ trainingStep }}"
+        webAccessUris: "{{ webAccessUris }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -511,18 +641,18 @@ Updates a specific job resource. Currently the only supported fields to update a
 ```sql
 UPDATE google.ml.jobs
 SET 
-data__jobId = '{{ jobId }}',
 data__trainingInput = '{{ trainingInput }}',
-data__predictionInput = '{{ predictionInput }}',
-data__createTime = '{{ createTime }}',
-data__startTime = '{{ startTime }}',
-data__endTime = '{{ endTime }}',
 data__state = '{{ state }}',
 data__errorMessage = '{{ errorMessage }}',
-data__trainingOutput = '{{ trainingOutput }}',
 data__predictionOutput = '{{ predictionOutput }}',
+data__etag = '{{ etag }}',
+data__jobId = '{{ jobId }}',
+data__startTime = '{{ startTime }}',
+data__predictionInput = '{{ predictionInput }}',
+data__createTime = '{{ createTime }}',
 data__labels = '{{ labels }}',
-data__etag = '{{ etag }}'
+data__endTime = '{{ endTime }}',
+data__trainingOutput = '{{ trainingOutput }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND jobsId = '{{ jobsId }}' --required

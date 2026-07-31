@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>operations</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>operations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="operations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.sqladmin.operations" /></td></tr>
 </tbody></table>
@@ -102,7 +103,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="operationType" /></td>
     <td><code>string</code></td>
-    <td>The type of the operation. Valid values are: * `CREATE` * `DELETE` * `UPDATE` * `RESTART` * `IMPORT` * `EXPORT` * `BACKUP_VOLUME` * `RESTORE_VOLUME` * `CREATE_USER` * `DELETE_USER` * `CREATE_DATABASE` * `DELETE_DATABASE`</td>
+    <td>The type of the operation. Valid values are: * `CREATE` * `DELETE` * `UPDATE` * `RESTART` * `IMPORT` * `EXPORT` * `BACKUP_VOLUME` * `RESTORE_VOLUME` * `CREATE_USER` * `DELETE_USER` * `CREATE_DATABASE` * `DELETE_DATABASE` (SQL_OPERATION_TYPE_UNSPECIFIED, IMPORT, EXPORT, CREATE, UPDATE, DELETE, RESTART, BACKUP, SNAPSHOT, BACKUP_VOLUME, DELETE_VOLUME, RESTORE_VOLUME, INJECT_USER, CLONE, STOP_REPLICA, START_REPLICA, PROMOTE_REPLICA, CREATE_REPLICA, CREATE_USER, DELETE_USER, UPDATE_USER, CREATE_DATABASE, DELETE_DATABASE, UPDATE_DATABASE, FAILOVER, DELETE_BACKUP, RECREATE_REPLICA, TRUNCATE_LOG, DEMOTE_MASTER, MAINTENANCE, ENABLE_PRIVATE_IP, DEFER_MAINTENANCE, CREATE_CLONE, RESCHEDULE_MAINTENANCE, START_EXTERNAL_SYNC, LOG_CLEANUP, AUTO_RESTART, REENCRYPT, SWITCHOVER, UPDATE_BACKUP, ACQUIRE_SSRS_LEASE, RELEASE_SSRS_LEASE, RECONFIGURE_OLD_PRIMARY, CLUSTER_MAINTENANCE, SELF_SERVICE_MAINTENANCE, SWITCHOVER_TO_REPLICA, MAJOR_VERSION_UPGRADE, ADVANCED_BACKUP, MANAGE_BACKUP, ENHANCED_BACKUP, REPAIR_READ_POOL, CREATE_READ_POOL, PRE_CHECK_MAJOR_VERSION_UPGRADE, SETUP_MIGRATION)</td>
 </tr>
 <tr>
     <td><CopyableCode code="preCheckMajorVersionUpgradeContext" /></td>
@@ -122,7 +123,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>The status of an operation.</td>
+    <td>The status of an operation. (SQL_OPERATION_STATUS_UNSPECIFIED, PENDING, RUNNING, DONE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="subOperationType" /></td>
@@ -216,7 +217,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="operationType" /></td>
     <td><code>string</code></td>
-    <td>The type of the operation. Valid values are: * `CREATE` * `DELETE` * `UPDATE` * `RESTART` * `IMPORT` * `EXPORT` * `BACKUP_VOLUME` * `RESTORE_VOLUME` * `CREATE_USER` * `DELETE_USER` * `CREATE_DATABASE` * `DELETE_DATABASE`</td>
+    <td>The type of the operation. Valid values are: * `CREATE` * `DELETE` * `UPDATE` * `RESTART` * `IMPORT` * `EXPORT` * `BACKUP_VOLUME` * `RESTORE_VOLUME` * `CREATE_USER` * `DELETE_USER` * `CREATE_DATABASE` * `DELETE_DATABASE` (SQL_OPERATION_TYPE_UNSPECIFIED, IMPORT, EXPORT, CREATE, UPDATE, DELETE, RESTART, BACKUP, SNAPSHOT, BACKUP_VOLUME, DELETE_VOLUME, RESTORE_VOLUME, INJECT_USER, CLONE, STOP_REPLICA, START_REPLICA, PROMOTE_REPLICA, CREATE_REPLICA, CREATE_USER, DELETE_USER, UPDATE_USER, CREATE_DATABASE, DELETE_DATABASE, UPDATE_DATABASE, FAILOVER, DELETE_BACKUP, RECREATE_REPLICA, TRUNCATE_LOG, DEMOTE_MASTER, MAINTENANCE, ENABLE_PRIVATE_IP, DEFER_MAINTENANCE, CREATE_CLONE, RESCHEDULE_MAINTENANCE, START_EXTERNAL_SYNC, LOG_CLEANUP, AUTO_RESTART, REENCRYPT, SWITCHOVER, UPDATE_BACKUP, ACQUIRE_SSRS_LEASE, RELEASE_SSRS_LEASE, RECONFIGURE_OLD_PRIMARY, CLUSTER_MAINTENANCE, SELF_SERVICE_MAINTENANCE, SWITCHOVER_TO_REPLICA, MAJOR_VERSION_UPGRADE, ADVANCED_BACKUP, MANAGE_BACKUP, ENHANCED_BACKUP, REPAIR_READ_POOL, CREATE_READ_POOL, PRE_CHECK_MAJOR_VERSION_UPGRADE, SETUP_MIGRATION)</td>
 </tr>
 <tr>
     <td><CopyableCode code="preCheckMajorVersionUpgradeContext" /></td>
@@ -236,7 +237,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>The status of an operation.</td>
+    <td>The status of an operation. (SQL_OPERATION_STATUS_UNSPECIFIED, PENDING, RUNNING, DONE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="subOperationType" /></td>

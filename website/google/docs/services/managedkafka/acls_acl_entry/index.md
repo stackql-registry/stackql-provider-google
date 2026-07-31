@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>acls_acl_entry</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>acls_acl_entry</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="acls_acl_entry" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.managedkafka.acls_acl_entry" /></td></tr>
 </tbody></table>
@@ -117,20 +118,20 @@ Incremental update: Adds an acl entry to an acl. Creates the acl if it does not 
 
 ```sql
 INSERT INTO google.managedkafka.acls_acl_entry (
-data__permissionType,
-data__host,
-data__operation,
 data__principal,
+data__permissionType,
+data__operation,
+data__host,
 projectsId,
 locationsId,
 clustersId,
 aclsId
 )
 SELECT 
-'{{ permissionType }}',
-'{{ host }}',
-'{{ operation }}',
 '{{ principal }}',
+'{{ permissionType }}',
+'{{ operation }}',
+'{{ host }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ clustersId }}',
@@ -143,43 +144,39 @@ aclCreated
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: acls_acl_entry
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the acls_acl_entry resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the acls_acl_entry resource.
     - name: clustersId
-      value: string
+      value: "{{ clustersId }}"
       description: Required parameter for the acls_acl_entry resource.
     - name: aclsId
-      value: string
+      value: "{{ aclsId }}"
       description: Required parameter for the acls_acl_entry resource.
-    - name: permissionType
-      value: string
-      description: >
-        Required. The permission type. Accepted values are (case insensitive): ALLOW, DENY.
-        
-    - name: host
-      value: string
-      description: >
-        Required. The host. Must be set to "*" for Managed Service for Apache Kafka.
-        
-    - name: operation
-      value: string
-      description: >
-        Required. The operation type. Allowed values are (case insensitive): ALL, READ, WRITE, CREATE, DELETE, ALTER, DESCRIBE, CLUSTER_ACTION, DESCRIBE_CONFIGS, ALTER_CONFIGS, and IDEMPOTENT_WRITE. See https://kafka.apache.org/documentation/#operations_resources_and_protocols for valid combinations of resource_type and operation for different Kafka API requests.
-        
     - name: principal
-      value: string
-      description: >
+      value: "{{ principal }}"
+      description: |
         Required. The principal. Specified as Google Cloud account, with the Kafka StandardAuthorizer prefix "User:". For example: "User:test-kafka-client@test-project.iam.gserviceaccount.com". Can be the wildcard "User:*" to refer to all users.
-        
-```
+    - name: permissionType
+      value: "{{ permissionType }}"
+      description: |
+        Required. The permission type. Accepted values are (case insensitive): ALLOW, DENY.
+    - name: operation
+      value: "{{ operation }}"
+      description: |
+        Required. The operation type. Allowed values are (case insensitive): ALL, READ, WRITE, CREATE, DELETE, ALTER, DESCRIBE, CLUSTER_ACTION, DESCRIBE_CONFIGS, ALTER_CONFIGS, and IDEMPOTENT_WRITE. See https://kafka.apache.org/documentation/#operations_resources_and_protocols for valid combinations of resource_type and operation for different Kafka API requests.
+    - name: host
+      value: "{{ host }}"
+      description: |
+        Required. The host. Must be set to "*" for Managed Service for Apache Kafka.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

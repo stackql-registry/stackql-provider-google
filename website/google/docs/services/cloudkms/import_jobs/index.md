@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>import_jobs</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>import_jobs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="import_jobs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudkms.import_jobs" /></td></tr>
 </tbody></table>
@@ -67,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="cryptoKeyBackend" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The resource name of the backend environment where the key material for the wrapping key resides and where all related cryptographic operations are performed. Currently, this field is only populated for keys stored in HSM_SINGLE_TENANT. Note, this list is non-exhaustive and may apply to additional ProtectionLevels in the future.</td>
+    <td>Immutable. The resource name of the backend environment where the key material for the wrapping key resides and where all related cryptographic operations are performed. Currently, this field is only populated for keys stored in HSM_SINGLE_TENANT. Note, this list is non-exhaustive and may apply to additional ProtectionLevels in the future. Supported resources: * `"projects/*/locations/*/singleTenantHsmInstances/*"`</td>
 </tr>
 <tr>
     <td><CopyableCode code="expireEventTime" /></td>
@@ -87,12 +88,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="importMethod" /></td>
     <td><code>string</code></td>
-    <td>Required. Immutable. The wrapping method to be used for incoming key material.</td>
+    <td>Required. Immutable. The wrapping method to be used for incoming key material. (IMPORT_METHOD_UNSPECIFIED, RSA_OAEP_3072_SHA1_AES_256, RSA_OAEP_4096_SHA1_AES_256, RSA_OAEP_3072_SHA256_AES_256, RSA_OAEP_4096_SHA256_AES_256, RSA_OAEP_3072_SHA256, RSA_OAEP_4096_SHA256, HPKE_KEM_ML_KEM_768_HKDF_SHA256_AES_256_GCM, HPKE_KEM_ML_KEM_1024_HKDF_SHA256_AES_256_GCM, HPKE_KEM_XWING_HKDF_SHA256_AES_256_GCM)</td>
 </tr>
 <tr>
     <td><CopyableCode code="protectionLevel" /></td>
     <td><code>string</code></td>
-    <td>Required. Immutable. The protection level of the ImportJob. This must match the protection_level of the version_template on the CryptoKey you attempt to import into.</td>
+    <td>Required. Immutable. The protection level of the ImportJob. This must match the protection_level of the version_template on the CryptoKey you attempt to import into. (PROTECTION_LEVEL_UNSPECIFIED, SOFTWARE, HSM, EXTERNAL, EXTERNAL_VPC, HSM_SINGLE_TENANT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="publicKey" /></td>
@@ -100,9 +101,14 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The public key with which to wrap key material prior to import. Only returned if state is ACTIVE. (id: WrappingPublicKey)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="publicKeyFormat" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Specifies the WrappingPublicKey format provided by the customer in the KeyManagementService.GetImportJob request. (PUBLIC_KEY_FORMAT_UNSPECIFIED, PEM, DER, NIST_PQC, XWING_RAW_BYTES)</td>
+</tr>
+<tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the ImportJob, indicating if it can be used.</td>
+    <td>Output only. The current state of the ImportJob, indicating if it can be used. (IMPORT_JOB_STATE_UNSPECIFIED, PENDING_GENERATION, ACTIVE, EXPIRED)</td>
 </tr>
 </tbody>
 </table>
@@ -136,7 +142,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="cryptoKeyBackend" /></td>
     <td><code>string</code></td>
-    <td>Immutable. The resource name of the backend environment where the key material for the wrapping key resides and where all related cryptographic operations are performed. Currently, this field is only populated for keys stored in HSM_SINGLE_TENANT. Note, this list is non-exhaustive and may apply to additional ProtectionLevels in the future.</td>
+    <td>Immutable. The resource name of the backend environment where the key material for the wrapping key resides and where all related cryptographic operations are performed. Currently, this field is only populated for keys stored in HSM_SINGLE_TENANT. Note, this list is non-exhaustive and may apply to additional ProtectionLevels in the future. Supported resources: * `"projects/*/locations/*/singleTenantHsmInstances/*"`</td>
 </tr>
 <tr>
     <td><CopyableCode code="expireEventTime" /></td>
@@ -156,12 +162,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="importMethod" /></td>
     <td><code>string</code></td>
-    <td>Required. Immutable. The wrapping method to be used for incoming key material.</td>
+    <td>Required. Immutable. The wrapping method to be used for incoming key material. (IMPORT_METHOD_UNSPECIFIED, RSA_OAEP_3072_SHA1_AES_256, RSA_OAEP_4096_SHA1_AES_256, RSA_OAEP_3072_SHA256_AES_256, RSA_OAEP_4096_SHA256_AES_256, RSA_OAEP_3072_SHA256, RSA_OAEP_4096_SHA256, HPKE_KEM_ML_KEM_768_HKDF_SHA256_AES_256_GCM, HPKE_KEM_ML_KEM_1024_HKDF_SHA256_AES_256_GCM, HPKE_KEM_XWING_HKDF_SHA256_AES_256_GCM)</td>
 </tr>
 <tr>
     <td><CopyableCode code="protectionLevel" /></td>
     <td><code>string</code></td>
-    <td>Required. Immutable. The protection level of the ImportJob. This must match the protection_level of the version_template on the CryptoKey you attempt to import into.</td>
+    <td>Required. Immutable. The protection level of the ImportJob. This must match the protection_level of the version_template on the CryptoKey you attempt to import into. (PROTECTION_LEVEL_UNSPECIFIED, SOFTWARE, HSM, EXTERNAL, EXTERNAL_VPC, HSM_SINGLE_TENANT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="publicKey" /></td>
@@ -169,9 +175,14 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The public key with which to wrap key material prior to import. Only returned if state is ACTIVE. (id: WrappingPublicKey)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="publicKeyFormat" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Specifies the WrappingPublicKey format provided by the customer in the KeyManagementService.GetImportJob request. (PUBLIC_KEY_FORMAT_UNSPECIFIED, PEM, DER, NIST_PQC, XWING_RAW_BYTES)</td>
+</tr>
+<tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the ImportJob, indicating if it can be used.</td>
+    <td>Output only. The current state of the ImportJob, indicating if it can be used. (IMPORT_JOB_STATE_UNSPECIFIED, PENDING_GENERATION, ACTIVE, EXPIRED)</td>
 </tr>
 </tbody>
 </table>
@@ -197,14 +208,14 @@ The following methods are available for this resource:
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-keyRingsId"><code>keyRingsId</code></a>, <a href="#parameter-importJobsId"><code>importJobsId</code></a></td>
-    <td></td>
+    <td><a href="#parameter-publicKeyFormat"><code>publicKeyFormat</code></a></td>
     <td>Returns metadata for a given ImportJob.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-keyRingsId"><code>keyRingsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists ImportJobs.</td>
 </tr>
 <tr>
@@ -275,6 +286,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
+<tr id="parameter-publicKeyFormat">
+    <td><CopyableCode code="publicKeyFormat" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 
@@ -303,12 +319,14 @@ generateTime,
 importMethod,
 protectionLevel,
 publicKey,
+publicKeyFormat,
 state
 FROM google.cloudkms.import_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND keyRingsId = '{{ keyRingsId }}' -- required
 AND importJobsId = '{{ importJobsId }}' -- required
+AND publicKeyFormat = '{{ publicKeyFormat }}'
 ;
 ```
 </TabItem>
@@ -328,15 +346,16 @@ generateTime,
 importMethod,
 protectionLevel,
 publicKey,
+publicKeyFormat,
 state
 FROM google.cloudkms.import_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND keyRingsId = '{{ keyRingsId }}' -- required
-AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -358,18 +377,18 @@ Create a new ImportJob within a KeyRing. ImportJob.import_method is required.
 
 ```sql
 INSERT INTO google.cloudkms.import_jobs (
+data__importMethod,
 data__cryptoKeyBackend,
 data__protectionLevel,
-data__importMethod,
 projectsId,
 locationsId,
 keyRingsId,
 importJobId
 )
 SELECT 
+'{{ importMethod }}',
 '{{ cryptoKeyBackend }}',
 '{{ protectionLevel }}',
-'{{ importMethod }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ keyRingsId }}',
@@ -385,44 +404,42 @@ generateTime,
 importMethod,
 protectionLevel,
 publicKey,
+publicKeyFormat,
 state
 ;
 ```
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: import_jobs
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the import_jobs resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the import_jobs resource.
     - name: keyRingsId
-      value: string
+      value: "{{ keyRingsId }}"
       description: Required parameter for the import_jobs resource.
-    - name: cryptoKeyBackend
-      value: string
-      description: >
-        Immutable. The resource name of the backend environment where the key material for the wrapping key resides and where all related cryptographic operations are performed. Currently, this field is only populated for keys stored in HSM_SINGLE_TENANT. Note, this list is non-exhaustive and may apply to additional ProtectionLevels in the future.
-        
-    - name: protectionLevel
-      value: string
-      description: >
-        Required. Immutable. The protection level of the ImportJob. This must match the protection_level of the version_template on the CryptoKey you attempt to import into.
-        
-      valid_values: ['PROTECTION_LEVEL_UNSPECIFIED', 'SOFTWARE', 'HSM', 'EXTERNAL', 'EXTERNAL_VPC', 'HSM_SINGLE_TENANT']
     - name: importMethod
-      value: string
-      description: >
+      value: "{{ importMethod }}"
+      description: |
         Required. Immutable. The wrapping method to be used for incoming key material.
-        
-      valid_values: ['IMPORT_METHOD_UNSPECIFIED', 'RSA_OAEP_3072_SHA1_AES_256', 'RSA_OAEP_4096_SHA1_AES_256', 'RSA_OAEP_3072_SHA256_AES_256', 'RSA_OAEP_4096_SHA256_AES_256', 'RSA_OAEP_3072_SHA256', 'RSA_OAEP_4096_SHA256']
+      valid_values: ['IMPORT_METHOD_UNSPECIFIED', 'RSA_OAEP_3072_SHA1_AES_256', 'RSA_OAEP_4096_SHA1_AES_256', 'RSA_OAEP_3072_SHA256_AES_256', 'RSA_OAEP_4096_SHA256_AES_256', 'RSA_OAEP_3072_SHA256', 'RSA_OAEP_4096_SHA256', 'HPKE_KEM_ML_KEM_768_HKDF_SHA256_AES_256_GCM', 'HPKE_KEM_ML_KEM_1024_HKDF_SHA256_AES_256_GCM', 'HPKE_KEM_XWING_HKDF_SHA256_AES_256_GCM']
+    - name: cryptoKeyBackend
+      value: "{{ cryptoKeyBackend }}"
+      description: |
+        Immutable. The resource name of the backend environment where the key material for the wrapping key resides and where all related cryptographic operations are performed. Currently, this field is only populated for keys stored in HSM_SINGLE_TENANT. Note, this list is non-exhaustive and may apply to additional ProtectionLevels in the future. Supported resources: * \`"projects/*/locations/*/singleTenantHsmInstances/*"\`
+    - name: protectionLevel
+      value: "{{ protectionLevel }}"
+      description: |
+        Required. Immutable. The protection level of the ImportJob. This must match the protection_level of the version_template on the CryptoKey you attempt to import into.
+      valid_values: ['PROTECTION_LEVEL_UNSPECIFIED', 'SOFTWARE', 'HSM', 'EXTERNAL', 'EXTERNAL_VPC', 'HSM_SINGLE_TENANT']
     - name: importJobId
-      value: string
-```
+      value: "{{ importJobId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

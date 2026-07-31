@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>continuous_test_results</code> 
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>continuous_test_results</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="continuous_test_results" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dialogflow.continuous_test_results" /></td></tr>
 </tbody></table>
@@ -51,22 +52,22 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The resource name for the continuous test result. Format: `projects//locations//agents//environments//continuousTestResults/`.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="result" /></td>
     <td><code>string</code></td>
-    <td>The result of this continuous test run, i.e. whether all the tests in this continuous test run pass or not.</td>
+    <td> (AGGREGATED_TEST_RESULT_UNSPECIFIED, PASSED, FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="runTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Time when the continuous testing run starts.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="testCaseResults" /></td>
     <td><code>array</code></td>
-    <td>A list of individual test case results names in this continuous test run.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -93,7 +94,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
     <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Fetches a list of continuous test results for a given environment.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -154,7 +155,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="projects_locations_agents_environments_continuous_test_results_list">
 
-Fetches a list of continuous test results for a given environment.
+Successful response
 
 ```sql
 SELECT

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>archive_deployments</code> res
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>archive_deployments</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="archive_deployments" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.archive_deployments" /></td></tr>
 </tbody></table>
@@ -154,7 +155,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_environments_archive_deployments_list"><CopyableCode code="organizations_environments_archive_deployments_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the ArchiveDeployments in the specified Environment.</td>
 </tr>
 <tr>
@@ -289,9 +290,9 @@ updatedAt
 FROM google.apigee.archive_deployments
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND environmentsId = '{{ environmentsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -314,15 +315,15 @@ Creates a new ArchiveDeployment.
 ```sql
 INSERT INTO google.apigee.archive_deployments (
 data__gcsUri,
-data__labels,
 data__name,
+data__labels,
 organizationsId,
 environmentsId
 )
 SELECT 
 '{{ gcsUri }}',
-'{{ labels }}',
 '{{ name }}',
+'{{ labels }}',
 '{{ organizationsId }}',
 '{{ environmentsId }}'
 RETURNING
@@ -336,32 +337,29 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: archive_deployments
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the archive_deployments resource.
     - name: environmentsId
-      value: string
+      value: "{{ environmentsId }}"
       description: Required parameter for the archive_deployments resource.
     - name: gcsUri
-      value: string
-      description: >
+      value: "{{ gcsUri }}"
+      description: |
         Input only. The Google Cloud Storage signed URL returned from GenerateUploadUrl and used to upload the Archive zip file.
-        
-    - name: labels
-      value: object
-      description: >
-        User-supplied key-value pairs used to organize ArchiveDeployments. Label keys must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: \p{Ll}\p{Lo}{0,62} Label values must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: [\p{Ll}\p{Lo}\p{N}_-]{0,63} No more than 64 labels can be associated with a given store.
-        
     - name: name
-      value: string
-      description: >
-        Name of the Archive Deployment in the following format: `organizations/{org}/environments/{env}/archiveDeployments/{id}`.
-        
-```
+      value: "{{ name }}"
+      description: |
+        Name of the Archive Deployment in the following format: \`organizations/{org}/environments/{env}/archiveDeployments/{id}\`.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        User-supplied key-value pairs used to organize ArchiveDeployments. Label keys must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: p{Ll}p{Lo}{0,62} Label values must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: [p{Ll}p{Lo}p{N}_-]{0,63} No more than 64 labels can be associated with a given store.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -382,8 +380,8 @@ Updates an existing ArchiveDeployment. Labels can modified but most of the other
 UPDATE google.apigee.archive_deployments
 SET 
 data__gcsUri = '{{ gcsUri }}',
-data__labels = '{{ labels }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__labels = '{{ labels }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND environmentsId = '{{ environmentsId }}' --required

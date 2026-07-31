@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>nodes</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>nodes</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="nodes" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.tpu.nodes" /></td></tr>
 </tbody></table>
@@ -72,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="apiVersion" /></td>
     <td><code>string</code></td>
-    <td>Output only. The API version that created this Node.</td>
+    <td>Output only. The API version that created this Node. (API_VERSION_UNSPECIFIED, V1_ALPHA1, V1, V2_ALPHA1, V2)</td>
 </tr>
 <tr>
     <td><CopyableCode code="bootDiskConfig" /></td>
@@ -102,7 +103,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="health" /></td>
     <td><code>string</code></td>
-    <td>The health status of the TPU node.</td>
+    <td>The health status of the TPU node. (HEALTH_UNSPECIFIED, HEALTHY, TIMEOUT, UNHEALTHY_TENSORFLOW, UNHEALTHY_MAINTENANCE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="healthDescription" /></td>
@@ -127,7 +128,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="networkConfig" /></td>
     <td><code>object</code></td>
-    <td>Network configurations for the TPU node. network_config and network_configs are mutually exclusive, you can only specify one of them. If both are specified, an error will be returned. (id: NetworkConfig)</td>
+    <td>Network related configurations. (id: NetworkConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="networkConfigs" /></td>
@@ -167,7 +168,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state for the TPU Node.</td>
+    <td>Output only. The current state for the TPU Node. (STATE_UNSPECIFIED, CREATING, READY, RESTARTING, REIMAGING, DELETING, REPAIRING, STOPPED, STOPPING, STARTING, PREEMPTED, TERMINATED, HIDING, HIDDEN, UNHIDING, UNKNOWN)</td>
 </tr>
 <tr>
     <td><CopyableCode code="symptoms" /></td>
@@ -221,7 +222,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="apiVersion" /></td>
     <td><code>string</code></td>
-    <td>Output only. The API version that created this Node.</td>
+    <td>Output only. The API version that created this Node. (API_VERSION_UNSPECIFIED, V1_ALPHA1, V1, V2_ALPHA1, V2)</td>
 </tr>
 <tr>
     <td><CopyableCode code="bootDiskConfig" /></td>
@@ -251,7 +252,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="health" /></td>
     <td><code>string</code></td>
-    <td>The health status of the TPU node.</td>
+    <td>The health status of the TPU node. (HEALTH_UNSPECIFIED, HEALTHY, TIMEOUT, UNHEALTHY_TENSORFLOW, UNHEALTHY_MAINTENANCE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="healthDescription" /></td>
@@ -276,7 +277,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="networkConfig" /></td>
     <td><code>object</code></td>
-    <td>Network configurations for the TPU node. network_config and network_configs are mutually exclusive, you can only specify one of them. If both are specified, an error will be returned. (id: NetworkConfig)</td>
+    <td>Network related configurations. (id: NetworkConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="networkConfigs" /></td>
@@ -316,7 +317,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state for the TPU Node.</td>
+    <td>Output only. The current state for the TPU Node. (STATE_UNSPECIFIED, CREATING, READY, RESTARTING, REIMAGING, DELETING, REPAIRING, STOPPED, STOPPING, STARTING, PREEMPTED, TERMINATED, HIDING, HIDDEN, UNHIDING, UNKNOWN)</td>
 </tr>
 <tr>
     <td><CopyableCode code="symptoms" /></td>
@@ -364,7 +365,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists nodes.</td>
 </tr>
 <tr>
@@ -389,18 +390,18 @@ The following methods are available for this resource:
     <td>Deletes a node.</td>
 </tr>
 <tr>
-    <td><a href="#stop"><CopyableCode code="stop" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-nodesId"><code>nodesId</code></a></td>
-    <td></td>
-    <td>Stops a node. This operation is only available with single TPU nodes.</td>
-</tr>
-<tr>
     <td><a href="#start"><CopyableCode code="start" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-nodesId"><code>nodesId</code></a></td>
     <td></td>
     <td>Starts a node.</td>
+</tr>
+<tr>
+    <td><a href="#stop"><CopyableCode code="stop" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-nodesId"><code>nodesId</code></a></td>
+    <td></td>
+    <td>Stops a node. This operation is only available with single TPU nodes.</td>
 </tr>
 </tbody>
 </table>
@@ -541,8 +542,8 @@ upcomingMaintenance
 FROM google.tpu.nodes
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -564,43 +565,43 @@ Creates a node.
 
 ```sql
 INSERT INTO google.tpu.nodes (
+data__schedulingConfig,
+data__cidrBlock,
+data__health,
+data__runtimeVersion,
+data__metadata,
+data__shieldedInstanceConfig,
+data__networkConfigs,
+data__labels,
+data__tags,
+data__acceleratorConfig,
 data__description,
 data__acceleratorType,
-data__runtimeVersion,
 data__networkConfig,
-data__networkConfigs,
-data__cidrBlock,
-data__serviceAccount,
-data__schedulingConfig,
-data__health,
-data__labels,
-data__metadata,
-data__tags,
-data__dataDisks,
-data__shieldedInstanceConfig,
-data__acceleratorConfig,
 data__bootDiskConfig,
+data__dataDisks,
+data__serviceAccount,
 projectsId,
 locationsId,
 nodeId
 )
 SELECT 
+'{{ schedulingConfig }}',
+'{{ cidrBlock }}',
+'{{ health }}',
+'{{ runtimeVersion }}',
+'{{ metadata }}',
+'{{ shieldedInstanceConfig }}',
+'{{ networkConfigs }}',
+'{{ labels }}',
+'{{ tags }}',
+'{{ acceleratorConfig }}',
 '{{ description }}',
 '{{ acceleratorType }}',
-'{{ runtimeVersion }}',
 '{{ networkConfig }}',
-'{{ networkConfigs }}',
-'{{ cidrBlock }}',
-'{{ serviceAccount }}',
-'{{ schedulingConfig }}',
-'{{ health }}',
-'{{ labels }}',
-'{{ metadata }}',
-'{{ tags }}',
-'{{ dataDisks }}',
-'{{ shieldedInstanceConfig }}',
-'{{ acceleratorConfig }}',
 '{{ bootDiskConfig }}',
+'{{ dataDisks }}',
+'{{ serviceAccount }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ nodeId }}'
@@ -615,100 +616,108 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: nodes
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the nodes resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the nodes resource.
-    - name: description
-      value: string
-      description: >
-        The user-supplied description of the TPU. Maximum of 512 characters.
-        
-    - name: acceleratorType
-      value: string
-      description: >
-        Optional. The type of hardware accelerators associated with this node.
-        
-    - name: runtimeVersion
-      value: string
-      description: >
-        Required. The runtime version running in the Node.
-        
-    - name: networkConfig
-      value: object
-      description: >
-        Network configurations for the TPU node. network_config and network_configs are mutually exclusive, you can only specify one of them. If both are specified, an error will be returned.
-        
-    - name: networkConfigs
-      value: array
-      description: >
-        Optional. Repeated network configurations for the TPU node. This field is used to specify multiple networks configs for the TPU node. network_config and network_configs are mutually exclusive, you can only specify one of them. If both are specified, an error will be returned.
-        
-    - name: cidrBlock
-      value: string
-      description: >
-        The CIDR block that the TPU node will use when selecting an IP address. This CIDR block must be a /29 block; the Compute Engine networks API forbids a smaller block, and using a larger block would be wasteful (a node can only consume one IP address). Errors will occur if the CIDR block has already been used for a currently existing TPU node, the CIDR block conflicts with any subnetworks in the user's provided network, or the provided network is peered with another network that is using that CIDR block.
-        
-    - name: serviceAccount
-      value: object
-      description: >
-        The Google Cloud Platform Service Account to be used by the TPU node VMs. If None is specified, the default compute service account will be used.
-        
     - name: schedulingConfig
-      value: object
-      description: >
+      description: |
         The scheduling options for this node.
-        
+      value:
+        preemptible: {{ preemptible }}
+        reserved: {{ reserved }}
+        spot: {{ spot }}
+    - name: cidrBlock
+      value: "{{ cidrBlock }}"
+      description: |
+        The CIDR block that the TPU node will use when selecting an IP address. This CIDR block must be a /29 block; the Compute Engine networks API forbids a smaller block, and using a larger block would be wasteful (a node can only consume one IP address). Errors will occur if the CIDR block has already been used for a currently existing TPU node, the CIDR block conflicts with any subnetworks in the user's provided network, or the provided network is peered with another network that is using that CIDR block.
     - name: health
-      value: string
-      description: >
+      value: "{{ health }}"
+      description: |
         The health status of the TPU node.
-        
       valid_values: ['HEALTH_UNSPECIFIED', 'HEALTHY', 'TIMEOUT', 'UNHEALTHY_TENSORFLOW', 'UNHEALTHY_MAINTENANCE']
-    - name: labels
-      value: object
-      description: >
-        Resource labels to represent user-provided metadata.
-        
+    - name: runtimeVersion
+      value: "{{ runtimeVersion }}"
+      description: |
+        Required. The runtime version running in the Node.
     - name: metadata
-      value: object
-      description: >
+      value: "{{ metadata }}"
+      description: |
         Custom metadata to apply to the TPU Node. Can set startup-script and shutdown-script
-        
-    - name: tags
-      value: array
-      description: >
-        Tags to apply to the TPU Node. Tags are used to identify valid sources or targets for network firewalls.
-        
-    - name: dataDisks
-      value: array
-      description: >
-        The additional data disks for the Node.
-        
     - name: shieldedInstanceConfig
-      value: object
-      description: >
+      description: |
         Shielded Instance options.
-        
+      value:
+        enableSecureBoot: {{ enableSecureBoot }}
+    - name: networkConfigs
+      description: |
+        Optional. Repeated network configurations for the TPU node. This field is used to specify multiple networks configs for the TPU node. network_config and network_configs are mutually exclusive, you can only specify one of them. If both are specified, an error will be returned.
+      value:
+        - subnetwork: "{{ subnetwork }}"
+          enableExternalIps: {{ enableExternalIps }}
+          network: "{{ network }}"
+          queueCount: {{ queueCount }}
+          canIpForward: {{ canIpForward }}
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Resource labels to represent user-provided metadata.
+    - name: tags
+      value:
+        - "{{ tags }}"
+      description: |
+        Tags to apply to the TPU Node. Tags are used to identify valid sources or targets for network firewalls.
     - name: acceleratorConfig
-      value: object
-      description: >
+      description: |
         The AccleratorConfig for the TPU Node.
-        
+      value:
+        type: "{{ type }}"
+        topology: "{{ topology }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        The user-supplied description of the TPU. Maximum of 512 characters.
+    - name: acceleratorType
+      value: "{{ acceleratorType }}"
+      description: |
+        Optional. The type of hardware accelerators associated with this node.
+    - name: networkConfig
+      description: |
+        Network related configurations.
+      value:
+        subnetwork: "{{ subnetwork }}"
+        enableExternalIps: {{ enableExternalIps }}
+        network: "{{ network }}"
+        queueCount: {{ queueCount }}
+        canIpForward: {{ canIpForward }}
     - name: bootDiskConfig
-      value: object
-      description: >
+      description: |
         Optional. Boot disk configuration.
-        
+      value:
+        customerEncryptionKey:
+          kmsKeyName: "{{ kmsKeyName }}"
+    - name: dataDisks
+      description: |
+        The additional data disks for the Node.
+      value:
+        - sourceDisk: "{{ sourceDisk }}"
+          mode: "{{ mode }}"
+    - name: serviceAccount
+      description: |
+        The Google Cloud Platform Service Account to be used by the TPU node VMs. If None is specified, the default compute service account will be used.
+      value:
+        email: "{{ email }}"
+        scope:
+          - "{{ scope }}"
     - name: nodeId
-      value: string
-```
+      value: "{{ nodeId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -728,22 +737,22 @@ Updates the configurations of a node.
 ```sql
 UPDATE google.tpu.nodes
 SET 
+data__schedulingConfig = '{{ schedulingConfig }}',
+data__cidrBlock = '{{ cidrBlock }}',
+data__health = '{{ health }}',
+data__runtimeVersion = '{{ runtimeVersion }}',
+data__metadata = '{{ metadata }}',
+data__shieldedInstanceConfig = '{{ shieldedInstanceConfig }}',
+data__networkConfigs = '{{ networkConfigs }}',
+data__labels = '{{ labels }}',
+data__tags = '{{ tags }}',
+data__acceleratorConfig = '{{ acceleratorConfig }}',
 data__description = '{{ description }}',
 data__acceleratorType = '{{ acceleratorType }}',
-data__runtimeVersion = '{{ runtimeVersion }}',
 data__networkConfig = '{{ networkConfig }}',
-data__networkConfigs = '{{ networkConfigs }}',
-data__cidrBlock = '{{ cidrBlock }}',
-data__serviceAccount = '{{ serviceAccount }}',
-data__schedulingConfig = '{{ schedulingConfig }}',
-data__health = '{{ health }}',
-data__labels = '{{ labels }}',
-data__metadata = '{{ metadata }}',
-data__tags = '{{ tags }}',
+data__bootDiskConfig = '{{ bootDiskConfig }}',
 data__dataDisks = '{{ dataDisks }}',
-data__shieldedInstanceConfig = '{{ shieldedInstanceConfig }}',
-data__acceleratorConfig = '{{ acceleratorConfig }}',
-data__bootDiskConfig = '{{ bootDiskConfig }}'
+data__serviceAccount = '{{ serviceAccount }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -786,30 +795,30 @@ AND nodesId = '{{ nodesId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="stop"
+    defaultValue="start"
     values={[
-        { label: 'stop', value: 'stop' },
-        { label: 'start', value: 'start' }
+        { label: 'start', value: 'start' },
+        { label: 'stop', value: 'stop' }
     ]}
 >
-<TabItem value="stop">
-
-Stops a node. This operation is only available with single TPU nodes.
-
-```sql
-EXEC google.tpu.nodes.stop 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@nodesId='{{ nodesId }}' --required
-;
-```
-</TabItem>
 <TabItem value="start">
 
 Starts a node.
 
 ```sql
 EXEC google.tpu.nodes.start 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@nodesId='{{ nodesId }}' --required
+;
+```
+</TabItem>
+<TabItem value="stop">
+
+Stops a node. This operation is only available with single TPU nodes.
+
+```sql
+EXEC google.tpu.nodes.stop 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @nodesId='{{ nodesId }}' --required

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>materialized_views</code> resou
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>materialized_views</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="materialized_views" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.bigtableadmin.materialized_views" /></td></tr>
 </tbody></table>
@@ -144,14 +145,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-view"><code>view</code></a></td>
+    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists information about materialized views in an instance.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td><a href="#parameter-materializedViewId"><code>materializedViewId</code></a></td>
+    <td><a href="#parameter-ignoreWarnings"><code>ignoreWarnings</code></a>, <a href="#parameter-materializedViewId"><code>materializedViewId</code></a></td>
     <td>Creates a materialized view within an instance.</td>
 </tr>
 <tr>
@@ -202,6 +203,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-etag">
     <td><CopyableCode code="etag" /></td>
     <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-ignoreWarnings">
+    <td><CopyableCode code="ignoreWarnings" /></td>
+    <td><code>boolean</code></td>
     <td></td>
 </tr>
 <tr id="parameter-materializedViewId">
@@ -274,9 +280,9 @@ query
 FROM google.bigtableadmin.materialized_views
 WHERE projectsId = '{{ projectsId }}' -- required
 AND instancesId = '{{ instancesId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND view = '{{ view }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -298,21 +304,23 @@ Creates a materialized view within an instance.
 
 ```sql
 INSERT INTO google.bigtableadmin.materialized_views (
-data__etag,
-data__query,
 data__name,
+data__etag,
 data__deletionProtection,
+data__query,
 projectsId,
 instancesId,
+ignoreWarnings,
 materializedViewId
 )
 SELECT 
-'{{ etag }}',
-'{{ query }}',
 '{{ name }}',
+'{{ etag }}',
 {{ deletionProtection }},
+'{{ query }}',
 '{{ projectsId }}',
 '{{ instancesId }}',
+'{{ ignoreWarnings }}',
 '{{ materializedViewId }}'
 RETURNING
 name,
@@ -325,39 +333,37 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: materialized_views
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the materialized_views resource.
     - name: instancesId
-      value: string
+      value: "{{ instancesId }}"
       description: Required parameter for the materialized_views resource.
-    - name: etag
-      value: string
-      description: >
-        Optional. The etag for this materialized view. This may be sent on update requests to ensure that the client has an up-to-date value before proceeding. The server returns an ABORTED error on a mismatched etag. Views: `SCHEMA_VIEW`, `REPLICATION_VIEW`, `FULL`.
-        
-    - name: query
-      value: string
-      description: >
-        Required. Immutable. The materialized view's select query. Views: `SCHEMA_VIEW`, `FULL`.
-        
     - name: name
-      value: string
-      description: >
-        Identifier. The unique name of the materialized view. Format: `projects/{project}/instances/{instance}/materializedViews/{materialized_view}` Views: `SCHEMA_VIEW`, `REPLICATION_VIEW`, `FULL`.
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. The unique name of the materialized view. Format: \`projects/{project}/instances/{instance}/materializedViews/{materialized_view}\` Views: \`SCHEMA_VIEW\`, \`REPLICATION_VIEW\`, \`FULL\`.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. The etag for this materialized view. This may be sent on update requests to ensure that the client has an up-to-date value before proceeding. The server returns an ABORTED error on a mismatched etag. Views: \`SCHEMA_VIEW\`, \`REPLICATION_VIEW\`, \`FULL\`.
     - name: deletionProtection
-      value: boolean
-      description: >
-        Set to true to make the MaterializedView protected against deletion. Views: `SCHEMA_VIEW`, `REPLICATION_VIEW`, `FULL`.
-        
+      value: {{ deletionProtection }}
+      description: |
+        Set to true to make the MaterializedView protected against deletion. Views: \`SCHEMA_VIEW\`, \`REPLICATION_VIEW\`, \`FULL\`.
+    - name: query
+      value: "{{ query }}"
+      description: |
+        Required. Immutable. The materialized view's select query. Views: \`SCHEMA_VIEW\`, \`FULL\`.
+    - name: ignoreWarnings
+      value: {{ ignoreWarnings }}
     - name: materializedViewId
-      value: string
-```
+      value: "{{ materializedViewId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -377,10 +383,10 @@ Updates a materialized view within an instance.
 ```sql
 UPDATE google.bigtableadmin.materialized_views
 SET 
-data__etag = '{{ etag }}',
-data__query = '{{ query }}',
 data__name = '{{ name }}',
-data__deletionProtection = {{ deletionProtection }}
+data__etag = '{{ etag }}',
+data__deletionProtection = {{ deletionProtection }},
+data__query = '{{ query }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instancesId = '{{ instancesId }}' --required

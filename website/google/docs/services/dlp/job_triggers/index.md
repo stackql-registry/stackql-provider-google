@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>job_triggers</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>job_triggers</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="job_triggers" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dlp.job_triggers" /></td></tr>
 </tbody></table>
@@ -36,8 +37,8 @@ The following fields are returned by `SELECT` queries:
     values={[
         { label: 'projects_locations_job_triggers_get', value: 'projects_locations_job_triggers_get' },
         { label: 'organizations_locations_job_triggers_get', value: 'organizations_locations_job_triggers_get' },
-        { label: 'projects_locations_job_triggers_list', value: 'projects_locations_job_triggers_list' },
         { label: 'projects_job_triggers_get', value: 'projects_job_triggers_get' },
+        { label: 'projects_locations_job_triggers_list', value: 'projects_locations_job_triggers_list' },
         { label: 'organizations_locations_job_triggers_list', value: 'organizations_locations_job_triggers_list' },
         { label: 'projects_job_triggers_list', value: 'projects_job_triggers_list' }
     ]}
@@ -56,7 +57,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Unique resource name for the triggeredJob, assigned by the service when the triggeredJob is created, for example `projects/dlp-test-project/jobTriggers/53234423`.</td>
+    <td>Output only. Unique resource name for the triggeredJob, assigned by the service when the triggeredJob is created, for example `projects/dlp-test-project/jobTriggers/53234423`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -91,7 +92,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>Required. A status for this trigger.</td>
+    <td>Required. A status for this trigger. (STATUS_UNSPECIFIED, HEALTHY, PAUSED, CANCELLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="triggers" /></td>
@@ -120,7 +121,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Unique resource name for the triggeredJob, assigned by the service when the triggeredJob is created, for example `projects/dlp-test-project/jobTriggers/53234423`.</td>
+    <td>Output only. Unique resource name for the triggeredJob, assigned by the service when the triggeredJob is created, for example `projects/dlp-test-project/jobTriggers/53234423`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -155,71 +156,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>Required. A status for this trigger.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="triggers" /></td>
-    <td><code>array</code></td>
-    <td>A list of triggers which will be OR'ed together. Only one in the list needs to trigger for a job to be started. The list may contain only a single Schedule trigger and must have at least one object.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The last update timestamp of a triggeredJob.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="projects_locations_job_triggers_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Unique resource name for the triggeredJob, assigned by the service when the triggeredJob is created, for example `projects/dlp-test-project/jobTriggers/53234423`.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The creation timestamp of a triggeredJob.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>User provided description (max 256 chars)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>Display name (max 100 chars)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="errors" /></td>
-    <td><code>array</code></td>
-    <td>Output only. A stream of errors encountered when the trigger was activated. Repeated errors may result in the JobTrigger automatically being paused. Will return the last 100 errors. Whenever the JobTrigger is modified this list will be cleared.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="inspectJob" /></td>
-    <td><code>object</code></td>
-    <td>For inspect jobs, a snapshot of the configuration. (id: GooglePrivacyDlpV2InspectJobConfig)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="lastRunTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The timestamp of the last time this trigger executed.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="status" /></td>
-    <td><code>string</code></td>
-    <td>Required. A status for this trigger.</td>
+    <td>Required. A status for this trigger. (STATUS_UNSPECIFIED, HEALTHY, PAUSED, CANCELLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="triggers" /></td>
@@ -248,7 +185,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Unique resource name for the triggeredJob, assigned by the service when the triggeredJob is created, for example `projects/dlp-test-project/jobTriggers/53234423`.</td>
+    <td>Output only. Unique resource name for the triggeredJob, assigned by the service when the triggeredJob is created, for example `projects/dlp-test-project/jobTriggers/53234423`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -283,7 +220,71 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>Required. A status for this trigger.</td>
+    <td>Required. A status for this trigger. (STATUS_UNSPECIFIED, HEALTHY, PAUSED, CANCELLED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="triggers" /></td>
+    <td><code>array</code></td>
+    <td>A list of triggers which will be OR'ed together. Only one in the list needs to trigger for a job to be started. The list may contain only a single Schedule trigger and must have at least one object.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The last update timestamp of a triggeredJob.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_locations_job_triggers_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Unique resource name for the triggeredJob, assigned by the service when the triggeredJob is created, for example `projects/dlp-test-project/jobTriggers/53234423`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The creation timestamp of a triggeredJob.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>User provided description (max 256 chars)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="displayName" /></td>
+    <td><code>string</code></td>
+    <td>Display name (max 100 chars)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="errors" /></td>
+    <td><code>array</code></td>
+    <td>Output only. A stream of errors encountered when the trigger was activated. Repeated errors may result in the JobTrigger automatically being paused. Will return the last 100 errors. Whenever the JobTrigger is modified this list will be cleared.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="inspectJob" /></td>
+    <td><code>object</code></td>
+    <td>For inspect jobs, a snapshot of the configuration. (id: GooglePrivacyDlpV2InspectJobConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="lastRunTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The timestamp of the last time this trigger executed.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="status" /></td>
+    <td><code>string</code></td>
+    <td>Required. A status for this trigger. (STATUS_UNSPECIFIED, HEALTHY, PAUSED, CANCELLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="triggers" /></td>
@@ -312,7 +313,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Unique resource name for the triggeredJob, assigned by the service when the triggeredJob is created, for example `projects/dlp-test-project/jobTriggers/53234423`.</td>
+    <td>Output only. Unique resource name for the triggeredJob, assigned by the service when the triggeredJob is created, for example `projects/dlp-test-project/jobTriggers/53234423`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -347,7 +348,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>Required. A status for this trigger.</td>
+    <td>Required. A status for this trigger. (STATUS_UNSPECIFIED, HEALTHY, PAUSED, CANCELLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="triggers" /></td>
@@ -376,7 +377,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Unique resource name for the triggeredJob, assigned by the service when the triggeredJob is created, for example `projects/dlp-test-project/jobTriggers/53234423`.</td>
+    <td>Output only. Unique resource name for the triggeredJob, assigned by the service when the triggeredJob is created, for example `projects/dlp-test-project/jobTriggers/53234423`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -411,7 +412,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>string</code></td>
-    <td>Required. A status for this trigger.</td>
+    <td>Required. A status for this trigger. (STATUS_UNSPECIFIED, HEALTHY, PAUSED, CANCELLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="triggers" /></td>
@@ -448,105 +449,112 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-jobTriggersId"><code>jobTriggersId</code></a></td>
     <td></td>
-    <td>Gets a job trigger. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
+    <td>Gets a job trigger. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_job_triggers_get"><CopyableCode code="organizations_locations_job_triggers_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-jobTriggersId"><code>jobTriggersId</code></a></td>
     <td></td>
-    <td>Gets a job trigger. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_job_triggers_list"><CopyableCode code="projects_locations_job_triggers_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-type"><code>type</code></a>, <a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists job triggers. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
+    <td>Gets a job trigger. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_job_triggers_get"><CopyableCode code="projects_job_triggers_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-jobTriggersId"><code>jobTriggersId</code></a></td>
     <td></td>
-    <td>Gets a job trigger. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
+    <td>Gets a job trigger. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_job_triggers_list"><CopyableCode code="projects_locations_job_triggers_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-type"><code>type</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td>Lists job triggers. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_job_triggers_list"><CopyableCode code="organizations_locations_job_triggers_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-type"><code>type</code></a></td>
-    <td>Lists job triggers. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-type"><code>type</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td>Lists job triggers. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_job_triggers_list"><CopyableCode code="projects_job_triggers_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-type"><code>type</code></a>, <a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
-    <td>Lists job triggers. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-type"><code>type</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td>Lists job triggers. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_job_triggers_create"><CopyableCode code="projects_locations_job_triggers_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
-    <td>Creates a job trigger to run DLP actions such as scanning storage for sensitive information on a set schedule. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
+    <td>Creates a job trigger to run DLP actions such as scanning storage for sensitive information on a set schedule. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_job_triggers_create"><CopyableCode code="organizations_locations_job_triggers_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
-    <td>Creates a job trigger to run DLP actions such as scanning storage for sensitive information on a set schedule. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
+    <td>Creates a job trigger to run DLP actions such as scanning storage for sensitive information on a set schedule. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_job_triggers_create"><CopyableCode code="projects_job_triggers_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
-    <td>Creates a job trigger to run DLP actions such as scanning storage for sensitive information on a set schedule. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
+    <td>Creates a job trigger to run DLP actions such as scanning storage for sensitive information on a set schedule. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_job_triggers_patch"><CopyableCode code="projects_locations_job_triggers_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-jobTriggersId"><code>jobTriggersId</code></a></td>
     <td></td>
-    <td>Updates a job trigger. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
+    <td>Updates a job trigger. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_job_triggers_patch"><CopyableCode code="organizations_locations_job_triggers_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-jobTriggersId"><code>jobTriggersId</code></a></td>
     <td></td>
-    <td>Updates a job trigger. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
+    <td>Updates a job trigger. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_job_triggers_patch"><CopyableCode code="projects_job_triggers_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-jobTriggersId"><code>jobTriggersId</code></a></td>
     <td></td>
-    <td>Updates a job trigger. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
+    <td>Updates a job trigger. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_job_triggers_delete"><CopyableCode code="projects_locations_job_triggers_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-jobTriggersId"><code>jobTriggersId</code></a></td>
     <td></td>
-    <td>Deletes a job trigger. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
+    <td>Deletes a job trigger. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_job_triggers_delete"><CopyableCode code="organizations_locations_job_triggers_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-jobTriggersId"><code>jobTriggersId</code></a></td>
     <td></td>
-    <td>Deletes a job trigger. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
+    <td>Deletes a job trigger. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_job_triggers_delete"><CopyableCode code="projects_job_triggers_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-jobTriggersId"><code>jobTriggersId</code></a></td>
     <td></td>
-    <td>Deletes a job trigger. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
+    <td>Deletes a job trigger. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</td>
+</tr>
+<tr>
+    <td><a href="#projects_job_triggers_activate"><CopyableCode code="projects_job_triggers_activate" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-jobTriggersId"><code>jobTriggersId</code></a></td>
+    <td></td>
+    <td>Activate a job trigger. Causes the immediate execute of a trigger instead of waiting on the trigger event to occur.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_job_triggers_activate"><CopyableCode code="projects_locations_job_triggers_activate" /></a></td>
@@ -561,13 +569,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-jobTriggersId"><code>jobTriggersId</code></a></td>
     <td></td>
     <td>Inspect hybrid content and store findings to a trigger. The inspection will be processed asynchronously. To review the findings monitor the jobs within the trigger.</td>
-</tr>
-<tr>
-    <td><a href="#projects_job_triggers_activate"><CopyableCode code="projects_job_triggers_activate" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-jobTriggersId"><code>jobTriggersId</code></a></td>
-    <td></td>
-    <td>Activate a job trigger. Causes the immediate execute of a trigger instead of waiting on the trigger event to occur.</td>
 </tr>
 </tbody>
 </table>
@@ -645,15 +646,15 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     values={[
         { label: 'projects_locations_job_triggers_get', value: 'projects_locations_job_triggers_get' },
         { label: 'organizations_locations_job_triggers_get', value: 'organizations_locations_job_triggers_get' },
-        { label: 'projects_locations_job_triggers_list', value: 'projects_locations_job_triggers_list' },
         { label: 'projects_job_triggers_get', value: 'projects_job_triggers_get' },
+        { label: 'projects_locations_job_triggers_list', value: 'projects_locations_job_triggers_list' },
         { label: 'organizations_locations_job_triggers_list', value: 'organizations_locations_job_triggers_list' },
         { label: 'projects_job_triggers_list', value: 'projects_job_triggers_list' }
     ]}
 >
 <TabItem value="projects_locations_job_triggers_get">
 
-Gets a job trigger. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
+Gets a job trigger. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
 
 ```sql
 SELECT
@@ -676,7 +677,7 @@ AND jobTriggersId = '{{ jobTriggersId }}' -- required
 </TabItem>
 <TabItem value="organizations_locations_job_triggers_get">
 
-Gets a job trigger. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
+Gets a job trigger. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
 
 ```sql
 SELECT
@@ -693,13 +694,35 @@ updateTime
 FROM google.dlp.job_triggers
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND jobTriggersId = '{{ jobTriggersId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="projects_job_triggers_get">
+
+Gets a job trigger. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
+
+```sql
+SELECT
+name,
+createTime,
+description,
+displayName,
+errors,
+inspectJob,
+lastRunTime,
+status,
+triggers,
+updateTime
+FROM google.dlp.job_triggers
+WHERE projectsId = '{{ projectsId }}' -- required
 AND jobTriggersId = '{{ jobTriggersId }}' -- required
 ;
 ```
 </TabItem>
 <TabItem value="projects_locations_job_triggers_list">
 
-Lists job triggers. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
+Lists job triggers. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
 
 ```sql
 SELECT
@@ -716,40 +739,18 @@ updateTime
 FROM google.dlp.job_triggers
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND type = '{{ type }}'
-AND locationId = '{{ locationId }}'
 AND orderBy = '{{ orderBy }}'
+AND type = '{{ type }}'
 AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
+AND locationId = '{{ locationId }}'
 AND pageToken = '{{ pageToken }}'
-;
-```
-</TabItem>
-<TabItem value="projects_job_triggers_get">
-
-Gets a job trigger. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
-
-```sql
-SELECT
-name,
-createTime,
-description,
-displayName,
-errors,
-inspectJob,
-lastRunTime,
-status,
-triggers,
-updateTime
-FROM google.dlp.job_triggers
-WHERE projectsId = '{{ projectsId }}' -- required
-AND jobTriggersId = '{{ jobTriggersId }}' -- required
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
 <TabItem value="organizations_locations_job_triggers_list">
 
-Lists job triggers. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
+Lists job triggers. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
 
 ```sql
 SELECT
@@ -766,18 +767,18 @@ updateTime
 FROM google.dlp.job_triggers
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND locationId = '{{ locationId }}'
 AND orderBy = '{{ orderBy }}'
-AND filter = '{{ filter }}'
 AND type = '{{ type }}'
+AND pageSize = '{{ pageSize }}'
+AND locationId = '{{ locationId }}'
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
 <TabItem value="projects_job_triggers_list">
 
-Lists job triggers. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
+Lists job triggers. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
 
 ```sql
 SELECT
@@ -793,12 +794,12 @@ triggers,
 updateTime
 FROM google.dlp.job_triggers
 WHERE projectsId = '{{ projectsId }}' -- required
-AND type = '{{ type }}'
-AND locationId = '{{ locationId }}'
 AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND type = '{{ type }}'
 AND orderBy = '{{ orderBy }}'
+AND locationId = '{{ locationId }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -818,20 +819,20 @@ AND orderBy = '{{ orderBy }}'
 >
 <TabItem value="projects_locations_job_triggers_create">
 
-Creates a job trigger to run DLP actions such as scanning storage for sensitive information on a set schedule. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
+Creates a job trigger to run DLP actions such as scanning storage for sensitive information on a set schedule. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
 
 ```sql
 INSERT INTO google.dlp.job_triggers (
-data__triggerId,
-data__locationId,
 data__jobTrigger,
+data__locationId,
+data__triggerId,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ triggerId }}',
-'{{ locationId }}',
 '{{ jobTrigger }}',
+'{{ locationId }}',
+'{{ triggerId }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -850,20 +851,20 @@ updateTime
 </TabItem>
 <TabItem value="organizations_locations_job_triggers_create">
 
-Creates a job trigger to run DLP actions such as scanning storage for sensitive information on a set schedule. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
+Creates a job trigger to run DLP actions such as scanning storage for sensitive information on a set schedule. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
 
 ```sql
 INSERT INTO google.dlp.job_triggers (
-data__triggerId,
-data__locationId,
 data__jobTrigger,
+data__locationId,
+data__triggerId,
 organizationsId,
 locationsId
 )
 SELECT 
-'{{ triggerId }}',
-'{{ locationId }}',
 '{{ jobTrigger }}',
+'{{ locationId }}',
+'{{ triggerId }}',
 '{{ organizationsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -882,19 +883,19 @@ updateTime
 </TabItem>
 <TabItem value="projects_job_triggers_create">
 
-Creates a job trigger to run DLP actions such as scanning storage for sensitive information on a set schedule. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
+Creates a job trigger to run DLP actions such as scanning storage for sensitive information on a set schedule. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
 
 ```sql
 INSERT INTO google.dlp.job_triggers (
-data__triggerId,
-data__locationId,
 data__jobTrigger,
+data__locationId,
+data__triggerId,
 projectsId
 )
 SELECT 
-'{{ triggerId }}',
-'{{ locationId }}',
 '{{ jobTrigger }}',
+'{{ locationId }}',
+'{{ triggerId }}',
 '{{ projectsId }}'
 RETURNING
 name,
@@ -912,35 +913,174 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: job_triggers
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the job_triggers resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the job_triggers resource.
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the job_triggers resource.
-    - name: triggerId
-      value: string
-      description: >
-        The trigger id can contain uppercase and lowercase letters, numbers, and hyphens; that is, it must match the regular expression: `[a-zA-Z\d-_]+`. The maximum length is 100 characters. Can be empty to allow the system to generate one.
-        
-    - name: locationId
-      value: string
-      description: >
-        Deprecated. This field has no effect.
-        
     - name: jobTrigger
-      value: object
-      description: >
-        Contains a configuration to make API calls on a repeating basis. See https://cloud.google.com/sensitive-data-protection/docs/concepts-job-triggers to learn more.
-        
-```
+      description: |
+        Contains a configuration to make API calls on a repeating basis. See https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-job-triggers to learn more.
+      value:
+        name: "{{ name }}"
+        description: "{{ description }}"
+        lastRunTime: "{{ lastRunTime }}"
+        errors:
+          - timestamps: "{{ timestamps }}"
+            extraInfo: "{{ extraInfo }}"
+            details:
+              message: "{{ message }}"
+              details: "{{ details }}"
+              code: {{ code }}
+        updateTime: "{{ updateTime }}"
+        displayName: "{{ displayName }}"
+        status: "{{ status }}"
+        triggers:
+          - schedule:
+              recurrencePeriodDuration: "{{ recurrencePeriodDuration }}"
+            manual: "{{ manual }}"
+        createTime: "{{ createTime }}"
+        inspectJob:
+          inspectTemplateName: "{{ inspectTemplateName }}"
+          actions:
+            - publishToStackdriver: "{{ publishToStackdriver }}"
+              publishSummaryToCscc: "{{ publishSummaryToCscc }}"
+              publishFindingsToCloudDataCatalog: "{{ publishFindingsToCloudDataCatalog }}"
+              saveFindings:
+                outputConfig:
+                  storagePath: "{{ storagePath }}"
+                  outputSchema: "{{ outputSchema }}"
+                  table: "{{ table }}"
+              pubSub:
+                topic: "{{ topic }}"
+              publishFindingsToDataplexCatalog: "{{ publishFindingsToDataplexCatalog }}"
+              deidentify:
+                fileTypesToTransform:
+                  - "{{ fileTypesToTransform }}"
+                cloudStorageOutput: "{{ cloudStorageOutput }}"
+                transformationConfig:
+                  deidentifyTemplate: "{{ deidentifyTemplate }}"
+                  imageRedactTemplate: "{{ imageRedactTemplate }}"
+                  structuredDeidentifyTemplate: "{{ structuredDeidentifyTemplate }}"
+                transformationDetailsStorageConfig:
+                  table: "{{ table }}"
+              jobNotificationEmails: "{{ jobNotificationEmails }}"
+          storageConfig:
+            bigQueryOptions:
+              tableReference:
+                projectId: "{{ projectId }}"
+                datasetId: "{{ datasetId }}"
+                tableId: "{{ tableId }}"
+              identifyingFields:
+                - name: "{{ name }}"
+              excludedFields:
+                - name: "{{ name }}"
+              rowsLimit: "{{ rowsLimit }}"
+              rowsLimitPercent: {{ rowsLimitPercent }}
+              sampleMethod: "{{ sampleMethod }}"
+              includedFields:
+                - name: "{{ name }}"
+            datastoreOptions:
+              partitionId:
+                projectId: "{{ projectId }}"
+                namespaceId: "{{ namespaceId }}"
+              kind:
+                name: "{{ name }}"
+            cloudStorageOptions:
+              bytesLimitPerFilePercent: {{ bytesLimitPerFilePercent }}
+              bytesLimitPerFile: "{{ bytesLimitPerFile }}"
+              fileTypes:
+                - "{{ fileTypes }}"
+              fileSet:
+                regexFileSet: "{{ regexFileSet }}"
+                url: "{{ url }}"
+              filesLimitPercent: {{ filesLimitPercent }}
+              sampleMethod: "{{ sampleMethod }}"
+            timespanConfig:
+              enableAutoPopulationOfTimespanConfig: {{ enableAutoPopulationOfTimespanConfig }}
+              startTime: "{{ startTime }}"
+              timestampField:
+                name: "{{ name }}"
+              endTime: "{{ endTime }}"
+            hybridOptions:
+              labels: "{{ labels }}"
+              requiredFindingLabelKeys:
+                - "{{ requiredFindingLabelKeys }}"
+              tableOptions:
+                identifyingFields: "{{ identifyingFields }}"
+              description: "{{ description }}"
+          inspectConfig:
+            minLikelihoodPerInfoType:
+              - infoType:
+                  name: "{{ name }}"
+                  version: "{{ version }}"
+                  sensitivityScore: "{{ sensitivityScore }}"
+                minLikelihood: "{{ minLikelihood }}"
+            infoTypes:
+              - name: "{{ name }}"
+                version: "{{ version }}"
+                sensitivityScore:
+                  score: "{{ score }}"
+            contentOptions:
+              - "{{ contentOptions }}"
+            minLikelihood: "{{ minLikelihood }}"
+            excludeInfoTypes: {{ excludeInfoTypes }}
+            customInfoTypes:
+              - likelihood: "{{ likelihood }}"
+                exclusionType: "{{ exclusionType }}"
+                surrogateType: "{{ surrogateType }}"
+                sensitivityScore:
+                  score: "{{ score }}"
+                storedType:
+                  name: "{{ name }}"
+                  createTime: "{{ createTime }}"
+                metadataKeyValueExpression:
+                  valueRegex: "{{ valueRegex }}"
+                  keyRegex: "{{ keyRegex }}"
+                fileLabelInfoType:
+                  sensitivityLabel: "{{ sensitivityLabel }}"
+                  googleDriveLabel: "{{ googleDriveLabel }}"
+                detectionRules: "{{ detectionRules }}"
+                infoType:
+                  name: "{{ name }}"
+                  version: "{{ version }}"
+                  sensitivityScore: "{{ sensitivityScore }}"
+                regex:
+                  pattern: "{{ pattern }}"
+                  groupIndexes: "{{ groupIndexes }}"
+                dictionary:
+                  wordList: "{{ wordList }}"
+                  cloudStoragePath: "{{ cloudStoragePath }}"
+            limits:
+              maxFindingsPerInfoType:
+                - maxFindings: {{ maxFindings }}
+                  infoType:
+                    name: "{{ name }}"
+                    version: "{{ version }}"
+                    sensitivityScore: "{{ sensitivityScore }}"
+              maxFindingsPerRequest: {{ maxFindingsPerRequest }}
+              maxFindingsPerItem: {{ maxFindingsPerItem }}
+            ruleSet:
+              - rules: "{{ rules }}"
+                infoTypes: "{{ infoTypes }}"
+            includeQuote: {{ includeQuote }}
+    - name: locationId
+      value: "{{ locationId }}"
+      description: |
+        Deprecated. This field has no effect.
+    - name: triggerId
+      value: "{{ triggerId }}"
+      description: |
+        The trigger id can contain uppercase and lowercase letters, numbers, and hyphens; that is, it must match the regular expression: \`[a-zA-Zd-_]+\`. The maximum length is 100 characters. Can be empty to allow the system to generate one.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -957,7 +1097,7 @@ updateTime
 >
 <TabItem value="projects_locations_job_triggers_patch">
 
-Updates a job trigger. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
+Updates a job trigger. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
 
 ```sql
 UPDATE google.dlp.job_triggers
@@ -983,7 +1123,7 @@ updateTime;
 </TabItem>
 <TabItem value="organizations_locations_job_triggers_patch">
 
-Updates a job trigger. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
+Updates a job trigger. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
 
 ```sql
 UPDATE google.dlp.job_triggers
@@ -1009,7 +1149,7 @@ updateTime;
 </TabItem>
 <TabItem value="projects_job_triggers_patch">
 
-Updates a job trigger. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
+Updates a job trigger. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
 
 ```sql
 UPDATE google.dlp.job_triggers
@@ -1047,7 +1187,7 @@ updateTime;
 >
 <TabItem value="projects_locations_job_triggers_delete">
 
-Deletes a job trigger. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
+Deletes a job trigger. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
 
 ```sql
 DELETE FROM google.dlp.job_triggers
@@ -1059,7 +1199,7 @@ AND jobTriggersId = '{{ jobTriggersId }}' --required
 </TabItem>
 <TabItem value="organizations_locations_job_triggers_delete">
 
-Deletes a job trigger. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
+Deletes a job trigger. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
 
 ```sql
 DELETE FROM google.dlp.job_triggers
@@ -1071,7 +1211,7 @@ AND jobTriggersId = '{{ jobTriggersId }}' --required
 </TabItem>
 <TabItem value="projects_job_triggers_delete">
 
-Deletes a job trigger. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
+Deletes a job trigger. See https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
 
 ```sql
 DELETE FROM google.dlp.job_triggers
@@ -1086,13 +1226,24 @@ AND jobTriggersId = '{{ jobTriggersId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_job_triggers_activate"
+    defaultValue="projects_job_triggers_activate"
     values={[
+        { label: 'projects_job_triggers_activate', value: 'projects_job_triggers_activate' },
         { label: 'projects_locations_job_triggers_activate', value: 'projects_locations_job_triggers_activate' },
-        { label: 'projects_locations_job_triggers_hybrid_inspect', value: 'projects_locations_job_triggers_hybrid_inspect' },
-        { label: 'projects_job_triggers_activate', value: 'projects_job_triggers_activate' }
+        { label: 'projects_locations_job_triggers_hybrid_inspect', value: 'projects_locations_job_triggers_hybrid_inspect' }
     ]}
 >
+<TabItem value="projects_job_triggers_activate">
+
+Activate a job trigger. Causes the immediate execute of a trigger instead of waiting on the trigger event to occur.
+
+```sql
+EXEC google.dlp.job_triggers.projects_job_triggers_activate 
+@projectsId='{{ projectsId }}' --required, 
+@jobTriggersId='{{ jobTriggersId }}' --required
+;
+```
+</TabItem>
 <TabItem value="projects_locations_job_triggers_activate">
 
 Activate a job trigger. Causes the immediate execute of a trigger instead of waiting on the trigger event to occur.
@@ -1118,17 +1269,6 @@ EXEC google.dlp.job_triggers.projects_locations_job_triggers_hybrid_inspect
 '{
 "hybridItem": "{{ hybridItem }}"
 }'
-;
-```
-</TabItem>
-<TabItem value="projects_job_triggers_activate">
-
-Activate a job trigger. Causes the immediate execute of a trigger instead of waiting on the trigger event to occur.
-
-```sql
-EXEC google.dlp.job_triggers.projects_job_triggers_activate 
-@projectsId='{{ projectsId }}' --required, 
-@jobTriggersId='{{ jobTriggersId }}' --required
 ;
 ```
 </TabItem>

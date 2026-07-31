@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>forecast</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>forecast</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="forecast" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.airquality.forecast" /></td></tr>
 </tbody></table>
@@ -91,16 +92,16 @@ Returns air quality forecast for a specific location for a given time range.
 EXEC google.airquality.forecast.lookup 
 @@json=
 '{
-"period": "{{ period }}", 
-"pageSize": {{ pageSize }}, 
-"universalAqi": {{ universalAqi }}, 
-"uaqiColorPalette": "{{ uaqiColorPalette }}", 
+"extraComputations": "{{ extraComputations }}", 
 "dateTime": "{{ dateTime }}", 
-"customLocalAqis": "{{ customLocalAqis }}", 
-"languageCode": "{{ languageCode }}", 
-"pageToken": "{{ pageToken }}", 
+"uaqiColorPalette": "{{ uaqiColorPalette }}", 
 "location": "{{ location }}", 
-"extraComputations": "{{ extraComputations }}"
+"pageSize": {{ pageSize }}, 
+"pageToken": "{{ pageToken }}", 
+"languageCode": "{{ languageCode }}", 
+"period": "{{ period }}", 
+"universalAqi": {{ universalAqi }}, 
+"customLocalAqis": "{{ customLocalAqis }}"
 }'
 ;
 ```

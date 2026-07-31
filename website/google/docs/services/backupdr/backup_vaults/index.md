@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>backup_vaults</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>backup_vaults</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="backup_vaults" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.backupdr.backup_vaults" /></td></tr>
 </tbody></table>
@@ -57,7 +58,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="accessRestriction" /></td>
     <td><code>string</code></td>
-    <td>Optional. Note: This field is added for future use case and will not be supported in the current release. Access restriction for the backup vault. Default value is WITHIN_ORGANIZATION if not provided during creation.</td>
+    <td>Optional. Restricts access to certain sources and destinations for data being sent into, or restored from, the backup vault. Defaults to WITHIN_ORGANIZATION if not provided during creation. (ACCESS_RESTRICTION_UNSPECIFIED, WITHIN_PROJECT, WITHIN_ORGANIZATION, UNRESTRICTED, WITHIN_ORG_BUT_UNRESTRICTED_FOR_BA)</td>
 </tr>
 <tr>
     <td><CopyableCode code="annotations" /></td>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="backupRetentionInheritance" /></td>
     <td><code>string</code></td>
-    <td>Optional. Setting for how a backup's enforced retention end time is inherited.</td>
+    <td>Optional. Setting for how a backup's enforced retention end time is inherited. (BACKUP_RETENTION_INHERITANCE_UNSPECIFIED, INHERIT_VAULT_RETENTION, MATCH_BACKUP_EXPIRE_TIME)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -122,7 +123,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The BackupVault resource instance state.</td>
+    <td>Output only. The BackupVault resource instance state. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, ERROR, UPDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="totalStoredBytes" /></td>
@@ -161,7 +162,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="accessRestriction" /></td>
     <td><code>string</code></td>
-    <td>Optional. Note: This field is added for future use case and will not be supported in the current release. Access restriction for the backup vault. Default value is WITHIN_ORGANIZATION if not provided during creation.</td>
+    <td>Optional. Restricts access to certain sources and destinations for data being sent into, or restored from, the backup vault. Defaults to WITHIN_ORGANIZATION if not provided during creation. (ACCESS_RESTRICTION_UNSPECIFIED, WITHIN_PROJECT, WITHIN_ORGANIZATION, UNRESTRICTED, WITHIN_ORG_BUT_UNRESTRICTED_FOR_BA)</td>
 </tr>
 <tr>
     <td><CopyableCode code="annotations" /></td>
@@ -181,7 +182,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="backupRetentionInheritance" /></td>
     <td><code>string</code></td>
-    <td>Optional. Setting for how a backup's enforced retention end time is inherited.</td>
+    <td>Optional. Setting for how a backup's enforced retention end time is inherited. (BACKUP_RETENTION_INHERITANCE_UNSPECIFIED, INHERIT_VAULT_RETENTION, MATCH_BACKUP_EXPIRE_TIME)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -226,7 +227,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The BackupVault resource instance state.</td>
+    <td>Output only. The BackupVault resource instance state. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, ERROR, UPDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="totalStoredBytes" /></td>
@@ -274,28 +275,28 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-view"><code>view</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists BackupVaults in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-backupVaultId"><code>backupVaultId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-backupVaultId"><code>backupVaultId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new BackupVault in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backupVaultsId"><code>backupVaultsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-force"><code>force</code></a>, <a href="#parameter-forceUpdateAccessRestriction"><code>forceUpdateAccessRestriction</code></a></td>
+    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-forceUpdateAccessRestriction"><code>forceUpdateAccessRestriction</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Updates the settings of a BackupVault.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backupVaultsId"><code>backupVaultsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-force"><code>force</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-ignoreBackupPlanReferences"><code>ignoreBackupPlanReferences</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-force"><code>force</code></a>, <a href="#parameter-ignoreBackupPlanReferences"><code>ignoreBackupPlanReferences</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes a BackupVault.</td>
 </tr>
 </tbody>
@@ -470,11 +471,11 @@ updateTime
 FROM google.backupdr.backup_vaults
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND view = '{{ view }}'
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -496,36 +497,36 @@ Creates a new BackupVault in a given project and location.
 
 ```sql
 INSERT INTO google.backupdr.backup_vaults (
-data__description,
+data__encryptionConfig,
+data__effectiveTime,
 data__labels,
+data__annotations,
+data__description,
+data__etag,
 data__backupMinimumEnforcedRetentionDuration,
 data__backupRetentionInheritance,
-data__etag,
-data__effectiveTime,
-data__annotations,
 data__accessRestriction,
-data__encryptionConfig,
 projectsId,
 locationsId,
+validateOnly,
 backupVaultId,
-requestId,
-validateOnly
+requestId
 )
 SELECT 
-'{{ description }}',
+'{{ encryptionConfig }}',
+'{{ effectiveTime }}',
 '{{ labels }}',
+'{{ annotations }}',
+'{{ description }}',
+'{{ etag }}',
 '{{ backupMinimumEnforcedRetentionDuration }}',
 '{{ backupRetentionInheritance }}',
-'{{ etag }}',
-'{{ effectiveTime }}',
-'{{ annotations }}',
 '{{ accessRestriction }}',
-'{{ encryptionConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
+'{{ validateOnly }}',
 '{{ backupVaultId }}',
-'{{ requestId }}',
-'{{ validateOnly }}'
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -537,70 +538,62 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: backup_vaults
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the backup_vaults resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the backup_vaults resource.
-    - name: description
-      value: string
-      description: >
-        Optional. The description of the BackupVault instance (2048 characters or less).
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Resource labels to represent user provided metadata. No labels currently defined:
-        
-    - name: backupMinimumEnforcedRetentionDuration
-      value: string
-      description: >
-        Required. The default and minimum enforced retention for each backup within the backup vault. The enforced retention for each backup can be extended. Note: Longer minimum enforced retention period impacts potential storage costs post introductory trial. We recommend starting with a short duration of 3 days or less.
-        
-    - name: backupRetentionInheritance
-      value: string
-      description: >
-        Optional. Setting for how a backup's enforced retention end time is inherited.
-        
-      valid_values: ['BACKUP_RETENTION_INHERITANCE_UNSPECIFIED', 'INHERIT_VAULT_RETENTION', 'MATCH_BACKUP_EXPIRE_TIME']
-    - name: etag
-      value: string
-      description: >
-        Optional. Server specified ETag for the backup vault resource to prevent simultaneous updates from overwiting each other.
-        
-    - name: effectiveTime
-      value: string
-      description: >
-        Optional. Time after which the BackupVault resource is locked.
-        
-    - name: annotations
-      value: object
-      description: >
-        Optional. User annotations. See https://google.aip.dev/128#annotations Stores small amounts of arbitrary data.
-        
-    - name: accessRestriction
-      value: string
-      description: >
-        Optional. Note: This field is added for future use case and will not be supported in the current release. Access restriction for the backup vault. Default value is WITHIN_ORGANIZATION if not provided during creation.
-        
-      valid_values: ['ACCESS_RESTRICTION_UNSPECIFIED', 'WITHIN_PROJECT', 'WITHIN_ORGANIZATION', 'UNRESTRICTED', 'WITHIN_ORG_BUT_UNRESTRICTED_FOR_BA']
     - name: encryptionConfig
-      value: object
-      description: >
+      description: |
         Optional. The encryption config of the backup vault.
-        
-    - name: backupVaultId
-      value: string
-    - name: requestId
-      value: string
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
+    - name: effectiveTime
+      value: "{{ effectiveTime }}"
+      description: |
+        Optional. Time after which the BackupVault resource is locked.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Resource labels to represent user provided metadata. No labels currently defined:
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Optional. User annotations. See https://google.aip.dev/128#annotations Stores small amounts of arbitrary data.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. The description of the BackupVault instance (2048 characters or less).
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. Server specified ETag for the backup vault resource to prevent simultaneous updates from overwiting each other.
+    - name: backupMinimumEnforcedRetentionDuration
+      value: "{{ backupMinimumEnforcedRetentionDuration }}"
+      description: |
+        Required. The default and minimum enforced retention for each backup within the backup vault. The enforced retention for each backup can be extended. Note: Longer minimum enforced retention period impacts potential storage costs post introductory trial. We recommend starting with a short duration of 3 days or less.
+    - name: backupRetentionInheritance
+      value: "{{ backupRetentionInheritance }}"
+      description: |
+        Optional. Setting for how a backup's enforced retention end time is inherited.
+      valid_values: ['BACKUP_RETENTION_INHERITANCE_UNSPECIFIED', 'INHERIT_VAULT_RETENTION', 'MATCH_BACKUP_EXPIRE_TIME']
+    - name: accessRestriction
+      value: "{{ accessRestriction }}"
+      description: |
+        Optional. Restricts access to certain sources and destinations for data being sent into, or restored from, the backup vault. Defaults to WITHIN_ORGANIZATION if not provided during creation.
+      valid_values: ['ACCESS_RESTRICTION_UNSPECIFIED', 'WITHIN_PROJECT', 'WITHIN_ORGANIZATION', 'UNRESTRICTED', 'WITHIN_ORG_BUT_UNRESTRICTED_FOR_BA']
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+    - name: backupVaultId
+      value: "{{ backupVaultId }}"
+    - name: requestId
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -620,24 +613,24 @@ Updates the settings of a BackupVault.
 ```sql
 UPDATE google.backupdr.backup_vaults
 SET 
-data__description = '{{ description }}',
+data__encryptionConfig = '{{ encryptionConfig }}',
+data__effectiveTime = '{{ effectiveTime }}',
 data__labels = '{{ labels }}',
+data__annotations = '{{ annotations }}',
+data__description = '{{ description }}',
+data__etag = '{{ etag }}',
 data__backupMinimumEnforcedRetentionDuration = '{{ backupMinimumEnforcedRetentionDuration }}',
 data__backupRetentionInheritance = '{{ backupRetentionInheritance }}',
-data__etag = '{{ etag }}',
-data__effectiveTime = '{{ effectiveTime }}',
-data__annotations = '{{ annotations }}',
-data__accessRestriction = '{{ accessRestriction }}',
-data__encryptionConfig = '{{ encryptionConfig }}'
+data__accessRestriction = '{{ accessRestriction }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND backupVaultsId = '{{ backupVaultsId }}' --required
+AND force = {{ force}}
+AND forceUpdateAccessRestriction = {{ forceUpdateAccessRestriction}}
 AND updateMask = '{{ updateMask}}'
 AND requestId = '{{ requestId}}'
 AND validateOnly = {{ validateOnly}}
-AND force = {{ force}}
-AND forceUpdateAccessRestriction = {{ forceUpdateAccessRestriction}}
 RETURNING
 name,
 done,
@@ -666,12 +659,12 @@ DELETE FROM google.backupdr.backup_vaults
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND backupVaultsId = '{{ backupVaultsId }}' --required
-AND requestId = '{{ requestId }}'
-AND force = '{{ force }}'
 AND etag = '{{ etag }}'
-AND validateOnly = '{{ validateOnly }}'
 AND allowMissing = '{{ allowMissing }}'
+AND validateOnly = '{{ validateOnly }}'
+AND force = '{{ force }}'
 AND ignoreBackupPlanReferences = '{{ ignoreBackupPlanReferences }}'
+AND requestId = '{{ requestId }}'
 ;
 ```
 </TabItem>

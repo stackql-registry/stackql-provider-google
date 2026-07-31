@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>certificate_issuance_configs</c
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>certificate_issuance_configs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="certificate_issuance_configs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.certificatemanager.certificate_issuance_configs" /></td></tr>
 </tbody></table>
@@ -72,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="keyAlgorithm" /></td>
     <td><code>string</code></td>
-    <td>Required. The key algorithm to use when generating the private key.</td>
+    <td>Required. The key algorithm to use when generating the private key. (KEY_ALGORITHM_UNSPECIFIED, RSA_2048, ECDSA_P256)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -88,6 +89,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="rotationWindowPercentage" /></td>
     <td><code>integer (int32)</code></td>
     <td>Required. Specifies the percentage of elapsed time of the certificate lifetime to wait before renewing the certificate. Must be a number between 1-99, inclusive.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="tags" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -131,7 +137,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="keyAlgorithm" /></td>
     <td><code>string</code></td>
-    <td>Required. The key algorithm to use when generating the private key.</td>
+    <td>Required. The key algorithm to use when generating the private key. (KEY_ALGORITHM_UNSPECIFIED, RSA_2048, ECDSA_P256)</td>
 </tr>
 <tr>
     <td><CopyableCode code="labels" /></td>
@@ -147,6 +153,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="rotationWindowPercentage" /></td>
     <td><code>integer (int32)</code></td>
     <td>Required. Specifies the percentage of elapsed time of the certificate lifetime to wait before renewing the certificate. Must be a number between 1-99, inclusive.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="tags" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -184,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists CertificateIssuanceConfigs in a given project and location.</td>
 </tr>
 <tr>
@@ -295,6 +306,7 @@ keyAlgorithm,
 labels,
 lifetime,
 rotationWindowPercentage,
+tags,
 updateTime
 FROM google.certificatemanager.certificate_issuance_configs
 WHERE projectsId = '{{ projectsId }}' -- required
@@ -317,14 +329,15 @@ keyAlgorithm,
 labels,
 lifetime,
 rotationWindowPercentage,
+tags,
 updateTime
 FROM google.certificatemanager.certificate_issuance_configs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -347,24 +360,26 @@ Creates a new CertificateIssuanceConfig in a given project and location.
 ```sql
 INSERT INTO google.certificatemanager.certificate_issuance_configs (
 data__name,
-data__labels,
-data__description,
+data__tags,
 data__certificateAuthorityConfig,
-data__lifetime,
-data__rotationWindowPercentage,
 data__keyAlgorithm,
+data__rotationWindowPercentage,
+data__description,
+data__lifetime,
+data__labels,
 projectsId,
 locationsId,
 certificateIssuanceConfigId
 )
 SELECT 
 '{{ name }}',
-'{{ labels }}',
-'{{ description }}',
+'{{ tags }}',
 '{{ certificateAuthorityConfig }}',
-'{{ lifetime }}',
-{{ rotationWindowPercentage }},
 '{{ keyAlgorithm }}',
+{{ rotationWindowPercentage }},
+'{{ description }}',
+'{{ lifetime }}',
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ certificateIssuanceConfigId }}'
@@ -379,55 +394,54 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: certificate_issuance_configs
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the certificate_issuance_configs resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the certificate_issuance_configs resource.
     - name: name
-      value: string
-      description: >
-        Identifier. A user-defined name of the certificate issuance config. CertificateIssuanceConfig names must be unique globally and match pattern `projects/*/locations/*/certificateIssuanceConfigs/*`.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Set of labels associated with a CertificateIssuanceConfig.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. One or more paragraphs of text description of a CertificateIssuanceConfig.
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. A user-defined name of the certificate issuance config. CertificateIssuanceConfig names must be unique globally and match pattern \`projects/*/locations/*/certificateIssuanceConfigs/*\`.
+    - name: tags
+      value: "{{ tags }}"
+      description: |
+        Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: "123/environment": "production", "123/costCenter": "marketing"
     - name: certificateAuthorityConfig
-      value: object
-      description: >
+      description: |
         Required. The CA that issues the workload certificate. It includes the CA address, type, authentication to CA service, etc.
-        
-    - name: lifetime
-      value: string
-      description: >
-        Required. Workload certificate lifetime requested.
-        
-    - name: rotationWindowPercentage
-      value: integer
-      description: >
-        Required. Specifies the percentage of elapsed time of the certificate lifetime to wait before renewing the certificate. Must be a number between 1-99, inclusive.
-        
+      value:
+        certificateAuthorityServiceConfig:
+          caPool: "{{ caPool }}"
     - name: keyAlgorithm
-      value: string
-      description: >
+      value: "{{ keyAlgorithm }}"
+      description: |
         Required. The key algorithm to use when generating the private key.
-        
       valid_values: ['KEY_ALGORITHM_UNSPECIFIED', 'RSA_2048', 'ECDSA_P256']
+    - name: rotationWindowPercentage
+      value: {{ rotationWindowPercentage }}
+      description: |
+        Required. Specifies the percentage of elapsed time of the certificate lifetime to wait before renewing the certificate. Must be a number between 1-99, inclusive.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. One or more paragraphs of text description of a CertificateIssuanceConfig.
+    - name: lifetime
+      value: "{{ lifetime }}"
+      description: |
+        Required. Workload certificate lifetime requested.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Set of labels associated with a CertificateIssuanceConfig.
     - name: certificateIssuanceConfigId
-      value: string
-```
+      value: "{{ certificateIssuanceConfigId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -448,12 +462,13 @@ Updates a CertificateIssuanceConfig.
 UPDATE google.certificatemanager.certificate_issuance_configs
 SET 
 data__name = '{{ name }}',
-data__labels = '{{ labels }}',
-data__description = '{{ description }}',
+data__tags = '{{ tags }}',
 data__certificateAuthorityConfig = '{{ certificateAuthorityConfig }}',
-data__lifetime = '{{ lifetime }}',
+data__keyAlgorithm = '{{ keyAlgorithm }}',
 data__rotationWindowPercentage = {{ rotationWindowPercentage }},
-data__keyAlgorithm = '{{ keyAlgorithm }}'
+data__description = '{{ description }}',
+data__lifetime = '{{ lifetime }}',
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

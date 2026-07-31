@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>product_sets_product</code> res
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>product_sets_product</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="product_sets_product" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.vision.product_sets_product" /></td></tr>
 </tbody></table>
@@ -127,25 +128,24 @@ SELECT
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: product_sets_product
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the product_sets_product resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the product_sets_product resource.
     - name: productSetsId
-      value: string
+      value: "{{ productSetsId }}"
       description: Required parameter for the product_sets_product resource.
     - name: product
-      value: string
-      description: >
-        Required. The resource name for the Product to be added to this ProductSet. Format is: `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`
-        
-```
+      value: "{{ product }}"
+      description: |
+        Required. The resource name for the Product to be added to this ProductSet. Format is: \`projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID\`
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

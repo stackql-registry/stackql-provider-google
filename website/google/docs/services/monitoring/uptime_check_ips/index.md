@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>uptime_check_ips</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>uptime_check_ips</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="uptime_check_ips" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.monitoring.uptime_check_ips" /></td></tr>
 </tbody></table>
@@ -61,7 +62,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="region" /></td>
     <td><code>string</code></td>
-    <td>A broad region category in which the IP address is located.</td>
+    <td>A broad region category in which the IP address is located. (REGION_UNSPECIFIED, USA, EUROPE, SOUTH_AMERICA, ASIA_PACIFIC, USA_OREGON, USA_IOWA, USA_VIRGINIA)</td>
 </tr>
 </tbody>
 </table>

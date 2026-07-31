@@ -18,7 +18,7 @@ memcache service documentation.
 
 :::info[Service Summary]
 
-total resources: __4__  
+total resources: __5__  
 
 :::
 
@@ -26,7 +26,8 @@ total resources: __4__
 <div class="row">
 <div class="providerDocColumn">
 <a href="/services/memcache/instances/">instances</a><br />
-<a href="/services/memcache/instances_parameters/">instances_parameters</a>
+<a href="/services/memcache/instances_parameters/">instances_parameters</a><br />
+<a href="/services/memcache/instances_tags/">instances_tags</a>
 </div>
 <div class="providerDocColumn">
 <a href="/services/memcache/locations/">locations</a><br />

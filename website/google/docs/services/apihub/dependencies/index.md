@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>dependencies</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>dependencies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="dependencies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apihub.dependencies" /></td></tr>
 </tbody></table>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="discoveryMode" /></td>
     <td><code>string</code></td>
-    <td>Output only. Discovery mode of the dependency.</td>
+    <td>Output only. Discovery mode of the dependency. (DISCOVERY_MODE_UNSPECIFIED, MANUAL)</td>
 </tr>
 <tr>
     <td><CopyableCode code="errorDetail" /></td>
@@ -87,7 +88,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the dependency.</td>
+    <td>Output only. State of the dependency. (STATE_UNSPECIFIED, PROPOSED, VALIDATED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="supplier" /></td>
@@ -141,7 +142,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="discoveryMode" /></td>
     <td><code>string</code></td>
-    <td>Output only. Discovery mode of the dependency.</td>
+    <td>Output only. Discovery mode of the dependency. (DISCOVERY_MODE_UNSPECIFIED, MANUAL)</td>
 </tr>
 <tr>
     <td><CopyableCode code="errorDetail" /></td>
@@ -151,7 +152,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the dependency.</td>
+    <td>Output only. State of the dependency. (STATE_UNSPECIFIED, PROPOSED, VALIDATED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="supplier" /></td>
@@ -194,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>List dependencies based on the provided filter and pagination parameters.</td>
 </tr>
 <tr>
@@ -328,9 +329,9 @@ updateTime
 FROM google.apihub.dependencies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -352,21 +353,21 @@ Create a dependency between two entities in the API hub.
 
 ```sql
 INSERT INTO google.apihub.dependencies (
-data__name,
-data__consumer,
 data__supplier,
-data__description,
 data__attributes,
+data__consumer,
+data__description,
+data__name,
 projectsId,
 locationsId,
 dependencyId
 )
 SELECT 
-'{{ name }}',
-'{{ consumer }}',
 '{{ supplier }}',
-'{{ description }}',
 '{{ attributes }}',
+'{{ consumer }}',
+'{{ description }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ dependencyId }}'
@@ -386,44 +387,45 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: dependencies
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the dependencies resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the dependencies resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The name of the dependency in the API Hub. Format: `projects/{project}/locations/{location}/dependencies/{dependency}`
-        
-    - name: consumer
-      value: object
-      description: >
-        Required. Immutable. The entity acting as the consumer in the dependency.
-        
     - name: supplier
-      value: object
-      description: >
+      description: |
         Required. Immutable. The entity acting as the supplier in the dependency.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. Human readable description corresponding of the dependency.
-        
+      value:
+        operationResourceName: "{{ operationResourceName }}"
+        externalApiResourceName: "{{ externalApiResourceName }}"
+        displayName: "{{ displayName }}"
     - name: attributes
-      value: object
-      description: >
-        Optional. The list of user defined attributes associated with the dependency resource. The key is the attribute name. It will be of the format: `projects/{project}/locations/{location}/attributes/{attribute}`. The value is the attribute values associated with the resource.
-        
+      value: "{{ attributes }}"
+      description: |
+        Optional. The list of user defined attributes associated with the dependency resource. The key is the attribute name. It will be of the format: \`projects/{project}/locations/{location}/attributes/{attribute}\`. The value is the attribute values associated with the resource.
+    - name: consumer
+      description: |
+        Required. Immutable. The entity acting as the consumer in the dependency.
+      value:
+        operationResourceName: "{{ operationResourceName }}"
+        externalApiResourceName: "{{ externalApiResourceName }}"
+        displayName: "{{ displayName }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. Human readable description corresponding of the dependency.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The name of the dependency in the API Hub. Format: \`projects/{project}/locations/{location}/dependencies/{dependency}\`
     - name: dependencyId
-      value: string
-```
+      value: "{{ dependencyId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -443,11 +445,11 @@ Update a dependency based on the update_mask provided in the request. The follow
 ```sql
 UPDATE google.apihub.dependencies
 SET 
-data__name = '{{ name }}',
-data__consumer = '{{ consumer }}',
 data__supplier = '{{ supplier }}',
+data__attributes = '{{ attributes }}',
+data__consumer = '{{ consumer }}',
 data__description = '{{ description }}',
-data__attributes = '{{ attributes }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>permissions</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>permissions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="permissions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.iam.permissions" /></td></tr>
 </tbody></table>
@@ -92,8 +93,8 @@ EXEC google.iam.permissions.query_testable_permissions
 @@json=
 '{
 "fullResourceName": "{{ fullResourceName }}", 
-"pageSize": {{ pageSize }}, 
-"pageToken": "{{ pageToken }}"
+"pageToken": "{{ pageToken }}", 
+"pageSize": {{ pageSize }}
 }'
 ;
 ```

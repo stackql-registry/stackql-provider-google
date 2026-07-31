@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>namespaces</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>namespaces</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="namespaces" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.iam.namespaces" /></td></tr>
 </tbody></table>
@@ -52,7 +53,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Output only. The resource name of the namespace.</td>
+    <td>Identifier. The resource name of the namespace.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the namespace.</td>
+    <td>Output only. The state of the namespace. (STATE_UNSPECIFIED, ACTIVE, DELETED)</td>
 </tr>
 </tbody>
 </table>
@@ -96,7 +97,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Output only. The resource name of the namespace.</td>
+    <td>Identifier. The resource name of the namespace.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -121,7 +122,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the namespace.</td>
+    <td>Output only. The state of the namespace. (STATE_UNSPECIFIED, ACTIVE, DELETED)</td>
 </tr>
 </tbody>
 </table>
@@ -154,7 +155,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workloadIdentityPoolsId"><code>workloadIdentityPoolsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
+    <td><a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists all non-deleted WorkloadIdentityPoolNamespaces in a workload identity pool. If `show_deleted` is set to `true`, then deleted namespaces are also listed.</td>
 </tr>
 <tr>
@@ -294,9 +295,9 @@ FROM google.iam.namespaces
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND workloadIdentityPoolsId = '{{ workloadIdentityPoolsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND showDeleted = '{{ showDeleted }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -318,6 +319,7 @@ Creates a new WorkloadIdentityPoolNamespace in a WorkloadIdentityPool.
 
 ```sql
 INSERT INTO google.iam.namespaces (
+data__name,
 data__description,
 data__disabled,
 projectsId,
@@ -326,6 +328,7 @@ workloadIdentityPoolsId,
 workloadIdentityPoolNamespaceId
 )
 SELECT 
+'{{ name }}',
 '{{ description }}',
 {{ disabled }},
 '{{ projectsId }}',
@@ -343,32 +346,34 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: namespaces
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the namespaces resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the namespaces resource.
     - name: workloadIdentityPoolsId
-      value: string
+      value: "{{ workloadIdentityPoolsId }}"
       description: Required parameter for the namespaces resource.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the namespace.
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. A description of the namespace. Cannot exceed 256 characters.
-        
     - name: disabled
-      value: boolean
-      description: >
+      value: {{ disabled }}
+      description: |
         Optional. Whether the namespace is disabled. If disabled, credentials may no longer be issued for identities within this namespace, however existing credentials will still be accepted until they expire.
-        
     - name: workloadIdentityPoolNamespaceId
-      value: string
-```
+      value: "{{ workloadIdentityPoolNamespaceId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -388,6 +393,7 @@ Updates an existing WorkloadIdentityPoolNamespace in a WorkloadIdentityPool.
 ```sql
 UPDATE google.iam.namespaces
 SET 
+data__name = '{{ name }}',
 data__description = '{{ description }}',
 data__disabled = {{ disabled }}
 WHERE 

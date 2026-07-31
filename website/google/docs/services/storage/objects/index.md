@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>objects</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>objects</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="objects" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.storage.objects" /></td></tr>
 </tbody></table>
@@ -509,7 +510,7 @@ The following methods are available for this resource:
     <td><a href="#compose"><CopyableCode code="compose" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-destinationBucket"><code>destinationBucket</code></a>, <a href="#parameter-destinationObject"><code>destinationObject</code></a></td>
-    <td><a href="#parameter-destinationPredefinedAcl"><code>destinationPredefinedAcl</code></a>, <a href="#parameter-ifGenerationMatch"><code>ifGenerationMatch</code></a>, <a href="#parameter-ifMetagenerationMatch"><code>ifMetagenerationMatch</code></a>, <a href="#parameter-kmsKeyName"><code>kmsKeyName</code></a>, <a href="#parameter-userProject"><code>userProject</code></a></td>
+    <td><a href="#parameter-destinationPredefinedAcl"><code>destinationPredefinedAcl</code></a>, <a href="#parameter-dropContextGroups"><code>dropContextGroups</code></a>, <a href="#parameter-ifGenerationMatch"><code>ifGenerationMatch</code></a>, <a href="#parameter-ifMetagenerationMatch"><code>ifMetagenerationMatch</code></a>, <a href="#parameter-kmsKeyName"><code>kmsKeyName</code></a>, <a href="#parameter-userProject"><code>userProject</code></a></td>
     <td>Concatenates a list of existing objects into a new object in the same bucket.</td>
 </tr>
 <tr>
@@ -523,7 +524,7 @@ The following methods are available for this resource:
     <td><a href="#rewrite"><CopyableCode code="rewrite" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-sourceBucket"><code>sourceBucket</code></a>, <a href="#parameter-sourceObject"><code>sourceObject</code></a>, <a href="#parameter-destinationBucket"><code>destinationBucket</code></a>, <a href="#parameter-destinationObject"><code>destinationObject</code></a></td>
-    <td><a href="#parameter-destinationKmsKeyName"><code>destinationKmsKeyName</code></a>, <a href="#parameter-destinationPredefinedAcl"><code>destinationPredefinedAcl</code></a>, <a href="#parameter-ifGenerationMatch"><code>ifGenerationMatch</code></a>, <a href="#parameter-ifGenerationNotMatch"><code>ifGenerationNotMatch</code></a>, <a href="#parameter-ifMetagenerationMatch"><code>ifMetagenerationMatch</code></a>, <a href="#parameter-ifMetagenerationNotMatch"><code>ifMetagenerationNotMatch</code></a>, <a href="#parameter-ifSourceGenerationMatch"><code>ifSourceGenerationMatch</code></a>, <a href="#parameter-ifSourceGenerationNotMatch"><code>ifSourceGenerationNotMatch</code></a>, <a href="#parameter-ifSourceMetagenerationMatch"><code>ifSourceMetagenerationMatch</code></a>, <a href="#parameter-ifSourceMetagenerationNotMatch"><code>ifSourceMetagenerationNotMatch</code></a>, <a href="#parameter-maxBytesRewrittenPerCall"><code>maxBytesRewrittenPerCall</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-rewriteToken"><code>rewriteToken</code></a>, <a href="#parameter-sourceGeneration"><code>sourceGeneration</code></a>, <a href="#parameter-userProject"><code>userProject</code></a></td>
+    <td><a href="#parameter-destinationKmsKeyName"><code>destinationKmsKeyName</code></a>, <a href="#parameter-destinationPredefinedAcl"><code>destinationPredefinedAcl</code></a>, <a href="#parameter-dropContextGroups"><code>dropContextGroups</code></a>, <a href="#parameter-ifGenerationMatch"><code>ifGenerationMatch</code></a>, <a href="#parameter-ifGenerationNotMatch"><code>ifGenerationNotMatch</code></a>, <a href="#parameter-ifMetagenerationMatch"><code>ifMetagenerationMatch</code></a>, <a href="#parameter-ifMetagenerationNotMatch"><code>ifMetagenerationNotMatch</code></a>, <a href="#parameter-ifSourceGenerationMatch"><code>ifSourceGenerationMatch</code></a>, <a href="#parameter-ifSourceGenerationNotMatch"><code>ifSourceGenerationNotMatch</code></a>, <a href="#parameter-ifSourceMetagenerationMatch"><code>ifSourceMetagenerationMatch</code></a>, <a href="#parameter-ifSourceMetagenerationNotMatch"><code>ifSourceMetagenerationNotMatch</code></a>, <a href="#parameter-maxBytesRewrittenPerCall"><code>maxBytesRewrittenPerCall</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-rewriteToken"><code>rewriteToken</code></a>, <a href="#parameter-sourceGeneration"><code>sourceGeneration</code></a>, <a href="#parameter-userProject"><code>userProject</code></a></td>
     <td>Rewrites a source object to a destination object. Optionally overrides metadata.</td>
 </tr>
 <tr>
@@ -532,13 +533,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-bucket"><code>bucket</code></a>, <a href="#parameter-sourceObject"><code>sourceObject</code></a>, <a href="#parameter-destinationObject"><code>destinationObject</code></a></td>
     <td><a href="#parameter-ifSourceGenerationMatch"><code>ifSourceGenerationMatch</code></a>, <a href="#parameter-ifSourceGenerationNotMatch"><code>ifSourceGenerationNotMatch</code></a>, <a href="#parameter-ifSourceMetagenerationMatch"><code>ifSourceMetagenerationMatch</code></a>, <a href="#parameter-ifSourceMetagenerationNotMatch"><code>ifSourceMetagenerationNotMatch</code></a>, <a href="#parameter-ifGenerationMatch"><code>ifGenerationMatch</code></a>, <a href="#parameter-ifGenerationNotMatch"><code>ifGenerationNotMatch</code></a>, <a href="#parameter-ifMetagenerationMatch"><code>ifMetagenerationMatch</code></a>, <a href="#parameter-ifMetagenerationNotMatch"><code>ifMetagenerationNotMatch</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-userProject"><code>userProject</code></a></td>
     <td>Moves the source object to the destination object in the same bucket.</td>
-</tr>
-<tr>
-    <td><a href="#watch_all"><CopyableCode code="watch_all" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-bucket"><code>bucket</code></a></td>
-    <td><a href="#parameter-delimiter"><code>delimiter</code></a>, <a href="#parameter-endOffset"><code>endOffset</code></a>, <a href="#parameter-includeTrailingDelimiter"><code>includeTrailingDelimiter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-prefix"><code>prefix</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-startOffset"><code>startOffset</code></a>, <a href="#parameter-userProject"><code>userProject</code></a>, <a href="#parameter-versions"><code>versions</code></a></td>
-    <td>Watch for changes on all objects in a bucket.</td>
 </tr>
 <tr>
     <td><a href="#restore"><CopyableCode code="restore" /></a></td>
@@ -627,6 +621,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-destinationPredefinedAcl">
     <td><CopyableCode code="destinationPredefinedAcl" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-dropContextGroups">
+    <td><CopyableCode code="dropContextGroups" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -1076,225 +1075,209 @@ updated
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: objects
   props:
     - name: bucket
-      value: string
+      value: "{{ bucket }}"
       description: Required parameter for the objects resource.
     - name: acl
-      value: array
-      description: >
+      description: |
         Access controls on the object.
-        
+      value:
+        - bucket: "{{ bucket }}"
+          domain: "{{ domain }}"
+          email: "{{ email }}"
+          entity: "{{ entity }}"
+          entityId: "{{ entityId }}"
+          etag: "{{ etag }}"
+          generation: "{{ generation }}"
+          id: "{{ id }}"
+          kind: "{{ kind }}"
+          object: "{{ object }}"
+          projectTeam:
+            projectNumber: "{{ projectNumber }}"
+            team: "{{ team }}"
+          role: "{{ role }}"
+          selfLink: "{{ selfLink }}"
     - name: bucket
-      value: string
-      description: >
+      value: "{{ bucket }}"
+      description: |
         The name of the bucket containing this object.
-        
     - name: cacheControl
-      value: string
-      description: >
+      value: "{{ cacheControl }}"
+      description: |
         Cache-Control directive for the object data. If omitted, and the object is accessible to all anonymous users, the default will be public, max-age=3600.
-        
     - name: componentCount
-      value: integer
-      description: >
+      value: {{ componentCount }}
+      description: |
         Number of underlying components that make up this object. Components are accumulated by compose operations.
-        
     - name: contentDisposition
-      value: string
-      description: >
+      value: "{{ contentDisposition }}"
+      description: |
         Content-Disposition of the object data.
-        
     - name: contentEncoding
-      value: string
-      description: >
+      value: "{{ contentEncoding }}"
+      description: |
         Content-Encoding of the object data.
-        
     - name: contentLanguage
-      value: string
-      description: >
+      value: "{{ contentLanguage }}"
+      description: |
         Content-Language of the object data.
-        
     - name: contentType
-      value: string
-      description: >
+      value: "{{ contentType }}"
+      description: |
         Content-Type of the object data. If an object is stored without a Content-Type, it is served as application/octet-stream.
-        
     - name: crc32c
-      value: string
-      description: >
+      value: "{{ crc32c }}"
+      description: |
         CRC32c checksum, as described in RFC 4960, Appendix B; encoded using base64 in big-endian byte order. For more information about using the CRC32c checksum, see [Data Validation and Change Detection](https://cloud.google.com/storage/docs/data-validation).
-        
     - name: customTime
-      value: string
-      description: >
+      value: "{{ customTime }}"
+      description: |
         A timestamp in RFC 3339 format specified by the user for an object.
-        
     - name: customerEncryption
-      value: object
-      description: >
+      description: |
         Metadata of customer-supplied encryption key, if the object is encrypted by such a key.
-        
+      value:
+        encryptionAlgorithm: "{{ encryptionAlgorithm }}"
+        keySha256: "{{ keySha256 }}"
     - name: etag
-      value: string
-      description: >
+      value: "{{ etag }}"
+      description: |
         HTTP 1.1 Entity tag for the object.
-        
     - name: eventBasedHold
-      value: boolean
-      description: >
+      value: {{ eventBasedHold }}
+      description: |
         Whether an object is under event-based hold. Event-based hold is a way to retain objects until an event occurs, which is signified by the hold's release (i.e. this value is set to false). After being released (set to false), such objects will be subject to bucket-level retention (if any). One sample use case of this flag is for banks to hold loan documents for at least 3 years after loan is paid in full. Here, bucket-level retention is 3 years and the event is the loan being paid in full. In this example, these objects will be held intact for any number of years until the event has occurred (event-based hold on the object is released) and then 3 more years after that. That means retention duration of the objects begins from the moment event-based hold transitioned from true to false.
-        
     - name: generation
-      value: string
-      description: >
+      value: "{{ generation }}"
+      description: |
         The content generation of this object. Used for object versioning.
-        
     - name: id
-      value: string
-      description: >
+      value: "{{ id }}"
+      description: |
         The ID of the object, including the bucket name, object name, and generation number.
-        
     - name: kind
-      value: string
-      description: >
+      value: "{{ kind }}"
+      description: |
         The kind of item this is. For objects, this is always storage#object.
-        
       default: storage#object
     - name: kmsKeyName
-      value: string
-      description: >
+      value: "{{ kmsKeyName }}"
+      description: |
         Not currently supported. Specifying the parameter causes the request to fail with status code 400 - Bad Request.
-        
     - name: md5Hash
-      value: string
-      description: >
+      value: "{{ md5Hash }}"
+      description: |
         MD5 hash of the data; encoded using base64. For more information about using the MD5 hash, see [Data Validation and Change Detection](https://cloud.google.com/storage/docs/data-validation).
-        
     - name: mediaLink
-      value: string
-      description: >
+      value: "{{ mediaLink }}"
+      description: |
         Media download link.
-        
     - name: metadata
-      value: object
-      description: >
+      value: "{{ metadata }}"
+      description: |
         User-provided metadata, in key/value pairs.
-        
     - name: contexts
-      value: object
-      description: >
+      description: |
         User-defined or system-defined object contexts. Each object context is a key-payload pair, where the key provides the identification and the payload holds the associated value and additional metadata.
-        
+      value:
+        custom: "{{ custom }}"
     - name: restoreToken
-      value: string
-      description: >
+      value: "{{ restoreToken }}"
+      description: |
         Restore token used to differentiate deleted objects with the same name and generation. This field is only returned for deleted objects in hierarchical namespace buckets.
-        
     - name: metageneration
-      value: string
-      description: >
+      value: "{{ metageneration }}"
+      description: |
         The version of the metadata for this object at this generation. Used for preconditions and for detecting changes in metadata. A metageneration number is only meaningful in the context of a particular generation of a particular object.
-        
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         The name of the object. Required if not specified by URL parameter.
-        
     - name: owner
-      value: object
-      description: >
+      description: |
         The owner of the object. This will always be the uploader of the object.
-        
+      value:
+        entity: "{{ entity }}"
+        entityId: "{{ entityId }}"
     - name: retentionExpirationTime
-      value: string
-      description: >
+      value: "{{ retentionExpirationTime }}"
+      description: |
         A server-determined value that specifies the earliest time that the object's retention period expires. This value is in RFC 3339 format. Note 1: This field is not provided for objects with an active event-based hold, since retention expiration is unknown until the hold is removed. Note 2: This value can be provided even when temporary hold is set (so that the user can reason about policy without having to first unset the temporary hold).
-        
     - name: retention
-      value: object
-      description: >
+      description: |
         A collection of object level retention parameters.
-        
+      value:
+        retainUntilTime: "{{ retainUntilTime }}"
+        mode: "{{ mode }}"
     - name: selfLink
-      value: string
-      description: >
+      value: "{{ selfLink }}"
+      description: |
         The link to this object.
-        
     - name: size
-      value: string
-      description: >
+      value: "{{ size }}"
+      description: |
         Content-Length of the data in bytes.
-        
     - name: storageClass
-      value: string
-      description: >
+      value: "{{ storageClass }}"
+      description: |
         Storage class of the object.
-        
     - name: temporaryHold
-      value: boolean
-      description: >
+      value: {{ temporaryHold }}
+      description: |
         Whether an object is under temporary hold. While this flag is set to true, the object is protected against deletion and overwrites. A common use case of this flag is regulatory investigations where objects need to be retained while the investigation is ongoing. Note that unlike event-based hold, temporary hold does not impact retention expiration time of an object.
-        
     - name: timeCreated
-      value: string
-      description: >
+      value: "{{ timeCreated }}"
+      description: |
         The creation time of the object in RFC 3339 format.
-        
     - name: timeDeleted
-      value: string
-      description: >
+      value: "{{ timeDeleted }}"
+      description: |
         The time at which the object became noncurrent in RFC 3339 format. Will be returned if and only if this version of the object has been deleted.
-        
     - name: timeFinalized
-      value: string
-      description: >
+      value: "{{ timeFinalized }}"
+      description: |
         The time when the object was finalized.
-        
     - name: softDeleteTime
-      value: string
-      description: >
+      value: "{{ softDeleteTime }}"
+      description: |
         The time at which the object became soft-deleted in RFC 3339 format.
-        
     - name: hardDeleteTime
-      value: string
-      description: >
+      value: "{{ hardDeleteTime }}"
+      description: |
         This is the time (in the future) when the soft-deleted object will no longer be restorable. It is equal to the soft delete time plus the current soft delete retention duration of the bucket.
-        
     - name: timeStorageClassUpdated
-      value: string
-      description: >
+      value: "{{ timeStorageClassUpdated }}"
+      description: |
         The time at which the object's storage class was last changed. When the object is initially created, it will be set to timeCreated.
-        
     - name: updated
-      value: string
-      description: >
+      value: "{{ updated }}"
+      description: |
         The modification time of the object metadata in RFC 3339 format. Set initially to object creation time and then updated whenever any metadata of the object changes. This includes changes made by a requester, such as modifying custom metadata, as well as changes made by Cloud Storage on behalf of a requester, such as changing the storage class based on an Object Lifecycle Configuration.
-        
     - name: contentEncoding
-      value: string
+      value: "{{ contentEncoding }}"
     - name: ifGenerationMatch
-      value: string (int64)
+      value: "{{ ifGenerationMatch }}"
     - name: ifGenerationNotMatch
-      value: string (int64)
+      value: "{{ ifGenerationNotMatch }}"
     - name: ifMetagenerationMatch
-      value: string (int64)
+      value: "{{ ifMetagenerationMatch }}"
     - name: ifMetagenerationNotMatch
-      value: string (int64)
+      value: "{{ ifMetagenerationNotMatch }}"
     - name: kmsKeyName
-      value: string
+      value: "{{ kmsKeyName }}"
     - name: name
-      value: string
+      value: "{{ name }}"
     - name: predefinedAcl
-      value: string
+      value: "{{ predefinedAcl }}"
     - name: projection
-      value: string
+      value: "{{ projection }}"
     - name: userProject
-      value: string
-```
+      value: "{{ userProject }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -1554,7 +1537,6 @@ AND userProject = '{{ userProject }}'
         { label: 'copy', value: 'copy' },
         { label: 'rewrite', value: 'rewrite' },
         { label: 'move', value: 'move' },
-        { label: 'watch_all', value: 'watch_all' },
         { label: 'restore', value: 'restore' },
         { label: 'bulk_restore', value: 'bulk_restore' }
     ]}
@@ -1568,6 +1550,7 @@ EXEC google.storage.objects.compose
 @destinationBucket='{{ destinationBucket }}' --required, 
 @destinationObject='{{ destinationObject }}' --required, 
 @destinationPredefinedAcl='{{ destinationPredefinedAcl }}', 
+@dropContextGroups='{{ dropContextGroups }}', 
 @ifGenerationMatch='{{ ifGenerationMatch }}', 
 @ifMetagenerationMatch='{{ ifMetagenerationMatch }}', 
 @kmsKeyName='{{ kmsKeyName }}', 
@@ -1661,6 +1644,7 @@ EXEC google.storage.objects.rewrite
 @destinationObject='{{ destinationObject }}' --required, 
 @destinationKmsKeyName='{{ destinationKmsKeyName }}', 
 @destinationPredefinedAcl='{{ destinationPredefinedAcl }}', 
+@dropContextGroups='{{ dropContextGroups }}', 
 @ifGenerationMatch='{{ ifGenerationMatch }}', 
 @ifGenerationNotMatch='{{ ifGenerationNotMatch }}', 
 @ifMetagenerationMatch='{{ ifMetagenerationMatch }}', 
@@ -1737,39 +1721,6 @@ EXEC google.storage.objects.move
 @ifMetagenerationNotMatch='{{ ifMetagenerationNotMatch }}', 
 @projection='{{ projection }}', 
 @userProject='{{ userProject }}'
-;
-```
-</TabItem>
-<TabItem value="watch_all">
-
-Watch for changes on all objects in a bucket.
-
-```sql
-EXEC google.storage.objects.watch_all 
-@bucket='{{ bucket }}' --required, 
-@delimiter='{{ delimiter }}', 
-@endOffset='{{ endOffset }}', 
-@includeTrailingDelimiter={{ includeTrailingDelimiter }}, 
-@maxResults='{{ maxResults }}', 
-@pageToken='{{ pageToken }}', 
-@prefix='{{ prefix }}', 
-@projection='{{ projection }}', 
-@startOffset='{{ startOffset }}', 
-@userProject='{{ userProject }}', 
-@versions={{ versions }} 
-@@json=
-'{
-"address": "{{ address }}", 
-"expiration": "{{ expiration }}", 
-"id": "{{ id }}", 
-"kind": "{{ kind }}", 
-"params": "{{ params }}", 
-"payload": {{ payload }}, 
-"resourceId": "{{ resourceId }}", 
-"resourceUri": "{{ resourceUri }}", 
-"token": "{{ token }}", 
-"type": "{{ type }}"
-}'
 ;
 ```
 </TabItem>

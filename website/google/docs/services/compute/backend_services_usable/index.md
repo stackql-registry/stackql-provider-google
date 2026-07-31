@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>backend_services_usable</code> 
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>backend_services_usable</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="backend_services_usable" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.backend_services_usable" /></td></tr>
 </tbody></table>
@@ -61,17 +62,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of resource. Always compute#usableBackendServiceList for lists of usable backend services. (default: compute#usableBackendServiceList)</td>
+    <td>Output only. [Output Only] Type of resource. Alwayscompute#usableBackendServiceList for lists of usable backend services. (default: compute#usableBackendServiceList)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextPageToken" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
+    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger thanmaxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for this resource.</td>
+    <td>Output only. [Output Only] Server-defined URL for this resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="warning" /></td>
@@ -102,8 +103,8 @@ The following methods are available for this resource:
     <td><a href="#list_usable"><CopyableCode code="list_usable" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-region"><code>region</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
-    <td>Retrieves a list of all usable backend services in the specified project in the given region.</td>
+    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td>Retrieves a list of all usable backend services for Application Load<br />Balancers and Proxy Network Load Balancers in the specified project in the<br />given region. Backend services for external and internal passthrough<br />Network Load Balancers are not included in the response.</td>
 </tr>
 </tbody>
 </table>
@@ -169,7 +170,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="list_usable">
 
-Retrieves a list of all usable backend services in the specified project in the given region.
+Retrieves a list of all usable backend services for Application Load<br />Balancers and Proxy Network Load Balancers in the specified project in the<br />given region. Backend services for external and internal passthrough<br />Network Load Balancers are not included in the response.
 
 ```sql
 SELECT
@@ -182,11 +183,11 @@ warning
 FROM google.compute.backend_services_usable
 WHERE project = '{{ project }}' -- required
 AND region = '{{ region }}' -- required
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
-AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>

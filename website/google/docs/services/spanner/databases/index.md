@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>databases</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>databases</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="databases" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.spanner.databases" /></td></tr>
 </tbody></table>
@@ -62,7 +63,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="databaseDialect" /></td>
     <td><code>string</code></td>
-    <td>Output only. The dialect of the Cloud Spanner Database.</td>
+    <td>Output only. The dialect of the Cloud Spanner Database. (DATABASE_DIALECT_UNSPECIFIED, GOOGLE_STANDARD_SQL, POSTGRESQL)</td>
 </tr>
 <tr>
     <td><CopyableCode code="defaultLeader" /></td>
@@ -107,7 +108,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current database state.</td>
+    <td>Output only. The current database state. (STATE_UNSPECIFIED, CREATING, READY, READY_OPTIMIZING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="versionRetentionPeriod" /></td>
@@ -141,7 +142,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="databaseDialect" /></td>
     <td><code>string</code></td>
-    <td>Output only. The dialect of the Cloud Spanner Database.</td>
+    <td>Output only. The dialect of the Cloud Spanner Database. (DATABASE_DIALECT_UNSPECIFIED, GOOGLE_STANDARD_SQL, POSTGRESQL)</td>
 </tr>
 <tr>
     <td><CopyableCode code="defaultLeader" /></td>
@@ -186,7 +187,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current database state.</td>
+    <td>Output only. The current database state. (STATE_UNSPECIFIED, CREATING, READY, READY_OPTIMIZING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="versionRetentionPeriod" /></td>
@@ -249,18 +250,18 @@ The following methods are available for this resource:
     <td>Drops (aka deletes) a Cloud Spanner database. Completed backups for the database will be retained according to their `expire_time`. Note: Cloud Spanner might continue to accept requests for a few seconds after the database has been deleted.</td>
 </tr>
 <tr>
-    <td><a href="#projects_instances_databases_restore"><CopyableCode code="projects_instances_databases_restore" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td></td>
-    <td>Create a new database by restoring from a completed backup. The new database must be in the same project and in an instance with the same instance configuration as the instance containing the backup. The returned database long-running operation has a name of the format `projects//instances//databases//operations/`, and can be used to track the progress of the operation, and to cancel it. The metadata field type is RestoreDatabaseMetadata. The response type is Database, if successful. Cancelling the returned operation will stop the restore and delete the database. There can be only one database being restored into an instance at a time. Once the restore operation completes, a new restore operation can be initiated, without waiting for the optimize operation associated with the first restore to complete.</td>
-</tr>
-<tr>
     <td><a href="#projects_instances_databases_changequorum"><CopyableCode code="projects_instances_databases_changequorum" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a>, <a href="#parameter-databasesId"><code>databasesId</code></a></td>
     <td></td>
     <td>`ChangeQuorum` is strictly restricted to databases that use dual-region instance configurations. Initiates a background operation to change the quorum of a database from dual-region mode to single-region mode or vice versa. The returned long-running operation has a name of the format `projects//instances//databases//operations/` and can be used to track execution of the `ChangeQuorum`. The metadata field type is ChangeQuorumMetadata. Authorization requires `spanner.databases.changequorum` permission on the resource database.</td>
+</tr>
+<tr>
+    <td><a href="#projects_instances_databases_restore"><CopyableCode code="projects_instances_databases_restore" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Create a new database by restoring from a completed backup. The new database must be in the same project and in an instance with the same instance configuration as the instance containing the backup. The returned database long-running operation has a name of the format `projects//instances//databases//operations/`, and can be used to track the progress of the operation, and to cancel it. The metadata field type is RestoreDatabaseMetadata. The response type is Database, if successful. Cancelling the returned operation will stop the restore and delete the database. There can be only one database being restored into an instance at a time. Once the restore operation completes, a new restore operation can be initiated, without waiting for the optimize operation associated with the first restore to complete.</td>
 </tr>
 </tbody>
 </table>
@@ -391,20 +392,20 @@ Creates a new Spanner database and starts to prepare it for serving. The returne
 
 ```sql
 INSERT INTO google.spanner.databases (
+data__createStatement,
+data__extraStatements,
+data__encryptionConfig,
 data__databaseDialect,
 data__protoDescriptors,
-data__encryptionConfig,
-data__extraStatements,
-data__createStatement,
 projectsId,
 instancesId
 )
 SELECT 
+'{{ createStatement }}',
+'{{ extraStatements }}',
+'{{ encryptionConfig }}',
 '{{ databaseDialect }}',
 '{{ protoDescriptors }}',
-'{{ encryptionConfig }}',
-'{{ extraStatements }}',
-'{{ createStatement }}',
 '{{ projectsId }}',
 '{{ instancesId }}'
 RETURNING
@@ -418,43 +419,42 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: databases
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the databases resource.
     - name: instancesId
-      value: string
+      value: "{{ instancesId }}"
       description: Required parameter for the databases resource.
+    - name: createStatement
+      value: "{{ createStatement }}"
+      description: |
+        Required. A \`CREATE DATABASE\` statement, which specifies the ID of the new database. The database ID must conform to the regular expression \`a-z*[a-z0-9]\` and be between 2 and 30 characters in length. If the database ID is a reserved word or if it contains a hyphen, the database ID must be enclosed in backticks (\`\` \` \`\`).
+    - name: extraStatements
+      value:
+        - "{{ extraStatements }}"
+      description: |
+        Optional. A list of DDL statements to run inside the newly created database. Statements can create tables, indexes, etc. These statements execute atomically with the creation of the database: if there is an error in any statement, the database is not created.
+    - name: encryptionConfig
+      description: |
+        Optional. The encryption configuration for the database. If this field is not specified, Cloud Spanner will encrypt/decrypt all data at rest using Google default encryption.
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
+        kmsKeyNames:
+          - "{{ kmsKeyNames }}"
     - name: databaseDialect
-      value: string
-      description: >
+      value: "{{ databaseDialect }}"
+      description: |
         Optional. The dialect of the Cloud Spanner Database.
-        
       valid_values: ['DATABASE_DIALECT_UNSPECIFIED', 'GOOGLE_STANDARD_SQL', 'POSTGRESQL']
     - name: protoDescriptors
-      value: string
-      description: >
-        Optional. Proto descriptors used by `CREATE/ALTER PROTO BUNDLE` statements in 'extra_statements'. Contains a protobuf-serialized [`google.protobuf.FileDescriptorSet`](https://github.com/protocolbuffers/protobuf/blob/main/src/google/protobuf/descriptor.proto) descriptor set. To generate it, [install](https://grpc.io/docs/protoc-installation/) and run `protoc` with --include_imports and --descriptor_set_out. For example, to generate for moon/shot/app.proto, run ``` $protoc --proto_path=/app_path --proto_path=/lib_path \ --include_imports \ --descriptor_set_out=descriptors.data \ moon/shot/app.proto ``` For more details, see protobuffer [self description](https://developers.google.com/protocol-buffers/docs/techniques#self-description).
-        
-    - name: encryptionConfig
-      value: object
-      description: >
-        Optional. The encryption configuration for the database. If this field is not specified, Cloud Spanner will encrypt/decrypt all data at rest using Google default encryption.
-        
-    - name: extraStatements
-      value: array
-      description: >
-        Optional. A list of DDL statements to run inside the newly created database. Statements can create tables, indexes, etc. These statements execute atomically with the creation of the database: if there is an error in any statement, the database is not created.
-        
-    - name: createStatement
-      value: string
-      description: >
-        Required. A `CREATE DATABASE` statement, which specifies the ID of the new database. The database ID must conform to the regular expression `a-z*[a-z0-9]` and be between 2 and 30 characters in length. If the database ID is a reserved word or if it contains a hyphen, the database ID must be enclosed in backticks (`` ` ``).
-        
-```
+      value: "{{ protoDescriptors }}"
+      description: |
+        Optional. Proto descriptors used by \`CREATE/ALTER PROTO BUNDLE\` statements in 'extra_statements'. Contains a protobuf-serialized [\`google.protobuf.FileDescriptorSet\`](https://github.com/protocolbuffers/protobuf/blob/main/src/google/protobuf/descriptor.proto) descriptor set. To generate it, [install](https://grpc.io/docs/protoc-installation/) and run \`protoc\` with --include_imports and --descriptor_set_out. For example, to generate for moon/shot/app.proto, run \`\`\` $protoc --proto_path=/app_path --proto_path=/lib_path  --include_imports  --descriptor_set_out=descriptors.data  moon/shot/app.proto \`\`\` For more details, see protobuffer [self description](https://developers.google.com/protocol-buffers/docs/techniques#self-description).
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -518,29 +518,12 @@ AND databasesId = '{{ databasesId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_instances_databases_restore"
+    defaultValue="projects_instances_databases_changequorum"
     values={[
-        { label: 'projects_instances_databases_restore', value: 'projects_instances_databases_restore' },
-        { label: 'projects_instances_databases_changequorum', value: 'projects_instances_databases_changequorum' }
+        { label: 'projects_instances_databases_changequorum', value: 'projects_instances_databases_changequorum' },
+        { label: 'projects_instances_databases_restore', value: 'projects_instances_databases_restore' }
     ]}
 >
-<TabItem value="projects_instances_databases_restore">
-
-Create a new database by restoring from a completed backup. The new database must be in the same project and in an instance with the same instance configuration as the instance containing the backup. The returned database long-running operation has a name of the format `projects//instances//databases//operations/`, and can be used to track the progress of the operation, and to cancel it. The metadata field type is RestoreDatabaseMetadata. The response type is Database, if successful. Cancelling the returned operation will stop the restore and delete the database. There can be only one database being restored into an instance at a time. Once the restore operation completes, a new restore operation can be initiated, without waiting for the optimize operation associated with the first restore to complete.
-
-```sql
-EXEC google.spanner.databases.projects_instances_databases_restore 
-@projectsId='{{ projectsId }}' --required, 
-@instancesId='{{ instancesId }}' --required 
-@@json=
-'{
-"backup": "{{ backup }}", 
-"encryptionConfig": "{{ encryptionConfig }}", 
-"databaseId": "{{ databaseId }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_instances_databases_changequorum">
 
 `ChangeQuorum` is strictly restricted to databases that use dual-region instance configurations. Initiates a background operation to change the quorum of a database from dual-region mode to single-region mode or vice versa. The returned long-running operation has a name of the format `projects//instances//databases//operations/` and can be used to track execution of the `ChangeQuorum`. The metadata field type is ChangeQuorumMetadata. Authorization requires `spanner.databases.changequorum` permission on the resource database.
@@ -552,9 +535,26 @@ EXEC google.spanner.databases.projects_instances_databases_changequorum
 @databasesId='{{ databasesId }}' --required 
 @@json=
 '{
+"name": "{{ name }}", 
 "quorumType": "{{ quorumType }}", 
-"etag": "{{ etag }}", 
-"name": "{{ name }}"
+"etag": "{{ etag }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="projects_instances_databases_restore">
+
+Create a new database by restoring from a completed backup. The new database must be in the same project and in an instance with the same instance configuration as the instance containing the backup. The returned database long-running operation has a name of the format `projects//instances//databases//operations/`, and can be used to track the progress of the operation, and to cancel it. The metadata field type is RestoreDatabaseMetadata. The response type is Database, if successful. Cancelling the returned operation will stop the restore and delete the database. There can be only one database being restored into an instance at a time. Once the restore operation completes, a new restore operation can be initiated, without waiting for the optimize operation associated with the first restore to complete.
+
+```sql
+EXEC google.spanner.databases.projects_instances_databases_restore 
+@projectsId='{{ projectsId }}' --required, 
+@instancesId='{{ instancesId }}' --required 
+@@json=
+'{
+"databaseId": "{{ databaseId }}", 
+"backup": "{{ backup }}", 
+"encryptionConfig": "{{ encryptionConfig }}"
 }'
 ;
 ```

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>step_entries</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>step_entries</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="step_entries" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.workflowexecutions.step_entries" /></td></tr>
 </tbody></table>
@@ -82,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the step entry.</td>
+    <td>Output only. The state of the step entry. (STATE_UNSPECIFIED, STATE_IN_PROGRESS, STATE_SUCCEEDED, STATE_FAILED, STATE_CANCELLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="step" /></td>
@@ -97,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="stepType" /></td>
     <td><code>string</code></td>
-    <td>Output only. The type of the step this step entry belongs to.</td>
+    <td>Output only. The type of the step this step entry belongs to. (STEP_TYPE_UNSPECIFIED, STEP_ASSIGN, STEP_STD_LIB_CALL, STEP_CONNECTOR_CALL, STEP_SUBWORKFLOW_CALL, STEP_CALL, STEP_SWITCH, STEP_CONDITION, STEP_FOR, STEP_FOR_ITERATION, STEP_PARALLEL_FOR, STEP_PARALLEL_BRANCH, STEP_PARALLEL_BRANCH_ENTRY, STEP_TRY_RETRY_EXCEPT, STEP_TRY, STEP_RETRY, STEP_EXCEPT, STEP_RETURN, STEP_RAISE, STEP_GOTO)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -156,7 +157,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the step entry.</td>
+    <td>Output only. The state of the step entry. (STATE_UNSPECIFIED, STATE_IN_PROGRESS, STATE_SUCCEEDED, STATE_FAILED, STATE_CANCELLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="step" /></td>
@@ -171,7 +172,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="stepType" /></td>
     <td><code>string</code></td>
-    <td>Output only. The type of the step this step entry belongs to.</td>
+    <td>Output only. The type of the step this step entry belongs to. (STEP_TYPE_UNSPECIFIED, STEP_ASSIGN, STEP_STD_LIB_CALL, STEP_CONNECTOR_CALL, STEP_SUBWORKFLOW_CALL, STEP_CALL, STEP_SWITCH, STEP_CONDITION, STEP_FOR, STEP_FOR_ITERATION, STEP_PARALLEL_FOR, STEP_PARALLEL_BRANCH, STEP_PARALLEL_BRANCH_ENTRY, STEP_TRY_RETRY_EXCEPT, STEP_TRY, STEP_RETRY, STEP_EXCEPT, STEP_RETURN, STEP_RAISE, STEP_GOTO)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -214,7 +215,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-workflowsId"><code>workflowsId</code></a>, <a href="#parameter-executionsId"><code>executionsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-skip"><code>skip</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-view"><code>view</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-skip"><code>skip</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists step entries for the corresponding workflow execution. Returned entries are ordered by their create_time.</td>
 </tr>
 </tbody>
@@ -351,12 +352,12 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND workflowsId = '{{ workflowsId }}' -- required
 AND executionsId = '{{ executionsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND skip = '{{ skip }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND view = '{{ view }}'
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>

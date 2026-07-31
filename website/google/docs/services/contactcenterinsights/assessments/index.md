@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>assessments</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>assessments</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="assessments" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.contactcenterinsights.assessments" /></td></tr>
 </tbody></table>
@@ -57,7 +58,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="agentInfo" /></td>
     <td><code>object</code></td>
-    <td>Information about the agent the assessment is for. (id: GoogleCloudContactcenterinsightsV1ConversationQualityMetadataAgentInfo)</td>
+    <td>Information about an agent involved in the conversation. (id: GoogleCloudContactcenterinsightsV1ConversationQualityMetadataAgentInfo)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -67,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the assessment.</td>
+    <td>Output only. The state of the assessment. (STATE_UNSPECIFIED, DRAFT, PUBLISHED, APPEALED, FINALIZED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -96,7 +97,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="agentInfo" /></td>
     <td><code>object</code></td>
-    <td>Information about the agent the assessment is for. (id: GoogleCloudContactcenterinsightsV1ConversationQualityMetadataAgentInfo)</td>
+    <td>Information about an agent involved in the conversation. (id: GoogleCloudContactcenterinsightsV1ConversationQualityMetadataAgentInfo)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -106,7 +107,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the assessment.</td>
+    <td>Output only. The state of the assessment. (STATE_UNSPECIFIED, DRAFT, PUBLISHED, APPEALED, FINALIZED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -169,18 +170,18 @@ The following methods are available for this resource:
     <td>Appeal an Assessment.</td>
 </tr>
 <tr>
-    <td><a href="#publish"><CopyableCode code="publish" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-assessmentsId"><code>assessmentsId</code></a></td>
-    <td></td>
-    <td>Publish an Assessment.</td>
-</tr>
-<tr>
     <td><a href="#finalize"><CopyableCode code="finalize" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-assessmentsId"><code>assessmentsId</code></a></td>
     <td></td>
     <td>Finalize an Assessment.</td>
+</tr>
+<tr>
+    <td><a href="#publish"><CopyableCode code="publish" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-assessmentsId"><code>assessmentsId</code></a></td>
+    <td></td>
+    <td>Publish an Assessment.</td>
 </tr>
 </tbody>
 </table>
@@ -308,15 +309,15 @@ Create Assessment.
 
 ```sql
 INSERT INTO google.contactcenterinsights.assessments (
-data__agentInfo,
 data__name,
+data__agentInfo,
 projectsId,
 locationsId,
 conversationsId
 )
 SELECT 
-'{{ agentInfo }}',
 '{{ name }}',
+'{{ agentInfo }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ conversationsId }}'
@@ -331,30 +332,42 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: assessments
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the assessments resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the assessments resource.
     - name: conversationsId
-      value: string
+      value: "{{ conversationsId }}"
       description: Required parameter for the assessments resource.
-    - name: agentInfo
-      value: object
-      description: >
-        Information about the agent the assessment is for.
-        
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Identifier. The resource name of the assessment. Format: projects/{project}/locations/{location}/conversations/{conversation}/assessments/{assessment}
-        
-```
+    - name: agentInfo
+      description: |
+        Information about an agent involved in the conversation.
+      value:
+        dispositionCode: "{{ dispositionCode }}"
+        versionId: "{{ versionId }}"
+        agentType: "{{ agentType }}"
+        displayName: "{{ displayName }}"
+        deploymentDisplayName: "{{ deploymentDisplayName }}"
+        team: "{{ team }}"
+        teams:
+          - "{{ teams }}"
+        entrySubagentId: "{{ entrySubagentId }}"
+        agentId: "{{ agentId }}"
+        location: "{{ location }}"
+        entrySubagentDisplayName: "{{ entrySubagentDisplayName }}"
+        deploymentId: "{{ deploymentId }}"
+        versionDisplayName: "{{ versionDisplayName }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -390,8 +403,8 @@ AND force = '{{ force }}'
     defaultValue="appeal"
     values={[
         { label: 'appeal', value: 'appeal' },
-        { label: 'publish', value: 'publish' },
-        { label: 'finalize', value: 'finalize' }
+        { label: 'finalize', value: 'finalize' },
+        { label: 'publish', value: 'publish' }
     ]}
 >
 <TabItem value="appeal">
@@ -407,12 +420,12 @@ EXEC google.contactcenterinsights.assessments.appeal
 ;
 ```
 </TabItem>
-<TabItem value="publish">
+<TabItem value="finalize">
 
-Publish an Assessment.
+Finalize an Assessment.
 
 ```sql
-EXEC google.contactcenterinsights.assessments.publish 
+EXEC google.contactcenterinsights.assessments.finalize 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @conversationsId='{{ conversationsId }}' --required, 
@@ -420,12 +433,12 @@ EXEC google.contactcenterinsights.assessments.publish
 ;
 ```
 </TabItem>
-<TabItem value="finalize">
+<TabItem value="publish">
 
-Finalize an Assessment.
+Publish an Assessment.
 
 ```sql
-EXEC google.contactcenterinsights.assessments.finalize 
+EXEC google.contactcenterinsights.assessments.publish 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @conversationsId='{{ conversationsId }}' --required, 

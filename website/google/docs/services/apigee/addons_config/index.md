@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>addons_config</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>addons_config</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="addons_config" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.addons_config" /></td></tr>
 </tbody></table>
@@ -188,8 +189,8 @@ EXEC google.apigee.addons_config.organizations_environments_addons_config_set_ad
 @environmentsId='{{ environmentsId }}' --required 
 @@json=
 '{
-"apiSecurityEnabled": {{ apiSecurityEnabled }}, 
-"analyticsEnabled": {{ analyticsEnabled }}
+"analyticsEnabled": {{ analyticsEnabled }}, 
+"apiSecurityEnabled": {{ apiSecurityEnabled }}
 }'
 ;
 ```

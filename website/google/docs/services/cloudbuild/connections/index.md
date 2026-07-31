@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>connections</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>connections</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="connections" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudbuild.connections" /></td></tr>
 </tbody></table>
@@ -159,7 +160,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_connections_list"><CopyableCode code="projects_locations_connections_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists Connections in a given project and location.</td>
 </tr>
 <tr>
@@ -173,7 +174,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_connections_patch"><CopyableCode code="projects_locations_connections_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
-    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates a single connection.</td>
 </tr>
 <tr>
@@ -314,8 +315,8 @@ SELECT
 FROM google.cloudbuild.connections
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
 ;
 ```
@@ -338,29 +339,29 @@ Creates a Connection.
 
 ```sql
 INSERT INTO google.cloudbuild.connections (
-data__name,
-data__etag,
 data__bitbucketDataCenterConfig,
-data__gitlabConfig,
 data__bitbucketCloudConfig,
 data__annotations,
+data__etag,
+data__name,
+data__githubConfig,
+data__gitlabConfig,
 data__disabled,
 data__githubEnterpriseConfig,
-data__githubConfig,
 projectsId,
 locationsId,
 connectionId
 )
 SELECT 
-'{{ name }}',
-'{{ etag }}',
 '{{ bitbucketDataCenterConfig }}',
-'{{ gitlabConfig }}',
 '{{ bitbucketCloudConfig }}',
 '{{ annotations }}',
+'{{ etag }}',
+'{{ name }}',
+'{{ githubConfig }}',
+'{{ gitlabConfig }}',
 {{ disabled }},
 '{{ githubEnterpriseConfig }}',
-'{{ githubConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ connectionId }}'
@@ -375,64 +376,102 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: connections
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the connections resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the connections resource.
-    - name: name
-      value: string
-      description: >
-        Immutable. The resource name of the connection, in the format `projects/{project}/locations/{location}/connections/{connection_id}`.
-        
-    - name: etag
-      value: string
-      description: >
-        This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
-        
     - name: bitbucketDataCenterConfig
-      value: object
-      description: >
+      description: |
         Configuration for connections to Bitbucket Data Center.
-        
-    - name: gitlabConfig
-      value: object
-      description: >
-        Configuration for connections to gitlab.com or an instance of GitLab Enterprise.
-        
+      value:
+        sslCa: "{{ sslCa }}"
+        hostUri: "{{ hostUri }}"
+        webhookSecretSecretVersion: "{{ webhookSecretSecretVersion }}"
+        serviceDirectoryConfig:
+          service: "{{ service }}"
+        authorizerCredential:
+          userTokenSecretVersion: "{{ userTokenSecretVersion }}"
+          username: "{{ username }}"
+        serverVersion: "{{ serverVersion }}"
+        readAuthorizerCredential:
+          userTokenSecretVersion: "{{ userTokenSecretVersion }}"
+          username: "{{ username }}"
     - name: bitbucketCloudConfig
-      value: object
-      description: >
+      description: |
         Configuration for connections to Bitbucket Cloud.
-        
+      value:
+        workspace: "{{ workspace }}"
+        authorizerCredential:
+          userTokenSecretVersion: "{{ userTokenSecretVersion }}"
+          username: "{{ username }}"
+        webhookSecretSecretVersion: "{{ webhookSecretSecretVersion }}"
+        readAuthorizerCredential:
+          userTokenSecretVersion: "{{ userTokenSecretVersion }}"
+          username: "{{ username }}"
     - name: annotations
-      value: object
-      description: >
+      value: "{{ annotations }}"
+      description: |
         Optional. Allows clients to store small amounts of arbitrary data.
-        
-    - name: disabled
-      value: boolean
-      description: >
-        Optional. If disabled is set to true, functionality is disabled for this connection. Repository based API methods and webhooks processing for repositories in this connection will be disabled.
-        
-    - name: githubEnterpriseConfig
-      value: object
-      description: >
-        Configuration for connections to an instance of GitHub Enterprise.
-        
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Immutable. The resource name of the connection, in the format \`projects/{project}/locations/{location}/connections/{connection_id}\`.
     - name: githubConfig
-      value: object
-      description: >
+      description: |
         Configuration for connections to github.com.
-        
+      value:
+        authorizerCredential:
+          username: "{{ username }}"
+          oauthTokenSecretVersion: "{{ oauthTokenSecretVersion }}"
+        appInstallationId: "{{ appInstallationId }}"
+    - name: gitlabConfig
+      description: |
+        Configuration for connections to gitlab.com or an instance of GitLab Enterprise.
+      value:
+        authorizerCredential:
+          userTokenSecretVersion: "{{ userTokenSecretVersion }}"
+          username: "{{ username }}"
+        serverVersion: "{{ serverVersion }}"
+        readAuthorizerCredential:
+          userTokenSecretVersion: "{{ userTokenSecretVersion }}"
+          username: "{{ username }}"
+        hostUri: "{{ hostUri }}"
+        webhookSecretSecretVersion: "{{ webhookSecretSecretVersion }}"
+        serviceDirectoryConfig:
+          service: "{{ service }}"
+        sslCa: "{{ sslCa }}"
+    - name: disabled
+      value: {{ disabled }}
+      description: |
+        Optional. If disabled is set to true, functionality is disabled for this connection. Repository based API methods and webhooks processing for repositories in this connection will be disabled.
+    - name: githubEnterpriseConfig
+      description: |
+        Configuration for connections to an instance of GitHub Enterprise.
+      value:
+        apiKey: "{{ apiKey }}"
+        sslCa: "{{ sslCa }}"
+        appSlug: "{{ appSlug }}"
+        serviceDirectoryConfig:
+          service: "{{ service }}"
+        serverVersion: "{{ serverVersion }}"
+        privateKeySecretVersion: "{{ privateKeySecretVersion }}"
+        appId: "{{ appId }}"
+        webhookSecretSecretVersion: "{{ webhookSecretSecretVersion }}"
+        hostUri: "{{ hostUri }}"
+        appInstallationId: "{{ appInstallationId }}"
     - name: connectionId
-      value: string
-```
+      value: "{{ connectionId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -452,22 +491,22 @@ Updates a single connection.
 ```sql
 UPDATE google.cloudbuild.connections
 SET 
-data__name = '{{ name }}',
-data__etag = '{{ etag }}',
 data__bitbucketDataCenterConfig = '{{ bitbucketDataCenterConfig }}',
-data__gitlabConfig = '{{ gitlabConfig }}',
 data__bitbucketCloudConfig = '{{ bitbucketCloudConfig }}',
 data__annotations = '{{ annotations }}',
+data__etag = '{{ etag }}',
+data__name = '{{ name }}',
+data__githubConfig = '{{ githubConfig }}',
+data__gitlabConfig = '{{ gitlabConfig }}',
 data__disabled = {{ disabled }},
-data__githubEnterpriseConfig = '{{ githubEnterpriseConfig }}',
-data__githubConfig = '{{ githubConfig }}'
+data__githubEnterpriseConfig = '{{ githubEnterpriseConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND connectionsId = '{{ connectionsId }}' --required
+AND etag = '{{ etag}}'
 AND allowMissing = {{ allowMissing}}
 AND updateMask = '{{ updateMask}}'
-AND etag = '{{ etag}}'
 RETURNING
 name,
 done,
@@ -523,9 +562,9 @@ EXEC google.cloudbuild.connections.projects_locations_connections_process_webhoo
 @webhookKey='{{ webhookKey }}' 
 @@json=
 '{
+"data": "{{ data }}", 
 "extensions": "{{ extensions }}", 
-"contentType": "{{ contentType }}", 
-"data": "{{ data }}"
+"contentType": "{{ contentType }}"
 }'
 ;
 ```

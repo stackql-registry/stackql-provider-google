@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>transition_route_groups</code> 
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>transition_route_groups</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="transition_route_groups" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dialogflow.transition_route_groups" /></td></tr>
 </tbody></table>
@@ -54,17 +55,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The unique identifier of the transition route group. TransitionRouteGroups.CreateTransitionRouteGroup populates the name automatically. Format: `projects//locations//agents//flows//transitionRouteGroups/` .</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Required. The human-readable name of the transition route group, unique within the flow. The display name can be no longer than 30 characters.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="transitionRoutes" /></td>
     <td><code>array</code></td>
-    <td>Transition routes associated with the TransitionRouteGroup.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -83,17 +84,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The unique identifier of the transition route group. TransitionRouteGroups.CreateTransitionRouteGroup populates the name automatically. Format: `projects//locations//agents//flows//transitionRouteGroups/` .</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Required. The human-readable name of the transition route group, unique within the flow. The display name can be no longer than 30 characters.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="transitionRoutes" /></td>
     <td><code>array</code></td>
-    <td>Transition routes associated with the TransitionRouteGroup.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -112,17 +113,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The unique identifier of the transition route group. TransitionRouteGroups.CreateTransitionRouteGroup populates the name automatically. Format: `projects//locations//agents//flows//transitionRouteGroups/` .</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Required. The human-readable name of the transition route group, unique within the flow. The display name can be no longer than 30 characters.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="transitionRoutes" /></td>
     <td><code>array</code></td>
-    <td>Transition routes associated with the TransitionRouteGroup.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -141,17 +142,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The unique identifier of the transition route group. TransitionRouteGroups.CreateTransitionRouteGroup populates the name automatically. Format: `projects//locations//agents//flows//transitionRouteGroups/` .</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Required. The human-readable name of the transition route group, unique within the flow. The display name can be no longer than 30 characters.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="transitionRoutes" /></td>
     <td><code>array</code></td>
-    <td>Transition routes associated with the TransitionRouteGroup.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -178,70 +179,70 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-flowsId"><code>flowsId</code></a>, <a href="#parameter-transitionRouteGroupsId"><code>transitionRouteGroupsId</code></a></td>
     <td><a href="#parameter-languageCode"><code>languageCode</code></a></td>
-    <td>Retrieves the specified TransitionRouteGroup.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_flows_transition_route_groups_list"><CopyableCode code="projects_locations_agents_flows_transition_route_groups_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-flowsId"><code>flowsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a></td>
-    <td>Returns the list of all transition route groups in the specified flow.</td>
+    <td><a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_transition_route_groups_get"><CopyableCode code="projects_locations_agents_transition_route_groups_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-transitionRouteGroupsId"><code>transitionRouteGroupsId</code></a></td>
     <td><a href="#parameter-languageCode"><code>languageCode</code></a></td>
-    <td>Retrieves the specified TransitionRouteGroup.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_transition_route_groups_list"><CopyableCode code="projects_locations_agents_transition_route_groups_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a></td>
-    <td>Returns the list of all transition route groups in the specified flow.</td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_flows_transition_route_groups_create"><CopyableCode code="projects_locations_agents_flows_transition_route_groups_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-flowsId"><code>flowsId</code></a></td>
     <td><a href="#parameter-languageCode"><code>languageCode</code></a></td>
-    <td>Creates an TransitionRouteGroup in the specified flow. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_transition_route_groups_create"><CopyableCode code="projects_locations_agents_transition_route_groups_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a></td>
     <td><a href="#parameter-languageCode"><code>languageCode</code></a></td>
-    <td>Creates an TransitionRouteGroup in the specified flow. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_flows_transition_route_groups_patch"><CopyableCode code="projects_locations_agents_flows_transition_route_groups_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-flowsId"><code>flowsId</code></a>, <a href="#parameter-transitionRouteGroupsId"><code>transitionRouteGroupsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a></td>
-    <td>Updates the specified TransitionRouteGroup. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).</td>
+    <td><a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_transition_route_groups_patch"><CopyableCode code="projects_locations_agents_transition_route_groups_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-transitionRouteGroupsId"><code>transitionRouteGroupsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a></td>
-    <td>Updates the specified TransitionRouteGroup. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).</td>
+    <td><a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_flows_transition_route_groups_delete"><CopyableCode code="projects_locations_agents_flows_transition_route_groups_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-flowsId"><code>flowsId</code></a>, <a href="#parameter-transitionRouteGroupsId"><code>transitionRouteGroupsId</code></a></td>
     <td><a href="#parameter-force"><code>force</code></a></td>
-    <td>Deletes the specified TransitionRouteGroup. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_transition_route_groups_delete"><CopyableCode code="projects_locations_agents_transition_route_groups_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-transitionRouteGroupsId"><code>transitionRouteGroupsId</code></a></td>
     <td><a href="#parameter-force"><code>force</code></a></td>
-    <td>Deletes the specified TransitionRouteGroup. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -325,7 +326,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="projects_locations_agents_flows_transition_route_groups_get">
 
-Retrieves the specified TransitionRouteGroup.
+Successful response
 
 ```sql
 SELECT
@@ -344,7 +345,7 @@ AND languageCode = '{{ languageCode }}'
 </TabItem>
 <TabItem value="projects_locations_agents_flows_transition_route_groups_list">
 
-Returns the list of all transition route groups in the specified flow.
+Successful response
 
 ```sql
 SELECT
@@ -356,15 +357,15 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND agentsId = '{{ agentsId }}' -- required
 AND flowsId = '{{ flowsId }}' -- required
+AND languageCode = '{{ languageCode }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND languageCode = '{{ languageCode }}'
 ;
 ```
 </TabItem>
 <TabItem value="projects_locations_agents_transition_route_groups_get">
 
-Retrieves the specified TransitionRouteGroup.
+Successful response
 
 ```sql
 SELECT
@@ -382,7 +383,7 @@ AND languageCode = '{{ languageCode }}'
 </TabItem>
 <TabItem value="projects_locations_agents_transition_route_groups_list">
 
-Returns the list of all transition route groups in the specified flow.
+Successful response
 
 ```sql
 SELECT
@@ -393,9 +394,9 @@ FROM google.dialogflow.transition_route_groups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND agentsId = '{{ agentsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND languageCode = '{{ languageCode }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -414,7 +415,7 @@ AND languageCode = '{{ languageCode }}'
 >
 <TabItem value="projects_locations_agents_flows_transition_route_groups_create">
 
-Creates an TransitionRouteGroup in the specified flow. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+No description available.
 
 ```sql
 INSERT INTO google.dialogflow.transition_route_groups (
@@ -445,7 +446,7 @@ transitionRoutes
 </TabItem>
 <TabItem value="projects_locations_agents_transition_route_groups_create">
 
-Creates an TransitionRouteGroup in the specified flow. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+No description available.
 
 ```sql
 INSERT INTO google.dialogflow.transition_route_groups (
@@ -474,40 +475,101 @@ transitionRoutes
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: transition_route_groups
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the transition_route_groups resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the transition_route_groups resource.
     - name: agentsId
-      value: string
+      value: "{{ agentsId }}"
       description: Required parameter for the transition_route_groups resource.
     - name: flowsId
-      value: string
+      value: "{{ flowsId }}"
       description: Required parameter for the transition_route_groups resource.
     - name: name
-      value: string
-      description: >
-        The unique identifier of the transition route group. TransitionRouteGroups.CreateTransitionRouteGroup populates the name automatically. Format: `projects//locations//agents//flows//transitionRouteGroups/` .
-        
+      value: "{{ name }}"
     - name: displayName
-      value: string
-      description: >
-        Required. The human-readable name of the transition route group, unique within the flow. The display name can be no longer than 30 characters.
-        
+      value: "{{ displayName }}"
     - name: transitionRoutes
-      value: array
-      description: >
-        Transition routes associated with the TransitionRouteGroup.
-        
+      value:
+        - name: "{{ name }}"
+          targetPage: "{{ targetPage }}"
+          condition: "{{ condition }}"
+          description: "{{ description }}"
+          targetFlow: "{{ targetFlow }}"
+          intent: "{{ intent }}"
+          triggerFulfillment:
+            returnPartialResponses: {{ returnPartialResponses }}
+            generators:
+              - inputParameters: "{{ inputParameters }}"
+                generator: "{{ generator }}"
+                outputParameter: "{{ outputParameter }}"
+            webhook: "{{ webhook }}"
+            enableGenerativeFallback: {{ enableGenerativeFallback }}
+            setParameterActions:
+              - parameter: "{{ parameter }}"
+                value: "{{ value }}"
+            tag: "{{ tag }}"
+            advancedSettings:
+              loggingSettings:
+                enableInteractionLogging: {{ enableInteractionLogging }}
+                enableConsentBasedRedaction: {{ enableConsentBasedRedaction }}
+                enableStackdriverLogging: {{ enableStackdriverLogging }}
+              audioExportGcsDestination:
+                uri: "{{ uri }}"
+              speechSettings:
+                useTimeoutBasedEndpointing: {{ useTimeoutBasedEndpointing }}
+                models: "{{ models }}"
+                endpointerSensitivity: {{ endpointerSensitivity }}
+                noSpeechTimeout: "{{ noSpeechTimeout }}"
+              dtmfSettings:
+                maxDigits: {{ maxDigits }}
+                finishDigit: "{{ finishDigit }}"
+                interdigitTimeoutDuration: "{{ interdigitTimeoutDuration }}"
+                enabled: {{ enabled }}
+                endpointingTimeoutDuration: "{{ endpointingTimeoutDuration }}"
+            messages:
+              - playAudio:
+                  audioUri: "{{ audioUri }}"
+                  allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                toolCall:
+                  tool: "{{ tool }}"
+                  action: "{{ action }}"
+                  inputParameters: "{{ inputParameters }}"
+                knowledgeInfoCard: "{{ knowledgeInfoCard }}"
+                endInteraction: "{{ endInteraction }}"
+                conversationSuccess:
+                  metadata: "{{ metadata }}"
+                channel: "{{ channel }}"
+                text:
+                  text:
+                    - "{{ text }}"
+                  allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                telephonyTransferCall:
+                  phoneNumber: "{{ phoneNumber }}"
+                responseType: "{{ responseType }}"
+                payload: "{{ payload }}"
+                outputAudioText:
+                  text: "{{ text }}"
+                  ssml: "{{ ssml }}"
+                  allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                mixedAudio:
+                  segments:
+                    - allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                      audio: "{{ audio }}"
+                      uri: "{{ uri }}"
+                liveAgentHandoff:
+                  metadata: "{{ metadata }}"
+            conditionalCases:
+              - cases: "{{ cases }}"
     - name: languageCode
-      value: string
-```
+      value: "{{ languageCode }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -523,7 +585,7 @@ transitionRoutes
 >
 <TabItem value="projects_locations_agents_flows_transition_route_groups_patch">
 
-Updates the specified TransitionRouteGroup. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+No description available.
 
 ```sql
 UPDATE google.dialogflow.transition_route_groups
@@ -537,8 +599,8 @@ AND locationsId = '{{ locationsId }}' --required
 AND agentsId = '{{ agentsId }}' --required
 AND flowsId = '{{ flowsId }}' --required
 AND transitionRouteGroupsId = '{{ transitionRouteGroupsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND languageCode = '{{ languageCode}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 displayName,
@@ -547,7 +609,7 @@ transitionRoutes;
 </TabItem>
 <TabItem value="projects_locations_agents_transition_route_groups_patch">
 
-Updates the specified TransitionRouteGroup. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+No description available.
 
 ```sql
 UPDATE google.dialogflow.transition_route_groups
@@ -560,8 +622,8 @@ projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND agentsId = '{{ agentsId }}' --required
 AND transitionRouteGroupsId = '{{ transitionRouteGroupsId }}' --required
-AND updateMask = '{{ updateMask}}'
 AND languageCode = '{{ languageCode}}'
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 displayName,
@@ -582,7 +644,7 @@ transitionRoutes;
 >
 <TabItem value="projects_locations_agents_flows_transition_route_groups_delete">
 
-Deletes the specified TransitionRouteGroup. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+No description available.
 
 ```sql
 DELETE FROM google.dialogflow.transition_route_groups
@@ -597,7 +659,7 @@ AND force = '{{ force }}'
 </TabItem>
 <TabItem value="projects_locations_agents_transition_route_groups_delete">
 
-Deletes the specified TransitionRouteGroup. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+No description available.
 
 ```sql
 DELETE FROM google.dialogflow.transition_route_groups

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>pages</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>pages</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="pages" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dialogflow.pages" /></td></tr>
 </tbody></table>
@@ -52,52 +53,52 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The unique identifier of the page. Required for the Pages.UpdatePage method. Pages.CreatePage populates the name automatically. Format: `projects//locations//agents//flows//pages/`.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="advancedSettings" /></td>
     <td><code>object</code></td>
-    <td>Hierarchical advanced settings for this page. The settings exposed at the lower level overrides the settings exposed at the higher level. (id: GoogleCloudDialogflowCxV3AdvancedSettings)</td>
+    <td> (id: GoogleCloudDialogflowCxV3AdvancedSettings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
-    <td>The description of the page. The maximum length is 500 characters.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Required. The human-readable name of the page, unique within the flow.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="entryFulfillment" /></td>
     <td><code>object</code></td>
-    <td>The fulfillment to call when the session is entering the page. (id: GoogleCloudDialogflowCxV3Fulfillment)</td>
+    <td> (id: GoogleCloudDialogflowCxV3Fulfillment)</td>
 </tr>
 <tr>
     <td><CopyableCode code="eventHandlers" /></td>
     <td><code>array</code></td>
-    <td>Handlers associated with the page to handle events such as webhook errors, no match or no input.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="form" /></td>
     <td><code>object</code></td>
-    <td>The form associated with the page, used for collecting parameters relevant to the page. (id: GoogleCloudDialogflowCxV3Form)</td>
+    <td> (id: GoogleCloudDialogflowCxV3Form)</td>
 </tr>
 <tr>
     <td><CopyableCode code="knowledgeConnectorSettings" /></td>
     <td><code>object</code></td>
-    <td>Optional. Knowledge connector configuration. (id: GoogleCloudDialogflowCxV3KnowledgeConnectorSettings)</td>
+    <td> (id: GoogleCloudDialogflowCxV3KnowledgeConnectorSettings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="transitionRouteGroups" /></td>
     <td><code>array</code></td>
-    <td>Ordered list of `TransitionRouteGroups` added to the page. Transition route groups must be unique within a page. If the page links both flow-level transition route groups and agent-level transition route groups, the flow-level ones will have higher priority and will be put before the agent-level ones. * If multiple transition routes within a page scope refer to the same intent, then the precedence order is: page's transition route -&gt; page's transition route group -&gt; flow's transition routes. * If multiple transition route groups within a page contain the same intent, then the first group in the ordered list takes precedence. Format:`projects//locations//agents//flows//transitionRouteGroups/` or `projects//locations//agents//transitionRouteGroups/` for agent-level groups.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="transitionRoutes" /></td>
     <td><code>array</code></td>
-    <td>A list of transitions for the transition rules of this page. They route the conversation to another page in the same flow, or another flow. When we are in a certain page, the TransitionRoutes are evaluated in the following order: * TransitionRoutes defined in the page with intent specified. * TransitionRoutes defined in the transition route groups with intent specified. * TransitionRoutes defined in flow with intent specified. * TransitionRoutes defined in the transition route groups with intent specified. * TransitionRoutes defined in the page with only condition specified. * TransitionRoutes defined in the transition route groups with only condition specified.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -116,52 +117,52 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The unique identifier of the page. Required for the Pages.UpdatePage method. Pages.CreatePage populates the name automatically. Format: `projects//locations//agents//flows//pages/`.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="advancedSettings" /></td>
     <td><code>object</code></td>
-    <td>Hierarchical advanced settings for this page. The settings exposed at the lower level overrides the settings exposed at the higher level. (id: GoogleCloudDialogflowCxV3AdvancedSettings)</td>
+    <td> (id: GoogleCloudDialogflowCxV3AdvancedSettings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
-    <td>The description of the page. The maximum length is 500 characters.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
-    <td>Required. The human-readable name of the page, unique within the flow.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="entryFulfillment" /></td>
     <td><code>object</code></td>
-    <td>The fulfillment to call when the session is entering the page. (id: GoogleCloudDialogflowCxV3Fulfillment)</td>
+    <td> (id: GoogleCloudDialogflowCxV3Fulfillment)</td>
 </tr>
 <tr>
     <td><CopyableCode code="eventHandlers" /></td>
     <td><code>array</code></td>
-    <td>Handlers associated with the page to handle events such as webhook errors, no match or no input.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="form" /></td>
     <td><code>object</code></td>
-    <td>The form associated with the page, used for collecting parameters relevant to the page. (id: GoogleCloudDialogflowCxV3Form)</td>
+    <td> (id: GoogleCloudDialogflowCxV3Form)</td>
 </tr>
 <tr>
     <td><CopyableCode code="knowledgeConnectorSettings" /></td>
     <td><code>object</code></td>
-    <td>Optional. Knowledge connector configuration. (id: GoogleCloudDialogflowCxV3KnowledgeConnectorSettings)</td>
+    <td> (id: GoogleCloudDialogflowCxV3KnowledgeConnectorSettings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="transitionRouteGroups" /></td>
     <td><code>array</code></td>
-    <td>Ordered list of `TransitionRouteGroups` added to the page. Transition route groups must be unique within a page. If the page links both flow-level transition route groups and agent-level transition route groups, the flow-level ones will have higher priority and will be put before the agent-level ones. * If multiple transition routes within a page scope refer to the same intent, then the precedence order is: page's transition route -&gt; page's transition route group -&gt; flow's transition routes. * If multiple transition route groups within a page contain the same intent, then the first group in the ordered list takes precedence. Format:`projects//locations//agents//flows//transitionRouteGroups/` or `projects//locations//agents//transitionRouteGroups/` for agent-level groups.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="transitionRoutes" /></td>
     <td><code>array</code></td>
-    <td>A list of transitions for the transition rules of this page. They route the conversation to another page in the same flow, or another flow. When we are in a certain page, the TransitionRoutes are evaluated in the following order: * TransitionRoutes defined in the page with intent specified. * TransitionRoutes defined in the transition route groups with intent specified. * TransitionRoutes defined in flow with intent specified. * TransitionRoutes defined in the transition route groups with intent specified. * TransitionRoutes defined in the page with only condition specified. * TransitionRoutes defined in the transition route groups with only condition specified.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -188,35 +189,35 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-flowsId"><code>flowsId</code></a>, <a href="#parameter-pagesId"><code>pagesId</code></a></td>
     <td><a href="#parameter-languageCode"><code>languageCode</code></a></td>
-    <td>Retrieves the specified page.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_flows_pages_list"><CopyableCode code="projects_locations_agents_flows_pages_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-flowsId"><code>flowsId</code></a></td>
-    <td><a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Returns the list of all pages in the specified flow.</td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_flows_pages_create"><CopyableCode code="projects_locations_agents_flows_pages_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-flowsId"><code>flowsId</code></a></td>
     <td><a href="#parameter-languageCode"><code>languageCode</code></a></td>
-    <td>Creates a page in the specified flow. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_flows_pages_patch"><CopyableCode code="projects_locations_agents_flows_pages_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-flowsId"><code>flowsId</code></a>, <a href="#parameter-pagesId"><code>pagesId</code></a></td>
-    <td><a href="#parameter-languageCode"><code>languageCode</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates the specified page. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).</td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-languageCode"><code>languageCode</code></a></td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_locations_agents_flows_pages_delete"><CopyableCode code="projects_locations_agents_flows_pages_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-agentsId"><code>agentsId</code></a>, <a href="#parameter-flowsId"><code>flowsId</code></a>, <a href="#parameter-pagesId"><code>pagesId</code></a></td>
     <td><a href="#parameter-force"><code>force</code></a></td>
-    <td>Deletes the specified page. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -298,7 +299,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="projects_locations_agents_flows_pages_get">
 
-Retrieves the specified page.
+Successful response
 
 ```sql
 SELECT
@@ -324,7 +325,7 @@ AND languageCode = '{{ languageCode }}'
 </TabItem>
 <TabItem value="projects_locations_agents_flows_pages_list">
 
-Returns the list of all pages in the specified flow.
+Successful response
 
 ```sql
 SELECT
@@ -343,8 +344,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND agentsId = '{{ agentsId }}' -- required
 AND flowsId = '{{ flowsId }}' -- required
-AND languageCode = '{{ languageCode }}'
 AND pageSize = '{{ pageSize }}'
+AND languageCode = '{{ languageCode }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -363,20 +364,20 @@ AND pageToken = '{{ pageToken }}'
 >
 <TabItem value="projects_locations_agents_flows_pages_create">
 
-Creates a page in the specified flow. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+No description available.
 
 ```sql
 INSERT INTO google.dialogflow.pages (
-data__name,
+data__eventHandlers,
+data__form,
 data__displayName,
+data__transitionRouteGroups,
+data__knowledgeConnectorSettings,
+data__name,
+data__transitionRoutes,
 data__description,
 data__entryFulfillment,
-data__form,
-data__transitionRouteGroups,
-data__transitionRoutes,
-data__eventHandlers,
 data__advancedSettings,
-data__knowledgeConnectorSettings,
 projectsId,
 locationsId,
 agentsId,
@@ -384,16 +385,16 @@ flowsId,
 languageCode
 )
 SELECT 
-'{{ name }}',
+'{{ eventHandlers }}',
+'{{ form }}',
 '{{ displayName }}',
+'{{ transitionRouteGroups }}',
+'{{ knowledgeConnectorSettings }}',
+'{{ name }}',
+'{{ transitionRoutes }}',
 '{{ description }}',
 '{{ entryFulfillment }}',
-'{{ form }}',
-'{{ transitionRouteGroups }}',
-'{{ transitionRoutes }}',
-'{{ eventHandlers }}',
 '{{ advancedSettings }}',
-'{{ knowledgeConnectorSettings }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ agentsId }}',
@@ -415,75 +416,425 @@ transitionRoutes
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: pages
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the pages resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the pages resource.
     - name: agentsId
-      value: string
+      value: "{{ agentsId }}"
       description: Required parameter for the pages resource.
     - name: flowsId
-      value: string
+      value: "{{ flowsId }}"
       description: Required parameter for the pages resource.
-    - name: name
-      value: string
-      description: >
-        The unique identifier of the page. Required for the Pages.UpdatePage method. Pages.CreatePage populates the name automatically. Format: `projects//locations//agents//flows//pages/`.
-        
-    - name: displayName
-      value: string
-      description: >
-        Required. The human-readable name of the page, unique within the flow.
-        
-    - name: description
-      value: string
-      description: >
-        The description of the page. The maximum length is 500 characters.
-        
-    - name: entryFulfillment
-      value: object
-      description: >
-        The fulfillment to call when the session is entering the page.
-        
-    - name: form
-      value: object
-      description: >
-        The form associated with the page, used for collecting parameters relevant to the page.
-        
-    - name: transitionRouteGroups
-      value: array
-      description: >
-        Ordered list of `TransitionRouteGroups` added to the page. Transition route groups must be unique within a page. If the page links both flow-level transition route groups and agent-level transition route groups, the flow-level ones will have higher priority and will be put before the agent-level ones. * If multiple transition routes within a page scope refer to the same intent, then the precedence order is: page's transition route -> page's transition route group -> flow's transition routes. * If multiple transition route groups within a page contain the same intent, then the first group in the ordered list takes precedence. Format:`projects//locations//agents//flows//transitionRouteGroups/` or `projects//locations//agents//transitionRouteGroups/` for agent-level groups.
-        
-    - name: transitionRoutes
-      value: array
-      description: >
-        A list of transitions for the transition rules of this page. They route the conversation to another page in the same flow, or another flow. When we are in a certain page, the TransitionRoutes are evaluated in the following order: * TransitionRoutes defined in the page with intent specified. * TransitionRoutes defined in the transition route groups with intent specified. * TransitionRoutes defined in flow with intent specified. * TransitionRoutes defined in the transition route groups with intent specified. * TransitionRoutes defined in the page with only condition specified. * TransitionRoutes defined in the transition route groups with only condition specified.
-        
     - name: eventHandlers
-      value: array
-      description: >
-        Handlers associated with the page to handle events such as webhook errors, no match or no input.
-        
-    - name: advancedSettings
-      value: object
-      description: >
-        Hierarchical advanced settings for this page. The settings exposed at the lower level overrides the settings exposed at the higher level.
-        
+      value:
+        - name: "{{ name }}"
+          event: "{{ event }}"
+          targetPage: "{{ targetPage }}"
+          triggerFulfillment:
+            returnPartialResponses: {{ returnPartialResponses }}
+            generators:
+              - inputParameters: "{{ inputParameters }}"
+                generator: "{{ generator }}"
+                outputParameter: "{{ outputParameter }}"
+            webhook: "{{ webhook }}"
+            enableGenerativeFallback: {{ enableGenerativeFallback }}
+            setParameterActions:
+              - parameter: "{{ parameter }}"
+                value: "{{ value }}"
+            tag: "{{ tag }}"
+            advancedSettings:
+              loggingSettings:
+                enableInteractionLogging: {{ enableInteractionLogging }}
+                enableConsentBasedRedaction: {{ enableConsentBasedRedaction }}
+                enableStackdriverLogging: {{ enableStackdriverLogging }}
+              audioExportGcsDestination:
+                uri: "{{ uri }}"
+              speechSettings:
+                useTimeoutBasedEndpointing: {{ useTimeoutBasedEndpointing }}
+                models: "{{ models }}"
+                endpointerSensitivity: {{ endpointerSensitivity }}
+                noSpeechTimeout: "{{ noSpeechTimeout }}"
+              dtmfSettings:
+                maxDigits: {{ maxDigits }}
+                finishDigit: "{{ finishDigit }}"
+                interdigitTimeoutDuration: "{{ interdigitTimeoutDuration }}"
+                enabled: {{ enabled }}
+                endpointingTimeoutDuration: "{{ endpointingTimeoutDuration }}"
+            messages:
+              - playAudio:
+                  audioUri: "{{ audioUri }}"
+                  allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                toolCall:
+                  tool: "{{ tool }}"
+                  action: "{{ action }}"
+                  inputParameters: "{{ inputParameters }}"
+                knowledgeInfoCard: "{{ knowledgeInfoCard }}"
+                endInteraction: "{{ endInteraction }}"
+                conversationSuccess:
+                  metadata: "{{ metadata }}"
+                channel: "{{ channel }}"
+                text:
+                  text:
+                    - "{{ text }}"
+                  allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                telephonyTransferCall:
+                  phoneNumber: "{{ phoneNumber }}"
+                responseType: "{{ responseType }}"
+                payload: "{{ payload }}"
+                outputAudioText:
+                  text: "{{ text }}"
+                  ssml: "{{ ssml }}"
+                  allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                mixedAudio:
+                  segments:
+                    - allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                      audio: "{{ audio }}"
+                      uri: "{{ uri }}"
+                liveAgentHandoff:
+                  metadata: "{{ metadata }}"
+            conditionalCases:
+              - cases: "{{ cases }}"
+          targetFlow: "{{ targetFlow }}"
+          targetPlaybook: "{{ targetPlaybook }}"
+    - name: form
+      value:
+        parameters:
+          - required: {{ required }}
+            isList: {{ isList }}
+            redact: {{ redact }}
+            displayName: "{{ displayName }}"
+            advancedSettings:
+              loggingSettings:
+                enableInteractionLogging: {{ enableInteractionLogging }}
+                enableConsentBasedRedaction: {{ enableConsentBasedRedaction }}
+                enableStackdriverLogging: {{ enableStackdriverLogging }}
+              audioExportGcsDestination:
+                uri: "{{ uri }}"
+              speechSettings:
+                useTimeoutBasedEndpointing: {{ useTimeoutBasedEndpointing }}
+                models: "{{ models }}"
+                endpointerSensitivity: {{ endpointerSensitivity }}
+                noSpeechTimeout: "{{ noSpeechTimeout }}"
+              dtmfSettings:
+                maxDigits: {{ maxDigits }}
+                finishDigit: "{{ finishDigit }}"
+                interdigitTimeoutDuration: "{{ interdigitTimeoutDuration }}"
+                enabled: {{ enabled }}
+                endpointingTimeoutDuration: "{{ endpointingTimeoutDuration }}"
+            entityType: "{{ entityType }}"
+            fillBehavior:
+              initialPromptFulfillment:
+                returnPartialResponses: {{ returnPartialResponses }}
+                generators:
+                  - inputParameters: "{{ inputParameters }}"
+                    generator: "{{ generator }}"
+                    outputParameter: "{{ outputParameter }}"
+                webhook: "{{ webhook }}"
+                enableGenerativeFallback: {{ enableGenerativeFallback }}
+                setParameterActions:
+                  - parameter: "{{ parameter }}"
+                    value: "{{ value }}"
+                tag: "{{ tag }}"
+                advancedSettings:
+                  loggingSettings: "{{ loggingSettings }}"
+                  audioExportGcsDestination: "{{ audioExportGcsDestination }}"
+                  speechSettings: "{{ speechSettings }}"
+                  dtmfSettings: "{{ dtmfSettings }}"
+                messages:
+                  - playAudio:
+                      audioUri: "{{ audioUri }}"
+                      allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                    toolCall:
+                      tool: "{{ tool }}"
+                      action: "{{ action }}"
+                      inputParameters: "{{ inputParameters }}"
+                    knowledgeInfoCard: "{{ knowledgeInfoCard }}"
+                    endInteraction: "{{ endInteraction }}"
+                    conversationSuccess:
+                      metadata: "{{ metadata }}"
+                    channel: "{{ channel }}"
+                    text:
+                      text: "{{ text }}"
+                      allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                    telephonyTransferCall:
+                      phoneNumber: "{{ phoneNumber }}"
+                    responseType: "{{ responseType }}"
+                    payload: "{{ payload }}"
+                    outputAudioText:
+                      text: "{{ text }}"
+                      ssml: "{{ ssml }}"
+                      allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                    mixedAudio:
+                      segments: "{{ segments }}"
+                    liveAgentHandoff:
+                      metadata: "{{ metadata }}"
+                conditionalCases:
+                  - cases: "{{ cases }}"
+              repromptEventHandlers:
+                - name: "{{ name }}"
+                  event: "{{ event }}"
+                  targetPage: "{{ targetPage }}"
+                  triggerFulfillment:
+                    returnPartialResponses: {{ returnPartialResponses }}
+                    generators: "{{ generators }}"
+                    webhook: "{{ webhook }}"
+                    enableGenerativeFallback: {{ enableGenerativeFallback }}
+                    setParameterActions: "{{ setParameterActions }}"
+                    tag: "{{ tag }}"
+                    advancedSettings: "{{ advancedSettings }}"
+                    messages: "{{ messages }}"
+                    conditionalCases: "{{ conditionalCases }}"
+                  targetFlow: "{{ targetFlow }}"
+                  targetPlaybook: "{{ targetPlaybook }}"
+            defaultValue: "{{ defaultValue }}"
+    - name: displayName
+      value: "{{ displayName }}"
+    - name: transitionRouteGroups
+      value:
+        - "{{ transitionRouteGroups }}"
     - name: knowledgeConnectorSettings
-      value: object
-      description: >
-        Optional. Knowledge connector configuration.
-        
+      value:
+        targetFlow: "{{ targetFlow }}"
+        dataStoreConnections:
+          - dataStore: "{{ dataStore }}"
+            documentProcessingMode: "{{ documentProcessingMode }}"
+            dataStoreType: "{{ dataStoreType }}"
+        triggerFulfillment:
+          returnPartialResponses: {{ returnPartialResponses }}
+          generators:
+            - inputParameters: "{{ inputParameters }}"
+              generator: "{{ generator }}"
+              outputParameter: "{{ outputParameter }}"
+          webhook: "{{ webhook }}"
+          enableGenerativeFallback: {{ enableGenerativeFallback }}
+          setParameterActions:
+            - parameter: "{{ parameter }}"
+              value: "{{ value }}"
+          tag: "{{ tag }}"
+          advancedSettings:
+            loggingSettings:
+              enableInteractionLogging: {{ enableInteractionLogging }}
+              enableConsentBasedRedaction: {{ enableConsentBasedRedaction }}
+              enableStackdriverLogging: {{ enableStackdriverLogging }}
+            audioExportGcsDestination:
+              uri: "{{ uri }}"
+            speechSettings:
+              useTimeoutBasedEndpointing: {{ useTimeoutBasedEndpointing }}
+              models: "{{ models }}"
+              endpointerSensitivity: {{ endpointerSensitivity }}
+              noSpeechTimeout: "{{ noSpeechTimeout }}"
+            dtmfSettings:
+              maxDigits: {{ maxDigits }}
+              finishDigit: "{{ finishDigit }}"
+              interdigitTimeoutDuration: "{{ interdigitTimeoutDuration }}"
+              enabled: {{ enabled }}
+              endpointingTimeoutDuration: "{{ endpointingTimeoutDuration }}"
+          messages:
+            - playAudio:
+                audioUri: "{{ audioUri }}"
+                allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+              toolCall:
+                tool: "{{ tool }}"
+                action: "{{ action }}"
+                inputParameters: "{{ inputParameters }}"
+              knowledgeInfoCard: "{{ knowledgeInfoCard }}"
+              endInteraction: "{{ endInteraction }}"
+              conversationSuccess:
+                metadata: "{{ metadata }}"
+              channel: "{{ channel }}"
+              text:
+                text:
+                  - "{{ text }}"
+                allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+              telephonyTransferCall:
+                phoneNumber: "{{ phoneNumber }}"
+              responseType: "{{ responseType }}"
+              payload: "{{ payload }}"
+              outputAudioText:
+                text: "{{ text }}"
+                ssml: "{{ ssml }}"
+                allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+              mixedAudio:
+                segments:
+                  - allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                    audio: "{{ audio }}"
+                    uri: "{{ uri }}"
+              liveAgentHandoff:
+                metadata: "{{ metadata }}"
+          conditionalCases:
+            - cases: "{{ cases }}"
+        enabled: {{ enabled }}
+        targetPage: "{{ targetPage }}"
+    - name: name
+      value: "{{ name }}"
+    - name: transitionRoutes
+      value:
+        - name: "{{ name }}"
+          targetPage: "{{ targetPage }}"
+          condition: "{{ condition }}"
+          description: "{{ description }}"
+          targetFlow: "{{ targetFlow }}"
+          intent: "{{ intent }}"
+          triggerFulfillment:
+            returnPartialResponses: {{ returnPartialResponses }}
+            generators:
+              - inputParameters: "{{ inputParameters }}"
+                generator: "{{ generator }}"
+                outputParameter: "{{ outputParameter }}"
+            webhook: "{{ webhook }}"
+            enableGenerativeFallback: {{ enableGenerativeFallback }}
+            setParameterActions:
+              - parameter: "{{ parameter }}"
+                value: "{{ value }}"
+            tag: "{{ tag }}"
+            advancedSettings:
+              loggingSettings:
+                enableInteractionLogging: {{ enableInteractionLogging }}
+                enableConsentBasedRedaction: {{ enableConsentBasedRedaction }}
+                enableStackdriverLogging: {{ enableStackdriverLogging }}
+              audioExportGcsDestination:
+                uri: "{{ uri }}"
+              speechSettings:
+                useTimeoutBasedEndpointing: {{ useTimeoutBasedEndpointing }}
+                models: "{{ models }}"
+                endpointerSensitivity: {{ endpointerSensitivity }}
+                noSpeechTimeout: "{{ noSpeechTimeout }}"
+              dtmfSettings:
+                maxDigits: {{ maxDigits }}
+                finishDigit: "{{ finishDigit }}"
+                interdigitTimeoutDuration: "{{ interdigitTimeoutDuration }}"
+                enabled: {{ enabled }}
+                endpointingTimeoutDuration: "{{ endpointingTimeoutDuration }}"
+            messages:
+              - playAudio:
+                  audioUri: "{{ audioUri }}"
+                  allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                toolCall:
+                  tool: "{{ tool }}"
+                  action: "{{ action }}"
+                  inputParameters: "{{ inputParameters }}"
+                knowledgeInfoCard: "{{ knowledgeInfoCard }}"
+                endInteraction: "{{ endInteraction }}"
+                conversationSuccess:
+                  metadata: "{{ metadata }}"
+                channel: "{{ channel }}"
+                text:
+                  text:
+                    - "{{ text }}"
+                  allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                telephonyTransferCall:
+                  phoneNumber: "{{ phoneNumber }}"
+                responseType: "{{ responseType }}"
+                payload: "{{ payload }}"
+                outputAudioText:
+                  text: "{{ text }}"
+                  ssml: "{{ ssml }}"
+                  allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                mixedAudio:
+                  segments:
+                    - allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                      audio: "{{ audio }}"
+                      uri: "{{ uri }}"
+                liveAgentHandoff:
+                  metadata: "{{ metadata }}"
+            conditionalCases:
+              - cases: "{{ cases }}"
+    - name: description
+      value: "{{ description }}"
+    - name: entryFulfillment
+      value:
+        returnPartialResponses: {{ returnPartialResponses }}
+        generators:
+          - inputParameters: "{{ inputParameters }}"
+            generator: "{{ generator }}"
+            outputParameter: "{{ outputParameter }}"
+        webhook: "{{ webhook }}"
+        enableGenerativeFallback: {{ enableGenerativeFallback }}
+        setParameterActions:
+          - parameter: "{{ parameter }}"
+            value: "{{ value }}"
+        tag: "{{ tag }}"
+        advancedSettings:
+          loggingSettings:
+            enableInteractionLogging: {{ enableInteractionLogging }}
+            enableConsentBasedRedaction: {{ enableConsentBasedRedaction }}
+            enableStackdriverLogging: {{ enableStackdriverLogging }}
+          audioExportGcsDestination:
+            uri: "{{ uri }}"
+          speechSettings:
+            useTimeoutBasedEndpointing: {{ useTimeoutBasedEndpointing }}
+            models: "{{ models }}"
+            endpointerSensitivity: {{ endpointerSensitivity }}
+            noSpeechTimeout: "{{ noSpeechTimeout }}"
+          dtmfSettings:
+            maxDigits: {{ maxDigits }}
+            finishDigit: "{{ finishDigit }}"
+            interdigitTimeoutDuration: "{{ interdigitTimeoutDuration }}"
+            enabled: {{ enabled }}
+            endpointingTimeoutDuration: "{{ endpointingTimeoutDuration }}"
+        messages:
+          - playAudio:
+              audioUri: "{{ audioUri }}"
+              allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+            toolCall:
+              tool: "{{ tool }}"
+              action: "{{ action }}"
+              inputParameters: "{{ inputParameters }}"
+            knowledgeInfoCard: "{{ knowledgeInfoCard }}"
+            endInteraction: "{{ endInteraction }}"
+            conversationSuccess:
+              metadata: "{{ metadata }}"
+            channel: "{{ channel }}"
+            text:
+              text:
+                - "{{ text }}"
+              allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+            telephonyTransferCall:
+              phoneNumber: "{{ phoneNumber }}"
+            responseType: "{{ responseType }}"
+            payload: "{{ payload }}"
+            outputAudioText:
+              text: "{{ text }}"
+              ssml: "{{ ssml }}"
+              allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+            mixedAudio:
+              segments:
+                - allowPlaybackInterruption: {{ allowPlaybackInterruption }}
+                  audio: "{{ audio }}"
+                  uri: "{{ uri }}"
+            liveAgentHandoff:
+              metadata: "{{ metadata }}"
+        conditionalCases:
+          - cases: "{{ cases }}"
+    - name: advancedSettings
+      value:
+        loggingSettings:
+          enableInteractionLogging: {{ enableInteractionLogging }}
+          enableConsentBasedRedaction: {{ enableConsentBasedRedaction }}
+          enableStackdriverLogging: {{ enableStackdriverLogging }}
+        audioExportGcsDestination:
+          uri: "{{ uri }}"
+        speechSettings:
+          useTimeoutBasedEndpointing: {{ useTimeoutBasedEndpointing }}
+          models: "{{ models }}"
+          endpointerSensitivity: {{ endpointerSensitivity }}
+          noSpeechTimeout: "{{ noSpeechTimeout }}"
+        dtmfSettings:
+          maxDigits: {{ maxDigits }}
+          finishDigit: "{{ finishDigit }}"
+          interdigitTimeoutDuration: "{{ interdigitTimeoutDuration }}"
+          enabled: {{ enabled }}
+          endpointingTimeoutDuration: "{{ endpointingTimeoutDuration }}"
     - name: languageCode
-      value: string
-```
+      value: "{{ languageCode }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -498,29 +849,29 @@ transitionRoutes
 >
 <TabItem value="projects_locations_agents_flows_pages_patch">
 
-Updates the specified page. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+No description available.
 
 ```sql
 UPDATE google.dialogflow.pages
 SET 
-data__name = '{{ name }}',
+data__eventHandlers = '{{ eventHandlers }}',
+data__form = '{{ form }}',
 data__displayName = '{{ displayName }}',
+data__transitionRouteGroups = '{{ transitionRouteGroups }}',
+data__knowledgeConnectorSettings = '{{ knowledgeConnectorSettings }}',
+data__name = '{{ name }}',
+data__transitionRoutes = '{{ transitionRoutes }}',
 data__description = '{{ description }}',
 data__entryFulfillment = '{{ entryFulfillment }}',
-data__form = '{{ form }}',
-data__transitionRouteGroups = '{{ transitionRouteGroups }}',
-data__transitionRoutes = '{{ transitionRoutes }}',
-data__eventHandlers = '{{ eventHandlers }}',
-data__advancedSettings = '{{ advancedSettings }}',
-data__knowledgeConnectorSettings = '{{ knowledgeConnectorSettings }}'
+data__advancedSettings = '{{ advancedSettings }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND agentsId = '{{ agentsId }}' --required
 AND flowsId = '{{ flowsId }}' --required
 AND pagesId = '{{ pagesId }}' --required
-AND languageCode = '{{ languageCode}}'
 AND updateMask = '{{ updateMask}}'
+AND languageCode = '{{ languageCode}}'
 RETURNING
 name,
 advancedSettings,
@@ -547,7 +898,7 @@ transitionRoutes;
 >
 <TabItem value="projects_locations_agents_flows_pages_delete">
 
-Deletes the specified page. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+No description available.
 
 ```sql
 DELETE FROM google.dialogflow.pages

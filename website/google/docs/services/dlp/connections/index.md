@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>connections</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>connections</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="connections" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dlp.connections" /></td></tr>
 </tbody></table>
@@ -69,7 +70,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Required. The connection's state in its lifecycle.</td>
+    <td>Required. The connection's state in its lifecycle. (CONNECTION_STATE_UNSPECIFIED, MISSING_CREDENTIALS, AVAILABLE, ERROR)</td>
 </tr>
 </tbody>
 </table>
@@ -103,7 +104,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Required. The connection's state in its lifecycle.</td>
+    <td>Required. The connection's state in its lifecycle. (CONNECTION_STATE_UNSPECIFIED, MISSING_CREDENTIALS, AVAILABLE, ERROR)</td>
 </tr>
 </tbody>
 </table>
@@ -137,7 +138,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Required. The connection's state in its lifecycle.</td>
+    <td>Required. The connection's state in its lifecycle. (CONNECTION_STATE_UNSPECIFIED, MISSING_CREDENTIALS, AVAILABLE, ERROR)</td>
 </tr>
 </tbody>
 </table>
@@ -171,7 +172,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Required. The connection's state in its lifecycle.</td>
+    <td>Required. The connection's state in its lifecycle. (CONNECTION_STATE_UNSPECIFIED, MISSING_CREDENTIALS, AVAILABLE, ERROR)</td>
 </tr>
 </tbody>
 </table>
@@ -211,14 +212,14 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_connections_list"><CopyableCode code="projects_locations_connections_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists Connections in a parent. Use SearchConnections to see all connections within an organization.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_connections_list"><CopyableCode code="organizations_locations_connections_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists Connections in a parent. Use SearchConnections to see all connections within an organization.</td>
 </tr>
 <tr>
@@ -274,7 +275,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_locations_connections_search"><CopyableCode code="organizations_locations_connections_search" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Searches for Connections in a parent.</td>
 </tr>
 </tbody>
@@ -389,9 +390,9 @@ state
 FROM google.dlp.connections
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -408,9 +409,9 @@ state
 FROM google.dlp.connections
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -473,25 +474,41 @@ state
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: connections
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the connections resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the connections resource.
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the connections resource.
     - name: connection
-      value: object
-      description: >
-        Required. The connection resource.
-        
-```
+      description: |
+        A data connection to allow the DLP API to profile data in locations that require additional configuration.
+      value:
+        name: "{{ name }}"
+        errors:
+          - timestamps: "{{ timestamps }}"
+            extraInfo: "{{ extraInfo }}"
+            details:
+              message: "{{ message }}"
+              details: "{{ details }}"
+              code: {{ code }}
+        cloudSql:
+          connectionName: "{{ connectionName }}"
+          usernamePassword:
+            username: "{{ username }}"
+            passwordSecretVersionName: "{{ passwordSecretVersionName }}"
+          maxConnections: {{ maxConnections }}
+          cloudSqlIam: "{{ cloudSqlIam }}"
+          databaseEngine: "{{ databaseEngine }}"
+        state: "{{ state }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -615,9 +632,9 @@ Searches for Connections in a parent.
 EXEC google.dlp.connections.organizations_locations_connections_search 
 @organizationsId='{{ organizationsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
+@pageSize='{{ pageSize }}', 
 @pageToken='{{ pageToken }}', 
-@filter='{{ filter }}', 
-@pageSize='{{ pageSize }}'
+@filter='{{ filter }}'
 ;
 ```
 </TabItem>

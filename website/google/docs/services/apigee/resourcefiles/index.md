@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>resourcefiles</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>resourcefiles</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="resourcefiles" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.resourcefiles" /></td></tr>
 </tbody></table>
@@ -148,7 +149,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_environments_resourcefiles_create"><CopyableCode code="organizations_environments_resourcefiles_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-environmentsId"><code>environmentsId</code></a></td>
-    <td><a href="#parameter-name"><code>name</code></a>, <a href="#parameter-type"><code>type</code></a></td>
+    <td><a href="#parameter-type"><code>type</code></a>, <a href="#parameter-name"><code>name</code></a></td>
     <td>Creates a resource file. Specify the `Content-Type` as `application/octet-stream` or `multipart/form-data`. For more information about resource files, see [Resource files](https://cloud.google.com/apigee/docs/api-platform/develop/resource-files).</td>
 </tr>
 <tr>
@@ -287,22 +288,22 @@ Creates a resource file. Specify the `Content-Type` as `application/octet-stream
 
 ```sql
 INSERT INTO google.apigee.resourcefiles (
-data__data,
-data__extensions,
 data__contentType,
+data__extensions,
+data__data,
 organizationsId,
 environmentsId,
-name,
-type
+type,
+name
 )
 SELECT 
-'{{ data }}',
-'{{ extensions }}',
 '{{ contentType }}',
+'{{ extensions }}',
+'{{ data }}',
 '{{ organizationsId }}',
 '{{ environmentsId }}',
-'{{ name }}',
-'{{ type }}'
+'{{ type }}',
+'{{ name }}'
 RETURNING
 name,
 type
@@ -311,36 +312,33 @@ type
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: resourcefiles
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the resourcefiles resource.
     - name: environmentsId
-      value: string
+      value: "{{ environmentsId }}"
       description: Required parameter for the resourcefiles resource.
-    - name: data
-      value: string
-      description: >
-        The HTTP request/response body as raw binary.
-        
-    - name: extensions
-      value: array
-      description: >
-        Application specific response metadata. Must be set in the first response for streaming APIs.
-        
     - name: contentType
-      value: string
-      description: >
+      value: "{{ contentType }}"
+      description: |
         The HTTP Content-Type header value specifying the content type of the body.
-        
-    - name: name
-      value: string
+    - name: extensions
+      value: "{{ extensions }}"
+      description: |
+        Application specific response metadata. Must be set in the first response for streaming APIs.
+    - name: data
+      value: "{{ data }}"
+      description: |
+        The HTTP request/response body as raw binary.
     - name: type
-      value: string
-```
+      value: "{{ type }}"
+    - name: name
+      value: "{{ name }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -360,9 +358,9 @@ Updates a resource file. Specify the `Content-Type` as `application/octet-stream
 ```sql
 REPLACE google.apigee.resourcefiles
 SET 
-data__data = '{{ data }}',
+data__contentType = '{{ contentType }}',
 data__extensions = '{{ extensions }}',
-data__contentType = '{{ contentType }}'
+data__data = '{{ data }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND environmentsId = '{{ environmentsId }}' --required

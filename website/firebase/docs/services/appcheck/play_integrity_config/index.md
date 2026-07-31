@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>play_integrity_config</code> re
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>play_integrity_config</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="play_integrity_config" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.appcheck.play_integrity_config" /></td></tr>
 </tbody></table>
@@ -53,6 +54,21 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
     <td>Required. The relative resource name of the Play Integrity configuration object, in the format: ``` projects/&#123;project_number&#125;/apps/&#123;app_id&#125;/playIntegrityConfig ```</td>
+</tr>
+<tr>
+    <td><CopyableCode code="accountDetails" /></td>
+    <td><code>object</code></td>
+    <td>Specifies account requirements for Android devices running your app. These settings correspond to requirements on the [**account details** field](https://developer.android.com/google/play/integrity/verdicts#account-details-field) obtained from the Play Integrity API. See the [default responses table](https://developer.android.com/google/play/integrity/setup#default) for a quick summary. The default values for these settings work for most apps, and are recommended. (id: GoogleFirebaseAppcheckV1PlayIntegrityConfigAccountDetails)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="appIntegrity" /></td>
+    <td><code>object</code></td>
+    <td>Specifies application integrity requirements for Android devices running your app. These settings correspond to requirements on the [**application integrity** field](https://developer.android.com/google/play/integrity/verdicts#application-integrity-field) obtained from the Play Integrity API. See the [default responses table](https://developer.android.com/google/play/integrity/setup#default) for a quick summary. The default values for these settings work for most apps, and are recommended. (id: GoogleFirebaseAppcheckV1PlayIntegrityConfigAppIntegrity)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="deviceIntegrity" /></td>
+    <td><code>object</code></td>
+    <td>Specifies device integrity requirements for Android devices running your app. These settings correspond to requirements on the [**device integrity** field](https://developer.android.com/google/play/integrity/verdicts#device-integrity-field) obtained from the Play Integrity API. See the [default responses table](https://developer.android.com/google/play/integrity/setup#default) for a quick summary. Warning: There are also [conditional](https://developer.android.com/google/play/integrity/setup#conditional) as well as [optional](https://developer.android.com/google/play/integrity/setup#optional_device_information) responses that you can receive, but requires additional explicit opt-in from you. The App Check API is **not** responsible for any such opt-ins. The default values for these settings work for most apps, and are recommended. (id: GoogleFirebaseAppcheckV1PlayIntegrityConfigDeviceIntegrity)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tokenTtl" /></td>
@@ -174,6 +190,9 @@ Gets the PlayIntegrityConfig for the specified app.
 ```sql
 SELECT
 name,
+accountDetails,
+appIntegrity,
+deviceIntegrity,
 tokenTtl
 FROM firebase.appcheck.play_integrity_config
 WHERE projectsId = '{{ projectsId }}' -- required
@@ -212,14 +231,20 @@ Updates the PlayIntegrityConfig for the specified app. While this configuration 
 ```sql
 UPDATE firebase.appcheck.play_integrity_config
 SET 
+data__tokenTtl = '{{ tokenTtl }}',
 data__name = '{{ name }}',
-data__tokenTtl = '{{ tokenTtl }}'
+data__deviceIntegrity = '{{ deviceIntegrity }}',
+data__appIntegrity = '{{ appIntegrity }}',
+data__accountDetails = '{{ accountDetails }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND appsId = '{{ appsId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
+accountDetails,
+appIntegrity,
+deviceIntegrity,
 tokenTtl;
 ```
 </TabItem>

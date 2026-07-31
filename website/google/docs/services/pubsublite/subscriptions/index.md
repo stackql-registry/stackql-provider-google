@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>subscriptions</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>subscriptions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="subscriptions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.pubsublite.subscriptions" /></td></tr>
 </tbody></table>
@@ -142,7 +143,7 @@ The following methods are available for this resource:
     <td><a href="#admin_projects_locations_topics_subscriptions_list"><CopyableCode code="admin_projects_locations_topics_subscriptions_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-topicsId"><code>topicsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists the subscriptions attached to the specified topic.</td>
 </tr>
 <tr>
@@ -279,8 +280,8 @@ FROM google.pubsublite.subscriptions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND topicsId = '{{ topicsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -337,20 +338,20 @@ Creates a new subscription.
 
 ```sql
 INSERT INTO google.pubsublite.subscriptions (
-data__name,
-data__topic,
 data__deliveryConfig,
 data__exportConfig,
+data__name,
+data__topic,
 projectsId,
 locationsId,
 subscriptionId,
 skipBacklog
 )
 SELECT 
-'{{ name }}',
-'{{ topic }}',
 '{{ deliveryConfig }}',
 '{{ exportConfig }}',
+'{{ name }}',
+'{{ topic }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ subscriptionId }}',
@@ -365,41 +366,43 @@ topic
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: subscriptions
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the subscriptions resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the subscriptions resource.
-    - name: name
-      value: string
-      description: >
-        The name of the subscription. Structured like: projects/{project_number}/locations/{location}/subscriptions/{subscription_id}
-        
-    - name: topic
-      value: string
-      description: >
-        The name of the topic this subscription is attached to. Structured like: projects/{project_number}/locations/{location}/topics/{topic_id}
-        
     - name: deliveryConfig
-      value: object
-      description: >
+      description: |
         The settings for this subscription's message delivery.
-        
+      value:
+        deliveryRequirement: "{{ deliveryRequirement }}"
     - name: exportConfig
-      value: object
-      description: >
+      description: |
         If present, messages are automatically written from the Pub/Sub Lite topic associated with this subscription to a destination.
-        
+      value:
+        currentState: "{{ currentState }}"
+        desiredState: "{{ desiredState }}"
+        pubsubConfig:
+          topic: "{{ topic }}"
+        deadLetterTopic: "{{ deadLetterTopic }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The name of the subscription. Structured like: projects/{project_number}/locations/{location}/subscriptions/{subscription_id}
+    - name: topic
+      value: "{{ topic }}"
+      description: |
+        The name of the topic this subscription is attached to. Structured like: projects/{project_number}/locations/{location}/topics/{topic_id}
     - name: subscriptionId
-      value: string
+      value: "{{ subscriptionId }}"
     - name: skipBacklog
-      value: boolean
-```
+      value: {{ skipBacklog }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -419,10 +422,10 @@ Updates properties of the specified subscription.
 ```sql
 UPDATE google.pubsublite.subscriptions
 SET 
-data__name = '{{ name }}',
-data__topic = '{{ topic }}',
 data__deliveryConfig = '{{ deliveryConfig }}',
-data__exportConfig = '{{ exportConfig }}'
+data__exportConfig = '{{ exportConfig }}',
+data__name = '{{ name }}',
+data__topic = '{{ topic }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -498,8 +501,8 @@ EXEC google.pubsublite.subscriptions.cursor_projects_locations_subscriptions_com
 @subscriptionsId='{{ subscriptionsId }}' --required 
 @@json=
 '{
-"partition": "{{ partition }}", 
-"cursor": "{{ cursor }}"
+"cursor": "{{ cursor }}", 
+"partition": "{{ partition }}"
 }'
 ;
 ```

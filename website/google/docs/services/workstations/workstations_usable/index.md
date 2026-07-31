@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>workstations_usable</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>workstations_usable</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="workstations_usable" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.workstations.workstations_usable" /></td></tr>
 </tbody></table>
@@ -99,6 +100,11 @@ The following fields are returned by `SELECT` queries:
     <td>Optional. [Labels](https://cloud.google.com/workstations/docs/label-resources) that are applied to the workstation and that are also propagated to the underlying Compute Engine resources.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="persistentDirectories" /></td>
+    <td><code>array</code></td>
+    <td>Optional. Directories to persist across workstation sessions.</td>
+</tr>
+<tr>
     <td><CopyableCode code="reconciling" /></td>
     <td><code>boolean</code></td>
     <td>Output only. Indicates whether this workstation is currently being updated to match its intended state.</td>
@@ -121,7 +127,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the workstation.</td>
+    <td>Output only. Current state of the workstation. (STATE_UNSPECIFIED, STATE_STARTING, STATE_RUNNING, STATE_STOPPING, STATE_STOPPED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -233,6 +239,7 @@ etag,
 host,
 kmsKey,
 labels,
+persistentDirectories,
 reconciling,
 runtimeHost,
 sourceWorkstation,

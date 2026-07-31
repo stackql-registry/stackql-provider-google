@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>services</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>services</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="services" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apphub.services" /></td></tr>
 </tbody></table>
@@ -92,7 +93,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Service state.</td>
+    <td>Output only. Service state. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, DETACHED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -161,7 +162,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Service state.</td>
+    <td>Output only. Service state. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, DETACHED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -204,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-applicationsId"><code>applicationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists Services in an Application.</td>
 </tr>
 <tr>
@@ -358,8 +359,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND applicationsId = '{{ applicationsId }}' -- required
 AND pageToken = '{{ pageToken }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 ;
 ```
@@ -382,11 +383,11 @@ Creates a Service in an Application.
 
 ```sql
 INSERT INTO google.apphub.services (
-data__attributes,
-data__displayName,
-data__name,
-data__discoveredService,
 data__description,
+data__name,
+data__displayName,
+data__attributes,
+data__discoveredService,
 projectsId,
 locationsId,
 applicationsId,
@@ -394,11 +395,11 @@ serviceId,
 requestId
 )
 SELECT 
-'{{ attributes }}',
-'{{ displayName }}',
-'{{ name }}',
-'{{ discoveredService }}',
 '{{ description }}',
+'{{ name }}',
+'{{ displayName }}',
+'{{ attributes }}',
+'{{ discoveredService }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ applicationsId }}',
@@ -415,49 +416,57 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: services
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the services resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the services resource.
     - name: applicationsId
-      value: string
+      value: "{{ applicationsId }}"
       description: Required parameter for the services resource.
-    - name: attributes
-      value: object
-      description: >
-        Optional. Consumer provided attributes.
-        
-    - name: displayName
-      value: string
-      description: >
-        Optional. User-defined name for the Service. Can have a maximum length of 63 characters.
-        
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name of a Service. Format: `"projects/{host-project-id}/locations/{location}/applications/{application-id}/services/{service-id}"`
-        
-    - name: discoveredService
-      value: string
-      description: >
-        Required. Immutable. The resource name of the original discovered service.
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. User-defined description of a Service. Can have a maximum length of 2048 characters.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of a Service. Format: \`"projects/{host-project-id}/locations/{location}/applications/{application-id}/services/{service-id}"\`
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. User-defined name for the Service. Can have a maximum length of 63 characters.
+    - name: attributes
+      description: |
+        Optional. Consumer provided attributes.
+      value:
+        environment:
+          type: "{{ type }}"
+        developerOwners:
+          - email: "{{ email }}"
+            displayName: "{{ displayName }}"
+        criticality:
+          type: "{{ type }}"
+        businessOwners:
+          - email: "{{ email }}"
+            displayName: "{{ displayName }}"
+        operatorOwners:
+          - email: "{{ email }}"
+            displayName: "{{ displayName }}"
+    - name: discoveredService
+      value: "{{ discoveredService }}"
+      description: |
+        Required. Immutable. The resource name of the original discovered service.
     - name: serviceId
-      value: string
+      value: "{{ serviceId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -477,11 +486,11 @@ Updates a Service in an Application.
 ```sql
 UPDATE google.apphub.services
 SET 
-data__attributes = '{{ attributes }}',
-data__displayName = '{{ displayName }}',
+data__description = '{{ description }}',
 data__name = '{{ name }}',
-data__discoveredService = '{{ discoveredService }}',
-data__description = '{{ description }}'
+data__displayName = '{{ displayName }}',
+data__attributes = '{{ attributes }}',
+data__discoveredService = '{{ discoveredService }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>compilation_results</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>compilation_results</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="compilation_results" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataform.compilation_results" /></td></tr>
 </tbody></table>
@@ -32,37 +33,13 @@ Creates, updates, deletes, gets or lists a <code>compilation_results</code> reso
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="query"
+    defaultValue="get"
     values={[
-        { label: 'query', value: 'query' },
         { label: 'get', value: 'get' },
+        { label: 'query', value: 'query' },
         { label: 'list', value: 'list' }
     ]}
 >
-<TabItem value="query">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="compilationResultActions" /></td>
-    <td><code>array</code></td>
-    <td>List of compilation result actions.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="nextPageToken" /></td>
-    <td><code>string</code></td>
-    <td>A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="get">
 
 <table>
@@ -133,6 +110,30 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="workspace" /></td>
     <td><code>string</code></td>
     <td>Immutable. The name of the workspace to compile. Must be in the format `projects/*/locations/*/repositories/*/workspaces/*`.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="query">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="compilationResultActions" /></td>
+    <td><code>array</code></td>
+    <td>List of compilation result actions.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="nextPageToken" /></td>
+    <td><code>string</code></td>
+    <td>A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.</td>
 </tr>
 </tbody>
 </table>
@@ -229,13 +230,6 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#query"><CopyableCode code="query" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-compilationResultsId"><code>compilationResultsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Returns CompilationResultActions in a given CompilationResult.</td>
-</tr>
-<tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-compilationResultsId"><code>compilationResultsId</code></a></td>
@@ -243,10 +237,17 @@ The following methods are available for this resource:
     <td>Fetches a single CompilationResult.</td>
 </tr>
 <tr>
+    <td><a href="#query"><CopyableCode code="query" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a>, <a href="#parameter-compilationResultsId"><code>compilationResultsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Returns CompilationResultActions in a given CompilationResult.</td>
+</tr>
+<tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-repositoriesId"><code>repositoriesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists CompilationResults in a given Repository.</td>
 </tr>
 <tr>
@@ -318,32 +319,13 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="query"
+    defaultValue="get"
     values={[
-        { label: 'query', value: 'query' },
         { label: 'get', value: 'get' },
+        { label: 'query', value: 'query' },
         { label: 'list', value: 'list' }
     ]}
 >
-<TabItem value="query">
-
-Returns CompilationResultActions in a given CompilationResult.
-
-```sql
-SELECT
-compilationResultActions,
-nextPageToken
-FROM google.dataform.compilation_results
-WHERE projectsId = '{{ projectsId }}' -- required
-AND locationsId = '{{ locationsId }}' -- required
-AND repositoriesId = '{{ repositoriesId }}' -- required
-AND compilationResultsId = '{{ compilationResultsId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
-;
-```
-</TabItem>
 <TabItem value="get">
 
 Fetches a single CompilationResult.
@@ -370,6 +352,25 @@ AND compilationResultsId = '{{ compilationResultsId }}' -- required
 ;
 ```
 </TabItem>
+<TabItem value="query">
+
+Returns CompilationResultActions in a given CompilationResult.
+
+```sql
+SELECT
+compilationResultActions,
+nextPageToken
+FROM google.dataform.compilation_results
+WHERE projectsId = '{{ projectsId }}' -- required
+AND locationsId = '{{ locationsId }}' -- required
+AND repositoriesId = '{{ repositoriesId }}' -- required
+AND compilationResultsId = '{{ compilationResultsId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
 <TabItem value="list">
 
 Lists CompilationResults in a given Repository.
@@ -392,10 +393,10 @@ FROM google.dataform.compilation_results
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND repositoriesId = '{{ repositoriesId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -418,8 +419,8 @@ Creates a new CompilationResult in a given project and location.
 ```sql
 INSERT INTO google.dataform.compilation_results (
 data__workspace,
-data__gitCommitish,
 data__releaseConfig,
+data__gitCommitish,
 data__codeCompilationConfig,
 projectsId,
 locationsId,
@@ -427,8 +428,8 @@ repositoriesId
 )
 SELECT 
 '{{ workspace }}',
-'{{ gitCommitish }}',
 '{{ releaseConfig }}',
+'{{ gitCommitish }}',
 '{{ codeCompilationConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -451,39 +452,47 @@ workspace
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: compilation_results
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the compilation_results resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the compilation_results resource.
     - name: repositoriesId
-      value: string
+      value: "{{ repositoriesId }}"
       description: Required parameter for the compilation_results resource.
     - name: workspace
-      value: string
-      description: >
-        Immutable. The name of the workspace to compile. Must be in the format `projects/*/locations/*/repositories/*/workspaces/*`.
-        
-    - name: gitCommitish
-      value: string
-      description: >
-        Immutable. Git commit/tag/branch name at which the repository should be compiled. Must exist in the remote repository. Examples: - a commit SHA: `12ade345` - a tag: `tag1` - a branch name: `branch1`
-        
+      value: "{{ workspace }}"
+      description: |
+        Immutable. The name of the workspace to compile. Must be in the format \`projects/*/locations/*/repositories/*/workspaces/*\`.
     - name: releaseConfig
-      value: string
-      description: >
-        Immutable. The name of the release config to compile. Must be in the format `projects/*/locations/*/repositories/*/releaseConfigs/*`.
-        
+      value: "{{ releaseConfig }}"
+      description: |
+        Immutable. The name of the release config to compile. Must be in the format \`projects/*/locations/*/repositories/*/releaseConfigs/*\`.
+    - name: gitCommitish
+      value: "{{ gitCommitish }}"
+      description: |
+        Immutable. Git commit/tag/branch name at which the repository should be compiled. Must exist in the remote repository. Examples: - a commit SHA: \`12ade345\` - a tag: \`tag1\` - a branch name: \`branch1\`
     - name: codeCompilationConfig
-      value: object
-      description: >
-        Immutable. If set, fields of `code_compilation_config` override the default compilation settings that are specified in dataform.json.
-        
-```
+      description: |
+        Immutable. If set, fields of \`code_compilation_config\` override the default compilation settings that are specified in dataform.json.
+      value:
+        assertionSchema: "{{ assertionSchema }}"
+        defaultLocation: "{{ defaultLocation }}"
+        defaultDatabase: "{{ defaultDatabase }}"
+        vars: "{{ vars }}"
+        defaultNotebookRuntimeOptions:
+          aiPlatformNotebookRuntimeTemplate: "{{ aiPlatformNotebookRuntimeTemplate }}"
+          gcsOutputBucket: "{{ gcsOutputBucket }}"
+        schemaSuffix: "{{ schemaSuffix }}"
+        tablePrefix: "{{ tablePrefix }}"
+        databaseSuffix: "{{ databaseSuffix }}"
+        defaultSchema: "{{ defaultSchema }}"
+        builtinAssertionNamePrefix: "{{ builtinAssertionNamePrefix }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

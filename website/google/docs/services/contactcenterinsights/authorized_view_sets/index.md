@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>authorized_view_sets</code> re
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>authorized_view_sets</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="authorized_view_sets" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.contactcenterinsights.authorized_view_sets" /></td></tr>
 </tbody></table>
@@ -134,7 +135,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>List AuthorizedViewSets</td>
 </tr>
 <tr>
@@ -267,9 +268,9 @@ FROM google.contactcenterinsights.authorized_view_sets
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -291,15 +292,15 @@ Create AuthorizedViewSet
 
 ```sql
 INSERT INTO google.contactcenterinsights.authorized_view_sets (
-data__displayName,
 data__name,
+data__displayName,
 projectsId,
 locationsId,
 authorizedViewSetId
 )
 SELECT 
-'{{ displayName }}',
 '{{ name }}',
+'{{ displayName }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ authorizedViewSetId }}'
@@ -313,29 +314,27 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: authorized_view_sets
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the authorized_view_sets resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the authorized_view_sets resource.
-    - name: displayName
-      value: string
-      description: >
-        Display Name. Limit 64 characters.
-        
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Identifier. The resource name of the AuthorizedViewSet. Format: projects/{project}/locations/{location}/authorizedViewSets/{authorized_view_set}
-        
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Display Name. Limit 64 characters.
     - name: authorizedViewSetId
-      value: string
-```
+      value: "{{ authorizedViewSetId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -355,8 +354,8 @@ Updates an AuthorizedViewSet.
 ```sql
 UPDATE google.contactcenterinsights.authorized_view_sets
 SET 
-data__displayName = '{{ displayName }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__displayName = '{{ displayName }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

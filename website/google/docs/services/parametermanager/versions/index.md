@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>versions</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>versions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="versions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.parametermanager.versions" /></td></tr>
 </tbody></table>
@@ -52,32 +53,27 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Identifier. [Output only] The resource name of the ParameterVersion in the format `projects/*/locations/*/parameters/*/versions/*`.</td>
+    <td>Identifier. The resource name of the TemplateVersion in the format `projects/*/locations/*/templates/*/versions/*`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. [Output only] Create time stamp</td>
+    <td>Output only. Create time stamp</td>
 </tr>
 <tr>
     <td><CopyableCode code="disabled" /></td>
     <td><code>boolean</code></td>
-    <td>Optional. Disabled boolean to determine if a ParameterVersion acts as a metadata only resource (payload is never returned if disabled is true). If true any calls will always default to BASIC view even if the user explicitly passes FULL view as part of the request. A render call on a disabled resource fails with an error. Default value is False.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="kmsKeyVersion" /></td>
-    <td><code>string</code></td>
-    <td>Optional. Output only. [Output only] The resource name of the KMS key version used to encrypt the ParameterVersion payload. This field is populated only if the Parameter resource has customer managed encryption key (CMEK) configured.</td>
+    <td>Optional. Disabled boolean to determine if a TemplateVersion acts as a metadata only resource (payload is never returned if disabled is true).</td>
 </tr>
 <tr>
     <td><CopyableCode code="payload" /></td>
     <td><code>object</code></td>
-    <td>Required. Immutable. Payload content of a ParameterVersion resource. This is only returned when the request provides the View value of FULL (default for GET request). (id: ParameterVersionPayload)</td>
+    <td>Required. Immutable. Payload content of a TemplateVersion resource. (id: TemplateVersionPayload)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Output only. [Output only] Update time stamp</td>
+    <td>Output only. Update time stamp</td>
 </tr>
 </tbody>
 </table>
@@ -116,44 +112,44 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-parametersId"><code>parametersId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-templatesId"><code>templatesId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
     <td><a href="#parameter-view"><code>view</code></a></td>
-    <td>Gets details of a single ParameterVersion.</td>
+    <td>Gets details of a single TemplateVersion.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-parametersId"><code>parametersId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists ParameterVersions in a given project, location, and parameter.</td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-templatesId"><code>templatesId</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td>Lists TemplateVersions in a given project, location, and template.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-parametersId"><code>parametersId</code></a></td>
-    <td><a href="#parameter-parameterVersionId"><code>parameterVersionId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Creates a new ParameterVersion in a given project, location, and parameter.</td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-templatesId"><code>templatesId</code></a></td>
+    <td><a href="#parameter-templateVersionId"><code>templateVersionId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Creates a new TemplateVersion in a given project, location, and template.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-parametersId"><code>parametersId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates a single ParameterVersion.</td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-templatesId"><code>templatesId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td>Updates a single TemplateVersion.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-parametersId"><code>parametersId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-templatesId"><code>templatesId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Deletes a single ParameterVersion.</td>
+    <td>Deletes a single TemplateVersion.</td>
 </tr>
 <tr>
     <td><a href="#render"><CopyableCode code="render" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-parametersId"><code>parametersId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
-    <td></td>
-    <td>Gets rendered version of a ParameterVersion.</td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-templatesId"><code>templatesId</code></a>, <a href="#parameter-versionsId"><code>versionsId</code></a></td>
+    <td><a href="#parameter-parameterVersion"><code>parameterVersion</code></a></td>
+    <td>Gets rendered version of a TemplateVersion.</td>
 </tr>
 </tbody>
 </table>
@@ -176,13 +172,13 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
-<tr id="parameter-parametersId">
-    <td><CopyableCode code="parametersId" /></td>
+<tr id="parameter-projectsId">
+    <td><CopyableCode code="projectsId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
-<tr id="parameter-projectsId">
-    <td><CopyableCode code="projectsId" /></td>
+<tr id="parameter-templatesId">
+    <td><CopyableCode code="templatesId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -211,13 +207,18 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
-<tr id="parameter-parameterVersionId">
-    <td><CopyableCode code="parameterVersionId" /></td>
+<tr id="parameter-parameterVersion">
+    <td><CopyableCode code="parameterVersion" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
 <tr id="parameter-requestId">
     <td><CopyableCode code="requestId" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-templateVersionId">
+    <td><CopyableCode code="templateVersionId" /></td>
     <td><code>string</code></td>
     <td></td>
 </tr>
@@ -245,20 +246,19 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get">
 
-Gets details of a single ParameterVersion.
+Gets details of a single TemplateVersion.
 
 ```sql
 SELECT
 name,
 createTime,
 disabled,
-kmsKeyVersion,
 payload,
 updateTime
 FROM google.parametermanager.versions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND parametersId = '{{ parametersId }}' -- required
+AND templatesId = '{{ templatesId }}' -- required
 AND versionsId = '{{ versionsId }}' -- required
 AND view = '{{ view }}'
 ;
@@ -266,7 +266,7 @@ AND view = '{{ view }}'
 </TabItem>
 <TabItem value="list">
 
-Lists ParameterVersions in a given project, location, and parameter.
+Lists TemplateVersions in a given project, location, and template.
 
 ```sql
 SELECT
@@ -274,11 +274,11 @@ SELECT
 FROM google.parametermanager.versions
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND parametersId = '{{ parametersId }}' -- required
-AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
+AND templatesId = '{{ templatesId }}' -- required
 AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -296,7 +296,7 @@ AND pageToken = '{{ pageToken }}'
 >
 <TabItem value="create">
 
-Creates a new ParameterVersion in a given project, location, and parameter.
+Creates a new TemplateVersion in a given project, location, and template.
 
 ```sql
 INSERT INTO google.parametermanager.versions (
@@ -305,8 +305,8 @@ data__disabled,
 data__payload,
 projectsId,
 locationsId,
-parametersId,
-parameterVersionId,
+templatesId,
+templateVersionId,
 requestId
 )
 SELECT 
@@ -315,14 +315,13 @@ SELECT
 '{{ payload }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ parametersId }}',
-'{{ parameterVersionId }}',
+'{{ templatesId }}',
+'{{ templateVersionId }}',
 '{{ requestId }}'
 RETURNING
 name,
 createTime,
 disabled,
-kmsKeyVersion,
 payload,
 updateTime
 ;
@@ -330,39 +329,37 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: versions
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the versions resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the versions resource.
-    - name: parametersId
-      value: string
+    - name: templatesId
+      value: "{{ templatesId }}"
       description: Required parameter for the versions resource.
     - name: name
-      value: string
-      description: >
-        Identifier. [Output only] The resource name of the ParameterVersion in the format `projects/*/locations/*/parameters/*/versions/*`.
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the TemplateVersion in the format \`projects/*/locations/*/templates/*/versions/*\`.
     - name: disabled
-      value: boolean
-      description: >
-        Optional. Disabled boolean to determine if a ParameterVersion acts as a metadata only resource (payload is never returned if disabled is true). If true any calls will always default to BASIC view even if the user explicitly passes FULL view as part of the request. A render call on a disabled resource fails with an error. Default value is False.
-        
+      value: {{ disabled }}
+      description: |
+        Optional. Disabled boolean to determine if a TemplateVersion acts as a metadata only resource (payload is never returned if disabled is true).
     - name: payload
-      value: object
-      description: >
-        Required. Immutable. Payload content of a ParameterVersion resource. This is only returned when the request provides the View value of FULL (default for GET request).
-        
-    - name: parameterVersionId
-      value: string
+      description: |
+        Required. Immutable. Payload content of a TemplateVersion resource.
+      value:
+        data: "{{ data }}"
+    - name: templateVersionId
+      value: "{{ templateVersionId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -377,7 +374,7 @@ updateTime
 >
 <TabItem value="patch">
 
-Updates a single ParameterVersion.
+Updates a single TemplateVersion.
 
 ```sql
 UPDATE google.parametermanager.versions
@@ -388,15 +385,14 @@ data__payload = '{{ payload }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
-AND parametersId = '{{ parametersId }}' --required
+AND templatesId = '{{ templatesId }}' --required
 AND versionsId = '{{ versionsId }}' --required
-AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
+AND requestId = '{{ requestId}}'
 RETURNING
 name,
 createTime,
 disabled,
-kmsKeyVersion,
 payload,
 updateTime;
 ```
@@ -414,13 +410,13 @@ updateTime;
 >
 <TabItem value="delete">
 
-Deletes a single ParameterVersion.
+Deletes a single TemplateVersion.
 
 ```sql
 DELETE FROM google.parametermanager.versions
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
-AND parametersId = '{{ parametersId }}' --required
+AND templatesId = '{{ templatesId }}' --required
 AND versionsId = '{{ versionsId }}' --required
 AND requestId = '{{ requestId }}'
 ;
@@ -439,14 +435,15 @@ AND requestId = '{{ requestId }}'
 >
 <TabItem value="render">
 
-Gets rendered version of a ParameterVersion.
+Gets rendered version of a TemplateVersion.
 
 ```sql
 EXEC google.parametermanager.versions.render 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@parametersId='{{ parametersId }}' --required, 
-@versionsId='{{ versionsId }}' --required
+@templatesId='{{ templatesId }}' --required, 
+@versionsId='{{ versionsId }}' --required, 
+@parameterVersion='{{ parameterVersion }}'
 ;
 ```
 </TabItem>

@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>resource_policies</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>resource_policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="resource_policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.appcheck.resource_policies" /></td></tr>
 </tbody></table>
@@ -57,7 +58,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="enforcementMode" /></td>
     <td><code>string</code></td>
-    <td>Required. The App Check enforcement mode for this resource. This will override the EnforcementMode setting on the service.</td>
+    <td>Required. The baseline protection EnforcementMode for this resource. This will override the service-level baseline protection EnforcementMode. (OFF, UNENFORCED, ENFORCED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="etag" /></td>
@@ -96,7 +97,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="enforcementMode" /></td>
     <td><code>string</code></td>
-    <td>Required. The App Check enforcement mode for this resource. This will override the EnforcementMode setting on the service.</td>
+    <td>Required. The baseline protection EnforcementMode for this resource. This will override the service-level baseline protection EnforcementMode. (OFF, UNENFORCED, ENFORCED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="etag" /></td>
@@ -299,18 +300,18 @@ Creates the specified ResourcePolicy configuration.
 
 ```sql
 INSERT INTO firebase.appcheck.resource_policies (
-data__name,
 data__targetResource,
-data__enforcementMode,
 data__etag,
+data__enforcementMode,
+data__name,
 projectsId,
 servicesId
 )
 SELECT 
-'{{ name }}',
 '{{ targetResource }}',
-'{{ enforcementMode }}',
 '{{ etag }}',
+'{{ enforcementMode }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ servicesId }}'
 RETURNING
@@ -324,38 +325,34 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: resource_policies
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the resource_policies resource.
     - name: servicesId
-      value: string
+      value: "{{ servicesId }}"
       description: Required parameter for the resource_policies resource.
-    - name: name
-      value: string
-      description: >
-        Required. Identifier. The relative name of the resource policy object, in the format: ``` projects/{project_number}/services/{service_id}/resourcePolicies/{resource_policy_id} ``` Note that the `service_id` element must be a supported service ID. Currently, the following service IDs are supported: * `oauth2.googleapis.com` (Google Identity for iOS) `resource_policy_id` is a system-generated UID.
-        
     - name: targetResource
-      value: string
-      description: >
-        Required. Service specific name of the resource object to which this policy applies, in the format: * **iOS OAuth clients** (Google Identity for iOS): `//oauth2.googleapis.com/projects/{project_number}/oauthClients/{oauth_client_id}` Note that the resource must belong to the service specified in the `name` and be from the same project as this policy, but the resource is allowed to be missing at the time of creation of this policy; in that case, we make a best-effort attempt at respecting this policy, but it may not have any effect until the resource is fully created.
-        
-    - name: enforcementMode
-      value: string
-      description: >
-        Required. The App Check enforcement mode for this resource. This will override the EnforcementMode setting on the service.
-        
-      valid_values: ['OFF', 'UNENFORCED', 'ENFORCED']
+      value: "{{ targetResource }}"
+      description: |
+        Required. Service specific name of the resource object to which this policy applies, in the format: * **iOS OAuth clients** (Google Identity for iOS): \`//oauth2.googleapis.com/projects/{project_number}/oauthClients/{oauth_client_id}\` Note that the resource must belong to the service specified in the \`name\` and be from the same project as this policy, but the resource is allowed to be missing at the time of creation of this policy; in that case, we make a best-effort attempt at respecting this policy, but it may not have any effect until the resource is fully created.
     - name: etag
-      value: string
-      description: >
+      value: "{{ etag }}"
+      description: |
         This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. This etag is strongly validated as defined by RFC 7232.
-        
-```
+    - name: enforcementMode
+      value: "{{ enforcementMode }}"
+      description: |
+        Required. The baseline protection EnforcementMode for this resource. This will override the service-level baseline protection EnforcementMode.
+      valid_values: ['OFF', 'UNENFORCED', 'ENFORCED']
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. Identifier. The relative name of the resource policy object, in the format: \`\`\` projects/{project_number}/services/{service_id}/resourcePolicies/{resource_policy_id} \`\`\` Note that the \`service_id\` element must be a supported service ID. Currently, the following service IDs are supported: * \`oauth2.googleapis.com\` (Google Identity for iOS) \`resource_policy_id\` is a system-generated UID.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -376,10 +373,10 @@ Updates the specified ResourcePolicy configuration.
 ```sql
 UPDATE firebase.appcheck.resource_policies
 SET 
-data__name = '{{ name }}',
 data__targetResource = '{{ targetResource }}',
+data__etag = '{{ etag }}',
 data__enforcementMode = '{{ enforcementMode }}',
-data__etag = '{{ etag }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND servicesId = '{{ servicesId }}' --required

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>backups</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>backups</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="backups" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.alloydb.backups" /></td></tr>
 </tbody></table>
@@ -82,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="databaseVersion" /></td>
     <td><code>string</code></td>
-    <td>Output only. The database engine major version of the cluster this backup was created from. Any restored cluster created from this backup will have the same database version.</td>
+    <td>Output only. The database engine major version of the cluster this backup was created from. Any restored cluster created from this backup will have the same database version. (DATABASE_VERSION_UNSPECIFIED, POSTGRES_13, POSTGRES_14, POSTGRES_15, POSTGRES_16, POSTGRES_17, POSTGRES_18)</td>
 </tr>
 <tr>
     <td><CopyableCode code="deleteTime" /></td>
@@ -147,7 +148,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the backup.</td>
+    <td>Output only. The current state of the backup. (STATE_UNSPECIFIED, READY, CREATING, FAILED, DELETING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tags" /></td>
@@ -157,7 +158,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>The backup type, which suggests the trigger for the backup.</td>
+    <td>The backup type, which suggests the trigger for the backup. (TYPE_UNSPECIFIED, ON_DEMAND, AUTOMATED, CONTINUOUS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -216,7 +217,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="databaseVersion" /></td>
     <td><code>string</code></td>
-    <td>Output only. The database engine major version of the cluster this backup was created from. Any restored cluster created from this backup will have the same database version.</td>
+    <td>Output only. The database engine major version of the cluster this backup was created from. Any restored cluster created from this backup will have the same database version. (DATABASE_VERSION_UNSPECIFIED, POSTGRES_13, POSTGRES_14, POSTGRES_15, POSTGRES_16, POSTGRES_17, POSTGRES_18)</td>
 </tr>
 <tr>
     <td><CopyableCode code="deleteTime" /></td>
@@ -281,7 +282,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the backup.</td>
+    <td>Output only. The current state of the backup. (STATE_UNSPECIFIED, READY, CREATING, FAILED, DELETING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tags" /></td>
@@ -291,7 +292,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>The backup type, which suggests the trigger for the backup.</td>
+    <td>The backup type, which suggests the trigger for the backup. (TYPE_UNSPECIFIED, ON_DEMAND, AUTOMATED, CONTINUOUS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -334,21 +335,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-view"><code>view</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists Backups in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-backupId"><code>backupId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-backupId"><code>backupId</code></a></td>
     <td>Creates a new Backup in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backupsId"><code>backupsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td>Updates the parameters of a single Backup.</td>
 </tr>
 <tr>
@@ -527,11 +528,11 @@ updateTime
 FROM google.alloydb.backups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 AND view = '{{ view }}'
+AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -553,36 +554,36 @@ Creates a new Backup in a given project and location.
 
 ```sql
 INSERT INTO google.alloydb.backups (
-data__displayName,
-data__labels,
-data__type,
+data__tags,
 data__description,
 data__clusterName,
-data__encryptionConfig,
 data__etag,
+data__encryptionConfig,
+data__displayName,
+data__type,
 data__annotations,
-data__tags,
+data__labels,
 projectsId,
 locationsId,
-backupId,
 requestId,
-validateOnly
+validateOnly,
+backupId
 )
 SELECT 
-'{{ displayName }}',
-'{{ labels }}',
-'{{ type }}',
+'{{ tags }}',
 '{{ description }}',
 '{{ clusterName }}',
-'{{ encryptionConfig }}',
 '{{ etag }}',
+'{{ encryptionConfig }}',
+'{{ displayName }}',
+'{{ type }}',
 '{{ annotations }}',
-'{{ tags }}',
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ backupId }}',
 '{{ requestId }}',
-'{{ validateOnly }}'
+'{{ validateOnly }}',
+'{{ backupId }}'
 RETURNING
 name,
 done,
@@ -594,69 +595,61 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: backups
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the backups resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the backups resource.
-    - name: displayName
-      value: string
-      description: >
-        User-settable and human-readable display name for the Backup.
-        
-    - name: labels
-      value: object
-      description: >
-        Labels as key value pairs
-        
-    - name: type
-      value: string
-      description: >
-        The backup type, which suggests the trigger for the backup.
-        
-      valid_values: ['TYPE_UNSPECIFIED', 'ON_DEMAND', 'AUTOMATED', 'CONTINUOUS']
-    - name: description
-      value: string
-      description: >
-        User-provided description of the backup.
-        
-    - name: clusterName
-      value: string
-      description: >
-        Required. The full resource name of the backup source cluster (e.g., projects/{project}/locations/{region}/clusters/{cluster_id}).
-        
-    - name: encryptionConfig
-      value: object
-      description: >
-        Optional. The encryption config can be specified to encrypt the backup with a customer-managed encryption key (CMEK). When this field is not specified, the backup will then use default encryption scheme to protect the user data.
-        
-    - name: etag
-      value: string
-      description: >
-        For Resource freshness validation (https://google.aip.dev/154)
-        
-    - name: annotations
-      value: object
-      description: >
-        Annotations to allow client tools to store small amount of arbitrary data. This is distinct from labels. https://google.aip.dev/128
-        
     - name: tags
-      value: object
-      description: >
-        Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: ``` "123/environment": "production", "123/costCenter": "marketing" ```
-        
-    - name: backupId
-      value: string
+      value: "{{ tags }}"
+      description: |
+        Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: \`\`\` "123/environment": "production", "123/costCenter": "marketing" \`\`\`
+    - name: description
+      value: "{{ description }}"
+      description: |
+        User-provided description of the backup.
+    - name: clusterName
+      value: "{{ clusterName }}"
+      description: |
+        Required. The full resource name of the backup source cluster (e.g., projects/{project}/locations/{region}/clusters/{cluster_id}).
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        For Resource freshness validation (https://google.aip.dev/154)
+    - name: encryptionConfig
+      description: |
+        Optional. The encryption config can be specified to encrypt the backup with a customer-managed encryption key (CMEK). When this field is not specified, the backup will then use default encryption scheme to protect the user data.
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        User-settable and human-readable display name for the Backup.
+    - name: type
+      value: "{{ type }}"
+      description: |
+        The backup type, which suggests the trigger for the backup.
+      valid_values: ['TYPE_UNSPECIFIED', 'ON_DEMAND', 'AUTOMATED', 'CONTINUOUS']
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Annotations to allow client tools to store small amount of arbitrary data. This is distinct from labels. https://google.aip.dev/128
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Labels as key value pairs
     - name: requestId
-      value: string
+      value: "{{ requestId }}"
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+    - name: backupId
+      value: "{{ backupId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -676,23 +669,23 @@ Updates the parameters of a single Backup.
 ```sql
 UPDATE google.alloydb.backups
 SET 
-data__displayName = '{{ displayName }}',
-data__labels = '{{ labels }}',
-data__type = '{{ type }}',
+data__tags = '{{ tags }}',
 data__description = '{{ description }}',
 data__clusterName = '{{ clusterName }}',
-data__encryptionConfig = '{{ encryptionConfig }}',
 data__etag = '{{ etag }}',
+data__encryptionConfig = '{{ encryptionConfig }}',
+data__displayName = '{{ displayName }}',
+data__type = '{{ type }}',
 data__annotations = '{{ annotations }}',
-data__tags = '{{ tags }}'
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND backupsId = '{{ backupsId }}' --required
-AND updateMask = '{{ updateMask}}'
+AND allowMissing = {{ allowMissing}}
 AND requestId = '{{ requestId}}'
 AND validateOnly = {{ validateOnly}}
-AND allowMissing = {{ allowMissing}}
+AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
 done,

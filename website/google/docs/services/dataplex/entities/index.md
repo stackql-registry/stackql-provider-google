@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>entities</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>entities</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="entities" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataplex.entities" /></td></tr>
 </tbody></table>
@@ -122,12 +123,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="system" /></td>
     <td><code>string</code></td>
-    <td>Required. Immutable. Identifies the storage system of the entity data.</td>
+    <td>Required. Immutable. Identifies the storage system of the entity data. (STORAGE_SYSTEM_UNSPECIFIED, CLOUD_STORAGE, BIGQUERY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Required. Immutable. The type of entity.</td>
+    <td>Required. Immutable. The type of entity. (TYPE_UNSPECIFIED, TABLE, FILESET)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -226,12 +227,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="system" /></td>
     <td><code>string</code></td>
-    <td>Required. Immutable. Identifies the storage system of the entity data.</td>
+    <td>Required. Immutable. Identifies the storage system of the entity data. (STORAGE_SYSTEM_UNSPECIFIED, CLOUD_STORAGE, BIGQUERY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Required. Immutable. The type of entity.</td>
+    <td>Required. Immutable. The type of entity. (TYPE_UNSPECIFIED, TABLE, FILESET)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -274,7 +275,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_lakes_zones_entities_list"><CopyableCode code="projects_locations_lakes_zones_entities_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-lakesId"><code>lakesId</code></a>, <a href="#parameter-zonesId"><code>zonesId</code></a></td>
-    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>List metadata entities in a zone.</td>
 </tr>
 <tr>
@@ -444,9 +445,9 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND lakesId = '{{ lakesId }}' -- required
 AND zonesId = '{{ zonesId }}' -- required
-AND view = '{{ view }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND view = '{{ view }}'
 AND filter = '{{ filter }}'
 ;
 ```
@@ -469,17 +470,17 @@ Create a metadata entity.
 
 ```sql
 INSERT INTO google.dataplex.entities (
-data__displayName,
-data__description,
 data__id,
-data__etag,
-data__type,
-data__asset,
-data__dataPath,
-data__dataPathPattern,
-data__system,
-data__format,
 data__schema,
+data__displayName,
+data__asset,
+data__format,
+data__dataPath,
+data__system,
+data__description,
+data__dataPathPattern,
+data__type,
+data__etag,
 projectsId,
 locationsId,
 lakesId,
@@ -487,17 +488,17 @@ zonesId,
 validateOnly
 )
 SELECT 
-'{{ displayName }}',
-'{{ description }}',
 '{{ id }}',
-'{{ etag }}',
-'{{ type }}',
-'{{ asset }}',
-'{{ dataPath }}',
-'{{ dataPathPattern }}',
-'{{ system }}',
-'{{ format }}',
 '{{ schema }}',
+'{{ displayName }}',
+'{{ asset }}',
+'{{ format }}',
+'{{ dataPath }}',
+'{{ system }}',
+'{{ description }}',
+'{{ dataPathPattern }}',
+'{{ type }}',
+'{{ etag }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ lakesId }}',
@@ -527,82 +528,94 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: entities
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the entities resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the entities resource.
     - name: lakesId
-      value: string
+      value: "{{ lakesId }}"
       description: Required parameter for the entities resource.
     - name: zonesId
-      value: string
+      value: "{{ zonesId }}"
       description: Required parameter for the entities resource.
-    - name: displayName
-      value: string
-      description: >
-        Optional. Display name must be shorter than or equal to 256 characters.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. User friendly longer description text. Must be shorter than or equal to 1024 characters.
-        
     - name: id
-      value: string
-      description: >
+      value: "{{ id }}"
+      description: |
         Required. A user-provided entity ID. It is mutable, and will be used as the published table name. Specifying a new ID in an update entity request will override the existing value. The ID must contain only letters (a-z, A-Z), numbers (0-9), and underscores, and consist of 256 or fewer characters.
-        
-    - name: etag
-      value: string
-      description: >
-        Optional. The etag associated with the entity, which can be retrieved with a GetEntity request. Required for update and delete requests.
-        
-    - name: type
-      value: string
-      description: >
-        Required. Immutable. The type of entity.
-        
-      valid_values: ['TYPE_UNSPECIFIED', 'TABLE', 'FILESET']
-    - name: asset
-      value: string
-      description: >
-        Required. Immutable. The ID of the asset associated with the storage location containing the entity data. The entity must be with in the same zone with the asset.
-        
-    - name: dataPath
-      value: string
-      description: >
-        Required. Immutable. The storage path of the entity data. For Cloud Storage data, this is the fully-qualified path to the entity, such as gs://bucket/path/to/data. For BigQuery data, this is the name of the table resource, such as projects/project_id/datasets/dataset_id/tables/table_id.
-        
-    - name: dataPathPattern
-      value: string
-      description: >
-        Optional. The set of items within the data path constituting the data in the entity, represented as a glob path. Example: gs://bucket/path/to/data/**/*.csv.
-        
-    - name: system
-      value: string
-      description: >
-        Required. Immutable. Identifies the storage system of the entity data.
-        
-      valid_values: ['STORAGE_SYSTEM_UNSPECIFIED', 'CLOUD_STORAGE', 'BIGQUERY']
-    - name: format
-      value: object
-      description: >
-        Required. Identifies the storage format of the entity data. It does not apply to entities with data stored in BigQuery.
-        
     - name: schema
-      value: object
-      description: >
+      description: |
         Required. The description of the data structure and layout. The schema is not included in list responses. It is only included in SCHEMA and FULL entity views of a GetEntity response.
-        
+      value:
+        partitionStyle: "{{ partitionStyle }}"
+        userManaged: {{ userManaged }}
+        fields:
+          - name: "{{ name }}"
+            description: "{{ description }}"
+            mode: "{{ mode }}"
+            type: "{{ type }}"
+            fields: "{{ fields }}"
+        partitionFields:
+          - name: "{{ name }}"
+            type: "{{ type }}"
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. Display name must be shorter than or equal to 256 characters.
+    - name: asset
+      value: "{{ asset }}"
+      description: |
+        Required. Immutable. The ID of the asset associated with the storage location containing the entity data. The entity must be with in the same zone with the asset.
+    - name: format
+      description: |
+        Required. Identifies the storage format of the entity data. It does not apply to entities with data stored in BigQuery.
+      value:
+        mimeType: "{{ mimeType }}"
+        csv:
+          encoding: "{{ encoding }}"
+          delimiter: "{{ delimiter }}"
+          quote: "{{ quote }}"
+          headerRows: {{ headerRows }}
+        format: "{{ format }}"
+        compressionFormat: "{{ compressionFormat }}"
+        json:
+          encoding: "{{ encoding }}"
+        iceberg:
+          metadataLocation: "{{ metadataLocation }}"
+    - name: dataPath
+      value: "{{ dataPath }}"
+      description: |
+        Required. Immutable. The storage path of the entity data. For Cloud Storage data, this is the fully-qualified path to the entity, such as gs://bucket/path/to/data. For BigQuery data, this is the name of the table resource, such as projects/project_id/datasets/dataset_id/tables/table_id.
+    - name: system
+      value: "{{ system }}"
+      description: |
+        Required. Immutable. Identifies the storage system of the entity data.
+      valid_values: ['STORAGE_SYSTEM_UNSPECIFIED', 'CLOUD_STORAGE', 'BIGQUERY']
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. User friendly longer description text. Must be shorter than or equal to 1024 characters.
+    - name: dataPathPattern
+      value: "{{ dataPathPattern }}"
+      description: |
+        Optional. The set of items within the data path constituting the data in the entity, represented as a glob path. Example: gs://bucket/path/to/data/**/*.csv.
+    - name: type
+      value: "{{ type }}"
+      description: |
+        Required. Immutable. The type of entity.
+      valid_values: ['TYPE_UNSPECIFIED', 'TABLE', 'FILESET']
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. The etag associated with the entity, which can be retrieved with a GetEntity request. Required for update and delete requests.
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -622,17 +635,17 @@ Update a metadata entity. Only supports full resource update.
 ```sql
 REPLACE google.dataplex.entities
 SET 
-data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
 data__id = '{{ id }}',
-data__etag = '{{ etag }}',
-data__type = '{{ type }}',
+data__schema = '{{ schema }}',
+data__displayName = '{{ displayName }}',
 data__asset = '{{ asset }}',
-data__dataPath = '{{ dataPath }}',
-data__dataPathPattern = '{{ dataPathPattern }}',
-data__system = '{{ system }}',
 data__format = '{{ format }}',
-data__schema = '{{ schema }}'
+data__dataPath = '{{ dataPath }}',
+data__system = '{{ system }}',
+data__description = '{{ description }}',
+data__dataPathPattern = '{{ dataPathPattern }}',
+data__type = '{{ type }}',
+data__etag = '{{ etag }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

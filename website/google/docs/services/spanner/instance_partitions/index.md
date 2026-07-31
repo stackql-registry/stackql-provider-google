@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>instance_partitions</code> res
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>instance_partitions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="instance_partitions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.spanner.instance_partitions" /></td></tr>
 </tbody></table>
@@ -82,12 +83,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="nodeCount" /></td>
     <td><code>integer (int32)</code></td>
-    <td>The number of nodes allocated to this instance partition. Users can set the `node_count` field to specify the target number of nodes allocated to the instance partition. This may be zero in API responses for instance partitions that are not yet in state `READY`.</td>
+    <td>The number of nodes allocated to this instance partition. Users can set the `node_count` field to specify the target number of nodes allocated to the instance partition. If autoscaling is enabled, node_count is treated as an OUTPUT_ONLY field and reflects the current number of nodes allocated to the instance partition. This may be zero in API responses for instance partitions that are not yet in state `READY`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="processingUnits" /></td>
     <td><code>integer (int32)</code></td>
-    <td>The number of processing units allocated to this instance partition. Users can set the `processing_units` field to specify the target number of processing units allocated to the instance partition. This might be zero in API responses for instance partitions that are not yet in the `READY` state.</td>
+    <td>The number of processing units allocated to this instance partition. Users can set the `processing_units` field to specify the target number of processing units allocated to the instance partition. If autoscaling is enabled, processing_units is treated as an OUTPUT_ONLY field and reflects the current number of processing units allocated to the instance partition. This might be zero in API responses for instance partitions that are not yet in the `READY` state.</td>
 </tr>
 <tr>
     <td><CopyableCode code="referencingBackups" /></td>
@@ -102,7 +103,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current instance partition state.</td>
+    <td>Output only. The current instance partition state. (STATE_UNSPECIFIED, CREATING, READY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -156,12 +157,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="nodeCount" /></td>
     <td><code>integer (int32)</code></td>
-    <td>The number of nodes allocated to this instance partition. Users can set the `node_count` field to specify the target number of nodes allocated to the instance partition. This may be zero in API responses for instance partitions that are not yet in state `READY`.</td>
+    <td>The number of nodes allocated to this instance partition. Users can set the `node_count` field to specify the target number of nodes allocated to the instance partition. If autoscaling is enabled, node_count is treated as an OUTPUT_ONLY field and reflects the current number of nodes allocated to the instance partition. This may be zero in API responses for instance partitions that are not yet in state `READY`.</td>
 </tr>
 <tr>
     <td><CopyableCode code="processingUnits" /></td>
     <td><code>integer (int32)</code></td>
-    <td>The number of processing units allocated to this instance partition. Users can set the `processing_units` field to specify the target number of processing units allocated to the instance partition. This might be zero in API responses for instance partitions that are not yet in the `READY` state.</td>
+    <td>The number of processing units allocated to this instance partition. Users can set the `processing_units` field to specify the target number of processing units allocated to the instance partition. If autoscaling is enabled, processing_units is treated as an OUTPUT_ONLY field and reflects the current number of processing units allocated to the instance partition. This might be zero in API responses for instance partitions that are not yet in the `READY` state.</td>
 </tr>
 <tr>
     <td><CopyableCode code="referencingBackups" /></td>
@@ -176,7 +177,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current instance partition state.</td>
+    <td>Output only. The current instance partition state. (STATE_UNSPECIFIED, CREATING, READY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -371,14 +372,14 @@ Creates an instance partition and begins preparing it to be used. The returned l
 
 ```sql
 INSERT INTO google.spanner.instance_partitions (
-data__instancePartition,
 data__instancePartitionId,
+data__instancePartition,
 projectsId,
 instancesId
 )
 SELECT 
-'{{ instancePartition }}',
 '{{ instancePartitionId }}',
+'{{ instancePartition }}',
 '{{ projectsId }}',
 '{{ instancesId }}'
 RETURNING
@@ -392,27 +393,61 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: instance_partitions
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the instance_partitions resource.
     - name: instancesId
-      value: string
+      value: "{{ instancesId }}"
       description: Required parameter for the instance_partitions resource.
-    - name: instancePartition
-      value: object
-      description: >
-        An isolated set of Cloud Spanner resources that databases can define placements on.
-        
     - name: instancePartitionId
-      value: string
-      description: >
-        Required. The ID of the instance partition to create. Valid identifiers are of the form `a-z*[a-z0-9]` and must be between 2 and 64 characters in length.
-        
-```
+      value: "{{ instancePartitionId }}"
+      description: |
+        Required. The ID of the instance partition to create. Valid identifiers are of the form \`a-z*[a-z0-9]\` and must be between 2 and 64 characters in length.
+    - name: instancePartition
+      description: |
+        An isolated set of Cloud Spanner resources that databases can define placements on.
+      value:
+        name: "{{ name }}"
+        config: "{{ config }}"
+        displayName: "{{ displayName }}"
+        nodeCount: {{ nodeCount }}
+        processingUnits: {{ processingUnits }}
+        autoscalingConfig:
+          autoscalingLimits:
+            minNodes: {{ minNodes }}
+            minProcessingUnits: {{ minProcessingUnits }}
+            maxNodes: {{ maxNodes }}
+            maxProcessingUnits: {{ maxProcessingUnits }}
+          autoscalingTargets:
+            highPriorityCpuUtilizationPercent: {{ highPriorityCpuUtilizationPercent }}
+            totalCpuUtilizationPercent: {{ totalCpuUtilizationPercent }}
+            storageUtilizationPercent: {{ storageUtilizationPercent }}
+          asymmetricAutoscalingOptions:
+            - replicaSelection:
+                location: "{{ location }}"
+              overrides:
+                autoscalingLimits:
+                  minNodes: {{ minNodes }}
+                  minProcessingUnits: {{ minProcessingUnits }}
+                  maxNodes: {{ maxNodes }}
+                  maxProcessingUnits: {{ maxProcessingUnits }}
+                autoscalingTargetHighPriorityCpuUtilizationPercent: {{ autoscalingTargetHighPriorityCpuUtilizationPercent }}
+                autoscalingTargetTotalCpuUtilizationPercent: {{ autoscalingTargetTotalCpuUtilizationPercent }}
+                disableHighPriorityCpuAutoscaling: {{ disableHighPriorityCpuAutoscaling }}
+                disableTotalCpuAutoscaling: {{ disableTotalCpuAutoscaling }}
+        state: "{{ state }}"
+        createTime: "{{ createTime }}"
+        updateTime: "{{ updateTime }}"
+        referencingDatabases:
+          - "{{ referencingDatabases }}"
+        referencingBackups:
+          - "{{ referencingBackups }}"
+        etag: "{{ etag }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -432,8 +467,8 @@ Updates an instance partition, and begins allocating or releasing resources as r
 ```sql
 UPDATE google.spanner.instance_partitions
 SET 
-data__fieldMask = '{{ fieldMask }}',
-data__instancePartition = '{{ instancePartition }}'
+data__instancePartition = '{{ instancePartition }}',
+data__fieldMask = '{{ fieldMask }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND instancesId = '{{ instancesId }}' --required

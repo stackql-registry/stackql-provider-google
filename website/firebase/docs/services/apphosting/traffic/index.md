@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>traffic</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>traffic</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="traffic" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.apphosting.traffic" /></td></tr>
 </tbody></table>
@@ -134,7 +135,7 @@ The following methods are available for this resource:
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backendsId"><code>backendsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Updates a backend's traffic.</td>
 </tr>
 </tbody>
@@ -236,18 +237,18 @@ Updates a backend's traffic.
 ```sql
 UPDATE firebase.apphosting.traffic
 SET 
-data__target = '{{ target }}',
 data__rolloutPolicy = '{{ rolloutPolicy }}',
+data__target = '{{ target }}',
+data__annotations = '{{ annotations }}',
 data__name = '{{ name }}',
-data__labels = '{{ labels }}',
-data__annotations = '{{ annotations }}'
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND backendsId = '{{ backendsId }}' --required
 AND updateMask = '{{ updateMask}}'
-AND requestId = '{{ requestId}}'
 AND validateOnly = {{ validateOnly}}
+AND requestId = '{{ requestId}}'
 RETURNING
 name,
 done,

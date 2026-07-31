@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>notification_configs</code> res
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>notification_configs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="notification_configs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.securitycenter.notification_configs" /></td></tr>
 </tbody></table>
@@ -32,55 +33,16 @@ Creates, updates, deletes, gets or lists a <code>notification_configs</code> res
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="folders_notification_configs_get"
+    defaultValue="organizations_notification_configs_get"
     values={[
-        { label: 'folders_notification_configs_get', value: 'folders_notification_configs_get' },
         { label: 'organizations_notification_configs_get', value: 'organizations_notification_configs_get' },
         { label: 'projects_notification_configs_get', value: 'projects_notification_configs_get' },
-        { label: 'folders_notification_configs_list', value: 'folders_notification_configs_list' },
+        { label: 'folders_notification_configs_get', value: 'folders_notification_configs_get' },
         { label: 'organizations_notification_configs_list', value: 'organizations_notification_configs_list' },
-        { label: 'projects_notification_configs_list', value: 'projects_notification_configs_list' }
+        { label: 'projects_notification_configs_list', value: 'projects_notification_configs_list' },
+        { label: 'folders_notification_configs_list', value: 'folders_notification_configs_list' }
     ]}
 >
-<TabItem value="folders_notification_configs_get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>The relative resource name of this notification config. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: "organizations/&#123;organization_id&#125;/notificationConfigs/notify_public_bucket", "folders/&#123;folder_id&#125;/notificationConfigs/notify_public_bucket", or "projects/&#123;project_id&#125;/notificationConfigs/notify_public_bucket".</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>The description of the notification config (max of 1024 characters).</td>
-</tr>
-<tr>
-    <td><CopyableCode code="pubsubTopic" /></td>
-    <td><code>string</code></td>
-    <td>The Pub/Sub topic to send notifications to. Its format is "projects/[project_id]/topics/[topic]".</td>
-</tr>
-<tr>
-    <td><CopyableCode code="serviceAccount" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The service account that needs "pubsub.topics.publish" permission to publish to the Pub/Sub topic.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="streamingConfig" /></td>
-    <td><code>object</code></td>
-    <td>The config for triggering streaming-based notifications. (id: StreamingConfig)</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
 <TabItem value="organizations_notification_configs_get">
 
 <table>
@@ -95,27 +57,27 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The relative resource name of this notification config. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: "organizations/&#123;organization_id&#125;/notificationConfigs/notify_public_bucket", "folders/&#123;folder_id&#125;/notificationConfigs/notify_public_bucket", or "projects/&#123;project_id&#125;/notificationConfigs/notify_public_bucket".</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
-    <td>The description of the notification config (max of 1024 characters).</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="pubsubTopic" /></td>
     <td><code>string</code></td>
-    <td>The Pub/Sub topic to send notifications to. Its format is "projects/[project_id]/topics/[topic]".</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="serviceAccount" /></td>
     <td><code>string</code></td>
-    <td>Output only. The service account that needs "pubsub.topics.publish" permission to publish to the Pub/Sub topic.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="streamingConfig" /></td>
     <td><code>object</code></td>
-    <td>The config for triggering streaming-based notifications. (id: StreamingConfig)</td>
+    <td> (id: StreamingConfig)</td>
 </tr>
 </tbody>
 </table>
@@ -134,32 +96,32 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The relative resource name of this notification config. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: "organizations/&#123;organization_id&#125;/notificationConfigs/notify_public_bucket", "folders/&#123;folder_id&#125;/notificationConfigs/notify_public_bucket", or "projects/&#123;project_id&#125;/notificationConfigs/notify_public_bucket".</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
-    <td>The description of the notification config (max of 1024 characters).</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="pubsubTopic" /></td>
     <td><code>string</code></td>
-    <td>The Pub/Sub topic to send notifications to. Its format is "projects/[project_id]/topics/[topic]".</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="serviceAccount" /></td>
     <td><code>string</code></td>
-    <td>Output only. The service account that needs "pubsub.topics.publish" permission to publish to the Pub/Sub topic.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="streamingConfig" /></td>
     <td><code>object</code></td>
-    <td>The config for triggering streaming-based notifications. (id: StreamingConfig)</td>
+    <td> (id: StreamingConfig)</td>
 </tr>
 </tbody>
 </table>
 </TabItem>
-<TabItem value="folders_notification_configs_list">
+<TabItem value="folders_notification_configs_get">
 
 <table>
 <thead>
@@ -173,27 +135,27 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The relative resource name of this notification config. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: "organizations/&#123;organization_id&#125;/notificationConfigs/notify_public_bucket", "folders/&#123;folder_id&#125;/notificationConfigs/notify_public_bucket", or "projects/&#123;project_id&#125;/notificationConfigs/notify_public_bucket".</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
-    <td>The description of the notification config (max of 1024 characters).</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="pubsubTopic" /></td>
     <td><code>string</code></td>
-    <td>The Pub/Sub topic to send notifications to. Its format is "projects/[project_id]/topics/[topic]".</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="serviceAccount" /></td>
     <td><code>string</code></td>
-    <td>Output only. The service account that needs "pubsub.topics.publish" permission to publish to the Pub/Sub topic.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="streamingConfig" /></td>
     <td><code>object</code></td>
-    <td>The config for triggering streaming-based notifications. (id: StreamingConfig)</td>
+    <td> (id: StreamingConfig)</td>
 </tr>
 </tbody>
 </table>
@@ -212,27 +174,27 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The relative resource name of this notification config. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: "organizations/&#123;organization_id&#125;/notificationConfigs/notify_public_bucket", "folders/&#123;folder_id&#125;/notificationConfigs/notify_public_bucket", or "projects/&#123;project_id&#125;/notificationConfigs/notify_public_bucket".</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
-    <td>The description of the notification config (max of 1024 characters).</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="pubsubTopic" /></td>
     <td><code>string</code></td>
-    <td>The Pub/Sub topic to send notifications to. Its format is "projects/[project_id]/topics/[topic]".</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="serviceAccount" /></td>
     <td><code>string</code></td>
-    <td>Output only. The service account that needs "pubsub.topics.publish" permission to publish to the Pub/Sub topic.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="streamingConfig" /></td>
     <td><code>object</code></td>
-    <td>The config for triggering streaming-based notifications. (id: StreamingConfig)</td>
+    <td> (id: StreamingConfig)</td>
 </tr>
 </tbody>
 </table>
@@ -251,27 +213,66 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The relative resource name of this notification config. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: "organizations/&#123;organization_id&#125;/notificationConfigs/notify_public_bucket", "folders/&#123;folder_id&#125;/notificationConfigs/notify_public_bucket", or "projects/&#123;project_id&#125;/notificationConfigs/notify_public_bucket".</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
     <td><code>string</code></td>
-    <td>The description of the notification config (max of 1024 characters).</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="pubsubTopic" /></td>
     <td><code>string</code></td>
-    <td>The Pub/Sub topic to send notifications to. Its format is "projects/[project_id]/topics/[topic]".</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="serviceAccount" /></td>
     <td><code>string</code></td>
-    <td>Output only. The service account that needs "pubsub.topics.publish" permission to publish to the Pub/Sub topic.</td>
+    <td></td>
 </tr>
 <tr>
     <td><CopyableCode code="streamingConfig" /></td>
     <td><code>object</code></td>
-    <td>The config for triggering streaming-based notifications. (id: StreamingConfig)</td>
+    <td> (id: StreamingConfig)</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="folders_notification_configs_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="pubsubTopic" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="serviceAccount" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr>
+    <td><CopyableCode code="streamingConfig" /></td>
+    <td><code>object</code></td>
+    <td> (id: StreamingConfig)</td>
 </tr>
 </tbody>
 </table>
@@ -294,109 +295,109 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#folders_notification_configs_get"><CopyableCode code="folders_notification_configs_get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-notificationConfigsId"><code>notificationConfigsId</code></a></td>
-    <td></td>
-    <td>Gets a notification config.</td>
-</tr>
-<tr>
     <td><a href="#organizations_notification_configs_get"><CopyableCode code="organizations_notification_configs_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-notificationConfigsId"><code>notificationConfigsId</code></a></td>
     <td></td>
-    <td>Gets a notification config.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_notification_configs_get"><CopyableCode code="projects_notification_configs_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-notificationConfigsId"><code>notificationConfigsId</code></a></td>
     <td></td>
-    <td>Gets a notification config.</td>
+    <td></td>
 </tr>
 <tr>
-    <td><a href="#folders_notification_configs_list"><CopyableCode code="folders_notification_configs_list" /></a></td>
+    <td><a href="#folders_notification_configs_get"><CopyableCode code="folders_notification_configs_get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Lists notification configs.</td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-notificationConfigsId"><code>notificationConfigsId</code></a></td>
+    <td></td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#organizations_notification_configs_list"><CopyableCode code="organizations_notification_configs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
     <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists notification configs.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_notification_configs_list"><CopyableCode code="projects_notification_configs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
-    <td>Lists notification configs.</td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td></td>
 </tr>
 <tr>
-    <td><a href="#folders_notification_configs_create"><CopyableCode code="folders_notification_configs_create" /></a></td>
-    <td><CopyableCode code="insert" /></td>
+    <td><a href="#folders_notification_configs_list"><CopyableCode code="folders_notification_configs_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
-    <td><a href="#parameter-configId"><code>configId</code></a></td>
-    <td>Creates a notification config.</td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#organizations_notification_configs_create"><CopyableCode code="organizations_notification_configs_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
     <td><a href="#parameter-configId"><code>configId</code></a></td>
-    <td>Creates a notification config.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_notification_configs_create"><CopyableCode code="projects_notification_configs_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td><a href="#parameter-configId"><code>configId</code></a></td>
-    <td>Creates a notification config.</td>
+    <td></td>
 </tr>
 <tr>
-    <td><a href="#folders_notification_configs_patch"><CopyableCode code="folders_notification_configs_patch" /></a></td>
-    <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-notificationConfigsId"><code>notificationConfigsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td> Updates a notification config. The following update fields are allowed: description, pubsub_topic, streaming_config.filter</td>
+    <td><a href="#folders_notification_configs_create"><CopyableCode code="folders_notification_configs_create" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a></td>
+    <td><a href="#parameter-configId"><code>configId</code></a></td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#organizations_notification_configs_patch"><CopyableCode code="organizations_notification_configs_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-notificationConfigsId"><code>notificationConfigsId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td> Updates a notification config. The following update fields are allowed: description, pubsub_topic, streaming_config.filter</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_notification_configs_patch"><CopyableCode code="projects_notification_configs_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-notificationConfigsId"><code>notificationConfigsId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td> Updates a notification config. The following update fields are allowed: description, pubsub_topic, streaming_config.filter</td>
+    <td></td>
 </tr>
 <tr>
-    <td><a href="#folders_notification_configs_delete"><CopyableCode code="folders_notification_configs_delete" /></a></td>
-    <td><CopyableCode code="delete" /></td>
+    <td><a href="#folders_notification_configs_patch"><CopyableCode code="folders_notification_configs_patch" /></a></td>
+    <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-notificationConfigsId"><code>notificationConfigsId</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a></td>
     <td></td>
-    <td>Deletes a notification config.</td>
 </tr>
 <tr>
     <td><a href="#organizations_notification_configs_delete"><CopyableCode code="organizations_notification_configs_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-notificationConfigsId"><code>notificationConfigsId</code></a></td>
     <td></td>
-    <td>Deletes a notification config.</td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_notification_configs_delete"><CopyableCode code="projects_notification_configs_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-notificationConfigsId"><code>notificationConfigsId</code></a></td>
     <td></td>
-    <td>Deletes a notification config.</td>
+    <td></td>
+</tr>
+<tr>
+    <td><a href="#folders_notification_configs_delete"><CopyableCode code="folders_notification_configs_delete" /></a></td>
+    <td><CopyableCode code="delete" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-notificationConfigsId"><code>notificationConfigsId</code></a></td>
+    <td></td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -460,36 +461,19 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="folders_notification_configs_get"
+    defaultValue="organizations_notification_configs_get"
     values={[
-        { label: 'folders_notification_configs_get', value: 'folders_notification_configs_get' },
         { label: 'organizations_notification_configs_get', value: 'organizations_notification_configs_get' },
         { label: 'projects_notification_configs_get', value: 'projects_notification_configs_get' },
-        { label: 'folders_notification_configs_list', value: 'folders_notification_configs_list' },
+        { label: 'folders_notification_configs_get', value: 'folders_notification_configs_get' },
         { label: 'organizations_notification_configs_list', value: 'organizations_notification_configs_list' },
-        { label: 'projects_notification_configs_list', value: 'projects_notification_configs_list' }
+        { label: 'projects_notification_configs_list', value: 'projects_notification_configs_list' },
+        { label: 'folders_notification_configs_list', value: 'folders_notification_configs_list' }
     ]}
 >
-<TabItem value="folders_notification_configs_get">
-
-Gets a notification config.
-
-```sql
-SELECT
-name,
-description,
-pubsubTopic,
-serviceAccount,
-streamingConfig
-FROM google.securitycenter.notification_configs
-WHERE foldersId = '{{ foldersId }}' -- required
-AND notificationConfigsId = '{{ notificationConfigsId }}' -- required
-;
-```
-</TabItem>
 <TabItem value="organizations_notification_configs_get">
 
-Gets a notification config.
+Successful response
 
 ```sql
 SELECT
@@ -506,7 +490,7 @@ AND notificationConfigsId = '{{ notificationConfigsId }}' -- required
 </TabItem>
 <TabItem value="projects_notification_configs_get">
 
-Gets a notification config.
+Successful response
 
 ```sql
 SELECT
@@ -521,9 +505,9 @@ AND notificationConfigsId = '{{ notificationConfigsId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="folders_notification_configs_list">
+<TabItem value="folders_notification_configs_get">
 
-Lists notification configs.
+Successful response
 
 ```sql
 SELECT
@@ -534,14 +518,13 @@ serviceAccount,
 streamingConfig
 FROM google.securitycenter.notification_configs
 WHERE foldersId = '{{ foldersId }}' -- required
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
+AND notificationConfigsId = '{{ notificationConfigsId }}' -- required
 ;
 ```
 </TabItem>
 <TabItem value="organizations_notification_configs_list">
 
-Lists notification configs.
+Successful response
 
 ```sql
 SELECT
@@ -559,7 +542,7 @@ AND pageToken = '{{ pageToken }}'
 </TabItem>
 <TabItem value="projects_notification_configs_list">
 
-Lists notification configs.
+Successful response
 
 ```sql
 SELECT
@@ -570,8 +553,26 @@ serviceAccount,
 streamingConfig
 FROM google.securitycenter.notification_configs
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="folders_notification_configs_list">
+
+Successful response
+
+```sql
+SELECT
+name,
+description,
+pubsubTopic,
+serviceAccount,
+streamingConfig
+FROM google.securitycenter.notification_configs
+WHERE foldersId = '{{ foldersId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -581,61 +582,32 @@ AND pageSize = '{{ pageSize }}'
 ## `INSERT` examples
 
 <Tabs
-    defaultValue="folders_notification_configs_create"
+    defaultValue="organizations_notification_configs_create"
     values={[
-        { label: 'folders_notification_configs_create', value: 'folders_notification_configs_create' },
         { label: 'organizations_notification_configs_create', value: 'organizations_notification_configs_create' },
         { label: 'projects_notification_configs_create', value: 'projects_notification_configs_create' },
+        { label: 'folders_notification_configs_create', value: 'folders_notification_configs_create' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
-<TabItem value="folders_notification_configs_create">
-
-Creates a notification config.
-
-```sql
-INSERT INTO google.securitycenter.notification_configs (
-data__name,
-data__pubsubTopic,
-data__description,
-data__streamingConfig,
-foldersId,
-configId
-)
-SELECT 
-'{{ name }}',
-'{{ pubsubTopic }}',
-'{{ description }}',
-'{{ streamingConfig }}',
-'{{ foldersId }}',
-'{{ configId }}'
-RETURNING
-name,
-description,
-pubsubTopic,
-serviceAccount,
-streamingConfig
-;
-```
-</TabItem>
 <TabItem value="organizations_notification_configs_create">
 
-Creates a notification config.
+No description available.
 
 ```sql
 INSERT INTO google.securitycenter.notification_configs (
-data__name,
 data__pubsubTopic,
-data__description,
 data__streamingConfig,
+data__description,
+data__name,
 organizationsId,
 configId
 )
 SELECT 
-'{{ name }}',
 '{{ pubsubTopic }}',
-'{{ description }}',
 '{{ streamingConfig }}',
+'{{ description }}',
+'{{ name }}',
 '{{ organizationsId }}',
 '{{ configId }}'
 RETURNING
@@ -649,23 +621,52 @@ streamingConfig
 </TabItem>
 <TabItem value="projects_notification_configs_create">
 
-Creates a notification config.
+No description available.
 
 ```sql
 INSERT INTO google.securitycenter.notification_configs (
-data__name,
 data__pubsubTopic,
-data__description,
 data__streamingConfig,
+data__description,
+data__name,
 projectsId,
 configId
 )
 SELECT 
-'{{ name }}',
 '{{ pubsubTopic }}',
-'{{ description }}',
 '{{ streamingConfig }}',
+'{{ description }}',
+'{{ name }}',
 '{{ projectsId }}',
+'{{ configId }}'
+RETURNING
+name,
+description,
+pubsubTopic,
+serviceAccount,
+streamingConfig
+;
+```
+</TabItem>
+<TabItem value="folders_notification_configs_create">
+
+No description available.
+
+```sql
+INSERT INTO google.securitycenter.notification_configs (
+data__pubsubTopic,
+data__streamingConfig,
+data__description,
+data__name,
+foldersId,
+configId
+)
+SELECT 
+'{{ pubsubTopic }}',
+'{{ streamingConfig }}',
+'{{ description }}',
+'{{ name }}',
+'{{ foldersId }}',
 '{{ configId }}'
 RETURNING
 name,
@@ -678,42 +679,31 @@ streamingConfig
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: notification_configs
   props:
-    - name: foldersId
-      value: string
-      description: Required parameter for the notification_configs resource.
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the notification_configs resource.
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the notification_configs resource.
-    - name: name
-      value: string
-      description: >
-        The relative resource name of this notification config. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: "organizations/{organization_id}/notificationConfigs/notify_public_bucket", "folders/{folder_id}/notificationConfigs/notify_public_bucket", or "projects/{project_id}/notificationConfigs/notify_public_bucket".
-        
+    - name: foldersId
+      value: "{{ foldersId }}"
+      description: Required parameter for the notification_configs resource.
     - name: pubsubTopic
-      value: string
-      description: >
-        The Pub/Sub topic to send notifications to. Its format is "projects/[project_id]/topics/[topic]".
-        
-    - name: description
-      value: string
-      description: >
-        The description of the notification config (max of 1024 characters).
-        
+      value: "{{ pubsubTopic }}"
     - name: streamingConfig
-      value: object
-      description: >
-        The config for triggering streaming-based notifications.
-        
+      value:
+        filter: "{{ filter }}"
+    - name: description
+      value: "{{ description }}"
+    - name: name
+      value: "{{ name }}"
     - name: configId
-      value: string
-```
+      value: "{{ configId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -721,47 +711,24 @@ streamingConfig
 ## `UPDATE` examples
 
 <Tabs
-    defaultValue="folders_notification_configs_patch"
+    defaultValue="organizations_notification_configs_patch"
     values={[
-        { label: 'folders_notification_configs_patch', value: 'folders_notification_configs_patch' },
         { label: 'organizations_notification_configs_patch', value: 'organizations_notification_configs_patch' },
-        { label: 'projects_notification_configs_patch', value: 'projects_notification_configs_patch' }
+        { label: 'projects_notification_configs_patch', value: 'projects_notification_configs_patch' },
+        { label: 'folders_notification_configs_patch', value: 'folders_notification_configs_patch' }
     ]}
 >
-<TabItem value="folders_notification_configs_patch">
-
- Updates a notification config. The following update fields are allowed: description, pubsub_topic, streaming_config.filter
-
-```sql
-UPDATE google.securitycenter.notification_configs
-SET 
-data__name = '{{ name }}',
-data__pubsubTopic = '{{ pubsubTopic }}',
-data__description = '{{ description }}',
-data__streamingConfig = '{{ streamingConfig }}'
-WHERE 
-foldersId = '{{ foldersId }}' --required
-AND notificationConfigsId = '{{ notificationConfigsId }}' --required
-AND updateMask = '{{ updateMask}}'
-RETURNING
-name,
-description,
-pubsubTopic,
-serviceAccount,
-streamingConfig;
-```
-</TabItem>
 <TabItem value="organizations_notification_configs_patch">
 
- Updates a notification config. The following update fields are allowed: description, pubsub_topic, streaming_config.filter
+No description available.
 
 ```sql
 UPDATE google.securitycenter.notification_configs
 SET 
-data__name = '{{ name }}',
 data__pubsubTopic = '{{ pubsubTopic }}',
+data__streamingConfig = '{{ streamingConfig }}',
 data__description = '{{ description }}',
-data__streamingConfig = '{{ streamingConfig }}'
+data__name = '{{ name }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND notificationConfigsId = '{{ notificationConfigsId }}' --required
@@ -776,17 +743,40 @@ streamingConfig;
 </TabItem>
 <TabItem value="projects_notification_configs_patch">
 
- Updates a notification config. The following update fields are allowed: description, pubsub_topic, streaming_config.filter
+No description available.
 
 ```sql
 UPDATE google.securitycenter.notification_configs
 SET 
-data__name = '{{ name }}',
 data__pubsubTopic = '{{ pubsubTopic }}',
+data__streamingConfig = '{{ streamingConfig }}',
 data__description = '{{ description }}',
-data__streamingConfig = '{{ streamingConfig }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
+AND notificationConfigsId = '{{ notificationConfigsId }}' --required
+AND updateMask = '{{ updateMask}}'
+RETURNING
+name,
+description,
+pubsubTopic,
+serviceAccount,
+streamingConfig;
+```
+</TabItem>
+<TabItem value="folders_notification_configs_patch">
+
+No description available.
+
+```sql
+UPDATE google.securitycenter.notification_configs
+SET 
+data__pubsubTopic = '{{ pubsubTopic }}',
+data__streamingConfig = '{{ streamingConfig }}',
+data__description = '{{ description }}',
+data__name = '{{ name }}'
+WHERE 
+foldersId = '{{ foldersId }}' --required
 AND notificationConfigsId = '{{ notificationConfigsId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
@@ -803,27 +793,16 @@ streamingConfig;
 ## `DELETE` examples
 
 <Tabs
-    defaultValue="folders_notification_configs_delete"
+    defaultValue="organizations_notification_configs_delete"
     values={[
-        { label: 'folders_notification_configs_delete', value: 'folders_notification_configs_delete' },
         { label: 'organizations_notification_configs_delete', value: 'organizations_notification_configs_delete' },
-        { label: 'projects_notification_configs_delete', value: 'projects_notification_configs_delete' }
+        { label: 'projects_notification_configs_delete', value: 'projects_notification_configs_delete' },
+        { label: 'folders_notification_configs_delete', value: 'folders_notification_configs_delete' }
     ]}
 >
-<TabItem value="folders_notification_configs_delete">
-
-Deletes a notification config.
-
-```sql
-DELETE FROM google.securitycenter.notification_configs
-WHERE foldersId = '{{ foldersId }}' --required
-AND notificationConfigsId = '{{ notificationConfigsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="organizations_notification_configs_delete">
 
-Deletes a notification config.
+No description available.
 
 ```sql
 DELETE FROM google.securitycenter.notification_configs
@@ -834,11 +813,22 @@ AND notificationConfigsId = '{{ notificationConfigsId }}' --required
 </TabItem>
 <TabItem value="projects_notification_configs_delete">
 
-Deletes a notification config.
+No description available.
 
 ```sql
 DELETE FROM google.securitycenter.notification_configs
 WHERE projectsId = '{{ projectsId }}' --required
+AND notificationConfigsId = '{{ notificationConfigsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="folders_notification_configs_delete">
+
+No description available.
+
+```sql
+DELETE FROM google.securitycenter.notification_configs
+WHERE foldersId = '{{ foldersId }}' --required
 AND notificationConfigsId = '{{ notificationConfigsId }}' --required
 ;
 ```

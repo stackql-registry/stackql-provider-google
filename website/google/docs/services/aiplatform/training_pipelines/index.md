@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>training_pipelines</code> resou
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>training_pipelines</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="training_pipelines" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.training_pipelines" /></td></tr>
 </tbody></table>
@@ -97,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="modelToUpload" /></td>
     <td><code>object</code></td>
-    <td>A trained machine learning Model. (id: GoogleCloudAiplatformV1Model)</td>
+    <td>Describes the Model that may be uploaded (via ModelService.UploadModel) by this TrainingPipeline. The TrainingPipeline's training_task_definition should make clear whether this Model description should be populated, and if there are any special requirements regarding how it should be filled. If nothing is mentioned in the training_task_definition, then it should be assumed that this field should not be filled and the training task either uploads the Model without a need of this information, or that training task does not support uploading a Model as part of the pipeline. When the Pipeline's state becomes `PIPELINE_STATE_SUCCEEDED` and the trained Model had been uploaded into Vertex AI, then the model_to_upload's resource name is populated. The Model is always uploaded into the Project and Location in which this pipeline is. (id: GoogleCloudAiplatformV1Model)</td>
 </tr>
 <tr>
     <td><CopyableCode code="parentModel" /></td>
@@ -112,7 +113,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The detailed state of the pipeline.</td>
+    <td>Output only. The detailed state of the pipeline. (PIPELINE_STATE_UNSPECIFIED, PIPELINE_STATE_QUEUED, PIPELINE_STATE_PENDING, PIPELINE_STATE_RUNNING, PIPELINE_STATE_SUCCEEDED, PIPELINE_STATE_FAILED, PIPELINE_STATE_CANCELLING, PIPELINE_STATE_CANCELLED, PIPELINE_STATE_PAUSED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="trainingTaskDefinition" /></td>
@@ -196,7 +197,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="modelToUpload" /></td>
     <td><code>object</code></td>
-    <td>A trained machine learning Model. (id: GoogleCloudAiplatformV1Model)</td>
+    <td>Describes the Model that may be uploaded (via ModelService.UploadModel) by this TrainingPipeline. The TrainingPipeline's training_task_definition should make clear whether this Model description should be populated, and if there are any special requirements regarding how it should be filled. If nothing is mentioned in the training_task_definition, then it should be assumed that this field should not be filled and the training task either uploads the Model without a need of this information, or that training task does not support uploading a Model as part of the pipeline. When the Pipeline's state becomes `PIPELINE_STATE_SUCCEEDED` and the trained Model had been uploaded into Vertex AI, then the model_to_upload's resource name is populated. The Model is always uploaded into the Project and Location in which this pipeline is. (id: GoogleCloudAiplatformV1Model)</td>
 </tr>
 <tr>
     <td><CopyableCode code="parentModel" /></td>
@@ -211,7 +212,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The detailed state of the pipeline.</td>
+    <td>Output only. The detailed state of the pipeline. (PIPELINE_STATE_UNSPECIFIED, PIPELINE_STATE_QUEUED, PIPELINE_STATE_PENDING, PIPELINE_STATE_RUNNING, PIPELINE_STATE_SUCCEEDED, PIPELINE_STATE_FAILED, PIPELINE_STATE_CANCELLING, PIPELINE_STATE_CANCELLED, PIPELINE_STATE_PAUSED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="trainingTaskDefinition" /></td>
@@ -264,7 +265,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
     <td>Lists TrainingPipelines in a Location.</td>
 </tr>
 <tr>
@@ -407,10 +408,10 @@ updateTime
 FROM google.aiplatform.training_pipelines
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND readMask = '{{ readMask }}'
+AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
+AND readMask = '{{ readMask }}'
 ;
 ```
 </TabItem>
@@ -432,28 +433,28 @@ Creates a TrainingPipeline. A created TrainingPipeline right away will be attemp
 
 ```sql
 INSERT INTO google.aiplatform.training_pipelines (
+data__displayName,
 data__modelId,
+data__inputDataConfig,
+data__modelToUpload,
+data__parentModel,
+data__trainingTaskInputs,
 data__labels,
 data__trainingTaskDefinition,
-data__inputDataConfig,
 data__encryptionSpec,
-data__displayName,
-data__trainingTaskInputs,
-data__parentModel,
-data__modelToUpload,
 projectsId,
 locationsId
 )
 SELECT 
+'{{ displayName }}',
 '{{ modelId }}',
+'{{ inputDataConfig }}',
+'{{ modelToUpload }}',
+'{{ parentModel }}',
+'{{ trainingTaskInputs }}',
 '{{ labels }}',
 '{{ trainingTaskDefinition }}',
-'{{ inputDataConfig }}',
 '{{ encryptionSpec }}',
-'{{ displayName }}',
-'{{ trainingTaskInputs }}',
-'{{ parentModel }}',
-'{{ modelToUpload }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -479,62 +480,271 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: training_pipelines
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the training_pipelines resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the training_pipelines resource.
-    - name: modelId
-      value: string
-      description: >
-        Optional. The ID to use for the uploaded Model, which will become the final component of the model resource name. This value may be up to 63 characters, and valid characters are `[a-z0-9_-]`. The first character cannot be a number or hyphen.
-        
-    - name: labels
-      value: object
-      description: >
-        The labels with user-defined metadata to organize TrainingPipelines. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
-        
-    - name: trainingTaskDefinition
-      value: string
-      description: >
-        Required. A Google Cloud Storage path to the YAML file that defines the training task which is responsible for producing the model artifact, and may also include additional auxiliary work. The definition files that can be used here are found in gs://google-cloud-aiplatform/schema/trainingjob/definition/. Note: The URI given on output will be immutable and probably different, including the URI scheme, than the one given on input. The output URI will point to a location where the user only has a read access.
-        
-    - name: inputDataConfig
-      value: object
-      description: >
-        Specifies Vertex AI owned input data that may be used for training the Model. The TrainingPipeline's training_task_definition should make clear whether this config is used and if there are any special requirements on how it should be filled. If nothing about this config is mentioned in the training_task_definition, then it should be assumed that the TrainingPipeline does not depend on this configuration.
-        
-    - name: encryptionSpec
-      value: object
-      description: >
-        Customer-managed encryption key spec for a TrainingPipeline. If set, this TrainingPipeline will be secured by this key. Note: Model trained by this TrainingPipeline is also secured by this key if model_to_upload is not set separately.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Required. The user-defined name of this TrainingPipeline.
-        
-    - name: trainingTaskInputs
-      value: any
-      description: >
-        Required. The training task's parameter(s), as specified in the training_task_definition's `inputs`.
-        
-    - name: parentModel
-      value: string
-      description: >
-        Optional. When specify this field, the `model_to_upload` will not be uploaded as a new model, instead, it will become a new version of this `parent_model`.
-        
+    - name: modelId
+      value: "{{ modelId }}"
+      description: |
+        Optional. The ID to use for the uploaded Model, which will become the final component of the model resource name. This value may be up to 63 characters, and valid characters are \`[a-z0-9_-]\`. The first character cannot be a number or hyphen.
+    - name: inputDataConfig
+      description: |
+        Specifies Vertex AI owned input data that may be used for training the Model. The TrainingPipeline's training_task_definition should make clear whether this config is used and if there are any special requirements on how it should be filled. If nothing about this config is mentioned in the training_task_definition, then it should be assumed that the TrainingPipeline does not depend on this configuration.
+      value:
+        savedQueryId: "{{ savedQueryId }}"
+        datasetId: "{{ datasetId }}"
+        timestampSplit:
+          validationFraction: {{ validationFraction }}
+          key: "{{ key }}"
+          trainingFraction: {{ trainingFraction }}
+          testFraction: {{ testFraction }}
+        fractionSplit:
+          validationFraction: {{ validationFraction }}
+          trainingFraction: {{ trainingFraction }}
+          testFraction: {{ testFraction }}
+        bigqueryDestination:
+          outputUri: "{{ outputUri }}"
+        gcsDestination:
+          outputUriPrefix: "{{ outputUriPrefix }}"
+        annotationsFilter: "{{ annotationsFilter }}"
+        stratifiedSplit:
+          trainingFraction: {{ trainingFraction }}
+          testFraction: {{ testFraction }}
+          validationFraction: {{ validationFraction }}
+          key: "{{ key }}"
+        predefinedSplit:
+          key: "{{ key }}"
+        annotationSchemaUri: "{{ annotationSchemaUri }}"
+        persistMlUseAssignment: {{ persistMlUseAssignment }}
+        filterSplit:
+          trainingFilter: "{{ trainingFilter }}"
+          testFilter: "{{ testFilter }}"
+          validationFilter: "{{ validationFilter }}"
     - name: modelToUpload
-      value: object
-      description: >
-        A trained machine learning Model.
-        
-```
+      description: |
+        Describes the Model that may be uploaded (via ModelService.UploadModel) by this TrainingPipeline. The TrainingPipeline's training_task_definition should make clear whether this Model description should be populated, and if there are any special requirements regarding how it should be filled. If nothing is mentioned in the training_task_definition, then it should be assumed that this field should not be filled and the training task either uploads the Model without a need of this information, or that training task does not support uploading a Model as part of the pipeline. When the Pipeline's state becomes \`PIPELINE_STATE_SUCCEEDED\` and the trained Model had been uploaded into Vertex AI, then the model_to_upload's resource name is populated. The Model is always uploaded into the Project and Location in which this pipeline is.
+      value:
+        name: "{{ name }}"
+        encryptionSpec:
+          kmsKeyName: "{{ kmsKeyName }}"
+        predictSchemata:
+          parametersSchemaUri: "{{ parametersSchemaUri }}"
+          predictionSchemaUri: "{{ predictionSchemaUri }}"
+          instanceSchemaUri: "{{ instanceSchemaUri }}"
+        containerSpec:
+          grpcPorts:
+            - containerPort: {{ containerPort }}
+          predictRoute: "{{ predictRoute }}"
+          livenessProbe:
+            failureThreshold: {{ failureThreshold }}
+            periodSeconds: {{ periodSeconds }}
+            successThreshold: {{ successThreshold }}
+            grpc:
+              service: "{{ service }}"
+              port: {{ port }}
+            tcpSocket:
+              port: {{ port }}
+              host: "{{ host }}"
+            exec:
+              command:
+                - "{{ command }}"
+            initialDelaySeconds: {{ initialDelaySeconds }}
+            httpGet:
+              host: "{{ host }}"
+              scheme: "{{ scheme }}"
+              path: "{{ path }}"
+              httpHeaders:
+                - name: "{{ name }}"
+                  value: "{{ value }}"
+              port: {{ port }}
+            timeoutSeconds: {{ timeoutSeconds }}
+          deploymentTimeout: "{{ deploymentTimeout }}"
+          imageUri: "{{ imageUri }}"
+          sharedMemorySizeMb: "{{ sharedMemorySizeMb }}"
+          ports:
+            - containerPort: {{ containerPort }}
+          invokeRoutePrefix: "{{ invokeRoutePrefix }}"
+          startupProbe:
+            failureThreshold: {{ failureThreshold }}
+            periodSeconds: {{ periodSeconds }}
+            successThreshold: {{ successThreshold }}
+            grpc:
+              service: "{{ service }}"
+              port: {{ port }}
+            tcpSocket:
+              port: {{ port }}
+              host: "{{ host }}"
+            exec:
+              command:
+                - "{{ command }}"
+            initialDelaySeconds: {{ initialDelaySeconds }}
+            httpGet:
+              host: "{{ host }}"
+              scheme: "{{ scheme }}"
+              path: "{{ path }}"
+              httpHeaders:
+                - name: "{{ name }}"
+                  value: "{{ value }}"
+              port: {{ port }}
+            timeoutSeconds: {{ timeoutSeconds }}
+          healthProbe:
+            failureThreshold: {{ failureThreshold }}
+            periodSeconds: {{ periodSeconds }}
+            successThreshold: {{ successThreshold }}
+            grpc:
+              service: "{{ service }}"
+              port: {{ port }}
+            tcpSocket:
+              port: {{ port }}
+              host: "{{ host }}"
+            exec:
+              command:
+                - "{{ command }}"
+            initialDelaySeconds: {{ initialDelaySeconds }}
+            httpGet:
+              host: "{{ host }}"
+              scheme: "{{ scheme }}"
+              path: "{{ path }}"
+              httpHeaders:
+                - name: "{{ name }}"
+                  value: "{{ value }}"
+              port: {{ port }}
+            timeoutSeconds: {{ timeoutSeconds }}
+          command:
+            - "{{ command }}"
+          healthRoute: "{{ healthRoute }}"
+          args:
+            - "{{ args }}"
+          env:
+            - name: "{{ name }}"
+              value: "{{ value }}"
+        supportedExportFormats:
+          - id: "{{ id }}"
+            exportableContents: "{{ exportableContents }}"
+        versionId: "{{ versionId }}"
+        labels: "{{ labels }}"
+        baseModelSource:
+          genieSource:
+            baseModelUri: "{{ baseModelUri }}"
+          modelGardenSource:
+            publicModelName: "{{ publicModelName }}"
+            skipHfModelCache: {{ skipHfModelCache }}
+            versionId: "{{ versionId }}"
+        supportedDeploymentResourcesTypes:
+          - "{{ supportedDeploymentResourcesTypes }}"
+        createTime: "{{ createTime }}"
+        satisfiesPzi: {{ satisfiesPzi }}
+        supportedInputStorageFormats:
+          - "{{ supportedInputStorageFormats }}"
+        versionUpdateTime: "{{ versionUpdateTime }}"
+        defaultCheckpointId: "{{ defaultCheckpointId }}"
+        metadataSchemaUri: "{{ metadataSchemaUri }}"
+        description: "{{ description }}"
+        versionAliases:
+          - "{{ versionAliases }}"
+        trainingPipeline: "{{ trainingPipeline }}"
+        metadataArtifact: "{{ metadataArtifact }}"
+        etag: "{{ etag }}"
+        versionCreateTime: "{{ versionCreateTime }}"
+        versionDescription: "{{ versionDescription }}"
+        metadata: "{{ metadata }}"
+        explanationSpec:
+          metadata:
+            featureAttributionsSchemaUri: "{{ featureAttributionsSchemaUri }}"
+            outputs: "{{ outputs }}"
+            inputs: "{{ inputs }}"
+            latentSpaceSource: "{{ latentSpaceSource }}"
+          parameters:
+            integratedGradientsAttribution:
+              smoothGradConfig:
+                noiseSigma: {{ noiseSigma }}
+                noisySampleCount: {{ noisySampleCount }}
+                featureNoiseSigma: "{{ featureNoiseSigma }}"
+              stepCount: {{ stepCount }}
+              blurBaselineConfig:
+                maxBlurSigma: {{ maxBlurSigma }}
+            topK: {{ topK }}
+            examples:
+              neighborCount: {{ neighborCount }}
+              exampleGcsSource:
+                dataFormat: "{{ dataFormat }}"
+                gcsSource: "{{ gcsSource }}"
+              nearestNeighborSearchConfig: "{{ nearestNeighborSearchConfig }}"
+              presets:
+                query: "{{ query }}"
+                modality: "{{ modality }}"
+            outputIndices:
+              - "{{ outputIndices }}"
+            sampledShapleyAttribution:
+              pathCount: {{ pathCount }}
+            xraiAttribution:
+              stepCount: {{ stepCount }}
+              blurBaselineConfig:
+                maxBlurSigma: {{ maxBlurSigma }}
+              smoothGradConfig:
+                noiseSigma: {{ noiseSigma }}
+                noisySampleCount: {{ noisySampleCount }}
+                featureNoiseSigma: "{{ featureNoiseSigma }}"
+        pipelineJob: "{{ pipelineJob }}"
+        modelSourceInfo:
+          copy: {{ copy }}
+          sourceType: "{{ sourceType }}"
+        artifactUri: "{{ artifactUri }}"
+        dataStats:
+          validationDataItemsCount: "{{ validationDataItemsCount }}"
+          trainingDataItemsCount: "{{ trainingDataItemsCount }}"
+          trainingAnnotationsCount: "{{ trainingAnnotationsCount }}"
+          testAnnotationsCount: "{{ testAnnotationsCount }}"
+          validationAnnotationsCount: "{{ validationAnnotationsCount }}"
+          testDataItemsCount: "{{ testDataItemsCount }}"
+        originalModelInfo:
+          model: "{{ model }}"
+        deployedModels:
+          - deployedModelId: "{{ deployedModelId }}"
+            checkpointId: "{{ checkpointId }}"
+            endpoint: "{{ endpoint }}"
+        satisfiesPzs: {{ satisfiesPzs }}
+        updateTime: "{{ updateTime }}"
+        checkpoints:
+          - checkpointId: "{{ checkpointId }}"
+            epoch: "{{ epoch }}"
+            step: "{{ step }}"
+        displayName: "{{ displayName }}"
+        supportedOutputStorageFormats:
+          - "{{ supportedOutputStorageFormats }}"
+    - name: parentModel
+      value: "{{ parentModel }}"
+      description: |
+        Optional. When specify this field, the \`model_to_upload\` will not be uploaded as a new model, instead, it will become a new version of this \`parent_model\`.
+    - name: trainingTaskInputs
+      value: "{{ trainingTaskInputs }}"
+      description: |
+        Required. The training task's parameter(s), as specified in the training_task_definition's \`inputs\`.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        The labels with user-defined metadata to organize TrainingPipelines. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
+    - name: trainingTaskDefinition
+      value: "{{ trainingTaskDefinition }}"
+      description: |
+        Required. A Google Cloud Storage path to the YAML file that defines the training task which is responsible for producing the model artifact, and may also include additional auxiliary work. The definition files that can be used here are found in gs://google-cloud-aiplatform/schema/trainingjob/definition/. Note: The URI given on output will be immutable and probably different, including the URI scheme, than the one given on input. The output URI will point to a location where the user only has a read access.
+    - name: encryptionSpec
+      description: |
+        Customer-managed encryption key spec for a TrainingPipeline. If set, this TrainingPipeline will be secured by this key. Note: Model trained by this TrainingPipeline is also secured by this key if model_to_upload is not set separately.
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

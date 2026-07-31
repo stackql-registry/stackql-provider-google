@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>backups</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>backups</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="backups" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.gkebackup.backups" /></td></tr>
 </tbody></table>
@@ -125,6 +126,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. This flag indicates whether this Backup resource was created manually by a user or via a schedule in the BackupPlan. A value of True means that the Backup was created manually.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="namespaceCount" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Output only. The total number of user managed namespaces contained in the Backup.</td>
+</tr>
+<tr>
     <td><CopyableCode code="permissiveMode" /></td>
     <td><code>boolean</code></td>
     <td>Output only. If false, Backup will fail when Backup for GKE detects Kubernetes configuration that is non-standard or requires additional setup to restore. Inherited from the parent BackupPlan's permissive_mode value.</td>
@@ -182,7 +188,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the Backup</td>
+    <td>Output only. Current state of the Backup (STATE_UNSPECIFIED, CREATING, IN_PROGRESS, SUCCEEDED, FAILED, DELETING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateReason" /></td>
@@ -299,6 +305,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. This flag indicates whether this Backup resource was created manually by a user or via a schedule in the BackupPlan. A value of True means that the Backup was created manually.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="namespaceCount" /></td>
+    <td><code>integer (int32)</code></td>
+    <td>Output only. The total number of user managed namespaces contained in the Backup.</td>
+</tr>
+<tr>
     <td><CopyableCode code="permissiveMode" /></td>
     <td><code>boolean</code></td>
     <td>Output only. If false, Backup will fail when Backup for GKE detects Kubernetes configuration that is non-standard or requires additional setup to restore. Inherited from the parent BackupPlan's permissive_mode value.</td>
@@ -356,7 +367,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the Backup</td>
+    <td>Output only. Current state of the Backup (STATE_UNSPECIFIED, CREATING, IN_PROGRESS, SUCCEEDED, FAILED, DELETING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateReason" /></td>
@@ -414,7 +425,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backupPlansId"><code>backupPlansId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
     <td>Lists the Backups for a given BackupPlan.</td>
 </tr>
 <tr>
@@ -552,6 +563,7 @@ encryptionKey,
 etag,
 labels,
 manual,
+namespaceCount,
 permissiveMode,
 podCount,
 resourceCount,
@@ -598,6 +610,7 @@ encryptionKey,
 etag,
 labels,
 manual,
+namespaceCount,
 permissiveMode,
 podCount,
 resourceCount,
@@ -619,9 +632,9 @@ FROM google.gkebackup.backups
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND backupPlansId = '{{ backupPlansId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 ;
@@ -645,20 +658,20 @@ Creates a Backup for the given BackupPlan.
 
 ```sql
 INSERT INTO google.gkebackup.backups (
-data__labels,
-data__deleteLockDays,
-data__retainDays,
 data__description,
+data__retainDays,
+data__deleteLockDays,
+data__labels,
 projectsId,
 locationsId,
 backupPlansId,
 backupId
 )
 SELECT 
-'{{ labels }}',
-{{ deleteLockDays }},
-{{ retainDays }},
 '{{ description }}',
+{{ retainDays }},
+{{ deleteLockDays }},
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ backupPlansId }}',
@@ -674,42 +687,38 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: backups
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the backups resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the backups resource.
     - name: backupPlansId
-      value: string
+      value: "{{ backupPlansId }}"
       description: Required parameter for the backups resource.
-    - name: labels
-      value: object
-      description: >
-        Optional. A set of custom labels supplied by user.
-        
-    - name: deleteLockDays
-      value: integer
-      description: >
-        Optional. Minimum age for this Backup (in days). If this field is set to a non-zero value, the Backup will be "locked" against deletion (either manual or automatic deletion) for the number of days provided (measured from the creation time of the Backup). MUST be an integer value between 0-90 (inclusive). Defaults to parent BackupPlan's backup_delete_lock_days setting and may only be increased (either at creation time or in a subsequent update).
-        
-    - name: retainDays
-      value: integer
-      description: >
-        Optional. The age (in days) after which this Backup will be automatically deleted. Must be an integer value >= 0: - If 0, no automatic deletion will occur for this Backup. - If not 0, this must be >= delete_lock_days and <= 365. Once a Backup is created, this value may only be increased. Defaults to the parent BackupPlan's backup_retain_days value.
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. User specified descriptive string for this Backup.
-        
+    - name: retainDays
+      value: {{ retainDays }}
+      description: |
+        Optional. The age (in days) after which this Backup will be automatically deleted. Must be an integer value >= 0: - If 0, no automatic deletion will occur for this Backup. - If not 0, this must be >= delete_lock_days and <= 365. Once a Backup is created, this value may only be increased. Defaults to the parent BackupPlan's backup_retain_days value.
+    - name: deleteLockDays
+      value: {{ deleteLockDays }}
+      description: |
+        Optional. Minimum age for this Backup (in days). If this field is set to a non-zero value, the Backup will be "locked" against deletion (either manual or automatic deletion) for the number of days provided (measured from the creation time of the Backup). MUST be an integer value between 0-90 (inclusive). Defaults to parent BackupPlan's backup_delete_lock_days setting and may only be increased (either at creation time or in a subsequent update).
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. A set of custom labels supplied by user.
     - name: backupId
-      value: string
-```
+      value: "{{ backupId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -729,10 +738,10 @@ Update a Backup.
 ```sql
 UPDATE google.gkebackup.backups
 SET 
-data__labels = '{{ labels }}',
-data__deleteLockDays = {{ deleteLockDays }},
+data__description = '{{ description }}',
 data__retainDays = {{ retainDays }},
-data__description = '{{ description }}'
+data__deleteLockDays = {{ deleteLockDays }},
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

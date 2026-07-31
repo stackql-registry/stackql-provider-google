@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>instances</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>instances</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="instances" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.securesourcemanager.instances" /></td></tr>
 </tbody></table>
@@ -52,7 +53,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Optional. A unique identifier for an instance. The name should be of the format: `projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/instances/&#123;instance_id&#125;` `project_number`: Maps to a unique int64 id assigned to each project. `location_id`: Refers to the region where the instance will be deployed. Since Secure Source Manager is a regional service, it must be one of the valid GCP regions. `instance_id`: User provided name for the instance, must be unique for a project_number and location_id combination.</td>
+    <td>Identifier. A unique identifier for an instance. The name should be of the format: `projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/instances/&#123;instance_id&#125;` `project_number`: Maps to a unique int64 id assigned to each project. `location_id`: Refers to the region where the instance will be deployed. Since Secure Source Manager is a regional service, it must be one of the valid GCP regions. `instance_id`: User provided name for the instance, must be unique for a project_number and location_id combination.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -82,12 +83,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the instance.</td>
+    <td>Output only. Current state of the instance. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, PAUSED, UNKNOWN)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateNote" /></td>
     <td><code>string</code></td>
-    <td>Output only. An optional field providing information about the current instance state.</td>
+    <td>Output only. An optional field providing information about the current instance state. (STATE_NOTE_UNSPECIFIED, PAUSED_CMEK_UNAVAILABLE, INSTANCE_RESUMING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -113,6 +114,56 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Identifier. A unique identifier for an instance. The name should be of the format: `projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/instances/&#123;instance_id&#125;` `project_number`: Maps to a unique int64 id assigned to each project. `location_id`: Refers to the region where the instance will be deployed. Since Secure Source Manager is a regional service, it must be one of the valid GCP regions. `instance_id`: User provided name for the instance, must be unique for a project_number and location_id combination.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Create timestamp.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="hostConfig" /></td>
+    <td><code>object</code></td>
+    <td>Output only. A list of hostnames for this instance. (id: HostConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="kmsKey" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Immutable. Customer-managed encryption key name, in the format projects/*/locations/*/keyRings/*/cryptoKeys/*.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="labels" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Labels as key value pairs. Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. For more information, see [Requirements for labels](https://cloud.google.com/resource-manager/docs/best-practices-labels#label_encoding).</td>
+</tr>
+<tr>
+    <td><CopyableCode code="privateConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Private settings for private instance. (id: PrivateConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Current state of the instance. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, PAUSED, UNKNOWN)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="stateNote" /></td>
+    <td><code>string</code></td>
+    <td>Output only. An optional field providing information about the current instance state. (STATE_NOTE_UNSPECIFIED, PAUSED_CMEK_UNAVAILABLE, INSTANCE_RESUMING)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="updateTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Update timestamp.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="workforceIdentityFederationConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Configuration for Workforce Identity Federation to support third party identity provider. If unset, defaults to the Google OIDC IdP. (id: WorkforceIdentityFederationConfig)</td>
+</tr>
 </tbody>
 </table>
 </TabItem>
@@ -144,21 +195,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists Instances in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-instanceId"><code>instanceId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-instanceId"><code>instanceId</code></a></td>
     <td>Creates a new instance in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Deletes a single instance.</td>
 </tr>
 </tbody>
@@ -195,6 +246,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-filter">
     <td><CopyableCode code="filter" /></td>
     <td><code>string</code></td>
+    <td></td>
+</tr>
+<tr id="parameter-force">
+    <td><CopyableCode code="force" /></td>
+    <td><code>boolean</code></td>
     <td></td>
 </tr>
 <tr id="parameter-instanceId">
@@ -263,14 +319,23 @@ Lists Instances in a given project and location.
 
 ```sql
 SELECT
-*
+name,
+createTime,
+hostConfig,
+kmsKey,
+labels,
+privateConfig,
+state,
+stateNote,
+updateTime,
+workforceIdentityFederationConfig
 FROM google.securesourcemanager.instances
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
-AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -292,26 +357,26 @@ Creates a new instance in a given project and location.
 
 ```sql
 INSERT INTO google.securesourcemanager.instances (
-data__privateConfig,
 data__workforceIdentityFederationConfig,
 data__labels,
-data__name,
 data__kmsKey,
+data__name,
+data__privateConfig,
 projectsId,
 locationsId,
-instanceId,
-requestId
+requestId,
+instanceId
 )
 SELECT 
-'{{ privateConfig }}',
 '{{ workforceIdentityFederationConfig }}',
 '{{ labels }}',
-'{{ name }}',
 '{{ kmsKey }}',
+'{{ name }}',
+'{{ privateConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ instanceId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ instanceId }}'
 RETURNING
 name,
 done,
@@ -323,46 +388,53 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: instances
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the instances resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the instances resource.
-    - name: privateConfig
-      value: object
-      description: >
-        Optional. Private settings for private instance.
-        
     - name: workforceIdentityFederationConfig
-      value: object
-      description: >
+      description: |
         Optional. Configuration for Workforce Identity Federation to support third party identity provider. If unset, defaults to the Google OIDC IdP.
-        
+      value:
+        enabled: {{ enabled }}
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. Labels as key value pairs. Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. For more information, see [Requirements for labels](https://cloud.google.com/resource-manager/docs/best-practices-labels#label_encoding).
-        
-    - name: name
-      value: string
-      description: >
-        Optional. A unique identifier for an instance. The name should be of the format: `projects/{project_number}/locations/{location_id}/instances/{instance_id}` `project_number`: Maps to a unique int64 id assigned to each project. `location_id`: Refers to the region where the instance will be deployed. Since Secure Source Manager is a regional service, it must be one of the valid GCP regions. `instance_id`: User provided name for the instance, must be unique for a project_number and location_id combination.
-        
     - name: kmsKey
-      value: string
-      description: >
+      value: "{{ kmsKey }}"
+      description: |
         Optional. Immutable. Customer-managed encryption key name, in the format projects/*/locations/*/keyRings/*/cryptoKeys/*.
-        
-    - name: instanceId
-      value: string
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. A unique identifier for an instance. The name should be of the format: \`projects/{project_number}/locations/{location_id}/instances/{instance_id}\` \`project_number\`: Maps to a unique int64 id assigned to each project. \`location_id\`: Refers to the region where the instance will be deployed. Since Secure Source Manager is a regional service, it must be one of the valid GCP regions. \`instance_id\`: User provided name for the instance, must be unique for a project_number and location_id combination.
+    - name: privateConfig
+      description: |
+        Optional. Private settings for private instance.
+      value:
+        customHostConfig:
+          gitHttp: "{{ gitHttp }}"
+          gitSsh: "{{ gitSsh }}"
+          html: "{{ html }}"
+          api: "{{ api }}"
+        httpServiceAttachment: "{{ httpServiceAttachment }}"
+        pscAllowedProjects:
+          - "{{ pscAllowedProjects }}"
+        caPool: "{{ caPool }}"
+        isPrivate: {{ isPrivate }}
+        sshServiceAttachment: "{{ sshServiceAttachment }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+    - name: instanceId
+      value: "{{ instanceId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -384,6 +456,7 @@ DELETE FROM google.securesourcemanager.instances
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND instancesId = '{{ instancesId }}' --required
+AND force = '{{ force }}'
 AND requestId = '{{ requestId }}'
 ;
 ```

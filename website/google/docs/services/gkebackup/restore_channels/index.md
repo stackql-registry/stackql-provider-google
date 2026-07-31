@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>restore_channels</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>restore_channels</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="restore_channels" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.gkebackup.restore_channels" /></td></tr>
 </tbody></table>
@@ -184,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists RestoreChannels in a given location.</td>
 </tr>
 <tr>
@@ -326,10 +327,10 @@ updateTime
 FROM google.gkebackup.restore_channels
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -351,19 +352,19 @@ Creates a new RestoreChannel in a given location.
 
 ```sql
 INSERT INTO google.gkebackup.restore_channels (
-data__name,
 data__destinationProject,
-data__labels,
 data__description,
+data__labels,
+data__name,
 projectsId,
 locationsId,
 restoreChannelId
 )
 SELECT 
-'{{ name }}',
 '{{ destinationProject }}',
-'{{ labels }}',
 '{{ description }}',
+'{{ labels }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ restoreChannelId }}'
@@ -378,39 +379,35 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: restore_channels
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the restore_channels resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the restore_channels resource.
-    - name: name
-      value: string
-      description: >
-        Identifier. The fully qualified name of the RestoreChannel. `projects/*/locations/*/restoreChannels/*`
-        
     - name: destinationProject
-      value: string
-      description: >
-        Required. Immutable. The project into which the backups will be restored. The format is `projects/{projectId}` or `projects/{projectNumber}`.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. A set of custom labels supplied by user.
-        
+      value: "{{ destinationProject }}"
+      description: |
+        Required. Immutable. The project into which the backups will be restored. The format is \`projects/{projectId}\` or \`projects/{projectNumber}\`.
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. User specified descriptive string for this RestoreChannel.
-        
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. A set of custom labels supplied by user.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The fully qualified name of the RestoreChannel. \`projects/*/locations/*/restoreChannels/*\`
     - name: restoreChannelId
-      value: string
-```
+      value: "{{ restoreChannelId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -430,10 +427,10 @@ Update a RestoreChannel.
 ```sql
 UPDATE google.gkebackup.restore_channels
 SET 
-data__name = '{{ name }}',
 data__destinationProject = '{{ destinationProject }}',
+data__description = '{{ description }}',
 data__labels = '{{ labels }}',
-data__description = '{{ description }}'
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

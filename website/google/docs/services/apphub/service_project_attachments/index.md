@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>service_project_attachments</co
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>service_project_attachments</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="service_project_attachments" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apphub.service_project_attachments" /></td></tr>
 </tbody></table>
@@ -67,7 +68,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. ServiceProjectAttachment state.</td>
+    <td>Output only. ServiceProjectAttachment state. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -106,7 +107,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. ServiceProjectAttachment state.</td>
+    <td>Output only. ServiceProjectAttachment state. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -144,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists service projects attached to the host project.</td>
 </tr>
 <tr>
@@ -268,8 +269,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -316,31 +317,29 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: service_project_attachments
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the service_project_attachments resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the service_project_attachments resource.
     - name: name
-      value: string
-      description: >
-        Identifier. The resource name of a ServiceProjectAttachment. Format: `"projects/{host-project-id}/locations/global/serviceProjectAttachments/{service-project-id}."`
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of a ServiceProjectAttachment. Format: \`"projects/{host-project-id}/locations/global/serviceProjectAttachments/{service-project-id}."\`
     - name: serviceProject
-      value: string
-      description: >
-        Required. Immutable. Service project name in the format: `"projects/abc"` or `"projects/123"`. As input, project name with either project id or number are accepted. As output, this field will contain project number.
-        
+      value: "{{ serviceProject }}"
+      description: |
+        Required. Immutable. Service project name in the format: \`"projects/abc"\` or \`"projects/123"\`. As input, project name with either project id or number are accepted. As output, this field will contain project number.
     - name: serviceProjectAttachmentId
-      value: string
+      value: "{{ serviceProjectAttachmentId }}"
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

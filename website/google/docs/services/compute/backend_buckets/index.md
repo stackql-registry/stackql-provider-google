@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>backend_buckets</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>backend_buckets</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="backend_buckets" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.backend_buckets" /></td></tr>
 </tbody></table>
@@ -35,7 +36,8 @@ The following fields are returned by `SELECT` queries:
     defaultValue="get"
     values={[
         { label: 'get', value: 'get' },
-        { label: 'list', value: 'list' }
+        { label: 'list', value: 'list' },
+        { label: 'aggregated_list', value: 'aggregated_list' }
     ]}
 >
 <TabItem value="get">
@@ -57,7 +59,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>[a-z](?:[-a-z0-9]&#123;0,61&#125;[a-z0-9])?</code>)</td>
+    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply withRFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>&#91;a-z&#93;(?:&#91;-a-z0-9&#93;&#123;0,61&#125;&#91;a-z0-9&#93;)?</code>)</td>
 </tr>
 <tr>
     <td><CopyableCode code="bucketName" /></td>
@@ -72,12 +74,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="compressionMode" /></td>
     <td><code>string</code></td>
-    <td>Compress text responses using Brotli or gzip compression, based on the client's Accept-Encoding header.</td>
+    <td>Compress text responses using Brotli or gzip compression, based on the client's Accept-Encoding header. (AUTOMATIC, DISABLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Creation timestamp in RFC3339 text format.</td>
+    <td>[Output Only] Creation timestamp inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="customResponseHeaders" /></td>
@@ -102,17 +104,22 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>Type of the resource. (default: compute#backendBucket)</td>
+    <td>Output only. Type of the resource. (default: compute#backendBucket)</td>
 </tr>
 <tr>
     <td><CopyableCode code="loadBalancingScheme" /></td>
     <td><code>string</code></td>
-    <td>The value can only be INTERNAL_MANAGED for cross-region internal layer 7 load balancer. If loadBalancingScheme is not specified, the backend bucket can be used by classic global external load balancers, or global application external load balancers, or both.</td>
+    <td>The value can only be INTERNAL_MANAGED for cross-region internal layer 7 load balancer.  If loadBalancingScheme is not specified, the backend bucket can be used by classic global external load balancers, or global application external load balancers, or both. (EXTERNAL_MANAGED, INTERNAL_MANAGED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="params" /></td>
     <td><code>object</code></td>
     <td>Input only. [Input Only] Additional params passed with the request, but not persisted as part of resource payload. (id: BackendBucketParams)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="region" /></td>
+    <td><code>string</code></td>
+    <td>Output only. [Output Only] URL of the region where the regional backend bucket resides. This field is not applicable to global backend buckets. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
@@ -122,7 +129,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="usedBy" /></td>
     <td><code>array</code></td>
-    <td>[Output Only] List of resources referencing that backend bucket.</td>
+    <td>Output only. [Output Only] List of resources referencing that backend bucket.</td>
 </tr>
 </tbody>
 </table>
@@ -151,22 +158,116 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>Type of resource. (default: compute#backendBucketList)</td>
+    <td>Output only. Type of resource. (default: compute#backendBucketList)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextPageToken" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
+    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger thanmaxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for this resource.</td>
+    <td>Output only. [Output Only] Server-defined URL for this resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="warning" /></td>
     <td><code>object</code></td>
     <td>[Output Only] Informational warning message.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="aggregated_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="id" /></td>
+    <td><code>string (uint64)</code></td>
+    <td>[Output Only] Unique identifier for the resource; defined by the server.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply withRFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. (pattern: <code>&#91;a-z&#93;(?:&#91;-a-z0-9&#93;&#123;0,61&#125;&#91;a-z0-9&#93;)?</code>)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="bucketName" /></td>
+    <td><code>string</code></td>
+    <td>Cloud Storage bucket name.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="cdnPolicy" /></td>
+    <td><code>object</code></td>
+    <td>Cloud CDN configuration for this BackendBucket. (id: BackendBucketCdnPolicy)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="compressionMode" /></td>
+    <td><code>string</code></td>
+    <td>Compress text responses using Brotli or gzip compression, based on the client's Accept-Encoding header. (AUTOMATIC, DISABLED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="creationTimestamp" /></td>
+    <td><code>string</code></td>
+    <td>[Output Only] Creation timestamp inRFC3339 text format.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="customResponseHeaders" /></td>
+    <td><code>array</code></td>
+    <td>Headers that the Application Load Balancer should add to proxied responses.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>An optional textual description of the resource; provided by the client when the resource is created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="edgeSecurityPolicy" /></td>
+    <td><code>string</code></td>
+    <td>[Output Only] The resource URL for the edge security policy associated with this backend bucket.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="enableCdn" /></td>
+    <td><code>boolean</code></td>
+    <td>If true, enable Cloud CDN for this BackendBucket.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="kind" /></td>
+    <td><code>string</code></td>
+    <td>Output only. Type of the resource. (default: compute#backendBucket)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="loadBalancingScheme" /></td>
+    <td><code>string</code></td>
+    <td>The value can only be INTERNAL_MANAGED for cross-region internal layer 7 load balancer.  If loadBalancingScheme is not specified, the backend bucket can be used by classic global external load balancers, or global application external load balancers, or both. (EXTERNAL_MANAGED, INTERNAL_MANAGED)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="params" /></td>
+    <td><code>object</code></td>
+    <td>Input only. [Input Only] Additional params passed with the request, but not persisted as part of resource payload. (id: BackendBucketParams)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="region" /></td>
+    <td><code>string</code></td>
+    <td>Output only. [Output Only] URL of the region where the regional backend bucket resides. This field is not applicable to global backend buckets. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="selfLink" /></td>
+    <td><code>string</code></td>
+    <td>[Output Only] Server-defined URL for the resource.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="usedBy" /></td>
+    <td><code>array</code></td>
+    <td>Output only. [Output Only] List of resources referencing that backend bucket.</td>
 </tr>
 </tbody>
 </table>
@@ -199,29 +300,36 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
-    <td>Retrieves the list of BackendBucket resources available to the specified project.</td>
+    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Retrieves the list of BackendBucket resources available to the specified<br />project.</td>
+</tr>
+<tr>
+    <td><a href="#aggregated_list"><CopyableCode code="aggregated_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-project"><code>project</code></a></td>
+    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-includeAllScopes"><code>includeAllScopes</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-serviceProjectNumber"><code>serviceProjectNumber</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td>Retrieves the list of all BackendBucket resources, regional and global,<br />available to the specified project.<br /><br />To prevent failure, it is recommended that you set the<br />`returnPartialSuccess` parameter to `true`.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-project"><code>project</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Creates a BackendBucket resource in the specified project using the data included in the request.</td>
+    <td>Creates a BackendBucket resource in the specified project using<br />the data included in the request.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-backendBucket"><code>backendBucket</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Updates the specified BackendBucket resource with the data included in the request. This method supports PATCH semantics and uses the JSON merge patch format and processing rules.</td>
+    <td>Updates the specified BackendBucket resource with the data included in the<br />request. This method supportsPATCH<br />semantics and uses theJSON merge<br />patch format and processing rules.</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="replace" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-backendBucket"><code>backendBucket</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Updates the specified BackendBucket resource with the data included in the request.</td>
+    <td>Updates the specified BackendBucket resource with the data included in the<br />request.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
@@ -235,14 +343,14 @@ The following methods are available for this resource:
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-backendBucket"><code>backendBucket</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Adds a key for validating requests with signed URLs for this backend bucket.</td>
+    <td>Adds a key for validating requests with signed URLs for this backend<br />bucket.</td>
 </tr>
 <tr>
     <td><a href="#delete_signed_url_key"><CopyableCode code="delete_signed_url_key" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-backendBucket"><code>backendBucket</code></a>, <a href="#parameter-keyName"><code>keyName</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Deletes a key for validating requests with signed URLs for this backend bucket.</td>
+    <td>Deletes a key for validating requests with signed URLs for this backend<br />bucket.</td>
 </tr>
 <tr>
     <td><a href="#set_edge_security_policy"><CopyableCode code="set_edge_security_policy" /></a></td>
@@ -287,6 +395,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
+<tr id="parameter-includeAllScopes">
+    <td><CopyableCode code="includeAllScopes" /></td>
+    <td><code>boolean</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-maxResults">
     <td><CopyableCode code="maxResults" /></td>
     <td><code>integer (uint32)</code></td>
@@ -312,6 +425,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>boolean</code></td>
     <td></td>
 </tr>
+<tr id="parameter-serviceProjectNumber">
+    <td><CopyableCode code="serviceProjectNumber" /></td>
+    <td><code>string (int64)</code></td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 
@@ -321,7 +439,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="get"
     values={[
         { label: 'get', value: 'get' },
-        { label: 'list', value: 'list' }
+        { label: 'list', value: 'list' },
+        { label: 'aggregated_list', value: 'aggregated_list' }
     ]}
 >
 <TabItem value="get">
@@ -343,6 +462,7 @@ enableCdn,
 kind,
 loadBalancingScheme,
 params,
+region,
 selfLink,
 usedBy
 FROM google.compute.backend_buckets
@@ -353,7 +473,7 @@ AND backendBucket = '{{ backendBucket }}' -- required
 </TabItem>
 <TabItem value="list">
 
-Retrieves the list of BackendBucket resources available to the specified project.
+Retrieves the list of BackendBucket resources available to the specified<br />project.
 
 ```sql
 SELECT
@@ -365,11 +485,45 @@ selfLink,
 warning
 FROM google.compute.backend_buckets
 WHERE project = '{{ project }}' -- required
+AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+;
+```
+</TabItem>
+<TabItem value="aggregated_list">
+
+Retrieves the list of all BackendBucket resources, regional and global,<br />available to the specified project.<br /><br />To prevent failure, it is recommended that you set the<br />`returnPartialSuccess` parameter to `true`.
+
+```sql
+SELECT
+id,
+name,
+bucketName,
+cdnPolicy,
+compressionMode,
+creationTimestamp,
+customResponseHeaders,
+description,
+edgeSecurityPolicy,
+enableCdn,
+kind,
+loadBalancingScheme,
+params,
+region,
+selfLink,
+usedBy
+FROM google.compute.backend_buckets
+WHERE project = '{{ project }}' -- required
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND includeAllScopes = '{{ includeAllScopes }}'
+AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
+AND serviceProjectNumber = '{{ serviceProjectNumber }}'
+AND maxResults = '{{ maxResults }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -387,44 +541,40 @@ AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 >
 <TabItem value="insert">
 
-Creates a BackendBucket resource in the specified project using the data included in the request.
+Creates a BackendBucket resource in the specified project using<br />the data included in the request.
 
 ```sql
 INSERT INTO google.compute.backend_buckets (
-data__kind,
-data__id,
-data__creationTimestamp,
-data__name,
-data__description,
-data__selfLink,
-data__bucketName,
-data__enableCdn,
-data__cdnPolicy,
 data__customResponseHeaders,
-data__edgeSecurityPolicy,
-data__compressionMode,
 data__loadBalancingScheme,
+data__description,
+data__compressionMode,
+data__id,
+data__selfLink,
+data__name,
 data__params,
-data__usedBy,
+data__cdnPolicy,
+data__edgeSecurityPolicy,
+data__creationTimestamp,
+data__enableCdn,
+data__bucketName,
 project,
 requestId
 )
 SELECT 
-'{{ kind }}',
-'{{ id }}',
-'{{ creationTimestamp }}',
-'{{ name }}',
-'{{ description }}',
-'{{ selfLink }}',
-'{{ bucketName }}',
-{{ enableCdn }},
-'{{ cdnPolicy }}',
 '{{ customResponseHeaders }}',
-'{{ edgeSecurityPolicy }}',
-'{{ compressionMode }}',
 '{{ loadBalancingScheme }}',
+'{{ description }}',
+'{{ compressionMode }}',
+'{{ id }}',
+'{{ selfLink }}',
+'{{ name }}',
 '{{ params }}',
-'{{ usedBy }}',
+'{{ cdnPolicy }}',
+'{{ edgeSecurityPolicy }}',
+'{{ creationTimestamp }}',
+{{ enableCdn }},
+'{{ bucketName }}',
 '{{ project }}',
 '{{ requestId }}'
 RETURNING
@@ -435,6 +585,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -459,94 +610,107 @@ zone
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: backend_buckets
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the backend_buckets resource.
-    - name: kind
-      value: string
-      description: >
-        Type of the resource.
-        
-      default: compute#backendBucket
-    - name: id
-      value: string
-      description: >
-        [Output Only] Unique identifier for the resource; defined by the server.
-        
-    - name: creationTimestamp
-      value: string
-      description: >
-        [Output Only] Creation timestamp in RFC3339 text format.
-        
-    - name: name
-      value: string
-      description: >
-        Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
-        
-    - name: description
-      value: string
-      description: >
-        An optional textual description of the resource; provided by the client when the resource is created.
-        
-    - name: selfLink
-      value: string
-      description: >
-        [Output Only] Server-defined URL for the resource.
-        
-    - name: bucketName
-      value: string
-      description: >
-        Cloud Storage bucket name.
-        
-    - name: enableCdn
-      value: boolean
-      description: >
-        If true, enable Cloud CDN for this BackendBucket.
-        
-    - name: cdnPolicy
-      value: object
-      description: >
-        Cloud CDN configuration for this BackendBucket.
-        
     - name: customResponseHeaders
-      value: array
-      description: >
+      value:
+        - "{{ customResponseHeaders }}"
+      description: |
         Headers that the Application Load Balancer should add to proxied responses.
-        
-    - name: edgeSecurityPolicy
-      value: string
-      description: >
-        [Output Only] The resource URL for the edge security policy associated with this backend bucket.
-        
-    - name: compressionMode
-      value: string
-      description: >
-        Compress text responses using Brotli or gzip compression, based on the client's Accept-Encoding header.
-        
-      valid_values: ['AUTOMATIC', 'DISABLED']
     - name: loadBalancingScheme
-      value: string
-      description: >
-        The value can only be INTERNAL_MANAGED for cross-region internal layer 7 load balancer. If loadBalancingScheme is not specified, the backend bucket can be used by classic global external load balancers, or global application external load balancers, or both.
-        
-      valid_values: ['INTERNAL_MANAGED']
+      value: "{{ loadBalancingScheme }}"
+      description: |
+        The value can only be INTERNAL_MANAGED for cross-region internal layer 7
+        load balancer.
+        If loadBalancingScheme is not specified, the backend bucket can be used by
+        classic global external load balancers, or global application external load
+        balancers, or both.
+      valid_values: ['EXTERNAL_MANAGED', 'INTERNAL_MANAGED']
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional textual description of the resource; provided by the client
+        when the resource is created.
+    - name: compressionMode
+      value: "{{ compressionMode }}"
+      description: |
+        Compress text responses using Brotli or gzip compression, based on
+        the client's Accept-Encoding header.
+      valid_values: ['AUTOMATIC', 'DISABLED']
+    - name: id
+      value: "{{ id }}"
+      description: |
+        [Output Only] Unique identifier for the resource; defined by the server.
+    - name: selfLink
+      value: "{{ selfLink }}"
+      description: |
+        [Output Only] Server-defined URL for the resource.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Name of the resource. Provided by the client when the resource is created.
+        The name must be 1-63 characters long, and comply withRFC1035.
+        Specifically, the name must be 1-63 characters long and match the regular
+        expression \`[a-z]([-a-z0-9]*[a-z0-9])?\` which means the first
+        character must be a lowercase letter, and all following characters must
+        be a dash, lowercase letter, or digit, except the last character, which
+        cannot be a dash.
     - name: params
-      value: object
-      description: >
-        Input only. [Input Only] Additional params passed with the request, but not persisted as part of resource payload.
-        
-    - name: usedBy
-      value: array
-      description: >
-        [Output Only] List of resources referencing that backend bucket.
-        
+      description: |
+        Input only. [Input Only] Additional params passed with the request, but not persisted
+        as part of resource payload.
+      value:
+        resourceManagerTags: "{{ resourceManagerTags }}"
+    - name: cdnPolicy
+      description: |
+        Cloud CDN configuration for this BackendBucket.
+      value:
+        negativeCachingPolicy:
+          - ttl: {{ ttl }}
+            code: {{ code }}
+        cacheKeyPolicy:
+          includeHttpHeaders:
+            - "{{ includeHttpHeaders }}"
+          queryStringWhitelist:
+            - "{{ queryStringWhitelist }}"
+        requestCoalescing: {{ requestCoalescing }}
+        defaultTtl: {{ defaultTtl }}
+        cacheMode: "{{ cacheMode }}"
+        negativeCaching: {{ negativeCaching }}
+        bypassCacheOnRequestHeaders:
+          - headerName: "{{ headerName }}"
+        serveWhileStale: {{ serveWhileStale }}
+        signedUrlKeyNames:
+          - "{{ signedUrlKeyNames }}"
+        clientTtl: {{ clientTtl }}
+        maxTtl: {{ maxTtl }}
+        signedUrlCacheMaxAgeSec: "{{ signedUrlCacheMaxAgeSec }}"
+    - name: edgeSecurityPolicy
+      value: "{{ edgeSecurityPolicy }}"
+      description: |
+        [Output Only] The resource URL for the edge security policy associated with
+        this backend bucket.
+    - name: creationTimestamp
+      value: "{{ creationTimestamp }}"
+      description: |
+        [Output Only] Creation timestamp inRFC3339
+        text format.
+    - name: enableCdn
+      value: {{ enableCdn }}
+      description: |
+        If true, enable Cloud CDN for this BackendBucket.
+    - name: bucketName
+      value: "{{ bucketName }}"
+      description: |
+        Cloud Storage bucket name.
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -561,26 +725,24 @@ zone
 >
 <TabItem value="patch">
 
-Updates the specified BackendBucket resource with the data included in the request. This method supports PATCH semantics and uses the JSON merge patch format and processing rules.
+Updates the specified BackendBucket resource with the data included in the<br />request. This method supportsPATCH<br />semantics and uses theJSON merge<br />patch format and processing rules.
 
 ```sql
 UPDATE google.compute.backend_buckets
 SET 
-data__kind = '{{ kind }}',
-data__id = '{{ id }}',
-data__creationTimestamp = '{{ creationTimestamp }}',
-data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__selfLink = '{{ selfLink }}',
-data__bucketName = '{{ bucketName }}',
-data__enableCdn = {{ enableCdn }},
-data__cdnPolicy = '{{ cdnPolicy }}',
 data__customResponseHeaders = '{{ customResponseHeaders }}',
-data__edgeSecurityPolicy = '{{ edgeSecurityPolicy }}',
-data__compressionMode = '{{ compressionMode }}',
 data__loadBalancingScheme = '{{ loadBalancingScheme }}',
+data__description = '{{ description }}',
+data__compressionMode = '{{ compressionMode }}',
+data__id = '{{ id }}',
+data__selfLink = '{{ selfLink }}',
+data__name = '{{ name }}',
 data__params = '{{ params }}',
-data__usedBy = '{{ usedBy }}'
+data__cdnPolicy = '{{ cdnPolicy }}',
+data__edgeSecurityPolicy = '{{ edgeSecurityPolicy }}',
+data__creationTimestamp = '{{ creationTimestamp }}',
+data__enableCdn = {{ enableCdn }},
+data__bucketName = '{{ bucketName }}'
 WHERE 
 project = '{{ project }}' --required
 AND backendBucket = '{{ backendBucket }}' --required
@@ -593,6 +755,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -627,26 +790,24 @@ zone;
 >
 <TabItem value="update">
 
-Updates the specified BackendBucket resource with the data included in the request.
+Updates the specified BackendBucket resource with the data included in the<br />request.
 
 ```sql
 REPLACE google.compute.backend_buckets
 SET 
-data__kind = '{{ kind }}',
-data__id = '{{ id }}',
-data__creationTimestamp = '{{ creationTimestamp }}',
-data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__selfLink = '{{ selfLink }}',
-data__bucketName = '{{ bucketName }}',
-data__enableCdn = {{ enableCdn }},
-data__cdnPolicy = '{{ cdnPolicy }}',
 data__customResponseHeaders = '{{ customResponseHeaders }}',
-data__edgeSecurityPolicy = '{{ edgeSecurityPolicy }}',
-data__compressionMode = '{{ compressionMode }}',
 data__loadBalancingScheme = '{{ loadBalancingScheme }}',
+data__description = '{{ description }}',
+data__compressionMode = '{{ compressionMode }}',
+data__id = '{{ id }}',
+data__selfLink = '{{ selfLink }}',
+data__name = '{{ name }}',
 data__params = '{{ params }}',
-data__usedBy = '{{ usedBy }}'
+data__cdnPolicy = '{{ cdnPolicy }}',
+data__edgeSecurityPolicy = '{{ edgeSecurityPolicy }}',
+data__creationTimestamp = '{{ creationTimestamp }}',
+data__enableCdn = {{ enableCdn }},
+data__bucketName = '{{ bucketName }}'
 WHERE 
 project = '{{ project }}' --required
 AND backendBucket = '{{ backendBucket }}' --required
@@ -659,6 +820,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -718,7 +880,7 @@ AND requestId = '{{ requestId }}'
 >
 <TabItem value="add_signed_url_key">
 
-Adds a key for validating requests with signed URLs for this backend bucket.
+Adds a key for validating requests with signed URLs for this backend<br />bucket.
 
 ```sql
 EXEC google.compute.backend_buckets.add_signed_url_key 
@@ -727,15 +889,15 @@ EXEC google.compute.backend_buckets.add_signed_url_key
 @requestId='{{ requestId }}' 
 @@json=
 '{
-"keyName": "{{ keyName }}", 
-"keyValue": "{{ keyValue }}"
+"keyValue": "{{ keyValue }}", 
+"keyName": "{{ keyName }}"
 }'
 ;
 ```
 </TabItem>
 <TabItem value="delete_signed_url_key">
 
-Deletes a key for validating requests with signed URLs for this backend bucket.
+Deletes a key for validating requests with signed URLs for this backend<br />bucket.
 
 ```sql
 EXEC google.compute.backend_buckets.delete_signed_url_key 

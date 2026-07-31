@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>instances</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>instances</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="instances" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.looker.instances" /></td></tr>
 </tbody></table>
@@ -55,14 +56,24 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/instances/&#123;instance&#125;`.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="acceleratedSecurityPatchEnabled" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. Accelerated security patch enabled for the instance.</td>
+</tr>
+<tr>
     <td><CopyableCode code="adminSettings" /></td>
     <td><code>object</code></td>
     <td>Looker Instance Admin settings. (id: AdminSettings)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="catalogIntegrationOptOut" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. Indicates whether catalog integration is disabled for the Looker instance.</td>
+</tr>
+<tr>
     <td><CopyableCode code="classType" /></td>
     <td><code>string</code></td>
-    <td>Optional. Storage class of the instance.</td>
+    <td>Optional. Storage class of the instance. (CLASS_TYPE_UNSPECIFIED, R1, P1)</td>
 </tr>
 <tr>
     <td><CopyableCode code="consumerNetwork" /></td>
@@ -113,6 +124,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="geminiEnabled" /></td>
     <td><code>boolean</code></td>
     <td>Optional. Whether Gemini feature is enabled on the Looker instance or not.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="ingressIpAllowlistConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Ingress IP allowlist configuration for the Looker instance. (id: IngressIpAllowlistConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="ingressPrivateIp" /></td>
@@ -167,7 +183,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="platformEdition" /></td>
     <td><code>string</code></td>
-    <td>Platform edition.</td>
+    <td>Platform edition. (PLATFORM_EDITION_UNSPECIFIED, LOOKER_CORE_TRIAL, LOOKER_CORE_STANDARD, LOOKER_CORE_STANDARD_ANNUAL, LOOKER_CORE_ENTERPRISE_ANNUAL, LOOKER_CORE_EMBED_ANNUAL, LOOKER_CORE_NONPROD_STANDARD_ANNUAL, LOOKER_CORE_NONPROD_ENTERPRISE_ANNUAL, LOOKER_CORE_NONPROD_EMBED_ANNUAL, LOOKER_CORE_TRIAL_STANDARD, LOOKER_CORE_TRIAL_ENTERPRISE, LOOKER_CORE_TRIAL_EMBED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="privateIpEnabled" /></td>
@@ -190,6 +206,11 @@ The following fields are returned by `SELECT` queries:
     <td>Whether public IP is enabled on the Looker instance.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="releaseChannel" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The selected release channel for the instance. (RELEASE_CHANNEL_UNSPECIFIED, RAPID, REGULAR, STABLE)</td>
+</tr>
+<tr>
     <td><CopyableCode code="reservedRange" /></td>
     <td><code>string</code></td>
     <td>Name of a reserved IP address range within the Instance.consumer_network, to be used for private services access connection. May or may not be specified in a create request.</td>
@@ -205,9 +226,19 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Reserved for future use.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="softDeleteReason" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The reason for the instance being in a soft-deleted state. (SOFT_DELETE_REASON_UNSPECIFIED, BILLING_ACCOUNT_ISSUE, TRIAL_EXPIRED, CUSTOMER_REQUEST)</td>
+</tr>
+<tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the instance.</td>
+    <td>Output only. The state of the instance. (STATE_UNSPECIFIED, ACTIVE, CREATING, FAILED, SUSPENDED, UPDATING, DELETING, EXPORTING, IMPORTING)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="suspendedTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time when the Looker instance was suspended (soft deleted).</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -239,14 +270,24 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/instances/&#123;instance&#125;`.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="acceleratedSecurityPatchEnabled" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. Accelerated security patch enabled for the instance.</td>
+</tr>
+<tr>
     <td><CopyableCode code="adminSettings" /></td>
     <td><code>object</code></td>
     <td>Looker Instance Admin settings. (id: AdminSettings)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="catalogIntegrationOptOut" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. Indicates whether catalog integration is disabled for the Looker instance.</td>
+</tr>
+<tr>
     <td><CopyableCode code="classType" /></td>
     <td><code>string</code></td>
-    <td>Optional. Storage class of the instance.</td>
+    <td>Optional. Storage class of the instance. (CLASS_TYPE_UNSPECIFIED, R1, P1)</td>
 </tr>
 <tr>
     <td><CopyableCode code="consumerNetwork" /></td>
@@ -297,6 +338,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="geminiEnabled" /></td>
     <td><code>boolean</code></td>
     <td>Optional. Whether Gemini feature is enabled on the Looker instance or not.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="ingressIpAllowlistConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Ingress IP allowlist configuration for the Looker instance. (id: IngressIpAllowlistConfig)</td>
 </tr>
 <tr>
     <td><CopyableCode code="ingressPrivateIp" /></td>
@@ -351,7 +397,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="platformEdition" /></td>
     <td><code>string</code></td>
-    <td>Platform edition.</td>
+    <td>Platform edition. (PLATFORM_EDITION_UNSPECIFIED, LOOKER_CORE_TRIAL, LOOKER_CORE_STANDARD, LOOKER_CORE_STANDARD_ANNUAL, LOOKER_CORE_ENTERPRISE_ANNUAL, LOOKER_CORE_EMBED_ANNUAL, LOOKER_CORE_NONPROD_STANDARD_ANNUAL, LOOKER_CORE_NONPROD_ENTERPRISE_ANNUAL, LOOKER_CORE_NONPROD_EMBED_ANNUAL, LOOKER_CORE_TRIAL_STANDARD, LOOKER_CORE_TRIAL_ENTERPRISE, LOOKER_CORE_TRIAL_EMBED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="privateIpEnabled" /></td>
@@ -374,6 +420,11 @@ The following fields are returned by `SELECT` queries:
     <td>Whether public IP is enabled on the Looker instance.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="releaseChannel" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The selected release channel for the instance. (RELEASE_CHANNEL_UNSPECIFIED, RAPID, REGULAR, STABLE)</td>
+</tr>
+<tr>
     <td><CopyableCode code="reservedRange" /></td>
     <td><code>string</code></td>
     <td>Name of a reserved IP address range within the Instance.consumer_network, to be used for private services access connection. May or may not be specified in a create request.</td>
@@ -389,9 +440,19 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Reserved for future use.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="softDeleteReason" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The reason for the instance being in a soft-deleted state. (SOFT_DELETE_REASON_UNSPECIFIED, BILLING_ACCOUNT_ISSUE, TRIAL_EXPIRED, CUSTOMER_REQUEST)</td>
+</tr>
+<tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of the instance.</td>
+    <td>Output only. The state of the instance. (STATE_UNSPECIFIED, ACTIVE, CREATING, FAILED, SUSPENDED, UPDATING, DELETING, EXPORTING, IMPORTING)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="suspendedTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. The time when the Looker instance was suspended (soft deleted).</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -434,7 +495,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists Instances in a given project and location.</td>
 </tr>
 <tr>
@@ -459,13 +520,6 @@ The following methods are available for this resource:
     <td>Delete instance.</td>
 </tr>
 <tr>
-    <td><a href="#restore"><CopyableCode code="restore" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td></td>
-    <td>Restore Looker instance.</td>
-</tr>
-<tr>
     <td><a href="#restart"><CopyableCode code="restart" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
@@ -473,11 +527,25 @@ The following methods are available for this resource:
     <td>Restart instance.</td>
 </tr>
 <tr>
+    <td><a href="#undelete"><CopyableCode code="undelete" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Undeletes Looker instance.</td>
+</tr>
+<tr>
     <td><a href="#import"><CopyableCode code="import" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
     <td></td>
     <td>Import instance.</td>
+</tr>
+<tr>
+    <td><a href="#restore"><CopyableCode code="restore" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Restore Looker instance.</td>
 </tr>
 <tr>
     <td><a href="#export"><CopyableCode code="export" /></a></td>
@@ -537,6 +605,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
+<tr id="parameter-showDeleted">
+    <td><CopyableCode code="showDeleted" /></td>
+    <td><code>boolean</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-updateMask">
     <td><CopyableCode code="updateMask" /></td>
     <td><code>string (google-fieldmask)</code></td>
@@ -561,7 +634,9 @@ Gets details of a single Instance.
 ```sql
 SELECT
 name,
+acceleratedSecurityPatchEnabled,
 adminSettings,
+catalogIntegrationOptOut,
 classType,
 consumerNetwork,
 controlledEgressConfig,
@@ -573,6 +648,7 @@ egressPublicIp,
 encryptionConfig,
 fipsEnabled,
 geminiEnabled,
+ingressIpAllowlistConfig,
 ingressPrivateIp,
 ingressPublicIp,
 lastDenyMaintenancePeriod,
@@ -588,10 +664,13 @@ privateIpEnabled,
 pscConfig,
 pscEnabled,
 publicIpEnabled,
+releaseChannel,
 reservedRange,
 satisfiesPzi,
 satisfiesPzs,
+softDeleteReason,
 state,
+suspendedTime,
 updateTime,
 userMetadata
 FROM google.looker.instances
@@ -608,7 +687,9 @@ Lists Instances in a given project and location.
 ```sql
 SELECT
 name,
+acceleratedSecurityPatchEnabled,
 adminSettings,
+catalogIntegrationOptOut,
 classType,
 consumerNetwork,
 controlledEgressConfig,
@@ -620,6 +701,7 @@ egressPublicIp,
 encryptionConfig,
 fipsEnabled,
 geminiEnabled,
+ingressIpAllowlistConfig,
 ingressPrivateIp,
 ingressPublicIp,
 lastDenyMaintenancePeriod,
@@ -635,17 +717,21 @@ privateIpEnabled,
 pscConfig,
 pscEnabled,
 publicIpEnabled,
+releaseChannel,
 reservedRange,
 satisfiesPzi,
 satisfiesPzs,
+softDeleteReason,
 state,
+suspendedTime,
 updateTime,
 userMetadata
 FROM google.looker.instances
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND showDeleted = '{{ showDeleted }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -667,55 +753,63 @@ Creates a new Instance in a given project and location.
 
 ```sql
 INSERT INTO google.looker.instances (
-data__periodicExportConfig,
-data__encryptionConfig,
-data__pscEnabled,
 data__consumerNetwork,
 data__customDomain,
-data__geminiEnabled,
-data__adminSettings,
-data__fipsEnabled,
-data__maintenanceWindow,
-data__controlledEgressEnabled,
-data__classType,
+data__releaseChannel,
 data__controlledEgressConfig,
-data__linkedLspProjectNumber,
-data__platformEdition,
-data__maintenanceSchedule,
-data__publicIpEnabled,
-data__reservedRange,
 data__userMetadata,
-data__denyMaintenancePeriod,
+data__controlledEgressEnabled,
+data__ingressIpAllowlistConfig,
+data__publicIpEnabled,
+data__adminSettings,
+data__catalogIntegrationOptOut,
+data__platformEdition,
+data__geminiEnabled,
+data__pscEnabled,
+data__linkedLspProjectNumber,
+data__classType,
+data__oauthConfig,
+data__encryptionConfig,
+data__reservedRange,
 data__privateIpEnabled,
 data__pscConfig,
-data__oauthConfig,
+data__periodicExportConfig,
+data__denyMaintenancePeriod,
+data__acceleratedSecurityPatchEnabled,
+data__maintenanceWindow,
+data__fipsEnabled,
+data__maintenanceSchedule,
 projectsId,
 locationsId,
 instanceId
 )
 SELECT 
-'{{ periodicExportConfig }}',
-'{{ encryptionConfig }}',
-{{ pscEnabled }},
 '{{ consumerNetwork }}',
 '{{ customDomain }}',
-{{ geminiEnabled }},
-'{{ adminSettings }}',
-{{ fipsEnabled }},
-'{{ maintenanceWindow }}',
-{{ controlledEgressEnabled }},
-'{{ classType }}',
+'{{ releaseChannel }}',
 '{{ controlledEgressConfig }}',
-'{{ linkedLspProjectNumber }}',
-'{{ platformEdition }}',
-'{{ maintenanceSchedule }}',
-{{ publicIpEnabled }},
-'{{ reservedRange }}',
 '{{ userMetadata }}',
-'{{ denyMaintenancePeriod }}',
+{{ controlledEgressEnabled }},
+'{{ ingressIpAllowlistConfig }}',
+{{ publicIpEnabled }},
+'{{ adminSettings }}',
+{{ catalogIntegrationOptOut }},
+'{{ platformEdition }}',
+{{ geminiEnabled }},
+{{ pscEnabled }},
+'{{ linkedLspProjectNumber }}',
+'{{ classType }}',
+'{{ oauthConfig }}',
+'{{ encryptionConfig }}',
+'{{ reservedRange }}',
 {{ privateIpEnabled }},
 '{{ pscConfig }}',
-'{{ oauthConfig }}',
+'{{ periodicExportConfig }}',
+'{{ denyMaintenancePeriod }}',
+{{ acceleratedSecurityPatchEnabled }},
+'{{ maintenanceWindow }}',
+{{ fipsEnabled }},
+'{{ maintenanceSchedule }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ instanceId }}'
@@ -730,131 +824,186 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: instances
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the instances resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the instances resource.
-    - name: periodicExportConfig
-      value: object
-      description: >
-        Optional. Configuration for periodic export.
-        
-    - name: encryptionConfig
-      value: object
-      description: >
-        Encryption configuration (CMEK). Only set if CMEK has been enabled on the instance.
-        
-    - name: pscEnabled
-      value: boolean
-      description: >
-        Optional. Whether to use Private Service Connect (PSC) for private IP connectivity. If true, neither `public_ip_enabled` nor `private_ip_enabled` can be true.
-        
     - name: consumerNetwork
-      value: string
-      description: >
-        Network name in the consumer project. Format: `projects/{project}/global/networks/{network}`. Note that the consumer network may be in a different GCP project than the consumer project that is hosting the Looker Instance.
-        
+      value: "{{ consumerNetwork }}"
+      description: |
+        Network name in the consumer project. Format: \`projects/{project}/global/networks/{network}\`. Note that the consumer network may be in a different GCP project than the consumer project that is hosting the Looker Instance.
     - name: customDomain
-      value: object
-      description: >
+      description: |
         Custom domain configuration for the instance.
-        
-    - name: geminiEnabled
-      value: boolean
-      description: >
-        Optional. Whether Gemini feature is enabled on the Looker instance or not.
-        
-    - name: adminSettings
-      value: object
-      description: >
-        Looker Instance Admin settings.
-        
-    - name: fipsEnabled
-      value: boolean
-      description: >
-        Optional. Whether FIPS is enabled on the Looker instance.
-        
-    - name: maintenanceWindow
-      value: object
-      description: >
-        Maintenance window for this instance.
-        
-    - name: controlledEgressEnabled
-      value: boolean
-      description: >
-        Optional. Whether controlled egress is enabled on the Looker instance.
-        
-    - name: classType
-      value: string
-      description: >
-        Optional. Storage class of the instance.
-        
-      valid_values: ['CLASS_TYPE_UNSPECIFIED', 'R1', 'P1']
+      value:
+        domain: "{{ domain }}"
+        state: "{{ state }}"
+    - name: releaseChannel
+      value: "{{ releaseChannel }}"
+      description: |
+        Optional. The selected release channel for the instance.
+      valid_values: ['RELEASE_CHANNEL_UNSPECIFIED', 'RAPID', 'REGULAR', 'STABLE']
     - name: controlledEgressConfig
-      value: object
-      description: >
+      description: |
         Optional. Controlled egress configuration.
-        
-    - name: linkedLspProjectNumber
-      value: string
-      description: >
-        Optional. Linked Google Cloud Project Number for Looker Studio Pro.
-        
-    - name: platformEdition
-      value: string
-      description: >
-        Platform edition.
-        
-      valid_values: ['PLATFORM_EDITION_UNSPECIFIED', 'LOOKER_CORE_TRIAL', 'LOOKER_CORE_STANDARD', 'LOOKER_CORE_STANDARD_ANNUAL', 'LOOKER_CORE_ENTERPRISE_ANNUAL', 'LOOKER_CORE_EMBED_ANNUAL', 'LOOKER_CORE_NONPROD_STANDARD_ANNUAL', 'LOOKER_CORE_NONPROD_ENTERPRISE_ANNUAL', 'LOOKER_CORE_NONPROD_EMBED_ANNUAL', 'LOOKER_CORE_TRIAL_STANDARD', 'LOOKER_CORE_TRIAL_ENTERPRISE', 'LOOKER_CORE_TRIAL_EMBED']
-    - name: maintenanceSchedule
-      value: object
-      description: >
-        Maintenance schedule for this instance.
-        
-    - name: publicIpEnabled
-      value: boolean
-      description: >
-        Whether public IP is enabled on the Looker instance.
-        
-    - name: reservedRange
-      value: string
-      description: >
-        Name of a reserved IP address range within the Instance.consumer_network, to be used for private services access connection. May or may not be specified in a create request.
-        
+      value:
+        webProxyIps:
+          - "{{ webProxyIps }}"
+        egressFqdns:
+          - "{{ egressFqdns }}"
+        marketplaceEnabled: {{ marketplaceEnabled }}
     - name: userMetadata
-      value: object
-      description: >
+      description: |
         Optional. User metadata.
-        
-    - name: denyMaintenancePeriod
-      value: object
-      description: >
-        Maintenance denial period for this instance.
-        
-    - name: privateIpEnabled
-      value: boolean
-      description: >
-        Whether private IP is enabled on the Looker instance.
-        
-    - name: pscConfig
-      value: object
-      description: >
-        Optional. PSC configuration. Used when `psc_enabled` is true.
-        
+      value:
+        additionalDeveloperUserCount: {{ additionalDeveloperUserCount }}
+        additionalViewerUserCount: {{ additionalViewerUserCount }}
+        additionalStandardUserCount: {{ additionalStandardUserCount }}
+    - name: controlledEgressEnabled
+      value: {{ controlledEgressEnabled }}
+      description: |
+        Optional. Whether controlled egress is enabled on the Looker instance.
+    - name: ingressIpAllowlistConfig
+      description: |
+        Optional. Ingress IP allowlist configuration for the Looker instance.
+      value:
+        enabled: {{ enabled }}
+        googleServicesEnabled: {{ googleServicesEnabled }}
+        allowlistRules:
+          - description: "{{ description }}"
+            ipRange: "{{ ipRange }}"
+    - name: publicIpEnabled
+      value: {{ publicIpEnabled }}
+      description: |
+        Whether public IP is enabled on the Looker instance.
+    - name: adminSettings
+      description: |
+        Looker Instance Admin settings.
+      value:
+        allowedEmailDomains:
+          - "{{ allowedEmailDomains }}"
+    - name: catalogIntegrationOptOut
+      value: {{ catalogIntegrationOptOut }}
+      description: |
+        Optional. Indicates whether catalog integration is disabled for the Looker instance.
+    - name: platformEdition
+      value: "{{ platformEdition }}"
+      description: |
+        Platform edition.
+      valid_values: ['PLATFORM_EDITION_UNSPECIFIED', 'LOOKER_CORE_TRIAL', 'LOOKER_CORE_STANDARD', 'LOOKER_CORE_STANDARD_ANNUAL', 'LOOKER_CORE_ENTERPRISE_ANNUAL', 'LOOKER_CORE_EMBED_ANNUAL', 'LOOKER_CORE_NONPROD_STANDARD_ANNUAL', 'LOOKER_CORE_NONPROD_ENTERPRISE_ANNUAL', 'LOOKER_CORE_NONPROD_EMBED_ANNUAL', 'LOOKER_CORE_TRIAL_STANDARD', 'LOOKER_CORE_TRIAL_ENTERPRISE', 'LOOKER_CORE_TRIAL_EMBED']
+    - name: geminiEnabled
+      value: {{ geminiEnabled }}
+      description: |
+        Optional. Whether Gemini feature is enabled on the Looker instance or not.
+    - name: pscEnabled
+      value: {{ pscEnabled }}
+      description: |
+        Optional. Whether to use Private Service Connect (PSC) for private IP connectivity. If true, neither \`public_ip_enabled\` nor \`private_ip_enabled\` can be true.
+    - name: linkedLspProjectNumber
+      value: "{{ linkedLspProjectNumber }}"
+      description: |
+        Optional. Linked Google Cloud Project Number for Looker Studio Pro.
+    - name: classType
+      value: "{{ classType }}"
+      description: |
+        Optional. Storage class of the instance.
+      valid_values: ['CLASS_TYPE_UNSPECIFIED', 'R1', 'P1']
     - name: oauthConfig
-      value: object
-      description: >
+      description: |
         Looker instance OAuth login settings.
-        
+      value:
+        clientSecret: "{{ clientSecret }}"
+        sharedOauthClientEnabled: {{ sharedOauthClientEnabled }}
+        clientId: "{{ clientId }}"
+    - name: encryptionConfig
+      description: |
+        Encryption configuration (CMEK). Only set if CMEK has been enabled on the instance.
+      value:
+        kmsKeyState: "{{ kmsKeyState }}"
+        kmsKeyName: "{{ kmsKeyName }}"
+        kmsKeyNameVersion: "{{ kmsKeyNameVersion }}"
+    - name: reservedRange
+      value: "{{ reservedRange }}"
+      description: |
+        Name of a reserved IP address range within the Instance.consumer_network, to be used for private services access connection. May or may not be specified in a create request.
+    - name: privateIpEnabled
+      value: {{ privateIpEnabled }}
+      description: |
+        Whether private IP is enabled on the Looker instance.
+    - name: pscConfig
+      description: |
+        Optional. PSC configuration. Used when \`psc_enabled\` is true.
+      value:
+        serviceAttachments:
+          - localFqdn: "{{ localFqdn }}"
+            connectionStatus: "{{ connectionStatus }}"
+            localFqdns: "{{ localFqdns }}"
+            failureReason: "{{ failureReason }}"
+            targetServiceAttachmentUri: "{{ targetServiceAttachmentUri }}"
+        lookerServiceAttachmentUri: "{{ lookerServiceAttachmentUri }}"
+        allowedVpcs:
+          - "{{ allowedVpcs }}"
+    - name: periodicExportConfig
+      description: |
+        Optional. Configuration for periodic export.
+      value:
+        startTime:
+          minutes: {{ minutes }}
+          seconds: {{ seconds }}
+          hours: {{ hours }}
+          nanos: {{ nanos }}
+        gcsUri: "{{ gcsUri }}"
+        kmsKey: "{{ kmsKey }}"
+    - name: denyMaintenancePeriod
+      description: |
+        Maintenance denial period for this instance.
+      value:
+        startDate:
+          month: {{ month }}
+          year: {{ year }}
+          day: {{ day }}
+        endDate:
+          month: {{ month }}
+          year: {{ year }}
+          day: {{ day }}
+        time:
+          minutes: {{ minutes }}
+          seconds: {{ seconds }}
+          hours: {{ hours }}
+          nanos: {{ nanos }}
+    - name: acceleratedSecurityPatchEnabled
+      value: {{ acceleratedSecurityPatchEnabled }}
+      description: |
+        Optional. Accelerated security patch enabled for the instance.
+    - name: maintenanceWindow
+      description: |
+        Maintenance window for this instance.
+      value:
+        dayOfWeek: "{{ dayOfWeek }}"
+        startTime:
+          minutes: {{ minutes }}
+          seconds: {{ seconds }}
+          hours: {{ hours }}
+          nanos: {{ nanos }}
+    - name: fipsEnabled
+      value: {{ fipsEnabled }}
+      description: |
+        Optional. Whether FIPS is enabled on the Looker instance.
+    - name: maintenanceSchedule
+      description: |
+        Maintenance schedule for this instance.
+      value:
+        startTime: "{{ startTime }}"
+        endTime: "{{ endTime }}"
     - name: instanceId
-      value: string
-```
+      value: "{{ instanceId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -874,28 +1023,32 @@ Update Instance.
 ```sql
 UPDATE google.looker.instances
 SET 
-data__periodicExportConfig = '{{ periodicExportConfig }}',
-data__encryptionConfig = '{{ encryptionConfig }}',
-data__pscEnabled = {{ pscEnabled }},
 data__consumerNetwork = '{{ consumerNetwork }}',
 data__customDomain = '{{ customDomain }}',
-data__geminiEnabled = {{ geminiEnabled }},
-data__adminSettings = '{{ adminSettings }}',
-data__fipsEnabled = {{ fipsEnabled }},
-data__maintenanceWindow = '{{ maintenanceWindow }}',
-data__controlledEgressEnabled = {{ controlledEgressEnabled }},
-data__classType = '{{ classType }}',
+data__releaseChannel = '{{ releaseChannel }}',
 data__controlledEgressConfig = '{{ controlledEgressConfig }}',
-data__linkedLspProjectNumber = '{{ linkedLspProjectNumber }}',
-data__platformEdition = '{{ platformEdition }}',
-data__maintenanceSchedule = '{{ maintenanceSchedule }}',
-data__publicIpEnabled = {{ publicIpEnabled }},
-data__reservedRange = '{{ reservedRange }}',
 data__userMetadata = '{{ userMetadata }}',
-data__denyMaintenancePeriod = '{{ denyMaintenancePeriod }}',
+data__controlledEgressEnabled = {{ controlledEgressEnabled }},
+data__ingressIpAllowlistConfig = '{{ ingressIpAllowlistConfig }}',
+data__publicIpEnabled = {{ publicIpEnabled }},
+data__adminSettings = '{{ adminSettings }}',
+data__catalogIntegrationOptOut = {{ catalogIntegrationOptOut }},
+data__platformEdition = '{{ platformEdition }}',
+data__geminiEnabled = {{ geminiEnabled }},
+data__pscEnabled = {{ pscEnabled }},
+data__linkedLspProjectNumber = '{{ linkedLspProjectNumber }}',
+data__classType = '{{ classType }}',
+data__oauthConfig = '{{ oauthConfig }}',
+data__encryptionConfig = '{{ encryptionConfig }}',
+data__reservedRange = '{{ reservedRange }}',
 data__privateIpEnabled = {{ privateIpEnabled }},
 data__pscConfig = '{{ pscConfig }}',
-data__oauthConfig = '{{ oauthConfig }}'
+data__periodicExportConfig = '{{ periodicExportConfig }}',
+data__denyMaintenancePeriod = '{{ denyMaintenancePeriod }}',
+data__acceleratedSecurityPatchEnabled = {{ acceleratedSecurityPatchEnabled }},
+data__maintenanceWindow = '{{ maintenanceWindow }}',
+data__fipsEnabled = {{ fipsEnabled }},
+data__maintenanceSchedule = '{{ maintenanceSchedule }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -939,36 +1092,33 @@ AND force = '{{ force }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="restore"
+    defaultValue="restart"
     values={[
-        { label: 'restore', value: 'restore' },
         { label: 'restart', value: 'restart' },
+        { label: 'undelete', value: 'undelete' },
         { label: 'import', value: 'import' },
+        { label: 'restore', value: 'restore' },
         { label: 'export', value: 'export' }
     ]}
 >
-<TabItem value="restore">
-
-Restore Looker instance.
-
-```sql
-EXEC google.looker.instances.restore 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@instancesId='{{ instancesId }}' --required 
-@@json=
-'{
-"backup": "{{ backup }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="restart">
 
 Restart instance.
 
 ```sql
 EXEC google.looker.instances.restart 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@instancesId='{{ instancesId }}' --required
+;
+```
+</TabItem>
+<TabItem value="undelete">
+
+Undeletes Looker instance.
+
+```sql
+EXEC google.looker.instances.undelete 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @instancesId='{{ instancesId }}' --required
@@ -987,6 +1137,22 @@ EXEC google.looker.instances.import
 @@json=
 '{
 "gcsUri": "{{ gcsUri }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="restore">
+
+Restore Looker instance.
+
+```sql
+EXEC google.looker.instances.restore 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@instancesId='{{ instancesId }}' --required 
+@@json=
+'{
+"backup": "{{ backup }}"
 }'
 ;
 ```

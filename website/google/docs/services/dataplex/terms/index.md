@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>terms</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>terms</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="terms" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dataplex.terms" /></td></tr>
 </tbody></table>
@@ -103,46 +104,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. Identifier. The resource name of the GlossaryTerm. Format: projects/&#123;project_id_or_number&#125;/locations/&#123;location_id&#125;/glossaries/&#123;glossary_id&#125;/terms/&#123;term_id&#125;</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time at which the GlossaryTerm was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Optional. The user-mutable description of the GlossaryTerm.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="displayName" /></td>
-    <td><code>string</code></td>
-    <td>Optional. User friendly display name of the GlossaryTerm. This is user-mutable. This will be same as the GlossaryTermId, if not specified.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Optional. User-defined labels for the GlossaryTerm.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="parent" /></td>
-    <td><code>string</code></td>
-    <td>Required. The immediate parent of the GlossaryTerm in the resource-hierarchy. It can either be a Glossary or a GlossaryCategory. Format: projects/&#123;project_id_or_number&#125;/locations/&#123;location_id&#125;/glossaries/&#123;glossary_id&#125; OR projects/&#123;project_id_or_number&#125;/locations/&#123;location_id&#125;/glossaries/&#123;glossary_id&#125;/categories/&#123;category_id&#125;</td>
-</tr>
-<tr>
-    <td><CopyableCode code="uid" /></td>
-    <td><code>string</code></td>
-    <td>Output only. System generated unique id for the GlossaryTerm. This ID will be different if the GlossaryTerm is deleted and re-created with the same name.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The time at which the GlossaryTerm was last updated.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -174,7 +135,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_glossaries_terms_list"><CopyableCode code="projects_locations_glossaries_terms_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-glossariesId"><code>glossariesId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists GlossaryTerm resources in a Glossary.</td>
 </tr>
 <tr>
@@ -304,22 +265,15 @@ Lists GlossaryTerm resources in a Glossary.
 
 ```sql
 SELECT
-name,
-createTime,
-description,
-displayName,
-labels,
-parent,
-uid,
-updateTime
+*
 FROM google.dataplex.terms
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND glossariesId = '{{ glossariesId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -341,20 +295,20 @@ Creates a new GlossaryTerm resource.
 
 ```sql
 INSERT INTO google.dataplex.terms (
-data__displayName,
-data__description,
 data__labels,
 data__parent,
+data__displayName,
+data__description,
 projectsId,
 locationsId,
 glossariesId,
 termId
 )
 SELECT 
-'{{ displayName }}',
-'{{ description }}',
 '{{ labels }}',
 '{{ parent }}',
+'{{ displayName }}',
+'{{ description }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ glossariesId }}',
@@ -373,42 +327,38 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: terms
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the terms resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the terms resource.
     - name: glossariesId
-      value: string
+      value: "{{ glossariesId }}"
       description: Required parameter for the terms resource.
-    - name: displayName
-      value: string
-      description: >
-        Optional. User friendly display name of the GlossaryTerm. This is user-mutable. This will be same as the GlossaryTermId, if not specified.
-        
-    - name: description
-      value: string
-      description: >
-        Optional. The user-mutable description of the GlossaryTerm.
-        
     - name: labels
-      value: object
-      description: >
+      value: "{{ labels }}"
+      description: |
         Optional. User-defined labels for the GlossaryTerm.
-        
     - name: parent
-      value: string
-      description: >
+      value: "{{ parent }}"
+      description: |
         Required. The immediate parent of the GlossaryTerm in the resource-hierarchy. It can either be a Glossary or a GlossaryCategory. Format: projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id} OR projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id}/categories/{category_id}
-        
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. User friendly display name of the GlossaryTerm. This is user-mutable. This will be same as the GlossaryTermId, if not specified.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Optional. The user-mutable description of the GlossaryTerm.
     - name: termId
-      value: string
-```
+      value: "{{ termId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -428,10 +378,10 @@ Updates a GlossaryTerm resource.
 ```sql
 UPDATE google.dataplex.terms
 SET 
-data__displayName = '{{ displayName }}',
-data__description = '{{ description }}',
 data__labels = '{{ labels }}',
-data__parent = '{{ parent }}'
+data__parent = '{{ parent }}',
+data__displayName = '{{ displayName }}',
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

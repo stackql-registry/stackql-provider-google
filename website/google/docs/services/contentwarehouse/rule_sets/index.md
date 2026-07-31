@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>rule_sets</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>rule_sets</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="rule_sets" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.contentwarehouse.rule_sets" /></td></tr>
 </tbody></table>
@@ -264,18 +265,18 @@ Creates a ruleset.
 
 ```sql
 INSERT INTO google.contentwarehouse.rule_sets (
-data__description,
-data__name,
-data__source,
 data__rules,
+data__description,
+data__source,
+data__name,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ description }}',
-'{{ name }}',
-'{{ source }}',
 '{{ rules }}',
+'{{ description }}',
+'{{ source }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -288,37 +289,38 @@ source
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: rule_sets
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the rule_sets resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the rule_sets resource.
-    - name: description
-      value: string
-      description: >
-        Short description of the rule-set.
-        
-    - name: name
-      value: string
-      description: >
-        The resource name of the rule set. Managed internally. Format: projects/{project_number}/locations/{location}/ruleSet/{rule_set_id}. The name is ignored when creating a rule set.
-        
-    - name: source
-      value: string
-      description: >
-        Source of the rules i.e., customer name.
-        
     - name: rules
-      value: array
-      description: >
+      description: |
         List of rules given by the customer.
-        
-```
+      value:
+        - ruleId: "{{ ruleId }}"
+          description: "{{ description }}"
+          triggerType: "{{ triggerType }}"
+          condition: "{{ condition }}"
+          actions: "{{ actions }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Short description of the rule-set.
+    - name: source
+      value: "{{ source }}"
+      description: |
+        Source of the rules i.e., customer name.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The resource name of the rule set. Managed internally. Format: projects/{project_number}/locations/{location}/ruleSet/{rule_set_id}. The name is ignored when creating a rule set.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

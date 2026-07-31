@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>apis</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>apis</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="apis" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigateway.apis" /></td></tr>
 </tbody></table>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the API.</td>
+    <td>Output only. State of the API. (STATE_UNSPECIFIED, CREATING, ACTIVE, FAILED, DELETING, UPDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -126,7 +127,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the API.</td>
+    <td>Output only. State of the API. (STATE_UNSPECIFIED, CREATING, ACTIVE, FAILED, DELETING, UPDATING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -322,17 +323,17 @@ Creates a new Api in a given project and location.
 
 ```sql
 INSERT INTO google.apigateway.apis (
-data__labels,
-data__displayName,
 data__managedService,
+data__displayName,
+data__labels,
 projectsId,
 locationsId,
 apiId
 )
 SELECT 
-'{{ labels }}',
-'{{ displayName }}',
 '{{ managedService }}',
+'{{ displayName }}',
+'{{ labels }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ apiId }}'
@@ -347,34 +348,31 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: apis
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the apis resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the apis resource.
-    - name: labels
-      value: object
-      description: >
-        Optional. Resource labels to represent user-provided metadata. Refer to cloud documentation on labels for more details. https://cloud.google.com/compute/docs/labeling-resources
-        
-    - name: displayName
-      value: string
-      description: >
-        Optional. Display name.
-        
     - name: managedService
-      value: string
-      description: >
+      value: "{{ managedService }}"
+      description: |
         Optional. Immutable. The name of a Google Managed Service ( https://cloud.google.com/service-infrastructure/docs/glossary#managed). If not specified, a new Service will automatically be created in the same project as this API.
-        
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        Optional. Display name.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Resource labels to represent user-provided metadata. Refer to cloud documentation on labels for more details. https://cloud.google.com/compute/docs/labeling-resources
     - name: apiId
-      value: string
-```
+      value: "{{ apiId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -394,9 +392,9 @@ Updates the parameters of a single Api.
 ```sql
 UPDATE google.apigateway.apis
 SET 
-data__labels = '{{ labels }}',
+data__managedService = '{{ managedService }}',
 data__displayName = '{{ displayName }}',
-data__managedService = '{{ managedService }}'
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

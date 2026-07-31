@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>objects</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>objects</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="objects" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.datamigration.objects" /></td></tr>
 </tbody></table>
@@ -72,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="phase" /></td>
     <td><code>string</code></td>
-    <td>Output only. The phase of the migration job object.</td>
+    <td>Output only. The phase of the migration job object. (PHASE_UNSPECIFIED, FULL_DUMP, CDC, READY_FOR_PROMOTE, PROMOTE_IN_PROGRESS, PROMOTED, DIFF_BACKUP, CREATING_BACKUP, RESTORING_BACKUP)</td>
 </tr>
 <tr>
     <td><CopyableCode code="sourceObject" /></td>
@@ -82,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>The state of the migration job object.</td>
+    <td>The state of the migration job object. (STATE_UNSPECIFIED, NOT_STARTED, RUNNING, STOPPING, STOPPED, RESTARTING, FAILED, REMOVING, NOT_SELECTED, COMPLETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -126,7 +127,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="phase" /></td>
     <td><code>string</code></td>
-    <td>Output only. The phase of the migration job object.</td>
+    <td>Output only. The phase of the migration job object. (PHASE_UNSPECIFIED, FULL_DUMP, CDC, READY_FOR_PROMOTE, PROMOTE_IN_PROGRESS, PROMOTED, DIFF_BACKUP, CREATING_BACKUP, RESTORING_BACKUP)</td>
 </tr>
 <tr>
     <td><CopyableCode code="sourceObject" /></td>
@@ -136,7 +137,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>The state of the migration job object.</td>
+    <td>The state of the migration job object. (STATE_UNSPECIFIED, NOT_STARTED, RUNNING, STOPPING, STOPPED, RESTARTING, FAILED, REMOVING, NOT_SELECTED, COMPLETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>

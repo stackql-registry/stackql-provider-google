@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>nat_addresses</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>nat_addresses</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="nat_addresses" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.nat_addresses" /></td></tr>
 </tbody></table>
@@ -62,7 +63,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the nat address.</td>
+    <td>Output only. State of the nat address. (STATE_UNSPECIFIED, CREATING, RESERVED, ACTIVE, DELETING)</td>
 </tr>
 </tbody>
 </table>
@@ -91,7 +92,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. State of the nat address.</td>
+    <td>Output only. State of the nat address. (STATE_UNSPECIFIED, CREATING, RESERVED, ACTIVE, DELETING)</td>
 </tr>
 </tbody>
 </table>
@@ -124,7 +125,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_instances_nat_addresses_list"><CopyableCode code="organizations_instances_nat_addresses_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists the NAT addresses for an Apigee instance. **Note:** Not supported for Apigee hybrid.</td>
 </tr>
 <tr>
@@ -229,8 +230,8 @@ state
 FROM google.apigee.nat_addresses
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND instancesId = '{{ instancesId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -271,22 +272,21 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: nat_addresses
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the nat_addresses resource.
     - name: instancesId
-      value: string
+      value: "{{ instancesId }}"
       description: Required parameter for the nat_addresses resource.
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Required. Resource ID of the NAT address.
-        
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

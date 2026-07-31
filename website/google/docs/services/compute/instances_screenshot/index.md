@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>instances_screenshot</code> re
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>instances_screenshot</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="instances_screenshot" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.instances_screenshot" /></td></tr>
 </tbody></table>
@@ -56,7 +57,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of the resource. Always compute#screenshot for the screenshots. (default: compute#screenshot)</td>
+    <td>Output only. [Output Only] Type of the resource. Always compute#screenshot for the screenshots. (default: compute#screenshot)</td>
 </tr>
 </tbody>
 </table>

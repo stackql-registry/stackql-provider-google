@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>roles</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>roles</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="roles" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.iam.roles" /></td></tr>
 </tbody></table>
@@ -37,8 +38,8 @@ The following fields are returned by `SELECT` queries:
         { label: 'get_project_roles', value: 'get_project_roles' },
         { label: 'get_org_roles', value: 'get_org_roles' },
         { label: 'list_project_roles', value: 'list_project_roles' },
-        { label: 'get', value: 'get' },
         { label: 'list_org_roles', value: 'list_org_roles' },
+        { label: 'get', value: 'get' },
         { label: 'list', value: 'list' }
     ]}
 >
@@ -81,7 +82,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="stage" /></td>
     <td><code>string</code></td>
-    <td>The current launch stage of the role. If the `ALPHA` launch stage has been selected for a role, the `stage` field will not be included in the returned definition for the role.</td>
+    <td>The current launch stage of the role. If the `ALPHA` launch stage has been selected for a role, the `stage` field will not be included in the returned definition for the role. (ALPHA, BETA, GA, DEPRECATED, DISABLED, EAP)</td>
 </tr>
 <tr>
     <td><CopyableCode code="title" /></td>
@@ -130,7 +131,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="stage" /></td>
     <td><code>string</code></td>
-    <td>The current launch stage of the role. If the `ALPHA` launch stage has been selected for a role, the `stage` field will not be included in the returned definition for the role.</td>
+    <td>The current launch stage of the role. If the `ALPHA` launch stage has been selected for a role, the `stage` field will not be included in the returned definition for the role. (ALPHA, BETA, GA, DEPRECATED, DISABLED, EAP)</td>
 </tr>
 <tr>
     <td><CopyableCode code="title" /></td>
@@ -179,56 +180,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="stage" /></td>
     <td><code>string</code></td>
-    <td>The current launch stage of the role. If the `ALPHA` launch stage has been selected for a role, the `stage` field will not be included in the returned definition for the role.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="title" /></td>
-    <td><code>string</code></td>
-    <td>Optional. A human-readable title for the role. Typically this is limited to 100 UTF-8 bytes.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="get">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>The name of the role. When `Role` is used in `CreateRole`, the role name must not be set. When `Role` is used in output and other input such as `UpdateRole`, the role name is the complete path. For example, `roles/logging.viewer` for predefined roles, `organizations/&#123;ORGANIZATION_ID&#125;/roles/myRole` for organization-level custom roles, and `projects/&#123;PROJECT_ID&#125;/roles/myRole` for project-level custom roles.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="deleted" /></td>
-    <td><code>boolean</code></td>
-    <td>The current deleted state of the role. This field is read only. It will be ignored in calls to CreateRole and UpdateRole.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>Optional. A human-readable description for the role.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="etag" /></td>
-    <td><code>string (byte)</code></td>
-    <td>Used to perform a consistent read-modify-write.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="includedPermissions" /></td>
-    <td><code>array</code></td>
-    <td>The names of the permissions this role grants when bound in an IAM policy.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="stage" /></td>
-    <td><code>string</code></td>
-    <td>The current launch stage of the role. If the `ALPHA` launch stage has been selected for a role, the `stage` field will not be included in the returned definition for the role.</td>
+    <td>The current launch stage of the role. If the `ALPHA` launch stage has been selected for a role, the `stage` field will not be included in the returned definition for the role. (ALPHA, BETA, GA, DEPRECATED, DISABLED, EAP)</td>
 </tr>
 <tr>
     <td><CopyableCode code="title" /></td>
@@ -277,7 +229,56 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="stage" /></td>
     <td><code>string</code></td>
-    <td>The current launch stage of the role. If the `ALPHA` launch stage has been selected for a role, the `stage` field will not be included in the returned definition for the role.</td>
+    <td>The current launch stage of the role. If the `ALPHA` launch stage has been selected for a role, the `stage` field will not be included in the returned definition for the role. (ALPHA, BETA, GA, DEPRECATED, DISABLED, EAP)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="title" /></td>
+    <td><code>string</code></td>
+    <td>Optional. A human-readable title for the role. Typically this is limited to 100 UTF-8 bytes.</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="get">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>The name of the role. When `Role` is used in `CreateRole`, the role name must not be set. When `Role` is used in output and other input such as `UpdateRole`, the role name is the complete path. For example, `roles/logging.viewer` for predefined roles, `organizations/&#123;ORGANIZATION_ID&#125;/roles/myRole` for organization-level custom roles, and `projects/&#123;PROJECT_ID&#125;/roles/myRole` for project-level custom roles.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="deleted" /></td>
+    <td><code>boolean</code></td>
+    <td>The current deleted state of the role. This field is read only. It will be ignored in calls to CreateRole and UpdateRole.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="description" /></td>
+    <td><code>string</code></td>
+    <td>Optional. A human-readable description for the role.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="etag" /></td>
+    <td><code>string (byte)</code></td>
+    <td>Used to perform a consistent read-modify-write.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="includedPermissions" /></td>
+    <td><code>array</code></td>
+    <td>The names of the permissions this role grants when bound in an IAM policy.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="stage" /></td>
+    <td><code>string</code></td>
+    <td>The current launch stage of the role. If the `ALPHA` launch stage has been selected for a role, the `stage` field will not be included in the returned definition for the role. (ALPHA, BETA, GA, DEPRECATED, DISABLED, EAP)</td>
 </tr>
 <tr>
     <td><CopyableCode code="title" /></td>
@@ -326,7 +327,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="stage" /></td>
     <td><code>string</code></td>
-    <td>The current launch stage of the role. If the `ALPHA` launch stage has been selected for a role, the `stage` field will not be included in the returned definition for the role.</td>
+    <td>The current launch stage of the role. If the `ALPHA` launch stage has been selected for a role, the `stage` field will not be included in the returned definition for the role. (ALPHA, BETA, GA, DEPRECATED, DISABLED, EAP)</td>
 </tr>
 <tr>
     <td><CopyableCode code="title" /></td>
@@ -371,7 +372,14 @@ The following methods are available for this resource:
     <td><a href="#list_project_roles"><CopyableCode code="list_project_roles" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
+    <td>Lists every predefined Role that IAM supports, or every custom role that is defined for an organization or project.</td>
+</tr>
+<tr>
+    <td><a href="#list_org_roles"><CopyableCode code="list_org_roles" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
     <td>Lists every predefined Role that IAM supports, or every custom role that is defined for an organization or project.</td>
 </tr>
 <tr>
@@ -382,17 +390,10 @@ The following methods are available for this resource:
     <td>Gets the definition of a Role.</td>
 </tr>
 <tr>
-    <td><a href="#list_org_roles"><CopyableCode code="list_org_roles" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
-    <td>Lists every predefined Role that IAM supports, or every custom role that is defined for an organization or project.</td>
-</tr>
-<tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a></td>
     <td>Lists every predefined Role that IAM supports, or every custom role that is defined for an organization or project.</td>
 </tr>
 <tr>
@@ -445,18 +446,18 @@ The following methods are available for this resource:
     <td>Undeletes a custom Role.</td>
 </tr>
 <tr>
-    <td><a href="#query_grantable_roles"><CopyableCode code="query_grantable_roles" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td></td>
-    <td></td>
-    <td>Lists roles that can be granted on a Google Cloud resource. A role is grantable if the IAM policy for the resource can contain bindings to the role.</td>
-</tr>
-<tr>
     <td><a href="#undelete_org_roles"><CopyableCode code="undelete_org_roles" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-rolesId"><code>rolesId</code></a></td>
     <td></td>
     <td>Undeletes a custom Role.</td>
+</tr>
+<tr>
+    <td><a href="#query_grantable_roles"><CopyableCode code="query_grantable_roles" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td></td>
+    <td></td>
+    <td>Lists roles that can be granted on a Google Cloud resource. A role is grantable if the IAM policy for the resource can contain bindings to the role.</td>
 </tr>
 </tbody>
 </table>
@@ -535,8 +536,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
         { label: 'get_project_roles', value: 'get_project_roles' },
         { label: 'get_org_roles', value: 'get_org_roles' },
         { label: 'list_project_roles', value: 'list_project_roles' },
-        { label: 'get', value: 'get' },
         { label: 'list_org_roles', value: 'list_org_roles' },
+        { label: 'get', value: 'get' },
         { label: 'list', value: 'list' }
     ]}
 >
@@ -594,8 +595,30 @@ title
 FROM google.iam.roles
 WHERE projectsId = '{{ projectsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND view = '{{ view }}'
+AND pageToken = '{{ pageToken }}'
+AND showDeleted = '{{ showDeleted }}'
+;
+```
+</TabItem>
+<TabItem value="list_org_roles">
+
+Lists every predefined Role that IAM supports, or every custom role that is defined for an organization or project.
+
+```sql
+SELECT
+name,
+deleted,
+description,
+etag,
+includedPermissions,
+stage,
+title
+FROM google.iam.roles
+WHERE organizationsId = '{{ organizationsId }}' -- required
+AND pageSize = '{{ pageSize }}'
+AND view = '{{ view }}'
+AND pageToken = '{{ pageToken }}'
 AND showDeleted = '{{ showDeleted }}'
 ;
 ```
@@ -618,28 +641,6 @@ WHERE rolesId = '{{ rolesId }}' -- required
 ;
 ```
 </TabItem>
-<TabItem value="list_org_roles">
-
-Lists every predefined Role that IAM supports, or every custom role that is defined for an organization or project.
-
-```sql
-SELECT
-name,
-deleted,
-description,
-etag,
-includedPermissions,
-stage,
-title
-FROM google.iam.roles
-WHERE organizationsId = '{{ organizationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND view = '{{ view }}'
-AND showDeleted = '{{ showDeleted }}'
-;
-```
-</TabItem>
 <TabItem value="list">
 
 Lists every predefined Role that IAM supports, or every custom role that is defined for an organization or project.
@@ -654,10 +655,10 @@ includedPermissions,
 stage,
 title
 FROM google.iam.roles
-WHERE parent = '{{ parent }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
+WHERE pageSize = '{{ pageSize }}'
 AND view = '{{ view }}'
+AND pageToken = '{{ pageToken }}'
+AND parent = '{{ parent }}'
 AND showDeleted = '{{ showDeleted }}'
 ;
 ```
@@ -727,27 +728,33 @@ title
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: roles
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the roles resource.
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the roles resource.
     - name: roleId
-      value: string
-      description: >
-        The role ID to use for this role. A role ID may contain alphanumeric characters, underscores (`_`), and periods (`.`). It must contain a minimum of 3 characters and a maximum of 64 characters.
-        
+      value: "{{ roleId }}"
+      description: |
+        The role ID to use for this role. A role ID may contain alphanumeric characters, underscores (\`_\`), and periods (\`.\`). It must contain a minimum of 3 characters and a maximum of 64 characters.
     - name: role
-      value: object
-      description: >
-        A role in the Identity and Access Management API.
-        
-```
+      description: |
+        The Role resource to create.
+      value:
+        name: "{{ name }}"
+        stage: "{{ stage }}"
+        deleted: {{ deleted }}
+        includedPermissions:
+          - "{{ includedPermissions }}"
+        etag: "{{ etag }}"
+        title: "{{ title }}"
+        description: "{{ description }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -769,12 +776,12 @@ Updates the definition of a custom Role.
 UPDATE google.iam.roles
 SET 
 data__name = '{{ name }}',
-data__title = '{{ title }}',
-data__description = '{{ description }}',
-data__includedPermissions = '{{ includedPermissions }}',
 data__stage = '{{ stage }}',
+data__deleted = {{ deleted }},
+data__includedPermissions = '{{ includedPermissions }}',
 data__etag = '{{ etag }}',
-data__deleted = {{ deleted }}
+data__title = '{{ title }}',
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND rolesId = '{{ rolesId }}' --required
@@ -797,12 +804,12 @@ Updates the definition of a custom Role.
 UPDATE google.iam.roles
 SET 
 data__name = '{{ name }}',
-data__title = '{{ title }}',
-data__description = '{{ description }}',
-data__includedPermissions = '{{ includedPermissions }}',
 data__stage = '{{ stage }}',
+data__deleted = {{ deleted }},
+data__includedPermissions = '{{ includedPermissions }}',
 data__etag = '{{ etag }}',
-data__deleted = {{ deleted }}
+data__title = '{{ title }}',
+data__description = '{{ description }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND rolesId = '{{ rolesId }}' --required
@@ -862,8 +869,8 @@ AND etag = '{{ etag }}'
     defaultValue="undelete_project_roles"
     values={[
         { label: 'undelete_project_roles', value: 'undelete_project_roles' },
-        { label: 'query_grantable_roles', value: 'query_grantable_roles' },
-        { label: 'undelete_org_roles', value: 'undelete_org_roles' }
+        { label: 'undelete_org_roles', value: 'undelete_org_roles' },
+        { label: 'query_grantable_roles', value: 'query_grantable_roles' }
     ]}
 >
 <TabItem value="undelete_project_roles">
@@ -881,22 +888,6 @@ EXEC google.iam.roles.undelete_project_roles
 ;
 ```
 </TabItem>
-<TabItem value="query_grantable_roles">
-
-Lists roles that can be granted on a Google Cloud resource. A role is grantable if the IAM policy for the resource can contain bindings to the role.
-
-```sql
-EXEC google.iam.roles.query_grantable_roles 
-@@json=
-'{
-"fullResourceName": "{{ fullResourceName }}", 
-"view": "{{ view }}", 
-"pageSize": {{ pageSize }}, 
-"pageToken": "{{ pageToken }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="undelete_org_roles">
 
 Undeletes a custom Role.
@@ -908,6 +899,22 @@ EXEC google.iam.roles.undelete_org_roles
 @@json=
 '{
 "etag": "{{ etag }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="query_grantable_roles">
+
+Lists roles that can be granted on a Google Cloud resource. A role is grantable if the IAM policy for the resource can contain bindings to the role.
+
+```sql
+EXEC google.iam.roles.query_grantable_roles 
+@@json=
+'{
+"pageToken": "{{ pageToken }}", 
+"pageSize": {{ pageSize }}, 
+"view": "{{ view }}", 
+"fullResourceName": "{{ fullResourceName }}"
 }'
 ;
 ```

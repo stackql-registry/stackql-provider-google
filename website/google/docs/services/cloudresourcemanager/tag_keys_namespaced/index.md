@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>tag_keys_namespaced</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>tag_keys_namespaced</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="tag_keys_namespaced" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudresourcemanager.tag_keys_namespaced" /></td></tr>
 </tbody></table>
@@ -86,7 +87,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="purpose" /></td>
     <td><code>string</code></td>
-    <td>Optional. A purpose denotes that this Tag is intended for use in policies of a specific policy engine, and will involve that policy engine in management operations involving this Tag. A purpose does not grant a policy engine exclusive rights to the Tag, and it may be referenced by other policy engines. A purpose cannot be changed once set.</td>
+    <td>Optional. A purpose denotes that this Tag is intended for use in policies of a specific policy engine, and will involve that policy engine in management operations involving this Tag. A purpose does not grant a policy engine exclusive rights to the Tag, and it may be referenced by other policy engines. A purpose cannot be changed once set. (PURPOSE_UNSPECIFIED, GCE_FIREWALL, DATA_GOVERNANCE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="purposeData" /></td>

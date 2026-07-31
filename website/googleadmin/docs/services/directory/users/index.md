@@ -15,6 +15,7 @@ image: /img/stackql-googleadmin-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>users</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>users</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="users" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleadmin.directory.users" /></td></tr>
 </tbody></table>
@@ -75,6 +76,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The list of the user's alias email addresses.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="archivalTime" /></td>
+    <td><code>string</code></td>
+    <td>Output only. User's account archival time. (Read-only)</td>
+</tr>
+<tr>
     <td><CopyableCode code="archived" /></td>
     <td><code>boolean</code></td>
     <td>Indicates if user is archived.</td>
@@ -125,6 +131,11 @@ The following fields are returned by `SELECT` queries:
     <td>The user's gender. The maximum allowed data size for this field is 1KB.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="guestAccountInfo" /></td>
+    <td><code>object</code></td>
+    <td>Immutable. Additional guest-related metadata fields (id: GuestAccountInfo)</td>
+</tr>
+<tr>
     <td><CopyableCode code="hashFunction" /></td>
     <td><code>string</code></td>
     <td>Stores the hash format of the `password` property. The following `hashFunction` values are allowed: * `MD5` - Accepts simple hex-encoded values. * `SHA-1` - Accepts simple hex-encoded values. * `crypt` - Compliant with the [C crypt library](https://en.wikipedia.org/wiki/Crypt_%28C%29). Supports the DES, MD5 (hash prefix `$1$`), SHA-256 (hash prefix `$5$`), and SHA-512 (hash prefix `$6$`) hash algorithms. If rounds are specified as part of the prefix, they must be 10,000 or fewer.</td>
@@ -163,6 +174,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="isEnrolledIn2Sv" /></td>
     <td><code>boolean</code></td>
     <td>Output only. Is enrolled in 2-step verification (Read-only)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="isGuestUser" /></td>
+    <td><code>boolean</code></td>
+    <td>Immutable. Indicates if the inserted user is a guest.</td>
 </tr>
 <tr>
     <td><CopyableCode code="isMailboxSetup" /></td>
@@ -263,6 +279,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="suspensionReason" /></td>
     <td><code>string</code></td>
     <td>Output only. Has the reason a user account is suspended either by the administrator or by Google at the time of suspension. The property is returned only if the `suspended` property is `true`.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="suspensionTime" /></td>
+    <td><code>string</code></td>
+    <td>Output only. User's account suspension time. (Read-only)</td>
 </tr>
 <tr>
     <td><CopyableCode code="thumbnailPhotoEtag" /></td>
@@ -319,6 +340,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. The list of the user's alias email addresses.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="archivalTime" /></td>
+    <td><code>string</code></td>
+    <td>Output only. User's account archival time. (Read-only)</td>
+</tr>
+<tr>
     <td><CopyableCode code="archived" /></td>
     <td><code>boolean</code></td>
     <td>Indicates if user is archived.</td>
@@ -369,6 +395,11 @@ The following fields are returned by `SELECT` queries:
     <td>The user's gender. The maximum allowed data size for this field is 1KB.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="guestAccountInfo" /></td>
+    <td><code>object</code></td>
+    <td>Immutable. Additional guest-related metadata fields (id: GuestAccountInfo)</td>
+</tr>
+<tr>
     <td><CopyableCode code="hashFunction" /></td>
     <td><code>string</code></td>
     <td>Stores the hash format of the `password` property. The following `hashFunction` values are allowed: * `MD5` - Accepts simple hex-encoded values. * `SHA-1` - Accepts simple hex-encoded values. * `crypt` - Compliant with the [C crypt library](https://en.wikipedia.org/wiki/Crypt_%28C%29). Supports the DES, MD5 (hash prefix `$1$`), SHA-256 (hash prefix `$5$`), and SHA-512 (hash prefix `$6$`) hash algorithms. If rounds are specified as part of the prefix, they must be 10,000 or fewer.</td>
@@ -407,6 +438,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="isEnrolledIn2Sv" /></td>
     <td><code>boolean</code></td>
     <td>Output only. Is enrolled in 2-step verification (Read-only)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="isGuestUser" /></td>
+    <td><code>boolean</code></td>
+    <td>Immutable. Indicates if the inserted user is a guest.</td>
 </tr>
 <tr>
     <td><CopyableCode code="isMailboxSetup" /></td>
@@ -509,6 +545,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Has the reason a user account is suspended either by the administrator or by Google at the time of suspension. The property is returned only if the `suspended` property is `true`.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="suspensionTime" /></td>
+    <td><code>string</code></td>
+    <td>Output only. User's account suspension time. (Read-only)</td>
+</tr>
+<tr>
     <td><CopyableCode code="thumbnailPhotoEtag" /></td>
     <td><code>string</code></td>
     <td>Output only. ETag of the user's photo (Read-only)</td>
@@ -554,7 +595,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-domain"><code>domain</code></a></td>
-    <td><a href="#parameter-customFieldMask"><code>customFieldMask</code></a>, <a href="#parameter-customer"><code>customer</code></a>, <a href="#parameter-event"><code>event</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-query"><code>query</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-sortOrder"><code>sortOrder</code></a>, <a href="#parameter-viewType"><code>viewType</code></a></td>
+    <td><a href="#parameter-sortOrder"><code>sortOrder</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-viewType"><code>viewType</code></a>, <a href="#parameter-event"><code>event</code></a>, <a href="#parameter-customFieldMask"><code>customFieldMask</code></a>, <a href="#parameter-customer"><code>customer</code></a>, <a href="#parameter-query"><code>query</code></a></td>
     <td>Retrieves a paginated list of either deleted users or all users in a domain.</td>
 </tr>
 <tr>
@@ -586,11 +627,11 @@ The following methods are available for this resource:
     <td>Deletes a user.</td>
 </tr>
 <tr>
-    <td><a href="#make_admin"><CopyableCode code="make_admin" /></a></td>
+    <td><a href="#sign_out"><CopyableCode code="sign_out" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-userKey"><code>userKey</code></a></td>
     <td></td>
-    <td>Makes a user a super administrator.</td>
+    <td>Signs a user out of all web and device sessions and reset their sign-in cookies. User will have to sign in by authenticating again.</td>
 </tr>
 <tr>
     <td><a href="#undelete"><CopyableCode code="undelete" /></a></td>
@@ -603,15 +644,15 @@ The following methods are available for this resource:
     <td><a href="#watch"><CopyableCode code="watch" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
-    <td><a href="#parameter-domain"><code>domain</code></a>, <a href="#parameter-customer"><code>customer</code></a>, <a href="#parameter-event"><code>event</code></a>, <a href="#parameter-customFieldMask"><code>customFieldMask</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-query"><code>query</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-sortOrder"><code>sortOrder</code></a>, <a href="#parameter-viewType"><code>viewType</code></a></td>
+    <td><a href="#parameter-sortOrder"><code>sortOrder</code></a>, <a href="#parameter-domain"><code>domain</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-showDeleted"><code>showDeleted</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-event"><code>event</code></a>, <a href="#parameter-projection"><code>projection</code></a>, <a href="#parameter-viewType"><code>viewType</code></a>, <a href="#parameter-customer"><code>customer</code></a>, <a href="#parameter-customFieldMask"><code>customFieldMask</code></a>, <a href="#parameter-query"><code>query</code></a></td>
     <td>Watches for changes in users list.</td>
 </tr>
 <tr>
-    <td><a href="#sign_out"><CopyableCode code="sign_out" /></a></td>
+    <td><a href="#make_admin"><CopyableCode code="make_admin" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-userKey"><code>userKey</code></a></td>
     <td></td>
-    <td>Signs a user out of all web and device sessions and reset their sign-in cookies. User will have to sign in by authenticating again.</td>
+    <td>Makes a user a super administrator.</td>
 </tr>
 </tbody>
 </table>
@@ -727,6 +768,7 @@ name,
 addresses,
 agreedToTerms,
 aliases,
+archivalTime,
 archived,
 changePasswordAtNextLogin,
 creationTime,
@@ -737,6 +779,7 @@ emails,
 etag,
 externalIds,
 gender,
+guestAccountInfo,
 hashFunction,
 ims,
 includeInGlobalAddressList,
@@ -745,6 +788,7 @@ isAdmin,
 isDelegatedAdmin,
 isEnforcedIn2Sv,
 isEnrolledIn2Sv,
+isGuestUser,
 isMailboxSetup,
 keywords,
 kind,
@@ -765,6 +809,7 @@ relations,
 sshPublicKeys,
 suspended,
 suspensionReason,
+suspensionTime,
 thumbnailPhotoEtag,
 thumbnailPhotoUrl,
 websites
@@ -787,6 +832,7 @@ name,
 addresses,
 agreedToTerms,
 aliases,
+archivalTime,
 archived,
 changePasswordAtNextLogin,
 creationTime,
@@ -797,6 +843,7 @@ emails,
 etag,
 externalIds,
 gender,
+guestAccountInfo,
 hashFunction,
 ims,
 includeInGlobalAddressList,
@@ -805,6 +852,7 @@ isAdmin,
 isDelegatedAdmin,
 isEnforcedIn2Sv,
 isEnrolledIn2Sv,
+isGuestUser,
 isMailboxSetup,
 keywords,
 kind,
@@ -825,22 +873,23 @@ relations,
 sshPublicKeys,
 suspended,
 suspensionReason,
+suspensionTime,
 thumbnailPhotoEtag,
 thumbnailPhotoUrl,
 websites
 FROM googleadmin.directory.users
 WHERE domain = '{{ domain }}' -- required
+AND sortOrder = '{{ sortOrder }}'
+AND orderBy = '{{ orderBy }}'
+AND showDeleted = '{{ showDeleted }}'
+AND pageToken = '{{ pageToken }}'
+AND maxResults = '{{ maxResults }}'
+AND projection = '{{ projection }}'
+AND viewType = '{{ viewType }}'
+AND event = '{{ event }}'
 AND customFieldMask = '{{ customFieldMask }}'
 AND customer = '{{ customer }}'
-AND event = '{{ event }}'
-AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
-AND projection = '{{ projection }}'
 AND query = '{{ query }}'
-AND showDeleted = '{{ showDeleted }}'
-AND sortOrder = '{{ sortOrder }}'
-AND viewType = '{{ viewType }}'
 ;
 ```
 </TabItem>
@@ -862,67 +911,71 @@ Creates a user. Mutate calls immediately following user creation might sometimes
 
 ```sql
 INSERT INTO googleadmin.directory.users (
+data__locations,
+data__ipWhitelisted,
+data__guestAccountInfo,
+data__includeInGlobalAddressList,
+data__orgUnitPath,
+data__recoveryPhone,
+data__sshPublicKeys,
+data__name,
+data__addresses,
+data__ims,
+data__password,
+data__notes,
+data__emails,
 data__id,
 data__primaryEmail,
-data__password,
-data__hashFunction,
-data__suspended,
-data__changePasswordAtNextLogin,
-data__ipWhitelisted,
-data__name,
-data__emails,
-data__externalIds,
-data__relations,
-data__addresses,
-data__organizations,
-data__phones,
-data__languages,
-data__posixAccounts,
-data__sshPublicKeys,
-data__notes,
-data__websites,
-data__locations,
-data__includeInGlobalAddressList,
-data__keywords,
-data__gender,
-data__ims,
 data__customSchemas,
 data__archived,
-data__orgUnitPath,
+data__externalIds,
+data__organizations,
 data__recoveryEmail,
-data__recoveryPhone,
+data__hashFunction,
+data__gender,
+data__phones,
+data__isGuestUser,
+data__relations,
+data__languages,
+data__suspended,
+data__websites,
+data__keywords,
+data__posixAccounts,
+data__changePasswordAtNextLogin,
 resolveConflictAccount
 )
 SELECT 
+'{{ locations }}',
+{{ ipWhitelisted }},
+'{{ guestAccountInfo }}',
+{{ includeInGlobalAddressList }},
+'{{ orgUnitPath }}',
+'{{ recoveryPhone }}',
+'{{ sshPublicKeys }}',
+'{{ name }}',
+'{{ addresses }}',
+'{{ ims }}',
+'{{ password }}',
+'{{ notes }}',
+'{{ emails }}',
 '{{ id }}',
 '{{ primaryEmail }}',
-'{{ password }}',
-'{{ hashFunction }}',
-{{ suspended }},
-{{ changePasswordAtNextLogin }},
-{{ ipWhitelisted }},
-'{{ name }}',
-'{{ emails }}',
-'{{ externalIds }}',
-'{{ relations }}',
-'{{ addresses }}',
-'{{ organizations }}',
-'{{ phones }}',
-'{{ languages }}',
-'{{ posixAccounts }}',
-'{{ sshPublicKeys }}',
-'{{ notes }}',
-'{{ websites }}',
-'{{ locations }}',
-{{ includeInGlobalAddressList }},
-'{{ keywords }}',
-'{{ gender }}',
-'{{ ims }}',
 '{{ customSchemas }}',
 {{ archived }},
-'{{ orgUnitPath }}',
+'{{ externalIds }}',
+'{{ organizations }}',
 '{{ recoveryEmail }}',
-'{{ recoveryPhone }}',
+'{{ hashFunction }}',
+'{{ gender }}',
+'{{ phones }}',
+{{ isGuestUser }},
+'{{ relations }}',
+'{{ languages }}',
+{{ suspended }},
+'{{ websites }}',
+'{{ keywords }}',
+'{{ posixAccounts }}',
+{{ changePasswordAtNextLogin }},
 '{{ resolveConflictAccount }}'
 RETURNING
 id,
@@ -930,6 +983,7 @@ name,
 addresses,
 agreedToTerms,
 aliases,
+archivalTime,
 archived,
 changePasswordAtNextLogin,
 creationTime,
@@ -940,6 +994,7 @@ emails,
 etag,
 externalIds,
 gender,
+guestAccountInfo,
 hashFunction,
 ims,
 includeInGlobalAddressList,
@@ -948,6 +1003,7 @@ isAdmin,
 isDelegatedAdmin,
 isEnforcedIn2Sv,
 isEnrolledIn2Sv,
+isGuestUser,
 isMailboxSetup,
 keywords,
 kind,
@@ -968,6 +1024,7 @@ relations,
 sshPublicKeys,
 suspended,
 suspensionReason,
+suspensionTime,
 thumbnailPhotoEtag,
 thumbnailPhotoUrl,
 websites
@@ -976,158 +1033,142 @@ websites
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: users
   props:
-    - name: id
-      value: string
-      description: >
-        The unique ID for the user. A user `id` can be used as a user request URI's `userKey`.
-        
-    - name: primaryEmail
-      value: string
-      description: >
-        The user's primary email address. This property is required in a request to create a user account. The `primaryEmail` must be unique and cannot be an alias of another user.
-        
-    - name: password
-      value: string
-      description: >
-        User's password
-        
-    - name: hashFunction
-      value: string
-      description: >
-        Stores the hash format of the `password` property. The following `hashFunction` values are allowed: * `MD5` - Accepts simple hex-encoded values. * `SHA-1` - Accepts simple hex-encoded values. * `crypt` - Compliant with the [C crypt library](https://en.wikipedia.org/wiki/Crypt_%28C%29). Supports the DES, MD5 (hash prefix `$1$`), SHA-256 (hash prefix `$5$`), and SHA-512 (hash prefix `$6$`) hash algorithms. If rounds are specified as part of the prefix, they must be 10,000 or fewer.
-        
-    - name: suspended
-      value: boolean
-      description: >
-        Indicates if user is suspended.
-        
-    - name: changePasswordAtNextLogin
-      value: boolean
-      description: >
-        Indicates if the user is forced to change their password at next login. This setting doesn't apply when [the user signs in via a third-party identity provider](https://support.google.com/a/answer/60224).
-        
-    - name: ipWhitelisted
-      value: boolean
-      description: >
-        If `true`, the user's IP address is subject to a deprecated IP address [`allowlist`](https://support.google.com/a/answer/60752) configuration.
-        
-    - name: name
-      value: object
-      description: >
-        Holds the given and family names of the user, and the read-only `fullName` value. The maximum number of characters in the `givenName` and in the `familyName` values is 60. In addition, name values support unicode/UTF-8 characters, and can contain spaces, letters (a-z), numbers (0-9), dashes (-), forward slashes (/), and periods (.). For more information about character usage rules, see the [administration help center](https://support.google.com/a/answer/9193374). Maximum allowed data size for this field is 1KB.
-        
-    - name: emails
-      value: any
-      description: >
-        The list of the user's email addresses. The maximum allowed data size for this field is 10KB. This excludes `publicKeyEncryptionCertificates`.
-        
-    - name: externalIds
-      value: any
-      description: >
-        The list of external IDs for the user, such as an employee or network ID. The maximum allowed data size for this field is 2KB.
-        
-    - name: relations
-      value: any
-      description: >
-        The list of the user's relationships to other users. The maximum allowed data size for this field is 2KB.
-        
-    - name: addresses
-      value: any
-      description: >
-        The list of the user's addresses. The maximum allowed data size for this field is 10KB.
-        
-    - name: organizations
-      value: any
-      description: >
-        The list of organizations the user belongs to. The maximum allowed data size for this field is 10KB.
-        
-    - name: phones
-      value: any
-      description: >
-        The list of the user's phone numbers. The maximum allowed data size for this field is 1KB.
-        
-    - name: languages
-      value: any
-      description: >
-        The user's languages. The maximum allowed data size for this field is 1KB.
-        
-    - name: posixAccounts
-      value: any
-      description: >
-        The list of [POSIX](https://www.opengroup.org/austin/papers/posix_faq.html) account information for the user.
-        
-    - name: sshPublicKeys
-      value: any
-      description: >
-        A list of SSH public keys.
-        
-    - name: notes
-      value: any
-      description: >
-        Notes for the user.
-        
-    - name: websites
-      value: any
-      description: >
-        The user's websites. The maximum allowed data size for this field is 2KB.
-        
     - name: locations
-      value: any
-      description: >
+      value: "{{ locations }}"
+      description: |
         The user's locations. The maximum allowed data size for this field is 10KB.
-        
+    - name: ipWhitelisted
+      value: {{ ipWhitelisted }}
+      description: |
+        If \`true\`, the user's IP address is subject to a deprecated IP address [\`allowlist\`](https://support.google.com/a/answer/60752) configuration.
+    - name: guestAccountInfo
+      description: |
+        Immutable. Additional guest-related metadata fields
+      value:
+        primaryGuestEmail: "{{ primaryGuestEmail }}"
     - name: includeInGlobalAddressList
-      value: boolean
-      description: >
+      value: {{ includeInGlobalAddressList }}
+      description: |
         Indicates if the user's profile is visible in the Google Workspace global address list when the contact sharing feature is enabled for the domain. For more information about excluding user profiles, see the [administration help center](https://support.google.com/a/answer/1285988).
-        
-    - name: keywords
-      value: any
-      description: >
-        The list of the user's keywords. The maximum allowed data size for this field is 1KB.
-        
-    - name: gender
-      value: any
-      description: >
-        The user's gender. The maximum allowed data size for this field is 1KB.
-        
-    - name: ims
-      value: any
-      description: >
-        The list of the user's Instant Messenger (IM) accounts. A user account can have multiple ims properties. But, only one of these ims properties can be the primary IM contact. The maximum allowed data size for this field is 2KB.
-        
-    - name: customSchemas
-      value: object
-      description: >
-        Custom fields of the user. The key is a `schema_name` and its values are `'field_name': 'field_value'`.
-        
-    - name: archived
-      value: boolean
-      description: >
-        Indicates if user is archived.
-        
     - name: orgUnitPath
-      value: string
-      description: >
-        The full path of the parent organization associated with the user. If the parent organization is the top-level, it is represented as a forward slash (`/`).
-        
-    - name: recoveryEmail
-      value: string
-      description: >
-        Recovery email of the user.
-        
+      value: "{{ orgUnitPath }}"
+      description: |
+        The full path of the parent organization associated with the user. If the parent organization is the top-level, it is represented as a forward slash (\`/\`).
     - name: recoveryPhone
-      value: string
-      description: >
+      value: "{{ recoveryPhone }}"
+      description: |
         Recovery phone of the user. The phone number must be in the E.164 format, starting with the plus sign (+). Example: *+16506661212*.
-        
+    - name: sshPublicKeys
+      value: "{{ sshPublicKeys }}"
+      description: |
+        A list of SSH public keys.
+    - name: name
+      description: |
+        Holds the given and family names of the user, and the read-only \`fullName\` value. The maximum number of characters in the \`givenName\` and in the \`familyName\` values is 60. In addition, name values support unicode/UTF-8 characters, and can contain spaces, letters (a-z), numbers (0-9), dashes (-), forward slashes (/), and periods (.). For more information about character usage rules, see the [administration help center](https://support.google.com/a/answer/9193374). Maximum allowed data size for this field is 1KB.
+      value:
+        displayName: "{{ displayName }}"
+        fullName: "{{ fullName }}"
+        familyName: "{{ familyName }}"
+        givenName: "{{ givenName }}"
+    - name: addresses
+      value: "{{ addresses }}"
+      description: |
+        The list of the user's addresses. The maximum allowed data size for this field is 10KB.
+    - name: ims
+      value: "{{ ims }}"
+      description: |
+        The list of the user's Instant Messenger (IM) accounts. A user account can have multiple ims properties. But, only one of these ims properties can be the primary IM contact. The maximum allowed data size for this field is 2KB.
+    - name: password
+      value: "{{ password }}"
+      description: |
+        User's password
+    - name: notes
+      value: "{{ notes }}"
+      description: |
+        Notes for the user.
+    - name: emails
+      value: "{{ emails }}"
+      description: |
+        The list of the user's email addresses. The maximum allowed data size for this field is 10KB. This excludes \`publicKeyEncryptionCertificates\`.
+    - name: id
+      value: "{{ id }}"
+      description: |
+        The unique ID for the user. A user \`id\` can be used as a user request URI's \`userKey\`.
+    - name: primaryEmail
+      value: "{{ primaryEmail }}"
+      description: |
+        The user's primary email address. This property is required in a request to create a user account. The \`primaryEmail\` must be unique and cannot be an alias of another user.
+    - name: customSchemas
+      value: "{{ customSchemas }}"
+      description: |
+        Custom fields of the user. The key is a \`schema_name\` and its values are \`'field_name': 'field_value'\`.
+    - name: archived
+      value: {{ archived }}
+      description: |
+        Indicates if user is archived.
+    - name: externalIds
+      value: "{{ externalIds }}"
+      description: |
+        The list of external IDs for the user, such as an employee or network ID. The maximum allowed data size for this field is 2KB.
+    - name: organizations
+      value: "{{ organizations }}"
+      description: |
+        The list of organizations the user belongs to. The maximum allowed data size for this field is 10KB.
+    - name: recoveryEmail
+      value: "{{ recoveryEmail }}"
+      description: |
+        Recovery email of the user.
+    - name: hashFunction
+      value: "{{ hashFunction }}"
+      description: |
+        Stores the hash format of the \`password\` property. The following \`hashFunction\` values are allowed: * \`MD5\` - Accepts simple hex-encoded values. * \`SHA-1\` - Accepts simple hex-encoded values. * \`crypt\` - Compliant with the [C crypt library](https://en.wikipedia.org/wiki/Crypt_%28C%29). Supports the DES, MD5 (hash prefix \`$1$\`), SHA-256 (hash prefix \`$5$\`), and SHA-512 (hash prefix \`$6$\`) hash algorithms. If rounds are specified as part of the prefix, they must be 10,000 or fewer.
+    - name: gender
+      value: "{{ gender }}"
+      description: |
+        The user's gender. The maximum allowed data size for this field is 1KB.
+    - name: phones
+      value: "{{ phones }}"
+      description: |
+        The list of the user's phone numbers. The maximum allowed data size for this field is 1KB.
+    - name: isGuestUser
+      value: {{ isGuestUser }}
+      description: |
+        Immutable. Indicates if the inserted user is a guest.
+    - name: relations
+      value: "{{ relations }}"
+      description: |
+        The list of the user's relationships to other users. The maximum allowed data size for this field is 2KB.
+    - name: languages
+      value: "{{ languages }}"
+      description: |
+        The user's languages. The maximum allowed data size for this field is 1KB.
+    - name: suspended
+      value: {{ suspended }}
+      description: |
+        Indicates if user is suspended.
+    - name: websites
+      value: "{{ websites }}"
+      description: |
+        The user's websites. The maximum allowed data size for this field is 2KB.
+    - name: keywords
+      value: "{{ keywords }}"
+      description: |
+        The list of the user's keywords. The maximum allowed data size for this field is 1KB.
+    - name: posixAccounts
+      value: "{{ posixAccounts }}"
+      description: |
+        The list of [POSIX](https://www.opengroup.org/austin/papers/posix_faq.html) account information for the user.
+    - name: changePasswordAtNextLogin
+      value: {{ changePasswordAtNextLogin }}
+      description: |
+        Indicates if the user is forced to change their password at next login. This setting doesn't apply when [the user signs in via a third-party identity provider](https://support.google.com/a/answer/60224).
     - name: resolveConflictAccount
-      value: boolean
-```
+      value: {{ resolveConflictAccount }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -1147,35 +1188,37 @@ Updates a user using patch semantics. The update method should be used instead, 
 ```sql
 UPDATE googleadmin.directory.users
 SET 
+data__locations = '{{ locations }}',
+data__ipWhitelisted = {{ ipWhitelisted }},
+data__guestAccountInfo = '{{ guestAccountInfo }}',
+data__includeInGlobalAddressList = {{ includeInGlobalAddressList }},
+data__orgUnitPath = '{{ orgUnitPath }}',
+data__recoveryPhone = '{{ recoveryPhone }}',
+data__sshPublicKeys = '{{ sshPublicKeys }}',
+data__name = '{{ name }}',
+data__addresses = '{{ addresses }}',
+data__ims = '{{ ims }}',
+data__password = '{{ password }}',
+data__notes = '{{ notes }}',
+data__emails = '{{ emails }}',
 data__id = '{{ id }}',
 data__primaryEmail = '{{ primaryEmail }}',
-data__password = '{{ password }}',
-data__hashFunction = '{{ hashFunction }}',
-data__suspended = {{ suspended }},
-data__changePasswordAtNextLogin = {{ changePasswordAtNextLogin }},
-data__ipWhitelisted = {{ ipWhitelisted }},
-data__name = '{{ name }}',
-data__emails = '{{ emails }}',
-data__externalIds = '{{ externalIds }}',
-data__relations = '{{ relations }}',
-data__addresses = '{{ addresses }}',
-data__organizations = '{{ organizations }}',
-data__phones = '{{ phones }}',
-data__languages = '{{ languages }}',
-data__posixAccounts = '{{ posixAccounts }}',
-data__sshPublicKeys = '{{ sshPublicKeys }}',
-data__notes = '{{ notes }}',
-data__websites = '{{ websites }}',
-data__locations = '{{ locations }}',
-data__includeInGlobalAddressList = {{ includeInGlobalAddressList }},
-data__keywords = '{{ keywords }}',
-data__gender = '{{ gender }}',
-data__ims = '{{ ims }}',
 data__customSchemas = '{{ customSchemas }}',
 data__archived = {{ archived }},
-data__orgUnitPath = '{{ orgUnitPath }}',
+data__externalIds = '{{ externalIds }}',
+data__organizations = '{{ organizations }}',
 data__recoveryEmail = '{{ recoveryEmail }}',
-data__recoveryPhone = '{{ recoveryPhone }}'
+data__hashFunction = '{{ hashFunction }}',
+data__gender = '{{ gender }}',
+data__phones = '{{ phones }}',
+data__isGuestUser = {{ isGuestUser }},
+data__relations = '{{ relations }}',
+data__languages = '{{ languages }}',
+data__suspended = {{ suspended }},
+data__websites = '{{ websites }}',
+data__keywords = '{{ keywords }}',
+data__posixAccounts = '{{ posixAccounts }}',
+data__changePasswordAtNextLogin = {{ changePasswordAtNextLogin }}
 WHERE 
 userKey = '{{ userKey }}' --required
 RETURNING
@@ -1184,6 +1227,7 @@ name,
 addresses,
 agreedToTerms,
 aliases,
+archivalTime,
 archived,
 changePasswordAtNextLogin,
 creationTime,
@@ -1194,6 +1238,7 @@ emails,
 etag,
 externalIds,
 gender,
+guestAccountInfo,
 hashFunction,
 ims,
 includeInGlobalAddressList,
@@ -1202,6 +1247,7 @@ isAdmin,
 isDelegatedAdmin,
 isEnforcedIn2Sv,
 isEnrolledIn2Sv,
+isGuestUser,
 isMailboxSetup,
 keywords,
 kind,
@@ -1222,6 +1268,7 @@ relations,
 sshPublicKeys,
 suspended,
 suspensionReason,
+suspensionTime,
 thumbnailPhotoEtag,
 thumbnailPhotoUrl,
 websites;
@@ -1245,35 +1292,37 @@ Updates a user. This method supports patch semantics, meaning that you only need
 ```sql
 REPLACE googleadmin.directory.users
 SET 
+data__locations = '{{ locations }}',
+data__ipWhitelisted = {{ ipWhitelisted }},
+data__guestAccountInfo = '{{ guestAccountInfo }}',
+data__includeInGlobalAddressList = {{ includeInGlobalAddressList }},
+data__orgUnitPath = '{{ orgUnitPath }}',
+data__recoveryPhone = '{{ recoveryPhone }}',
+data__sshPublicKeys = '{{ sshPublicKeys }}',
+data__name = '{{ name }}',
+data__addresses = '{{ addresses }}',
+data__ims = '{{ ims }}',
+data__password = '{{ password }}',
+data__notes = '{{ notes }}',
+data__emails = '{{ emails }}',
 data__id = '{{ id }}',
 data__primaryEmail = '{{ primaryEmail }}',
-data__password = '{{ password }}',
-data__hashFunction = '{{ hashFunction }}',
-data__suspended = {{ suspended }},
-data__changePasswordAtNextLogin = {{ changePasswordAtNextLogin }},
-data__ipWhitelisted = {{ ipWhitelisted }},
-data__name = '{{ name }}',
-data__emails = '{{ emails }}',
-data__externalIds = '{{ externalIds }}',
-data__relations = '{{ relations }}',
-data__addresses = '{{ addresses }}',
-data__organizations = '{{ organizations }}',
-data__phones = '{{ phones }}',
-data__languages = '{{ languages }}',
-data__posixAccounts = '{{ posixAccounts }}',
-data__sshPublicKeys = '{{ sshPublicKeys }}',
-data__notes = '{{ notes }}',
-data__websites = '{{ websites }}',
-data__locations = '{{ locations }}',
-data__includeInGlobalAddressList = {{ includeInGlobalAddressList }},
-data__keywords = '{{ keywords }}',
-data__gender = '{{ gender }}',
-data__ims = '{{ ims }}',
 data__customSchemas = '{{ customSchemas }}',
 data__archived = {{ archived }},
-data__orgUnitPath = '{{ orgUnitPath }}',
+data__externalIds = '{{ externalIds }}',
+data__organizations = '{{ organizations }}',
 data__recoveryEmail = '{{ recoveryEmail }}',
-data__recoveryPhone = '{{ recoveryPhone }}'
+data__hashFunction = '{{ hashFunction }}',
+data__gender = '{{ gender }}',
+data__phones = '{{ phones }}',
+data__isGuestUser = {{ isGuestUser }},
+data__relations = '{{ relations }}',
+data__languages = '{{ languages }}',
+data__suspended = {{ suspended }},
+data__websites = '{{ websites }}',
+data__keywords = '{{ keywords }}',
+data__posixAccounts = '{{ posixAccounts }}',
+data__changePasswordAtNextLogin = {{ changePasswordAtNextLogin }}
 WHERE 
 userKey = '{{ userKey }}' --required
 RETURNING
@@ -1282,6 +1331,7 @@ name,
 addresses,
 agreedToTerms,
 aliases,
+archivalTime,
 archived,
 changePasswordAtNextLogin,
 creationTime,
@@ -1292,6 +1342,7 @@ emails,
 etag,
 externalIds,
 gender,
+guestAccountInfo,
 hashFunction,
 ims,
 includeInGlobalAddressList,
@@ -1300,6 +1351,7 @@ isAdmin,
 isDelegatedAdmin,
 isEnforcedIn2Sv,
 isEnrolledIn2Sv,
+isGuestUser,
 isMailboxSetup,
 keywords,
 kind,
@@ -1320,6 +1372,7 @@ relations,
 sshPublicKeys,
 suspended,
 suspensionReason,
+suspensionTime,
 thumbnailPhotoEtag,
 thumbnailPhotoUrl,
 websites;
@@ -1352,25 +1405,21 @@ WHERE userKey = '{{ userKey }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="make_admin"
+    defaultValue="sign_out"
     values={[
-        { label: 'make_admin', value: 'make_admin' },
+        { label: 'sign_out', value: 'sign_out' },
         { label: 'undelete', value: 'undelete' },
         { label: 'watch', value: 'watch' },
-        { label: 'sign_out', value: 'sign_out' }
+        { label: 'make_admin', value: 'make_admin' }
     ]}
 >
-<TabItem value="make_admin">
+<TabItem value="sign_out">
 
-Makes a user a super administrator.
+Signs a user out of all web and device sessions and reset their sign-in cookies. User will have to sign in by authenticating again.
 
 ```sql
-EXEC googleadmin.directory.users.make_admin 
-@userKey='{{ userKey }}' --required 
-@@json=
-'{
-"status": {{ status }}
-}'
+EXEC googleadmin.directory.users.sign_out 
+@userKey='{{ userKey }}' --required
 ;
 ```
 </TabItem>
@@ -1394,41 +1443,45 @@ Watches for changes in users list.
 
 ```sql
 EXEC googleadmin.directory.users.watch 
-@domain='{{ domain }}', 
-@customer='{{ customer }}', 
-@event='{{ event }}', 
-@customFieldMask='{{ customFieldMask }}', 
-@maxResults='{{ maxResults }}', 
-@orderBy='{{ orderBy }}', 
-@pageToken='{{ pageToken }}', 
-@projection='{{ projection }}', 
-@query='{{ query }}', 
-@showDeleted='{{ showDeleted }}', 
 @sortOrder='{{ sortOrder }}', 
-@viewType='{{ viewType }}' 
+@domain='{{ domain }}', 
+@orderBy='{{ orderBy }}', 
+@showDeleted='{{ showDeleted }}', 
+@pageToken='{{ pageToken }}', 
+@maxResults='{{ maxResults }}', 
+@event='{{ event }}', 
+@projection='{{ projection }}', 
+@viewType='{{ viewType }}', 
+@customer='{{ customer }}', 
+@customFieldMask='{{ customFieldMask }}', 
+@query='{{ query }}' 
 @@json=
 '{
-"id": "{{ id }}", 
-"token": "{{ token }}", 
-"expiration": "{{ expiration }}", 
-"type": "{{ type }}", 
 "address": "{{ address }}", 
-"payload": {{ payload }}, 
-"params": "{{ params }}", 
+"token": "{{ token }}", 
 "resourceId": "{{ resourceId }}", 
+"params": "{{ params }}", 
+"type": "{{ type }}", 
+"kind": "{{ kind }}", 
+"id": "{{ id }}", 
 "resourceUri": "{{ resourceUri }}", 
-"kind": "{{ kind }}"
+"payload": {{ payload }}, 
+"expiration": "{{ expiration }}"
 }'
 ;
 ```
 </TabItem>
-<TabItem value="sign_out">
+<TabItem value="make_admin">
 
-Signs a user out of all web and device sessions and reset their sign-in cookies. User will have to sign in by authenticating again.
+Makes a user a super administrator.
 
 ```sql
-EXEC googleadmin.directory.users.sign_out 
-@userKey='{{ userKey }}' --required
+EXEC googleadmin.directory.users.make_admin 
+@userKey='{{ userKey }}' --required 
+@@json=
+'{
+"status": {{ status }}
+}'
 ;
 ```
 </TabItem>

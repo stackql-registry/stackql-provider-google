@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>specialist_pools</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>specialist_pools</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="specialist_pools" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.specialist_pools" /></td></tr>
 </tbody></table>
@@ -154,7 +155,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-readMask"><code>readMask</code></a></td>
     <td>Lists SpecialistPools in a Location.</td>
 </tr>
 <tr>
@@ -280,8 +281,8 @@ specialistWorkerEmails
 FROM google.aiplatform.specialist_pools
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND readMask = '{{ readMask }}'
 ;
 ```
@@ -304,18 +305,18 @@ Creates a SpecialistPool.
 
 ```sql
 INSERT INTO google.aiplatform.specialist_pools (
-data__specialistWorkerEmails,
-data__name,
 data__displayName,
+data__name,
 data__specialistManagerEmails,
+data__specialistWorkerEmails,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ specialistWorkerEmails }}',
-'{{ name }}',
 '{{ displayName }}',
+'{{ name }}',
 '{{ specialistManagerEmails }}',
+'{{ specialistWorkerEmails }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -329,37 +330,35 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: specialist_pools
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the specialist_pools resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the specialist_pools resource.
-    - name: specialistWorkerEmails
-      value: array
-      description: >
-        The email addresses of workers in the SpecialistPool.
-        
-    - name: name
-      value: string
-      description: >
-        Required. The resource name of the SpecialistPool.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Required. The user-defined name of the SpecialistPool. The name can be up to 128 characters long and can consist of any UTF-8 characters. This field should be unique on project-level.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. The resource name of the SpecialistPool.
     - name: specialistManagerEmails
-      value: array
-      description: >
+      value:
+        - "{{ specialistManagerEmails }}"
+      description: |
         The email addresses of the managers in the SpecialistPool.
-        
-```
+    - name: specialistWorkerEmails
+      value:
+        - "{{ specialistWorkerEmails }}"
+      description: |
+        The email addresses of workers in the SpecialistPool.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -379,10 +378,10 @@ Updates a SpecialistPool.
 ```sql
 UPDATE google.aiplatform.specialist_pools
 SET 
-data__specialistWorkerEmails = '{{ specialistWorkerEmails }}',
-data__name = '{{ name }}',
 data__displayName = '{{ displayName }}',
-data__specialistManagerEmails = '{{ specialistManagerEmails }}'
+data__name = '{{ name }}',
+data__specialistManagerEmails = '{{ specialistManagerEmails }}',
+data__specialistWorkerEmails = '{{ specialistWorkerEmails }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

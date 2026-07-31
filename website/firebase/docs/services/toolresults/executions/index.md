@@ -15,6 +15,7 @@ image: /img/stackql-firebase-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>executions</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>executions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="executions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="firebase.toolresults.executions" /></td></tr>
 </tbody></table>
@@ -82,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>The initial state is IN_PROGRESS. The only legal state transitions is from IN_PROGRESS to COMPLETE. A PRECONDITION_FAILED will be returned if an invalid transition is requested. The state can only be set to COMPLETE once. A FAILED_PRECONDITION will be returned if the state is set to COMPLETE multiple times. If the state is set to COMPLETE, all the in-progress steps within the execution will be set as COMPLETE. If the outcome of the step is not set, the outcome will be set to INCONCLUSIVE. - In response always set - In create/update request: optional</td>
+    <td>The initial state is IN_PROGRESS. The only legal state transitions is from IN_PROGRESS to COMPLETE. A PRECONDITION_FAILED will be returned if an invalid transition is requested. The state can only be set to COMPLETE once. A FAILED_PRECONDITION will be returned if the state is set to COMPLETE multiple times. If the state is set to COMPLETE, all the in-progress steps within the execution will be set as COMPLETE. If the outcome of the step is not set, the outcome will be set to INCONCLUSIVE. - In response always set - In create/update request: optional (unknownState, pending, inProgress, complete)</td>
 </tr>
 <tr>
     <td><CopyableCode code="testExecutionMatrixId" /></td>
@@ -136,7 +137,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>The initial state is IN_PROGRESS. The only legal state transitions is from IN_PROGRESS to COMPLETE. A PRECONDITION_FAILED will be returned if an invalid transition is requested. The state can only be set to COMPLETE once. A FAILED_PRECONDITION will be returned if the state is set to COMPLETE multiple times. If the state is set to COMPLETE, all the in-progress steps within the execution will be set as COMPLETE. If the outcome of the step is not set, the outcome will be set to INCONCLUSIVE. - In response always set - In create/update request: optional</td>
+    <td>The initial state is IN_PROGRESS. The only legal state transitions is from IN_PROGRESS to COMPLETE. A PRECONDITION_FAILED will be returned if an invalid transition is requested. The state can only be set to COMPLETE once. A FAILED_PRECONDITION will be returned if the state is set to COMPLETE multiple times. If the state is set to COMPLETE, all the in-progress steps within the execution will be set as COMPLETE. If the outcome of the step is not set, the outcome will be set to INCONCLUSIVE. - In response always set - In create/update request: optional (unknownState, pending, inProgress, complete)</td>
 </tr>
 <tr>
     <td><CopyableCode code="testExecutionMatrixId" /></td>
@@ -311,26 +312,26 @@ Creates an Execution. The returned Execution will have the id set. May return an
 ```sql
 INSERT INTO firebase.toolresults.executions (
 data__executionId,
-data__state,
-data__creationTime,
 data__completionTime,
-data__outcome,
 data__dimensionDefinitions,
 data__specification,
+data__outcome,
 data__testExecutionMatrixId,
+data__creationTime,
+data__state,
 projectId,
 historyId,
 requestId
 )
 SELECT 
 '{{ executionId }}',
-'{{ state }}',
-'{{ creationTime }}',
 '{{ completionTime }}',
-'{{ outcome }}',
 '{{ dimensionDefinitions }}',
 '{{ specification }}',
+'{{ outcome }}',
 '{{ testExecutionMatrixId }}',
+'{{ creationTime }}',
+'{{ state }}',
 '{{ projectId }}',
 '{{ historyId }}',
 '{{ requestId }}'
@@ -348,60 +349,110 @@ testExecutionMatrixId
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: executions
   props:
     - name: projectId
-      value: string
+      value: "{{ projectId }}"
       description: Required parameter for the executions resource.
     - name: historyId
-      value: string
+      value: "{{ historyId }}"
       description: Required parameter for the executions resource.
     - name: executionId
-      value: string
-      description: >
+      value: "{{ executionId }}"
+      description: |
         A unique identifier within a History for this Execution. Returns INVALID_ARGUMENT if this field is set or overwritten by the caller. - In response always set - In create/update request: never set
-        
-    - name: state
-      value: string
-      description: >
-        The initial state is IN_PROGRESS. The only legal state transitions is from IN_PROGRESS to COMPLETE. A PRECONDITION_FAILED will be returned if an invalid transition is requested. The state can only be set to COMPLETE once. A FAILED_PRECONDITION will be returned if the state is set to COMPLETE multiple times. If the state is set to COMPLETE, all the in-progress steps within the execution will be set as COMPLETE. If the outcome of the step is not set, the outcome will be set to INCONCLUSIVE. - In response always set - In create/update request: optional
-        
-      valid_values: ['unknownState', 'pending', 'inProgress', 'complete']
-    - name: creationTime
-      value: object
-      description: >
-        The time when the Execution was created. This value will be set automatically when CreateExecution is called. - In response: always set - In create/update request: never set
-        
     - name: completionTime
-      value: object
-      description: >
+      description: |
         The time when the Execution status transitioned to COMPLETE. This value will be set automatically when state transitions to COMPLETE. - In response: set if the execution state is COMPLETE. - In create/update request: never set
-        
-    - name: outcome
-      value: object
-      description: >
-        Classify the result, for example into SUCCESS or FAILURE - In response: present if set by create/update request - In create/update request: optional
-        
+      value:
+        seconds: "{{ seconds }}"
+        nanos: {{ nanos }}
     - name: dimensionDefinitions
-      value: array
-      description: >
+      value: "{{ dimensionDefinitions }}"
+      description: |
         The dimensions along which different steps in this execution may vary. This must remain fixed over the life of the execution. Returns INVALID_ARGUMENT if this field is set in an update request. Returns INVALID_ARGUMENT if the same name occurs in more than one dimension_definition. Returns INVALID_ARGUMENT if the size of the list is over 100. - In response: present if set by create - In create request: optional - In update request: never set
-        
     - name: specification
-      value: object
-      description: >
+      description: |
         Lightweight information about execution request. - In response: present if set by create - In create: optional - In update: optional
-        
+      value:
+        androidTest:
+          androidTestLoop: "{{ androidTestLoop }}"
+          androidRoboTest:
+            bootstrapRunnerClass: "{{ bootstrapRunnerClass }}"
+            maxDepth: {{ maxDepth }}
+            maxSteps: {{ maxSteps }}
+            appInitialActivity: "{{ appInitialActivity }}"
+            bootstrapPackageId: "{{ bootstrapPackageId }}"
+          androidAppInfo:
+            versionCode: "{{ versionCode }}"
+            name: "{{ name }}"
+            packageName: "{{ packageName }}"
+            versionName: "{{ versionName }}"
+          testTimeout:
+            seconds: "{{ seconds }}"
+            nanos: {{ nanos }}
+          androidInstrumentationTest:
+            testPackageId: "{{ testPackageId }}"
+            testRunnerClass: "{{ testRunnerClass }}"
+            useOrchestrator: {{ useOrchestrator }}
+            testTargets:
+              - "{{ testTargets }}"
+        iosTest:
+          iosAppInfo:
+            name: "{{ name }}"
+          iosRoboTest: "{{ iosRoboTest }}"
+          iosTestLoop:
+            bundleId: "{{ bundleId }}"
+          iosXcTest:
+            bundleId: "{{ bundleId }}"
+            xcodeVersion: "{{ xcodeVersion }}"
+          testTimeout:
+            seconds: "{{ seconds }}"
+            nanos: {{ nanos }}
+    - name: outcome
+      description: |
+        Classify the result, for example into SUCCESS or FAILURE - In response: present if set by create/update request - In create/update request: optional
+      value:
+        inconclusiveDetail:
+          infrastructureFailure: {{ infrastructureFailure }}
+          hasErrorLogs: {{ hasErrorLogs }}
+          abortedByUser: {{ abortedByUser }}
+        summary: "{{ summary }}"
+        successDetail:
+          otherNativeCrash: {{ otherNativeCrash }}
+        failureDetail:
+          timedOut: {{ timedOut }}
+          notInstalled: {{ notInstalled }}
+          otherNativeCrash: {{ otherNativeCrash }}
+          unableToCrawl: {{ unableToCrawl }}
+          crashed: {{ crashed }}
+          failedRoboscript: {{ failedRoboscript }}
+          deviceOutOfMemory: {{ deviceOutOfMemory }}
+        skippedDetail:
+          pendingTimeout: {{ pendingTimeout }}
+          incompatibleDevice: {{ incompatibleDevice }}
+          incompatibleAppVersion: {{ incompatibleAppVersion }}
+          incompatibleArchitecture: {{ incompatibleArchitecture }}
     - name: testExecutionMatrixId
-      value: string
-      description: >
+      value: "{{ testExecutionMatrixId }}"
+      description: |
         TestExecution Matrix ID that the TestExecutionService uses. - In response: present if set by create - In create: optional - In update: never set
-        
+    - name: creationTime
+      description: |
+        The time when the Execution was created. This value will be set automatically when CreateExecution is called. - In response: always set - In create/update request: never set
+      value:
+        seconds: "{{ seconds }}"
+        nanos: {{ nanos }}
+    - name: state
+      value: "{{ state }}"
+      description: |
+        The initial state is IN_PROGRESS. The only legal state transitions is from IN_PROGRESS to COMPLETE. A PRECONDITION_FAILED will be returned if an invalid transition is requested. The state can only be set to COMPLETE once. A FAILED_PRECONDITION will be returned if the state is set to COMPLETE multiple times. If the state is set to COMPLETE, all the in-progress steps within the execution will be set as COMPLETE. If the outcome of the step is not set, the outcome will be set to INCONCLUSIVE. - In response always set - In create/update request: optional
+      valid_values: ['unknownState', 'pending', 'inProgress', 'complete']
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -422,13 +473,13 @@ Updates an existing Execution with the supplied partial entity. May return any o
 UPDATE firebase.toolresults.executions
 SET 
 data__executionId = '{{ executionId }}',
-data__state = '{{ state }}',
-data__creationTime = '{{ creationTime }}',
 data__completionTime = '{{ completionTime }}',
-data__outcome = '{{ outcome }}',
 data__dimensionDefinitions = '{{ dimensionDefinitions }}',
 data__specification = '{{ specification }}',
-data__testExecutionMatrixId = '{{ testExecutionMatrixId }}'
+data__outcome = '{{ outcome }}',
+data__testExecutionMatrixId = '{{ testExecutionMatrixId }}',
+data__creationTime = '{{ creationTime }}',
+data__state = '{{ state }}'
 WHERE 
 projectId = '{{ projectId }}' --required
 AND historyId = '{{ historyId }}' --required

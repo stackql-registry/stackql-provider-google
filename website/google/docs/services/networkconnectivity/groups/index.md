@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>groups</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>groups</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="groups" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networkconnectivity.groups" /></td></tr>
 </tbody></table>
@@ -82,7 +83,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current lifecycle state of this group.</td>
+    <td>Output only. The current lifecycle state of this group. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, ACCEPTING, REJECTING, UPDATING, INACTIVE, OBSOLETE, FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -141,7 +142,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current lifecycle state of this group.</td>
+    <td>Output only. The current lifecycle state of this group. (STATE_UNSPECIFIED, CREATING, ACTIVE, DELETING, ACCEPTING, REJECTING, UPDATING, INACTIVE, OBSOLETE, FAILED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -184,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-hubsId"><code>hubsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists groups in a given hub.</td>
 </tr>
 <tr>
@@ -309,8 +310,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND hubsId = '{{ hubsId }}' -- required
 AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -332,10 +333,10 @@ Updates the parameters of a Network Connectivity Center group.
 ```sql
 UPDATE google.networkconnectivity.groups
 SET 
-data__name = '{{ name }}',
-data__description = '{{ description }}',
 data__labels = '{{ labels }}',
-data__autoAccept = '{{ autoAccept }}'
+data__autoAccept = '{{ autoAccept }}',
+data__description = '{{ description }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND hubsId = '{{ hubsId }}' --required

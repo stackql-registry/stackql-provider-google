@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>tasks</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>tasks</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="tasks" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.run.tasks" /></td></tr>
 </tbody></table>
@@ -102,7 +103,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="executionEnvironment" /></td>
     <td><code>string</code></td>
-    <td>The execution environment being used to host this Task.</td>
+    <td>The execution environment being used to host this Task. (EXECUTION_ENVIRONMENT_UNSPECIFIED, EXECUTION_ENVIRONMENT_GEN1, EXECUTION_ENVIRONMENT_GEN2)</td>
 </tr>
 <tr>
     <td><CopyableCode code="expireTime" /></td>
@@ -281,7 +282,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="executionEnvironment" /></td>
     <td><code>string</code></td>
-    <td>The execution environment being used to host this Task.</td>
+    <td>The execution environment being used to host this Task. (EXECUTION_ENVIRONMENT_UNSPECIFIED, EXECUTION_ENVIRONMENT_GEN1, EXECUTION_ENVIRONMENT_GEN2)</td>
 </tr>
 <tr>
     <td><CopyableCode code="expireTime" /></td>

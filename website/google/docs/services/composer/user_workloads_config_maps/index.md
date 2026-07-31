@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>user_workloads_config_maps</cod
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>user_workloads_config_maps</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="user_workloads_config_maps" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.composer.user_workloads_config_maps" /></td></tr>
 </tbody></table>
@@ -247,15 +248,15 @@ Creates a user workloads ConfigMap. This method is supported for Cloud Composer 
 
 ```sql
 INSERT INTO google.composer.user_workloads_config_maps (
-data__data,
 data__name,
+data__data,
 projectsId,
 locationsId,
 environmentsId
 )
 SELECT 
-'{{ data }}',
 '{{ name }}',
+'{{ data }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ environmentsId }}'
@@ -267,30 +268,28 @@ data
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: user_workloads_config_maps
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the user_workloads_config_maps resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the user_workloads_config_maps resource.
     - name: environmentsId
-      value: string
+      value: "{{ environmentsId }}"
       description: Required parameter for the user_workloads_config_maps resource.
-    - name: data
-      value: object
-      description: >
-        Optional. The "data" field of Kubernetes ConfigMap, organized in key-value pairs. For details see: https://kubernetes.io/docs/concepts/configuration/configmap/ Example: { "example_key": "example_value", "another_key": "another_value" }
-        
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Identifier. The resource name of the ConfigMap, in the form: "projects/{projectId}/locations/{locationId}/environments/{environmentId}/userWorkloadsConfigMaps/{userWorkloadsConfigMapId}"
-        
-```
+    - name: data
+      value: "{{ data }}"
+      description: |
+        Optional. The "data" field of Kubernetes ConfigMap, organized in key-value pairs. For details see: https://kubernetes.io/docs/concepts/configuration/configmap/ Example: { "example_key": "example_value", "another_key": "another_value" }
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -310,8 +309,8 @@ Updates a user workloads ConfigMap. This method is supported for Cloud Composer 
 ```sql
 REPLACE google.composer.user_workloads_config_maps
 SET 
-data__data = '{{ data }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__data = '{{ data }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

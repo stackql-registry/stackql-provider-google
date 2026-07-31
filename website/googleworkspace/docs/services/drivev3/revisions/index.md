@@ -15,6 +15,7 @@ image: /img/stackql-googleworkspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>revisions</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>revisions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="revisions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="googleworkspace.drivev3.revisions" /></td></tr>
 </tbody></table>
@@ -235,7 +236,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-fileId"><code>fileId</code></a></td>
     <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
-    <td>Lists a file's revisions. For more information, see [Manage file revisions](https://developers.google.com/workspace/drive/api/guides/manage-revisions).</td>
+    <td>Lists a file's revisions. For more information, see [Manage file revisions](https://developers.google.com/workspace/drive/api/guides/manage-revisions). **Important:** The list of revisions returned by this method might be incomplete for files with a large revision history, including frequently edited Google Docs, Sheets, and Slides. Older revisions might be omitted from the response, meaning the first revision returned may not be the oldest existing revision. The revision history visible in the Workspace editor user interface might be more complete than the list returned by the API.</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
@@ -333,7 +334,7 @@ AND acknowledgeAbuse = '{{ acknowledgeAbuse }}'
 </TabItem>
 <TabItem value="list">
 
-Lists a file's revisions. For more information, see [Manage file revisions](https://developers.google.com/workspace/drive/api/guides/manage-revisions).
+Lists a file's revisions. For more information, see [Manage file revisions](https://developers.google.com/workspace/drive/api/guides/manage-revisions). **Important:** The list of revisions returned by this method might be incomplete for files with a large revision history, including frequently edited Google Docs, Sheets, and Slides. Older revisions might be omitted from the response, meaning the first revision returned may not be the oldest existing revision. The revision history visible in the Workspace editor user interface might be more complete than the list returned by the API.
 
 ```sql
 SELECT
@@ -376,20 +377,20 @@ Updates a revision with patch semantics. For more information, see [Manage file 
 ```sql
 UPDATE googleworkspace.drivev3.revisions
 SET 
-data__id = '{{ id }}',
-data__mimeType = '{{ mimeType }}',
-data__kind = '{{ kind }}',
-data__published = {{ published }},
-data__exportLinks = '{{ exportLinks }}',
-data__keepForever = {{ keepForever }},
-data__md5Checksum = '{{ md5Checksum }}',
-data__modifiedTime = '{{ modifiedTime }}',
-data__publishAuto = {{ publishAuto }},
-data__publishedOutsideDomain = {{ publishedOutsideDomain }},
-data__publishedLink = '{{ publishedLink }}',
-data__size = '{{ size }}',
+data__lastModifyingUser = '{{ lastModifyingUser }}',
 data__originalFilename = '{{ originalFilename }}',
-data__lastModifyingUser = '{{ lastModifyingUser }}'
+data__modifiedTime = '{{ modifiedTime }}',
+data__exportLinks = '{{ exportLinks }}',
+data__published = {{ published }},
+data__id = '{{ id }}',
+data__md5Checksum = '{{ md5Checksum }}',
+data__publishedOutsideDomain = {{ publishedOutsideDomain }},
+data__publishAuto = {{ publishAuto }},
+data__size = '{{ size }}',
+data__kind = '{{ kind }}',
+data__keepForever = {{ keepForever }},
+data__mimeType = '{{ mimeType }}',
+data__publishedLink = '{{ publishedLink }}'
 WHERE 
 fileId = '{{ fileId }}' --required
 AND revisionId = '{{ revisionId }}' --required

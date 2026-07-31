@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>networks_effective_firewalls</c
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>networks_effective_firewalls</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="networks_effective_firewalls" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.networks_effective_firewalls" /></td></tr>
 </tbody></table>
@@ -51,7 +52,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="firewallPolicys" /></td>
     <td><code>array</code></td>
-    <td>[Output Only] Effective firewalls from firewall policy. It returns Global Network Firewall Policies and Hierarchical Firewall Policies. Use regionNetworkFirewallPolicies.getEffectiveFirewalls to get Regional Network Firewall Policies as well.</td>
+    <td>[Output Only] Effective firewalls from firewall policy. It returns Global Network Firewall Policies and Hierarchical Firewall Policies. UseregionNetworkFirewallPolicies.getEffectiveFirewalls to get Regional Network Firewall Policies as well.</td>
 </tr>
 <tr>
     <td><CopyableCode code="firewalls" /></td>

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>runtimes</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>runtimes</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="runtimes" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.appengine.runtimes" /></td></tr>
 </tbody></table>
@@ -76,12 +77,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="environment" /></td>
     <td><code>string</code></td>
-    <td>The environment of the runtime.</td>
+    <td>The environment of the runtime. (ENVIRONMENT_UNSPECIFIED, STANDARD, FLEXIBLE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stage" /></td>
     <td><code>string</code></td>
-    <td>The stage of life this runtime is in, e.g., BETA, GA, etc.</td>
+    <td>The stage of life this runtime is in, e.g., BETA, GA, etc. (RUNTIME_STAGE_UNSPECIFIED, DEVELOPMENT, ALPHA, BETA, GA, DEPRECATED, DECOMMISSIONED, END_OF_SUPPORT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="supportedOperatingSystems" /></td>

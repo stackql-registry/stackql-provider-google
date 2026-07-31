@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>notifications</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>notifications</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="notifications" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.storage.notifications" /></td></tr>
 </tbody></table>
@@ -302,63 +303,55 @@ topic
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: notifications
   props:
     - name: bucket
-      value: string
+      value: "{{ bucket }}"
       description: Required parameter for the notifications resource.
     - name: custom_attributes
-      value: object
-      description: >
+      value: "{{ custom_attributes }}"
+      description: |
         An optional list of additional attributes to attach to each Cloud PubSub message published for this notification subscription.
-        
     - name: etag
-      value: string
-      description: >
+      value: "{{ etag }}"
+      description: |
         HTTP 1.1 Entity tag for this subscription notification.
-        
     - name: event_types
-      value: array
-      description: >
+      value:
+        - "{{ event_types }}"
+      description: |
         If present, only send notifications about listed event types. If empty, sent notifications for all event types.
-        
     - name: id
-      value: string
-      description: >
+      value: "{{ id }}"
+      description: |
         The ID of the notification.
-        
     - name: kind
-      value: string
-      description: >
+      value: "{{ kind }}"
+      description: |
         The kind of item this is. For notifications, this is always storage#notification.
-        
       default: storage#notification
     - name: object_name_prefix
-      value: string
-      description: >
+      value: "{{ object_name_prefix }}"
+      description: |
         If present, only apply this notification configuration to object names that begin with this prefix.
-        
     - name: payload_format
-      value: string
-      description: >
+      value: "{{ payload_format }}"
+      description: |
         The desired content of the Payload.
-        
       default: JSON_API_V1
     - name: selfLink
-      value: string
-      description: >
+      value: "{{ selfLink }}"
+      description: |
         The canonical URL of this notification.
-        
     - name: topic
-      value: string
-      description: >
+      value: "{{ topic }}"
+      description: |
         The Cloud PubSub topic to which this subscription publishes. Formatted as: '//pubsub.googleapis.com/projects/{project-identifier}/topics/{my-topic}'
-        
     - name: userProject
-      value: string
-```
+      value: "{{ userProject }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

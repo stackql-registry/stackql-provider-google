@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>security_monitoring_conditions<
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>security_monitoring_conditions</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="security_monitoring_conditions" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.security_monitoring_conditions" /></td></tr>
 </tbody></table>
@@ -55,6 +56,11 @@ The following fields are returned by `SELECT` queries:
     <td>Identifier. Name of the security monitoring condition resource. Format: organizations/&#123;org&#125;/securityMonitoringConditions/&#123;security_monitoring_condition&#125;</td>
 </tr>
 <tr>
+    <td><CopyableCode code="apiHubGateway" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The API Hub gateway monitored by the security monitoring condition. This should only be set if risk_assessment_type is API_HUB. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/plugins/&#123;plugin&#125;/instances/&#123;instance&#125;`</td>
+</tr>
+<tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The time of the security monitoring condition creation.</td>
@@ -75,9 +81,14 @@ The following fields are returned by `SELECT` queries:
     <td>Required. ID of security profile of the security monitoring condition.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="riskAssessmentType" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The risk assessment type of the security monitoring condition. Defaults to ADVANCED_API_SECURITY. (RISK_ASSESSMENT_TYPE_UNSPECIFIED, APIGEE, API_HUB)</td>
+</tr>
+<tr>
     <td><CopyableCode code="scope" /></td>
     <td><code>string</code></td>
-    <td>Optional. Scope of the security monitoring condition. For Apigee, the environment is the scope of the resources.</td>
+    <td>Optional. Scope of the security monitoring condition. When RiskAssessmentType is APIGEE, the scope should be set to the environment of the resources. When RiskAssessmentType is API_HUB, the scope should not be set.</td>
 </tr>
 <tr>
     <td><CopyableCode code="totalDeployedResources" /></td>
@@ -114,6 +125,11 @@ The following fields are returned by `SELECT` queries:
     <td>Identifier. Name of the security monitoring condition resource. Format: organizations/&#123;org&#125;/securityMonitoringConditions/&#123;security_monitoring_condition&#125;</td>
 </tr>
 <tr>
+    <td><CopyableCode code="apiHubGateway" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The API Hub gateway monitored by the security monitoring condition. This should only be set if risk_assessment_type is API_HUB. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/plugins/&#123;plugin&#125;/instances/&#123;instance&#125;`</td>
+</tr>
+<tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. The time of the security monitoring condition creation.</td>
@@ -134,9 +150,14 @@ The following fields are returned by `SELECT` queries:
     <td>Required. ID of security profile of the security monitoring condition.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="riskAssessmentType" /></td>
+    <td><code>string</code></td>
+    <td>Optional. The risk assessment type of the security monitoring condition. Defaults to ADVANCED_API_SECURITY. (RISK_ASSESSMENT_TYPE_UNSPECIFIED, APIGEE, API_HUB)</td>
+</tr>
+<tr>
     <td><CopyableCode code="scope" /></td>
     <td><code>string</code></td>
-    <td>Optional. Scope of the security monitoring condition. For Apigee, the environment is the scope of the resources.</td>
+    <td>Optional. Scope of the security monitoring condition. When RiskAssessmentType is APIGEE, the scope should be set to the environment of the resources. When RiskAssessmentType is API_HUB, the scope should not be set.</td>
 </tr>
 <tr>
     <td><CopyableCode code="totalDeployedResources" /></td>
@@ -177,14 +198,14 @@ The following methods are available for this resource:
     <td><a href="#organizations_security_monitoring_conditions_get"><CopyableCode code="organizations_security_monitoring_conditions_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-securityMonitoringConditionsId"><code>securityMonitoringConditionsId</code></a></td>
-    <td></td>
+    <td><a href="#parameter-riskAssessmentType"><code>riskAssessmentType</code></a></td>
     <td>Get a security monitoring condition.</td>
 </tr>
 <tr>
     <td><a href="#organizations_security_monitoring_conditions_list"><CopyableCode code="organizations_security_monitoring_conditions_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-riskAssessmentType"><code>riskAssessmentType</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>List security monitoring conditions.</td>
 </tr>
 <tr>
@@ -205,7 +226,7 @@ The following methods are available for this resource:
     <td><a href="#organizations_security_monitoring_conditions_delete"><CopyableCode code="organizations_security_monitoring_conditions_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-securityMonitoringConditionsId"><code>securityMonitoringConditionsId</code></a></td>
-    <td></td>
+    <td><a href="#parameter-riskAssessmentType"><code>riskAssessmentType</code></a></td>
     <td>Delete a security monitoring condition.</td>
 </tr>
 </tbody>
@@ -249,6 +270,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
+<tr id="parameter-riskAssessmentType">
+    <td><CopyableCode code="riskAssessmentType" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 <tr id="parameter-securityMonitoringConditionId">
     <td><CopyableCode code="securityMonitoringConditionId" /></td>
     <td><code>string</code></td>
@@ -278,10 +304,12 @@ Get a security monitoring condition.
 ```sql
 SELECT
 name,
+apiHubGateway,
 createTime,
 include,
 includeAllResources,
 profile,
+riskAssessmentType,
 scope,
 totalDeployedResources,
 totalMonitoredResources,
@@ -289,6 +317,7 @@ updateTime
 FROM google.apigee.security_monitoring_conditions
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND securityMonitoringConditionsId = '{{ securityMonitoringConditionsId }}' -- required
+AND riskAssessmentType = '{{ riskAssessmentType }}'
 ;
 ```
 </TabItem>
@@ -299,18 +328,21 @@ List security monitoring conditions.
 ```sql
 SELECT
 name,
+apiHubGateway,
 createTime,
 include,
 includeAllResources,
 profile,
+riskAssessmentType,
 scope,
 totalDeployedResources,
 totalMonitoredResources,
 updateTime
 FROM google.apigee.security_monitoring_conditions
 WHERE organizationsId = '{{ organizationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND riskAssessmentType = '{{ riskAssessmentType }}'
 AND filter = '{{ filter }}'
 ;
 ```
@@ -333,28 +365,34 @@ Create a security monitoring condition.
 
 ```sql
 INSERT INTO google.apigee.security_monitoring_conditions (
-data__include,
-data__includeAllResources,
-data__name,
 data__profile,
+data__name,
 data__scope,
+data__include,
+data__riskAssessmentType,
+data__apiHubGateway,
+data__includeAllResources,
 organizationsId,
 securityMonitoringConditionId
 )
 SELECT 
-'{{ include }}',
-'{{ includeAllResources }}',
-'{{ name }}',
 '{{ profile }}',
+'{{ name }}',
 '{{ scope }}',
+'{{ include }}',
+'{{ riskAssessmentType }}',
+'{{ apiHubGateway }}',
+'{{ includeAllResources }}',
 '{{ organizationsId }}',
 '{{ securityMonitoringConditionId }}'
 RETURNING
 name,
+apiHubGateway,
 createTime,
 include,
 includeAllResources,
 profile,
+riskAssessmentType,
 scope,
 totalDeployedResources,
 totalMonitoredResources,
@@ -364,41 +402,48 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: security_monitoring_conditions
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the security_monitoring_conditions resource.
-    - name: include
-      value: object
-      description: >
-        Include only these resources.
-        
-    - name: includeAllResources
-      value: object
-      description: >
-        Include all resources under the scope.
-        
-    - name: name
-      value: string
-      description: >
-        Identifier. Name of the security monitoring condition resource. Format: organizations/{org}/securityMonitoringConditions/{security_monitoring_condition}
-        
     - name: profile
-      value: string
-      description: >
+      value: "{{ profile }}"
+      description: |
         Required. ID of security profile of the security monitoring condition.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Name of the security monitoring condition resource. Format: organizations/{org}/securityMonitoringConditions/{security_monitoring_condition}
     - name: scope
-      value: string
-      description: >
-        Optional. Scope of the security monitoring condition. For Apigee, the environment is the scope of the resources.
-        
+      value: "{{ scope }}"
+      description: |
+        Optional. Scope of the security monitoring condition. When RiskAssessmentType is APIGEE, the scope should be set to the environment of the resources. When RiskAssessmentType is API_HUB, the scope should not be set.
+    - name: include
+      description: |
+        Include only these resources.
+      value:
+        resources:
+          - type: "{{ type }}"
+            name: "{{ name }}"
+    - name: riskAssessmentType
+      value: "{{ riskAssessmentType }}"
+      description: |
+        Optional. The risk assessment type of the security monitoring condition. Defaults to ADVANCED_API_SECURITY.
+      valid_values: ['RISK_ASSESSMENT_TYPE_UNSPECIFIED', 'APIGEE', 'API_HUB']
+    - name: apiHubGateway
+      value: "{{ apiHubGateway }}"
+      description: |
+        Optional. The API Hub gateway monitored by the security monitoring condition. This should only be set if risk_assessment_type is API_HUB. Format: \`projects/{project}/locations/{location}/plugins/{plugin}/instances/{instance}\`
+    - name: includeAllResources
+      value: "{{ includeAllResources }}"
+      description: |
+        Include all resources under the scope.
     - name: securityMonitoringConditionId
-      value: string
-```
+      value: "{{ securityMonitoringConditionId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -418,21 +463,25 @@ Update a security monitoring condition.
 ```sql
 UPDATE google.apigee.security_monitoring_conditions
 SET 
-data__include = '{{ include }}',
-data__includeAllResources = '{{ includeAllResources }}',
-data__name = '{{ name }}',
 data__profile = '{{ profile }}',
-data__scope = '{{ scope }}'
+data__name = '{{ name }}',
+data__scope = '{{ scope }}',
+data__include = '{{ include }}',
+data__riskAssessmentType = '{{ riskAssessmentType }}',
+data__apiHubGateway = '{{ apiHubGateway }}',
+data__includeAllResources = '{{ includeAllResources }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND securityMonitoringConditionsId = '{{ securityMonitoringConditionsId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
+apiHubGateway,
 createTime,
 include,
 includeAllResources,
 profile,
+riskAssessmentType,
 scope,
 totalDeployedResources,
 totalMonitoredResources,
@@ -458,6 +507,7 @@ Delete a security monitoring condition.
 DELETE FROM google.apigee.security_monitoring_conditions
 WHERE organizationsId = '{{ organizationsId }}' --required
 AND securityMonitoringConditionsId = '{{ securityMonitoringConditionsId }}' --required
+AND riskAssessmentType = '{{ riskAssessmentType }}'
 ;
 ```
 </TabItem>

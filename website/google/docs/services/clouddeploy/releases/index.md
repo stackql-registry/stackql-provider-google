@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>releases</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>releases</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="releases" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.clouddeploy.releases" /></td></tr>
 </tbody></table>
@@ -87,7 +88,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="deliveryPipelineSnapshot" /></td>
     <td><code>object</code></td>
-    <td>A `DeliveryPipeline` resource in the Cloud Deploy API. A `DeliveryPipeline` defines a pipeline through which a Skaffold configuration can progress. (id: DeliveryPipeline)</td>
+    <td>Output only. Snapshot of the parent pipeline taken at release creation time. (id: DeliveryPipeline)</td>
 </tr>
 <tr>
     <td><CopyableCode code="deployParameters" /></td>
@@ -107,7 +108,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="labels" /></td>
     <td><code>object</code></td>
-    <td>Labels are attributes that can be set and used by both the user and by Cloud Deploy. Labels must meet the following constraints: * Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. * All characters must use UTF-8 encoding, and international characters are allowed. * Keys must start with a lowercase letter or international character. * Each resource is limited to a maximum of 64 labels. Both keys and values are additionally constrained to be &lt;= 128 bytes.</td>
+    <td>Optional. Labels are attributes that can be set and used by both the user and by Cloud Deploy. Labels must meet the following constraints: * Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. * All characters must use UTF-8 encoding, and international characters are allowed. * Keys must start with a lowercase letter or international character. * Each resource is limited to a maximum of 64 labels. Both keys and values are additionally constrained to be &lt;= 128 bytes.</td>
 </tr>
 <tr>
     <td><CopyableCode code="renderEndTime" /></td>
@@ -122,7 +123,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="renderState" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the render operation.</td>
+    <td>Output only. Current state of the render operation. (RENDER_STATE_UNSPECIFIED, SUCCEEDED, FAILED, IN_PROGRESS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="skaffoldConfigPath" /></td>
@@ -157,7 +158,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="toolVersions" /></td>
     <td><code>object</code></td>
-    <td>Optional. The tool versions to use for this release and all subsequent operations involving this release. If unset, then it will freeze the tool versions at the time of release creation. (id: ToolVersions)</td>
+    <td>Optional. The tool versions to use for this release and all subsequent operations involving this release. If unset, tool versions are frozen when the release is created. (id: ToolVersions)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -216,7 +217,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="deliveryPipelineSnapshot" /></td>
     <td><code>object</code></td>
-    <td>A `DeliveryPipeline` resource in the Cloud Deploy API. A `DeliveryPipeline` defines a pipeline through which a Skaffold configuration can progress. (id: DeliveryPipeline)</td>
+    <td>Output only. Snapshot of the parent pipeline taken at release creation time. (id: DeliveryPipeline)</td>
 </tr>
 <tr>
     <td><CopyableCode code="deployParameters" /></td>
@@ -236,7 +237,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="labels" /></td>
     <td><code>object</code></td>
-    <td>Labels are attributes that can be set and used by both the user and by Cloud Deploy. Labels must meet the following constraints: * Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. * All characters must use UTF-8 encoding, and international characters are allowed. * Keys must start with a lowercase letter or international character. * Each resource is limited to a maximum of 64 labels. Both keys and values are additionally constrained to be &lt;= 128 bytes.</td>
+    <td>Optional. Labels are attributes that can be set and used by both the user and by Cloud Deploy. Labels must meet the following constraints: * Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. * All characters must use UTF-8 encoding, and international characters are allowed. * Keys must start with a lowercase letter or international character. * Each resource is limited to a maximum of 64 labels. Both keys and values are additionally constrained to be &lt;= 128 bytes.</td>
 </tr>
 <tr>
     <td><CopyableCode code="renderEndTime" /></td>
@@ -251,7 +252,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="renderState" /></td>
     <td><code>string</code></td>
-    <td>Output only. Current state of the render operation.</td>
+    <td>Output only. Current state of the render operation. (RENDER_STATE_UNSPECIFIED, SUCCEEDED, FAILED, IN_PROGRESS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="skaffoldConfigPath" /></td>
@@ -286,7 +287,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="toolVersions" /></td>
     <td><code>object</code></td>
-    <td>Optional. The tool versions to use for this release and all subsequent operations involving this release. If unset, then it will freeze the tool versions at the time of release creation. (id: ToolVersions)</td>
+    <td>Optional. The tool versions to use for this release and all subsequent operations involving this release. If unset, tool versions are frozen when the release is created. (id: ToolVersions)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -324,14 +325,14 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deliveryPipelinesId"><code>deliveryPipelinesId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists Releases in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deliveryPipelinesId"><code>deliveryPipelinesId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-overrideDeployPolicy"><code>overrideDeployPolicy</code></a>, <a href="#parameter-releaseId"><code>releaseId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-overrideDeployPolicy"><code>overrideDeployPolicy</code></a>, <a href="#parameter-releaseId"><code>releaseId</code></a></td>
     <td>Creates a new Release in a given project and location.</td>
 </tr>
 <tr>
@@ -499,10 +500,10 @@ FROM google.clouddeploy.releases
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND deliveryPipelinesId = '{{ deliveryPipelinesId }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -526,42 +527,42 @@ Creates a new Release in a given project and location.
 INSERT INTO google.clouddeploy.releases (
 data__description,
 data__skaffoldVersion,
-data__skaffoldConfigUri,
 data__skaffoldConfigPath,
-data__name,
-data__labels,
+data__skaffoldConfigUri,
+data__annotations,
+data__etag,
 data__buildArtifacts,
 data__toolVersions,
 data__deployParameters,
-data__etag,
-data__annotations,
+data__labels,
+data__name,
 projectsId,
 locationsId,
 deliveryPipelinesId,
+requestId,
 validateOnly,
 overrideDeployPolicy,
-releaseId,
-requestId
+releaseId
 )
 SELECT 
 '{{ description }}',
 '{{ skaffoldVersion }}',
-'{{ skaffoldConfigUri }}',
 '{{ skaffoldConfigPath }}',
-'{{ name }}',
-'{{ labels }}',
+'{{ skaffoldConfigUri }}',
+'{{ annotations }}',
+'{{ etag }}',
 '{{ buildArtifacts }}',
 '{{ toolVersions }}',
 '{{ deployParameters }}',
-'{{ etag }}',
-'{{ annotations }}',
+'{{ labels }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ deliveryPipelinesId }}',
+'{{ requestId }}',
 '{{ validateOnly }}',
 '{{ overrideDeployPolicy }}',
-'{{ releaseId }}',
-'{{ requestId }}'
+'{{ releaseId }}'
 RETURNING
 name,
 done,
@@ -573,83 +574,80 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: releases
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the releases resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the releases resource.
     - name: deliveryPipelinesId
-      value: string
+      value: "{{ deliveryPipelinesId }}"
       description: Required parameter for the releases resource.
     - name: description
-      value: string
-      description: >
-        Optional. Description of the `Release`. Max length is 255 characters.
-        
+      value: "{{ description }}"
+      description: |
+        Optional. Description of the \`Release\`. Max length is 255 characters.
     - name: skaffoldVersion
-      value: string
-      description: >
+      value: "{{ skaffoldVersion }}"
+      description: |
         Optional. The Skaffold version to use when operating on this release, such as "1.20.0". Not all versions are valid; Cloud Deploy supports a specific set of versions. If unset, the most recent supported Skaffold version will be used.
-        
-    - name: skaffoldConfigUri
-      value: string
-      description: >
-        Optional. Cloud Storage URI of tar.gz archive containing Skaffold configuration.
-        
     - name: skaffoldConfigPath
-      value: string
-      description: >
+      value: "{{ skaffoldConfigPath }}"
+      description: |
         Optional. Filepath of the Skaffold config inside of the config URI.
-        
-    - name: name
-      value: string
-      description: >
-        Identifier. Name of the `Release`. Format is `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/releases/{release}`. The `release` component must match `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`
-        
-    - name: labels
-      value: object
-      description: >
-        Labels are attributes that can be set and used by both the user and by Cloud Deploy. Labels must meet the following constraints: * Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. * All characters must use UTF-8 encoding, and international characters are allowed. * Keys must start with a lowercase letter or international character. * Each resource is limited to a maximum of 64 labels. Both keys and values are additionally constrained to be <= 128 bytes.
-        
-    - name: buildArtifacts
-      value: array
-      description: >
-        Optional. List of artifacts to pass through to Skaffold command.
-        
-    - name: toolVersions
-      value: object
-      description: >
-        Optional. The tool versions to use for this release and all subsequent operations involving this release. If unset, then it will freeze the tool versions at the time of release creation.
-        
-    - name: deployParameters
-      value: object
-      description: >
-        Optional. The deploy parameters to use for all targets in this release.
-        
-    - name: etag
-      value: string
-      description: >
-        This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
-        
+    - name: skaffoldConfigUri
+      value: "{{ skaffoldConfigUri }}"
+      description: |
+        Optional. Cloud Storage URI of tar.gz archive containing Skaffold configuration.
     - name: annotations
-      value: object
-      description: >
+      value: "{{ annotations }}"
+      description: |
         Optional. User annotations. These attributes can only be set and used by the user, and not by Cloud Deploy. See https://google.aip.dev/128#annotations for more details such as format and size limitations.
-        
-    - name: validateOnly
-      value: boolean
-    - name: overrideDeployPolicy
-      value: string
-    - name: releaseId
-      value: string
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
+    - name: buildArtifacts
+      description: |
+        Optional. List of artifacts to pass through to Skaffold command.
+      value:
+        - image: "{{ image }}"
+          tag: "{{ tag }}"
+    - name: toolVersions
+      description: |
+        Optional. The tool versions to use for this release and all subsequent operations involving this release. If unset, tool versions are frozen when the release is created.
+      value:
+        docker: "{{ docker }}"
+        kpt: "{{ kpt }}"
+        helm: "{{ helm }}"
+        kubectl: "{{ kubectl }}"
+        kustomize: "{{ kustomize }}"
+        skaffold: "{{ skaffold }}"
+    - name: deployParameters
+      value: "{{ deployParameters }}"
+      description: |
+        Optional. The deploy parameters to use for all targets in this release.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Labels are attributes that can be set and used by both the user and by Cloud Deploy. Labels must meet the following constraints: * Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. * All characters must use UTF-8 encoding, and international characters are allowed. * Keys must start with a lowercase letter or international character. * Each resource is limited to a maximum of 64 labels. Both keys and values are additionally constrained to be <= 128 bytes.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. Name of the \`Release\`. Format is \`projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/releases/{release}\`. The \`release\` component must match \`[a-z]([a-z0-9-]{0,61}[a-z0-9])?\`
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+    - name: validateOnly
+      value: {{ validateOnly }}
+    - name: overrideDeployPolicy
+      value: "{{ overrideDeployPolicy }}"
+    - name: releaseId
+      value: "{{ releaseId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

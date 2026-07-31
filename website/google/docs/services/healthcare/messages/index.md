@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>messages</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>messages</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="messages" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.healthcare.messages" /></td></tr>
 </tbody></table>
@@ -194,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-datasetsId"><code>datasetsId</code></a>, <a href="#parameter-hl7V2StoresId"><code>hl7V2StoresId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-view"><code>view</code></a></td>
+    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists all the messages in the given HL7v2 store with support for filtering. Note: HL7v2 messages are indexed asynchronously, so there might be a slight delay between the time a message is created and when it can be found through a filter.</td>
 </tr>
 <tr>
@@ -355,11 +356,11 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND datasetsId = '{{ datasetsId }}' -- required
 AND hl7V2StoresId = '{{ hl7V2StoresId }}' -- required
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
-AND orderBy = '{{ orderBy }}'
 AND view = '{{ view }}'
+AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -409,28 +410,45 @@ sendTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: messages
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the messages resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the messages resource.
     - name: datasetsId
-      value: string
+      value: "{{ datasetsId }}"
       description: Required parameter for the messages resource.
     - name: hl7V2StoresId
-      value: string
+      value: "{{ hl7V2StoresId }}"
       description: Required parameter for the messages resource.
     - name: message
-      value: object
-      description: >
-        A complete HL7v2 message. See [Introduction to HL7 Standards] (https://www.hl7.org/implement/standards/index.cfm?ref=common) for details on the standard.
-        
-```
+      description: |
+        Required. HL7v2 message.
+      value:
+        patientIds:
+          - type: "{{ type }}"
+            value: "{{ value }}"
+        messageType: "{{ messageType }}"
+        name: "{{ name }}"
+        sendTime: "{{ sendTime }}"
+        data: "{{ data }}"
+        createTime: "{{ createTime }}"
+        sendFacility: "{{ sendFacility }}"
+        parsedData:
+          segments:
+            - segmentId: "{{ segmentId }}"
+              setId: "{{ setId }}"
+              fields: "{{ fields }}"
+        labels: "{{ labels }}"
+        schematizedData:
+          data: "{{ data }}"
+          error: "{{ error }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -450,8 +468,8 @@ Update the message. The contents of the message in Message.data and data extract
 ```sql
 UPDATE google.healthcare.messages
 SET 
-data__labels = '{{ labels }}',
-data__data = '{{ data }}'
+data__data = '{{ data }}',
+data__labels = '{{ labels }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

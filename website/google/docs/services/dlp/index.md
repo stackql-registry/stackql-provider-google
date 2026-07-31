@@ -18,7 +18,7 @@ dlp service documentation.
 
 :::info[Service Summary]
 
-total resources: __14__  
+total resources: __15__  
 
 :::
 
@@ -28,6 +28,7 @@ total resources: __14__
 <a href="/services/dlp/column_data_profiles/">column_data_profiles</a><br />
 <a href="/services/dlp/connections/">connections</a><br />
 <a href="/services/dlp/content/">content</a><br />
+<a href="/services/dlp/content_policies/">content_policies</a><br />
 <a href="/services/dlp/deidentify_templates/">deidentify_templates</a><br />
 <a href="/services/dlp/discovery_configs/">discovery_configs</a><br />
 <a href="/services/dlp/dlp_jobs/">dlp_jobs</a><br />

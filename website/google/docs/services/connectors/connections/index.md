@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>connections</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>connections</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="connections" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.connectors.connections" /></td></tr>
 </tbody></table>
@@ -50,11 +51,18 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#exchange_auth_code"><CopyableCode code="exchange_auth_code" /></a></td>
+    <td><a href="#tools"><CopyableCode code="tools" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
     <td></td>
-    <td>ExchangeAuthCode exchanges the OAuth authorization code (and other necessary data) for an access token (and associated credentials).</td>
+    <td>Lists all available tools with POST.</td>
+</tr>
+<tr>
+    <td><a href="#generate_connection_toolspec_override"><CopyableCode code="generate_connection_toolspec_override" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
+    <td></td>
+    <td>Generate toolspec override for the given list of toolNames.</td>
 </tr>
 <tr>
     <td><a href="#execute_sql_query"><CopyableCode code="execute_sql_query" /></a></td>
@@ -64,10 +72,24 @@ The following methods are available for this resource:
     <td>Executes a SQL statement specified in the body of the request. An example of this SQL statement in the case of Salesforce connector would be 'select * from Account a, Order o where a.Id = o.AccountId'.</td>
 </tr>
 <tr>
-    <td><a href="#check_status"><CopyableCode code="check_status" /></a></td>
+    <td><a href="#execute_http_request"><CopyableCode code="execute_http_request" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
     <td></td>
+    <td>Executes a generic HTTP request. This supports all payload formats including REST/JSON, GraphQL, XML, SOAP, and Multipart by passing the rendered payload as raw bytes.</td>
+</tr>
+<tr>
+    <td><a href="#refresh_access_token"><CopyableCode code="refresh_access_token" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
+    <td></td>
+    <td>RefreshAccessToken exchanges the OAuth refresh token (and other necessary data) for a new access token (and new associated credentials).</td>
+</tr>
+<tr>
+    <td><a href="#check_status"><CopyableCode code="check_status" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
+    <td><a href="#parameter-executionConfig.headers"><code>executionConfig.headers</code></a></td>
     <td>Reports the status of the connection. Note that when the connection is in a state that is not ACTIVE, the implementation of this RPC method must return a Status with the corresponding State instead of returning a gRPC status code that is not "OK", which indicates that ConnectionStatus itself, not the connection, failed.</td>
 </tr>
 <tr>
@@ -78,11 +100,11 @@ The following methods are available for this resource:
     <td>Reports readiness status of the connector. Similar logic to GetStatus but modified for kubernetes health check to understand.</td>
 </tr>
 <tr>
-    <td><a href="#refresh_access_token"><CopyableCode code="refresh_access_token" /></a></td>
+    <td><a href="#exchange_auth_code"><CopyableCode code="exchange_auth_code" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-connectionsId"><code>connectionsId</code></a></td>
     <td></td>
-    <td>RefreshAccessToken exchanges the OAuth refresh token (and other necessary data) for a new access token (and new associated credentials).</td>
+    <td>ExchangeAuthCode exchanges the OAuth authorization code (and other necessary data) for an access token (and associated credentials).</td>
 </tr>
 </tbody>
 </table>
@@ -115,33 +137,61 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
+<tr id="parameter-executionConfig.headers">
+    <td><CopyableCode code="executionConfig.headers" /></td>
+    <td><code>string</code></td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="exchange_auth_code"
+    defaultValue="tools"
     values={[
-        { label: 'exchange_auth_code', value: 'exchange_auth_code' },
+        { label: 'tools', value: 'tools' },
+        { label: 'generate_connection_toolspec_override', value: 'generate_connection_toolspec_override' },
         { label: 'execute_sql_query', value: 'execute_sql_query' },
+        { label: 'execute_http_request', value: 'execute_http_request' },
+        { label: 'refresh_access_token', value: 'refresh_access_token' },
         { label: 'check_status', value: 'check_status' },
         { label: 'check_readiness', value: 'check_readiness' },
-        { label: 'refresh_access_token', value: 'refresh_access_token' }
+        { label: 'exchange_auth_code', value: 'exchange_auth_code' }
     ]}
 >
-<TabItem value="exchange_auth_code">
+<TabItem value="tools">
 
-ExchangeAuthCode exchanges the OAuth authorization code (and other necessary data) for an access token (and associated credentials).
+Lists all available tools with POST.
 
 ```sql
-EXEC google.connectors.connections.exchange_auth_code 
+EXEC google.connectors.connections.tools 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @connectionsId='{{ connectionsId }}' --required 
 @@json=
 '{
-"authCodeData": "{{ authCodeData }}"
+"toolNames": "{{ toolNames }}", 
+"pageSize": {{ pageSize }}, 
+"pageToken": "{{ pageToken }}", 
+"executionConfig": "{{ executionConfig }}", 
+"toolSpec": "{{ toolSpec }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="generate_connection_toolspec_override">
+
+Generate toolspec override for the given list of toolNames.
+
+```sql
+EXEC google.connectors.connections.generate_connection_toolspec_override 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@connectionsId='{{ connectionsId }}' --required 
+@@json=
+'{
+"toolNames": "{{ toolNames }}"
 }'
 ;
 ```
@@ -162,6 +212,43 @@ EXEC google.connectors.connections.execute_sql_query
 ;
 ```
 </TabItem>
+<TabItem value="execute_http_request">
+
+Executes a generic HTTP request. This supports all payload formats including REST/JSON, GraphQL, XML, SOAP, and Multipart by passing the rendered payload as raw bytes.
+
+```sql
+EXEC google.connectors.connections.execute_http_request 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@connectionsId='{{ connectionsId }}' --required 
+@@json=
+'{
+"httpMethod": "{{ httpMethod }}", 
+"url": "{{ url }}", 
+"headers": "{{ headers }}", 
+"rawBody": "{{ rawBody }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="refresh_access_token">
+
+RefreshAccessToken exchanges the OAuth refresh token (and other necessary data) for a new access token (and new associated credentials).
+
+```sql
+EXEC google.connectors.connections.refresh_access_token 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@connectionsId='{{ connectionsId }}' --required 
+@@json=
+'{
+"executionConfig": "{{ executionConfig }}", 
+"oauth2Config": "{{ oauth2Config }}", 
+"refreshToken": "{{ refreshToken }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="check_status">
 
 Reports the status of the connection. Note that when the connection is in a state that is not ACTIVE, the implementation of this RPC method must return a Status with the corresponding State instead of returning a gRPC status code that is not "OK", which indicates that ConnectionStatus itself, not the connection, failed.
@@ -170,7 +257,8 @@ Reports the status of the connection. Note that when the connection is in a stat
 EXEC google.connectors.connections.check_status 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@connectionsId='{{ connectionsId }}' --required
+@connectionsId='{{ connectionsId }}' --required, 
+@executionConfig.headers='{{ executionConfig.headers }}'
 ;
 ```
 </TabItem>
@@ -186,18 +274,20 @@ EXEC google.connectors.connections.check_readiness
 ;
 ```
 </TabItem>
-<TabItem value="refresh_access_token">
+<TabItem value="exchange_auth_code">
 
-RefreshAccessToken exchanges the OAuth refresh token (and other necessary data) for a new access token (and new associated credentials).
+ExchangeAuthCode exchanges the OAuth authorization code (and other necessary data) for an access token (and associated credentials).
 
 ```sql
-EXEC google.connectors.connections.refresh_access_token 
+EXEC google.connectors.connections.exchange_auth_code 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @connectionsId='{{ connectionsId }}' --required 
 @@json=
 '{
-"refreshToken": "{{ refreshToken }}"
+"executionConfig": "{{ executionConfig }}", 
+"oauth2Config": "{{ oauth2Config }}", 
+"authCodeData": "{{ authCodeData }}"
 }'
 ;
 ```

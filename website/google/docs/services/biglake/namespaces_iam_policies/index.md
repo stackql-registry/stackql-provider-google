@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>namespaces_iam_policies</code> 
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>namespaces_iam_policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="namespaces_iam_policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.biglake.namespaces_iam_policies" /></td></tr>
 </tbody></table>
@@ -96,6 +97,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a>, <a href="#parameter-namespacesId"><code>namespacesId</code></a></td>
     <td></td>
     <td>Sets the IAM policy for the specified catalog.</td>
+</tr>
+<tr>
+    <td><a href="#test_iam_permissions"><CopyableCode code="test_iam_permissions" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a>, <a href="#parameter-namespacesId"><code>namespacesId</code></a></td>
+    <td></td>
+    <td>Tests the IAM permissions for the specified namespace.</td>
 </tr>
 </tbody>
 </table>
@@ -179,8 +187,8 @@ Sets the IAM policy for the specified catalog.
 ```sql
 REPLACE google.biglake.namespaces_iam_policies
 SET 
-data__updateMask = '{{ updateMask }}',
-data__policy = '{{ policy }}'
+data__policy = '{{ policy }}',
+data__updateMask = '{{ updateMask }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND catalogsId = '{{ catalogsId }}' --required
@@ -190,6 +198,33 @@ auditConfigs,
 bindings,
 etag,
 version;
+```
+</TabItem>
+</Tabs>
+
+
+## Lifecycle Methods
+
+<Tabs
+    defaultValue="test_iam_permissions"
+    values={[
+        { label: 'test_iam_permissions', value: 'test_iam_permissions' }
+    ]}
+>
+<TabItem value="test_iam_permissions">
+
+Tests the IAM permissions for the specified namespace.
+
+```sql
+EXEC google.biglake.namespaces_iam_policies.test_iam_permissions 
+@projectsId='{{ projectsId }}' --required, 
+@catalogsId='{{ catalogsId }}' --required, 
+@namespacesId='{{ namespacesId }}' --required 
+@@json=
+'{
+"permissions": "{{ permissions }}"
+}'
+;
 ```
 </TabItem>
 </Tabs>

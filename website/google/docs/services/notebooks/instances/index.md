@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>instances</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>instances</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="instances" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.notebooks.instances" /></td></tr>
 </tbody></table>
@@ -102,7 +103,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="healthState" /></td>
     <td><code>string</code></td>
-    <td>Output only. Instance health_state.</td>
+    <td>Output only. Instance health_state. (HEALTH_STATE_UNSPECIFIED, HEALTHY, UNHEALTHY, AGENT_NOT_INSTALLED, AGENT_NOT_RUNNING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="instanceOwners" /></td>
@@ -132,7 +133,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of this instance.</td>
+    <td>Output only. The state of this instance. (STATE_UNSPECIFIED, STARTING, PROVISIONING, ACTIVE, STOPPING, STOPPED, DELETED, UPGRADING, INITIALIZING, SUSPENDING, SUSPENDED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="thirdPartyProxyUrl" /></td>
@@ -216,7 +217,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="healthState" /></td>
     <td><code>string</code></td>
-    <td>Output only. Instance health_state.</td>
+    <td>Output only. Instance health_state. (HEALTH_STATE_UNSPECIFIED, HEALTHY, UNHEALTHY, AGENT_NOT_INSTALLED, AGENT_NOT_RUNNING)</td>
 </tr>
 <tr>
     <td><CopyableCode code="instanceOwners" /></td>
@@ -246,7 +247,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The state of this instance.</td>
+    <td>Output only. The state of this instance. (STATE_UNSPECIFIED, STARTING, PROVISIONING, ACTIVE, STOPPING, STOPPED, DELETED, UPGRADING, INITIALIZING, SUSPENDING, SUSPENDED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="thirdPartyProxyUrl" /></td>
@@ -294,21 +295,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists instances in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-instanceId"><code>instanceId</code></a></td>
+    <td><a href="#parameter-instanceId"><code>instanceId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Creates a new Instance in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>UpdateInstance updates an Instance.</td>
 </tr>
 <tr>
@@ -319,55 +320,6 @@ The following methods are available for this resource:
     <td>Deletes a single Instance.</td>
 </tr>
 <tr>
-    <td><a href="#upgrade"><CopyableCode code="upgrade" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td></td>
-    <td>Upgrades a notebook instance to the latest version.</td>
-</tr>
-<tr>
-    <td><a href="#reset"><CopyableCode code="reset" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td></td>
-    <td>Resets a notebook instance.</td>
-</tr>
-<tr>
-    <td><a href="#check_upgradability"><CopyableCode code="check_upgradability" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td></td>
-    <td>Checks whether a notebook instance is upgradable.</td>
-</tr>
-<tr>
-    <td><a href="#upgrade_system"><CopyableCode code="upgrade_system" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td></td>
-    <td>Allows notebook instances to upgrade themselves. Do not use this method directly.</td>
-</tr>
-<tr>
-    <td><a href="#check_authorization"><CopyableCode code="check_authorization" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td></td>
-    <td>Initiated by Cloud Console for Oauth consent flow for Workbench Instances. Do not use this method directly. Design doc: go/wbi-euc:auth-dd</td>
-</tr>
-<tr>
-    <td><a href="#stop"><CopyableCode code="stop" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td></td>
-    <td>Stops a notebook instance.</td>
-</tr>
-<tr>
-    <td><a href="#resize_disk"><CopyableCode code="resize_disk" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td></td>
-    <td>Resize a notebook instance disk to a higher capacity.</td>
-</tr>
-<tr>
     <td><a href="#rollback"><CopyableCode code="rollback" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
@@ -375,25 +327,18 @@ The following methods are available for this resource:
     <td>Rollbacks a notebook instance to the previous version.</td>
 </tr>
 <tr>
-    <td><a href="#diagnose"><CopyableCode code="diagnose" /></a></td>
+    <td><a href="#restore"><CopyableCode code="restore" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
     <td></td>
-    <td>Creates a Diagnostic File and runs Diagnostic Tool given an Instance.</td>
+    <td>RestoreInstance restores an Instance from a BackupSource.</td>
 </tr>
 <tr>
-    <td><a href="#generate_access_token"><CopyableCode code="generate_access_token" /></a></td>
+    <td><a href="#upgrade"><CopyableCode code="upgrade" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
     <td></td>
-    <td>Called by VM to return an EUC for the instance owner. Do not use this method directly. Design doc: go/wbi-euc:dd</td>
-</tr>
-<tr>
-    <td><a href="#start"><CopyableCode code="start" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
-    <td></td>
-    <td>Starts a notebook instance.</td>
+    <td>Upgrades a notebook instance to the latest version.</td>
 </tr>
 <tr>
     <td><a href="#report_info_system"><CopyableCode code="report_info_system" /></a></td>
@@ -403,11 +348,67 @@ The following methods are available for this resource:
     <td>Allows notebook instances to report their latest instance information to the Notebooks API server. The server will merge the reported information to the instance metadata store. Do not use this method directly.</td>
 </tr>
 <tr>
-    <td><a href="#restore"><CopyableCode code="restore" /></a></td>
+    <td><a href="#diagnose"><CopyableCode code="diagnose" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
     <td></td>
-    <td>RestoreInstance restores an Instance from a BackupSource.</td>
+    <td>Creates a Diagnostic File and runs Diagnostic Tool given an Instance.</td>
+</tr>
+<tr>
+    <td><a href="#start"><CopyableCode code="start" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Starts a notebook instance.</td>
+</tr>
+<tr>
+    <td><a href="#stop"><CopyableCode code="stop" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Stops a notebook instance.</td>
+</tr>
+<tr>
+    <td><a href="#upgrade_system"><CopyableCode code="upgrade_system" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Allows notebook instances to upgrade themselves. Do not use this method directly.</td>
+</tr>
+<tr>
+    <td><a href="#resize_disk"><CopyableCode code="resize_disk" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Resize a notebook instance disk to a higher capacity.</td>
+</tr>
+<tr>
+    <td><a href="#check_authorization"><CopyableCode code="check_authorization" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Initiated by Cloud Console for Oauth consent flow for Workbench Instances. Do not use this method directly. Design doc: go/wbi-euc:auth-dd</td>
+</tr>
+<tr>
+    <td><a href="#check_upgradability"><CopyableCode code="check_upgradability" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Checks whether a notebook instance is upgradable.</td>
+</tr>
+<tr>
+    <td><a href="#reset"><CopyableCode code="reset" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Resets a notebook instance.</td>
+</tr>
+<tr>
+    <td><a href="#generate_access_token"><CopyableCode code="generate_access_token" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-instancesId"><code>instancesId</code></a></td>
+    <td></td>
+    <td>Called by VM to return an EUC for the instance owner. Do not use this method directly. Design doc: go/wbi-euc:dd</td>
 </tr>
 </tbody>
 </table>
@@ -549,10 +550,10 @@ upgradeHistory
 FROM google.notebooks.instances
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND orderBy = '{{ orderBy }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -574,30 +575,30 @@ Creates a new Instance in a given project and location.
 
 ```sql
 INSERT INTO google.notebooks.instances (
-data__enableThirdPartyIdentity,
 data__enableManagedEuc,
-data__enableDeletionProtection,
-data__instanceOwners,
 data__gceSetup,
-data__labels,
 data__disableProxyAccess,
+data__instanceOwners,
+data__enableDeletionProtection,
+data__labels,
+data__enableThirdPartyIdentity,
 projectsId,
 locationsId,
-requestId,
-instanceId
+instanceId,
+requestId
 )
 SELECT 
-{{ enableThirdPartyIdentity }},
 {{ enableManagedEuc }},
-{{ enableDeletionProtection }},
-'{{ instanceOwners }}',
 '{{ gceSetup }}',
-'{{ labels }}',
 {{ disableProxyAccess }},
+'{{ instanceOwners }}',
+{{ enableDeletionProtection }},
+'{{ labels }}',
+{{ enableThirdPartyIdentity }},
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ requestId }}',
-'{{ instanceId }}'
+'{{ instanceId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -609,56 +610,101 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: instances
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the instances resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the instances resource.
-    - name: enableThirdPartyIdentity
-      value: boolean
-      description: >
-        Optional. Flag that specifies that a notebook can be accessed with third party identity provider.
-        
     - name: enableManagedEuc
-      value: boolean
-      description: >
+      value: {{ enableManagedEuc }}
+      description: |
         Optional. Flag to enable managed end user credentials for the instance.
-        
-    - name: enableDeletionProtection
-      value: boolean
-      description: >
-        Optional. If true, deletion protection will be enabled for this Workbench Instance. If false, deletion protection will be disabled for this Workbench Instance.
-        
-    - name: instanceOwners
-      value: array
-      description: >
-        Optional. The owner of this instance after creation. Format: `alias@example.com` Currently supports one owner only. If not specified, all of the service account users of your VM instance's service account can use the instance.
-        
     - name: gceSetup
-      value: object
-      description: >
+      description: |
         Optional. Compute Engine setup for the notebook. Uses notebook-defined fields.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Labels to apply to this instance. These can be later modified by the UpdateInstance method.
-        
+      value:
+        dataDisks:
+          - diskSizeGb: "{{ diskSizeGb }}"
+            diskEncryption: "{{ diskEncryption }}"
+            resourcePolicies: "{{ resourcePolicies }}"
+            kmsKey: "{{ kmsKey }}"
+            diskType: "{{ diskType }}"
+        gpuDriverConfig:
+          customGpuDriverPath: "{{ customGpuDriverPath }}"
+          enableGpuDriver: {{ enableGpuDriver }}
+        tags:
+          - "{{ tags }}"
+        enableIpForwarding: {{ enableIpForwarding }}
+        reservationAffinity:
+          consumeReservationType: "{{ consumeReservationType }}"
+          values:
+            - "{{ values }}"
+          key: "{{ key }}"
+        serviceAccounts:
+          - email: "{{ email }}"
+            scopes: "{{ scopes }}"
+        containerImage:
+          repository: "{{ repository }}"
+          tag: "{{ tag }}"
+        metadata: "{{ metadata }}"
+        machineType: "{{ machineType }}"
+        disablePublicIp: {{ disablePublicIp }}
+        acceleratorConfigs:
+          - type: "{{ type }}"
+            coreCount: "{{ coreCount }}"
+        bootDisk:
+          kmsKey: "{{ kmsKey }}"
+          diskSizeGb: "{{ diskSizeGb }}"
+          diskType: "{{ diskType }}"
+          diskEncryption: "{{ diskEncryption }}"
+        instanceId: "{{ instanceId }}"
+        shieldedInstanceConfig:
+          enableVtpm: {{ enableVtpm }}
+          enableSecureBoot: {{ enableSecureBoot }}
+          enableIntegrityMonitoring: {{ enableIntegrityMonitoring }}
+        minCpuPlatform: "{{ minCpuPlatform }}"
+        networkInterfaces:
+          - subnet: "{{ subnet }}"
+            nicType: "{{ nicType }}"
+            accessConfigs: "{{ accessConfigs }}"
+            network: "{{ network }}"
+        confidentialInstanceConfig:
+          confidentialInstanceType: "{{ confidentialInstanceType }}"
+        vmImage:
+          name: "{{ name }}"
+          family: "{{ family }}"
+          project: "{{ project }}"
     - name: disableProxyAccess
-      value: boolean
-      description: >
+      value: {{ disableProxyAccess }}
+      description: |
         Optional. If true, the notebook instance will not register with the proxy.
-        
-    - name: requestId
-      value: string
+    - name: instanceOwners
+      value:
+        - "{{ instanceOwners }}"
+      description: |
+        Optional. The owner of this instance after creation. Format: \`alias@example.com\` Currently supports one owner only. If not specified, all of the service account users of your VM instance's service account can use the instance.
+    - name: enableDeletionProtection
+      value: {{ enableDeletionProtection }}
+      description: |
+        Optional. If true, deletion protection will be enabled for this Workbench Instance. If false, deletion protection will be disabled for this Workbench Instance.
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Labels to apply to this instance. These can be later modified by the UpdateInstance method.
+    - name: enableThirdPartyIdentity
+      value: {{ enableThirdPartyIdentity }}
+      description: |
+        Optional. Flag that specifies that a notebook can be accessed with third party identity provider.
     - name: instanceId
-      value: string
-```
+      value: "{{ instanceId }}"
+    - name: requestId
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -678,19 +724,19 @@ UpdateInstance updates an Instance.
 ```sql
 UPDATE google.notebooks.instances
 SET 
-data__enableThirdPartyIdentity = {{ enableThirdPartyIdentity }},
 data__enableManagedEuc = {{ enableManagedEuc }},
-data__enableDeletionProtection = {{ enableDeletionProtection }},
-data__instanceOwners = '{{ instanceOwners }}',
 data__gceSetup = '{{ gceSetup }}',
+data__disableProxyAccess = {{ disableProxyAccess }},
+data__instanceOwners = '{{ instanceOwners }}',
+data__enableDeletionProtection = {{ enableDeletionProtection }},
 data__labels = '{{ labels }}',
-data__disableProxyAccess = {{ disableProxyAccess }}
+data__enableThirdPartyIdentity = {{ enableThirdPartyIdentity }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND instancesId = '{{ instancesId }}' --required
-AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
+AND requestId = '{{ requestId}}'
 RETURNING
 name,
 done,
@@ -729,23 +775,55 @@ AND requestId = '{{ requestId }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="upgrade"
+    defaultValue="rollback"
     values={[
-        { label: 'upgrade', value: 'upgrade' },
-        { label: 'reset', value: 'reset' },
-        { label: 'check_upgradability', value: 'check_upgradability' },
-        { label: 'upgrade_system', value: 'upgrade_system' },
-        { label: 'check_authorization', value: 'check_authorization' },
-        { label: 'stop', value: 'stop' },
-        { label: 'resize_disk', value: 'resize_disk' },
         { label: 'rollback', value: 'rollback' },
-        { label: 'diagnose', value: 'diagnose' },
-        { label: 'generate_access_token', value: 'generate_access_token' },
-        { label: 'start', value: 'start' },
+        { label: 'restore', value: 'restore' },
+        { label: 'upgrade', value: 'upgrade' },
         { label: 'report_info_system', value: 'report_info_system' },
-        { label: 'restore', value: 'restore' }
+        { label: 'diagnose', value: 'diagnose' },
+        { label: 'start', value: 'start' },
+        { label: 'stop', value: 'stop' },
+        { label: 'upgrade_system', value: 'upgrade_system' },
+        { label: 'resize_disk', value: 'resize_disk' },
+        { label: 'check_authorization', value: 'check_authorization' },
+        { label: 'check_upgradability', value: 'check_upgradability' },
+        { label: 'reset', value: 'reset' },
+        { label: 'generate_access_token', value: 'generate_access_token' }
     ]}
 >
+<TabItem value="rollback">
+
+Rollbacks a notebook instance to the previous version.
+
+```sql
+EXEC google.notebooks.instances.rollback 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@instancesId='{{ instancesId }}' --required 
+@@json=
+'{
+"targetSnapshot": "{{ targetSnapshot }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="restore">
+
+RestoreInstance restores an Instance from a BackupSource.
+
+```sql
+EXEC google.notebooks.instances.restore 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@instancesId='{{ instancesId }}' --required 
+@@json=
+'{
+"snapshot": "{{ snapshot }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="upgrade">
 
 Upgrades a notebook instance to the latest version.
@@ -754,28 +832,66 @@ Upgrades a notebook instance to the latest version.
 EXEC google.notebooks.instances.upgrade 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@instancesId='{{ instancesId }}' --required
+@instancesId='{{ instancesId }}' --required 
+@@json=
+'{
+"imageFamily": "{{ imageFamily }}"
+}'
 ;
 ```
 </TabItem>
-<TabItem value="reset">
+<TabItem value="report_info_system">
 
-Resets a notebook instance.
+Allows notebook instances to report their latest instance information to the Notebooks API server. The server will merge the reported information to the instance metadata store. Do not use this method directly.
 
 ```sql
-EXEC google.notebooks.instances.reset 
+EXEC google.notebooks.instances.report_info_system 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@instancesId='{{ instancesId }}' --required 
+@@json=
+'{
+"vmId": "{{ vmId }}", 
+"event": "{{ event }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="diagnose">
+
+Creates a Diagnostic File and runs Diagnostic Tool given an Instance.
+
+```sql
+EXEC google.notebooks.instances.diagnose 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@instancesId='{{ instancesId }}' --required 
+@@json=
+'{
+"diagnosticConfig": "{{ diagnosticConfig }}", 
+"timeoutMinutes": {{ timeoutMinutes }}
+}'
+;
+```
+</TabItem>
+<TabItem value="start">
+
+Starts a notebook instance.
+
+```sql
+EXEC google.notebooks.instances.start 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @instancesId='{{ instancesId }}' --required
 ;
 ```
 </TabItem>
-<TabItem value="check_upgradability">
+<TabItem value="stop">
 
-Checks whether a notebook instance is upgradable.
+Stops a notebook instance.
 
 ```sql
-EXEC google.notebooks.instances.check_upgradability 
+EXEC google.notebooks.instances.stop 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @instancesId='{{ instancesId }}' --required
@@ -798,6 +914,23 @@ EXEC google.notebooks.instances.upgrade_system
 ;
 ```
 </TabItem>
+<TabItem value="resize_disk">
+
+Resize a notebook instance disk to a higher capacity.
+
+```sql
+EXEC google.notebooks.instances.resize_disk 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@instancesId='{{ instancesId }}' --required 
+@@json=
+'{
+"dataDisk": "{{ dataDisk }}", 
+"bootDisk": "{{ bootDisk }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="check_authorization">
 
 Initiated by Cloud Console for Oauth consent flow for Workbench Instances. Do not use this method directly. Design doc: go/wbi-euc:auth-dd
@@ -814,65 +947,27 @@ EXEC google.notebooks.instances.check_authorization
 ;
 ```
 </TabItem>
-<TabItem value="stop">
+<TabItem value="check_upgradability">
 
-Stops a notebook instance.
+Checks whether a notebook instance is upgradable.
 
 ```sql
-EXEC google.notebooks.instances.stop 
+EXEC google.notebooks.instances.check_upgradability 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @instancesId='{{ instancesId }}' --required
 ;
 ```
 </TabItem>
-<TabItem value="resize_disk">
+<TabItem value="reset">
 
-Resize a notebook instance disk to a higher capacity.
-
-```sql
-EXEC google.notebooks.instances.resize_disk 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@instancesId='{{ instancesId }}' --required 
-@@json=
-'{
-"bootDisk": "{{ bootDisk }}", 
-"dataDisk": "{{ dataDisk }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="rollback">
-
-Rollbacks a notebook instance to the previous version.
+Resets a notebook instance.
 
 ```sql
-EXEC google.notebooks.instances.rollback 
+EXEC google.notebooks.instances.reset 
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
-@instancesId='{{ instancesId }}' --required 
-@@json=
-'{
-"targetSnapshot": "{{ targetSnapshot }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="diagnose">
-
-Creates a Diagnostic File and runs Diagnostic Tool given an Instance.
-
-```sql
-EXEC google.notebooks.instances.diagnose 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@instancesId='{{ instancesId }}' --required 
-@@json=
-'{
-"timeoutMinutes": {{ timeoutMinutes }}, 
-"diagnosticConfig": "{{ diagnosticConfig }}"
-}'
+@instancesId='{{ instancesId }}' --required
 ;
 ```
 </TabItem>
@@ -888,51 +983,6 @@ EXEC google.notebooks.instances.generate_access_token
 @@json=
 '{
 "vmToken": "{{ vmToken }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="start">
-
-Starts a notebook instance.
-
-```sql
-EXEC google.notebooks.instances.start 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@instancesId='{{ instancesId }}' --required
-;
-```
-</TabItem>
-<TabItem value="report_info_system">
-
-Allows notebook instances to report their latest instance information to the Notebooks API server. The server will merge the reported information to the instance metadata store. Do not use this method directly.
-
-```sql
-EXEC google.notebooks.instances.report_info_system 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@instancesId='{{ instancesId }}' --required 
-@@json=
-'{
-"event": "{{ event }}", 
-"vmId": "{{ vmId }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="restore">
-
-RestoreInstance restores an Instance from a BackupSource.
-
-```sql
-EXEC google.notebooks.instances.restore 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@instancesId='{{ instancesId }}' --required 
-@@json=
-'{
-"snapshot": "{{ snapshot }}"
 }'
 ;
 ```

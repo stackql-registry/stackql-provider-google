@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>documents</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>documents</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="documents" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.language.documents" /></td></tr>
 </tbody></table>
@@ -71,18 +72,18 @@ The following methods are available for this resource:
     <td>Moderates a document for harmful and sensitive categories.</td>
 </tr>
 <tr>
-    <td><a href="#analyze_sentiment"><CopyableCode code="analyze_sentiment" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td></td>
-    <td></td>
-    <td>Analyzes the sentiment of the provided text.</td>
-</tr>
-<tr>
     <td><a href="#classify_text"><CopyableCode code="classify_text" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td></td>
     <td></td>
     <td>Classifies a document into categories.</td>
+</tr>
+<tr>
+    <td><a href="#analyze_sentiment"><CopyableCode code="analyze_sentiment" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td></td>
+    <td></td>
+    <td>Analyzes the sentiment of the provided text.</td>
 </tr>
 </tbody>
 </table>
@@ -111,8 +112,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
         { label: 'analyze_entities', value: 'analyze_entities' },
         { label: 'annotate_text', value: 'annotate_text' },
         { label: 'moderate_text', value: 'moderate_text' },
-        { label: 'analyze_sentiment', value: 'analyze_sentiment' },
-        { label: 'classify_text', value: 'classify_text' }
+        { label: 'classify_text', value: 'classify_text' },
+        { label: 'analyze_sentiment', value: 'analyze_sentiment' }
     ]}
 >
 <TabItem value="analyze_entities">
@@ -137,8 +138,8 @@ A convenience method that provides all features in one call.
 EXEC google.language.documents.annotate_text 
 @@json=
 '{
-"document": "{{ document }}", 
 "features": "{{ features }}", 
+"document": "{{ document }}", 
 "encodingType": "{{ encodingType }}"
 }'
 ;
@@ -152,21 +153,7 @@ Moderates a document for harmful and sensitive categories.
 EXEC google.language.documents.moderate_text 
 @@json=
 '{
-"document": "{{ document }}", 
-"modelVersion": "{{ modelVersion }}"
-}'
-;
-```
-</TabItem>
-<TabItem value="analyze_sentiment">
-
-Analyzes the sentiment of the provided text.
-
-```sql
-EXEC google.language.documents.analyze_sentiment 
-@@json=
-'{
-"encodingType": "{{ encodingType }}", 
+"modelVersion": "{{ modelVersion }}", 
 "document": "{{ document }}"
 }'
 ;
@@ -181,6 +168,20 @@ EXEC google.language.documents.classify_text
 @@json=
 '{
 "document": "{{ document }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="analyze_sentiment">
+
+Analyzes the sentiment of the provided text.
+
+```sql
+EXEC google.language.documents.analyze_sentiment 
+@@json=
+'{
+"document": "{{ document }}", 
+"encodingType": "{{ encodingType }}"
 }'
 ;
 ```

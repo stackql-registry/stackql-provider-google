@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>instance_group_manager_resize_
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>instance_group_manager_resize_requests</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="instance_group_manager_resize_requests" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.compute.instance_group_manager_resize_requests" /></td></tr>
 </tbody></table>
@@ -52,17 +53,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="id" /></td>
     <td><code>string (uint64)</code></td>
-    <td>[Output Only] A unique identifier for this resource type. The server generates this identifier.</td>
+    <td>Output only. A unique identifier for this resource type. The server generates this identifier.</td>
 </tr>
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The name of this resize request. The name must be 1-63 characters long, and comply with RFC1035. (pattern: <code>[a-z](?:[-a-z0-9]&#123;0,61&#125;[a-z0-9])?</code>)</td>
+    <td>The name of this resize request. The name must be 1-63 characters long, and comply withRFC1035. (pattern: <code>&#91;a-z&#93;(?:&#91;-a-z0-9&#93;&#123;0,61&#125;&#91;a-z0-9&#93;)?</code>)</td>
 </tr>
 <tr>
     <td><CopyableCode code="creationTimestamp" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The creation timestamp for this resize request in RFC3339 text format.</td>
+    <td>Output only. The creation timestamp for this resize request inRFC3339 text format.</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -70,14 +71,24 @@ The following fields are returned by `SELECT` queries:
     <td>An optional description of this resource.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="instances" /></td>
+    <td><code>array</code></td>
+    <td>The names of instances to be created by this resize request. The number of names specified determines the number of instances to create. The group's target size will be increased by this number. This field cannot be used together with 'resize_by'.</td>
+</tr>
+<tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The resource type, which is always compute#instanceGroupManagerResizeRequest for resize requests. (default: compute#instanceGroupManagerResizeRequest)</td>
+    <td>Output only. The resource type, which is alwayscompute#instanceGroupManagerResizeRequest for resize requests. (default: compute#instanceGroupManagerResizeRequest)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="region" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The URL of a region where the resize request is located. Populated only for regional resize requests.</td>
 </tr>
 <tr>
     <td><CopyableCode code="requestedRunDuration" /></td>
     <td><code>object</code></td>
-    <td>Requested run duration for instances that will be created by this request. At the end of the run duration instance will be deleted. (id: Duration)</td>
+    <td>A Duration represents a fixed-length span of time represented as a count of seconds and fractions of seconds at nanosecond resolution. It is independent of any calendar and concepts like "day" or "month". Range is approximately 10,000 years. (id: Duration)</td>
 </tr>
 <tr>
     <td><CopyableCode code="resizeBy" /></td>
@@ -87,27 +98,27 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The URL for this resize request. The server defines this URL.</td>
+    <td>Output only. The URL for this resize request. The server defines this URL.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLinkWithId" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for this resource with the resource id.</td>
+    <td>Output only. Server-defined URL for this resource with the resource id.</td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>[Output only] Current state of the request.</td>
+    <td>Output only. Current state of the request. (ACCEPTED, CANCELLED, CREATING, FAILED, STATE_UNSPECIFIED, SUCCEEDED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="status" /></td>
     <td><code>object</code></td>
-    <td>[Output only] Status of the request. (id: InstanceGroupManagerResizeRequestStatus)</td>
+    <td>Output only. Status of the request. (id: InstanceGroupManagerResizeRequestStatus)</td>
 </tr>
 <tr>
     <td><CopyableCode code="zone" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] The URL of a zone where the resize request is located. Populated only for zonal resize requests.</td>
+    <td>Output only. The URL of a zone where the resize request is located. Populated only for zonal resize requests.</td>
 </tr>
 </tbody>
 </table>
@@ -126,7 +137,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="id" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Unique identifier for the resource; defined by the server.</td>
+    <td>Output only. Unique identifier for the resource; defined by the server.</td>
 </tr>
 <tr>
     <td><CopyableCode code="items" /></td>
@@ -136,22 +147,22 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="kind" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Type of the resource. Always compute#instanceGroupManagerResizeRequestList for a list of resize requests. (default: compute#instanceGroupManagerResizeRequestList)</td>
+    <td>Output only. Type of the resource. Alwayscompute#instanceGroupManagerResizeRequestList for a list of resize requests. (default: compute#instanceGroupManagerResizeRequestList)</td>
 </tr>
 <tr>
     <td><CopyableCode code="nextPageToken" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
+    <td>Output only. This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use thenextPageToken as a value for the query parameterpageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.</td>
 </tr>
 <tr>
     <td><CopyableCode code="selfLink" /></td>
     <td><code>string</code></td>
-    <td>[Output Only] Server-defined URL for this resource.</td>
+    <td>Output only. Server-defined URL for this resource.</td>
 </tr>
 <tr>
     <td><CopyableCode code="warning" /></td>
     <td><code>object</code></td>
-    <td>[Output Only] Informational warning message.</td>
+    <td>Output only. Informational warning message.</td>
 </tr>
 </tbody>
 </table>
@@ -184,29 +195,29 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instanceGroupManager"><code>instanceGroupManager</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a></td>
-    <td>Retrieves a list of resize requests that are contained in the managed instance group.</td>
+    <td><a href="#parameter-returnPartialSuccess"><code>returnPartialSuccess</code></a>, <a href="#parameter-maxResults"><code>maxResults</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td>Retrieves a list of resize requests that are contained in the<br />managed instance group.</td>
 </tr>
 <tr>
     <td><a href="#insert"><CopyableCode code="insert" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instanceGroupManager"><code>instanceGroupManager</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Creates a new resize request that starts provisioning VMs immediately or queues VM creation.</td>
+    <td>Creates a new resize request that starts provisioning VMs immediately<br />or queues VM creation.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instanceGroupManager"><code>instanceGroupManager</code></a>, <a href="#parameter-resizeRequest"><code>resizeRequest</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Deletes the specified, inactive resize request. Requests that are still active cannot be deleted. Deleting request does not delete instances that were provisioned previously.</td>
+    <td>Deletes the specified, inactive resize request. Requests that are still<br />active cannot be deleted. Deleting request does not delete instances that<br />were provisioned previously.</td>
 </tr>
 <tr>
     <td><a href="#cancel"><CopyableCode code="cancel" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-project"><code>project</code></a>, <a href="#parameter-zone"><code>zone</code></a>, <a href="#parameter-instanceGroupManager"><code>instanceGroupManager</code></a>, <a href="#parameter-resizeRequest"><code>resizeRequest</code></a></td>
     <td><a href="#parameter-requestId"><code>requestId</code></a></td>
-    <td>Cancels the specified resize request and removes it from the queue. Cancelled resize request does no longer wait for the resources to be provisioned. Cancel is only possible for requests that are accepted in the queue.</td>
+    <td>Cancels the specified resize request and removes it from the queue.<br />Cancelled resize request does no longer wait for the resources to be<br />provisioned. Cancel is only possible for requests that are accepted in the<br />queue.</td>
 </tr>
 </tbody>
 </table>
@@ -296,7 +307,9 @@ id,
 name,
 creationTimestamp,
 description,
+instances,
 kind,
+region,
 requestedRunDuration,
 resizeBy,
 selfLink,
@@ -314,7 +327,7 @@ AND resizeRequest = '{{ resizeRequest }}' -- required
 </TabItem>
 <TabItem value="list">
 
-Retrieves a list of resize requests that are contained in the managed instance group.
+Retrieves a list of resize requests that are contained in the<br />managed instance group.
 
 ```sql
 SELECT
@@ -328,11 +341,11 @@ FROM google.compute.instance_group_manager_resize_requests
 WHERE project = '{{ project }}' -- required
 AND zone = '{{ zone }}' -- required
 AND instanceGroupManager = '{{ instanceGroupManager }}' -- required
-AND filter = '{{ filter }}'
-AND maxResults = '{{ maxResults }}'
-AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND returnPartialSuccess = '{{ returnPartialSuccess }}'
+AND maxResults = '{{ maxResults }}'
+AND pageToken = '{{ pageToken }}'
+AND filter = '{{ filter }}'
+AND orderBy = '{{ orderBy }}'
 ;
 ```
 </TabItem>
@@ -350,40 +363,26 @@ AND returnPartialSuccess = '{{ returnPartialSuccess }}'
 >
 <TabItem value="insert">
 
-Creates a new resize request that starts provisioning VMs immediately or queues VM creation.
+Creates a new resize request that starts provisioning VMs immediately<br />or queues VM creation.
 
 ```sql
 INSERT INTO google.compute.instance_group_manager_resize_requests (
-data__kind,
-data__id,
-data__creationTimestamp,
-data__name,
-data__description,
-data__zone,
-data__resizeBy,
 data__requestedRunDuration,
-data__state,
-data__status,
-data__selfLink,
-data__selfLinkWithId,
+data__description,
+data__instances,
+data__resizeBy,
+data__name,
 project,
 zone,
 instanceGroupManager,
 requestId
 )
 SELECT 
-'{{ kind }}',
-'{{ id }}',
-'{{ creationTimestamp }}',
-'{{ name }}',
-'{{ description }}',
-'{{ zone }}',
-{{ resizeBy }},
 '{{ requestedRunDuration }}',
-'{{ state }}',
-'{{ status }}',
-'{{ selfLink }}',
-'{{ selfLinkWithId }}',
+'{{ description }}',
+'{{ instances }}',
+{{ resizeBy }},
+'{{ name }}',
 '{{ project }}',
 '{{ zone }}',
 '{{ instanceGroupManager }}',
@@ -396,6 +395,7 @@ creationTimestamp,
 description,
 endTime,
 error,
+getVersionOperationMetadata,
 httpErrorMessage,
 httpErrorStatusCode,
 insertTime,
@@ -420,84 +420,61 @@ zone
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: instance_group_manager_resize_requests
   props:
     - name: project
-      value: string
+      value: "{{ project }}"
       description: Required parameter for the instance_group_manager_resize_requests resource.
     - name: zone
-      value: string
+      value: "{{ zone }}"
       description: Required parameter for the instance_group_manager_resize_requests resource.
     - name: instanceGroupManager
-      value: string
+      value: "{{ instanceGroupManager }}"
       description: Required parameter for the instance_group_manager_resize_requests resource.
-    - name: kind
-      value: string
-      description: >
-        [Output Only] The resource type, which is always compute#instanceGroupManagerResizeRequest for resize requests.
-        
-      default: compute#instanceGroupManagerResizeRequest
-    - name: id
-      value: string
-      description: >
-        [Output Only] A unique identifier for this resource type. The server generates this identifier.
-        
-    - name: creationTimestamp
-      value: string
-      description: >
-        [Output Only] The creation timestamp for this resize request in RFC3339 text format.
-        
-    - name: name
-      value: string
-      description: >
-        The name of this resize request. The name must be 1-63 characters long, and comply with RFC1035.
-        
-    - name: description
-      value: string
-      description: >
-        An optional description of this resource.
-        
-    - name: zone
-      value: string
-      description: >
-        [Output Only] The URL of a zone where the resize request is located. Populated only for zonal resize requests.
-        
-    - name: resizeBy
-      value: integer
-      description: >
-        The number of instances to be created by this resize request. The group's target size will be increased by this number. This field cannot be used together with 'instances'.
-        
     - name: requestedRunDuration
-      value: object
-      description: >
-        Requested run duration for instances that will be created by this request. At the end of the run duration instance will be deleted.
-        
-    - name: state
-      value: string
-      description: >
-        [Output only] Current state of the request.
-        
-      valid_values: ['ACCEPTED', 'CANCELLED', 'CREATING', 'FAILED', 'STATE_UNSPECIFIED', 'SUCCEEDED']
-    - name: status
-      value: object
-      description: >
-        [Output only] Status of the request.
-        
-    - name: selfLink
-      value: string
-      description: >
-        [Output Only] The URL for this resize request. The server defines this URL.
-        
-    - name: selfLinkWithId
-      value: string
-      description: >
-        [Output Only] Server-defined URL for this resource with the resource id.
-        
+      description: |
+        A Duration represents a fixed-length span of time represented
+        as a count of seconds and fractions of seconds at nanosecond
+        resolution. It is independent of any calendar and concepts like "day"
+        or "month". Range is approximately 10,000 years.
+      value:
+        nanos: {{ nanos }}
+        seconds: "{{ seconds }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        An optional description of this resource.
+    - name: instances
+      description: |
+        The names of instances to be created by this resize request. The number of
+        names specified determines the number of instances to create. The group's
+        target size will be increased by this number. This field cannot be used
+        together with 'resize_by'.
+      value:
+        - name: "{{ name }}"
+          status: "{{ status }}"
+          preservedState:
+            disks: "{{ disks }}"
+            internalIPs: "{{ internalIPs }}"
+            metadata: "{{ metadata }}"
+            externalIPs: "{{ externalIPs }}"
+          fingerprint: "{{ fingerprint }}"
+    - name: resizeBy
+      value: {{ resizeBy }}
+      description: |
+        The number of instances to be created by this resize request. The group's
+        target size will be increased by this number. This field cannot be used
+        together with 'instances'.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The name of this resize request. The name must be 1-63 characters
+        long, and comply withRFC1035.
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -512,7 +489,7 @@ zone
 >
 <TabItem value="delete">
 
-Deletes the specified, inactive resize request. Requests that are still active cannot be deleted. Deleting request does not delete instances that were provisioned previously.
+Deletes the specified, inactive resize request. Requests that are still<br />active cannot be deleted. Deleting request does not delete instances that<br />were provisioned previously.
 
 ```sql
 DELETE FROM google.compute.instance_group_manager_resize_requests
@@ -537,7 +514,7 @@ AND requestId = '{{ requestId }}'
 >
 <TabItem value="cancel">
 
-Cancels the specified resize request and removes it from the queue. Cancelled resize request does no longer wait for the resources to be provisioned. Cancel is only possible for requests that are accepted in the queue.
+Cancels the specified resize request and removes it from the queue.<br />Cancelled resize request does no longer wait for the resources to be<br />provisioned. Cancel is only possible for requests that are accepted in the<br />queue.
 
 ```sql
 EXEC google.compute.instance_group_manager_resize_requests.cancel 

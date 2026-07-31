@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>tag_values</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>tag_values</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="tag_values" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudresourcemanager.tag_values" /></td></tr>
 </tbody></table>
@@ -174,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-parent"><code>parent</code></a></td>
     <td>Lists all TagValues for a specific TagKey.</td>
 </tr>
 <tr>
@@ -195,7 +196,7 @@ The following methods are available for this resource:
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-tagValuesId"><code>tagValuesId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-etag"><code>etag</code></a></td>
+    <td><a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Deletes a TagValue. The TagValue cannot have any bindings when it is deleted.</td>
 </tr>
 </tbody>
@@ -296,8 +297,8 @@ shortName,
 updateTime
 FROM google.cloudresourcemanager.tag_values
 WHERE pageSize = '{{ pageSize }}'
-AND parent = '{{ parent }}'
 AND pageToken = '{{ pageToken }}'
+AND parent = '{{ parent }}'
 ;
 ```
 </TabItem>
@@ -319,18 +320,18 @@ Creates a TagValue as a child of the specified TagKey. If a another request with
 
 ```sql
 INSERT INTO google.cloudresourcemanager.tag_values (
-data__etag,
-data__parent,
-data__shortName,
 data__description,
+data__shortName,
+data__parent,
+data__etag,
 data__name,
 validateOnly
 )
 SELECT 
-'{{ etag }}',
-'{{ parent }}',
-'{{ shortName }}',
 '{{ description }}',
+'{{ shortName }}',
+'{{ parent }}',
+'{{ etag }}',
 '{{ name }}',
 '{{ validateOnly }}'
 RETURNING
@@ -344,38 +345,33 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: tag_values
   props:
-    - name: etag
-      value: string
-      description: >
-        Optional. Entity tag which users can pass to prevent race conditions. This field is always set in server responses. See UpdateTagValueRequest for details.
-        
-    - name: parent
-      value: string
-      description: >
-        Immutable. The resource name of the new TagValue's parent TagKey. Must be of the form `tagKeys/{tag_key_id}`.
-        
-    - name: shortName
-      value: string
-      description: >
-        Required. Immutable. User-assigned short name for TagValue. The short name should be unique for TagValues within the same parent TagKey. The short name must be 256 characters or less, beginning and ending with an alphanumeric character ([a-z0-9A-Z]) with dashes (-), underscores (_), dots (.), and alphanumerics between.
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. User-assigned description of the TagValue. Must not exceed 256 characters. Read-write.
-        
+    - name: shortName
+      value: "{{ shortName }}"
+      description: |
+        Required. Immutable. User-assigned short name for TagValue. The short name should be unique for TagValues within the same parent TagKey. The short name must be 256 characters or less, beginning and ending with an alphanumeric character ([a-z0-9A-Z]) with dashes (-), underscores (_), dots (.), and alphanumerics between.
+    - name: parent
+      value: "{{ parent }}"
+      description: |
+        Immutable. The resource name of the new TagValue's parent TagKey. Must be of the form \`tagKeys/{tag_key_id}\`.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Optional. Entity tag which users can pass to prevent race conditions. This field is always set in server responses. See UpdateTagValueRequest for details.
     - name: name
-      value: string
-      description: >
-        Immutable. Resource name for TagValue in the format `tagValues/456`.
-        
+      value: "{{ name }}"
+      description: |
+        Immutable. Resource name for TagValue in the format \`tagValues/456\`.
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -395,10 +391,10 @@ Updates the attributes of the TagValue resource.
 ```sql
 UPDATE google.cloudresourcemanager.tag_values
 SET 
-data__etag = '{{ etag }}',
-data__parent = '{{ parent }}',
-data__shortName = '{{ shortName }}',
 data__description = '{{ description }}',
+data__shortName = '{{ shortName }}',
+data__parent = '{{ parent }}',
+data__etag = '{{ etag }}',
 data__name = '{{ name }}'
 WHERE 
 tagValuesId = '{{ tagValuesId }}' --required
@@ -430,8 +426,8 @@ Deletes a TagValue. The TagValue cannot have any bindings when it is deleted.
 ```sql
 DELETE FROM google.cloudresourcemanager.tag_values
 WHERE tagValuesId = '{{ tagValuesId }}' --required
-AND validateOnly = '{{ validateOnly }}'
 AND etag = '{{ etag }}'
+AND validateOnly = '{{ validateOnly }}'
 ;
 ```
 </TabItem>

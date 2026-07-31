@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>data_policies</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>data_policies</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="data_policies" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.bigquerydatapolicy.data_policies" /></td></tr>
 </tbody></table>
@@ -55,6 +56,11 @@ The following fields are returned by `SELECT` queries:
     <td>Identifier. Resource name of this data policy, in the format of `projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/dataPolicies/&#123;data_policy_id&#125;`.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="dataGovernanceTag" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Data Governance tag bound to the Data Policy. (id: DataGovernanceTag)</td>
+</tr>
+<tr>
     <td><CopyableCode code="dataMaskingPolicy" /></td>
     <td><code>object</code></td>
     <td>Optional. The data masking policy that specifies the data masking rule to use. It must be set if the data policy type is DATA_MASKING_POLICY. (id: DataMaskingPolicy)</td>
@@ -67,7 +73,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="dataPolicyType" /></td>
     <td><code>string</code></td>
-    <td>Required. Type of data policy.</td>
+    <td>Required. Type of data policy. (DATA_POLICY_TYPE_UNSPECIFIED, DATA_MASKING_POLICY, RAW_DATA_ACCESS_POLICY, COLUMN_LEVEL_SECURITY_POLICY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="etag" /></td>
@@ -87,7 +93,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="version" /></td>
     <td><code>string</code></td>
-    <td>Output only. The version of the Data Policy resource.</td>
+    <td>Output only. The version of the Data Policy resource. (VERSION_UNSPECIFIED, V1, V2)</td>
 </tr>
 </tbody>
 </table>
@@ -109,6 +115,11 @@ The following fields are returned by `SELECT` queries:
     <td>Identifier. Resource name of this data policy, in the format of `projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/dataPolicies/&#123;data_policy_id&#125;`.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="dataGovernanceTag" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Data Governance tag bound to the Data Policy. (id: DataGovernanceTag)</td>
+</tr>
+<tr>
     <td><CopyableCode code="dataMaskingPolicy" /></td>
     <td><code>object</code></td>
     <td>Optional. The data masking policy that specifies the data masking rule to use. It must be set if the data policy type is DATA_MASKING_POLICY. (id: DataMaskingPolicy)</td>
@@ -121,7 +132,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="dataPolicyType" /></td>
     <td><code>string</code></td>
-    <td>Required. Type of data policy.</td>
+    <td>Required. Type of data policy. (DATA_POLICY_TYPE_UNSPECIFIED, DATA_MASKING_POLICY, RAW_DATA_ACCESS_POLICY, COLUMN_LEVEL_SECURITY_POLICY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="etag" /></td>
@@ -141,7 +152,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="version" /></td>
     <td><code>string</code></td>
-    <td>Output only. The version of the Data Policy resource.</td>
+    <td>Output only. The version of the Data Policy resource. (VERSION_UNSPECIFIED, V1, V2)</td>
 </tr>
 </tbody>
 </table>
@@ -174,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List all of the data policies in the specified parent project.</td>
 </tr>
 <tr>
@@ -273,6 +284,7 @@ Gets the data policy specified by its resource name.
 ```sql
 SELECT
 name,
+dataGovernanceTag,
 dataMaskingPolicy,
 dataPolicyId,
 dataPolicyType,
@@ -294,6 +306,7 @@ List all of the data policies in the specified parent project.
 ```sql
 SELECT
 name,
+dataGovernanceTag,
 dataMaskingPolicy,
 dataPolicyId,
 dataPolicyType,
@@ -305,8 +318,8 @@ FROM google.bigquerydatapolicy.data_policies
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -328,18 +341,19 @@ Creates a new data policy under a project with the given `data_policy_id` (used 
 
 ```sql
 INSERT INTO google.bigquerydatapolicy.data_policies (
-data__dataPolicyId,
 data__dataPolicy,
+data__dataPolicyId,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ dataPolicyId }}',
 '{{ dataPolicy }}',
+'{{ dataPolicyId }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
 name,
+dataGovernanceTag,
 dataMaskingPolicy,
 dataPolicyId,
 dataPolicyType,
@@ -352,27 +366,39 @@ version
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: data_policies
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the data_policies resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the data_policies resource.
-    - name: dataPolicyId
-      value: string
-      description: >
-        Required. User-assigned (human readable) ID of the data policy that needs to be unique within a project. Used as {data_policy_id} in part of the resource name.
-        
     - name: dataPolicy
-      value: object
-      description: >
-        Required. The data policy to create. The `name` field does not need to be provided for the data policy creation.
-        
-```
+      description: |
+        Required. The data policy to create. The \`name\` field does not need to be provided for the data policy creation.
+      value:
+        version: "{{ version }}"
+        dataPolicyType: "{{ dataPolicyType }}"
+        grantees:
+          - "{{ grantees }}"
+        name: "{{ name }}"
+        etag: "{{ etag }}"
+        dataMaskingPolicy:
+          predefinedExpression: "{{ predefinedExpression }}"
+          routine: "{{ routine }}"
+        dataPolicyId: "{{ dataPolicyId }}"
+        policyTag: "{{ policyTag }}"
+        dataGovernanceTag:
+          key: "{{ key }}"
+          value: "{{ value }}"
+    - name: dataPolicyId
+      value: "{{ dataPolicyId }}"
+      description: |
+        Required. User-assigned (human readable) ID of the data policy that needs to be unique within a project. Used as {data_policy_id} in part of the resource name.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -392,11 +418,12 @@ Updates the metadata for an existing data policy. The target data policy can be 
 ```sql
 UPDATE google.bigquerydatapolicy.data_policies
 SET 
-data__dataMaskingPolicy = '{{ dataMaskingPolicy }}',
+data__dataPolicyType = '{{ dataPolicyType }}',
+data__grantees = '{{ grantees }}',
 data__name = '{{ name }}',
 data__etag = '{{ etag }}',
-data__dataPolicyType = '{{ dataPolicyType }}',
-data__grantees = '{{ grantees }}'
+data__dataMaskingPolicy = '{{ dataMaskingPolicy }}',
+data__dataGovernanceTag = '{{ dataGovernanceTag }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -405,6 +432,7 @@ AND updateMask = '{{ updateMask}}'
 AND allowMissing = {{ allowMissing}}
 RETURNING
 name,
+dataGovernanceTag,
 dataMaskingPolicy,
 dataPolicyId,
 dataPolicyType,

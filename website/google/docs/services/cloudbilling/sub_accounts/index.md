@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>sub_accounts</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>sub_accounts</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="sub_accounts" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudbilling.sub_accounts" /></td></tr>
 </tbody></table>
@@ -197,14 +198,14 @@ This method creates [billing subaccounts](https://cloud.google.com/billing/docs/
 
 ```sql
 INSERT INTO google.cloudbilling.sub_accounts (
-data__currencyCode,
 data__displayName,
+data__currencyCode,
 data__masterBillingAccount,
 billingAccountsId
 )
 SELECT 
-'{{ currencyCode }}',
 '{{ displayName }}',
+'{{ currencyCode }}',
 '{{ masterBillingAccount }}',
 '{{ billingAccountsId }}'
 RETURNING
@@ -219,28 +220,25 @@ parent
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: sub_accounts
   props:
     - name: billingAccountsId
-      value: string
+      value: "{{ billingAccountsId }}"
       description: Required parameter for the sub_accounts resource.
-    - name: currencyCode
-      value: string
-      description: >
-        Optional. The currency in which the billing account is billed and charged, represented as an ISO 4217 code such as `USD`. Billing account currency is determined at the time of billing account creation and cannot be updated subsequently, so this field should not be set on update requests. In addition, a subaccount always matches the currency of its parent billing account, so this field should not be set on subaccount creation requests. Clients can read this field to determine the currency of an existing billing account.
-        
     - name: displayName
-      value: string
-      description: >
-        The display name given to the billing account, such as `My Billing Account`. This name is displayed in the Google Cloud Console.
-        
+      value: "{{ displayName }}"
+      description: |
+        The display name given to the billing account, such as \`My Billing Account\`. This name is displayed in the Google Cloud Console.
+    - name: currencyCode
+      value: "{{ currencyCode }}"
+      description: |
+        Optional. The currency in which the billing account is billed and charged, represented as an ISO 4217 code such as \`USD\`. Billing account currency is determined at the time of billing account creation and cannot be updated subsequently, so this field should not be set on update requests. In addition, a subaccount always matches the currency of its parent billing account, so this field should not be set on subaccount creation requests. Clients can read this field to determine the currency of an existing billing account.
     - name: masterBillingAccount
-      value: string
-      description: >
+      value: "{{ masterBillingAccount }}"
+      description: |
         If this account is a [subaccount](https://cloud.google.com/billing/docs/concepts), then this will be the resource name of the parent billing account that it is being resold through. Otherwise this will be empty.
-        
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

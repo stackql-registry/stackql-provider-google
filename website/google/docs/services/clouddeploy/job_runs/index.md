@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>job_runs</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>job_runs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="job_runs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.clouddeploy.job_runs" /></td></tr>
 </tbody></table>
@@ -60,6 +61,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Information specific to an advanceChildRollout `JobRun` (id: AdvanceChildRolloutJobRun)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="analysisJobRun" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Information specific to an analysis `JobRun`. (id: AnalysisJobRun)</td>
+</tr>
+<tr>
     <td><CopyableCode code="createChildRolloutJobRun" /></td>
     <td><code>object</code></td>
     <td>Output only. Information specific to a createChildRollout `JobRun`. (id: CreateChildRolloutJobRun)</td>
@@ -112,7 +118,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the `JobRun`.</td>
+    <td>Output only. The current state of the `JobRun`. (STATE_UNSPECIFIED, IN_PROGRESS, SUCCEEDED, FAILED, TERMINATING, TERMINATED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -149,6 +155,11 @@ The following fields are returned by `SELECT` queries:
     <td>Output only. Information specific to an advanceChildRollout `JobRun` (id: AdvanceChildRolloutJobRun)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="analysisJobRun" /></td>
+    <td><code>object</code></td>
+    <td>Output only. Information specific to an analysis `JobRun`. (id: AnalysisJobRun)</td>
+</tr>
+<tr>
     <td><CopyableCode code="createChildRolloutJobRun" /></td>
     <td><code>object</code></td>
     <td>Output only. Information specific to a createChildRollout `JobRun`. (id: CreateChildRolloutJobRun)</td>
@@ -201,7 +212,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the `JobRun`.</td>
+    <td>Output only. The current state of the `JobRun`. (STATE_UNSPECIFIED, IN_PROGRESS, SUCCEEDED, FAILED, TERMINATING, TERMINATED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -244,7 +255,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-deliveryPipelinesId"><code>deliveryPipelinesId</code></a>, <a href="#parameter-releasesId"><code>releasesId</code></a>, <a href="#parameter-rolloutsId"><code>rolloutsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists JobRuns in a given project and location.</td>
 </tr>
 <tr>
@@ -340,6 +351,7 @@ Gets details of a single JobRun.
 SELECT
 name,
 advanceChildRolloutJobRun,
+analysisJobRun,
 createChildRolloutJobRun,
 createTime,
 deployJobRun,
@@ -371,6 +383,7 @@ Lists JobRuns in a given project and location.
 SELECT
 name,
 advanceChildRolloutJobRun,
+analysisJobRun,
 createChildRolloutJobRun,
 createTime,
 deployJobRun,
@@ -390,9 +403,9 @@ AND locationsId = '{{ locationsId }}' -- required
 AND deliveryPipelinesId = '{{ deliveryPipelinesId }}' -- required
 AND releasesId = '{{ releasesId }}' -- required
 AND rolloutsId = '{{ rolloutsId }}' -- required
+AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
 ;
 ```

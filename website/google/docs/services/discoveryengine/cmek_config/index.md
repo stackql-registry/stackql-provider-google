@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>cmek_config</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>cmek_config</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="cmek_config" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.discoveryengine.cmek_config" /></td></tr>
 </tbody></table>
@@ -76,7 +77,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="notebooklmState" /></td>
     <td><code>string</code></td>
-    <td>Output only. Whether the NotebookLM Corpus is ready to be used.</td>
+    <td>Output only. Whether the NotebookLM Corpus is ready to be used. (NOTEBOOK_LM_STATE_UNSPECIFIED, NOTEBOOK_LM_NOT_READY, NOTEBOOK_LM_READY, NOTEBOOK_LM_NOT_ENABLED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="singleRegionKeys" /></td>
@@ -86,7 +87,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The states of the CmekConfig.</td>
+    <td>Output only. The states of the CmekConfig. (STATE_UNSPECIFIED, CREATING, ACTIVE, KEY_ISSUE, DELETING, DELETE_FAILED, UNUSABLE, ACTIVE_ROTATING, DELETED, EXPIRED)</td>
 </tr>
 </tbody>
 </table>
@@ -202,8 +203,8 @@ Provisions a CMEK key for use in a location of a customer's project. This method
 ```sql
 UPDATE google.discoveryengine.cmek_config
 SET 
-data__kmsKey = '{{ kmsKey }}',
 data__name = '{{ name }}',
+data__kmsKey = '{{ kmsKey }}',
 data__singleRegionKeys = '{{ singleRegionKeys }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

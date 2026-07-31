@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>notes</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>notes</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="notes" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.contactcenterinsights.notes" /></td></tr>
 </tbody></table>
@@ -112,7 +113,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-conversationsId"><code>conversationsId</code></a>, <a href="#parameter-assessmentsId"><code>assessmentsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>List Notes.</td>
 </tr>
 <tr>
@@ -222,8 +223,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND conversationsId = '{{ conversationsId }}' -- required
 AND assessmentsId = '{{ assessmentsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -245,10 +246,10 @@ Create Note.
 
 ```sql
 INSERT INTO google.contactcenterinsights.notes (
-data__content,
 data__assessmentNote,
-data__conversationTurnNote,
+data__content,
 data__qaQuestionNote,
+data__conversationTurnNote,
 data__name,
 projectsId,
 locationsId,
@@ -256,10 +257,10 @@ conversationsId,
 assessmentsId
 )
 SELECT 
-'{{ content }}',
 '{{ assessmentNote }}',
-'{{ conversationTurnNote }}',
+'{{ content }}',
 '{{ qaQuestionNote }}',
+'{{ conversationTurnNote }}',
 '{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
@@ -279,48 +280,45 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: notes
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the notes resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the notes resource.
     - name: conversationsId
-      value: string
+      value: "{{ conversationsId }}"
       description: Required parameter for the notes resource.
     - name: assessmentsId
-      value: string
+      value: "{{ assessmentsId }}"
       description: Required parameter for the notes resource.
-    - name: content
-      value: string
-      description: >
-        The note content.
-        
     - name: assessmentNote
-      value: object
-      description: >
+      value: "{{ assessmentNote }}"
+      description: |
         The note is associated to the entire parent assessment.
-        
-    - name: conversationTurnNote
-      value: object
-      description: >
-        The note is associated with a conversation turn.
-        
+    - name: content
+      value: "{{ content }}"
+      description: |
+        The note content.
     - name: qaQuestionNote
-      value: object
-      description: >
+      description: |
         The note is associated with a QA question in one of the conversation's scorecard results.
-        
+      value:
+        qaQuestion: "{{ qaQuestion }}"
+    - name: conversationTurnNote
+      description: |
+        The note is associated with a conversation turn.
+      value:
+        turnIndex: {{ turnIndex }}
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Identifier. The resource name of the note. Format: projects/{project}/locations/{location}/conversations/{conversation}/assessments/{assessment}/notes/{note}
-        
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -340,10 +338,10 @@ Update Note.
 ```sql
 UPDATE google.contactcenterinsights.notes
 SET 
-data__content = '{{ content }}',
 data__assessmentNote = '{{ assessmentNote }}',
-data__conversationTurnNote = '{{ conversationTurnNote }}',
+data__content = '{{ content }}',
 data__qaQuestionNote = '{{ qaQuestionNote }}',
+data__conversationTurnNote = '{{ conversationTurnNote }}',
 data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required

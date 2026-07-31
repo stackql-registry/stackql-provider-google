@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>canaryevaluations</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>canaryevaluations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="canaryevaluations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.apigee.canaryevaluations" /></td></tr>
 </tbody></table>
@@ -81,7 +82,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the canary evaluation.</td>
+    <td>Output only. The current state of the canary evaluation. (STATE_UNSPECIFIED, RUNNING, SUCCEEDED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="treatment" /></td>
@@ -91,7 +92,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="verdict" /></td>
     <td><code>string</code></td>
-    <td>Output only. The resulting verdict of the canary evaluations: NONE, PASS, or FAIL.</td>
+    <td>Output only. The resulting verdict of the canary evaluations: NONE, PASS, or FAIL. (VERDICT_UNSPECIFIED, NONE, FAIL, PASS)</td>
 </tr>
 </tbody>
 </table>
@@ -209,19 +210,19 @@ Creates a new canary evaluation for an organization.
 
 ```sql
 INSERT INTO google.apigee.canaryevaluations (
-data__treatment,
 data__control,
-data__endTime,
 data__metricLabels,
+data__endTime,
+data__treatment,
 data__startTime,
 organizationsId,
 instancesId
 )
 SELECT 
-'{{ treatment }}',
 '{{ control }}',
-'{{ endTime }}',
 '{{ metricLabels }}',
+'{{ endTime }}',
+'{{ treatment }}',
 '{{ startTime }}',
 '{{ organizationsId }}',
 '{{ instancesId }}'
@@ -236,41 +237,39 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: canaryevaluations
   props:
     - name: organizationsId
-      value: string
+      value: "{{ organizationsId }}"
       description: Required parameter for the canaryevaluations resource.
     - name: instancesId
-      value: string
+      value: "{{ instancesId }}"
       description: Required parameter for the canaryevaluations resource.
-    - name: treatment
-      value: string
-      description: >
-        Required. The newer version that is serving requests.
-        
     - name: control
-      value: string
-      description: >
+      value: "{{ control }}"
+      description: |
         Required. The stable version that is serving requests.
-        
-    - name: endTime
-      value: string
-      description: >
-        Required. End time for the evaluation's analysis.
-        
     - name: metricLabels
-      value: object
-      description: >
+      description: |
         Required. Labels used to filter the metrics used for a canary evaluation.
-        
+      value:
+        instance_id: "{{ instance_id }}"
+        location: "{{ location }}"
+        env: "{{ env }}"
+    - name: endTime
+      value: "{{ endTime }}"
+      description: |
+        Required. End time for the evaluation's analysis.
+    - name: treatment
+      value: "{{ treatment }}"
+      description: |
+        Required. The newer version that is serving requests.
     - name: startTime
-      value: string
-      description: >
+      value: "{{ startTime }}"
+      description: |
         Required. Start time for the canary evaluation's analysis.
-        
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

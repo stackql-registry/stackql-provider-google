@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>certificate_authorities</code> 
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>certificate_authorities</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="certificate_authorities" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.privateca.certificate_authorities" /></td></tr>
 </tbody></table>
@@ -123,7 +124,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The State for this CertificateAuthority.</td>
+    <td>Output only. The State for this CertificateAuthority. (STATE_UNSPECIFIED, ENABLED, DISABLED, STAGED, AWAITING_USER_ACTIVATION, DELETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="subordinateConfig" /></td>
@@ -133,12 +134,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="tier" /></td>
     <td><code>string</code></td>
-    <td>Output only. The CaPool.Tier of the CaPool that includes this CertificateAuthority.</td>
+    <td>Output only. The CaPool.Tier of the CaPool that includes this CertificateAuthority. (TIER_UNSPECIFIED, ENTERPRISE, DEVOPS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Required. Immutable. The Type of this CertificateAuthority.</td>
+    <td>Required. Immutable. The Type of this CertificateAuthority. (TYPE_UNSPECIFIED, SELF_SIGNED, SUBORDINATE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -256,7 +257,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The State for this CertificateAuthority.</td>
+    <td>Output only. The State for this CertificateAuthority. (STATE_UNSPECIFIED, ENABLED, DISABLED, STAGED, AWAITING_USER_ACTIVATION, DELETED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="subordinateConfig" /></td>
@@ -266,12 +267,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="tier" /></td>
     <td><code>string</code></td>
-    <td>Output only. The CaPool.Tier of the CaPool that includes this CertificateAuthority.</td>
+    <td>Output only. The CaPool.Tier of the CaPool that includes this CertificateAuthority. (TIER_UNSPECIFIED, ENTERPRISE, DEVOPS)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Required. Immutable. The Type of this CertificateAuthority.</td>
+    <td>Required. Immutable. The Type of this CertificateAuthority. (TYPE_UNSPECIFIED, SELF_SIGNED, SUBORDINATE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -321,28 +322,28 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-caPoolsId"><code>caPoolsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists CertificateAuthorities.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-caPoolsId"><code>caPoolsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-certificateAuthorityId"><code>certificateAuthorityId</code></a></td>
+    <td><a href="#parameter-certificateAuthorityId"><code>certificateAuthorityId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Create a new CertificateAuthority in a given Project and Location.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-caPoolsId"><code>caPoolsId</code></a>, <a href="#parameter-certificateAuthoritiesId"><code>certificateAuthoritiesId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Update a CertificateAuthority.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-caPoolsId"><code>caPoolsId</code></a>, <a href="#parameter-certificateAuthoritiesId"><code>certificateAuthoritiesId</code></a></td>
-    <td><a href="#parameter-ignoreActiveCertificates"><code>ignoreActiveCertificates</code></a>, <a href="#parameter-skipGracePeriod"><code>skipGracePeriod</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-ignoreDependentResources"><code>ignoreDependentResources</code></a></td>
+    <td><a href="#parameter-skipGracePeriod"><code>skipGracePeriod</code></a>, <a href="#parameter-ignoreActiveCertificates"><code>ignoreActiveCertificates</code></a>, <a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-ignoreDependentResources"><code>ignoreDependentResources</code></a></td>
     <td>Delete a CertificateAuthority.</td>
 </tr>
 <tr>
@@ -353,18 +354,18 @@ The following methods are available for this resource:
     <td>Undelete a CertificateAuthority that has been deleted.</td>
 </tr>
 <tr>
-    <td><a href="#disable"><CopyableCode code="disable" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-caPoolsId"><code>caPoolsId</code></a>, <a href="#parameter-certificateAuthoritiesId"><code>certificateAuthoritiesId</code></a></td>
-    <td></td>
-    <td>Disable a CertificateAuthority.</td>
-</tr>
-<tr>
     <td><a href="#activate"><CopyableCode code="activate" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-caPoolsId"><code>caPoolsId</code></a>, <a href="#parameter-certificateAuthoritiesId"><code>certificateAuthoritiesId</code></a></td>
     <td></td>
     <td>Activate a CertificateAuthority that is in state AWAITING_USER_ACTIVATION and is of type SUBORDINATE. After the parent Certificate Authority signs a certificate signing request from FetchCertificateAuthorityCsr, this method can complete the activation process.</td>
+</tr>
+<tr>
+    <td><a href="#disable"><CopyableCode code="disable" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-caPoolsId"><code>caPoolsId</code></a>, <a href="#parameter-certificateAuthoritiesId"><code>certificateAuthoritiesId</code></a></td>
+    <td></td>
+    <td>Disable a CertificateAuthority.</td>
 </tr>
 <tr>
     <td><a href="#enable"><CopyableCode code="enable" /></a></td>
@@ -551,9 +552,9 @@ FROM google.privateca.certificate_authorities
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND caPoolsId = '{{ caPoolsId }}' -- required
+AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 AND orderBy = '{{ orderBy }}'
-AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
 ;
 ```
@@ -576,36 +577,36 @@ Create a new CertificateAuthority in a given Project and Location.
 
 ```sql
 INSERT INTO google.privateca.certificate_authorities (
-data__gcsBucket,
-data__labels,
-data__config,
-data__lifetime,
 data__type,
-data__subordinateConfig,
-data__keySpec,
 data__name,
+data__keySpec,
+data__gcsBucket,
+data__lifetime,
 data__userDefinedAccessUrls,
+data__config,
+data__labels,
+data__subordinateConfig,
 projectsId,
 locationsId,
 caPoolsId,
-requestId,
-certificateAuthorityId
+certificateAuthorityId,
+requestId
 )
 SELECT 
-'{{ gcsBucket }}',
-'{{ labels }}',
-'{{ config }}',
-'{{ lifetime }}',
 '{{ type }}',
-'{{ subordinateConfig }}',
-'{{ keySpec }}',
 '{{ name }}',
+'{{ keySpec }}',
+'{{ gcsBucket }}',
+'{{ lifetime }}',
 '{{ userDefinedAccessUrls }}',
+'{{ config }}',
+'{{ labels }}',
+'{{ subordinateConfig }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ caPoolsId }}',
-'{{ requestId }}',
-'{{ certificateAuthorityId }}'
+'{{ certificateAuthorityId }}',
+'{{ requestId }}'
 RETURNING
 name,
 done,
@@ -617,70 +618,154 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: certificate_authorities
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the certificate_authorities resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the certificate_authorities resource.
     - name: caPoolsId
-      value: string
+      value: "{{ caPoolsId }}"
       description: Required parameter for the certificate_authorities resource.
-    - name: gcsBucket
-      value: string
-      description: >
-        Immutable. The name of a Cloud Storage bucket where this CertificateAuthority will publish content, such as the CA certificate and CRLs. This must be a bucket name, without any prefixes (such as `gs://`) or suffixes (such as `.googleapis.com`). For example, to use a bucket named `my-bucket`, you would simply specify `my-bucket`. If not specified, a managed bucket will be created.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Labels with user-defined metadata.
-        
-    - name: config
-      value: object
-      description: >
-        Required. Immutable. The config used to create a self-signed X.509 certificate or CSR.
-        
-    - name: lifetime
-      value: string
-      description: >
-        Required. Immutable. The desired lifetime of the CA certificate. Used to create the "not_before_time" and "not_after_time" fields inside an X.509 certificate.
-        
     - name: type
-      value: string
-      description: >
+      value: "{{ type }}"
+      description: |
         Required. Immutable. The Type of this CertificateAuthority.
-        
       valid_values: ['TYPE_UNSPECIFIED', 'SELF_SIGNED', 'SUBORDINATE']
-    - name: subordinateConfig
-      value: object
-      description: >
-        Optional. If this is a subordinate CertificateAuthority, this field will be set with the subordinate configuration, which describes its issuers. This may be updated, but this CertificateAuthority must continue to validate.
-        
-    - name: keySpec
-      value: object
-      description: >
-        Required. Immutable. Used when issuing certificates for this CertificateAuthority. If this CertificateAuthority is a self-signed CertificateAuthority, this key is also used to sign the self-signed CA certificate. Otherwise, it is used to sign a CSR.
-        
     - name: name
-      value: string
-      description: >
-        Identifier. The resource name for this CertificateAuthority in the format `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
-        
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name for this CertificateAuthority in the format \`projects/*/locations/*/caPools/*/certificateAuthorities/*\`.
+    - name: keySpec
+      description: |
+        Required. Immutable. Used when issuing certificates for this CertificateAuthority. If this CertificateAuthority is a self-signed CertificateAuthority, this key is also used to sign the self-signed CA certificate. Otherwise, it is used to sign a CSR.
+      value:
+        cloudKmsKeyVersion: "{{ cloudKmsKeyVersion }}"
+        algorithm: "{{ algorithm }}"
+    - name: gcsBucket
+      value: "{{ gcsBucket }}"
+      description: |
+        Immutable. The name of a Cloud Storage bucket where this CertificateAuthority will publish content, such as the CA certificate and CRLs. This must be a bucket name, without any prefixes (such as \`gs://\`) or suffixes (such as \`.googleapis.com\`). For example, to use a bucket named \`my-bucket\`, you would simply specify \`my-bucket\`. If not specified, a managed bucket will be created.
+    - name: lifetime
+      value: "{{ lifetime }}"
+      description: |
+        Required. Immutable. The desired lifetime of the CA certificate. Used to create the "not_before_time" and "not_after_time" fields inside an X.509 certificate.
     - name: userDefinedAccessUrls
-      value: object
-      description: >
+      description: |
         Optional. User-defined URLs for CA certificate and CRLs. The service does not publish content to these URLs. It is up to the user to mirror content to these URLs.
-        
-    - name: requestId
-      value: string
+      value:
+        aiaIssuingCertificateUrls:
+          - "{{ aiaIssuingCertificateUrls }}"
+        crlAccessUrls:
+          - "{{ crlAccessUrls }}"
+    - name: config
+      description: |
+        Required. Immutable. The config used to create a self-signed X.509 certificate or CSR.
+      value:
+        subjectKeyId:
+          keyId: "{{ keyId }}"
+        subjectConfig:
+          subject:
+            organizationalUnit: "{{ organizationalUnit }}"
+            streetAddress: "{{ streetAddress }}"
+            commonName: "{{ commonName }}"
+            organization: "{{ organization }}"
+            province: "{{ province }}"
+            locality: "{{ locality }}"
+            postalCode: "{{ postalCode }}"
+            rdnSequence:
+              - attributes: "{{ attributes }}"
+            countryCode: "{{ countryCode }}"
+          subjectAltName:
+            ipAddresses:
+              - "{{ ipAddresses }}"
+            dnsNames:
+              - "{{ dnsNames }}"
+            emailAddresses:
+              - "{{ emailAddresses }}"
+            uris:
+              - "{{ uris }}"
+            customSans:
+              - critical: {{ critical }}
+                objectId:
+                  objectIdPath: "{{ objectIdPath }}"
+                value: "{{ value }}"
+        publicKey:
+          format: "{{ format }}"
+          key: "{{ key }}"
+        x509Config:
+          caOptions:
+            isCa: {{ isCa }}
+            maxIssuerPathLength: {{ maxIssuerPathLength }}
+          aiaOcspServers:
+            - "{{ aiaOcspServers }}"
+          additionalExtensions:
+            - critical: {{ critical }}
+              objectId:
+                objectIdPath:
+                  - {{ objectIdPath }}
+              value: "{{ value }}"
+          policyIds:
+            - objectIdPath: "{{ objectIdPath }}"
+          nameConstraints:
+            critical: {{ critical }}
+            excludedIpRanges:
+              - "{{ excludedIpRanges }}"
+            permittedEmailAddresses:
+              - "{{ permittedEmailAddresses }}"
+            excludedDnsNames:
+              - "{{ excludedDnsNames }}"
+            permittedUris:
+              - "{{ permittedUris }}"
+            excludedEmailAddresses:
+              - "{{ excludedEmailAddresses }}"
+            excludedUris:
+              - "{{ excludedUris }}"
+            permittedIpRanges:
+              - "{{ permittedIpRanges }}"
+            permittedDnsNames:
+              - "{{ permittedDnsNames }}"
+          keyUsage:
+            baseKeyUsage:
+              keyEncipherment: {{ keyEncipherment }}
+              certSign: {{ certSign }}
+              digitalSignature: {{ digitalSignature }}
+              contentCommitment: {{ contentCommitment }}
+              encipherOnly: {{ encipherOnly }}
+              decipherOnly: {{ decipherOnly }}
+              dataEncipherment: {{ dataEncipherment }}
+              crlSign: {{ crlSign }}
+              keyAgreement: {{ keyAgreement }}
+            extendedKeyUsage:
+              serverAuth: {{ serverAuth }}
+              clientAuth: {{ clientAuth }}
+              emailProtection: {{ emailProtection }}
+              ocspSigning: {{ ocspSigning }}
+              codeSigning: {{ codeSigning }}
+              timeStamping: {{ timeStamping }}
+            unknownExtendedKeyUsages:
+              - objectIdPath: "{{ objectIdPath }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Labels with user-defined metadata.
+    - name: subordinateConfig
+      description: |
+        Optional. If this is a subordinate CertificateAuthority, this field will be set with the subordinate configuration, which describes its issuers. This may be updated, but this CertificateAuthority must continue to validate.
+      value:
+        certificateAuthority: "{{ certificateAuthority }}"
+        pemIssuerChain:
+          pemCertificates:
+            - "{{ pemCertificates }}"
     - name: certificateAuthorityId
-      value: string
-```
+      value: "{{ certificateAuthorityId }}"
+    - name: requestId
+      value: "{{ requestId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -700,22 +785,22 @@ Update a CertificateAuthority.
 ```sql
 UPDATE google.privateca.certificate_authorities
 SET 
-data__gcsBucket = '{{ gcsBucket }}',
-data__labels = '{{ labels }}',
-data__config = '{{ config }}',
-data__lifetime = '{{ lifetime }}',
 data__type = '{{ type }}',
-data__subordinateConfig = '{{ subordinateConfig }}',
-data__keySpec = '{{ keySpec }}',
 data__name = '{{ name }}',
-data__userDefinedAccessUrls = '{{ userDefinedAccessUrls }}'
+data__keySpec = '{{ keySpec }}',
+data__gcsBucket = '{{ gcsBucket }}',
+data__lifetime = '{{ lifetime }}',
+data__userDefinedAccessUrls = '{{ userDefinedAccessUrls }}',
+data__config = '{{ config }}',
+data__labels = '{{ labels }}',
+data__subordinateConfig = '{{ subordinateConfig }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND caPoolsId = '{{ caPoolsId }}' --required
 AND certificateAuthoritiesId = '{{ certificateAuthoritiesId }}' --required
-AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
+AND requestId = '{{ requestId}}'
 RETURNING
 name,
 done,
@@ -745,8 +830,8 @@ WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND caPoolsId = '{{ caPoolsId }}' --required
 AND certificateAuthoritiesId = '{{ certificateAuthoritiesId }}' --required
-AND ignoreActiveCertificates = '{{ ignoreActiveCertificates }}'
 AND skipGracePeriod = '{{ skipGracePeriod }}'
+AND ignoreActiveCertificates = '{{ ignoreActiveCertificates }}'
 AND requestId = '{{ requestId }}'
 AND ignoreDependentResources = '{{ ignoreDependentResources }}'
 ;
@@ -761,8 +846,8 @@ AND ignoreDependentResources = '{{ ignoreDependentResources }}'
     defaultValue="undelete"
     values={[
         { label: 'undelete', value: 'undelete' },
-        { label: 'disable', value: 'disable' },
         { label: 'activate', value: 'activate' },
+        { label: 'disable', value: 'disable' },
         { label: 'enable', value: 'enable' }
     ]}
 >
@@ -783,24 +868,6 @@ EXEC google.privateca.certificate_authorities.undelete
 ;
 ```
 </TabItem>
-<TabItem value="disable">
-
-Disable a CertificateAuthority.
-
-```sql
-EXEC google.privateca.certificate_authorities.disable 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@caPoolsId='{{ caPoolsId }}' --required, 
-@certificateAuthoritiesId='{{ certificateAuthoritiesId }}' --required 
-@@json=
-'{
-"ignoreDependentResources": {{ ignoreDependentResources }}, 
-"requestId": "{{ requestId }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="activate">
 
 Activate a CertificateAuthority that is in state AWAITING_USER_ACTIVATION and is of type SUBORDINATE. After the parent Certificate Authority signs a certificate signing request from FetchCertificateAuthorityCsr, this method can complete the activation process.
@@ -813,9 +880,27 @@ EXEC google.privateca.certificate_authorities.activate
 @certificateAuthoritiesId='{{ certificateAuthoritiesId }}' --required 
 @@json=
 '{
+"requestId": "{{ requestId }}", 
 "subordinateConfig": "{{ subordinateConfig }}", 
-"pemCaCertificate": "{{ pemCaCertificate }}", 
-"requestId": "{{ requestId }}"
+"pemCaCertificate": "{{ pemCaCertificate }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="disable">
+
+Disable a CertificateAuthority.
+
+```sql
+EXEC google.privateca.certificate_authorities.disable 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@caPoolsId='{{ caPoolsId }}' --required, 
+@certificateAuthoritiesId='{{ certificateAuthoritiesId }}' --required 
+@@json=
+'{
+"requestId": "{{ requestId }}", 
+"ignoreDependentResources": {{ ignoreDependentResources }}
 }'
 ;
 ```

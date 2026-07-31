@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>volume_backups</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>volume_backups</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="volume_backups" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.gkebackup.volume_backups" /></td></tr>
 </tbody></table>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="format" /></td>
     <td><code>string</code></td>
-    <td>Output only. The format used for the volume backup.</td>
+    <td>Output only. The format used for the volume backup. (VOLUME_BACKUP_FORMAT_UNSPECIFIED, GCE_PERSISTENT_DISK)</td>
 </tr>
 <tr>
     <td><CopyableCode code="satisfiesPzi" /></td>
@@ -97,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of this VolumeBackup.</td>
+    <td>Output only. The current state of this VolumeBackup. (STATE_UNSPECIFIED, CREATING, SNAPSHOTTING, UPLOADING, SUCCEEDED, FAILED, DELETING, CLEANED_UP)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateMessage" /></td>
@@ -166,7 +167,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="format" /></td>
     <td><code>string</code></td>
-    <td>Output only. The format used for the volume backup.</td>
+    <td>Output only. The format used for the volume backup. (VOLUME_BACKUP_FORMAT_UNSPECIFIED, GCE_PERSISTENT_DISK)</td>
 </tr>
 <tr>
     <td><CopyableCode code="satisfiesPzi" /></td>
@@ -186,7 +187,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of this VolumeBackup.</td>
+    <td>Output only. The current state of this VolumeBackup. (STATE_UNSPECIFIED, CREATING, SNAPSHOTTING, UPLOADING, SUCCEEDED, FAILED, DELETING, CLEANED_UP)</td>
 </tr>
 <tr>
     <td><CopyableCode code="stateMessage" /></td>
@@ -244,7 +245,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-backupPlansId"><code>backupPlansId</code></a>, <a href="#parameter-backupsId"><code>backupsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists the VolumeBackups for a given Backup.</td>
 </tr>
 </tbody>
@@ -376,10 +377,10 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND backupPlansId = '{{ backupPlansId }}' -- required
 AND backupsId = '{{ backupsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>reservations</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>reservations</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="reservations" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.pubsublite.reservations" /></td></tr>
 </tbody></table>
@@ -270,29 +271,27 @@ throughputCapacity
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: reservations
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the reservations resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the reservations resource.
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         The name of the reservation. Structured like: projects/{project_number}/locations/{location}/reservations/{reservation_id}
-        
     - name: throughputCapacity
-      value: string
-      description: >
+      value: "{{ throughputCapacity }}"
+      description: |
         The reserved throughput capacity. Every unit of throughput capacity is equivalent to 1 MiB/s of published messages or 2 MiB/s of subscribed messages. Any topics which are declared as using capacity from a Reservation will consume resources from this reservation instead of being charged individually.
-        
     - name: reservationId
-      value: string
-```
+      value: "{{ reservationId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

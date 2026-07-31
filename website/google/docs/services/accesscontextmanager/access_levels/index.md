@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>access_levels</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>access_levels</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="access_levels" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.accesscontextmanager.access_levels" /></td></tr>
 </tbody></table>
@@ -144,7 +145,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-accessPoliciesId"><code>accessPoliciesId</code></a></td>
-    <td><a href="#parameter-accessLevelFormat"><code>accessLevelFormat</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-accessLevelFormat"><code>accessLevelFormat</code></a></td>
     <td>Lists all access levels for an access policy.</td>
 </tr>
 <tr>
@@ -264,9 +265,9 @@ description,
 title
 FROM google.accesscontextmanager.access_levels
 WHERE accessPoliciesId = '{{ accessPoliciesId }}' -- required
-AND accessLevelFormat = '{{ accessLevelFormat }}'
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
+AND accessLevelFormat = '{{ accessLevelFormat }}'
 ;
 ```
 </TabItem>
@@ -289,18 +290,18 @@ Creates an access level. The long-running operation from this RPC has a successf
 ```sql
 INSERT INTO google.accesscontextmanager.access_levels (
 data__title,
-data__description,
 data__custom,
 data__basic,
 data__name,
+data__description,
 accessPoliciesId
 )
 SELECT 
 '{{ title }}',
-'{{ description }}',
 '{{ custom }}',
 '{{ basic }}',
 '{{ name }}',
+'{{ description }}',
 '{{ accessPoliciesId }}'
 RETURNING
 name,
@@ -313,39 +314,59 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: access_levels
   props:
     - name: accessPoliciesId
-      value: string
+      value: "{{ accessPoliciesId }}"
       description: Required parameter for the access_levels resource.
     - name: title
-      value: string
-      description: >
+      value: "{{ title }}"
+      description: |
         Human readable title. Must be unique within the Policy.
-        
-    - name: description
-      value: string
-      description: >
-        Description of the `AccessLevel` and its use. Does not affect behavior.
-        
     - name: custom
-      value: object
-      description: >
-        A `CustomLevel` written in the Common Expression Language.
-        
+      description: |
+        A \`CustomLevel\` written in the Common Expression Language.
+      value:
+        expr:
+          expression: "{{ expression }}"
+          title: "{{ title }}"
+          location: "{{ location }}"
+          description: "{{ description }}"
     - name: basic
-      value: object
-      description: >
-        A `BasicLevel` composed of `Conditions`.
-        
+      description: |
+        A \`BasicLevel\` composed of \`Conditions\`.
+      value:
+        conditions:
+          - ipSubnetworks: "{{ ipSubnetworks }}"
+            requiredAccessLevels: "{{ requiredAccessLevels }}"
+            vpcNetworkSources: "{{ vpcNetworkSources }}"
+            devicePolicy:
+              requireCorpOwned: {{ requireCorpOwned }}
+              allowedDeviceManagementLevels:
+                - "{{ allowedDeviceManagementLevels }}"
+              requireScreenlock: {{ requireScreenlock }}
+              allowedEncryptionStatuses:
+                - "{{ allowedEncryptionStatuses }}"
+              osConstraints:
+                - requireVerifiedChromeOs: {{ requireVerifiedChromeOs }}
+                  osType: "{{ osType }}"
+                  minimumVersion: "{{ minimumVersion }}"
+              requireAdminApproval: {{ requireAdminApproval }}
+            negate: {{ negate }}
+            members: "{{ members }}"
+            regions: "{{ regions }}"
+        combiningFunction: "{{ combiningFunction }}"
     - name: name
-      value: string
-      description: >
-        Identifier. Resource name for the `AccessLevel`. Format: `accessPolicies/{access_policy}/accessLevels/{access_level}`. The `access_level` component must begin with a letter, followed by alphanumeric characters or `_`. Its maximum length is 50 characters. After you create an `AccessLevel`, you cannot change its `name`.
-        
-```
+      value: "{{ name }}"
+      description: |
+        Identifier. Resource name for the \`AccessLevel\`. Format: \`accessPolicies/{access_policy}/accessLevels/{access_level}\`. The \`access_level\` component must begin with a letter, followed by alphanumeric characters or \`_\`. Its maximum length is 50 characters. After you create an \`AccessLevel\`, you cannot change its \`name\`.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        Description of the \`AccessLevel\` and its use. Does not affect behavior.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -366,10 +387,10 @@ Updates an access level. The long-running operation from this RPC has a successf
 UPDATE google.accesscontextmanager.access_levels
 SET 
 data__title = '{{ title }}',
-data__description = '{{ description }}',
 data__custom = '{{ custom }}',
 data__basic = '{{ basic }}',
-data__name = '{{ name }}'
+data__name = '{{ name }}',
+data__description = '{{ description }}'
 WHERE 
 accessPoliciesId = '{{ accessPoliciesId }}' --required
 AND accessLevelsId = '{{ accessLevelsId }}' --required

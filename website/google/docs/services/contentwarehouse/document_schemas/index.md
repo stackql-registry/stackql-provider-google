@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>document_schemas</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>document_schemas</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="document_schemas" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.contentwarehouse.document_schemas" /></td></tr>
 </tbody></table>
@@ -301,19 +302,19 @@ Creates a document schema.
 ```sql
 INSERT INTO google.contentwarehouse.document_schemas (
 data__name,
-data__documentIsFolder,
-data__propertyDefinitions,
 data__description,
 data__displayName,
+data__propertyDefinitions,
+data__documentIsFolder,
 projectsId,
 locationsId
 )
 SELECT 
 '{{ name }}',
-{{ documentIsFolder }},
-'{{ propertyDefinitions }}',
 '{{ description }}',
 '{{ displayName }}',
+'{{ propertyDefinitions }}',
+{{ documentIsFolder }},
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -329,42 +330,99 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: document_schemas
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the document_schemas resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the document_schemas resource.
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         The resource name of the document schema. Format: projects/{project_number}/locations/{location}/documentSchemas/{document_schema_id}. The name is ignored when creating a document schema.
-        
-    - name: documentIsFolder
-      value: boolean
-      description: >
-        Document Type, true refers the document is a folder, otherwise it is a typical document.
-        
-    - name: propertyDefinitions
-      value: array
-      description: >
-        Document details.
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Schema description.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Required. Name of the schema given by the user. Must be unique per project.
-        
-```
+    - name: propertyDefinitions
+      description: |
+        Document details.
+      value:
+        - isMetadata: {{ isMetadata }}
+          isRepeatable: {{ isRepeatable }}
+          textTypeOptions: "{{ textTypeOptions }}"
+          schemaSources: "{{ schemaSources }}"
+          isSearchable: {{ isSearchable }}
+          displayName: "{{ displayName }}"
+          propertyTypeOptions:
+            propertyDefinitions:
+              - isMetadata: {{ isMetadata }}
+                isRepeatable: {{ isRepeatable }}
+                textTypeOptions: "{{ textTypeOptions }}"
+                schemaSources: "{{ schemaSources }}"
+                isSearchable: {{ isSearchable }}
+                displayName: "{{ displayName }}"
+                propertyTypeOptions:
+                  propertyDefinitions:
+                    - isMetadata: {{ isMetadata }}
+                      isRepeatable: {{ isRepeatable }}
+                      textTypeOptions: "{{ textTypeOptions }}"
+                      schemaSources: "{{ schemaSources }}"
+                      isSearchable: {{ isSearchable }}
+                      displayName: "{{ displayName }}"
+                      propertyTypeOptions:
+                        propertyDefinitions: "{{ propertyDefinitions }}"
+                      name: "{{ name }}"
+                      floatTypeOptions: "{{ floatTypeOptions }}"
+                      enumTypeOptions:
+                        validationCheckDisabled: {{ validationCheckDisabled }}
+                        possibleValues: "{{ possibleValues }}"
+                      isFilterable: {{ isFilterable }}
+                      mapTypeOptions: "{{ mapTypeOptions }}"
+                      integerTypeOptions: "{{ integerTypeOptions }}"
+                      timestampTypeOptions: "{{ timestampTypeOptions }}"
+                      dateTimeTypeOptions: "{{ dateTimeTypeOptions }}"
+                      isRequired: {{ isRequired }}
+                      retrievalImportance: "{{ retrievalImportance }}"
+                name: "{{ name }}"
+                floatTypeOptions: "{{ floatTypeOptions }}"
+                enumTypeOptions:
+                  validationCheckDisabled: {{ validationCheckDisabled }}
+                  possibleValues:
+                    - "{{ possibleValues }}"
+                isFilterable: {{ isFilterable }}
+                mapTypeOptions: "{{ mapTypeOptions }}"
+                integerTypeOptions: "{{ integerTypeOptions }}"
+                timestampTypeOptions: "{{ timestampTypeOptions }}"
+                dateTimeTypeOptions: "{{ dateTimeTypeOptions }}"
+                isRequired: {{ isRequired }}
+                retrievalImportance: "{{ retrievalImportance }}"
+          name: "{{ name }}"
+          floatTypeOptions: "{{ floatTypeOptions }}"
+          enumTypeOptions:
+            validationCheckDisabled: {{ validationCheckDisabled }}
+            possibleValues:
+              - "{{ possibleValues }}"
+          isFilterable: {{ isFilterable }}
+          mapTypeOptions: "{{ mapTypeOptions }}"
+          integerTypeOptions: "{{ integerTypeOptions }}"
+          timestampTypeOptions: "{{ timestampTypeOptions }}"
+          dateTimeTypeOptions: "{{ dateTimeTypeOptions }}"
+          isRequired: {{ isRequired }}
+          retrievalImportance: "{{ retrievalImportance }}"
+    - name: documentIsFolder
+      value: {{ documentIsFolder }}
+      description: |
+        Document Type, true refers the document is a folder, otherwise it is a typical document.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

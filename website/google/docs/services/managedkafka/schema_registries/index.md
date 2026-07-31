@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>schema_registries</code> resour
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>schema_registries</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="schema_registries" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.managedkafka.schema_registries" /></td></tr>
 </tbody></table>
@@ -221,14 +222,14 @@ Create a schema registry instance.
 
 ```sql
 INSERT INTO google.managedkafka.schema_registries (
-data__schemaRegistry,
 data__schemaRegistryId,
+data__schemaRegistry,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ schemaRegistry }}',
 '{{ schemaRegistryId }}',
+'{{ schemaRegistry }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -239,27 +240,28 @@ contexts
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: schema_registries
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the schema_registries resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the schema_registries resource.
-    - name: schemaRegistry
-      value: object
-      description: >
-        Required. The schema registry instance to create. The name field is ignored.
-        
     - name: schemaRegistryId
-      value: string
-      description: >
+      value: "{{ schemaRegistryId }}"
+      description: |
         Required. The schema registry instance ID to use for this schema registry. The ID must contain only letters (a-z, A-Z), numbers (0-9), and underscores (-). The maximum length is 63 characters. The ID must not start with a number.
-        
-```
+    - name: schemaRegistry
+      description: |
+        SchemaRegistry is a schema registry instance.
+      value:
+        contexts:
+          - "{{ contexts }}"
+        name: "{{ name }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

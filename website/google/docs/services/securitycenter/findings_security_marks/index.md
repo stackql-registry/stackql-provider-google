@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>findings_security_marks</code> 
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>findings_security_marks</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="findings_security_marks" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.securitycenter.findings_security_marks" /></td></tr>
 </tbody></table>
@@ -50,25 +51,25 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#folders_sources_findings_update_security_marks"><CopyableCode code="folders_sources_findings_update_security_marks" /></a></td>
-    <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-findingsId"><code>findingsId</code></a></td>
-    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-startTime"><code>startTime</code></a></td>
-    <td>Updates security marks.</td>
-</tr>
-<tr>
     <td><a href="#organizations_sources_findings_update_security_marks"><CopyableCode code="organizations_sources_findings_update_security_marks" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-findingsId"><code>findingsId</code></a></td>
-    <td><a href="#parameter-startTime"><code>startTime</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
-    <td>Updates security marks.</td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-startTime"><code>startTime</code></a></td>
+    <td></td>
 </tr>
 <tr>
     <td><a href="#projects_sources_findings_update_security_marks"><CopyableCode code="projects_sources_findings_update_security_marks" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-findingsId"><code>findingsId</code></a></td>
+    <td><a href="#parameter-startTime"><code>startTime</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td></td>
+</tr>
+<tr>
+    <td><a href="#folders_sources_findings_update_security_marks"><CopyableCode code="folders_sources_findings_update_security_marks" /></a></td>
+    <td><CopyableCode code="update" /></td>
+    <td><a href="#parameter-foldersId"><code>foldersId</code></a>, <a href="#parameter-sourcesId"><code>sourcesId</code></a>, <a href="#parameter-findingsId"><code>findingsId</code></a></td>
     <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-startTime"><code>startTime</code></a></td>
-    <td>Updates security marks.</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -127,51 +128,29 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `UPDATE` examples
 
 <Tabs
-    defaultValue="folders_sources_findings_update_security_marks"
+    defaultValue="organizations_sources_findings_update_security_marks"
     values={[
-        { label: 'folders_sources_findings_update_security_marks', value: 'folders_sources_findings_update_security_marks' },
         { label: 'organizations_sources_findings_update_security_marks', value: 'organizations_sources_findings_update_security_marks' },
-        { label: 'projects_sources_findings_update_security_marks', value: 'projects_sources_findings_update_security_marks' }
+        { label: 'projects_sources_findings_update_security_marks', value: 'projects_sources_findings_update_security_marks' },
+        { label: 'folders_sources_findings_update_security_marks', value: 'folders_sources_findings_update_security_marks' }
     ]}
 >
-<TabItem value="folders_sources_findings_update_security_marks">
-
-Updates security marks.
-
-```sql
-UPDATE google.securitycenter.findings_security_marks
-SET 
-data__name = '{{ name }}',
-data__canonicalName = '{{ canonicalName }}',
-data__marks = '{{ marks }}'
-WHERE 
-foldersId = '{{ foldersId }}' --required
-AND sourcesId = '{{ sourcesId }}' --required
-AND findingsId = '{{ findingsId }}' --required
-AND updateMask = '{{ updateMask}}'
-AND startTime = '{{ startTime}}'
-RETURNING
-name,
-canonicalName,
-marks;
-```
-</TabItem>
 <TabItem value="organizations_sources_findings_update_security_marks">
 
-Updates security marks.
+No description available.
 
 ```sql
 UPDATE google.securitycenter.findings_security_marks
 SET 
-data__name = '{{ name }}',
 data__canonicalName = '{{ canonicalName }}',
+data__name = '{{ name }}',
 data__marks = '{{ marks }}'
 WHERE 
 organizationsId = '{{ organizationsId }}' --required
 AND sourcesId = '{{ sourcesId }}' --required
 AND findingsId = '{{ findingsId }}' --required
-AND startTime = '{{ startTime}}'
 AND updateMask = '{{ updateMask}}'
+AND startTime = '{{ startTime}}'
 RETURNING
 name,
 canonicalName,
@@ -180,16 +159,38 @@ marks;
 </TabItem>
 <TabItem value="projects_sources_findings_update_security_marks">
 
-Updates security marks.
+No description available.
 
 ```sql
 UPDATE google.securitycenter.findings_security_marks
 SET 
-data__name = '{{ name }}',
 data__canonicalName = '{{ canonicalName }}',
+data__name = '{{ name }}',
 data__marks = '{{ marks }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
+AND sourcesId = '{{ sourcesId }}' --required
+AND findingsId = '{{ findingsId }}' --required
+AND startTime = '{{ startTime}}'
+AND updateMask = '{{ updateMask}}'
+RETURNING
+name,
+canonicalName,
+marks;
+```
+</TabItem>
+<TabItem value="folders_sources_findings_update_security_marks">
+
+No description available.
+
+```sql
+UPDATE google.securitycenter.findings_security_marks
+SET 
+data__canonicalName = '{{ canonicalName }}',
+data__name = '{{ name }}',
+data__marks = '{{ marks }}'
+WHERE 
+foldersId = '{{ foldersId }}' --required
 AND sourcesId = '{{ sourcesId }}' --required
 AND findingsId = '{{ findingsId }}' --required
 AND updateMask = '{{ updateMask}}'

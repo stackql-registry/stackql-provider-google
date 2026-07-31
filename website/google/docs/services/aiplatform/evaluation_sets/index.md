@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>evaluation_sets</code> resourc
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>evaluation_sets</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="evaluation_sets" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.evaluation_sets" /></td></tr>
 </tbody></table>
@@ -55,6 +56,11 @@ The following fields are returned by `SELECT` queries:
     <td>Identifier. The resource name of the EvaluationSet. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/evaluationSets/&#123;evaluation_set&#125;`</td>
 </tr>
 <tr>
+    <td><CopyableCode code="agentConfigs" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Static configurations for each agent associated with the items in this set. Key: `agent_id` (matches the `author` field in `events`). Value: The static configuration of the agent.</td>
+</tr>
+<tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. Timestamp when this item was created.</td>
@@ -63,6 +69,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
     <td>Required. The display name of the EvaluationSet.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="encryptionSpec" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Customer-managed encryption key spec for this EvaluationSet. If set, this EvaluationSet and its sub-resources will be secured by this key. (id: GoogleCloudAiplatformV1EncryptionSpec)</td>
 </tr>
 <tr>
     <td><CopyableCode code="evaluationItems" /></td>
@@ -99,6 +110,11 @@ The following fields are returned by `SELECT` queries:
     <td>Identifier. The resource name of the EvaluationSet. Format: `projects/&#123;project&#125;/locations/&#123;location&#125;/evaluationSets/&#123;evaluation_set&#125;`</td>
 </tr>
 <tr>
+    <td><CopyableCode code="agentConfigs" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Static configurations for each agent associated with the items in this set. Key: `agent_id` (matches the `author` field in `events`). Value: The static configuration of the agent.</td>
+</tr>
+<tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
     <td>Output only. Timestamp when this item was created.</td>
@@ -107,6 +123,11 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="displayName" /></td>
     <td><code>string</code></td>
     <td>Required. The display name of the EvaluationSet.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="encryptionSpec" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Customer-managed encryption key spec for this EvaluationSet. If set, this EvaluationSet and its sub-resources will be secured by this key. (id: GoogleCloudAiplatformV1EncryptionSpec)</td>
 </tr>
 <tr>
     <td><CopyableCode code="evaluationItems" /></td>
@@ -154,7 +175,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
     <td>Lists Evaluation Sets.</td>
 </tr>
 <tr>
@@ -177,6 +198,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-evaluationSetsId"><code>evaluationSetsId</code></a></td>
     <td></td>
     <td>Deletes an Evaluation Set.</td>
+</tr>
+<tr>
+    <td><a href="#import"><CopyableCode code="import" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Imports an Evaluation Set.</td>
 </tr>
 </tbody>
 </table>
@@ -253,8 +281,10 @@ Gets an Evaluation Set.
 ```sql
 SELECT
 name,
+agentConfigs,
 createTime,
 displayName,
+encryptionSpec,
 evaluationItems,
 metadata,
 updateTime
@@ -272,17 +302,19 @@ Lists Evaluation Sets.
 ```sql
 SELECT
 name,
+agentConfigs,
 createTime,
 displayName,
+encryptionSpec,
 evaluationItems,
 metadata,
 updateTime
 FROM google.aiplatform.evaluation_sets
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
 ;
 ```
@@ -306,23 +338,29 @@ Creates an Evaluation Set.
 ```sql
 INSERT INTO google.aiplatform.evaluation_sets (
 data__evaluationItems,
-data__name,
-data__metadata,
 data__displayName,
+data__metadata,
+data__agentConfigs,
+data__name,
+data__encryptionSpec,
 projectsId,
 locationsId
 )
 SELECT 
 '{{ evaluationItems }}',
-'{{ name }}',
-'{{ metadata }}',
 '{{ displayName }}',
+'{{ metadata }}',
+'{{ agentConfigs }}',
+'{{ name }}',
+'{{ encryptionSpec }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
 name,
+agentConfigs,
 createTime,
 displayName,
+encryptionSpec,
 evaluationItems,
 metadata,
 updateTime
@@ -331,37 +369,43 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: evaluation_sets
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the evaluation_sets resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the evaluation_sets resource.
     - name: evaluationItems
-      value: array
-      description: >
+      value:
+        - "{{ evaluationItems }}"
+      description: |
         Required. The EvaluationItems that are part of this dataset.
-        
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the EvaluationSet. Format: `projects/{project}/locations/{location}/evaluationSets/{evaluation_set}`
-        
-    - name: metadata
-      value: any
-      description: >
-        Optional. Metadata for the EvaluationSet.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Required. The display name of the EvaluationSet.
-        
-```
+    - name: metadata
+      value: "{{ metadata }}"
+      description: |
+        Optional. Metadata for the EvaluationSet.
+    - name: agentConfigs
+      value: "{{ agentConfigs }}"
+      description: |
+        Optional. Static configurations for each agent associated with the items in this set. Key: \`agent_id\` (matches the \`author\` field in \`events\`). Value: The static configuration of the agent.
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the EvaluationSet. Format: \`projects/{project}/locations/{location}/evaluationSets/{evaluation_set}\`
+    - name: encryptionSpec
+      description: |
+        Optional. Customer-managed encryption key spec for this EvaluationSet. If set, this EvaluationSet and its sub-resources will be secured by this key.
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -382,9 +426,11 @@ Updates an Evaluation Set.
 UPDATE google.aiplatform.evaluation_sets
 SET 
 data__evaluationItems = '{{ evaluationItems }}',
-data__name = '{{ name }}',
+data__displayName = '{{ displayName }}',
 data__metadata = '{{ metadata }}',
-data__displayName = '{{ displayName }}'
+data__agentConfigs = '{{ agentConfigs }}',
+data__name = '{{ name }}',
+data__encryptionSpec = '{{ encryptionSpec }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -392,8 +438,10 @@ AND evaluationSetsId = '{{ evaluationSetsId }}' --required
 AND updateMask = '{{ updateMask}}'
 RETURNING
 name,
+agentConfigs,
 createTime,
 displayName,
+encryptionSpec,
 evaluationItems,
 metadata,
 updateTime;
@@ -419,6 +467,38 @@ DELETE FROM google.aiplatform.evaluation_sets
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND evaluationSetsId = '{{ evaluationSetsId }}' --required
+;
+```
+</TabItem>
+</Tabs>
+
+
+## Lifecycle Methods
+
+<Tabs
+    defaultValue="import"
+    values={[
+        { label: 'import', value: 'import' }
+    ]}
+>
+<TabItem value="import">
+
+Imports an Evaluation Set.
+
+```sql
+EXEC google.aiplatform.evaluation_sets.import 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"agentEngineSource": "{{ agentEngineSource }}", 
+"bigquerySource": "{{ bigquerySource }}", 
+"inlineSource": "{{ inlineSource }}", 
+"gcsSource": "{{ gcsSource }}", 
+"evaluationSet": "{{ evaluationSet }}", 
+"cloudTraceSource": "{{ cloudTraceSource }}", 
+"gcsDestination": "{{ gcsDestination }}"
+}'
 ;
 ```
 </TabItem>

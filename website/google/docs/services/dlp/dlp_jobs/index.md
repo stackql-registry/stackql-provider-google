@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>dlp_jobs</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>dlp_jobs</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="dlp_jobs" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.dlp.dlp_jobs" /></td></tr>
 </tbody></table>
@@ -35,8 +36,8 @@ The following fields are returned by `SELECT` queries:
     defaultValue="projects_locations_dlp_jobs_get"
     values={[
         { label: 'projects_locations_dlp_jobs_get', value: 'projects_locations_dlp_jobs_get' },
-        { label: 'projects_locations_dlp_jobs_list', value: 'projects_locations_dlp_jobs_list' },
         { label: 'projects_dlp_jobs_get', value: 'projects_dlp_jobs_get' },
+        { label: 'projects_locations_dlp_jobs_list', value: 'projects_locations_dlp_jobs_list' },
         { label: 'organizations_locations_dlp_jobs_list', value: 'organizations_locations_dlp_jobs_list' },
         { label: 'projects_dlp_jobs_list', value: 'projects_dlp_jobs_list' }
     ]}
@@ -55,27 +56,27 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The server-assigned name.</td>
+    <td>Output only. The server-assigned name.</td>
 </tr>
 <tr>
     <td><CopyableCode code="actionDetails" /></td>
     <td><code>array</code></td>
-    <td>Events that should occur after the job has completed.</td>
+    <td>Output only. Events that should occur after the job has completed.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Time when the job was created.</td>
+    <td>Output only. Time when the job was created.</td>
 </tr>
 <tr>
     <td><CopyableCode code="endTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Time when the job finished.</td>
+    <td>Output only. Time when the job finished.</td>
 </tr>
 <tr>
     <td><CopyableCode code="errors" /></td>
     <td><code>array</code></td>
-    <td>A stream of errors encountered running the job.</td>
+    <td>Output only. A stream of errors encountered running the job.</td>
 </tr>
 <tr>
     <td><CopyableCode code="inspectDetails" /></td>
@@ -85,12 +86,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="jobTriggerName" /></td>
     <td><code>string</code></td>
-    <td>If created by a job trigger, the resource name of the trigger that instantiated the job.</td>
+    <td>Output only. If created by a job trigger, the resource name of the trigger that instantiated the job.</td>
 </tr>
 <tr>
     <td><CopyableCode code="lastModified" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Time when the job was last modified by the system.</td>
+    <td>Output only. Time when the job was last modified by the system.</td>
 </tr>
 <tr>
     <td><CopyableCode code="riskDetails" /></td>
@@ -100,91 +101,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="startTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Time when the job started.</td>
+    <td>Output only. Time when the job started.</td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>State of a job.</td>
+    <td>Output only. State of a job. (JOB_STATE_UNSPECIFIED, PENDING, RUNNING, DONE, CANCELED, FAILED, ACTIVE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>The type of job.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="projects_locations_dlp_jobs_list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>The server-assigned name.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="actionDetails" /></td>
-    <td><code>array</code></td>
-    <td>Events that should occur after the job has completed.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Time when the job was created.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="endTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Time when the job finished.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="errors" /></td>
-    <td><code>array</code></td>
-    <td>A stream of errors encountered running the job.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="inspectDetails" /></td>
-    <td><code>object</code></td>
-    <td>Results from inspecting a data source. (id: GooglePrivacyDlpV2InspectDataSourceDetails)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="jobTriggerName" /></td>
-    <td><code>string</code></td>
-    <td>If created by a job trigger, the resource name of the trigger that instantiated the job.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="lastModified" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Time when the job was last modified by the system.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="riskDetails" /></td>
-    <td><code>object</code></td>
-    <td>Results from analyzing risk of a data source. (id: GooglePrivacyDlpV2AnalyzeDataSourceRiskDetails)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="startTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Time when the job started.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="state" /></td>
-    <td><code>string</code></td>
-    <td>State of a job.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="type" /></td>
-    <td><code>string</code></td>
-    <td>The type of job.</td>
+    <td>The type of job. (DLP_JOB_TYPE_UNSPECIFIED, INSPECT_JOB, RISK_ANALYSIS_JOB)</td>
 </tr>
 </tbody>
 </table>
@@ -203,27 +130,27 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The server-assigned name.</td>
+    <td>Output only. The server-assigned name.</td>
 </tr>
 <tr>
     <td><CopyableCode code="actionDetails" /></td>
     <td><code>array</code></td>
-    <td>Events that should occur after the job has completed.</td>
+    <td>Output only. Events that should occur after the job has completed.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Time when the job was created.</td>
+    <td>Output only. Time when the job was created.</td>
 </tr>
 <tr>
     <td><CopyableCode code="endTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Time when the job finished.</td>
+    <td>Output only. Time when the job finished.</td>
 </tr>
 <tr>
     <td><CopyableCode code="errors" /></td>
     <td><code>array</code></td>
-    <td>A stream of errors encountered running the job.</td>
+    <td>Output only. A stream of errors encountered running the job.</td>
 </tr>
 <tr>
     <td><CopyableCode code="inspectDetails" /></td>
@@ -233,12 +160,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="jobTriggerName" /></td>
     <td><code>string</code></td>
-    <td>If created by a job trigger, the resource name of the trigger that instantiated the job.</td>
+    <td>Output only. If created by a job trigger, the resource name of the trigger that instantiated the job.</td>
 </tr>
 <tr>
     <td><CopyableCode code="lastModified" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Time when the job was last modified by the system.</td>
+    <td>Output only. Time when the job was last modified by the system.</td>
 </tr>
 <tr>
     <td><CopyableCode code="riskDetails" /></td>
@@ -248,17 +175,91 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="startTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Time when the job started.</td>
+    <td>Output only. Time when the job started.</td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>State of a job.</td>
+    <td>Output only. State of a job. (JOB_STATE_UNSPECIFIED, PENDING, RUNNING, DONE, CANCELED, FAILED, ACTIVE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>The type of job.</td>
+    <td>The type of job. (DLP_JOB_TYPE_UNSPECIFIED, INSPECT_JOB, RISK_ANALYSIS_JOB)</td>
+</tr>
+</tbody>
+</table>
+</TabItem>
+<TabItem value="projects_locations_dlp_jobs_list">
+
+<table>
+<thead>
+    <tr>
+    <th>Name</th>
+    <th>Datatype</th>
+    <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><CopyableCode code="name" /></td>
+    <td><code>string</code></td>
+    <td>Output only. The server-assigned name.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="actionDetails" /></td>
+    <td><code>array</code></td>
+    <td>Output only. Events that should occur after the job has completed.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="createTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Time when the job was created.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="endTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Time when the job finished.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="errors" /></td>
+    <td><code>array</code></td>
+    <td>Output only. A stream of errors encountered running the job.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="inspectDetails" /></td>
+    <td><code>object</code></td>
+    <td>Results from inspecting a data source. (id: GooglePrivacyDlpV2InspectDataSourceDetails)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="jobTriggerName" /></td>
+    <td><code>string</code></td>
+    <td>Output only. If created by a job trigger, the resource name of the trigger that instantiated the job.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="lastModified" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Time when the job was last modified by the system.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="riskDetails" /></td>
+    <td><code>object</code></td>
+    <td>Results from analyzing risk of a data source. (id: GooglePrivacyDlpV2AnalyzeDataSourceRiskDetails)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="startTime" /></td>
+    <td><code>string (google-datetime)</code></td>
+    <td>Output only. Time when the job started.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="state" /></td>
+    <td><code>string</code></td>
+    <td>Output only. State of a job. (JOB_STATE_UNSPECIFIED, PENDING, RUNNING, DONE, CANCELED, FAILED, ACTIVE)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="type" /></td>
+    <td><code>string</code></td>
+    <td>The type of job. (DLP_JOB_TYPE_UNSPECIFIED, INSPECT_JOB, RISK_ANALYSIS_JOB)</td>
 </tr>
 </tbody>
 </table>
@@ -277,27 +278,27 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The server-assigned name.</td>
+    <td>Output only. The server-assigned name.</td>
 </tr>
 <tr>
     <td><CopyableCode code="actionDetails" /></td>
     <td><code>array</code></td>
-    <td>Events that should occur after the job has completed.</td>
+    <td>Output only. Events that should occur after the job has completed.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Time when the job was created.</td>
+    <td>Output only. Time when the job was created.</td>
 </tr>
 <tr>
     <td><CopyableCode code="endTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Time when the job finished.</td>
+    <td>Output only. Time when the job finished.</td>
 </tr>
 <tr>
     <td><CopyableCode code="errors" /></td>
     <td><code>array</code></td>
-    <td>A stream of errors encountered running the job.</td>
+    <td>Output only. A stream of errors encountered running the job.</td>
 </tr>
 <tr>
     <td><CopyableCode code="inspectDetails" /></td>
@@ -307,12 +308,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="jobTriggerName" /></td>
     <td><code>string</code></td>
-    <td>If created by a job trigger, the resource name of the trigger that instantiated the job.</td>
+    <td>Output only. If created by a job trigger, the resource name of the trigger that instantiated the job.</td>
 </tr>
 <tr>
     <td><CopyableCode code="lastModified" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Time when the job was last modified by the system.</td>
+    <td>Output only. Time when the job was last modified by the system.</td>
 </tr>
 <tr>
     <td><CopyableCode code="riskDetails" /></td>
@@ -322,17 +323,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="startTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Time when the job started.</td>
+    <td>Output only. Time when the job started.</td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>State of a job.</td>
+    <td>Output only. State of a job. (JOB_STATE_UNSPECIFIED, PENDING, RUNNING, DONE, CANCELED, FAILED, ACTIVE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>The type of job.</td>
+    <td>The type of job. (DLP_JOB_TYPE_UNSPECIFIED, INSPECT_JOB, RISK_ANALYSIS_JOB)</td>
 </tr>
 </tbody>
 </table>
@@ -351,27 +352,27 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The server-assigned name.</td>
+    <td>Output only. The server-assigned name.</td>
 </tr>
 <tr>
     <td><CopyableCode code="actionDetails" /></td>
     <td><code>array</code></td>
-    <td>Events that should occur after the job has completed.</td>
+    <td>Output only. Events that should occur after the job has completed.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Time when the job was created.</td>
+    <td>Output only. Time when the job was created.</td>
 </tr>
 <tr>
     <td><CopyableCode code="endTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Time when the job finished.</td>
+    <td>Output only. Time when the job finished.</td>
 </tr>
 <tr>
     <td><CopyableCode code="errors" /></td>
     <td><code>array</code></td>
-    <td>A stream of errors encountered running the job.</td>
+    <td>Output only. A stream of errors encountered running the job.</td>
 </tr>
 <tr>
     <td><CopyableCode code="inspectDetails" /></td>
@@ -381,12 +382,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="jobTriggerName" /></td>
     <td><code>string</code></td>
-    <td>If created by a job trigger, the resource name of the trigger that instantiated the job.</td>
+    <td>Output only. If created by a job trigger, the resource name of the trigger that instantiated the job.</td>
 </tr>
 <tr>
     <td><CopyableCode code="lastModified" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Time when the job was last modified by the system.</td>
+    <td>Output only. Time when the job was last modified by the system.</td>
 </tr>
 <tr>
     <td><CopyableCode code="riskDetails" /></td>
@@ -396,17 +397,17 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="startTime" /></td>
     <td><code>string (google-datetime)</code></td>
-    <td>Time when the job started.</td>
+    <td>Output only. Time when the job started.</td>
 </tr>
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>State of a job.</td>
+    <td>Output only. State of a job. (JOB_STATE_UNSPECIFIED, PENDING, RUNNING, DONE, CANCELED, FAILED, ACTIVE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>The type of job.</td>
+    <td>The type of job. (DLP_JOB_TYPE_UNSPECIFIED, INSPECT_JOB, RISK_ANALYSIS_JOB)</td>
 </tr>
 </tbody>
 </table>
@@ -433,63 +434,70 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dlpJobsId"><code>dlpJobsId</code></a></td>
     <td></td>
-    <td>Gets the latest state of a long-running DlpJob. See https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_dlp_jobs_list"><CopyableCode code="projects_locations_dlp_jobs_list" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-type"><code>type</code></a>, <a href="#parameter-locationId"><code>locationId</code></a></td>
-    <td>Lists DlpJobs that match the specified filter in the request. See https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.</td>
+    <td>Gets the latest state of a long-running DlpJob. See https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_dlp_jobs_get"><CopyableCode code="projects_dlp_jobs_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-dlpJobsId"><code>dlpJobsId</code></a></td>
     <td></td>
-    <td>Gets the latest state of a long-running DlpJob. See https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.</td>
+    <td>Gets the latest state of a long-running DlpJob. See https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_dlp_jobs_list"><CopyableCode code="projects_locations_dlp_jobs_list" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-type"><code>type</code></a></td>
+    <td>Lists DlpJobs that match the specified filter in the request. See https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.</td>
 </tr>
 <tr>
     <td><a href="#organizations_locations_dlp_jobs_list"><CopyableCode code="organizations_locations_dlp_jobs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-organizationsId"><code>organizationsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-type"><code>type</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
-    <td>Lists DlpJobs that match the specified filter in the request. See https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.</td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-type"><code>type</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-locationId"><code>locationId</code></a></td>
+    <td>Lists DlpJobs that match the specified filter in the request. See https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_dlp_jobs_list"><CopyableCode code="projects_dlp_jobs_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-type"><code>type</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-locationId"><code>locationId</code></a></td>
-    <td>Lists DlpJobs that match the specified filter in the request. See https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.</td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-locationId"><code>locationId</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-type"><code>type</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a></td>
+    <td>Lists DlpJobs that match the specified filter in the request. See https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_dlp_jobs_create"><CopyableCode code="projects_locations_dlp_jobs_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
     <td></td>
-    <td>Creates a new job to inspect storage or calculate risk metrics. See https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more. When no InfoTypes or CustomInfoTypes are specified in inspect jobs, the system will automatically choose what detectors to run. By default this may be all types, but may change over time as detectors are updated.</td>
+    <td>Creates a new job to inspect storage or calculate risk metrics. See https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more. When no InfoTypes or CustomInfoTypes are specified in inspect jobs, the system will automatically choose what detectors to run. By default this may be all types, but may change over time as detectors are updated.</td>
 </tr>
 <tr>
     <td><a href="#projects_dlp_jobs_create"><CopyableCode code="projects_dlp_jobs_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a></td>
     <td></td>
-    <td>Creates a new job to inspect storage or calculate risk metrics. See https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more. When no InfoTypes or CustomInfoTypes are specified in inspect jobs, the system will automatically choose what detectors to run. By default this may be all types, but may change over time as detectors are updated.</td>
+    <td>Creates a new job to inspect storage or calculate risk metrics. See https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more. When no InfoTypes or CustomInfoTypes are specified in inspect jobs, the system will automatically choose what detectors to run. By default this may be all types, but may change over time as detectors are updated.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_dlp_jobs_delete"><CopyableCode code="projects_locations_dlp_jobs_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dlpJobsId"><code>dlpJobsId</code></a></td>
     <td></td>
-    <td>Deletes a long-running DlpJob. This method indicates that the client is no longer interested in the DlpJob result. The job will be canceled if possible. See https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.</td>
+    <td>Deletes a long-running DlpJob. This method indicates that the client is no longer interested in the DlpJob result. The job will be canceled if possible. See https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_dlp_jobs_delete"><CopyableCode code="projects_dlp_jobs_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-dlpJobsId"><code>dlpJobsId</code></a></td>
     <td></td>
-    <td>Deletes a long-running DlpJob. This method indicates that the client is no longer interested in the DlpJob result. The job will be canceled if possible. See https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.</td>
+    <td>Deletes a long-running DlpJob. This method indicates that the client is no longer interested in the DlpJob result. The job will be canceled if possible. See https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.</td>
+</tr>
+<tr>
+    <td><a href="#projects_dlp_jobs_cancel"><CopyableCode code="projects_dlp_jobs_cancel" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-dlpJobsId"><code>dlpJobsId</code></a></td>
+    <td></td>
+    <td>Starts asynchronous cancellation on a long-running DlpJob. The server makes a best effort to cancel the DlpJob, but success is not guaranteed. See https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_dlp_jobs_hybrid_inspect"><CopyableCode code="projects_locations_dlp_jobs_hybrid_inspect" /></a></td>
@@ -499,13 +507,6 @@ The following methods are available for this resource:
     <td>Inspect hybrid content and store findings to a job. To review the findings, inspect the job. Inspection will occur asynchronously.</td>
 </tr>
 <tr>
-    <td><a href="#projects_locations_dlp_jobs_cancel"><CopyableCode code="projects_locations_dlp_jobs_cancel" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dlpJobsId"><code>dlpJobsId</code></a></td>
-    <td></td>
-    <td>Starts asynchronous cancellation on a long-running DlpJob. The server makes a best effort to cancel the DlpJob, but success is not guaranteed. See https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.</td>
-</tr>
-<tr>
     <td><a href="#projects_locations_dlp_jobs_finish"><CopyableCode code="projects_locations_dlp_jobs_finish" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dlpJobsId"><code>dlpJobsId</code></a></td>
@@ -513,11 +514,11 @@ The following methods are available for this resource:
     <td>Finish a running hybrid DlpJob. Triggers the finalization steps and running of any enabled actions that have not yet run.</td>
 </tr>
 <tr>
-    <td><a href="#projects_dlp_jobs_cancel"><CopyableCode code="projects_dlp_jobs_cancel" /></a></td>
+    <td><a href="#projects_locations_dlp_jobs_cancel"><CopyableCode code="projects_locations_dlp_jobs_cancel" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-dlpJobsId"><code>dlpJobsId</code></a></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-dlpJobsId"><code>dlpJobsId</code></a></td>
     <td></td>
-    <td>Starts asynchronous cancellation on a long-running DlpJob. The server makes a best effort to cancel the DlpJob, but success is not guaranteed. See https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.</td>
+    <td>Starts asynchronous cancellation on a long-running DlpJob. The server makes a best effort to cancel the DlpJob, but success is not guaranteed. See https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.</td>
 </tr>
 </tbody>
 </table>
@@ -594,15 +595,15 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     defaultValue="projects_locations_dlp_jobs_get"
     values={[
         { label: 'projects_locations_dlp_jobs_get', value: 'projects_locations_dlp_jobs_get' },
-        { label: 'projects_locations_dlp_jobs_list', value: 'projects_locations_dlp_jobs_list' },
         { label: 'projects_dlp_jobs_get', value: 'projects_dlp_jobs_get' },
+        { label: 'projects_locations_dlp_jobs_list', value: 'projects_locations_dlp_jobs_list' },
         { label: 'organizations_locations_dlp_jobs_list', value: 'organizations_locations_dlp_jobs_list' },
         { label: 'projects_dlp_jobs_list', value: 'projects_dlp_jobs_list' }
     ]}
 >
 <TabItem value="projects_locations_dlp_jobs_get">
 
-Gets the latest state of a long-running DlpJob. See https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.
+Gets the latest state of a long-running DlpJob. See https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.
 
 ```sql
 SELECT
@@ -621,13 +622,37 @@ type
 FROM google.dlp.dlp_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
+AND dlpJobsId = '{{ dlpJobsId }}' -- required
+;
+```
+</TabItem>
+<TabItem value="projects_dlp_jobs_get">
+
+Gets the latest state of a long-running DlpJob. See https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.
+
+```sql
+SELECT
+name,
+actionDetails,
+createTime,
+endTime,
+errors,
+inspectDetails,
+jobTriggerName,
+lastModified,
+riskDetails,
+startTime,
+state,
+type
+FROM google.dlp.dlp_jobs
+WHERE projectsId = '{{ projectsId }}' -- required
 AND dlpJobsId = '{{ dlpJobsId }}' -- required
 ;
 ```
 </TabItem>
 <TabItem value="projects_locations_dlp_jobs_list">
 
-Lists DlpJobs that match the specified filter in the request. See https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.
+Lists DlpJobs that match the specified filter in the request. See https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.
 
 ```sql
 SELECT
@@ -646,42 +671,18 @@ type
 FROM google.dlp.dlp_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-AND type = '{{ type }}'
+AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 AND locationId = '{{ locationId }}'
-;
-```
-</TabItem>
-<TabItem value="projects_dlp_jobs_get">
-
-Gets the latest state of a long-running DlpJob. See https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.
-
-```sql
-SELECT
-name,
-actionDetails,
-createTime,
-endTime,
-errors,
-inspectDetails,
-jobTriggerName,
-lastModified,
-riskDetails,
-startTime,
-state,
-type
-FROM google.dlp.dlp_jobs
-WHERE projectsId = '{{ projectsId }}' -- required
-AND dlpJobsId = '{{ dlpJobsId }}' -- required
+AND orderBy = '{{ orderBy }}'
+AND type = '{{ type }}'
 ;
 ```
 </TabItem>
 <TabItem value="organizations_locations_dlp_jobs_list">
 
-Lists DlpJobs that match the specified filter in the request. See https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.
+Lists DlpJobs that match the specified filter in the request. See https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.
 
 ```sql
 SELECT
@@ -700,18 +701,18 @@ type
 FROM google.dlp.dlp_jobs
 WHERE organizationsId = '{{ organizationsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND locationId = '{{ locationId }}'
-AND pageSize = '{{ pageSize }}'
-AND type = '{{ type }}'
+AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
 AND orderBy = '{{ orderBy }}'
-AND filter = '{{ filter }}'
+AND type = '{{ type }}'
+AND pageSize = '{{ pageSize }}'
+AND locationId = '{{ locationId }}'
 ;
 ```
 </TabItem>
 <TabItem value="projects_dlp_jobs_list">
 
-Lists DlpJobs that match the specified filter in the request. See https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.
+Lists DlpJobs that match the specified filter in the request. See https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.
 
 ```sql
 SELECT
@@ -729,12 +730,12 @@ state,
 type
 FROM google.dlp.dlp_jobs
 WHERE projectsId = '{{ projectsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
 AND pageToken = '{{ pageToken }}'
+AND locationId = '{{ locationId }}'
+AND pageSize = '{{ pageSize }}'
 AND type = '{{ type }}'
 AND orderBy = '{{ orderBy }}'
-AND locationId = '{{ locationId }}'
 ;
 ```
 </TabItem>
@@ -753,7 +754,7 @@ AND locationId = '{{ locationId }}'
 >
 <TabItem value="projects_locations_dlp_jobs_create">
 
-Creates a new job to inspect storage or calculate risk metrics. See https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more. When no InfoTypes or CustomInfoTypes are specified in inspect jobs, the system will automatically choose what detectors to run. By default this may be all types, but may change over time as detectors are updated.
+Creates a new job to inspect storage or calculate risk metrics. See https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more. When no InfoTypes or CustomInfoTypes are specified in inspect jobs, the system will automatically choose what detectors to run. By default this may be all types, but may change over time as detectors are updated.
 
 ```sql
 INSERT INTO google.dlp.dlp_jobs (
@@ -789,7 +790,7 @@ type
 </TabItem>
 <TabItem value="projects_dlp_jobs_create">
 
-Creates a new job to inspect storage or calculate risk metrics. See https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more. When no InfoTypes or CustomInfoTypes are specified in inspect jobs, the system will automatically choose what detectors to run. By default this may be all types, but may change over time as detectors are updated.
+Creates a new job to inspect storage or calculate risk metrics. See https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more. When no InfoTypes or CustomInfoTypes are specified in inspect jobs, the system will automatically choose what detectors to run. By default this may be all types, but may change over time as detectors are updated.
 
 ```sql
 INSERT INTO google.dlp.dlp_jobs (
@@ -823,37 +824,265 @@ type
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: dlp_jobs
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the dlp_jobs resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the dlp_jobs resource.
     - name: inspectJob
-      value: object
-      description: >
+      description: |
         An inspection job scans a storage repository for InfoTypes.
-        
+      value:
+        inspectTemplateName: "{{ inspectTemplateName }}"
+        actions:
+          - publishToStackdriver: "{{ publishToStackdriver }}"
+            publishSummaryToCscc: "{{ publishSummaryToCscc }}"
+            publishFindingsToCloudDataCatalog: "{{ publishFindingsToCloudDataCatalog }}"
+            saveFindings:
+              outputConfig:
+                storagePath:
+                  path: "{{ path }}"
+                outputSchema: "{{ outputSchema }}"
+                table:
+                  projectId: "{{ projectId }}"
+                  datasetId: "{{ datasetId }}"
+                  tableId: "{{ tableId }}"
+            pubSub:
+              topic: "{{ topic }}"
+            publishFindingsToDataplexCatalog: "{{ publishFindingsToDataplexCatalog }}"
+            deidentify:
+              fileTypesToTransform:
+                - "{{ fileTypesToTransform }}"
+              cloudStorageOutput: "{{ cloudStorageOutput }}"
+              transformationConfig:
+                deidentifyTemplate: "{{ deidentifyTemplate }}"
+                imageRedactTemplate: "{{ imageRedactTemplate }}"
+                structuredDeidentifyTemplate: "{{ structuredDeidentifyTemplate }}"
+              transformationDetailsStorageConfig:
+                table:
+                  projectId: "{{ projectId }}"
+                  datasetId: "{{ datasetId }}"
+                  tableId: "{{ tableId }}"
+            jobNotificationEmails: "{{ jobNotificationEmails }}"
+        storageConfig:
+          bigQueryOptions:
+            tableReference:
+              projectId: "{{ projectId }}"
+              datasetId: "{{ datasetId }}"
+              tableId: "{{ tableId }}"
+            identifyingFields:
+              - name: "{{ name }}"
+            excludedFields:
+              - name: "{{ name }}"
+            rowsLimit: "{{ rowsLimit }}"
+            rowsLimitPercent: {{ rowsLimitPercent }}
+            sampleMethod: "{{ sampleMethod }}"
+            includedFields:
+              - name: "{{ name }}"
+          datastoreOptions:
+            partitionId:
+              projectId: "{{ projectId }}"
+              namespaceId: "{{ namespaceId }}"
+            kind:
+              name: "{{ name }}"
+          cloudStorageOptions:
+            bytesLimitPerFilePercent: {{ bytesLimitPerFilePercent }}
+            bytesLimitPerFile: "{{ bytesLimitPerFile }}"
+            fileTypes:
+              - "{{ fileTypes }}"
+            fileSet:
+              regexFileSet:
+                excludeRegex: "{{ excludeRegex }}"
+                bucketName: "{{ bucketName }}"
+                includeRegex: "{{ includeRegex }}"
+              url: "{{ url }}"
+            filesLimitPercent: {{ filesLimitPercent }}
+            sampleMethod: "{{ sampleMethod }}"
+          timespanConfig:
+            enableAutoPopulationOfTimespanConfig: {{ enableAutoPopulationOfTimespanConfig }}
+            startTime: "{{ startTime }}"
+            timestampField:
+              name: "{{ name }}"
+            endTime: "{{ endTime }}"
+          hybridOptions:
+            labels: "{{ labels }}"
+            requiredFindingLabelKeys:
+              - "{{ requiredFindingLabelKeys }}"
+            tableOptions:
+              identifyingFields:
+                - name: "{{ name }}"
+            description: "{{ description }}"
+        inspectConfig:
+          minLikelihoodPerInfoType:
+            - infoType:
+                name: "{{ name }}"
+                version: "{{ version }}"
+                sensitivityScore:
+                  score: "{{ score }}"
+              minLikelihood: "{{ minLikelihood }}"
+          infoTypes:
+            - name: "{{ name }}"
+              version: "{{ version }}"
+              sensitivityScore:
+                score: "{{ score }}"
+          contentOptions:
+            - "{{ contentOptions }}"
+          minLikelihood: "{{ minLikelihood }}"
+          excludeInfoTypes: {{ excludeInfoTypes }}
+          customInfoTypes:
+            - likelihood: "{{ likelihood }}"
+              exclusionType: "{{ exclusionType }}"
+              surrogateType: "{{ surrogateType }}"
+              sensitivityScore:
+                score: "{{ score }}"
+              storedType:
+                name: "{{ name }}"
+                createTime: "{{ createTime }}"
+              metadataKeyValueExpression:
+                valueRegex: "{{ valueRegex }}"
+                keyRegex: "{{ keyRegex }}"
+              fileLabelInfoType:
+                sensitivityLabel:
+                  guid: "{{ guid }}"
+                googleDriveLabel:
+                  labelFieldsToMatch: "{{ labelFieldsToMatch }}"
+                  labelId: "{{ labelId }}"
+              detectionRules: "{{ detectionRules }}"
+              infoType:
+                name: "{{ name }}"
+                version: "{{ version }}"
+                sensitivityScore:
+                  score: "{{ score }}"
+              regex:
+                pattern: "{{ pattern }}"
+                groupIndexes:
+                  - {{ groupIndexes }}
+              dictionary:
+                wordList:
+                  words: "{{ words }}"
+                cloudStoragePath:
+                  path: "{{ path }}"
+          limits:
+            maxFindingsPerInfoType:
+              - maxFindings: {{ maxFindings }}
+                infoType:
+                  name: "{{ name }}"
+                  version: "{{ version }}"
+                  sensitivityScore: "{{ sensitivityScore }}"
+            maxFindingsPerRequest: {{ maxFindingsPerRequest }}
+            maxFindingsPerItem: {{ maxFindingsPerItem }}
+          ruleSet:
+            - rules: "{{ rules }}"
+              infoTypes: "{{ infoTypes }}"
+          includeQuote: {{ includeQuote }}
     - name: locationId
-      value: string
-      description: >
+      value: "{{ locationId }}"
+      description: |
         Deprecated. This field has no effect.
-        
     - name: jobId
-      value: string
-      description: >
-        The job id can contain uppercase and lowercase letters, numbers, and hyphens; that is, it must match the regular expression: `[a-zA-Z\d-_]+`. The maximum length is 100 characters. Can be empty to allow the system to generate one.
-        
+      value: "{{ jobId }}"
+      description: |
+        The job id can contain uppercase and lowercase letters, numbers, and hyphens; that is, it must match the regular expression: \`[a-zA-Zd-_]+\`. The maximum length is 100 characters. Can be empty to allow the system to generate one.
     - name: riskJob
-      value: object
-      description: >
+      description: |
         A risk analysis job calculates re-identification risk metrics for a BigQuery table.
-        
-```
+      value:
+        actions:
+          - publishToStackdriver: "{{ publishToStackdriver }}"
+            publishSummaryToCscc: "{{ publishSummaryToCscc }}"
+            publishFindingsToCloudDataCatalog: "{{ publishFindingsToCloudDataCatalog }}"
+            saveFindings:
+              outputConfig:
+                storagePath:
+                  path: "{{ path }}"
+                outputSchema: "{{ outputSchema }}"
+                table:
+                  projectId: "{{ projectId }}"
+                  datasetId: "{{ datasetId }}"
+                  tableId: "{{ tableId }}"
+            pubSub:
+              topic: "{{ topic }}"
+            publishFindingsToDataplexCatalog: "{{ publishFindingsToDataplexCatalog }}"
+            deidentify:
+              fileTypesToTransform:
+                - "{{ fileTypesToTransform }}"
+              cloudStorageOutput: "{{ cloudStorageOutput }}"
+              transformationConfig:
+                deidentifyTemplate: "{{ deidentifyTemplate }}"
+                imageRedactTemplate: "{{ imageRedactTemplate }}"
+                structuredDeidentifyTemplate: "{{ structuredDeidentifyTemplate }}"
+              transformationDetailsStorageConfig:
+                table:
+                  projectId: "{{ projectId }}"
+                  datasetId: "{{ datasetId }}"
+                  tableId: "{{ tableId }}"
+            jobNotificationEmails: "{{ jobNotificationEmails }}"
+        privacyMetric:
+          lDiversityConfig:
+            sensitiveAttribute:
+              name: "{{ name }}"
+            quasiIds:
+              - name: "{{ name }}"
+          kMapEstimationConfig:
+            auxiliaryTables:
+              - quasiIds: "{{ quasiIds }}"
+                relativeFrequency:
+                  name: "{{ name }}"
+                table:
+                  projectId: "{{ projectId }}"
+                  datasetId: "{{ datasetId }}"
+                  tableId: "{{ tableId }}"
+            quasiIds:
+              - field:
+                  name: "{{ name }}"
+                infoType:
+                  name: "{{ name }}"
+                  version: "{{ version }}"
+                  sensitivityScore: "{{ sensitivityScore }}"
+                customTag: "{{ customTag }}"
+                inferred: "{{ inferred }}"
+            regionCode: "{{ regionCode }}"
+          kAnonymityConfig:
+            entityId:
+              field:
+                name: "{{ name }}"
+            quasiIds:
+              - name: "{{ name }}"
+          deltaPresenceEstimationConfig:
+            auxiliaryTables:
+              - quasiIds: "{{ quasiIds }}"
+                relativeFrequency:
+                  name: "{{ name }}"
+                table:
+                  projectId: "{{ projectId }}"
+                  datasetId: "{{ datasetId }}"
+                  tableId: "{{ tableId }}"
+            quasiIds:
+              - infoType:
+                  name: "{{ name }}"
+                  version: "{{ version }}"
+                  sensitivityScore: "{{ sensitivityScore }}"
+                customTag: "{{ customTag }}"
+                inferred: "{{ inferred }}"
+                field:
+                  name: "{{ name }}"
+            regionCode: "{{ regionCode }}"
+          numericalStatsConfig:
+            field:
+              name: "{{ name }}"
+          categoricalStatsConfig:
+            field:
+              name: "{{ name }}"
+        sourceTable:
+          projectId: "{{ projectId }}"
+          datasetId: "{{ datasetId }}"
+          tableId: "{{ tableId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -869,7 +1098,7 @@ type
 >
 <TabItem value="projects_locations_dlp_jobs_delete">
 
-Deletes a long-running DlpJob. This method indicates that the client is no longer interested in the DlpJob result. The job will be canceled if possible. See https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.
+Deletes a long-running DlpJob. This method indicates that the client is no longer interested in the DlpJob result. The job will be canceled if possible. See https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.
 
 ```sql
 DELETE FROM google.dlp.dlp_jobs
@@ -881,7 +1110,7 @@ AND dlpJobsId = '{{ dlpJobsId }}' --required
 </TabItem>
 <TabItem value="projects_dlp_jobs_delete">
 
-Deletes a long-running DlpJob. This method indicates that the client is no longer interested in the DlpJob result. The job will be canceled if possible. See https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.
+Deletes a long-running DlpJob. This method indicates that the client is no longer interested in the DlpJob result. The job will be canceled if possible. See https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.
 
 ```sql
 DELETE FROM google.dlp.dlp_jobs
@@ -896,14 +1125,25 @@ AND dlpJobsId = '{{ dlpJobsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_dlp_jobs_hybrid_inspect"
+    defaultValue="projects_dlp_jobs_cancel"
     values={[
+        { label: 'projects_dlp_jobs_cancel', value: 'projects_dlp_jobs_cancel' },
         { label: 'projects_locations_dlp_jobs_hybrid_inspect', value: 'projects_locations_dlp_jobs_hybrid_inspect' },
-        { label: 'projects_locations_dlp_jobs_cancel', value: 'projects_locations_dlp_jobs_cancel' },
         { label: 'projects_locations_dlp_jobs_finish', value: 'projects_locations_dlp_jobs_finish' },
-        { label: 'projects_dlp_jobs_cancel', value: 'projects_dlp_jobs_cancel' }
+        { label: 'projects_locations_dlp_jobs_cancel', value: 'projects_locations_dlp_jobs_cancel' }
     ]}
 >
+<TabItem value="projects_dlp_jobs_cancel">
+
+Starts asynchronous cancellation on a long-running DlpJob. The server makes a best effort to cancel the DlpJob, but success is not guaranteed. See https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.
+
+```sql
+EXEC google.dlp.dlp_jobs.projects_dlp_jobs_cancel 
+@projectsId='{{ projectsId }}' --required, 
+@dlpJobsId='{{ dlpJobsId }}' --required
+;
+```
+</TabItem>
 <TabItem value="projects_locations_dlp_jobs_hybrid_inspect">
 
 Inspect hybrid content and store findings to a job. To review the findings, inspect the job. Inspection will occur asynchronously.
@@ -920,18 +1160,6 @@ EXEC google.dlp.dlp_jobs.projects_locations_dlp_jobs_hybrid_inspect
 ;
 ```
 </TabItem>
-<TabItem value="projects_locations_dlp_jobs_cancel">
-
-Starts asynchronous cancellation on a long-running DlpJob. The server makes a best effort to cancel the DlpJob, but success is not guaranteed. See https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.
-
-```sql
-EXEC google.dlp.dlp_jobs.projects_locations_dlp_jobs_cancel 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@dlpJobsId='{{ dlpJobsId }}' --required
-;
-```
-</TabItem>
 <TabItem value="projects_locations_dlp_jobs_finish">
 
 Finish a running hybrid DlpJob. Triggers the finalization steps and running of any enabled actions that have not yet run.
@@ -944,13 +1172,14 @@ EXEC google.dlp.dlp_jobs.projects_locations_dlp_jobs_finish
 ;
 ```
 </TabItem>
-<TabItem value="projects_dlp_jobs_cancel">
+<TabItem value="projects_locations_dlp_jobs_cancel">
 
-Starts asynchronous cancellation on a long-running DlpJob. The server makes a best effort to cancel the DlpJob, but success is not guaranteed. See https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.
+Starts asynchronous cancellation on a long-running DlpJob. The server makes a best effort to cancel the DlpJob, but success is not guaranteed. See https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage and https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis to learn more.
 
 ```sql
-EXEC google.dlp.dlp_jobs.projects_dlp_jobs_cancel 
+EXEC google.dlp.dlp_jobs.projects_locations_dlp_jobs_cancel 
 @projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
 @dlpJobsId='{{ dlpJobsId }}' --required
 ;
 ```

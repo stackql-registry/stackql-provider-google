@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>trials_measurement</code> resou
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>trials_measurement</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="trials_measurement" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.ml.trials_measurement" /></td></tr>
 </tbody></table>
@@ -138,27 +139,31 @@ trialInfeasible
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: trials_measurement
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the trials_measurement resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the trials_measurement resource.
     - name: studiesId
-      value: string
+      value: "{{ studiesId }}"
       description: Required parameter for the trials_measurement resource.
     - name: trialsId
-      value: string
+      value: "{{ trialsId }}"
       description: Required parameter for the trials_measurement resource.
     - name: measurement
-      value: object
-      description: >
+      description: |
         A message representing a measurement.
-        
-```
+      value:
+        stepCount: "{{ stepCount }}"
+        elapsedTime: "{{ elapsedTime }}"
+        metrics:
+          - value: {{ value }}
+            metric: "{{ metric }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

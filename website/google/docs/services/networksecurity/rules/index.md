@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>rules</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>rules</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="rules" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.networksecurity.rules" /></td></tr>
 </tbody></table>
@@ -62,7 +63,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="basicProfile" /></td>
     <td><code>string</code></td>
-    <td>Required. Profile which tells what the primitive action should be.</td>
+    <td>Required. Profile which tells what the primitive action should be. (BASIC_PROFILE_UNSPECIFIED, ALLOW, DENY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -126,7 +127,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="basicProfile" /></td>
     <td><code>string</code></td>
-    <td>Required. Profile which tells what the primitive action should be.</td>
+    <td>Required. Profile which tells what the primitive action should be. (BASIC_PROFILE_UNSPECIFIED, ALLOW, DENY)</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -194,7 +195,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_gateway_security_policies_rules_list"><CopyableCode code="projects_locations_gateway_security_policies_rules_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-gatewaySecurityPoliciesId"><code>gatewaySecurityPoliciesId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists GatewaySecurityPolicyRules in a given project and location.</td>
 </tr>
 <tr>
@@ -330,8 +331,8 @@ FROM google.networksecurity.rules
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND gatewaySecurityPoliciesId = '{{ gatewaySecurityPoliciesId }}' -- required
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -353,28 +354,28 @@ Creates a new GatewaySecurityPolicy in a given project and location.
 
 ```sql
 INSERT INTO google.networksecurity.rules (
-data__name,
 data__description,
-data__tlsInspectionEnabled,
-data__priority,
-data__basicProfile,
-data__sessionMatcher,
-data__enabled,
 data__applicationMatcher,
+data__name,
+data__sessionMatcher,
+data__tlsInspectionEnabled,
+data__enabled,
+data__basicProfile,
+data__priority,
 projectsId,
 locationsId,
 gatewaySecurityPoliciesId,
 gatewaySecurityPolicyRuleId
 )
 SELECT 
-'{{ name }}',
 '{{ description }}',
-{{ tlsInspectionEnabled }},
-{{ priority }},
-'{{ basicProfile }}',
-'{{ sessionMatcher }}',
-{{ enabled }},
 '{{ applicationMatcher }}',
+'{{ name }}',
+'{{ sessionMatcher }}',
+{{ tlsInspectionEnabled }},
+{{ enabled }},
+'{{ basicProfile }}',
+{{ priority }},
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ gatewaySecurityPoliciesId }}',
@@ -390,63 +391,55 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: rules
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the rules resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the rules resource.
     - name: gatewaySecurityPoliciesId
-      value: string
+      value: "{{ gatewaySecurityPoliciesId }}"
       description: Required parameter for the rules resource.
-    - name: name
-      value: string
-      description: >
-        Required. Immutable. Name of the resource. ame is the full resource name so projects/{project}/locations/{location}/gatewaySecurityPolicies/{gateway_security_policy}/rules/{rule} rule should match the pattern: (^&#91;a-z&#93;([a-z0-9-]{0,61}[a-z0-9])?$).
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. Free-text description of the resource.
-        
-    - name: tlsInspectionEnabled
-      value: boolean
-      description: >
-        Optional. Flag to enable TLS inspection of traffic matching on , can only be true if the parent GatewaySecurityPolicy references a TLSInspectionConfig.
-        
-    - name: priority
-      value: integer
-      description: >
-        Required. Priority of the rule. Lower number corresponds to higher precedence.
-        
-    - name: basicProfile
-      value: string
-      description: >
-        Required. Profile which tells what the primitive action should be.
-        
-      valid_values: ['BASIC_PROFILE_UNSPECIFIED', 'ALLOW', 'DENY']
-    - name: sessionMatcher
-      value: string
-      description: >
-        Required. CEL expression for matching on session criteria.
-        
-    - name: enabled
-      value: boolean
-      description: >
-        Required. Whether the rule is enforced.
-        
     - name: applicationMatcher
-      value: string
-      description: >
+      value: "{{ applicationMatcher }}"
+      description: |
         Optional. CEL expression for matching on L7/application level criteria.
-        
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Required. Immutable. Name of the resource. ame is the full resource name so projects/{project}/locations/{location}/gatewaySecurityPolicies/{gateway_security_policy}/rules/{rule} rule should match the pattern: (^&#91;a-z&#93;([a-z0-9-]{0,61}[a-z0-9])?$).
+    - name: sessionMatcher
+      value: "{{ sessionMatcher }}"
+      description: |
+        Required. CEL expression for matching on session criteria.
+    - name: tlsInspectionEnabled
+      value: {{ tlsInspectionEnabled }}
+      description: |
+        Optional. Flag to enable TLS inspection of traffic matching on , can only be true if the parent GatewaySecurityPolicy references a TLSInspectionConfig.
+    - name: enabled
+      value: {{ enabled }}
+      description: |
+        Required. Whether the rule is enforced.
+    - name: basicProfile
+      value: "{{ basicProfile }}"
+      description: |
+        Required. Profile which tells what the primitive action should be.
+      valid_values: ['BASIC_PROFILE_UNSPECIFIED', 'ALLOW', 'DENY']
+    - name: priority
+      value: {{ priority }}
+      description: |
+        Required. Priority of the rule. Lower number corresponds to higher precedence.
     - name: gatewaySecurityPolicyRuleId
-      value: string
-```
+      value: "{{ gatewaySecurityPolicyRuleId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -466,14 +459,14 @@ Updates the parameters of a single GatewaySecurityPolicyRule.
 ```sql
 UPDATE google.networksecurity.rules
 SET 
-data__name = '{{ name }}',
 data__description = '{{ description }}',
-data__tlsInspectionEnabled = {{ tlsInspectionEnabled }},
-data__priority = {{ priority }},
-data__basicProfile = '{{ basicProfile }}',
+data__applicationMatcher = '{{ applicationMatcher }}',
+data__name = '{{ name }}',
 data__sessionMatcher = '{{ sessionMatcher }}',
+data__tlsInspectionEnabled = {{ tlsInspectionEnabled }},
 data__enabled = {{ enabled }},
-data__applicationMatcher = '{{ applicationMatcher }}'
+data__basicProfile = '{{ basicProfile }}',
+data__priority = {{ priority }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>tensorboards</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>tensorboards</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="tensorboards" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.tensorboards" /></td></tr>
 </tbody></table>
@@ -224,7 +225,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-readMask"><code>readMask</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists Tensorboards in a Location.</td>
 </tr>
 <tr>
@@ -249,13 +250,6 @@ The following methods are available for this resource:
     <td>Deletes a Tensorboard.</td>
 </tr>
 <tr>
-    <td><a href="#batch_read"><CopyableCode code="batch_read" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-tensorboardsId"><code>tensorboardsId</code></a></td>
-    <td><a href="#parameter-timeSeries"><code>timeSeries</code></a></td>
-    <td>Reads multiple TensorboardTimeSeries' data. The data point number limit is 1000 for scalars, 100 for tensors and blob references. If the number of data points stored is less than the limit, all data is returned. Otherwise, the number limit of data points is randomly selected from this time series and returned.</td>
-</tr>
-<tr>
     <td><a href="#read_usage"><CopyableCode code="read_usage" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-tensorboardsId"><code>tensorboardsId</code></a></td>
@@ -268,6 +262,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-tensorboardsId"><code>tensorboardsId</code></a></td>
     <td></td>
     <td>Returns the storage size for a given TensorBoard instance.</td>
+</tr>
+<tr>
+    <td><a href="#batch_read"><CopyableCode code="batch_read" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-tensorboardsId"><code>tensorboardsId</code></a></td>
+    <td><a href="#parameter-timeSeries"><code>timeSeries</code></a></td>
+    <td>Reads multiple TensorboardTimeSeries' data. The data point number limit is 1000 for scalars, 100 for tensors and blob references. If the number of data points stored is less than the limit, all data is returned. Otherwise, the number limit of data points is randomly selected from this time series and returned.</td>
 </tr>
 </tbody>
 </table>
@@ -395,11 +396,11 @@ updateTime
 FROM google.aiplatform.tensorboards
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND orderBy = '{{ orderBy }}'
-AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND readMask = '{{ readMask }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -421,22 +422,22 @@ Creates a Tensorboard.
 
 ```sql
 INSERT INTO google.aiplatform.tensorboards (
-data__etag,
-data__encryptionSpec,
-data__isDefault,
-data__labels,
 data__description,
 data__displayName,
+data__etag,
+data__encryptionSpec,
+data__labels,
+data__isDefault,
 projectsId,
 locationsId
 )
 SELECT 
-'{{ etag }}',
-'{{ encryptionSpec }}',
-{{ isDefault }},
-'{{ labels }}',
 '{{ description }}',
 '{{ displayName }}',
+'{{ etag }}',
+'{{ encryptionSpec }}',
+'{{ labels }}',
+{{ isDefault }},
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -450,47 +451,42 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: tensorboards
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the tensorboards resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the tensorboards resource.
-    - name: etag
-      value: string
-      description: >
-        Used to perform a consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
-        
-    - name: encryptionSpec
-      value: object
-      description: >
-        Customer-managed encryption key spec for a Tensorboard. If set, this Tensorboard and all sub-resources of this Tensorboard will be secured by this key.
-        
-    - name: isDefault
-      value: boolean
-      description: >
-        Used to indicate if the TensorBoard instance is the default one. Each project & region can have at most one default TensorBoard instance. Creation of a default TensorBoard instance and updating an existing TensorBoard instance to be default will mark all other TensorBoard instances (if any) as non default.
-        
-    - name: labels
-      value: object
-      description: >
-        The labels with user-defined metadata to organize your Tensorboards. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one Tensorboard (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Description of this Tensorboard.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Required. User provided name of this Tensorboard.
-        
-```
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        Used to perform a consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+    - name: encryptionSpec
+      description: |
+        Customer-managed encryption key spec for a Tensorboard. If set, this Tensorboard and all sub-resources of this Tensorboard will be secured by this key.
+      value:
+        kmsKeyName: "{{ kmsKeyName }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        The labels with user-defined metadata to organize your Tensorboards. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one Tensorboard (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
+    - name: isDefault
+      value: {{ isDefault }}
+      description: |
+        Used to indicate if the TensorBoard instance is the default one. Each project & region can have at most one default TensorBoard instance. Creation of a default TensorBoard instance and updating an existing TensorBoard instance to be default will mark all other TensorBoard instances (if any) as non default.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -510,12 +506,12 @@ Updates a Tensorboard.
 ```sql
 UPDATE google.aiplatform.tensorboards
 SET 
+data__description = '{{ description }}',
+data__displayName = '{{ displayName }}',
 data__etag = '{{ etag }}',
 data__encryptionSpec = '{{ encryptionSpec }}',
-data__isDefault = {{ isDefault }},
 data__labels = '{{ labels }}',
-data__description = '{{ description }}',
-data__displayName = '{{ displayName }}'
+data__isDefault = {{ isDefault }}
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -558,26 +554,13 @@ AND tensorboardsId = '{{ tensorboardsId }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="batch_read"
+    defaultValue="read_usage"
     values={[
-        { label: 'batch_read', value: 'batch_read' },
         { label: 'read_usage', value: 'read_usage' },
-        { label: 'read_size', value: 'read_size' }
+        { label: 'read_size', value: 'read_size' },
+        { label: 'batch_read', value: 'batch_read' }
     ]}
 >
-<TabItem value="batch_read">
-
-Reads multiple TensorboardTimeSeries' data. The data point number limit is 1000 for scalars, 100 for tensors and blob references. If the number of data points stored is less than the limit, all data is returned. Otherwise, the number limit of data points is randomly selected from this time series and returned.
-
-```sql
-EXEC google.aiplatform.tensorboards.batch_read 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required, 
-@tensorboardsId='{{ tensorboardsId }}' --required, 
-@timeSeries='{{ timeSeries }}'
-;
-```
-</TabItem>
 <TabItem value="read_usage">
 
 Returns a list of monthly active users for a given TensorBoard instance.
@@ -599,6 +582,19 @@ EXEC google.aiplatform.tensorboards.read_size
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @tensorboardsId='{{ tensorboardsId }}' --required
+;
+```
+</TabItem>
+<TabItem value="batch_read">
+
+Reads multiple TensorboardTimeSeries' data. The data point number limit is 1000 for scalars, 100 for tensors and blob references. If the number of data points stored is less than the limit, all data is returned. Otherwise, the number limit of data points is randomly selected from this time series and returned.
+
+```sql
+EXEC google.aiplatform.tensorboards.batch_read 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required, 
+@tensorboardsId='{{ tensorboardsId }}' --required, 
+@timeSeries='{{ timeSeries }}'
 ;
 ```
 </TabItem>

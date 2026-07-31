@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>bare_metal_clusters</code> reso
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>bare_metal_clusters</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="bare_metal_clusters" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.gkeonprem.bare_metal_clusters" /></td></tr>
 </tbody></table>
@@ -182,7 +183,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the bare metal user cluster.</td>
+    <td>Output only. The current state of the bare metal user cluster. (STATE_UNSPECIFIED, PROVISIONING, RUNNING, RECONCILING, STOPPING, ERROR, DEGRADED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="status" /></td>
@@ -361,7 +362,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Output only. The current state of the bare metal user cluster.</td>
+    <td>Output only. The current state of the bare metal user cluster. (STATE_UNSPECIFIED, PROVISIONING, RUNNING, RECONCILING, STOPPING, ERROR, DEGRADED)</td>
 </tr>
 <tr>
     <td><CopyableCode code="status" /></td>
@@ -417,43 +418,36 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_bare_metal_clusters_get"><CopyableCode code="projects_locations_bare_metal_clusters_get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bareMetalClustersId"><code>bareMetalClustersId</code></a></td>
-    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-view"><code>view</code></a></td>
+    <td><a href="#parameter-view"><code>view</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
     <td>Gets details of a single bare metal Cluster.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_bare_metal_clusters_list"><CopyableCode code="projects_locations_bare_metal_clusters_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-view"><code>view</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists bare metal clusters in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_bare_metal_clusters_create"><CopyableCode code="projects_locations_bare_metal_clusters_create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-allowPreflightFailure"><code>allowPreflightFailure</code></a>, <a href="#parameter-bareMetalClusterId"><code>bareMetalClusterId</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-bareMetalClusterId"><code>bareMetalClusterId</code></a>, <a href="#parameter-allowPreflightFailure"><code>allowPreflightFailure</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Creates a new bare metal cluster in a given project and location.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_bare_metal_clusters_patch"><CopyableCode code="projects_locations_bare_metal_clusters_patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bareMetalClustersId"><code>bareMetalClustersId</code></a></td>
-    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Updates the parameters of a single bare metal Cluster.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_bare_metal_clusters_delete"><CopyableCode code="projects_locations_bare_metal_clusters_delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bareMetalClustersId"><code>bareMetalClustersId</code></a></td>
-    <td><a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-force"><code>force</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-ignoreErrors"><code>ignoreErrors</code></a></td>
+    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-force"><code>force</code></a>, <a href="#parameter-ignoreErrors"><code>ignoreErrors</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a></td>
     <td>Deletes a single bare metal Cluster.</td>
-</tr>
-<tr>
-    <td><a href="#projects_locations_bare_metal_clusters_enroll"><CopyableCode code="projects_locations_bare_metal_clusters_enroll" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td></td>
-    <td>Enrolls an existing bare metal user cluster and its node pools to the Anthos On-Prem API within a given project and location. Through enrollment, an existing cluster will become Anthos On-Prem API managed. The corresponding GCP resources will be created and all future modifications to the cluster and/or its node pools will be expected to be performed through the API.</td>
 </tr>
 <tr>
     <td><a href="#projects_locations_bare_metal_clusters_query_version_config"><CopyableCode code="projects_locations_bare_metal_clusters_query_version_config" /></a></td>
@@ -466,8 +460,15 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_bare_metal_clusters_unenroll"><CopyableCode code="projects_locations_bare_metal_clusters_unenroll" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-bareMetalClustersId"><code>bareMetalClustersId</code></a></td>
-    <td><a href="#parameter-allowMissing"><code>allowMissing</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-force"><code>force</code></a></td>
+    <td><a href="#parameter-force"><code>force</code></a>, <a href="#parameter-etag"><code>etag</code></a>, <a href="#parameter-validateOnly"><code>validateOnly</code></a>, <a href="#parameter-allowMissing"><code>allowMissing</code></a></td>
     <td>Unenrolls an existing bare metal user cluster and its node pools from the Anthos On-Prem API within a given project and location. Unenrollment removes the Cloud reference to the cluster without modifying the underlying OnPrem Resources. Clusters and node pools will continue to run; however, they will no longer be accessible through the Anthos On-Prem API or its clients.</td>
+</tr>
+<tr>
+    <td><a href="#projects_locations_bare_metal_clusters_enroll"><CopyableCode code="projects_locations_bare_metal_clusters_enroll" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
+    <td></td>
+    <td>Enrolls an existing bare metal user cluster and its node pools to the Anthos On-Prem API within a given project and location. Through enrollment, an existing cluster will become Anthos On-Prem API managed. The corresponding GCP resources will be created and all future modifications to the cluster and/or its node pools will be expected to be performed through the API.</td>
 </tr>
 </tbody>
 </table>
@@ -630,8 +631,8 @@ FROM google.gkeonprem.bare_metal_clusters
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND bareMetalClustersId = '{{ bareMetalClustersId }}' -- required
-AND allowMissing = '{{ allowMissing }}'
 AND view = '{{ view }}'
+AND allowMissing = '{{ allowMissing }}'
 ;
 ```
 </TabItem>
@@ -678,10 +679,10 @@ FROM google.gkeonprem.bare_metal_clusters
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND filter = '{{ filter }}'
-AND view = '{{ view }}'
-AND pageToken = '{{ pageToken }}'
-AND pageSize = '{{ pageSize }}'
 AND allowMissing = '{{ allowMissing }}'
+AND view = '{{ view }}'
+AND pageSize = '{{ pageSize }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -703,53 +704,53 @@ Creates a new bare metal cluster in a given project and location.
 
 ```sql
 INSERT INTO google.gkeonprem.bare_metal_clusters (
-data__osEnvironmentConfig,
-data__loadBalancer,
-data__description,
+data__securityConfig,
+data__clusterOperations,
 data__bareMetalVersion,
 data__nodeAccessConfig,
-data__adminClusterMembership,
+data__name,
+data__osEnvironmentConfig,
 data__storage,
+data__networkConfig,
+data__loadBalancer,
+data__binaryAuthorization,
+data__annotations,
+data__proxy,
+data__upgradePolicy,
+data__controlPlane,
+data__description,
 data__maintenanceConfig,
 data__nodeConfig,
-data__proxy,
-data__clusterOperations,
-data__binaryAuthorization,
-data__securityConfig,
-data__controlPlane,
-data__networkConfig,
-data__upgradePolicy,
-data__annotations,
-data__name,
+data__adminClusterMembership,
 projectsId,
 locationsId,
-allowPreflightFailure,
 bareMetalClusterId,
+allowPreflightFailure,
 validateOnly
 )
 SELECT 
-'{{ osEnvironmentConfig }}',
-'{{ loadBalancer }}',
-'{{ description }}',
+'{{ securityConfig }}',
+'{{ clusterOperations }}',
 '{{ bareMetalVersion }}',
 '{{ nodeAccessConfig }}',
-'{{ adminClusterMembership }}',
+'{{ name }}',
+'{{ osEnvironmentConfig }}',
 '{{ storage }}',
+'{{ networkConfig }}',
+'{{ loadBalancer }}',
+'{{ binaryAuthorization }}',
+'{{ annotations }}',
+'{{ proxy }}',
+'{{ upgradePolicy }}',
+'{{ controlPlane }}',
+'{{ description }}',
 '{{ maintenanceConfig }}',
 '{{ nodeConfig }}',
-'{{ proxy }}',
-'{{ clusterOperations }}',
-'{{ binaryAuthorization }}',
-'{{ securityConfig }}',
-'{{ controlPlane }}',
-'{{ networkConfig }}',
-'{{ upgradePolicy }}',
-'{{ annotations }}',
-'{{ name }}',
+'{{ adminClusterMembership }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ allowPreflightFailure }}',
 '{{ bareMetalClusterId }}',
+'{{ allowPreflightFailure }}',
 '{{ validateOnly }}'
 RETURNING
 name,
@@ -762,113 +763,201 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: bare_metal_clusters
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the bare_metal_clusters resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the bare_metal_clusters resource.
-    - name: osEnvironmentConfig
-      value: object
-      description: >
-        OS environment related configurations.
-        
-    - name: loadBalancer
-      value: object
-      description: >
-        Required. Load balancer configuration.
-        
-    - name: description
-      value: string
-      description: >
-        A human readable description of this bare metal user cluster.
-        
-    - name: bareMetalVersion
-      value: string
-      description: >
-        Required. The Anthos clusters on bare metal version for your user cluster.
-        
-    - name: nodeAccessConfig
-      value: object
-      description: >
-        Node access related configurations.
-        
-    - name: adminClusterMembership
-      value: string
-      description: >
-        Required. The admin cluster this bare metal user cluster belongs to. This is the full resource name of the admin cluster's fleet membership.
-        
-    - name: storage
-      value: object
-      description: >
-        Required. Storage configuration.
-        
-    - name: maintenanceConfig
-      value: object
-      description: >
-        Maintenance configuration.
-        
-    - name: nodeConfig
-      value: object
-      description: >
-        Workload node configuration.
-        
-    - name: proxy
-      value: object
-      description: >
-        Proxy configuration.
-        
-    - name: clusterOperations
-      value: object
-      description: >
-        Cluster operations configuration.
-        
-    - name: binaryAuthorization
-      value: object
-      description: >
-        Binary Authorization related configurations.
-        
     - name: securityConfig
-      value: object
-      description: >
+      description: |
         Security related setting configuration.
-        
-    - name: controlPlane
-      value: object
-      description: >
-        Required. Control plane configuration.
-        
-    - name: networkConfig
-      value: object
-      description: >
-        Required. Network configuration.
-        
-    - name: upgradePolicy
-      value: object
-      description: >
-        The cluster upgrade policy.
-        
-    - name: annotations
-      value: object
-      description: >
-        Annotations on the bare metal user cluster. This field has the same restrictions as Kubernetes annotations. The total size of all keys and values combined is limited to 256k. Key can have 2 segments: prefix (optional) and name (required), separated by a slash (/). Prefix must be a DNS subdomain. Name must be 63 characters or less, begin and end with alphanumerics, with dashes (-), underscores (_), dots (.), and alphanumerics between.
-        
+      value:
+        authorization:
+          adminUsers:
+            - username: "{{ username }}"
+    - name: clusterOperations
+      description: |
+        Cluster operations configuration.
+      value:
+        enableApplicationLogs: {{ enableApplicationLogs }}
+    - name: bareMetalVersion
+      value: "{{ bareMetalVersion }}"
+      description: |
+        Required. The Anthos clusters on bare metal version for your user cluster.
+    - name: nodeAccessConfig
+      description: |
+        Node access related configurations.
+      value:
+        loginUser: "{{ loginUser }}"
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         Immutable. The bare metal user cluster resource name.
-        
-    - name: allowPreflightFailure
-      value: boolean
+    - name: osEnvironmentConfig
+      description: |
+        OS environment related configurations.
+      value:
+        packageRepoExcluded: {{ packageRepoExcluded }}
+    - name: storage
+      description: |
+        Required. Storage configuration.
+      value:
+        lvpShareConfig:
+          lvpConfig:
+            path: "{{ path }}"
+            storageClass: "{{ storageClass }}"
+          sharedPathPvCount: {{ sharedPathPvCount }}
+        lvpNodeMountsConfig:
+          path: "{{ path }}"
+          storageClass: "{{ storageClass }}"
+    - name: networkConfig
+      description: |
+        Required. Network configuration.
+      value:
+        advancedNetworking: {{ advancedNetworking }}
+        multipleNetworkInterfacesConfig:
+          enabled: {{ enabled }}
+        srIovConfig:
+          enabled: {{ enabled }}
+        islandModeCidr:
+          serviceAddressCidrBlocks:
+            - "{{ serviceAddressCidrBlocks }}"
+          podAddressCidrBlocks:
+            - "{{ podAddressCidrBlocks }}"
+    - name: loadBalancer
+      description: |
+        Required. Load balancer configuration.
+      value:
+        portConfig:
+          controlPlaneLoadBalancerPort: {{ controlPlaneLoadBalancerPort }}
+        metalLbConfig:
+          addressPools:
+            - avoidBuggyIps: {{ avoidBuggyIps }}
+              pool: "{{ pool }}"
+              addresses: "{{ addresses }}"
+              manualAssign: {{ manualAssign }}
+          loadBalancerNodePoolConfig:
+            nodePoolConfig:
+              labels: "{{ labels }}"
+              kubeletConfig:
+                registryPullQps: {{ registryPullQps }}
+                registryBurst: {{ registryBurst }}
+                serializeImagePullsDisabled: {{ serializeImagePullsDisabled }}
+              operatingSystem: "{{ operatingSystem }}"
+              nodeConfigs:
+                - labels: "{{ labels }}"
+                  nodeIp: "{{ nodeIp }}"
+              taints:
+                - key: "{{ key }}"
+                  value: "{{ value }}"
+                  effect: "{{ effect }}"
+        bgpLbConfig:
+          asn: "{{ asn }}"
+          bgpPeerConfigs:
+            - ipAddress: "{{ ipAddress }}"
+              controlPlaneNodes: "{{ controlPlaneNodes }}"
+              asn: "{{ asn }}"
+          addressPools:
+            - avoidBuggyIps: {{ avoidBuggyIps }}
+              pool: "{{ pool }}"
+              addresses: "{{ addresses }}"
+              manualAssign: {{ manualAssign }}
+          loadBalancerNodePoolConfig:
+            nodePoolConfig:
+              labels: "{{ labels }}"
+              kubeletConfig:
+                registryPullQps: {{ registryPullQps }}
+                registryBurst: {{ registryBurst }}
+                serializeImagePullsDisabled: {{ serializeImagePullsDisabled }}
+              operatingSystem: "{{ operatingSystem }}"
+              nodeConfigs:
+                - labels: "{{ labels }}"
+                  nodeIp: "{{ nodeIp }}"
+              taints:
+                - key: "{{ key }}"
+                  value: "{{ value }}"
+                  effect: "{{ effect }}"
+        vipConfig:
+          controlPlaneVip: "{{ controlPlaneVip }}"
+          ingressVip: "{{ ingressVip }}"
+        manualLbConfig:
+          enabled: {{ enabled }}
+    - name: binaryAuthorization
+      description: |
+        Binary Authorization related configurations.
+      value:
+        evaluationMode: "{{ evaluationMode }}"
+    - name: annotations
+      value: "{{ annotations }}"
+      description: |
+        Annotations on the bare metal user cluster. This field has the same restrictions as Kubernetes annotations. The total size of all keys and values combined is limited to 256k. Key can have 2 segments: prefix (optional) and name (required), separated by a slash (/). Prefix must be a DNS subdomain. Name must be 63 characters or less, begin and end with alphanumerics, with dashes (-), underscores (_), dots (.), and alphanumerics between.
+    - name: proxy
+      description: |
+        Proxy configuration.
+      value:
+        uri: "{{ uri }}"
+        noProxy:
+          - "{{ noProxy }}"
+    - name: upgradePolicy
+      description: |
+        The cluster upgrade policy.
+      value:
+        pause: {{ pause }}
+        policy: "{{ policy }}"
+    - name: controlPlane
+      description: |
+        Required. Control plane configuration.
+      value:
+        controlPlaneNodePoolConfig:
+          nodePoolConfig:
+            labels: "{{ labels }}"
+            kubeletConfig:
+              registryPullQps: {{ registryPullQps }}
+              registryBurst: {{ registryBurst }}
+              serializeImagePullsDisabled: {{ serializeImagePullsDisabled }}
+            operatingSystem: "{{ operatingSystem }}"
+            nodeConfigs:
+              - labels: "{{ labels }}"
+                nodeIp: "{{ nodeIp }}"
+            taints:
+              - key: "{{ key }}"
+                value: "{{ value }}"
+                effect: "{{ effect }}"
+        apiServerArgs:
+          - argument: "{{ argument }}"
+            value: "{{ value }}"
+    - name: description
+      value: "{{ description }}"
+      description: |
+        A human readable description of this bare metal user cluster.
+    - name: maintenanceConfig
+      description: |
+        Maintenance configuration.
+      value:
+        maintenanceAddressCidrBlocks:
+          - "{{ maintenanceAddressCidrBlocks }}"
+    - name: nodeConfig
+      description: |
+        Workload node configuration.
+      value:
+        maxPodsPerNode: "{{ maxPodsPerNode }}"
+        containerRuntime: "{{ containerRuntime }}"
+    - name: adminClusterMembership
+      value: "{{ adminClusterMembership }}"
+      description: |
+        Required. The admin cluster this bare metal user cluster belongs to. This is the full resource name of the admin cluster's fleet membership.
     - name: bareMetalClusterId
-      value: string
+      value: "{{ bareMetalClusterId }}"
+    - name: allowPreflightFailure
+      value: {{ allowPreflightFailure }}
     - name: validateOnly
-      value: boolean
-```
+      value: {{ validateOnly }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -888,30 +977,30 @@ Updates the parameters of a single bare metal Cluster.
 ```sql
 UPDATE google.gkeonprem.bare_metal_clusters
 SET 
-data__osEnvironmentConfig = '{{ osEnvironmentConfig }}',
-data__loadBalancer = '{{ loadBalancer }}',
-data__description = '{{ description }}',
+data__securityConfig = '{{ securityConfig }}',
+data__clusterOperations = '{{ clusterOperations }}',
 data__bareMetalVersion = '{{ bareMetalVersion }}',
 data__nodeAccessConfig = '{{ nodeAccessConfig }}',
-data__adminClusterMembership = '{{ adminClusterMembership }}',
+data__name = '{{ name }}',
+data__osEnvironmentConfig = '{{ osEnvironmentConfig }}',
 data__storage = '{{ storage }}',
+data__networkConfig = '{{ networkConfig }}',
+data__loadBalancer = '{{ loadBalancer }}',
+data__binaryAuthorization = '{{ binaryAuthorization }}',
+data__annotations = '{{ annotations }}',
+data__proxy = '{{ proxy }}',
+data__upgradePolicy = '{{ upgradePolicy }}',
+data__controlPlane = '{{ controlPlane }}',
+data__description = '{{ description }}',
 data__maintenanceConfig = '{{ maintenanceConfig }}',
 data__nodeConfig = '{{ nodeConfig }}',
-data__proxy = '{{ proxy }}',
-data__clusterOperations = '{{ clusterOperations }}',
-data__binaryAuthorization = '{{ binaryAuthorization }}',
-data__securityConfig = '{{ securityConfig }}',
-data__controlPlane = '{{ controlPlane }}',
-data__networkConfig = '{{ networkConfig }}',
-data__upgradePolicy = '{{ upgradePolicy }}',
-data__annotations = '{{ annotations }}',
-data__name = '{{ name }}'
+data__adminClusterMembership = '{{ adminClusterMembership }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND bareMetalClustersId = '{{ bareMetalClustersId }}' --required
-AND allowMissing = {{ allowMissing}}
 AND updateMask = '{{ updateMask}}'
+AND allowMissing = {{ allowMissing}}
 AND validateOnly = {{ validateOnly}}
 RETURNING
 name,
@@ -941,11 +1030,11 @@ DELETE FROM google.gkeonprem.bare_metal_clusters
 WHERE projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND bareMetalClustersId = '{{ bareMetalClustersId }}' --required
-AND validateOnly = '{{ validateOnly }}'
-AND force = '{{ force }}'
 AND allowMissing = '{{ allowMissing }}'
-AND etag = '{{ etag }}'
+AND force = '{{ force }}'
 AND ignoreErrors = '{{ ignoreErrors }}'
+AND etag = '{{ etag }}'
+AND validateOnly = '{{ validateOnly }}'
 ;
 ```
 </TabItem>
@@ -955,31 +1044,13 @@ AND ignoreErrors = '{{ ignoreErrors }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="projects_locations_bare_metal_clusters_enroll"
+    defaultValue="projects_locations_bare_metal_clusters_query_version_config"
     values={[
-        { label: 'projects_locations_bare_metal_clusters_enroll', value: 'projects_locations_bare_metal_clusters_enroll' },
         { label: 'projects_locations_bare_metal_clusters_query_version_config', value: 'projects_locations_bare_metal_clusters_query_version_config' },
-        { label: 'projects_locations_bare_metal_clusters_unenroll', value: 'projects_locations_bare_metal_clusters_unenroll' }
+        { label: 'projects_locations_bare_metal_clusters_unenroll', value: 'projects_locations_bare_metal_clusters_unenroll' },
+        { label: 'projects_locations_bare_metal_clusters_enroll', value: 'projects_locations_bare_metal_clusters_enroll' }
     ]}
 >
-<TabItem value="projects_locations_bare_metal_clusters_enroll">
-
-Enrolls an existing bare metal user cluster and its node pools to the Anthos On-Prem API within a given project and location. Through enrollment, an existing cluster will become Anthos On-Prem API managed. The corresponding GCP resources will be created and all future modifications to the cluster and/or its node pools will be expected to be performed through the API.
-
-```sql
-EXEC google.gkeonprem.bare_metal_clusters.projects_locations_bare_metal_clusters_enroll 
-@projectsId='{{ projectsId }}' --required, 
-@locationsId='{{ locationsId }}' --required 
-@@json=
-'{
-"bareMetalClusterId": "{{ bareMetalClusterId }}", 
-"localName": "{{ localName }}", 
-"adminClusterMembership": "{{ adminClusterMembership }}", 
-"localNamespace": "{{ localNamespace }}"
-}'
-;
-```
-</TabItem>
 <TabItem value="projects_locations_bare_metal_clusters_query_version_config">
 
 Queries the bare metal user cluster version config.
@@ -1003,10 +1074,28 @@ EXEC google.gkeonprem.bare_metal_clusters.projects_locations_bare_metal_clusters
 @projectsId='{{ projectsId }}' --required, 
 @locationsId='{{ locationsId }}' --required, 
 @bareMetalClustersId='{{ bareMetalClustersId }}' --required, 
-@allowMissing={{ allowMissing }}, 
+@force={{ force }}, 
 @etag='{{ etag }}', 
 @validateOnly={{ validateOnly }}, 
-@force={{ force }}
+@allowMissing={{ allowMissing }}
+;
+```
+</TabItem>
+<TabItem value="projects_locations_bare_metal_clusters_enroll">
+
+Enrolls an existing bare metal user cluster and its node pools to the Anthos On-Prem API within a given project and location. Through enrollment, an existing cluster will become Anthos On-Prem API managed. The corresponding GCP resources will be created and all future modifications to the cluster and/or its node pools will be expected to be performed through the API.
+
+```sql
+EXEC google.gkeonprem.bare_metal_clusters.projects_locations_bare_metal_clusters_enroll 
+@projectsId='{{ projectsId }}' --required, 
+@locationsId='{{ locationsId }}' --required 
+@@json=
+'{
+"adminClusterMembership": "{{ adminClusterMembership }}", 
+"bareMetalClusterId": "{{ bareMetalClusterId }}", 
+"localName": "{{ localName }}", 
+"localNamespace": "{{ localNamespace }}"
+}'
 ;
 ```
 </TabItem>

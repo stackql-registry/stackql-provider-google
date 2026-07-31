@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>logging_servers</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>logging_servers</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="logging_servers" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.vmwareengine.logging_servers" /></td></tr>
 </tbody></table>
@@ -72,12 +73,12 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="protocol" /></td>
     <td><code>string</code></td>
-    <td>Required. Protocol used by vCenter to send logs to a logging server.</td>
+    <td>Required. Protocol used by vCenter to send logs to a logging server. (PROTOCOL_UNSPECIFIED, UDP, TCP, TLS, SSL, RELP)</td>
 </tr>
 <tr>
     <td><CopyableCode code="sourceType" /></td>
     <td><code>string</code></td>
-    <td>Required. The type of component that produces logs that will be forwarded to this logging server.</td>
+    <td>Required. The type of component that produces logs that will be forwarded to this logging server. (SOURCE_TYPE_UNSPECIFIED, ESXI, VCSA)</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -103,46 +104,6 @@ The following fields are returned by `SELECT` queries:
     </tr>
 </thead>
 <tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The resource name of this logging server. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/loggingServers/my-logging-server`</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Creation time of this resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="hostname" /></td>
-    <td><code>string</code></td>
-    <td>Required. Fully-qualified domain name (FQDN) or IP Address of the logging server.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="port" /></td>
-    <td><code>integer (int32)</code></td>
-    <td>Required. Port number at which the logging server receives logs.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="protocol" /></td>
-    <td><code>string</code></td>
-    <td>Required. Protocol used by vCenter to send logs to a logging server.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="sourceType" /></td>
-    <td><code>string</code></td>
-    <td>Required. The type of component that produces logs that will be forwarded to this logging server.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="uid" /></td>
-    <td><code>string</code></td>
-    <td>Output only. System-generated unique identifier for the resource.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. Last update time of this resource.</td>
-</tr>
 </tbody>
 </table>
 </TabItem>
@@ -174,7 +135,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-privateCloudsId"><code>privateCloudsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists logging servers configured for a given private cloud.</td>
 </tr>
 <tr>
@@ -309,21 +270,14 @@ Lists logging servers configured for a given private cloud.
 
 ```sql
 SELECT
-name,
-createTime,
-hostname,
-port,
-protocol,
-sourceType,
-uid,
-updateTime
+*
 FROM google.vmwareengine.logging_servers
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND privateCloudsId = '{{ privateCloudsId }}' -- required
+AND filter = '{{ filter }}'
 AND orderBy = '{{ orderBy }}'
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
 ;
 ```
@@ -346,10 +300,10 @@ Create a new logging server for a given private cloud.
 
 ```sql
 INSERT INTO google.vmwareengine.logging_servers (
+data__hostname,
+data__port,
 data__protocol,
 data__sourceType,
-data__port,
-data__hostname,
 projectsId,
 locationsId,
 privateCloudsId,
@@ -357,10 +311,10 @@ requestId,
 loggingServerId
 )
 SELECT 
+'{{ hostname }}',
+{{ port }},
 '{{ protocol }}',
 '{{ sourceType }}',
-{{ port }},
-'{{ hostname }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ privateCloudsId }}',
@@ -377,46 +331,42 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: logging_servers
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the logging_servers resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the logging_servers resource.
     - name: privateCloudsId
-      value: string
+      value: "{{ privateCloudsId }}"
       description: Required parameter for the logging_servers resource.
+    - name: hostname
+      value: "{{ hostname }}"
+      description: |
+        Required. Fully-qualified domain name (FQDN) or IP Address of the logging server.
+    - name: port
+      value: {{ port }}
+      description: |
+        Required. Port number at which the logging server receives logs.
     - name: protocol
-      value: string
-      description: >
+      value: "{{ protocol }}"
+      description: |
         Required. Protocol used by vCenter to send logs to a logging server.
-        
       valid_values: ['PROTOCOL_UNSPECIFIED', 'UDP', 'TCP', 'TLS', 'SSL', 'RELP']
     - name: sourceType
-      value: string
-      description: >
+      value: "{{ sourceType }}"
+      description: |
         Required. The type of component that produces logs that will be forwarded to this logging server.
-        
       valid_values: ['SOURCE_TYPE_UNSPECIFIED', 'ESXI', 'VCSA']
-    - name: port
-      value: integer
-      description: >
-        Required. Port number at which the logging server receives logs.
-        
-    - name: hostname
-      value: string
-      description: >
-        Required. Fully-qualified domain name (FQDN) or IP Address of the logging server.
-        
     - name: requestId
-      value: string
+      value: "{{ requestId }}"
     - name: loggingServerId
-      value: string
-```
+      value: "{{ loggingServerId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -436,10 +386,10 @@ Updates the parameters of a single logging server. Only fields specified in `upd
 ```sql
 UPDATE google.vmwareengine.logging_servers
 SET 
-data__protocol = '{{ protocol }}',
-data__sourceType = '{{ sourceType }}',
+data__hostname = '{{ hostname }}',
 data__port = {{ port }},
-data__hostname = '{{ hostname }}'
+data__protocol = '{{ protocol }}',
+data__sourceType = '{{ sourceType }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

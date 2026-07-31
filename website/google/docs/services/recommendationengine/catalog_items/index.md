@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>catalog_items</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>catalog_items</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="catalog_items" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.recommendationengine.catalog_items" /></td></tr>
 </tbody></table>
@@ -184,7 +185,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_catalogs_catalog_items_list"><CopyableCode code="projects_locations_catalogs_catalog_items_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-catalogsId"><code>catalogsId</code></a></td>
-    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Gets a list of catalog items.</td>
 </tr>
 <tr>
@@ -326,8 +327,8 @@ WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND catalogsId = '{{ catalogsId }}' -- required
 AND pageToken = '{{ pageToken }}'
-AND filter = '{{ filter }}'
 AND pageSize = '{{ pageSize }}'
+AND filter = '{{ filter }}'
 ;
 ```
 </TabItem>
@@ -349,29 +350,29 @@ Creates a catalog item.
 
 ```sql
 INSERT INTO google.recommendationengine.catalog_items (
-data__itemGroupId,
 data__description,
-data__tags,
-data__productMetadata,
-data__categoryHierarchies,
 data__id,
 data__languageCode,
-data__itemAttributes,
+data__productMetadata,
 data__title,
+data__itemAttributes,
+data__categoryHierarchies,
+data__itemGroupId,
+data__tags,
 projectsId,
 locationsId,
 catalogsId
 )
 SELECT 
-'{{ itemGroupId }}',
 '{{ description }}',
-'{{ tags }}',
-'{{ productMetadata }}',
-'{{ categoryHierarchies }}',
 '{{ id }}',
 '{{ languageCode }}',
-'{{ itemAttributes }}',
+'{{ productMetadata }}',
 '{{ title }}',
+'{{ itemAttributes }}',
+'{{ categoryHierarchies }}',
+'{{ itemGroupId }}',
+'{{ tags }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ catalogsId }}'
@@ -390,65 +391,75 @@ title
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: catalog_items
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the catalog_items resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the catalog_items resource.
     - name: catalogsId
-      value: string
+      value: "{{ catalogsId }}"
       description: Required parameter for the catalog_items resource.
-    - name: itemGroupId
-      value: string
-      description: >
-        Optional. Variant group identifier for prediction results. UTF-8 encoded string with a length limit of 128 bytes. This field must be enabled before it can be used. [Learn more](https://cloud.google.com/recommendations-ai/docs/catalog#item-group-id).
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. Catalog item description. UTF-8 encoded string with a length limit of 5 KiB.
-        
-    - name: tags
-      value: array
-      description: >
-        Optional. Filtering tags associated with the catalog item. Each tag should be a UTF-8 encoded string with a length limit of 1 KiB. This tag can be used for filtering recommendation results by passing the tag as part of the predict request filter.
-        
-    - name: productMetadata
-      value: object
-      description: >
-        Optional. Metadata specific to retail products.
-        
-    - name: categoryHierarchies
-      value: array
-      description: >
-        Required. Catalog item categories. This field is repeated for supporting one catalog item belonging to several parallel category hierarchies. For example, if a shoes product belongs to both ["Shoes & Accessories" -> "Shoes"] and ["Sports & Fitness" -> "Athletic Clothing" -> "Shoes"], it could be represented as: "categoryHierarchies": [ { "categories": ["Shoes & Accessories", "Shoes"]}, { "categories": ["Sports & Fitness", "Athletic Clothing", "Shoes"] } ]
-        
     - name: id
-      value: string
-      description: >
+      value: "{{ id }}"
+      description: |
         Required. Catalog item identifier. UTF-8 encoded string with a length limit of 128 bytes. This id must be unique among all catalog items within the same catalog. It should also be used when logging user events in order for the user events to be joined with the Catalog.
-        
     - name: languageCode
-      value: string
-      description: >
+      value: "{{ languageCode }}"
+      description: |
         Optional. Deprecated. The model automatically detects the text language. Your catalog can include text in different languages, but duplicating catalog items to provide text in multiple languages can result in degraded model performance.
-        
-    - name: itemAttributes
-      value: object
-      description: >
-        Optional. Highly encouraged. Extra catalog item attributes to be included in the recommendation model. For example, for retail products, this could include the store name, vendor, style, color, etc. These are very strong signals for recommendation model, thus we highly recommend providing the item attributes here.
-        
+    - name: productMetadata
+      description: |
+        Optional. Metadata specific to retail products.
+      value:
+        exactPrice:
+          originalPrice: {{ originalPrice }}
+          displayPrice: {{ displayPrice }}
+        costs: "{{ costs }}"
+        currencyCode: "{{ currencyCode }}"
+        stockState: "{{ stockState }}"
+        images:
+          - uri: "{{ uri }}"
+            height: {{ height }}
+            width: {{ width }}
+        priceRange:
+          min: {{ min }}
+          max: {{ max }}
+        availableQuantity: "{{ availableQuantity }}"
+        canonicalProductUri: "{{ canonicalProductUri }}"
     - name: title
-      value: string
-      description: >
+      value: "{{ title }}"
+      description: |
         Required. Catalog item title. UTF-8 encoded string with a length limit of 1 KiB.
-        
-```
+    - name: itemAttributes
+      description: |
+        Optional. Highly encouraged. Extra catalog item attributes to be included in the recommendation model. For example, for retail products, this could include the store name, vendor, style, color, etc. These are very strong signals for recommendation model, thus we highly recommend providing the item attributes here.
+      value:
+        categoricalFeatures: "{{ categoricalFeatures }}"
+        numericalFeatures: "{{ numericalFeatures }}"
+    - name: categoryHierarchies
+      description: |
+        Required. Catalog item categories. This field is repeated for supporting one catalog item belonging to several parallel category hierarchies. For example, if a shoes product belongs to both ["Shoes & Accessories" -> "Shoes"] and ["Sports & Fitness" -> "Athletic Clothing" -> "Shoes"], it could be represented as: "categoryHierarchies": [ { "categories": ["Shoes & Accessories", "Shoes"]}, { "categories": ["Sports & Fitness", "Athletic Clothing", "Shoes"] } ]
+      value:
+        - categories: "{{ categories }}"
+    - name: itemGroupId
+      value: "{{ itemGroupId }}"
+      description: |
+        Optional. Variant group identifier for prediction results. UTF-8 encoded string with a length limit of 128 bytes. This field must be enabled before it can be used. [Learn more](https://cloud.google.com/recommendations-ai/docs/catalog#item-group-id).
+    - name: tags
+      value:
+        - "{{ tags }}"
+      description: |
+        Optional. Filtering tags associated with the catalog item. Each tag should be a UTF-8 encoded string with a length limit of 1 KiB. This tag can be used for filtering recommendation results by passing the tag as part of the predict request filter.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -468,15 +479,15 @@ Updates a catalog item. Partial updating is supported. Non-existing items will b
 ```sql
 UPDATE google.recommendationengine.catalog_items
 SET 
-data__itemGroupId = '{{ itemGroupId }}',
 data__description = '{{ description }}',
-data__tags = '{{ tags }}',
-data__productMetadata = '{{ productMetadata }}',
-data__categoryHierarchies = '{{ categoryHierarchies }}',
 data__id = '{{ id }}',
 data__languageCode = '{{ languageCode }}',
+data__productMetadata = '{{ productMetadata }}',
+data__title = '{{ title }}',
 data__itemAttributes = '{{ itemAttributes }}',
-data__title = '{{ title }}'
+data__categoryHierarchies = '{{ categoryHierarchies }}',
+data__itemGroupId = '{{ itemGroupId }}',
+data__tags = '{{ tags }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -541,10 +552,10 @@ EXEC google.recommendationengine.catalog_items.projects_locations_catalogs_catal
 @catalogsId='{{ catalogsId }}' --required 
 @@json=
 '{
-"inputConfig": "{{ inputConfig }}", 
-"errorsConfig": "{{ errorsConfig }}", 
+"updateMask": "{{ updateMask }}", 
 "requestId": "{{ requestId }}", 
-"updateMask": "{{ updateMask }}"
+"inputConfig": "{{ inputConfig }}", 
+"errorsConfig": "{{ errorsConfig }}"
 }'
 ;
 ```

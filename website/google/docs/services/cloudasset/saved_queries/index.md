@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>saved_queries</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>saved_queries</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="saved_queries" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.cloudasset.saved_queries" /></td></tr>
 </tbody></table>
@@ -34,65 +35,10 @@ The following fields are returned by `SELECT` queries:
 <Tabs
     defaultValue="list"
     values={[
-        { label: 'list', value: 'list' },
-        { label: 'get', value: 'get' }
+        { label: 'list', value: 'list' }
     ]}
 >
 <TabItem value="list">
-
-<table>
-<thead>
-    <tr>
-    <th>Name</th>
-    <th>Datatype</th>
-    <th>Description</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>The resource name of the saved query. The format must be: * projects/project_number/savedQueries/saved_query_id * folders/folder_number/savedQueries/saved_query_id * organizations/organization_number/savedQueries/saved_query_id</td>
-</tr>
-<tr>
-    <td><CopyableCode code="content" /></td>
-    <td><code>object</code></td>
-    <td>The query content. (id: QueryContent)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="createTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The create time of this saved query.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="creator" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The account's email address who has created this saved query.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="description" /></td>
-    <td><code>string</code></td>
-    <td>The description of this saved query. This value should be fewer than 255 characters.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="labels" /></td>
-    <td><code>object</code></td>
-    <td>Labels applied on the resource. This value should not contain more than 10 entries. The key and value of each entry must be non-empty and fewer than 64 characters.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="lastUpdateTime" /></td>
-    <td><code>string (google-datetime)</code></td>
-    <td>Output only. The last update time of this saved query.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="lastUpdater" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The account's email address who has updated this saved query most recently.</td>
-</tr>
-</tbody>
-</table>
-</TabItem>
-<TabItem value="get">
 
 <table>
 <thead>
@@ -167,15 +113,8 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-parentType"><code>parentType</code></a>, <a href="#parameter-parent"><code>parent</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists all saved queries in a parent project/folder/organization.</td>
-</tr>
-<tr>
-    <td><a href="#get"><CopyableCode code="get" /></a></td>
-    <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-name"><code>name</code></a></td>
-    <td></td>
-    <td>Gets details about a saved query.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
@@ -262,8 +201,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <Tabs
     defaultValue="list"
     values={[
-        { label: 'list', value: 'list' },
-        { label: 'get', value: 'get' }
+        { label: 'list', value: 'list' }
     ]}
 >
 <TabItem value="list">
@@ -284,27 +222,8 @@ FROM google.cloudasset.saved_queries
 WHERE parentType = '{{ parentType }}' -- required
 AND parent = '{{ parent }}' -- required
 AND pageSize = '{{ pageSize }}'
-AND pageToken = '{{ pageToken }}'
 AND filter = '{{ filter }}'
-;
-```
-</TabItem>
-<TabItem value="get">
-
-Gets details about a saved query.
-
-```sql
-SELECT
-name,
-content,
-createTime,
-creator,
-description,
-labels,
-lastUpdateTime,
-lastUpdater
-FROM google.cloudasset.saved_queries
-WHERE name = '{{ name }}' -- required
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -326,18 +245,18 @@ Creates a saved query in a parent project/folder/organization.
 
 ```sql
 INSERT INTO google.cloudasset.saved_queries (
-data__labels,
-data__content,
 data__name,
+data__content,
+data__labels,
 data__description,
 parentType,
 parent,
 savedQueryId
 )
 SELECT 
-'{{ labels }}',
-'{{ content }}',
 '{{ name }}',
+'{{ content }}',
+'{{ labels }}',
 '{{ description }}',
 '{{ parentType }}',
 '{{ parent }}',
@@ -356,39 +275,55 @@ lastUpdater
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: saved_queries
   props:
     - name: parentType
-      value: string
+      value: "{{ parentType }}"
       description: Required parameter for the saved_queries resource.
     - name: parent
-      value: string
+      value: "{{ parent }}"
       description: Required parameter for the saved_queries resource.
-    - name: labels
-      value: object
-      description: >
-        Labels applied on the resource. This value should not contain more than 10 entries. The key and value of each entry must be non-empty and fewer than 64 characters.
-        
-    - name: content
-      value: object
-      description: >
-        The query content.
-        
     - name: name
-      value: string
-      description: >
+      value: "{{ name }}"
+      description: |
         The resource name of the saved query. The format must be: * projects/project_number/savedQueries/saved_query_id * folders/folder_number/savedQueries/saved_query_id * organizations/organization_number/savedQueries/saved_query_id
-        
+    - name: content
+      description: |
+        The query content.
+      value:
+        iamPolicyAnalysisQuery:
+          options:
+            expandRoles: {{ expandRoles }}
+            outputResourceEdges: {{ outputResourceEdges }}
+            outputGroupEdges: {{ outputGroupEdges }}
+            expandResources: {{ expandResources }}
+            analyzeServiceAccountImpersonation: {{ analyzeServiceAccountImpersonation }}
+            expandGroups: {{ expandGroups }}
+          scope: "{{ scope }}"
+          accessSelector:
+            roles:
+              - "{{ roles }}"
+            permissions:
+              - "{{ permissions }}"
+          resourceSelector:
+            fullResourceName: "{{ fullResourceName }}"
+          conditionContext:
+            accessTime: "{{ accessTime }}"
+          identitySelector:
+            identity: "{{ identity }}"
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Labels applied on the resource. This value should not contain more than 10 entries. The key and value of each entry must be non-empty and fewer than 64 characters.
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         The description of this saved query. This value should be fewer than 255 characters.
-        
     - name: savedQueryId
-      value: string
-```
+      value: "{{ savedQueryId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -408,9 +343,9 @@ Updates a saved query.
 ```sql
 UPDATE google.cloudasset.saved_queries
 SET 
-data__labels = '{{ labels }}',
-data__content = '{{ content }}',
 data__name = '{{ name }}',
+data__content = '{{ content }}',
+data__labels = '{{ labels }}',
 data__description = '{{ description }}'
 WHERE 
 name = '{{ name }}' --required

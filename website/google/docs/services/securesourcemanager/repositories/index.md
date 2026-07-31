@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>repositories</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>repositories</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="repositories" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.securesourcemanager.repositories" /></td></tr>
 </tbody></table>
@@ -52,7 +53,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Optional. A unique identifier for a repository. The name should be of the format: `projects/&#123;project&#125;/locations/&#123;location_id&#125;/repositories/&#123;repository_id&#125;`</td>
+    <td>Identifier. A unique identifier for a repository. The name should be of the format: `projects/&#123;project&#125;/locations/&#123;location_id&#125;/repositories/&#123;repository_id&#125;`</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -78,6 +79,16 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="instance" /></td>
     <td><code>string</code></td>
     <td>Optional. The name of the instance in which the repository is hosted, formatted as `projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/instances/&#123;instance_id&#125;` When creating repository via securesourcemanager.googleapis.com, this field is used as input. When creating repository via *.sourcemanager.dev, this field is output only.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="scanConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Provides configuration for scanning. (id: ScanConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="serviceAccount" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Repository level service account (BYOSA).</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -111,7 +122,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Optional. A unique identifier for a repository. The name should be of the format: `projects/&#123;project&#125;/locations/&#123;location_id&#125;/repositories/&#123;repository_id&#125;`</td>
+    <td>Identifier. A unique identifier for a repository. The name should be of the format: `projects/&#123;project&#125;/locations/&#123;location_id&#125;/repositories/&#123;repository_id&#125;`</td>
 </tr>
 <tr>
     <td><CopyableCode code="createTime" /></td>
@@ -137,6 +148,16 @@ The following fields are returned by `SELECT` queries:
     <td><CopyableCode code="instance" /></td>
     <td><code>string</code></td>
     <td>Optional. The name of the instance in which the repository is hosted, formatted as `projects/&#123;project_number&#125;/locations/&#123;location_id&#125;/instances/&#123;instance_id&#125;` When creating repository via securesourcemanager.googleapis.com, this field is used as input. When creating repository via *.sourcemanager.dev, this field is output only.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="scanConfig" /></td>
+    <td><code>object</code></td>
+    <td>Optional. Provides configuration for scanning. (id: ScanConfig)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="serviceAccount" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Repository level service account (BYOSA).</td>
 </tr>
 <tr>
     <td><CopyableCode code="uid" /></td>
@@ -184,7 +205,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-instance"><code>instance</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-instance"><code>instance</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists Repositories in a given project and location. The instance field is required in the query parameter for requests using the securesourcemanager.googleapis.com endpoint.</td>
 </tr>
 <tr>
@@ -303,6 +324,8 @@ description,
 etag,
 initialConfig,
 instance,
+scanConfig,
+serviceAccount,
 uid,
 updateTime,
 uris
@@ -325,16 +348,18 @@ description,
 etag,
 initialConfig,
 instance,
+scanConfig,
+serviceAccount,
 uid,
 updateTime,
 uris
 FROM google.securesourcemanager.repositories
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND instance = '{{ instance }}'
 AND filter = '{{ filter }}'
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND instance = '{{ instance }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -356,21 +381,25 @@ Creates a new repository in a given project and location. The Repository.Instanc
 
 ```sql
 INSERT INTO google.securesourcemanager.repositories (
-data__initialConfig,
 data__etag,
-data__name,
-data__instance,
+data__initialConfig,
 data__description,
+data__instance,
+data__scanConfig,
+data__name,
+data__serviceAccount,
 projectsId,
 locationsId,
 repositoryId
 )
 SELECT 
-'{{ initialConfig }}',
 '{{ etag }}',
-'{{ name }}',
-'{{ instance }}',
+'{{ initialConfig }}',
 '{{ description }}',
+'{{ instance }}',
+'{{ scanConfig }}',
+'{{ name }}',
+'{{ serviceAccount }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ repositoryId }}'
@@ -385,44 +414,55 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: repositories
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the repositories resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the repositories resource.
-    - name: initialConfig
-      value: object
-      description: >
-        Input only. Initial configurations for the repository.
-        
     - name: etag
-      value: string
-      description: >
+      value: "{{ etag }}"
+      description: |
         Optional. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
-        
-    - name: name
-      value: string
-      description: >
-        Optional. A unique identifier for a repository. The name should be of the format: `projects/{project}/locations/{location_id}/repositories/{repository_id}`
-        
-    - name: instance
-      value: string
-      description: >
-        Optional. The name of the instance in which the repository is hosted, formatted as `projects/{project_number}/locations/{location_id}/instances/{instance_id}` When creating repository via securesourcemanager.googleapis.com, this field is used as input. When creating repository via *.sourcemanager.dev, this field is output only.
-        
+    - name: initialConfig
+      description: |
+        Input only. Initial configurations for the repository.
+      value:
+        license: "{{ license }}"
+        defaultBranch: "{{ defaultBranch }}"
+        gitignores:
+          - "{{ gitignores }}"
+        readme: "{{ readme }}"
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Optional. Description of the repository, which cannot exceed 500 characters.
-        
+    - name: instance
+      value: "{{ instance }}"
+      description: |
+        Optional. The name of the instance in which the repository is hosted, formatted as \`projects/{project_number}/locations/{location_id}/instances/{instance_id}\` When creating repository via securesourcemanager.googleapis.com, this field is used as input. When creating repository via *.sourcemanager.dev, this field is output only.
+    - name: scanConfig
+      description: |
+        Optional. Provides configuration for scanning.
+      value:
+        secretScanConfig:
+          enabled: {{ enabled }}
+          inspectTemplate: "{{ inspectTemplate }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. A unique identifier for a repository. The name should be of the format: \`projects/{project}/locations/{location_id}/repositories/{repository_id}\`
+    - name: serviceAccount
+      value: "{{ serviceAccount }}"
+      description: |
+        Optional. Repository level service account (BYOSA).
     - name: repositoryId
-      value: string
-```
+      value: "{{ repositoryId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -442,11 +482,13 @@ Updates the metadata of a repository.
 ```sql
 UPDATE google.securesourcemanager.repositories
 SET 
-data__initialConfig = '{{ initialConfig }}',
 data__etag = '{{ etag }}',
-data__name = '{{ name }}',
+data__initialConfig = '{{ initialConfig }}',
+data__description = '{{ description }}',
 data__instance = '{{ instance }}',
-data__description = '{{ description }}'
+data__scanConfig = '{{ scanConfig }}',
+data__name = '{{ name }}',
+data__serviceAccount = '{{ serviceAccount }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

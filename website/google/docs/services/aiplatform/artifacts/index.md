@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>artifacts</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>artifacts</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="artifacts" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.aiplatform.artifacts" /></td></tr>
 </tbody></table>
@@ -98,7 +99,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>The state of this Artifact. This is a property of the Artifact, and does not imply or capture any ongoing process. This property is managed by clients (such as Vertex AI Pipelines), and the system does not prescribe or check the validity of state transitions.</td>
+    <td>The state of this Artifact. This is a property of the Artifact, and does not imply or capture any ongoing process. This property is managed by clients (such as Vertex AI Pipelines), and the system does not prescribe or check the validity of state transitions. (STATE_UNSPECIFIED, PENDING, LIVE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -201,7 +202,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>The state of this Artifact. This is a property of the Artifact, and does not imply or capture any ongoing process. This property is managed by clients (such as Vertex AI Pipelines), and the system does not prescribe or check the validity of state transitions.</td>
+    <td>The state of this Artifact. This is a property of the Artifact, and does not imply or capture any ongoing process. This property is managed by clients (such as Vertex AI Pipelines), and the system does not prescribe or check the validity of state transitions. (STATE_UNSPECIFIED, PENDING, LIVE)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updateTime" /></td>
@@ -251,7 +252,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-metadataStoresId"><code>metadataStoresId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
     <td>Lists Artifacts in the MetadataStore.</td>
 </tr>
 <tr>
@@ -443,9 +444,9 @@ FROM google.aiplatform.artifacts
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND metadataStoresId = '{{ metadataStoresId }}' -- required
-AND orderBy = '{{ orderBy }}'
 AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND orderBy = '{{ orderBy }}'
 AND filter = '{{ filter }}'
 ;
 ```
@@ -468,30 +469,30 @@ Creates an Artifact associated with a MetadataStore.
 
 ```sql
 INSERT INTO google.aiplatform.artifacts (
-data__uri,
-data__etag,
-data__schemaVersion,
-data__labels,
 data__description,
 data__metadata,
-data__displayName,
-data__schemaTitle,
+data__labels,
 data__state,
+data__schemaVersion,
+data__displayName,
+data__etag,
+data__uri,
+data__schemaTitle,
 projectsId,
 locationsId,
 metadataStoresId,
 artifactId
 )
 SELECT 
-'{{ uri }}',
-'{{ etag }}',
-'{{ schemaVersion }}',
-'{{ labels }}',
 '{{ description }}',
 '{{ metadata }}',
-'{{ displayName }}',
-'{{ schemaTitle }}',
+'{{ labels }}',
 '{{ state }}',
+'{{ schemaVersion }}',
+'{{ displayName }}',
+'{{ etag }}',
+'{{ uri }}',
+'{{ schemaTitle }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ metadataStoresId }}',
@@ -514,68 +515,59 @@ uri
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: artifacts
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the artifacts resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the artifacts resource.
     - name: metadataStoresId
-      value: string
+      value: "{{ metadataStoresId }}"
       description: Required parameter for the artifacts resource.
-    - name: uri
-      value: string
-      description: >
-        The uniform resource identifier of the artifact file. May be empty if there is no actual artifact file.
-        
-    - name: etag
-      value: string
-      description: >
-        An eTag used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
-        
-    - name: schemaVersion
-      value: string
-      description: >
-        The version of the schema in schema_name to use. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
-        
-    - name: labels
-      value: object
-      description: >
-        The labels with user-defined metadata to organize your Artifacts. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one Artifact (System labels are excluded).
-        
     - name: description
-      value: string
-      description: >
+      value: "{{ description }}"
+      description: |
         Description of the Artifact
-        
     - name: metadata
-      value: object
-      description: >
+      value: "{{ metadata }}"
+      description: |
         Properties of the Artifact. Top level metadata keys' heading and trailing spaces will be trimmed. The size of this field should not exceed 200KB.
-        
-    - name: displayName
-      value: string
-      description: >
-        User provided display name of the Artifact. May be up to 128 Unicode characters.
-        
-    - name: schemaTitle
-      value: string
-      description: >
-        The title of the schema describing the metadata. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
-        
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        The labels with user-defined metadata to organize your Artifacts. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one Artifact (System labels are excluded).
     - name: state
-      value: string
-      description: >
+      value: "{{ state }}"
+      description: |
         The state of this Artifact. This is a property of the Artifact, and does not imply or capture any ongoing process. This property is managed by clients (such as Vertex AI Pipelines), and the system does not prescribe or check the validity of state transitions.
-        
       valid_values: ['STATE_UNSPECIFIED', 'PENDING', 'LIVE']
+    - name: schemaVersion
+      value: "{{ schemaVersion }}"
+      description: |
+        The version of the schema in schema_name to use. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        User provided display name of the Artifact. May be up to 128 Unicode characters.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        An eTag used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+    - name: uri
+      value: "{{ uri }}"
+      description: |
+        The uniform resource identifier of the artifact file. May be empty if there is no actual artifact file.
+    - name: schemaTitle
+      value: "{{ schemaTitle }}"
+      description: |
+        The title of the schema describing the metadata. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
     - name: artifactId
-      value: string
-```
+      value: "{{ artifactId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -595,15 +587,15 @@ Updates a stored Artifact.
 ```sql
 UPDATE google.aiplatform.artifacts
 SET 
-data__uri = '{{ uri }}',
-data__etag = '{{ etag }}',
-data__schemaVersion = '{{ schemaVersion }}',
-data__labels = '{{ labels }}',
 data__description = '{{ description }}',
 data__metadata = '{{ metadata }}',
+data__labels = '{{ labels }}',
+data__state = '{{ state }}',
+data__schemaVersion = '{{ schemaVersion }}',
 data__displayName = '{{ displayName }}',
-data__schemaTitle = '{{ schemaTitle }}',
-data__state = '{{ state }}'
+data__etag = '{{ etag }}',
+data__uri = '{{ uri }}',
+data__schemaTitle = '{{ schemaTitle }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required

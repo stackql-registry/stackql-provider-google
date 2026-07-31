@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>ca_pools</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>ca_pools</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="ca_pools" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.privateca.ca_pools" /></td></tr>
 </tbody></table>
@@ -77,7 +78,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="tier" /></td>
     <td><code>string</code></td>
-    <td>Required. Immutable. The Tier of this CaPool.</td>
+    <td>Required. Immutable. The Tier of this CaPool. (TIER_UNSPECIFIED, ENTERPRISE, DEVOPS)</td>
 </tr>
 </tbody>
 </table>
@@ -121,7 +122,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="tier" /></td>
     <td><code>string</code></td>
-    <td>Required. Immutable. The Tier of this CaPool.</td>
+    <td>Required. Immutable. The Tier of this CaPool. (TIER_UNSPECIFIED, ENTERPRISE, DEVOPS)</td>
 </tr>
 </tbody>
 </table>
@@ -154,21 +155,21 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a></td>
+    <td><a href="#parameter-orderBy"><code>orderBy</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
     <td>Lists CaPools.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-caPoolId"><code>caPoolId</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
+    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-caPoolId"><code>caPoolId</code></a></td>
     <td>Create a CaPool.</td>
 </tr>
 <tr>
     <td><a href="#patch"><CopyableCode code="patch" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a>, <a href="#parameter-caPoolsId"><code>caPoolsId</code></a></td>
-    <td><a href="#parameter-requestId"><code>requestId</code></a>, <a href="#parameter-updateMask"><code>updateMask</code></a></td>
+    <td><a href="#parameter-updateMask"><code>updateMask</code></a>, <a href="#parameter-requestId"><code>requestId</code></a></td>
     <td>Update a CaPool.</td>
 </tr>
 <tr>
@@ -296,9 +297,9 @@ FROM google.privateca.ca_pools
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
 AND orderBy = '{{ orderBy }}'
-AND pageToken = '{{ pageToken }}'
 AND pageSize = '{{ pageSize }}'
 AND filter = '{{ filter }}'
+AND pageToken = '{{ pageToken }}'
 ;
 ```
 </TabItem>
@@ -320,28 +321,28 @@ Create a CaPool.
 
 ```sql
 INSERT INTO google.privateca.ca_pools (
+data__publishingOptions,
+data__labels,
 data__tier,
 data__issuancePolicy,
-data__labels,
-data__name,
-data__publishingOptions,
 data__encryptionSpec,
+data__name,
 projectsId,
 locationsId,
-caPoolId,
-requestId
+requestId,
+caPoolId
 )
 SELECT 
+'{{ publishingOptions }}',
+'{{ labels }}',
 '{{ tier }}',
 '{{ issuancePolicy }}',
-'{{ labels }}',
-'{{ name }}',
-'{{ publishingOptions }}',
 '{{ encryptionSpec }}',
+'{{ name }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
-'{{ caPoolId }}',
-'{{ requestId }}'
+'{{ requestId }}',
+'{{ caPoolId }}'
 RETURNING
 name,
 done,
@@ -353,52 +354,127 @@ response
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: ca_pools
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the ca_pools resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the ca_pools resource.
+    - name: publishingOptions
+      description: |
+        Optional. The PublishingOptions to follow when issuing Certificates from any CertificateAuthority in this CaPool.
+      value:
+        publishCrl: {{ publishCrl }}
+        encodingFormat: "{{ encodingFormat }}"
+        publishCaCert: {{ publishCaCert }}
+    - name: labels
+      value: "{{ labels }}"
+      description: |
+        Optional. Labels with user-defined metadata.
     - name: tier
-      value: string
-      description: >
+      value: "{{ tier }}"
+      description: |
         Required. Immutable. The Tier of this CaPool.
-        
       valid_values: ['TIER_UNSPECIFIED', 'ENTERPRISE', 'DEVOPS']
     - name: issuancePolicy
-      value: object
-      description: >
+      description: |
         Optional. The IssuancePolicy to control how Certificates will be issued from this CaPool.
-        
-    - name: labels
-      value: object
-      description: >
-        Optional. Labels with user-defined metadata.
-        
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name for this CaPool in the format `projects/*/locations/*/caPools/*`.
-        
-    - name: publishingOptions
-      value: object
-      description: >
-        Optional. The PublishingOptions to follow when issuing Certificates from any CertificateAuthority in this CaPool.
-        
+      value:
+        allowRequesterSpecifiedNotBeforeTime: {{ allowRequesterSpecifiedNotBeforeTime }}
+        allowedIssuanceModes:
+          allowCsrBasedIssuance: {{ allowCsrBasedIssuance }}
+          allowConfigBasedIssuance: {{ allowConfigBasedIssuance }}
+        passthroughExtensions:
+          additionalExtensions:
+            - objectIdPath: "{{ objectIdPath }}"
+          knownExtensions:
+            - "{{ knownExtensions }}"
+        allowedKeyTypes:
+          - rsa:
+              minModulusSize: "{{ minModulusSize }}"
+              maxModulusSize: "{{ maxModulusSize }}"
+            ellipticCurve:
+              signatureAlgorithm: "{{ signatureAlgorithm }}"
+        identityConstraints:
+          allowSubjectPassthrough: {{ allowSubjectPassthrough }}
+          allowSubjectAltNamesPassthrough: {{ allowSubjectAltNamesPassthrough }}
+          celExpression:
+            expression: "{{ expression }}"
+            description: "{{ description }}"
+            location: "{{ location }}"
+            title: "{{ title }}"
+        backdateDuration: "{{ backdateDuration }}"
+        maximumLifetime: "{{ maximumLifetime }}"
+        baselineValues:
+          caOptions:
+            isCa: {{ isCa }}
+            maxIssuerPathLength: {{ maxIssuerPathLength }}
+          aiaOcspServers:
+            - "{{ aiaOcspServers }}"
+          additionalExtensions:
+            - critical: {{ critical }}
+              objectId:
+                objectIdPath:
+                  - {{ objectIdPath }}
+              value: "{{ value }}"
+          policyIds:
+            - objectIdPath: "{{ objectIdPath }}"
+          nameConstraints:
+            critical: {{ critical }}
+            excludedIpRanges:
+              - "{{ excludedIpRanges }}"
+            permittedEmailAddresses:
+              - "{{ permittedEmailAddresses }}"
+            excludedDnsNames:
+              - "{{ excludedDnsNames }}"
+            permittedUris:
+              - "{{ permittedUris }}"
+            excludedEmailAddresses:
+              - "{{ excludedEmailAddresses }}"
+            excludedUris:
+              - "{{ excludedUris }}"
+            permittedIpRanges:
+              - "{{ permittedIpRanges }}"
+            permittedDnsNames:
+              - "{{ permittedDnsNames }}"
+          keyUsage:
+            baseKeyUsage:
+              keyEncipherment: {{ keyEncipherment }}
+              certSign: {{ certSign }}
+              digitalSignature: {{ digitalSignature }}
+              contentCommitment: {{ contentCommitment }}
+              encipherOnly: {{ encipherOnly }}
+              decipherOnly: {{ decipherOnly }}
+              dataEncipherment: {{ dataEncipherment }}
+              crlSign: {{ crlSign }}
+              keyAgreement: {{ keyAgreement }}
+            extendedKeyUsage:
+              serverAuth: {{ serverAuth }}
+              clientAuth: {{ clientAuth }}
+              emailProtection: {{ emailProtection }}
+              ocspSigning: {{ ocspSigning }}
+              codeSigning: {{ codeSigning }}
+              timeStamping: {{ timeStamping }}
+            unknownExtendedKeyUsages:
+              - objectIdPath: "{{ objectIdPath }}"
     - name: encryptionSpec
-      value: object
-      description: >
+      description: |
         Optional. When EncryptionSpec is provided, the Subject, SubjectAltNames, and the PEM-encoded certificate fields will be encrypted at rest.
-        
-    - name: caPoolId
-      value: string
+      value:
+        cloudKmsKey: "{{ cloudKmsKey }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name for this CaPool in the format \`projects/*/locations/*/caPools/*\`.
     - name: requestId
-      value: string
-```
+      value: "{{ requestId }}"
+    - name: caPoolId
+      value: "{{ caPoolId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -418,18 +494,18 @@ Update a CaPool.
 ```sql
 UPDATE google.privateca.ca_pools
 SET 
+data__publishingOptions = '{{ publishingOptions }}',
+data__labels = '{{ labels }}',
 data__tier = '{{ tier }}',
 data__issuancePolicy = '{{ issuancePolicy }}',
-data__labels = '{{ labels }}',
-data__name = '{{ name }}',
-data__publishingOptions = '{{ publishingOptions }}',
-data__encryptionSpec = '{{ encryptionSpec }}'
+data__encryptionSpec = '{{ encryptionSpec }}',
+data__name = '{{ name }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
 AND caPoolsId = '{{ caPoolsId }}' --required
-AND requestId = '{{ requestId}}'
 AND updateMask = '{{ updateMask}}'
+AND requestId = '{{ requestId}}'
 RETURNING
 name,
 done,

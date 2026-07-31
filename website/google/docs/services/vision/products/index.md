@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists a <code>products</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>products</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="products" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.vision.products" /></td></tr>
 </tbody></table>
@@ -191,7 +192,7 @@ The following methods are available for this resource:
     <td><a href="#projects_locations_products_list"><CopyableCode code="projects_locations_products_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-projectsId"><code>projectsId</code></a>, <a href="#parameter-locationsId"><code>locationsId</code></a></td>
-    <td><a href="#parameter-pageSize"><code>pageSize</code></a>, <a href="#parameter-pageToken"><code>pageToken</code></a></td>
+    <td><a href="#parameter-pageToken"><code>pageToken</code></a>, <a href="#parameter-pageSize"><code>pageSize</code></a></td>
     <td>Lists products in an unspecified order. Possible errors: * Returns INVALID_ARGUMENT if page_size is greater than 100 or less than 1.</td>
 </tr>
 <tr>
@@ -343,8 +344,8 @@ productLabels
 FROM google.vision.products
 WHERE projectsId = '{{ projectsId }}' -- required
 AND locationsId = '{{ locationsId }}' -- required
-AND pageSize = '{{ pageSize }}'
 AND pageToken = '{{ pageToken }}'
+AND pageSize = '{{ pageSize }}'
 ;
 ```
 </TabItem>
@@ -366,21 +367,21 @@ Creates and returns a new product resource. Possible errors: * Returns INVALID_A
 
 ```sql
 INSERT INTO google.vision.products (
+data__productCategory,
 data__displayName,
 data__productLabels,
 data__name,
 data__description,
-data__productCategory,
 projectsId,
 locationsId,
 productId
 )
 SELECT 
+'{{ productCategory }}',
 '{{ displayName }}',
 '{{ productLabels }}',
 '{{ name }}',
 '{{ description }}',
-'{{ productCategory }}',
 '{{ projectsId }}',
 '{{ locationsId }}',
 '{{ productId }}'
@@ -395,44 +396,41 @@ productLabels
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: products
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the products resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the products resource.
-    - name: displayName
-      value: string
-      description: >
-        The user-provided name for this Product. Must not be empty. Must be at most 4096 characters long.
-        
-    - name: productLabels
-      value: array
-      description: >
-        Key-value pairs that can be attached to a product. At query time, constraints can be specified based on the product_labels. Note that integer values can be provided as strings, e.g. "1199". Only strings with integer values can match a range-based restriction which is to be supported soon. Multiple values can be assigned to the same key. One product may have up to 500 product_labels. Notice that the total number of distinct product_labels over all products in one ProductSet cannot exceed 1M, otherwise the product search pipeline will refuse to work for that ProductSet.
-        
-    - name: name
-      value: string
-      description: >
-        The resource name of the product. Format is: `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`. This field is ignored when creating a product.
-        
-    - name: description
-      value: string
-      description: >
-        User-provided metadata to be stored with this product. Must be at most 4096 characters long.
-        
     - name: productCategory
-      value: string
-      description: >
+      value: "{{ productCategory }}"
+      description: |
         Immutable. The category for the product identified by the reference image. This should be one of "homegoods-v2", "apparel-v2", "toys-v2", "packagedgoods-v1" or "general-v1". The legacy categories "homegoods", "apparel", and "toys" are still supported, but these should not be used for new products.
-        
+    - name: displayName
+      value: "{{ displayName }}"
+      description: |
+        The user-provided name for this Product. Must not be empty. Must be at most 4096 characters long.
+    - name: productLabels
+      description: |
+        Key-value pairs that can be attached to a product. At query time, constraints can be specified based on the product_labels. Note that integer values can be provided as strings, e.g. "1199". Only strings with integer values can match a range-based restriction which is to be supported soon. Multiple values can be assigned to the same key. One product may have up to 500 product_labels. Notice that the total number of distinct product_labels over all products in one ProductSet cannot exceed 1M, otherwise the product search pipeline will refuse to work for that ProductSet.
+      value:
+        - value: "{{ value }}"
+          key: "{{ key }}"
+    - name: name
+      value: "{{ name }}"
+      description: |
+        The resource name of the product. Format is: \`projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID\`. This field is ignored when creating a product.
+    - name: description
+      value: "{{ description }}"
+      description: |
+        User-provided metadata to be stored with this product. Must be at most 4096 characters long.
     - name: productId
-      value: string
-```
+      value: "{{ productId }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -452,11 +450,11 @@ Makes changes to a Product resource. Only the `display_name`, `description`, and
 ```sql
 UPDATE google.vision.products
 SET 
+data__productCategory = '{{ productCategory }}',
 data__displayName = '{{ displayName }}',
 data__productLabels = '{{ productLabels }}',
 data__name = '{{ name }}',
-data__description = '{{ description }}',
-data__productCategory = '{{ productCategory }}'
+data__description = '{{ description }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
@@ -514,9 +512,9 @@ EXEC google.vision.products.projects_locations_products_purge
 @locationsId='{{ locationsId }}' --required 
 @@json=
 '{
+"deleteOrphanProducts": {{ deleteOrphanProducts }}, 
 "force": {{ force }}, 
-"productSetPurgeConfig": "{{ productSetPurgeConfig }}", 
-"deleteOrphanProducts": {{ deleteOrphanProducts }}
+"productSetPurgeConfig": "{{ productSetPurgeConfig }}"
 }'
 ;
 ```

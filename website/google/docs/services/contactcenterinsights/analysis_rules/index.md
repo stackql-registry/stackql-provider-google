@@ -15,6 +15,7 @@ image: /img/stackql-google-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,7 @@ Creates, updates, deletes, gets or lists an <code>analysis_rules</code> resource
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><code>analysis_rules</code></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="analysis_rules" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
 <tr><td><b>Id</b></td><td><CopyableCode code="google.contactcenterinsights.analysis_rules" /></td></tr>
 </tbody></table>
@@ -318,21 +319,21 @@ Creates a analysis rule.
 ```sql
 INSERT INTO google.contactcenterinsights.analysis_rules (
 data__active,
-data__conversationFilter,
 data__displayName,
+data__analysisPercentage,
 data__annotatorSelector,
 data__name,
-data__analysisPercentage,
+data__conversationFilter,
 projectsId,
 locationsId
 )
 SELECT 
 {{ active }},
-'{{ conversationFilter }}',
 '{{ displayName }}',
+{{ analysisPercentage }},
 '{{ annotatorSelector }}',
 '{{ name }}',
-{{ analysisPercentage }},
+'{{ conversationFilter }}',
 '{{ projectsId }}',
 '{{ locationsId }}'
 RETURNING
@@ -349,47 +350,63 @@ updateTime
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: analysis_rules
   props:
     - name: projectsId
-      value: string
+      value: "{{ projectsId }}"
       description: Required parameter for the analysis_rules resource.
     - name: locationsId
-      value: string
+      value: "{{ locationsId }}"
       description: Required parameter for the analysis_rules resource.
     - name: active
-      value: boolean
-      description: >
+      value: {{ active }}
+      description: |
         If true, apply this rule to conversations. Otherwise, this rule is inactive and saved as a draft.
-        
-    - name: conversationFilter
-      value: string
-      description: >
-        Filter for the conversations that should apply this analysis rule. An empty filter means this analysis rule applies to all conversations. Refer to https://cloud.google.com/contact-center/insights/docs/filtering for details.
-        
     - name: displayName
-      value: string
-      description: >
+      value: "{{ displayName }}"
+      description: |
         Display Name of the analysis rule.
-        
-    - name: annotatorSelector
-      value: object
-      description: >
-        Selector of annotators to run and the phrase matchers to use for conversations that matches the conversation_filter. If not specified, NO annotators will be run.
-        
-    - name: name
-      value: string
-      description: >
-        Identifier. The resource name of the analysis rule. Format: projects/{project}/locations/{location}/analysisRules/{analysis_rule}
-        
     - name: analysisPercentage
-      value: number
-      description: >
+      value: {{ analysisPercentage }}
+      description: |
         Percentage of conversations that we should apply this analysis setting automatically, between [0, 1]. For example, 0.1 means 10%. Conversations are sampled in a determenestic way. The original runtime_percentage & upload percentage will be replaced by defining filters on the conversation.
-        
-```
+    - name: annotatorSelector
+      description: |
+        Selector of annotators to run and the phrase matchers to use for conversations that matches the conversation_filter. If not specified, NO annotators will be run.
+      value:
+        runPhraseMatcherAnnotator: {{ runPhraseMatcherAnnotator }}
+        summarizationConfig:
+          summarizationModel: "{{ summarizationModel }}"
+          generator: "{{ generator }}"
+          conversationProfile: "{{ conversationProfile }}"
+        runEntityAnnotator: {{ runEntityAnnotator }}
+        runSummarizationAnnotator: {{ runSummarizationAnnotator }}
+        runInterruptionAnnotator: {{ runInterruptionAnnotator }}
+        phraseMatchers:
+          - "{{ phraseMatchers }}"
+        runSentimentAnnotator: {{ runSentimentAnnotator }}
+        runQaAnnotator: {{ runQaAnnotator }}
+        runIssueModelAnnotator: {{ runIssueModelAnnotator }}
+        runSilenceAnnotator: {{ runSilenceAnnotator }}
+        runAutoLabelingAnnotator: {{ runAutoLabelingAnnotator }}
+        qaConfig:
+          scorecardList:
+            qaScorecardRevisions:
+              - "{{ qaScorecardRevisions }}"
+        issueModels:
+          - "{{ issueModels }}"
+        runIntentAnnotator: {{ runIntentAnnotator }}
+    - name: name
+      value: "{{ name }}"
+      description: |
+        Identifier. The resource name of the analysis rule. Format: projects/{project}/locations/{location}/analysisRules/{analysis_rule}
+    - name: conversationFilter
+      value: "{{ conversationFilter }}"
+      description: |
+        Filter for the conversations that should apply this analysis rule. An empty filter means this analysis rule applies to all conversations. Refer to https://cloud.google.com/contact-center/insights/docs/filtering for details.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -410,11 +427,11 @@ Updates a analysis rule.
 UPDATE google.contactcenterinsights.analysis_rules
 SET 
 data__active = {{ active }},
-data__conversationFilter = '{{ conversationFilter }}',
 data__displayName = '{{ displayName }}',
+data__analysisPercentage = {{ analysisPercentage }},
 data__annotatorSelector = '{{ annotatorSelector }}',
 data__name = '{{ name }}',
-data__analysisPercentage = {{ analysisPercentage }}
+data__conversationFilter = '{{ conversationFilter }}'
 WHERE 
 projectsId = '{{ projectsId }}' --required
 AND locationsId = '{{ locationsId }}' --required
